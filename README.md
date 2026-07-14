@@ -15,3 +15,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/monty
 https://innvonix-tech-solutions.github.io/ai-workforce/saurbhi
 
 https://innvonix-tech-solutions.github.io/ai-workforce/translink
+
+https://innvonix-tech-solutions.github.io/ai-workforce/translink/traffic/
