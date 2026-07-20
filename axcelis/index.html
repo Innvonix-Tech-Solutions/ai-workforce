@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axcelis — Quote-to-Install AI Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080b10; --bg2:#0c1017; --panel:#111823; --panel2:#182131;
+  --line:#233042; --line-soft:#1a2432;
+  --text:#e8edf3; --muted:#8fa0b3; --muted2:#5c6b7f;
+  --ion:#3fd7ff; --ion-glow:rgba(63,215,255,.35); --ion-dim:#173947;
+  --heat:#ff7a45; --good:#4ade80; --warn:#facc15;
+  --font-d:'Space Grotesk',sans-serif; --font-b:'IBM Plex Sans',sans-serif; --font-m:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-b);line-height:1.5;}
+::selection{background:var(--ion-glow);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+a{color:var(--ion);}
+
+/* ---------- Header ---------- */
+header.top{border-bottom:1px solid var(--line);background:
+  radial-gradient(ellipse 900px 260px at 15% -20%, rgba(63,215,255,.10), transparent 60%), var(--bg2);
+  padding:38px 0 30px;position:relative;overflow:hidden;}
+.eyebrow{font-family:var(--font-m);font-size:11.5px;letter-spacing:.16em;color:var(--ion);text-transform:uppercase;}
+h1.brand{font-family:var(--font-d);font-weight:700;font-size:clamp(30px,4.2vw,44px);letter-spacing:-.02em;margin:8px 0 6px;}
+h1.brand span{color:var(--ion);}
+.sub{color:var(--muted);max-width:640px;font-size:15px;}
+.beamline{margin-top:26px;height:64px;position:relative;}
+.beamline svg{width:100%;height:100%;display:block;}
+.beam-dot{filter:drop-shadow(0 0 6px var(--ion));}
+
+/* ---------- Econ strip ---------- */
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:26px 0 8px;}
+.econ .cell{background:var(--panel);padding:16px 18px;}
+.econ .cell .label{font-size:11px;color:var(--muted2);text-transform:uppercase;letter-spacing:.08em;font-family:var(--font-m);}
+.econ .cell .val{font-family:var(--font-d);font-size:24px;font-weight:600;margin-top:6px;}
+.econ .cell .delta{font-family:var(--font-m);font-size:12px;margin-top:4px;}
+.delta.up{color:var(--good);} .delta.down{color:var(--heat);}
+
+/* ---------- Sections ---------- */
+section{padding:46px 0;}
+section.roster,section.builder{border-top:1px solid var(--line-soft);}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.section-head h2{font-family:var(--font-d);font-size:22px;margin:0;}
+.section-head p{color:var(--muted);font-size:13.5px;margin:4px 0 0;}
+
+/* ---------- Roster ---------- */
+.roster-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;}
+.op-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;cursor:pointer;transition:border-color .15s, transform .15s;}
+.op-card:hover{border-color:var(--ion);transform:translateY(-2px);}
+.op-card .op-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+.op-card .op-name{font-family:var(--font-d);font-weight:600;font-size:16.5px;}
+.op-card .op-title{color:var(--muted);font-size:12.5px;margin-top:2px;}
+.op-card .op-desc{font-size:13px;color:var(--muted);margin-top:12px;min-height:36px;}
+.op-card .op-stats{display:flex;gap:16px;margin-top:14px;border-top:1px solid var(--line-soft);padding-top:12px;}
+.op-card .op-stats .st{font-family:var(--font-m);}
+.op-card .op-stats .st .n{font-size:15px;font-weight:600;color:var(--ion);}
+.op-card .op-stats .st .l{font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;}
+.badge{display:inline-block;font-family:var(--font-m);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:20px;border:1px solid var(--ion-dim);color:var(--ion);background:rgba(63,215,255,.06);}
+.badge.new{border-color:rgba(250,204,21,.4);color:var(--warn);background:rgba(250,204,21,.06);}
+
+/* ---------- Run view ---------- */
+.runview{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px;margin-top:8px;}
+.runview .rv-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;}
+.runview h3{font-family:var(--font-d);font-size:19px;margin:0 0 4px;}
+.runview .rv-sub{color:var(--muted);font-size:13px;}
+.prompt-box{margin-top:16px;}
+.prompt-box textarea{width:100%;min-height:64px;background:var(--bg2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-family:var(--font-m);font-size:13px;padding:12px;resize:vertical;}
+.run-actions{display:flex;gap:10px;margin-top:12px;align-items:center;}
+button.primary{background:var(--ion);color:#04141a;border:none;font-family:var(--font-d);font-weight:600;font-size:13.5px;padding:10px 18px;border-radius:8px;cursor:pointer;}
+button.primary:disabled{opacity:.5;cursor:not-allowed;}
+button.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);font-family:var(--font-b);font-size:13px;padding:9px 16px;border-radius:8px;cursor:pointer;}
+button.ghost:hover{color:var(--text);border-color:var(--muted2);}
+.run-status{font-family:var(--font-m);font-size:12px;color:var(--muted2);}
+
+.stations{margin-top:26px;}
+.wave-row{display:flex;gap:14px;padding:10px 0;position:relative;}
+.wave-row:not(:last-child)::after{content:"";position:absolute;left:24px;top:100%;width:1px;height:10px;background:var(--line);}
+.station{flex:1;min-width:150px;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;transition:border-color .2s, box-shadow .2s;}
+.station.running{border-color:var(--ion);box-shadow:0 0 0 1px var(--ion-glow), 0 0 20px -4px var(--ion-glow);}
+.station.done{border-color:rgba(74,222,128,.4);}
+.station .st-emoji{font-size:18px;}
+.station .st-agent{font-family:var(--font-m);font-size:11px;color:var(--muted);margin-top:6px;}
+.station .st-task{font-size:12.5px;margin-top:4px;color:var(--text);}
+.station .st-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--muted2);margin-right:6px;}
+.station.running .st-dot{background:var(--ion);box-shadow:0 0 8px var(--ion);}
+.station.done .st-dot{background:var(--good);}
+
+.feed{margin-top:22px;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;max-height:220px;overflow-y:auto;font-family:var(--font-m);font-size:12.5px;}
+.feed .ln{padding:3px 0;color:var(--muted);border-bottom:1px dashed var(--line-soft);}
+.feed .ln .who{color:var(--ion);}
+.feed .ln:last-child{border-bottom:none;}
+
+.deliverable{margin-top:22px;background:var(--bg2);border:1px solid var(--ion-dim);border-radius:10px;padding:20px 22px;display:none;}
+.deliverable.show{display:block;}
+.deliverable .d-label{font-family:var(--font-m);font-size:11px;color:var(--ion);text-transform:uppercase;letter-spacing:.08em;}
+.deliverable h4{font-family:var(--font-d);font-size:17px;margin:6px 0 12px;}
+.deliverable pre{white-space:pre-wrap;font-family:var(--font-m);font-size:12.5px;color:var(--text);line-height:1.65;margin:0;}
+
+/* ---------- Builder ---------- */
+.builder-box{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px;}
+.steps{display:flex;gap:8px;margin-bottom:22px;}
+.steps .step{flex:1;text-align:center;padding:8px 4px;border-radius:8px;font-family:var(--font-m);font-size:11.5px;color:var(--muted2);border:1px solid var(--line);}
+.steps .step.active{color:var(--ion);border-color:var(--ion-dim);background:rgba(63,215,255,.06);}
+.steps .step.complete{color:var(--good);}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:6px;font-family:var(--font-m);}
+.field select,.field input[type=text]{width:100%;background:var(--bg2);border:1px solid var(--line);color:var(--text);padding:10px 12px;border-radius:8px;font-family:var(--font-b);font-size:13.5px;}
+.wf-pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;}
+.wf-pick .wf-opt{border:1px solid var(--line);background:var(--bg2);border-radius:9px;padding:12px 14px;cursor:pointer;font-size:13px;}
+.wf-pick .wf-opt.sel{border-color:var(--ion);background:rgba(63,215,255,.06);}
+.wf-pick .wf-opt .n{font-family:var(--font-d);font-weight:600;font-size:13.5px;}
+.wf-pick .wf-opt .d{color:var(--muted);font-size:11.5px;margin-top:4px;}
+.summary{background:var(--bg2);border:1px solid var(--line);border-radius:9px;padding:16px;font-size:13px;color:var(--muted);}
+.summary b{color:var(--text);}
+.builder-nav{display:flex;justify-content:space-between;margin-top:20px;}
+
+footer{border-top:1px solid var(--line-soft);padding:30px 0 50px;color:var(--muted2);font-size:12px;}
+footer .foot-note{max-width:760px;}
+@media (max-width:720px){.econ{grid-template-columns:repeat(2,1fr);} .wave-row{flex-direction:column;}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">AXCELIS · CUSTOMER-FACING PROTOTYPE</div>
+    <h1 class="brand">Purion Quote-to-Install <span>AI Workforce</span></h1>
+    <p class="sub">A simulated roster of AI operators that run the equipment sales and fulfillment pipeline for Purion ion implantation systems &mdash; from RFQ to site acceptance test. Illustrative only.</p>
+    <div class="beamline">
+      <svg viewBox="0 0 1000 64" preserveAspectRatio="none">
+        <line x1="0" y1="32" x2="1000" y2="32" stroke="#233042" stroke-width="1"/>
+        <g fill="none" stroke="#3fd7ff" stroke-width="1.4" opacity=".55">
+          <rect x="40" y="18" width="26" height="28" rx="3"/>
+          <rect x="280" y="14" width="30" height="36" rx="3"/>
+          <rect x="560" y="20" width="24" height="24" rx="3"/>
+          <rect x="860" y="12" width="34" height="40" rx="3"/>
+        </g>
+        <circle class="beam-dot" cy="32" r="4" fill="#3fd7ff">
+          <animate attributeName="cx" values="0;1000;0" dur="7s" repeatCount="indefinite"/>
+        </circle>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="econ" id="econStrip"></div>
+</div>
+
+<div class="wrap">
+  <section class="roster">
+    <div class="section-head">
+      <div>
+        <h2>Operator Roster</h2>
+        <p>Eight operators cover the Purion order lifecycle. Click one to run it.</p>
+      </div>
+    </div>
+    <div class="roster-grid" id="rosterGrid"></div>
+  </section>
+
+  <section id="runSection" style="display:none;">
+    <div class="runview" id="runView"></div>
+  </section>
+
+  <section class="builder">
+    <div class="section-head">
+      <div>
+        <h2>Build a New Operator</h2>
+        <p>Clone an existing workflow into a new operator for the roster.</p>
+      </div>
+    </div>
+    <div class="builder-box" id="builderBox"></div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap foot-note">
+    This is an illustrative sales prototype, not a live system connected to Axcelis data, ERP, or customer records. All figures, quotes, dollar amounts, and deliverables shown are placeholders for demonstration only. Every operator output in a real deployment would be reviewed by a qualified Axcelis employee before it reaches a customer or enters a binding order.
+  </div>
+</footer>
+
+<script>
+/* ============ DATA ============ */
+const AGENT_ROLES = {
+  app_eng:    { emoji:'🔬', label:'Applications Engineer', tools:['process_sim','spec_match','save'] },
+  quote_spec: { emoji:'💰', label:'Proposal & Pricing Specialist', tools:['pricing_calc','terms_draft','save'] },
+  competitive:{ emoji:'🕵️', label:'Competitive Intelligence Analyst', tools:['market_scan','win_loss','save'] },
+  compliance: { emoji:'📋', label:'Export Compliance & Contracts Reviewer', tools:['eccn_classify','contract_review','save'] },
+  bom_eng:    { emoji:'🧩', label:'Order / BOM Engineer', tools:['bom_gen','config_check','save'] },
+  planner:    { emoji:'📅', label:'Production Planner', tools:['capacity_check','schedule_gen','save'] },
+  qa_eng:     { emoji:'✅', label:'Manufacturing QA Engineer', tools:['qc_checklist','defect_scan','save'] },
+  test_eng:   { emoji:'🧪', label:'Test Engineer (FAT/SAT)', tools:['fat_protocol','data_log','save'] },
+  logistics:  { emoji:'🚢', label:'Logistics & Export Coordinator', tools:['freight_quote','customs_doc','save'] },
+  field_eng:  { emoji:'🛠️', label:'Field Service / Install Engineer', tools:['sat_protocol','commissioning_log','save'] },
+  writer:     { emoji:'✍️', label:'Proposal Writer', tools:['doc_draft','format_doc','save'] },
+  research:   { emoji:'📊', label:'Market & Customer Research Analyst', tools:['customer_profile','fab_research','save'] },
+};
+
+const TOOLS = {
+  process_sim: () => 'Simulated implant profile — dose 2.1E15 cm⁻², energy 80 keV, uniformity ±0.4%',
+  spec_match: () => 'Matched process window to Purion XE high-energy chain (Xe/Ge compatible)',
+  pricing_calc: () => 'Priced base system + upgrades + CS&I service bundle against price book',
+  terms_draft: () => 'Drafted payment terms — 30% down / 60% FAT / 10% SAT, Incoterm DAP',
+  market_scan: () => 'Scanned for competing bids in the account and segment',
+  win_loss: () => 'Pulled win/loss history for this account and segment',
+  eccn_classify: () => 'Classified ECCN and screened destination for export restrictions',
+  contract_review: () => 'Flagged non-standard clauses for legal review',
+  bom_gen: () => 'Generated full bill of materials from the won configuration',
+  config_check: () => 'Checked part availability against the 100K+ SKU catalog',
+  capacity_check: () => 'Checked open build slots across manufacturing sites',
+  schedule_gen: () => 'Generated master build schedule to FAT',
+  qc_checklist: () => 'Issued in-process QC checklist for the build',
+  defect_scan: () => 'Reviewed build for non-conformances',
+  fat_protocol: () => 'Executed Factory Acceptance Test protocol — throughput, uniformity, particles',
+  data_log: () => 'Archived FAT process recipe and metrology data',
+  freight_quote: () => 'Quoted freight and transit routing for the shipment',
+  customs_doc: () => 'Assembled export documentation and customs paperwork',
+  sat_protocol: () => 'Executed on-site Site Acceptance Test against FAT baseline',
+  commissioning_log: () => 'Closed commissioning log and released tool to warranty support',
+  doc_draft: () => 'Drafted the technical and commercial narrative',
+  format_doc: () => 'Formatted output to the Axcelis document template',
+  customer_profile: () => 'Pulled customer fab profile and installed base',
+  fab_research: () => 'Cross-referenced public capex disclosures and PO history',
+  save: () => 'Saved to the deal record and CS&I knowledge base',
+};
+
+const WORKFLOWS = {
+  rfq_response: {
+    name:'RFQ / Quote Response', title:'RFQ / Quote Response', mode:'dag', tag:'flagship',
+    deliverable:'Quote Package',
+    desc:'Turns an inbound RFQ into a priced, compliant, competitively-aware quote package.',
+    sample:'Prepare an RFQ response for a Taiwan-based advanced logic fab requesting one Purion XE high energy system with an extended Xe/Ge chain and a 3-year CS&I service bundle.',
+    tasks:[
+      { agent:'research', task:'Pull customer fab profile, process node, and installed Purion base', deps:[] },
+      { agent:'app_eng', task:'Match RFQ process requirements to a Purion H / M / XE configuration', deps:[] },
+      { agent:'competitive', task:'Scan for competing bids and prior win/loss history on this account', deps:[] },
+      { agent:'quote_spec', task:'Build tool + upgrade + CS&I service bundle pricing', deps:[1] },
+      { agent:'compliance', task:'Classify ECCN and screen for export restrictions on the destination', deps:[0] },
+      { agent:'writer', task:'Draft the technical and commercial proposal document', deps:[2,3,4] },
+      { agent:'quote_spec', task:'Finalize the quote package and route it for approval', deps:[5] },
+    ]
+  },
+  tool_configuration: {
+    name:'Process Match', title:'Technical Configuration & Applications Matching', mode:'sequential',
+    deliverable:'Process Match Report',
+    desc:'Matches a customer process step to the right Purion platform and options.',
+    sample:'A Korean DRAM fab wants to know which Purion platform fits a high-dose, low-energy boron implant step at 300mm with tool matching to 3 existing systems.',
+    tasks:[
+      { agent:'research', task:'Gather the customer process specification and existing tool set', deps:[] },
+      { agent:'app_eng', task:'Simulate the implant profile — dose, energy, uniformity, contamination', deps:[0] },
+      { agent:'app_eng', task:'Recommend platform and options (Purion H / M / XE / GSD Ovation)', deps:[1] },
+      { agent:'qa_eng', task:'Validate the recommendation against fab tool-matching requirements', deps:[2] },
+    ]
+  },
+  competitive_intel: {
+    name:'Battlecard', title:'Competitive Win/Loss Intelligence', mode:'dag',
+    deliverable:'Competitive Battlecard',
+    desc:'Builds a battlecard ahead of a competitive tender.',
+    sample:'Build a battlecard ahead of a SiC power device tender where Applied Materials is the incumbent competitor.',
+    tasks:[
+      { agent:'research', task:'Scan public tenders and capex disclosures for the account', deps:[] },
+      { agent:'competitive', task:'Analyze competitor positioning and recent product moves', deps:[0] },
+      { agent:'competitive', task:'Compile win/loss patterns for this segment', deps:[0] },
+      { agent:'writer', task:'Produce the battlecard for the account team', deps:[1,2] },
+    ]
+  },
+  order_engineering: {
+    name:'Order Release', title:'Order Engineering & BOM Release', mode:'sequential',
+    deliverable:'Manufacturing Release Package',
+    desc:'Converts a won quote into a released manufacturing order.',
+    sample:'Release the manufacturing order for the Purion M mid-current system just won at a Malaysia power device fab.',
+    tasks:[
+      { agent:'bom_eng', task:'Translate the won configuration into a full bill of materials', deps:[] },
+      { agent:'bom_eng', task:'Check part availability and flag long-lead items', deps:[0] },
+      { agent:'compliance', task:'Re-verify export classification at the purchase-order stage', deps:[1] },
+      { agent:'planner', task:'Reserve a manufacturing capacity slot', deps:[2] },
+    ]
+  },
+  production_scheduling: {
+    name:'Build Scheduler', title:'Production Scheduling & Build Tracking', mode:'dag',
+    deliverable:'Build Status Report',
+    desc:'Slots a new order into the build schedule and tracks progress.',
+    sample:'Slot the new Purion H high current order into the Beverly build schedule and flag any capacity conflicts.',
+    tasks:[
+      { agent:'planner', task:'Build the master schedule across manufacturing sites', deps:[] },
+      { agent:'qa_eng', task:'Insert in-process QC checkpoints into the schedule', deps:[0] },
+      { agent:'planner', task:'Track build milestones against plan', deps:[0] },
+      { agent:'writer', task:'Compile a build status report for sales and the customer', deps:[1,2] },
+    ]
+  },
+  fat_coordination: {
+    name:'FAT Readiness', title:'Factory Acceptance Test Coordination', mode:'sequential',
+    deliverable:'FAT Report',
+    desc:'Runs and documents the Factory Acceptance Test before ship release.',
+    sample:'Run FAT coordination for the Purion XE system heading to a Japan image sensor customer next month.',
+    tasks:[
+      { agent:'test_eng', task:'Execute the FAT protocol — throughput, uniformity, particle count', deps:[] },
+      { agent:'qa_eng', task:'Review FAT results against spec limits', deps:[0] },
+      { agent:'field_eng', task:'Sign off on ship readiness', deps:[1] },
+      { agent:'writer', task:'Compile the FAT report for the customer', deps:[2] },
+    ]
+  },
+  logistics_export: {
+    name:'Export & Logistics', title:'Logistics & Export Compliance', mode:'sequential',
+    deliverable:'Shipment & Compliance Package',
+    desc:'Clears export compliance and arranges freight for a shipped system.',
+    sample:'Prepare export compliance and freight logistics for a Purion system shipping to a customer in mainland China.',
+    tasks:[
+      { agent:'compliance', task:'Finalize export license and ECCN documentation', deps:[] },
+      { agent:'logistics', task:'Arrange freight and customs clearance', deps:[0] },
+      { agent:'logistics', task:'Coordinate crating and transit for sensitive beamline components', deps:[1] },
+      { agent:'writer', task:'Compile the shipment notification package', deps:[2] },
+    ]
+  },
+  install_commissioning: {
+    name:'Install & SAT', title:'Installation & Site Acceptance Test', mode:'sequential',
+    deliverable:'SAT Sign-off & Handoff Package',
+    desc:'Coordinates on-site install, SAT, and handoff to CS&I.',
+    sample:'Coordinate install and SAT for a newly arrived Purion M system at a US mature-process fab, then hand off to CS&I.',
+    tasks:[
+      { agent:'field_eng', task:'Coordinate site readiness — power, gas, cleanroom bay', deps:[] },
+      { agent:'field_eng', task:'Execute installation and system bring-up', deps:[0] },
+      { agent:'test_eng', task:'Run SAT protocol against the FAT baseline', deps:[1] },
+      { agent:'writer', task:'Produce the SAT sign-off and CS&I handoff package', deps:[2] },
+    ]
+  },
+};
+
+const DTITLE = {
+  rfq_response:'Quote Package',
+  tool_configuration:'Process Match Report',
+  competitive_intel:'Competitive Battlecard',
+  order_engineering:'Manufacturing Release Package',
+  production_scheduling:'Build Status Report',
+  fat_coordination:'FAT Report',
+  logistics_export:'Shipment & Compliance Package',
+  install_commissioning:'SAT Sign-off & Handoff Package',
+};
+
+const FINAL = {
+  rfq_response:
+`QUOTE PACKAGE — Q-2026-0417
+Customer: Advanced logic fab, Hsinchu, Taiwan (illustrative)
+System: Purion XE High Energy Implanter x1
+Configuration: Extended Xe/Ge energy chain, 300mm, dual end station
+
+Pricing
+  Base system ............... $4.85M
+  Upgrades ................... $310K
+  3-yr CS&I service bundle ... $612K
+  Total ....................... $5.77M
+
+Terms: 30% down / 60% on FAT / 10% on SAT — Incoterm DAP — lead time 24 weeks
+Export: ECCN 3B001, license required — compliance pre-clearance attached
+Competitive read: 3 competing bids identified; account win rate 71% over last 8 quarters
+
+Next step: route to VP Sales for approval; target customer response within 5 business days.
+
+NOTE: illustrative placeholder figures for demonstration purposes only; not an actual quote.`,
+
+  tool_configuration:
+`PROCESS MATCH REPORT
+Customer: DRAM fab, Icheon, Korea (illustrative)
+Requested step: high-dose, low-energy boron implant, 300mm
+
+Simulated profile: dose 4.8E15 cm⁻², energy 12 keV, uniformity ±0.35%
+Recommended platform: Purion M (mid-current)
+Options: enhanced dose uniformity module, tool-matching calibration kit
+
+Tool-matching check: within ±0.6% of the 3 existing installed Purion systems on this line
+Confidence: high — process window sits inside the platform's qualified range
+
+NOTE: illustrative simulated data for demonstration purposes only.`,
+
+  competitive_intel:
+`COMPETITIVE BATTLECARD
+Segment: SiC power device, tender in progress (illustrative)
+Incumbent competitor: Applied Materials
+
+Positioning: Purion SiC suite covers high-current, medium-current and high-energy in three
+tools vs. the competitor's single-tool approach — relevant where the customer's process
+spans multiple implant energy ranges.
+Recent competitor move: broadened service contract terms in the last two quarters.
+Win/loss pattern: Axcelis wins 7 of 10 competitive SiC tenders when the account already
+runs an installed Purion tool; wins 4 of 10 on greenfield accounts.
+
+Recommended talking points: cost of ownership across the full SiC process flow, and the
+300+ engineer CS&I support network.
+
+NOTE: illustrative competitive analysis for demonstration purposes only.`,
+
+  order_engineering:
+`MANUFACTURING RELEASE PACKAGE
+Order: PO-2026-3312 — Purion M Mid-Current Implanter x1
+Customer: Power device fab, Kedah, Malaysia (illustrative)
+
+BOM: 1,284 lines released across beamline, end station, and gas panel
+Long-lead flags: 3 items, 14-week lead time (ion source, turbo pump, RF generator)
+Export re-check: ECCN 3B001 confirmed, no new restriction at PO stage
+Capacity: reserved build slot, Weeks 34–36, Beverly MA line 2
+
+NOTE: illustrative order data for demonstration purposes only.`,
+
+  production_scheduling:
+`BUILD STATUS REPORT
+Order: PO-2026-3298 — Purion H High-Current Implanter x1
+Site: Beverly, MA — Line 1
+
+Schedule: 11-week build cycle to FAT, on track
+QC checkpoints: 4 in-process gates inserted, 0 open non-conformances
+Milestone status: chamber sub-assembly complete, beamline integration in progress (Week 5 of 11)
+Risk flag: none currently open
+
+NOTE: illustrative schedule data for demonstration purposes only.`,
+
+  fat_coordination:
+`FAT REPORT
+System: Purion XE High Energy Implanter, S/N AX-22841
+Customer: Image sensor fab, destination Japan (illustrative)
+
+Throughput: 220 wafers/hour (spec: ≥210)
+Dose uniformity: 0.38% 1-sigma (spec: ≤0.5%)
+Particle adders: 0.02/cm² (spec: ≤0.05/cm²)
+Result: PASS — all 46 test recipes within specification
+Ship readiness: approved by Field Service
+
+NOTE: illustrative test data for demonstration purposes only.`,
+
+  logistics_export:
+`SHIPMENT & COMPLIANCE PACKAGE
+System: Purion H High-Current Implanter, S/N AX-22809
+Destination: customer site, mainland China (illustrative)
+
+Export license: EAR license granted, ECCN 3B001, valid through shipment window
+Freight: air freight, 3 crates, 8,200 kg, 6-day transit
+Customs docs: commercial invoice, license copy, packing list assembled
+Special handling: vibration-isolated crating for beamline optics
+
+NOTE: illustrative logistics data for demonstration purposes only.`,
+
+  install_commissioning:
+`SAT SIGN-OFF & HANDOFF PACKAGE
+System: Purion M Mid-Current Implanter, S/N AX-22850
+Site: mature-process fab, Austin, TX (illustrative)
+
+Site readiness: power, gas, and cleanroom bay confirmed ahead of arrival
+Installation: complete, system bring-up nominal
+SAT result: throughput within 1.1% of FAT baseline — PASS
+Handoff: commissioning log closed, tool released to CS&I warranty support
+
+NOTE: illustrative commissioning data for demonstration purposes only.`,
+};
+
+let EMPLOYEES = [
+  { id:'op-quote', name:'Quote Desk', title:'RFQ & Proposal Operator', wf:'rfq_response', handled:'~40 RFQs / quarter', hrs:14, win:63, status:'idle' },
+  { id:'op-match', name:'Process Match', title:'Applications Matching Operator', wf:'tool_configuration', handled:'~65 process evals / quarter', hrs:6, win:0, status:'idle' },
+  { id:'op-battle', name:'Battlecard', title:'Competitive Intelligence Operator', wf:'competitive_intel', handled:'~18 battlecards / quarter', hrs:5, win:22, status:'idle' },
+  { id:'op-release', name:'Order Release', title:'BOM & Manufacturing Release Operator', wf:'order_engineering', handled:'~30 orders / quarter', hrs:9, win:31, status:'idle' },
+  { id:'op-sched', name:'Build Scheduler', title:'Production Scheduling Operator', wf:'production_scheduling', handled:'~12 active builds', hrs:7, win:0, status:'idle' },
+  { id:'op-fat', name:'FAT Readiness', title:'Factory Acceptance Test Operator', wf:'fat_coordination', handled:'~28 FAT cycles / year', hrs:11, win:19, status:'idle' },
+  { id:'op-ship', name:'Export & Logistics', title:'Shipping & Compliance Operator', wf:'logistics_export', handled:'~30 shipments / year', hrs:8, win:40, status:'idle' },
+  { id:'op-install', name:'Install & SAT', title:'Commissioning Operator', wf:'install_commissioning', handled:'~28 installs / year', hrs:10, win:15, status:'idle' },
+];
+
+const CONFIG = {
+  econLabels:['Open RFQs','Avg. Quote Turnaround','Systems In Fulfillment','On-Time SAT Rate'],
+  econValues:['23','4.2 days','17','94%'],
+  econDeltas:[
+    {t:'+6 vs last mo', dir:'up'}, {t:'-1.8 days vs last mo', dir:'up'},
+    {t:'+3 vs last mo', dir:'up'}, {t:'+2 pts vs last mo', dir:'up'}
+  ],
+  runButton:'Run Operator', runNoun:'run', outputLabel:'Deliverable', rosterLabel:'Operator Roster',
+  builderCadences:['On each new RFQ received','On PO issuance','Daily build digest','On FAT completion','On shipment milestone','Weekly customer review'],
+};
+
+/* ============ RENDER: ECON STRIP ============ */
+function renderEcon(){
+  const el = document.getElementById('econStrip');
+  el.innerHTML = CONFIG.econLabels.map((l,i)=>`
+    <div class="cell">
+      <div class="label">${l}</div>
+      <div class="val">${CONFIG.econValues[i]}</div>
+      <div class="delta ${CONFIG.econDeltas[i].dir}">${CONFIG.econDeltas[i].t}</div>
+    </div>`).join('');
+}
+
+/* ============ RENDER: ROSTER ============ */
+function renderRoster(){
+  const el = document.getElementById('rosterGrid');
+  el.innerHTML = EMPLOYEES.map(emp=>{
+    const wf = WORKFLOWS[emp.wf];
+    const winTxt = emp.win ? emp.win+'%' : '—';
+    return `
+    <div class="op-card" data-id="${emp.id}">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${emp.name}</div>
+          <div class="op-title">${emp.title}</div>
+        </div>
+        ${wf.tag==='flagship' ? '<span class="badge">Flagship</span>' : (emp.isNew ? '<span class="badge new">New</span>' : '')}
+      </div>
+      <div class="op-desc">${wf.desc}</div>
+      <div class="op-stats">
+        <div class="st"><div class="n">${emp.handled}</div><div class="l">Handled</div></div>
+        <div class="st"><div class="n">${emp.hrs}h</div><div class="l">Saved / run</div></div>
+        <div class="st"><div class="n">${winTxt}</div><div class="l">Impact</div></div>
+      </div>
+    </div>`;
+  }).join('');
+  el.querySelectorAll('.op-card').forEach(card=>{
+    card.addEventListener('click', ()=> openRun(card.dataset.id));
+  });
+}
+
+/* ============ RUN VIEW ============ */
+function computeWaves(tasks){
+  const level = tasks.map(()=>0);
+  for(let i=0;i<tasks.length;i++){
+    const d = tasks[i].deps;
+    level[i] = d.length ? Math.max(...d.map(x=>level[x]))+1 : 0;
+  }
+  return level;
+}
+
+function openRun(empId){
+  const emp = EMPLOYEES.find(e=>e.id===empId);
+  const wf = WORKFLOWS[emp.wf];
+  const section = document.getElementById('runSection');
+  const rv = document.getElementById('runView');
+  section.style.display = 'block';
+
+  const levels = computeWaves(wf.tasks);
+  const waveCount = Math.max(...levels)+1;
+  let wavesHtml = '';
+  for(let w=0; w<waveCount; w++){
+    const idxs = wf.tasks.map((t,i)=>i).filter(i=>levels[i]===w);
+    wavesHtml += `<div class="wave-row" data-wave="${w}">` + idxs.map(i=>{
+      const t = wf.tasks[i]; const a = AGENT_ROLES[t.agent];
+      return `<div class="station" id="station-${i}">
+        <div class="st-emoji">${a.emoji}</div>
+        <div class="st-agent"><span class="st-dot"></span>${a.label}</div>
+        <div class="st-task">${t.task}</div>
+      </div>`;
+    }).join('') + `</div>`;
+  }
+
+  rv.innerHTML = `
+    <div class="rv-head">
+      <div>
+        <h3>${emp.name} — ${wf.title}</h3>
+        <div class="rv-sub">${wf.mode==='dag' ? 'Parallel workflow' : 'Sequential workflow'} · ${wf.tasks.length} tasks · produces "${DTITLE[emp.wf]}"</div>
+      </div>
+      <span class="run-status" id="runStatus">idle</span>
+    </div>
+    <div class="prompt-box">
+      <textarea id="promptInput">${wf.sample}</textarea>
+    </div>
+    <div class="run-actions">
+      <button class="primary" id="runBtn">${CONFIG.runButton}</button>
+      <button class="ghost" id="closeRun">Close</button>
+    </div>
+    <div class="stations">${wavesHtml}</div>
+    <div class="feed" id="feed"></div>
+    <div class="deliverable" id="deliverable">
+      <div class="d-label">${CONFIG.outputLabel}</div>
+      <h4 id="dTitle"></h4>
+      <pre id="dBody"></pre>
+    </div>
+  `;
+
+  document.getElementById('runBtn').addEventListener('click', ()=>runOperator(emp, wf, levels));
+  document.getElementById('closeRun').addEventListener('click', ()=>{ section.style.display='none'; });
+  section.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function delay(ms){ return new Promise(res=>setTimeout(res, ms)); }
+
+function logLine(text, who){
+  const feed = document.getElementById('feed');
+  const ln = document.createElement('div');
+  ln.className = 'ln';
+  ln.innerHTML = who ? `<span class="who">${who}</span> — ${text}` : text;
+  feed.appendChild(ln);
+  feed.scrollTop = feed.scrollHeight;
+}
+
+async function runOperator(emp, wf, levels){
+  const btn = document.getElementById('runBtn');
+  const status = document.getElementById('runStatus');
+  const feed = document.getElementById('feed');
+  const deliverable = document.getElementById('deliverable');
+  deliverable.classList.remove('show');
+  feed.innerHTML = '';
+  btn.disabled = true;
+  status.textContent = 'running…';
+
+  const waveCount = Math.max(...levels)+1;
+  const prompt = document.getElementById('promptInput').value.trim();
+  logLine(`Request received: "${prompt.slice(0,140)}${prompt.length>140?'…':''}"`);
+  await delay(400);
+
+  for(let w=0; w<waveCount; w++){
+    const idxs = wf.tasks.map((t,i)=>i).filter(i=>levels[i]===w);
+    for(const i of idxs){
+      const st = document.getElementById('station-'+i);
+      st.classList.add('running');
+    }
+    for(const i of idxs){
+      const t = wf.tasks[i]; const a = AGENT_ROLES[t.agent];
+      logLine(t.task, `${a.emoji} ${a.label}`);
+      const toolKey = a.tools[0];
+      await delay(280);
+      logLine(TOOLS[toolKey](), `${a.emoji} ${a.label}`);
+      await delay(220);
+    }
+    for(const i of idxs){
+      const st = document.getElementById('station-'+i);
+      st.classList.remove('running');
+      st.classList.add('done');
+    }
+    await delay(200);
+  }
+
+  logLine(TOOLS['save'](), '💾 System');
+  status.textContent = 'complete';
+  btn.disabled = false;
+
+  document.getElementById('dTitle').textContent = DTITLE[emp.wf];
+  document.getElementById('dBody').textContent = FINAL[emp.wf];
+  deliverable.classList.add('show');
+  deliverable.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+/* ============ BUILDER ============ */
+let builderState = { step:1, baseWf:null, name:'', title:'', cadence:CONFIG.builderCadences[0] };
+
+function renderBuilder(){
+  const el = document.getElementById('builderBox');
+  const wfKeys = Object.keys(WORKFLOWS);
+  const stepsHtml = ['Pick a workflow','Name the operator','Confirm & add'].map((s,i)=>{
+    const n = i+1;
+    let cls = '';
+    if(n===builderState.step) cls='active';
+    else if(n<builderState.step) cls='complete';
+    return `<div class="step ${cls}">${n}. ${s}</div>`;
+  }).join('');
+
+  let body = '';
+  if(builderState.step===1){
+    body = `<div class="wf-pick">` + wfKeys.map(k=>{
+      const wf = WORKFLOWS[k];
+      const sel = builderState.baseWf===k ? 'sel':'';
+      return `<div class="wf-opt ${sel}" data-wf="${k}"><div class="n">${wf.title}</div><div class="d">${wf.desc}</div></div>`;
+    }).join('') + `</div>
+    <div class="builder-nav"><span></span><button class="primary" id="toStep2" ${builderState.baseWf?'':'disabled'}>Next</button></div>`;
+  } else if(builderState.step===2){
+    body = `
+      <div class="field"><label>Operator name</label><input type="text" id="opName" value="${builderState.name}" placeholder="e.g. Quote Desk EU"></div>
+      <div class="field"><label>Operator title</label><input type="text" id="opTitle" value="${builderState.title}" placeholder="e.g. EMEA RFQ Operator"></div>
+      <div class="field"><label>Trigger cadence</label>
+        <select id="opCadence">${CONFIG.builderCadences.map(c=>`<option ${c===builderState.cadence?'selected':''}>${c}</option>`).join('')}</select>
+      </div>
+      <div class="builder-nav"><button class="ghost" id="toStep1b">Back</button><button class="primary" id="toStep3">Next</button></div>`;
+  } else {
+    const wf = WORKFLOWS[builderState.baseWf];
+    body = `
+      <div class="summary">
+        Cloning <b>${wf.title}</b> (${wf.tasks.length} tasks, ${AGENT_ROLES[wf.tasks[0].agent].label} leads off) into a new operator:<br><br>
+        Name: <b>${builderState.name || '(unnamed)'}</b><br>
+        Title: <b>${builderState.title || '(untitled)'}</b><br>
+        Trigger: <b>${builderState.cadence}</b>
+      </div>
+      <div class="builder-nav"><button class="ghost" id="toStep2b">Back</button><button class="primary" id="addOperator">Add to Roster</button></div>`;
+  }
+
+  el.innerHTML = `<div class="steps">${stepsHtml}</div>${body}`;
+
+  if(builderState.step===1){
+    el.querySelectorAll('.wf-opt').forEach(o=>o.addEventListener('click', ()=>{
+      builderState.baseWf = o.dataset.wf; renderBuilder();
+    }));
+    const nextBtn = document.getElementById('toStep2');
+    if(nextBtn) nextBtn.addEventListener('click', ()=>{ builderState.step=2; renderBuilder(); });
+  } else if(builderState.step===2){
+    document.getElementById('toStep1b').addEventListener('click', ()=>{ builderState.step=1; renderBuilder(); });
+    document.getElementById('toStep3').addEventListener('click', ()=>{
+      builderState.name = document.getElementById('opName').value.trim();
+      builderState.title = document.getElementById('opTitle').value.trim();
+      builderState.cadence = document.getElementById('opCadence').value;
+      builderState.step = 3; renderBuilder();
+    });
+  } else {
+    document.getElementById('toStep2b').addEventListener('click', ()=>{ builderState.step=2; renderBuilder(); });
+    document.getElementById('addOperator').addEventListener('click', ()=>{
+      const wf = WORKFLOWS[builderState.baseWf];
+      const newEmp = {
+        id: 'op-custom-'+Date.now(),
+        name: builderState.name || (wf.name+' Clone'),
+        title: builderState.title || wf.title,
+        wf: builderState.baseWf,
+        handled: 'New — no history yet',
+        hrs: Math.max(3, wf.tasks.length),
+        win: 0,
+        status:'idle',
+        isNew:true,
+      };
+      EMPLOYEES.push(newEmp);
+      renderRoster();
+      builderState = { step:1, baseWf:null, name:'', title:'', cadence:CONFIG.builderCadences[0] };
+      renderBuilder();
+      document.getElementById('rosterGrid').scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  }
+}
+
+/* ============ INIT ============ */
+renderEcon();
+renderRoster();
+renderBuilder();
+</script>
+</body>
+</html>
