@@ -23,3 +23,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/axcelis
 https://innvonix-tech-solutions.github.io/ai-workforce/cohu/
 
 https://innvonix-tech-solutions.github.io/ai-workforce/photronics
+
+https://innvonix-tech-solutions.github.io/ai-workforce/LiCAP
