@@ -21,3 +21,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/translink/traffic/
 https://innvonix-tech-solutions.github.io/ai-workforce/axcelis
 
 https://innvonix-tech-solutions.github.io/ai-workforce/cohu/
+
+https://innvonix-tech-solutions.github.io/ai-workforce/photronics
