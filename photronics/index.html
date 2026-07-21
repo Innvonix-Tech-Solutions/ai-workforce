@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photronics — AI Mask-Shop Workforce</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  --bg:#0a0e15;
+  --bg2:#0d1220;
+  --panel:#121826;
+  --panel2:#161e30;
+  --line:#242e44;
+  --line-soft:#1a2236;
+  --text:#e7ecf6;
+  --muted:#8b96ae;
+  --muted2:#5c6784;
+  --cyan:#4fd8e8;
+  --violet:#b28cff;
+  --good:#5fe0a8;
+  --warn:#f5b15a;
+  --radius:10px;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --disp:'Space Grotesk', system-ui, sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 560px at 12% -8%, rgba(79,216,232,0.10), transparent 60%),
+    radial-gradient(900px 520px at 108% 8%, rgba(178,140,255,0.10), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--disp);
+  line-height:1.5;
+  min-height:100vh;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:32px 24px 90px;}
+
+.reticle-field{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:
+    linear-gradient(var(--line-soft) 1px, transparent 1px) 0 0/38px 38px,
+    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px) 0 0/38px 38px,
+    var(--panel);
+  overflow:hidden;
+  padding:34px 30px 28px;
+}
+.reticle-field::before{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 55%, rgba(10,14,21,0.85) 100%);
+  pointer-events:none;
+}
+
+.mark-row{display:flex; align-items:center; gap:12px; margin-bottom:22px; position:relative; z-index:1;}
+.reticle-mark{width:30px;height:30px;flex:none;}
+.mark-label{font-family:var(--mono); font-size:12px; letter-spacing:.14em; color:var(--muted); text-transform:uppercase;}
+
+.hero-title{
+  position:relative; z-index:1;
+  font-size:clamp(28px,4vw,42px); font-weight:700; letter-spacing:-0.01em;
+  margin:0 0 10px; max-width:760px;
+}
+.hero-title .accent{color:var(--cyan);}
+.hero-sub{position:relative; z-index:1; color:var(--muted); max-width:640px; font-size:15px; margin:0 0 26px;}
+
+.hero-stats{position:relative; z-index:1; display:flex; gap:28px; flex-wrap:wrap; align-items:flex-end;}
+.hero-stat-big{font-family:var(--mono); font-size:44px; font-weight:600; color:var(--good); line-height:1;}
+.hero-stat-big-label{font-size:12px; color:var(--muted); margin-top:6px; max-width:180px;}
+
+.econ-strip{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+  background:var(--line); border:1px solid var(--line); border-radius:var(--radius);
+  overflow:hidden; margin-top:26px;
+}
+.econ-cell{background:var(--panel); padding:16px 18px;}
+.econ-val{font-family:var(--mono); font-size:22px; font-weight:600;}
+.econ-lbl{font-size:12px; color:var(--muted); margin-top:4px;}
+
+.section{margin-top:48px;}
+.section-head{display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin-bottom:16px; flex-wrap:wrap;}
+.section-title{font-size:20px; font-weight:700; margin:0;}
+.section-note{font-size:13px; color:var(--muted); font-family:var(--mono);}
+
+.roster-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:14px;}
+.op-card{
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:18px; display:flex; flex-direction:column; gap:10px; position:relative;
+  transition:border-color .15s ease, transform .15s ease;
+}
+.op-card:hover{border-color:var(--cyan); transform:translateY(-1px);}
+.op-card.flagship{border-color:rgba(178,140,255,0.55);}
+.op-tag{
+  position:absolute; top:14px; right:14px; font-family:var(--mono); font-size:10px; letter-spacing:.08em;
+  color:var(--violet); border:1px solid rgba(178,140,255,0.4); border-radius:20px; padding:2px 8px; text-transform:uppercase;
+}
+.op-tag.new{color:var(--good); border-color:rgba(95,224,168,0.4);}
+.op-name{font-weight:700; font-size:15.5px;}
+.op-role{color:var(--muted); font-size:12.5px; margin-top:-6px;}
+.op-desc{font-size:13px; color:#c3cadb; margin:2px 0 4px;}
+.op-meta{display:flex; gap:14px; font-family:var(--mono); font-size:12px; color:var(--muted2); flex-wrap:wrap;}
+.op-meta b{color:var(--cyan); font-weight:600;}
+.op-status{font-family:var(--mono); font-size:11px; color:var(--muted2); display:flex; align-items:center; gap:6px;}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--muted2); flex:none;}
+.dot.idle{background:var(--muted2);}
+.dot.running{background:var(--warn); animation:pulse 1s infinite;}
+.dot.done{background:var(--good);}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+.run-btn{
+  margin-top:6px; background:var(--cyan); color:#062024; border:none; border-radius:6px;
+  padding:9px 14px; font-family:var(--disp); font-weight:600; font-size:13px; cursor:pointer;
+  transition:filter .15s ease;
+}
+.run-btn:hover{filter:brightness(1.08);}
+.run-btn:disabled{background:var(--line); color:var(--muted2); cursor:default;}
+
+.run-panel{
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:22px;
+}
+.run-head{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:16px; flex-wrap:wrap;}
+.run-head h3{margin:0 0 4px; font-size:17px;}
+.run-head .sub{color:var(--muted); font-size:13px;}
+.back-link{background:none; border:1px solid var(--line); color:var(--muted); border-radius:6px; padding:7px 12px; font-family:var(--mono); font-size:12px; cursor:pointer;}
+.back-link:hover{border-color:var(--cyan); color:var(--cyan);}
+
+.waves{display:flex; flex-direction:column; gap:10px; margin-bottom:18px;}
+.wave{display:flex; gap:10px; flex-wrap:wrap;}
+.task-chip{
+  border:1px solid var(--line); background:var(--bg2); border-radius:8px; padding:9px 12px;
+  font-size:12.5px; display:flex; align-items:center; gap:8px; min-width:220px; flex:1 1 220px;
+  opacity:.45; transition:opacity .2s ease, border-color .2s ease;
+}
+.task-chip.active{opacity:1; border-color:var(--cyan);}
+.task-chip.complete{opacity:1; border-color:rgba(95,224,168,0.5);}
+.task-chip .em{font-size:16px;}
+.task-chip .tx{color:#cfd6e6;}
+.task-chip .ag{color:var(--muted); font-size:11px; font-family:var(--mono); display:block; margin-top:1px;}
+
+.feed{
+  background:var(--bg2); border:1px solid var(--line-soft); border-radius:8px; padding:14px 16px;
+  font-family:var(--mono); font-size:12.5px; max-height:220px; overflow-y:auto; margin-bottom:18px;
+}
+.feed-line{margin-bottom:6px; color:var(--muted);}
+.feed-line b{color:var(--text);}
+.feed-line .ok{color:var(--good);}
+
+.deliverable{
+  background:var(--bg2); border:1px solid rgba(178,140,255,0.4); border-radius:8px; padding:18px 20px;
+}
+.deliverable h4{margin:0 0 10px; font-size:14px; color:var(--violet); font-family:var(--mono); text-transform:uppercase; letter-spacing:.06em;}
+.deliverable pre{
+  white-space:pre-wrap; font-family:var(--mono); font-size:12.5px; color:#d7dcec; margin:0; line-height:1.6;
+}
+
+.builder{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:22px;}
+.steps{display:flex; gap:8px; margin-bottom:20px;}
+.step-pill{font-family:var(--mono); font-size:11px; padding:5px 11px; border-radius:20px; border:1px solid var(--line); color:var(--muted2);}
+.step-pill.active{border-color:var(--cyan); color:var(--cyan);}
+.step-pill.done{border-color:var(--good); color:var(--good);}
+.choice-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:10px; margin-bottom:18px;}
+.choice-card{border:1px solid var(--line); background:var(--bg2); border-radius:8px; padding:13px; cursor:pointer; font-size:13px;}
+.choice-card:hover{border-color:var(--cyan);}
+.choice-card.picked{border-color:var(--violet); background:rgba(178,140,255,0.08);}
+.choice-card .ct{font-weight:600; margin-bottom:3px;}
+.choice-card .cd{color:var(--muted); font-size:12px;}
+label.f-label{display:block; font-size:12px; color:var(--muted); margin:14px 0 6px; font-family:var(--mono);}
+input[type=text], select{
+  width:100%; background:var(--bg2); border:1px solid var(--line); color:var(--text);
+  border-radius:6px; padding:10px 12px; font-family:var(--disp); font-size:14px;
+}
+input[type=text]:focus, select:focus{outline:none; border-color:var(--cyan);}
+.builder-actions{display:flex; gap:10px; margin-top:22px;}
+.btn-primary{background:var(--cyan); color:#062024; border:none; border-radius:6px; padding:10px 18px; font-weight:600; font-size:13px; cursor:pointer;}
+.btn-ghost{background:none; border:1px solid var(--line); color:var(--muted); border-radius:6px; padding:10px 18px; font-size:13px; cursor:pointer;}
+.btn-ghost:hover{border-color:var(--cyan); color:var(--cyan);}
+.review-box{background:var(--bg2); border:1px solid var(--line); border-radius:8px; padding:16px; font-size:13px; color:#c3cadb;}
+.review-box div{margin-bottom:6px;}
+.review-box b{color:var(--text);}
+
+footer{margin-top:56px; padding-top:20px; border-top:1px solid var(--line); color:var(--muted2); font-size:11.5px; font-family:var(--mono); line-height:1.7;}
+.hitl{color:var(--muted); font-size:12px; margin-top:6px;}
+
+@media (max-width:640px){
+  .econ-strip{grid-template-columns:repeat(2,1fr);}
+  .hero-stats{gap:18px;}
+}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+const CONFIG = {
+  econLabels: ["Job travelers on the floor","Fab facilities online","Avg. mask cycle time","Data-integrity pass rate"],
+  statLabel: "Shot-count / cycle-time impact on flagship data-prep run",
+  statSign: "-",
+  statSuffix: "%",
+  statValue: 18,
+  runButton: "Run operator",
+  runNoun: "run",
+  outputLabel: "Deliverable",
+  rosterLabel: "The workforce",
+  builderCadences: ["Per job (real-time)","Per shift","Daily","Weekly"]
+};
+
+const AGENT_ROLES = {
+  intake:    { emoji:"📥", label:"Order Intake Specialist",       tools:["validateSpec","checkNDA","save"] },
+  fracture:  { emoji:"🔷", label:"Data Prep Engineer",             tools:["fracturePolygons","jobDeck","save"] },
+  pec:       { emoji:"🎯", label:"Proximity Correction Specialist",tools:["applyOPC","shotCount","save"] },
+  scheduler: { emoji:"🗓️", label:"Write Scheduler",                tools:["checkCapacity","matchRecipe","assignQueue","save"] },
+  inspector: { emoji:"🔍", label:"Inspection Technician",          tools:["opticalScan","ebeamScan","reviewScan","save"] },
+  classify:  { emoji:"🧩", label:"Defect Classification Analyst",  tools:["classifyDefect","dispositionCall","save"] },
+  repair:    { emoji:"🛠️", label:"Repair Engineer",                tools:["repairSite","save"] },
+  metrology: { emoji:"📐", label:"Metrology Specialist",           tools:["measureCD","measureRegistration","measurePhase","save"] },
+  clean:     { emoji:"🧴", label:"Clean & Coat Technician",        tools:["cleanSurface","applyCoating","mountPellicle","save"] },
+  qa:        { emoji:"✅", label:"QA & Recertification Reviewer",  tools:["verifyFile","recertify","signOff","save"] },
+  reporter:  { emoji:"📊", label:"Customer Reporting Analyst",     tools:["pullStatus","flagRisk","draftReport","save"] },
+  opslead:   { emoji:"📈", label:"Ops Analytics Lead",             tools:["aggregateYield","benchmarkCycle","forecastCapacity","save"] }
+};
+
+const WORKFLOWS = {
+  dataprep: {
+    name:"dataprep", title:"Mask Data Prep & Fracture", mode:"sequential",
+    deliverable:"Tool-Ready Job Package",
+    sample:"5nm-class logic, Metal-3, attPSM, expedite tier",
+    desc:"Turns a customer's tape-out into a tool-ready job deck: validate, fracture, correct, schedule, sign off.",
+    tag:"flagship",
+    tasks:[
+      {agent:"intake",   task:"Validate incoming GDSII/OASIS layout against the SEMI P10 order spec and NDA terms.", deps:[]},
+      {agent:"intake",   task:"Cross-check the job traveler against the fab's process spec and design rules.", deps:[0]},
+      {agent:"fracture", task:"Fracture layout polygons into Manhattan shapes and generate the writer job deck.", deps:[1]},
+      {agent:"pec",      task:"Apply proximity effect correction and dose biasing across the pattern.", deps:[2]},
+      {agent:"pec",      task:"Run shot-count minimization to cut writer exposure time.", deps:[3]},
+      {agent:"scheduler",task:"Match the dose recipe to available multibeam writer capacity and assign a queue slot.", deps:[4]},
+      {agent:"qa",       task:"Verify tool-ready file integrity and sign off for release to the floor.", deps:[5]}
+    ]
+  },
+  writescheduling: {
+    name:"writescheduling", title:"Writer Dispatch & Scheduling", mode:"dag",
+    deliverable:"Writer Dispatch Manifest",
+    sample:"3-facility writer fleet, mixed IC/FPD queue",
+    desc:"Balances the queue across the e-beam and laser writer fleet and confirms dispatch.",
+    tasks:[
+      {agent:"scheduler", task:"Pull current writer fleet capacity across all facilities.", deps:[]},
+      {agent:"scheduler", task:"Rank queued jobs by customer priority tier and committed due date.", deps:[]},
+      {agent:"scheduler", task:"Match each job's dose recipe to a compatible writer.", deps:[0,1]},
+      {agent:"opslead",   task:"Flag any capacity bottleneck against the fiscal utilization plan.", deps:[2]},
+      {agent:"qa",        task:"Confirm the dispatch manifest before release to the fab floor.", deps:[2,3]}
+    ]
+  },
+  inspection: {
+    name:"inspection", title:"Blank & Pattern Inspection", mode:"sequential",
+    deliverable:"Inspection & Defect Report",
+    sample:"6-inch quartz blank, post-write pattern scan",
+    desc:"Runs the full inspection stack, blank through review station, and calls disposition.",
+    tasks:[
+      {agent:"inspector", task:"Run blank mask inspection for substrate defects prior to writing.", deps:[]},
+      {agent:"inspector", task:"Run pattern-mask optical inspection against reference CAD data.", deps:[0]},
+      {agent:"inspector", task:"Run e-beam review-station scan on flagged sites.", deps:[1]},
+      {agent:"classify",  task:"Classify each defect by type, size and printability risk.", deps:[2]},
+      {agent:"classify",  task:"Compile a disposition recommendation: repair, recertify, or scrap.", deps:[3]}
+    ]
+  },
+  repair: {
+    name:"repair", title:"Defect Repair & Recertification", mode:"sequential",
+    deliverable:"Repair & Recertification Record",
+    sample:"2 repairable sites, phase-shift mask",
+    desc:"Repairs classified defects and recertifies the mask for return to the fab.",
+    tasks:[
+      {agent:"repair",    task:"Repair classified defects using laser or focused-ion-beam correction.", deps:[]},
+      {agent:"metrology", task:"Re-measure phase and transmission values at the repaired sites.", deps:[0]},
+      {agent:"inspector", task:"Re-inspect repaired sites to confirm the pattern is undamaged.", deps:[1]},
+      {agent:"qa",        task:"Recertify the mask for return to the fab.", deps:[2]}
+    ]
+  },
+  cleanpellicle: {
+    name:"cleanpellicle", title:"Clean & Pellicle Service", mode:"sequential",
+    deliverable:"Clean & Pellicle Service Ticket",
+    sample:"In-fab return, pellicle replacement request",
+    desc:"Restores a used mask to production form: clean, coat, re-pellicle, recertify.",
+    tasks:[
+      {agent:"clean", task:"Remove the old or damaged pellicle and clean the mask surface.", deps:[]},
+      {agent:"clean", task:"Apply anti-stick coating where the customer's process calls for it.", deps:[0]},
+      {agent:"clean", task:"Mount and align a new pellicle.", deps:[1]},
+      {agent:"qa",    task:"Re-inspect and recertify phase/transmission values before ship.", deps:[2]}
+    ]
+  },
+  metrology: {
+    name:"metrology", title:"Metrology & CD Analysis", mode:"dag",
+    deliverable:"Metrology Report",
+    sample:"CD uniformity + registration, phase-shift sites",
+    desc:"Runs CD, registration and phase measurements in parallel and compiles the spec-limit report.",
+    tasks:[
+      {agent:"metrology", task:"Measure critical dimension (CD) uniformity across the mask field.", deps:[]},
+      {agent:"metrology", task:"Measure pattern registration against the design grid.", deps:[]},
+      {agent:"metrology", task:"Measure phase and transmission on phase-shift sites.", deps:[]},
+      {agent:"opslead",   task:"Compile the metrology report against the customer's spec limits.", deps:[0,1,2]}
+    ]
+  },
+  customerreporting: {
+    name:"customerreporting", title:"Customer Status Reporting (MaskLink)", mode:"sequential",
+    deliverable:"Customer Status Report",
+    sample:"214 open job travelers, weekly portal refresh",
+    desc:"Pulls live production status and publishes the automated MaskLink customer report.",
+    tasks:[
+      {agent:"reporter", task:"Pull live production status for every open job traveler.", deps:[]},
+      {agent:"reporter", task:"Flag any job at risk of missing its committed cycle time.", deps:[0]},
+      {agent:"reporter", task:"Draft the automated status report for the customer's MaskLink account.", deps:[1]},
+      {agent:"qa",       task:"Review the report for accuracy before it is published.", deps:[2]}
+    ]
+  },
+  opsanalytics: {
+    name:"opsanalytics", title:"Yield & Capacity Analytics", mode:"dag",
+    deliverable:"Yield & Capacity Outlook",
+    sample:"11-facility yield roll-up, FY26 capex check",
+    desc:"Rolls up yield and cycle time across facilities and checks capacity against the capex plan.",
+    tasks:[
+      {agent:"opslead",  task:"Aggregate yield data across all 11 facilities.", deps:[]},
+      {agent:"opslead",  task:"Benchmark average cycle time by mask type and node.", deps:[]},
+      {agent:"opslead",  task:"Compare capacity utilization against the current capex plan.", deps:[0,1]},
+      {agent:"reporter", task:"Summarize findings for the executive and investor-facing readout.", deps:[2]},
+      {agent:"qa",       task:"Sign off on figures before the readout is distributed.", deps:[3]}
+    ]
+  }
+};
+
+const DTITLE = {
+  dataprep:"Tool-Ready Job Package",
+  writescheduling:"Writer Dispatch Manifest",
+  inspection:"Inspection & Defect Report",
+  repair:"Repair & Recertification Record",
+  cleanpellicle:"Clean & Pellicle Service Ticket",
+  metrology:"Metrology Report",
+  customerreporting:"Customer Status Report (MaskLink)",
+  opsanalytics:"Yield & Capacity Outlook"
+};
+
+const TOOLS = {
+  validateSpec: ()=>"SEMI P10 order package validated — 1 layer set, 4 job files, checksum OK",
+  checkNDA: ()=>"Customer NDA and process-node access rights confirmed",
+  fracturePolygons: ()=>"Layout fractured into 2.41M Manhattan shapes, job deck generated",
+  jobDeck: ()=>"Job deck organized and sequenced for writer intake",
+  applyOPC: ()=>"Proximity effect correction applied — dose bias table updated",
+  shotCount: ()=>"Shot count reduced 18% via minimization pass",
+  checkCapacity: ()=>"Writer fleet capacity checked across 3 facilities",
+  matchRecipe: ()=>"Dose recipe matched to an available multibeam writer",
+  assignQueue: ()=>"Job assigned a queue slot — priority tier: expedite",
+  opticalScan: ()=>"Optical inspection complete — 2 candidate sites flagged",
+  ebeamScan: ()=>"E-beam review scan complete on flagged sites",
+  reviewScan: ()=>"Review-station imaging captured for classification",
+  classifyDefect: ()=>"Defects classified: 1 repairable, 1 cosmetic (no action)",
+  dispositionCall: ()=>"Disposition set: repair + recertify before ship",
+  repairSite: ()=>"Defect site repaired via focused laser correction",
+  measureCD: ()=>"CD uniformity measured — within +/-3nm of spec",
+  measureRegistration: ()=>"Pattern registration measured — 4.1nm 3-sigma",
+  measurePhase: ()=>"Phase/transmission measured on phase-shift sites — in spec",
+  cleanSurface: ()=>"Mask surface cleaned, particle count verified sub-threshold",
+  applyCoating: ()=>"X301 anti-stick coating applied",
+  mountPellicle: ()=>"New pellicle mounted and aligned",
+  verifyFile: ()=>"Tool-ready file integrity verified against job spec",
+  recertify: ()=>"Phase and transmission values recertified for fab use",
+  signOff: ()=>"QA sign-off recorded on the job traveler",
+  pullStatus: ()=>"Live status pulled for 214 open job travelers",
+  flagRisk: ()=>"3 jobs flagged at risk of missing committed cycle time",
+  draftReport: ()=>"Automated status report drafted for the MaskLink portal",
+  aggregateYield: ()=>"Yield data aggregated across 11 facilities",
+  benchmarkCycle: ()=>"Average cycle time benchmarked by mask type and node",
+  forecastCapacity: ()=>"Capacity utilization compared against the FY26 capex plan",
+  save: ()=>"Saved to job traveler record"
+};
+
+const FINAL = {
+dataprep:
+`TOOL-READY JOB PACKAGE — Job #PLB-48213
+Customer: [Foundry Partner, confidential]   Layer: Metal-3   Node: 5nm-class logic
+Substrate: 6" quartz, attenuated phase-shift (attPSM)
+
+DATA PREP SUMMARY
+- Fracture: 2.41M Manhattan shapes generated from GDSII tape-out
+- OPC/PEC: dose bias table applied, edge placement error < 2nm
+- Shot count: reduced 18% vs. baseline (~6.2 writer-hours saved)
+- Writer assignment: Multibeam Writer 4, Brookfield CT
+- QA: file integrity verified, released to floor
+
+Estimated cycle time to ship: 4.8 days (vs. 6.1-day average)
+
+NOTE: illustrative sample output — all figures are placeholders for demonstration purposes only.`,
+
+writescheduling:
+`WRITER DISPATCH MANIFEST — Shift 07/21 Night
+Facilities checked: Brookfield CT, Boise ID, Hsinchu TW
+
+QUEUE SUMMARY
+1. Job #PLB-48213 -> Multibeam Writer 4 (Brookfield)  [expedite]
+2. Job #PLB-48198 -> Multibeam Writer 2 (Hsinchu)     [standard]
+3. Job #PLB-48201 -> Laser Writer 1 (Boise)           [standard]
+
+Capacity note: Brookfield multibeam fleet at 91% utilization, within FY26 capex plan.
+Manifest confirmed by QA, released to fab floor.
+
+NOTE: illustrative sample output — all figures are placeholders for demonstration purposes only.`,
+
+inspection:
+`INSPECTION & DEFECT REPORT — Job #PLB-48107
+Mask: 6" quartz blank, pattern layer: Via-2
+
+FINDINGS
+- Blank inspection: clean, no substrate defects
+- Pattern optical inspection: 2 sites flagged for review
+- E-beam review: 1 confirmed repairable defect, 1 cosmetic (no action)
+- Disposition: route to Repair & Recertification
+
+NOTE: illustrative sample output — all figures are placeholders for demonstration purposes only.`,
+
+repair:
+`REPAIR & RECERTIFICATION RECORD — Job #PLB-48107
+Site: (14220, 8890)  Defect type: chrome protrusion, repairable
+
+ACTIONS
+- Laser repair performed, site re-measured
+- Phase/transmission: 179.4° / 6.1% (within +/-2% of spec)
+- Re-inspection: pattern undamaged, no residual defect
+- QA: recertified for return to fab
+
+NOTE: illustrative sample output — all figures are placeholders for demonstration purposes only.`,
+
+cleanpellicle:
+`CLEAN & PELLICLE SERVICE TICKET — Job #PLB-47960
+Service: pellicle replacement + recertification
+
+ACTIONS
+- Old pellicle removed, mask surface cleaned
+- X301 anti-stick coating applied
+- New pellicle mounted and aligned
+- QA: phase/transmission recertified, cleared for ship
+
+Turnaround: 1.2 days (standard maintenance SLA)
+
+NOTE: illustrative sample output — all figures are placeholders for demonstration purposes only.`,
+
+metrology:
+`METROLOGY REPORT — Job #PLB-48213
+Mask: attPSM, Metal-3
+
+MEASUREMENTS
+- CD uniformity: +/-2.7nm (spec: +/-3nm)  PASS
+- Pattern registration: 4.1nm 3-sigma (spec: 5nm)  PASS
+- Phase: 179.6°  Transmission: 6.0% (spec: 180 +/-3°, 6 +/-1%)  PASS
+
+Overall: within customer spec limits, cleared for shipment.
+
+NOTE: illustrative sample output — all figures are placeholders for demonstration purposes only.`,
+
+customerreporting:
+`CUSTOMER STATUS REPORT — MaskLink Portal Refresh
+Account: [Foundry Partner, confidential]   Open job travelers: 214
+
+SUMMARY
+- 198 jobs on committed cycle time
+- 13 jobs ahead of schedule
+- 3 jobs flagged at risk (writer capacity contention, Hsinchu)
+- Mitigation: 2 of 3 re-routed to Boise facility
+
+Report reviewed by QA and published to customer portal.
+
+NOTE: illustrative sample output — all figures are placeholders for demonstration purposes only.`,
+
+opsanalytics:
+`YIELD & CAPACITY OUTLOOK — Q4 Rollup
+Facilities: 11 (Asia, North America, Europe)
+
+FINDINGS
+- Blended yield: 97.2% (up 0.4 pt QoQ)
+- Avg. cycle time: 4.9 days IC / 6.3 days FPD
+- Capacity utilization: 88% vs. FY26 capex plan (on track)
+- Recommendation: prioritize Korea capacity extension for leading-edge demand
+
+Signed off for executive/investor readout.
+
+NOTE: illustrative sample output — all figures are placeholders for demonstration purposes only.`
+};
+
+let EMPLOYEES = [
+  {id:"op1", name:"Dana Fracture",   title:"Data Prep & Fracture Operator",   wf:"dataprep",          handled:214, hrs:6.2, win:"18% shot-count cut", status:"idle"},
+  {id:"op2", name:"Reed Dispatch",   title:"Writer Dispatch Operator",        wf:"writescheduling",   handled:38,  hrs:1.4, win:"91% fleet utilization", status:"idle"},
+  {id:"op3", name:"Iris Scanline",   title:"Inspection Operator",             wf:"inspection",        handled:180, hrs:3.1, win:"2 sites caught pre-ship", status:"idle"},
+  {id:"op4", name:"Foster Beam",     title:"Repair & Recert Operator",        wf:"repair",             handled:22,  hrs:2.6, win:"0 repeat defects", status:"idle"},
+  {id:"op5", name:"Nora Pellicle",   title:"Clean & Pellicle Operator",       wf:"cleanpellicle",     handled:96,  hrs:1.2, win:"1.2-day SLA held", status:"idle"},
+  {id:"op6", name:"Cass Micron",     title:"Metrology Operator",              wf:"metrology",          handled:214, hrs:0.8, win:"100% spec-limit pass", status:"idle"},
+  {id:"op7", name:"Priya Portal",    title:"MaskLink Reporting Operator",     wf:"customerreporting",  handled:214, hrs:0.5, win:"3 at-risk jobs caught", status:"idle"},
+  {id:"op8", name:"Owen Yieldline",  title:"Yield & Capacity Operator",       wf:"opsanalytics",       handled:11,  hrs:2.0, win:"88% capex on-track", status:"idle"}
+];
+
+let state = {
+  view:"roster",
+  runningEmp:null,
+  runWf:null,
+  waves:[],
+  taskState:[],
+  feed:[],
+  runComplete:false,
+  builderStep:1,
+  builderBase:null,
+  builderName:"",
+  builderCadence:CONFIG.builderCadences[0],
+  builderFocus:""
+};
+let runTimer = null;
+
+function computeWaves(tasks, mode){
+  if(mode === "sequential"){ return tasks.map((_,i)=>[i]); }
+  const waveOf = new Array(tasks.length).fill(0);
+  tasks.forEach((t,i)=>{
+    if(t.deps.length===0){ waveOf[i]=0; }
+    else{ waveOf[i] = 1 + Math.max(...t.deps.map(d=>waveOf[d])); }
+  });
+  const maxWave = Math.max(...waveOf);
+  const waves = Array.from({length:maxWave+1},()=>[]);
+  waveOf.forEach((w,i)=>waves[w].push(i));
+  return waves;
+}
+
+function escapeHtml(s){
+  return s.replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+function render(){
+  const app = document.getElementById("app");
+  app.innerHTML = `
+    ${renderHero()}
+    ${state.view==="roster" ? renderRoster() : ""}
+    ${state.view==="run" ? renderRun() : ""}
+    ${renderBuilderSection()}
+    ${renderFooter()}
+  `;
+  attachHandlers();
+}
+
+function renderHero(){
+  return `
+  <div class="reticle-field">
+    <div class="mark-row">
+      <svg class="reticle-mark" viewBox="0 0 30 30" fill="none">
+        <circle cx="15" cy="15" r="12" stroke="#4fd8e8" stroke-width="1.4"/>
+        <line x1="15" y1="0" x2="15" y2="7" stroke="#b28cff" stroke-width="1.4"/>
+        <line x1="15" y1="23" x2="15" y2="30" stroke="#b28cff" stroke-width="1.4"/>
+        <line x1="0" y1="15" x2="7" y2="15" stroke="#b28cff" stroke-width="1.4"/>
+        <line x1="23" y1="15" x2="30" y2="15" stroke="#b28cff" stroke-width="1.4"/>
+        <circle cx="15" cy="15" r="2.4" fill="#4fd8e8"/>
+      </svg>
+      <div class="mark-label">Photronics · Mask Shop / AI Workforce Prototype</div>
+    </div>
+    <h1 class="hero-title">A registration mark for every job on the floor: <span class="accent">an AI operator behind each stage of the photomask pipeline.</span></h1>
+    <p class="hero-sub">From tape-out validation through fracture, write scheduling, inspection, repair, metrology and MaskLink reporting — each operator below is a real Photronics workflow run by a small team of specialist agents.</p>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-big">${CONFIG.statSign}${CONFIG.statValue}${CONFIG.statSuffix}</div>
+        <div class="hero-stat-big-label">${CONFIG.statLabel}</div>
+      </div>
+    </div>
+    <div class="econ-strip">
+      <div class="econ-cell"><div class="econ-val">214</div><div class="econ-lbl">${CONFIG.econLabels[0]}</div></div>
+      <div class="econ-cell"><div class="econ-val">11</div><div class="econ-lbl">${CONFIG.econLabels[1]}</div></div>
+      <div class="econ-cell"><div class="econ-val">4.8 days</div><div class="econ-lbl">${CONFIG.econLabels[2]}</div></div>
+      <div class="econ-cell"><div class="econ-val">99.7%</div><div class="econ-lbl">${CONFIG.econLabels[3]}</div></div>
+    </div>
+  </div>`;
+}
+
+function renderRoster(){
+  const cards = EMPLOYEES.map(emp=>{
+    const wf = WORKFLOWS[emp.wf];
+    const isFlagship = wf.tag === "flagship";
+    const isNew = emp.isNew;
+    return `
+    <div class="op-card ${isFlagship?"flagship":""}">
+      ${isFlagship ? `<div class="op-tag">Flagship</div>` : (isNew ? `<div class="op-tag new">New</div>` : "")}
+      <div class="op-name">${emp.name}</div>
+      <div class="op-role">${emp.title}</div>
+      <div class="op-desc">${wf.desc}</div>
+      <div class="op-meta">
+        <span>Handled: <b>${emp.handled}</b></span>
+        <span>Avg hrs: <b>${emp.hrs}</b></span>
+        <span>Win: <b>${emp.win==="0"||emp.win===0?"—":emp.win}</b></span>
+      </div>
+      <div class="op-status"><span class="dot idle"></span>Idle — ready for next job</div>
+      <button class="run-btn" data-run="${emp.id}">${CONFIG.runButton}</button>
+    </div>`;
+  }).join("");
+
+  return `
+  <div class="section">
+    <div class="section-head">
+      <h2 class="section-title">${CONFIG.rosterLabel}</h2>
+      <span class="section-note">8 operators · 12 specialist agents · click Run to see one work a job</span>
+    </div>
+    <div class="roster-grid">${cards}</div>
+  </div>`;
+}
+
+function renderRun(){
+  const emp = state.runningEmp;
+  const wf = WORKFLOWS[state.runWf];
+  const wavesHtml = state.waves.map((wave)=>{
+    const chips = wave.map(idx=>{
+      const t = wf.tasks[idx];
+      const agent = AGENT_ROLES[t.agent];
+      const st = state.taskState[idx];
+      return `
+      <div class="task-chip ${st==='active'?'active':''} ${st==='done'?'complete':''}">
+        <span class="em">${agent.emoji}</span>
+        <span class="tx">${t.task}<span class="ag">${agent.label}</span></span>
+      </div>`;
+    }).join("");
+    return `<div class="wave">${chips}</div>`;
+  }).join("");
+
+  const feedHtml = state.feed.map(line=>`<div class="feed-line">${line}</div>`).join("");
+
+  const deliverableHtml = state.runComplete ? `
+    <div class="deliverable">
+      <h4>${CONFIG.outputLabel}: ${DTITLE[wf.name]}</h4>
+      <pre>${escapeHtml(FINAL[wf.name])}</pre>
+    </div>` : "";
+
+  return `
+  <div class="section">
+    <div class="run-panel">
+      <div class="run-head">
+        <div>
+          <h3>${emp.name} — ${wf.title}</h3>
+          <div class="sub">Sample job: ${wf.sample}</div>
+        </div>
+        <button class="back-link" data-back="1">&larr; Back to roster</button>
+      </div>
+      <div class="waves">${wavesHtml}</div>
+      <div class="feed">${feedHtml || '<div class="feed-line">Waiting to start...</div>'}</div>
+      ${deliverableHtml}
+    </div>
+  </div>`;
+}
+
+function renderBuilderSection(){
+  const wfOptions = Object.values(WORKFLOWS).map(wf=>`
+    <div class="choice-card ${state.builderBase===wf.name?'picked':''}" data-base="${wf.name}">
+      <div class="ct">${wf.title}</div>
+      <div class="cd">${wf.desc}</div>
+    </div>`).join("");
+
+  let stepBody = "";
+  if(state.builderStep===1){
+    stepBody = `
+      <p class="section-note" style="margin-bottom:14px;">Step 1 — pick the workflow this new operator will run.</p>
+      <div class="choice-grid">${wfOptions}</div>
+      <div class="builder-actions">
+        <button class="btn-primary" data-next="2" ${!state.builderBase?"disabled":""}>Next</button>
+      </div>`;
+  } else if(state.builderStep===2){
+    const cadenceOptions = CONFIG.builderCadences.map(c=>`<option ${state.builderCadence===c?"selected":""}>${c}</option>`).join("");
+    stepBody = `
+      <p class="section-note" style="margin-bottom:14px;">Step 2 — name the operator and set its cadence.</p>
+      <label class="f-label">Operator name</label>
+      <input type="text" id="builder-name" placeholder="e.g. Vera Fastlane" value="${state.builderName}">
+      <label class="f-label">Run cadence</label>
+      <select id="builder-cadence">${cadenceOptions}</select>
+      <label class="f-label">Focus note (optional)</label>
+      <input type="text" id="builder-focus" placeholder="e.g. prioritize EUV pellicle-free jobs" value="${state.builderFocus}">
+      <div class="builder-actions">
+        <button class="btn-ghost" data-prev="1">Back</button>
+        <button class="btn-primary" data-next="3" ${!state.builderName?"disabled":""}>Next</button>
+      </div>`;
+  } else if(state.builderStep===3){
+    const wf = WORKFLOWS[state.builderBase];
+    stepBody = `
+      <p class="section-note" style="margin-bottom:14px;">Step 3 — review and add to the roster.</p>
+      <div class="review-box">
+        <div><b>Name:</b> ${state.builderName}</div>
+        <div><b>Workflow:</b> ${wf.title}</div>
+        <div><b>Cadence:</b> ${state.builderCadence}</div>
+        <div><b>Focus:</b> ${state.builderFocus || "—"}</div>
+      </div>
+      <div class="builder-actions">
+        <button class="btn-ghost" data-prev="2">Back</button>
+        <button class="btn-primary" data-confirm="1">Add to roster</button>
+      </div>`;
+  }
+
+  return `
+  <div class="section">
+    <div class="section-head">
+      <h2 class="section-title">Build a new operator</h2>
+      <span class="section-note">Clone any workflow above into a differently-tuned operator</span>
+    </div>
+    <div class="builder">
+      <div class="steps">
+        <span class="step-pill ${state.builderStep===1?'active':state.builderStep>1?'done':''}">1 · Workflow</span>
+        <span class="step-pill ${state.builderStep===2?'active':state.builderStep>2?'done':''}">2 · Identity</span>
+        <span class="step-pill ${state.builderStep===3?'active':''}">3 · Review</span>
+      </div>
+      ${stepBody}
+    </div>
+  </div>`;
+}
+
+function renderFooter(){
+  return `
+  <footer>
+    Illustrative prototype for internal discussion only. All figures, job numbers and customer references are placeholders and do not reflect actual Photronics production data. No system shown here is connected to Photronics' MaskLink, CyberMask or manufacturing execution systems. Every deliverable produced by this workforce is intended for human review before it reaches a customer or the fab floor.
+    <div class="hitl">Sources: photronics.com (company site), Photronics FY2025 results (Dec 10, 2025), SPIE/BACUS photomask data-prep literature.</div>
+  </footer>`;
+}
+
+function attachHandlers(){
+  document.querySelectorAll("[data-run]").forEach(btn=>{
+    btn.addEventListener("click", ()=>startRun(btn.getAttribute("data-run")));
+  });
+  const back = document.querySelector("[data-back]");
+  if(back) back.addEventListener("click", ()=>{ clearInterval(runTimer); state.view="roster"; render(); });
+
+  document.querySelectorAll("[data-base]").forEach(card=>{
+    card.addEventListener("click", ()=>{ state.builderBase = card.getAttribute("data-base"); render(); });
+  });
+  const next = document.querySelector("[data-next]");
+  if(next) next.addEventListener("click", ()=>{
+    if(state.builderStep===1){ state.builderStep=2; }
+    else if(state.builderStep===2){
+      state.builderName = document.getElementById("builder-name").value || state.builderName;
+      state.builderCadence = document.getElementById("builder-cadence").value;
+      state.builderFocus = document.getElementById("builder-focus").value;
+      state.builderStep=3;
+    }
+    render();
+  });
+  const prev = document.querySelector("[data-prev]");
+  if(prev) prev.addEventListener("click", ()=>{
+    state.builderStep = parseInt(prev.getAttribute("data-prev"));
+    render();
+  });
+  const confirmBtn = document.querySelector("[data-confirm]");
+  if(confirmBtn) confirmBtn.addEventListener("click", ()=>{
+    const wf = WORKFLOWS[state.builderBase];
+    const newEmp = {
+      id:"custom-"+Date.now(), name:state.builderName, title:`${state.builderCadence} · ${wf.title} Operator`,
+      wf: wf.name, handled:0, hrs:0, win:"0", status:"idle", isNew:true
+    };
+    EMPLOYEES.push(newEmp);
+    state.builderStep=1; state.builderBase=null; state.builderName=""; state.builderFocus="";
+    render();
+  });
+}
+
+function startRun(empId){
+  clearInterval(runTimer);
+  const emp = EMPLOYEES.find(e=>e.id===empId);
+  const wf = WORKFLOWS[emp.wf];
+  state.view = "run";
+  state.runningEmp = emp;
+  state.runWf = emp.wf;
+  state.waves = computeWaves(wf.tasks, wf.mode);
+  state.taskState = wf.tasks.map(()=>"pending");
+  state.feed = [`<span class="ok">&#9656;</span> Starting <b>${wf.title}</b> for job sample: ${wf.sample}`];
+  state.runComplete = false;
+  render();
+
+  const order = [];
+  state.waves.forEach(wave=>wave.forEach(idx=>order.push(idx)));
+  let step = 0;
+  runTimer = setInterval(()=>{
+    if(step >= order.length){
+      clearInterval(runTimer);
+      state.feed.push(`<span class="ok">&#10003;</span> <b>${wf.title}</b> complete. ${TOOLS.save()}.`);
+      state.runComplete = true;
+      render();
+      return;
+    }
+    const idx = order[step];
+    const t = wf.tasks[idx];
+    const agent = AGENT_ROLES[t.agent];
+    state.taskState[idx] = "active";
+    render();
+
+    setTimeout(()=>{
+      const toolsExclSave = agent.tools.filter(k=>k!=="save");
+      const toolKey = toolsExclSave[idx % toolsExclSave.length];
+      const output = TOOLS[toolKey]();
+      state.feed.push(`${agent.emoji} <b>${agent.label}</b>: ${t.task}`);
+      state.feed.push(`&nbsp;&nbsp;&#8618; ${output}`);
+      state.taskState[idx] = "done";
+      render();
+      step++;
+    }, 550);
+  }, 900);
+}
+
+render();
+</script>
+</body>
+</html>
