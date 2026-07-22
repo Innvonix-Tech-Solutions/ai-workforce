@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FormFactor AI Workforce</title>
+<style>
+  :root{
+    --bg:#ffffff;
+    --bg2:#f4f7fa;
+    --panel:#ffffff;
+    --panel2:#f1f5f9;
+    --border:#dbe3ea;
+    --border-soft:#e6ecf1;
+    --text:#132437;
+    --muted:#5b7186;
+    --muted2:#8598a8;
+    --accent:#0072ce;
+    --accent-dim:#cde6fa;
+    --gold:#c9761a;
+    --gold-dim:#f3e3cf;
+    --good:#1f9d6b;
+    --bad:#c0392b;
+    --radius:12px;
+    --radius-sm:8px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);}
+  body{padding:28px 20px 60px;min-height:100vh;}
+  .wrap{max-width:1180px;margin:0 auto;}
+
+  /* Header */
+  .header{display:flex;align-items:flex-start;gap:18px;margin-bottom:22px;flex-wrap:wrap;border-bottom:3px solid var(--accent);padding-bottom:18px;}
+  .mark{
+    width:50px;height:50px;border-radius:8px;flex:none;
+    background:#0f2a44;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:17px;letter-spacing:-0.5px;color:#ffffff;
+  }
+  .htext{flex:1;min-width:260px;}
+  .htext h1{margin:0 0 4px;font-size:22px;letter-spacing:-0.2px;color:#0f2a44;font-weight:700;}
+  .htext .sub{color:var(--muted);font-size:13.5px;margin:0;}
+  .lead{color:var(--muted);font-size:14.5px;line-height:1.65;max-width:900px;margin:14px 0 26px;}
+  .lead b{color:var(--text);font-weight:600;}
+
+  /* Econ strip */
+  .econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px;}
+  @media(max-width:820px){.econ{grid-template-columns:repeat(2,1fr);}}
+  .econ .card{
+    background:var(--panel);border:1px solid var(--border-soft);border-radius:var(--radius);
+    padding:16px 16px 14px;box-shadow:0 1px 3px rgba(19,36,55,0.06);
+  }
+  .econ .card .num{font-size:22px;font-weight:700;letter-spacing:-0.3px;color:var(--accent);}
+  .econ .card .lbl{font-size:11.5px;color:var(--muted);margin-top:5px;line-height:1.4;text-transform:uppercase;letter-spacing:0.4px;}
+  .hero-stat{
+    display:flex;align-items:center;gap:16px;background:var(--bg2);
+    border:1px solid var(--border-soft);border-left:4px solid var(--accent);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px;
+  }
+  .hero-stat .big{font-size:32px;font-weight:800;color:#0f2a44;letter-spacing:-0.5px;}
+  .hero-stat .cap{color:var(--muted);font-size:13.5px;}
+
+  /* Section headers */
+  .sec-head{display:flex;align-items:center;justify-content:space-between;margin:8px 0 14px;flex-wrap:wrap;gap:10px;}
+  .sec-head h2{font-size:15px;margin:0;color:#0f2a44;text-transform:uppercase;letter-spacing:0.6px;}
+  .sec-head .count{color:var(--muted);font-size:12.5px;}
+  .track-label{font-size:12px;color:var(--gold);text-transform:uppercase;letter-spacing:0.6px;margin:22px 0 10px;font-weight:700;}
+
+  .btn{
+    background:var(--accent);color:#ffffff;border:none;border-radius:6px;padding:9px 16px;
+    font-weight:700;font-size:13px;cursor:pointer;transition:transform .15s ease, opacity .15s ease;
+  }
+  .btn:hover{transform:translateY(-1px);opacity:0.92;}
+  .btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent);}
+  .btn.gold{background:var(--gold);color:#ffffff;}
+  .btn.small{padding:6px 11px;font-size:12px;border-radius:5px;}
+  .btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
+
+  /* Roster grid */
+  .roster{display:grid;grid-template-columns:repeat(auto-fill, minmax(258px,1fr));gap:14px;margin-bottom:6px;}
+  .op-card{
+    background:var(--panel);border:1px solid var(--border-soft);border-radius:var(--radius);
+    padding:16px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;
+    box-shadow:0 1px 3px rgba(19,36,55,0.06);
+  }
+  .op-card::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:var(--accent);
+  }
+  .op-card .name{font-weight:700;font-size:14.5px;color:#0f2a44;}
+  .op-card .title{color:var(--muted);font-size:12px;margin-top:1px;}
+  .op-card .wf-desc{color:var(--muted);font-size:12.5px;line-height:1.5;min-height:38px;}
+  .op-card .stats{display:flex;gap:14px;font-size:11.5px;color:var(--muted2);border-top:1px solid var(--border-soft);padding-top:9px;}
+  .op-card .stats div b{display:block;color:var(--text);font-size:13px;font-weight:700;}
+  .status-pill{
+    position:absolute;top:12px;right:12px;font-size:10px;padding:3px 8px;border-radius:20px;
+    background:#e7f6ee;color:var(--good);border:1px solid #bfe6d2;text-transform:uppercase;letter-spacing:0.4px;
+  }
+  .status-pill.running{background:var(--accent-dim);color:var(--accent);border-color:#a9d4f2;}
+  .flag{
+    position:absolute;top:12px;left:12px;font-size:9.5px;padding:2px 7px;border-radius:20px;
+    background:var(--gold-dim);color:var(--gold);border:1px solid #e8c493;text-transform:uppercase;letter-spacing:0.4px;
+  }
+
+  .add-op-card{
+    border:1.5px dashed var(--border);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;
+    flex-direction:column;gap:8px;color:var(--muted);cursor:pointer;min-height:150px;transition:border-color .15s ease, color .15s ease;
+  }
+  .add-op-card:hover{border-color:var(--accent);color:var(--accent);}
+  .add-op-card .plus{font-size:26px;line-height:1;}
+
+  /* Modal */
+  .overlay{
+    position:fixed;inset:0;background:rgba(15,42,68,0.45);
+    display:none;align-items:flex-start;justify-content:center;z-index:50;padding:30px 16px;overflow-y:auto;
+  }
+  .overlay.open{display:flex;}
+  .modal{
+    background:#ffffff;border:1px solid var(--border);border-radius:14px;max-width:720px;width:100%;
+    padding:22px 24px 24px;position:relative;box-shadow:0 24px 60px -20px rgba(15,42,68,0.35);
+  }
+  .modal .close{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;}
+  .modal h3{margin:0 0 4px;font-size:17px;color:#0f2a44;}
+  .modal .msub{color:var(--muted);font-size:12.5px;margin:0 0 16px;}
+
+  /* Run view */
+  .run-tasks{display:flex;flex-direction:column;gap:8px;margin:14px 0;}
+  .wave{display:flex;gap:8px;flex-wrap:wrap;}
+  .task{
+    flex:1;min-width:220px;background:var(--bg2);border:1px solid var(--border-soft);border-radius:9px;
+    padding:10px 12px;display:flex;gap:10px;align-items:flex-start;opacity:0.4;transition:opacity .3s ease, border-color .3s ease;
+  }
+  .task.active{opacity:1;border-color:var(--accent);}
+  .task.done{opacity:1;border-color:#bfe6d2;background:#f3faf6;}
+  .task .emoji{font-size:18px;flex:none;}
+  .task .body{flex:1;}
+  .task .agent-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.3px;}
+  .task .task-text{font-size:13px;margin-top:2px;color:var(--text);}
+  .task .tool-out{font-size:11.5px;color:var(--accent);margin-top:5px;font-family:ui-monospace,Menlo,Consolas,monospace;min-height:14px;}
+  .task .check{margin-left:auto;color:var(--good);font-size:15px;flex:none;visibility:hidden;}
+  .task.done .check{visibility:visible;}
+  .spinner{width:12px;height:12px;border-radius:50%;border:2px solid var(--border);border-top-color:var(--accent);animation:spin .8s linear infinite;flex:none;visibility:hidden;}
+  .task.active .spinner{visibility:visible;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  .deliverable{
+    background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin-top:14px;
+    display:none;
+  }
+  .deliverable.show{display:block;}
+  .deliverable .dtitle{font-weight:700;font-size:13.5px;color:var(--gold);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.4px;}
+  .deliverable pre{white-space:pre-wrap;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;color:var(--text);line-height:1.6;margin:0;}
+  .save-line{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:12px;color:var(--good);opacity:0;transition:opacity .4s ease;}
+  .save-line.show{opacity:1;}
+  .hitl{font-size:11.5px;color:var(--muted2);margin-top:14px;border-top:1px solid var(--border-soft);padding-top:10px;}
+
+  /* Builder */
+  .step-dots{display:flex;gap:6px;margin-bottom:16px;}
+  .step-dots div{width:26px;height:4px;border-radius:3px;background:var(--border);}
+  .step-dots div.on{background:var(--accent);}
+  .choice-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-bottom:14px;}
+  @media(max-width:520px){.choice-grid{grid-template-columns:1fr;}}
+  .choice{
+    border:1px solid var(--border-soft);background:var(--panel);border-radius:9px;padding:11px 12px;cursor:pointer;font-size:13px;
+  }
+  .choice:hover{border-color:var(--accent);}
+  .choice.sel{border-color:var(--accent);background:var(--accent-dim);}
+  .choice .cname{font-weight:700;font-size:13px;color:#0f2a44;}
+  .choice .cdesc{color:var(--muted);font-size:11.5px;margin-top:3px;}
+  input[type=text]{
+    width:100%;background:#ffffff;border:1px solid var(--border);border-radius:8px;
+    padding:10px 12px;color:var(--text);font-size:13.5px;margin-bottom:14px;
+  }
+  input[type=text]:focus{outline:none;border-color:var(--accent);}
+  .modal-nav{display:flex;justify-content:space-between;margin-top:6px;}
+  .summary-box{background:var(--bg2);border:1px solid var(--border-soft);border-radius:9px;padding:14px;font-size:13px;line-height:1.8;}
+  .summary-box b{color:var(--gold);}
+
+  .footer{margin-top:38px;padding-top:16px;border-top:1px solid var(--border-soft);color:var(--muted2);font-size:11.5px;line-height:1.7;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="mark">FF</div>
+    <div class="htext">
+      <h1>FormFactor AI Workforce</h1>
+      <p class="sub">Semiconductor Test and Measurement &mdash; autonomous programs for probe card engineering, wafer test qualification, and customer delivery</p>
+    </div>
+  </div>
+
+  <p class="lead">
+    This is a working prototype, not a live system connected to FormFactor's design or fab data. It shows how eight of the
+    company's real engineering and customer-delivery workflows &mdash; from <b>custom probe card design and node
+    qualification</b> to <b>foundry roadmap sync</b> and <b>field service diagnostics</b> &mdash; could run as autonomous
+    teams of specialist agents, each producing a domain-authentic deliverable a program manager would recognize.
+    All figures shown are illustrative placeholders for discussion purposes.
+  </p>
+
+  <div class="hero-stat">
+    <div class="big" id="heroStat">+64,480 hrs/yr</div>
+    <div class="cap">Illustrative engineering hours saved annually if all eight programs ran at the volumes shown below</div>
+  </div>
+
+  <div class="econ" id="econStrip"></div>
+
+  <div class="sec-head">
+    <h2 id="rosterHeading">Workforce Roster</h2>
+    <span class="count" id="rosterCount"></span>
+  </div>
+  <div id="rosterRoot"></div>
+
+  <div class="footer">
+    Illustrative prototype for discussion purposes only &mdash; not connected to FormFactor production, fab, or customer
+    systems, and not endorsed by or built on FormFactor's internal data. All names, figures, and deliverables shown are
+    placeholders. Every deliverable in this workforce is intended for human engineering review and sign-off before any
+    customer or fab-facing use.
+  </div>
+</div>
+
+<!-- RUN MODAL -->
+<div class="overlay" id="runOverlay">
+  <div class="modal" id="runModal">
+    <button class="close" onclick="closeRun()">&times;</button>
+    <h3 id="runTitle"></h3>
+    <p class="msub" id="runSub"></p>
+    <div class="run-tasks" id="runTasks"></div>
+    <div class="deliverable" id="runDeliverable">
+      <div class="dtitle" id="runDTitle"></div>
+      <pre id="runFinal"></pre>
+      <div class="save-line" id="runSaveLine">&#10003; <span id="runSaveText"></span></div>
+    </div>
+    <div class="hitl">Human-in-the-loop: this deliverable is a draft for engineering and program-manager review. No output here is released to a customer or fab without sign-off.</div>
+  </div>
+</div>
+
+<!-- BUILDER MODAL -->
+<div class="overlay" id="buildOverlay">
+  <div class="modal" id="buildModal">
+    <button class="close" onclick="closeBuilder()">&times;</button>
+    <h3>Add a new operator</h3>
+    <p class="msub">Clone one of the eight workflows into a new named operator on the roster.</p>
+    <div class="step-dots"><div id="dot1" class="on"></div><div id="dot2"></div><div id="dot3"></div></div>
+    <div id="builderBody"></div>
+    <div class="modal-nav">
+      <button class="btn ghost small" id="backBtn" onclick="builderBack()">Back</button>
+      <button class="btn small" id="nextBtn" onclick="builderNext()">Next</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================== DATA =========================== */
+
+const CONFIG = {
+  econLabels: [
+    'Engineering Hrs Saved / Week',
+    'Programs Run / Quarter',
+    'Avg Qual Cycle-Time Cut',
+    'Programs Active on Roster'
+  ],
+  econValues: ['1,240 hrs', '1,096 programs', '36%', '8 programs'],
+  statLabel: 'Illustrative engineering hours saved annually',
+  statSign: '+',
+  statSuffix: ' hrs/yr',
+  statValue: '64,480',
+  runButton: 'Run Program',
+  runNoun: 'program run',
+  outputLabel: 'Deliverable',
+  rosterLabel: 'Workforce Roster',
+  trackLabels: { trackA: 'Engineering Delivery', trackB: 'Programs & Customer Delivery' },
+  builderCadences: ['Weekly', 'Per Program Milestone', 'On Customer Request', 'Nightly Batch']
+};
+
+const AGENT_ROLES = {
+  requirements_analyst: { emoji:'📋', label:'Requirements Analyst', tools:['parseRFQ','mapPadGeometry','save'] },
+  device_physicist: { emoji:'🔬', label:'Device Physicist', tools:['modelContactForce','simulateMetallurgy','save'] },
+  mems_design_engineer: { emoji:'🛠️', label:'MEMS Design Engineer', tools:['designProbeTip','layoutArray','save'] },
+  cad_engineer: { emoji:'📐', label:'CAD Engineer', tools:['generateCAD','buildSpaceTransformer','save'] },
+  signal_integrity_engineer: { emoji:'📡', label:'Signal Integrity Engineer', tools:['runSIsim','extractSparams','save'] },
+  thermal_engineer: { emoji:'🌡️', label:'Thermal / Cryo Engineer', tools:['modelThermalBudget','simulateCryoLoad','save'] },
+  qa_test_engineer: { emoji:'✅', label:'QA Test Engineer', tools:['runCycleTest','measureContactResistance','save'] },
+  data_engineer: { emoji:'💾', label:'Test Data Engineer', tools:['pullTestLogs','computeCpK','save'] },
+  fab_liaison: { emoji:'🏭', label:'Foundry Liaison', tools:['gatherRoadmap','syncNodeSchedule','save'] },
+  field_service_engineer: { emoji:'🔧', label:'Field Service Engineer', tools:['triageTicket','inspectFleetLogs','save'] },
+  applications_engineer: { emoji:'🧪', label:'Applications Engineer', tools:['configureSystem','validateCalibration','save'] },
+  technical_writer: { emoji:'✍️', label:'Technical Writer', tools:['draftReport','formatDeliverable','save'] }
+};
+
+const WORKFLOWS = {
+  probe_card_qual: {
+    name:'probe_card_qual', title:'Custom Probe Card Design & Node Qualification', mode:'dag',
+    deliverable:'Probe Card Qualification Report',
+    sample:'Design and qualify a probe card for a new 3nm SoC vertical probe layout ahead of a foundry customer\u2019s Q3 node ramp.',
+    desc:'Turns a customer RFQ for a new node into a fully qualified probe card, from pad map to signed-off test data.',
+    tag:'flagship', track:'trackA',
+    tasks:[
+      {agent:'requirements_analyst', task:'Parse the customer RFQ, pad map, pitch spec, and electrical requirements', deps:[]},
+      {agent:'device_physicist', task:'Model the contact-force and metallurgy window for the pad surface', deps:[0]},
+      {agent:'mems_design_engineer', task:'Design the MEMS probe tip geometry and array layout', deps:[1]},
+      {agent:'cad_engineer', task:'Generate the mechanical CAD assembly and space-transformer drawings', deps:[2]},
+      {agent:'signal_integrity_engineer', task:'Run signal-integrity and impedance simulation on the high-speed pins', deps:[2]},
+      {agent:'qa_test_engineer', task:'Build the prototype and run contact-resistance and cycle qualification testing', deps:[3,4]},
+      {agent:'technical_writer', task:'Compile the qualification report and sign-off package', deps:[5]}
+    ]
+  },
+  hbm_scale: {
+    name:'hbm_scale', title:'HBM / DRAM High-Volume Test Scaling', mode:'sequential',
+    deliverable:'HVM Ramp Readiness Plan',
+    sample:'Scale the probe card fleet to support an HBM4 12-layer stack ramp for a memory customer\u2019s Q4 volume test.',
+    desc:'Adapts an existing probe card design and fleet plan to a customer\u2019s high-volume manufacturing ramp.',
+    track:'trackA',
+    tasks:[
+      {agent:'requirements_analyst', task:'Parse the fab\u2019s volume forecast and HVM ramp schedule', deps:[]},
+      {agent:'mems_design_engineer', task:'Adapt the array density for the new HBM pad pitch', deps:[0]},
+      {agent:'thermal_engineer', task:'Model heat dissipation at sustained HVM test throughput', deps:[1]},
+      {agent:'qa_test_engineer', task:'Run a reliability cycle test across the candidate probe fleet', deps:[2]},
+      {agent:'data_engineer', task:'Analyze yield and CpK data across production lots', deps:[3]},
+      {agent:'technical_writer', task:'Draft the HVM ramp readiness plan', deps:[4]}
+    ]
+  },
+  rf_mmwave_app: {
+    name:'rf_mmwave_app', title:'RF / mmW & 5G-6G Applications Engineering', mode:'dag',
+    deliverable:'Application Test Recommendation',
+    sample:'Recommend a probe system configuration for mmWave 6G front-end module R&D characterization at 140GHz.',
+    desc:'Turns an R&D lab\u2019s characterization goal into a concrete probe and calibration recommendation.',
+    track:'trackB',
+    tasks:[
+      {agent:'requirements_analyst', task:'Parse the lab\u2019s characterization spec and frequency target', deps:[]},
+      {agent:'signal_integrity_engineer', task:'Evaluate the probe bandwidth and calibration needs for the target frequency', deps:[0]},
+      {agent:'applications_engineer', task:'Configure the probe station and accessory stack', deps:[0]},
+      {agent:'qa_test_engineer', task:'Validate calibration-substrate performance across the target band', deps:[1,2]},
+      {agent:'technical_writer', task:'Draft the application test recommendation', deps:[3]}
+    ]
+  },
+  quantum_config: {
+    name:'quantum_config', title:'Quantum / Cryogenic System Configuration', mode:'sequential',
+    deliverable:'Cryogenic System Configuration Spec',
+    sample:'Configure a dilution-refrigerator wafer-probing system for a quantum computing R&D customer\u2019s qubit lab.',
+    desc:'Specs a cryogenic wafer-probing system to a customer\u2019s qubit characterization requirements.',
+    track:'trackA',
+    tasks:[
+      {agent:'requirements_analyst', task:'Parse the qubit characterization requirements and noise targets', deps:[]},
+      {agent:'thermal_engineer', task:'Model the cryostat thermal budget down to millikelvin base temperature', deps:[0]},
+      {agent:'device_physicist', task:'Specify low-noise wiring and magnetometry needs for qubit readout', deps:[1]},
+      {agent:'applications_engineer', task:'Assemble the full system configuration', deps:[2]},
+      {agent:'qa_test_engineer', task:'Validate base temperature and noise floor against spec', deps:[3]},
+      {agent:'technical_writer', task:'Draft the cryogenic system configuration spec', deps:[4]}
+    ]
+  },
+  packaging_enablement: {
+    name:'packaging_enablement', title:'Advanced Packaging / Chiplet Test Enablement', mode:'dag',
+    deliverable:'Chiplet Test Enablement Package',
+    sample:'Enable a probe card test flow for a 2.5D chiplet interposer with mixed fine-pitch bump arrays.',
+    desc:'Adapts probe card design to multi-die interposer and chiplet bump layouts.',
+    track:'trackA',
+    tasks:[
+      {agent:'requirements_analyst', task:'Parse the interposer bump map and multi-die layout requirements', deps:[]},
+      {agent:'mems_design_engineer', task:'Design a fine-pitch probe array matched to the interposer bump map', deps:[0]},
+      {agent:'cad_engineer', task:'Build the multi-die space-transformer layout', deps:[0]},
+      {agent:'signal_integrity_engineer', task:'Model the die-to-die interconnect channel for the test flow', deps:[1]},
+      {agent:'qa_test_engineer', task:'Validate the multi-touchdown test flow', deps:[2,3]},
+      {agent:'technical_writer', task:'Compile the chiplet test enablement package', deps:[4]}
+    ]
+  },
+  field_service: {
+    name:'field_service', title:'Field Service Diagnostics & Probe Renewal', mode:'sequential',
+    deliverable:'Field Service Resolution Report',
+    sample:'Diagnose intermittent contact failures on a fab-floor probe card fleet and schedule renewal.',
+    desc:'Triages a customer field ticket down to a diagnosed fix and RMA/renewal plan.',
+    track:'trackB',
+    tasks:[
+      {agent:'field_service_engineer', task:'Triage the failure symptoms reported in the customer ticket', deps:[]},
+      {agent:'data_engineer', task:'Pull contact-resistance trend logs for the affected fleet', deps:[0]},
+      {agent:'qa_test_engineer', task:'Bench-test the returned probe card', deps:[1]},
+      {agent:'mems_design_engineer', task:'Recommend a re-tip or redesign based on wear pattern', deps:[2]},
+      {agent:'technical_writer', task:'Draft the resolution report and RMA documentation', deps:[3]}
+    ]
+  },
+  roadmap_sync: {
+    name:'roadmap_sync', title:'Foundry Roadmap & Node Sync Program', mode:'sequential',
+    deliverable:'Node Roadmap Sync Brief',
+    sample:'Sync FormFactor\u2019s probe card roadmap with a foundry\u2019s 2nm node transition timeline.',
+    desc:'Keeps probe card development scheduled against a foundry account\u2019s multi-year node roadmap.',
+    track:'trackB',
+    tasks:[
+      {agent:'fab_liaison', task:'Gather the foundry\u2019s node roadmap and tape-out milestones', deps:[]},
+      {agent:'requirements_analyst', task:'Translate the roadmap into a probe spec forecast', deps:[0]},
+      {agent:'device_physicist', task:'Assess the pad-metallurgy and pitch trend impact on probe design', deps:[1]},
+      {agent:'mems_design_engineer', task:'Pre-develop candidate probe architecture options', deps:[2]},
+      {agent:'technical_writer', task:'Draft the node roadmap sync brief', deps:[3]}
+    ]
+  },
+  tech_paper: {
+    name:'tech_paper', title:'Technical Paper & Case Study Production', mode:'sequential',
+    deliverable:'Technical Paper Draft',
+    sample:'Produce a technical paper on terahertz probing results for silicon photonics test customers.',
+    desc:'Turns applications-engineering test results into a publishable technical paper or case study.',
+    track:'trackB',
+    tasks:[
+      {agent:'applications_engineer', task:'Gather the test methodology and results from the applications team', deps:[]},
+      {agent:'data_engineer', task:'Compile and validate the measurement datasets', deps:[0]},
+      {agent:'device_physicist', task:'Write the technical interpretation of the results', deps:[1]},
+      {agent:'technical_writer', task:'Draft the paper for publication', deps:[2]}
+    ]
+  }
+};
+
+const DTITLE = {
+  probe_card_qual: 'Probe Card Qualification Report',
+  hbm_scale: 'HVM Ramp Readiness Plan',
+  rf_mmwave_app: 'Application Test Recommendation',
+  quantum_config: 'Cryogenic System Configuration Spec',
+  packaging_enablement: 'Chiplet Test Enablement Package',
+  field_service: 'Field Service Resolution Report',
+  roadmap_sync: 'Node Roadmap Sync Brief',
+  tech_paper: 'Technical Paper Draft'
+};
+
+const TOOLS = {
+  parseRFQ: () => 'Parsed customer RFQ: 3nm SoC, 0.35mm pitch, 2,048-pin vertical array',
+  mapPadGeometry: () => 'Extracted pad map: 14 signal groups, staggered dual-row layout',
+  modelContactForce: () => 'Modeled contact-force window: 4.2\u20135.8g per pin for Cu-pillar pads',
+  simulateMetallurgy: () => 'Simulated pad-metallurgy wear: <0.3\u00b5m scrub over 1M cycles',
+  designProbeTip: () => 'Drafted MEMS tip geometry: cantilever spring, 42\u00b5m tip radius',
+  layoutArray: () => 'Laid out probe array: 2,048 tips across 4 quadrant zones',
+  generateCAD: () => 'Generated space-transformer CAD: 6-layer ceramic substrate',
+  buildSpaceTransformer: () => 'Built space-transformer assembly drawing, rev C',
+  runSIsim: () => 'Ran signal-integrity sim: insertion loss <0.8dB to 28GHz',
+  extractSparams: () => 'Extracted S-parameters for 16 high-speed channel pairs',
+  modelThermalBudget: () => 'Modeled thermal budget: base temp 4.1K with 12mW static heat load',
+  simulateCryoLoad: () => 'Simulated cooldown curve: 4K reached in 6.2 hours from ambient',
+  runCycleTest: () => 'Ran qualification cycle test: 1.02M touchdowns, 0 opens',
+  measureContactResistance: () => 'Measured contact resistance: 38m\u03a9 average, 4m\u03a9 std dev',
+  pullTestLogs: () => 'Pulled 14,200 test-log records from the fab-floor MES',
+  computeCpK: () => 'Computed fleet CpK: 1.47, up from a 1.14 baseline',
+  gatherRoadmap: () => 'Gathered foundry node roadmap: 2nm risk-start Q1, HVM Q4',
+  syncNodeSchedule: () => 'Synced probe-card development schedule to node tape-out dates',
+  triageTicket: () => 'Triaged field ticket: intermittent open on quadrant 3, 6 units affected',
+  inspectFleetLogs: () => 'Inspected fleet logs: contact-resistance drift on 3 cards since March',
+  configureSystem: () => 'Configured probe station: cryo chuck + mmWave positioner stack',
+  validateCalibration: () => 'Validated calibration substrate: TRL cal holds to 220GHz within spec',
+  draftReport: () => 'Drafted the report narrative from qualification and test data',
+  formatDeliverable: () => 'Formatted the deliverable for customer-facing sign-off',
+  save: () => 'Saved deliverable to the program record and notified stakeholders'
+};
+
+const FINAL = {
+  probe_card_qual:
+`PROBE CARD QUALIFICATION REPORT
+Program: 3nm SoC Vertical Probe Card \u2014 Customer Node Ramp, Q3
+
+Pad map: 2,048-pin vertical array, 0.35mm pitch, 14 signal groups, dual-row stagger
+Contact force window: 4.2\u20135.8g per pin, validated against Cu-pillar pad metallurgy
+Signal integrity: insertion loss 0.6\u20130.8dB to 28GHz across 16 high-speed channel pairs
+Qualification test: 1.02M touchdown cycles, 0 opens, contact resistance 38m\u03a9 \u00b1 4m\u03a9
+Mechanical: 6-layer ceramic space transformer, quadrant-zoned tip layout
+
+Recommendation: release to production with a 3-month re-tip interval on quadrant 3 (highest cycle exposure).
+
+NOTE: Illustrative sample output for demonstration purposes; all figures are placeholders and require engineering review before customer release.`,
+
+  hbm_scale:
+`HVM RAMP READINESS PLAN
+Program: HBM4 12-Layer Stack \u2014 Fleet Scaling for Q4 Volume Test
+
+Forecasted volume: 340K wafers/quarter across 3 fab sites
+Array adaptation: fine-pitch density increased 18% for the 12-layer TSV pad map
+Thermal: heat dissipation modeled at 1.4W/cm\u00b2 sustained HVM throughput
+Reliability: fleet cycle test across 24 units, CpK improved 1.14 \u2192 1.47
+Yield signal: no correlated contact-resistance drift observed across lots A\u2013D
+
+Recommendation: approve fleet ramp to 24 active cards with a staggered re-tip schedule.
+
+NOTE: Illustrative sample output for demonstration purposes; figures are placeholders pending engineering sign-off.`,
+
+  rf_mmwave_app:
+`APPLICATION TEST RECOMMENDATION
+Program: 6G Front-End Module R&D Characterization \u2014 University Lab
+
+Spec: mmWave characterization to 140GHz, front-end module S-parameter and load-pull
+Probe recommendation: T-Wave probe series with TRL calibration substrate
+Bandwidth validation: cal substrate holds spec to 220GHz, comfortable margin above 140GHz target
+System configuration: probe station plus banded waveguide accessory stack
+
+Recommendation: configure the lab with the T-Wave probe series and a quarterly cal-substrate refresh.
+
+NOTE: Illustrative sample output for demonstration purposes; all figures are placeholders.`,
+
+  quantum_config:
+`CRYOGENIC SYSTEM CONFIGURATION SPEC
+Program: Qubit Characterization Lab \u2014 Dilution-Refrigerator Wafer-Probing System
+
+Base temperature: 4.1K target with 12mW static heat load, budget validated
+Cooldown curve: 4K reached in 6.2 hours from ambient
+Wiring: low-noise, magnetometry-compatible harness specified for qubit readout chains
+Noise floor: validated within the customer's target spec at base temperature
+
+Recommendation: proceed to system build with a staged wiring-harness delivery.
+
+NOTE: Illustrative sample output for demonstration purposes; figures are placeholders pending lab validation.`,
+
+  packaging_enablement:
+`CHIPLET TEST ENABLEMENT PACKAGE
+Program: 2.5D Interposer \u2014 Mixed Fine-Pitch Bump Array Test Flow
+
+Array design: fine-pitch probe array matched to the interposer bump map, dual-die coverage
+Space transformer: multi-die layout on a single substrate, 3-zone routing
+Channel model: die-to-die interconnect insertion loss <1.1dB to 20GHz
+Multi-touchdown validation: 4-touchdown test flow verified, 0 misalignment events
+
+Recommendation: release the enablement package with the multi-touchdown flow as the standard for interposer programs.
+
+NOTE: Illustrative sample output for demonstration purposes; figures are placeholders pending qualification sign-off.`,
+
+  field_service:
+`FIELD SERVICE RESOLUTION REPORT
+Ticket: Intermittent Contact Failures \u2014 Fab-Floor Probe Card Fleet, Quadrant 3
+
+Symptom: intermittent opens on 6 units, concentrated in quadrant 3
+Trend data: contact-resistance drift beginning in March, 3 cards affected
+Bench test: confirmed tip wear beyond spec on the affected units
+Recommendation: re-tip 3 units this cycle, monitor the remaining fleet on a 2-week cadence
+
+Resolution: RMA issued for 3 units; replacement cards shipped next-day from the regional depot.
+
+NOTE: Illustrative sample output for demonstration purposes; figures are placeholders.`,
+
+  roadmap_sync:
+`NODE ROADMAP SYNC BRIEF
+Program: 2nm Node Transition \u2014 Foundry Account Alignment
+
+Foundry roadmap: risk-start Q1, HVM ramp Q4, pad metallurgy shift to Cu-pillar confirmed
+Probe spec forecast: pitch tightening to 0.28mm, signal-group count rising to 18
+Architecture pre-development: 2 probe architecture options scoped ahead of tape-out
+Timeline: development schedule synced to foundry tape-out milestones, 2-quarter lead
+
+Recommendation: begin pre-development on Option B architecture to hold schedule margin.
+
+NOTE: Illustrative sample output for demonstration purposes; figures are placeholders pending account confirmation.`,
+
+  tech_paper:
+`TECHNICAL PAPER DRAFT
+Topic: Terahertz Probing Results for Silicon Photonics Test
+
+Methodology: T-Wave probe series, 1.1THz upper bound, silicon photonics test structures
+Dataset: compiled and validated measurement set across 5 wafer lots
+Key finding: repeatable S-parameter extraction within 0.3dB across lot-to-lot variation
+Interpretation: results support terahertz probing as a viable method for photonics R&D characterization
+
+Recommendation: submit to an industry conference technical track for the Q1 publication cycle.
+
+NOTE: Illustrative sample output for demonstration purposes; figures are placeholders pending peer review.`
+};
+
+let EMPLOYEES = [
+  { id:'e1', name:'Elena Voss', title:'Probe Card Qualification Lead', wf:'probe_card_qual', handled:'142 programs/year', hrs:22, win:'37% faster qual sign-off', status:'idle' },
+  { id:'e2', name:'Marcus Chen', title:'HVM Ramp Program Manager', wf:'hbm_scale', handled:'58 ramp programs/year', hrs:16, win:'29% higher fleet CpK', status:'idle' },
+  { id:'e3', name:'Ingrid Kova\u010d', title:'Quantum Systems Engineer', wf:'quantum_config', handled:'34 cryo systems/year', hrs:26, win:'3 weeks cut from lead time', status:'idle' },
+  { id:'e4', name:'David Reyes', title:'Packaging Test Enablement Lead', wf:'packaging_enablement', handled:'47 interposer programs/year', hrs:19, win:'31% fewer touchdown failures', status:'idle' },
+  { id:'e5', name:'Sanjay Iyer', title:'RF Applications Engineer', wf:'rf_mmwave_app', handled:'210 lab configs/year', hrs:9, win:'41% faster spec-to-quote', status:'idle' },
+  { id:'e6', name:'Priya Nair', title:'Field Service Engineering Manager', wf:'field_service', handled:'890 tickets/year', hrs:6, win:'44% faster resolution time', status:'idle' },
+  { id:'e7', name:'Tomasz Adamski', title:'Foundry Account Engineer', wf:'roadmap_sync', handled:'12 foundry accounts', hrs:14, win:'2 quarters earlier visibility', status:'idle' },
+  { id:'e8', name:'Wei Zhang', title:'Applications Publications Lead', wf:'tech_paper', handled:'26 papers/year', hrs:11, win:'52% faster draft turnaround', status:'idle' }
+];
+
+/* =========================== RENDER: ECON STRIP =========================== */
+function renderEcon(){
+  const root = document.getElementById('econStrip');
+  root.innerHTML = CONFIG.econLabels.map((lbl,i)=>`
+    <div class="card">
+      <div class="num">${CONFIG.econValues[i]}</div>
+      <div class="lbl">${lbl}</div>
+    </div>`).join('');
+  document.getElementById('heroStat').textContent = CONFIG.statSign + CONFIG.statValue + CONFIG.statSuffix;
+}
+
+/* =========================== RENDER: ROSTER =========================== */
+function rosterHTML(list){
+  return list.map(op=>{
+    const wf = WORKFLOWS[op.wf];
+    const flag = wf.tag === 'flagship' ? '<div class="flag">Flagship</div>' : '';
+    const pillClass = op.status === 'running' ? 'status-pill running' : 'status-pill';
+    const pillText = op.status === 'running' ? 'Running' : 'Idle';
+    return `
+    <div class="op-card" data-id="${op.id}">
+      ${flag}
+      <div class="${pillClass}">${pillText}</div>
+      <div style="margin-top:6px;">
+        <div class="name">${op.name}</div>
+        <div class="title">${op.title}</div>
+      </div>
+      <div class="wf-desc">${wf.title}: ${wf.desc}</div>
+      <div class="stats">
+        <div>Handles<b>${op.handled}</b></div>
+        <div>Hrs saved/wk<b>${op.hrs}</b></div>
+        <div>Impact<b>${op.win === 0 ? '\u2014' : op.win}</b></div>
+      </div>
+      <button class="btn small" onclick="openRun('${op.id}')">${CONFIG.runButton}</button>
+    </div>`;
+  }).join('');
+}
+
+function renderRoster(){
+  const root = document.getElementById('rosterRoot');
+  const trackKeys = ['trackA','trackB'];
+  const hasTracks = Object.values(WORKFLOWS).some(w=>w.track);
+  let html = '';
+  if (hasTracks){
+    trackKeys.forEach(tk=>{
+      const list = EMPLOYEES.filter(op => WORKFLOWS[op.wf].track === tk);
+      if (!list.length) return;
+      html += `<div class="track-label">${CONFIG.trackLabels[tk]}</div>`;
+      html += `<div class="roster">${rosterHTML(list)}${tk===trackKeys[trackKeys.length-1] || tk==='trackB' ? addCardHTML() : ''}</div>`;
+    });
+  } else {
+    html = `<div class="roster">${rosterHTML(EMPLOYEES)}${addCardHTML()}</div>`;
+  }
+  root.innerHTML = html;
+  document.getElementById('rosterCount').textContent = EMPLOYEES.length + ' operators on roster';
+}
+
+function addCardHTML(){
+  return `<div class="add-op-card" onclick="openBuilder()"><div class="plus">+</div><div>Add Operator</div></div>`;
+}
+
+/* =========================== RUN ENGINE =========================== */
+let runState = null;
+
+function openRun(opId){
+  const op = EMPLOYEES.find(e=>e.id===opId);
+  const wf = WORKFLOWS[op.wf];
+  op.status = 'running';
+  renderRoster();
+
+  document.getElementById('runTitle').textContent = wf.title;
+  document.getElementById('runSub').textContent = op.name + ' \u2014 ' + wf.sample;
+  document.getElementById('runDeliverable').classList.remove('show');
+  document.getElementById('runSaveLine').classList.remove('show');
+
+  const tasksHTML = wf.tasks.map((t,i)=>{
+    const role = AGENT_ROLES[t.agent];
+    return `<div class="task" id="task-${i}">
+      <span class="emoji">${role.emoji}</span>
+      <div class="body">
+        <div class="agent-label">${role.label}</div>
+        <div class="task-text">${t.task}</div>
+        <div class="tool-out" id="tool-${i}"></div>
+      </div>
+      <div class="spinner" id="spin-${i}"></div>
+      <div class="check">&#10003;</div>
+    </div>`;
+  }).join('');
+  document.getElementById('runTasks').innerHTML = tasksHTML;
+
+  document.getElementById('runOverlay').classList.add('open');
+
+  runState = { opId, wf, done:new Set() };
+  runNextWave();
+}
+
+function waveFor(wf, doneSet){
+  // tasks whose deps are all satisfied and not yet done/active
+  return wf.tasks.map((t,i)=>i).filter(i => !doneSet.has(i) && wf.tasks[i].deps.every(d=>doneSet.has(d)));
+}
+
+function runNextWave(){
+  if (!runState) return;
+  const { wf, done } = runState;
+  const ready = waveFor(wf, done);
+  if (!ready.length){
+    finishRun();
+    return;
+  }
+  const isSeq = wf.mode === 'sequential';
+  const batch = isSeq ? [ready[0]] : ready;
+
+  batch.forEach(i=>{
+    const el = document.getElementById('task-'+i);
+    el.classList.add('active');
+  });
+
+  // stagger tool text reveal
+  batch.forEach((i, idx)=>{
+    const t = wf.tasks[i];
+    const role = AGENT_ROLES[t.agent];
+    const toolKey = role.tools[0];
+    setTimeout(()=>{
+      const out = TOOLS[toolKey] ? TOOLS[toolKey]() : '';
+      const toolEl = document.getElementById('tool-'+i);
+      if (toolEl) toolEl.textContent = out;
+    }, 350 + idx*120);
+  });
+
+  const waveDuration = 950 + batch.length*80;
+  setTimeout(()=>{
+    batch.forEach(i=>{
+      const el = document.getElementById('task-'+i);
+      el.classList.remove('active');
+      el.classList.add('done');
+      runState.done.add(i);
+    });
+    runNextWave();
+  }, waveDuration);
+}
+
+function finishRun(){
+  const { opId, wf } = runState;
+  const op = EMPLOYEES.find(e=>e.id===opId);
+  document.getElementById('runDTitle').textContent = DTITLE[wf.name];
+  document.getElementById('runFinal').textContent = FINAL[wf.name];
+  document.getElementById('runDeliverable').classList.add('show');
+  setTimeout(()=>{
+    document.getElementById('runSaveText').textContent = TOOLS.save();
+    document.getElementById('runSaveLine').classList.add('show');
+  }, 400);
+  op.status = 'idle';
+  renderRoster();
+  runState = null;
+}
+
+function closeRun(){
+  document.getElementById('runOverlay').classList.remove('open');
+  if (runState){
+    const op = EMPLOYEES.find(e=>e.id===runState.opId);
+    if (op) op.status = 'idle';
+    renderRoster();
+  }
+  runState = null;
+}
+
+/* =========================== BUILDER =========================== */
+let builderStep = 1;
+let builderChoice = { wfKey:null, name:'', cadence:null };
+
+function openBuilder(){
+  builderStep = 1;
+  builderChoice = { wfKey:null, name:'', cadence:null };
+  renderBuilderStep();
+  document.getElementById('buildOverlay').classList.add('open');
+}
+function closeBuilder(){
+  document.getElementById('buildOverlay').classList.remove('open');
+}
+
+function renderBuilderStep(){
+  ['dot1','dot2','dot3'].forEach((id,i)=>{
+    document.getElementById(id).classList.toggle('on', i < builderStep);
+  });
+  const body = document.getElementById('builderBody');
+  const backBtn = document.getElementById('backBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  backBtn.style.visibility = builderStep === 1 ? 'hidden' : 'visible';
+
+  if (builderStep === 1){
+    body.innerHTML = `<div class="choice-grid">` + Object.values(WORKFLOWS).map(wf=>`
+      <div class="choice ${builderChoice.wfKey===wf.name?'sel':''}" onclick="pickWf('${wf.name}')">
+        <div class="cname">${wf.title}</div>
+        <div class="cdesc">${wf.desc}</div>
+      </div>`).join('') + `</div>`;
+    nextBtn.textContent = 'Next';
+    nextBtn.disabled = !builderChoice.wfKey;
+  } else if (builderStep === 2){
+    body.innerHTML = `
+      <label style="font-size:12.5px;color:var(--muted);">Operator name</label>
+      <input type="text" id="opNameInput" placeholder="e.g. Aisha Patel" value="${builderChoice.name}">
+      <label style="font-size:12.5px;color:var(--muted);">Run cadence</label>
+      <div class="choice-grid">
+        ${CONFIG.builderCadences.map(c=>`
+          <div class="choice ${builderChoice.cadence===c?'sel':''}" onclick="pickCadence('${c}')">
+            <div class="cname">${c}</div>
+          </div>`).join('')}
+      </div>`;
+    nextBtn.textContent = 'Next';
+    setTimeout(()=>{
+      const inp = document.getElementById('opNameInput');
+      if (inp) inp.addEventListener('input', e=>{ builderChoice.name = e.target.value; });
+    },0);
+    nextBtn.disabled = !builderChoice.cadence;
+  } else if (builderStep === 3){
+    const wf = WORKFLOWS[builderChoice.wfKey];
+    const finalName = builderChoice.name.trim() || 'New Operator';
+    body.innerHTML = `
+      <div class="summary-box">
+        <div><b>Operator:</b> ${finalName}</div>
+        <div><b>Workflow:</b> ${wf.title}</div>
+        <div><b>Cadence:</b> ${builderChoice.cadence}</div>
+        <div><b>Deliverable:</b> ${DTITLE[wf.name]}</div>
+      </div>`;
+    nextBtn.textContent = 'Add to Roster';
+    nextBtn.disabled = false;
+  }
+}
+
+function pickWf(key){ builderChoice.wfKey = key; renderBuilderStep(); }
+function pickCadence(c){ builderChoice.cadence = c; renderBuilderStep(); }
+
+function builderBack(){
+  if (builderStep > 1){ builderStep--; renderBuilderStep(); }
+}
+function builderNext(){
+  if (builderStep < 3){
+    if (builderStep === 2){
+      const inp = document.getElementById('opNameInput');
+      if (inp) builderChoice.name = inp.value;
+    }
+    builderStep++;
+    renderBuilderStep();
+  } else {
+    const wf = WORKFLOWS[builderChoice.wfKey];
+    const finalName = builderChoice.name.trim() || 'New Operator';
+    const newOp = {
+      id: 'e' + (EMPLOYEES.length + 1) + '_' + Date.now(),
+      name: finalName,
+      title: 'Custom Operator (' + builderChoice.cadence + ')',
+      wf: builderChoice.wfKey,
+      handled: 'New \u2014 no history yet',
+      hrs: 0,
+      win: 0,
+      status: 'idle'
+    };
+    EMPLOYEES.push(newOp);
+    renderRoster();
+    closeBuilder();
+  }
+}
+
+/* =========================== INIT =========================== */
+renderEcon();
+renderRoster();
+</script>
+</body>
+</html>
