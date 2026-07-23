@@ -31,3 +31,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/formfactor-ai
 https://innvonix-tech-solutions.github.io/ai-workforce/freqelec-ai
 
 https://innvonix-tech-solutions.github.io/ai-workforce/sitime
+
+https://innvonix-tech-solutions.github.io/ai-workforce/ctdi
