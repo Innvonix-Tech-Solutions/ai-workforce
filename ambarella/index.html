@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ambarella — AI Vision Design-In Workforce</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  --bg:#ffffff;
+  --bg2:#f5f8fa;
+  --panel:#ffffff;
+  --panel2:#f5f8fa;
+  --line:#dee5ea;
+  --line-soft:#eef2f5;
+  --text:#12202b;
+  --muted:#5b6b76;
+  --muted2:#889199;
+  --blue:#0c82b6;
+  --navy:#16405a;
+  --good:#1f9d63;
+  --warn:#c97a1f;
+  --radius:8px;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --disp:'Inter', system-ui, -apple-system, sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 560px at 12% -8%, rgba(12,130,182,0.06), transparent 60%),
+    radial-gradient(900px 520px at 108% 8%, rgba(22,64,90,0.05), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--disp);
+  line-height:1.5;
+  min-height:100vh;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:32px 24px 90px;}
+
+.hero-field{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:
+    linear-gradient(var(--line-soft) 1px, transparent 1px) 0 0/38px 38px,
+    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px) 0 0/38px 38px,
+    var(--panel);
+  overflow:hidden;
+  padding:34px 30px 28px;
+  box-shadow:0 1px 2px rgba(18,32,43,0.04);
+}
+
+.mark-row{display:flex; align-items:center; gap:12px; margin-bottom:22px; position:relative; z-index:1;}
+.eye-mark{width:32px;height:32px;flex:none;}
+.mark-label{font-family:var(--mono); font-size:12px; letter-spacing:.14em; color:var(--muted); text-transform:uppercase;}
+
+.hero-title{
+  position:relative; z-index:1;
+  font-size:clamp(28px,4vw,42px); font-weight:700; letter-spacing:-0.01em;
+  margin:0 0 10px; max-width:780px;
+}
+.hero-title .accent{color:var(--blue);}
+.hero-sub{position:relative; z-index:1; color:var(--muted); max-width:650px; font-size:15px; margin:0 0 26px;}
+
+.hero-stats{position:relative; z-index:1; display:flex; gap:28px; flex-wrap:wrap; align-items:flex-end;}
+.hero-stat-big{font-family:var(--mono); font-size:44px; font-weight:600; color:var(--blue); line-height:1;}
+.hero-stat-big-label{font-size:12px; color:var(--muted); margin-top:6px; max-width:210px;}
+
+.econ-strip{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+  background:var(--line); border:1px solid var(--line); border-radius:var(--radius);
+  overflow:hidden; margin-top:26px;
+}
+.econ-cell{background:var(--panel); padding:16px 18px;}
+.econ-val{font-family:var(--mono); font-size:22px; font-weight:600;}
+.econ-lbl{font-size:12px; color:var(--muted); margin-top:4px;}
+
+.section{margin-top:48px;}
+.section-head{display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin-bottom:16px; flex-wrap:wrap;}
+.section-title{font-size:20px; font-weight:700; margin:0;}
+.section-note{font-size:13px; color:var(--muted); font-family:var(--mono);}
+
+.roster-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:14px;}
+.op-card{
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:18px; display:flex; flex-direction:column; gap:10px; position:relative;
+  transition:border-color .15s ease, transform .15s ease;
+}
+.op-card:hover{border-color:var(--blue); transform:translateY(-1px);}
+.op-card.flagship{border-color:rgba(12,130,182,0.55);}
+.op-tag{
+  position:absolute; top:14px; right:14px; font-family:var(--mono); font-size:10px; letter-spacing:.08em;
+  color:var(--blue); border:1px solid rgba(12,130,182,0.4); border-radius:20px; padding:2px 8px; text-transform:uppercase;
+}
+.op-tag.new{color:var(--good); border-color:rgba(31,157,99,0.4);}
+.op-name{font-weight:700; font-size:15.5px;}
+.op-role{color:var(--muted); font-size:12.5px; margin-top:-6px;}
+.op-desc{font-size:13px; color:#334652; margin:2px 0 4px;}
+.op-meta{display:flex; gap:14px; font-family:var(--mono); font-size:12px; color:var(--muted2); flex-wrap:wrap;}
+.op-meta b{color:var(--blue); font-weight:600;}
+.op-status{font-family:var(--mono); font-size:11px; color:var(--muted2); display:flex; align-items:center; gap:6px;}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--muted2); flex:none;}
+.dot.idle{background:var(--muted2);}
+.dot.running{background:var(--warn); animation:pulse 1s infinite;}
+.dot.done{background:var(--good);}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+.run-btn{
+  margin-top:6px; background:var(--blue); color:#ffffff; border:none; border-radius:6px;
+  padding:9px 14px; font-family:var(--disp); font-weight:600; font-size:13px; cursor:pointer;
+  transition:filter .15s ease;
+}
+.run-btn:hover{filter:brightness(1.08);}
+.run-btn:disabled{background:var(--line); color:var(--muted2); cursor:default;}
+
+.run-panel{
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:22px;
+}
+.run-head{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:16px; flex-wrap:wrap;}
+.run-head h3{margin:0 0 4px; font-size:17px;}
+.run-head .sub{color:var(--muted); font-size:13px;}
+.back-link{background:none; border:1px solid var(--line); color:var(--muted); border-radius:6px; padding:7px 12px; font-family:var(--mono); font-size:12px; cursor:pointer;}
+.back-link:hover{border-color:var(--blue); color:var(--blue);}
+
+.waves{display:flex; flex-direction:column; gap:10px; margin-bottom:18px;}
+.wave{display:flex; gap:10px; flex-wrap:wrap;}
+.task-chip{
+  border:1px solid var(--line); background:var(--bg2); border-radius:8px; padding:9px 12px;
+  font-size:12.5px; display:flex; align-items:center; gap:8px; min-width:220px; flex:1 1 220px;
+  opacity:.45; transition:opacity .2s ease, border-color .2s ease;
+}
+.task-chip.active{opacity:1; border-color:var(--blue);}
+.task-chip.complete{opacity:1; border-color:rgba(31,157,99,0.5);}
+.task-chip .em{font-size:16px;}
+.task-chip .tx{color:#233642;}
+.task-chip .ag{color:var(--muted); font-size:11px; font-family:var(--mono); display:block; margin-top:1px;}
+
+.feed{
+  background:var(--bg2); border:1px solid var(--line-soft); border-radius:8px; padding:14px 16px;
+  font-family:var(--mono); font-size:12.5px; max-height:220px; overflow-y:auto; margin-bottom:18px;
+}
+.feed-line{margin-bottom:6px; color:var(--muted);}
+.feed-line b{color:var(--text);}
+.feed-line .ok{color:var(--good);}
+
+.deliverable{
+  background:var(--bg2); border:1px solid rgba(22,64,90,0.35); border-radius:8px; padding:18px 20px;
+}
+.deliverable h4{margin:0 0 10px; font-size:14px; color:var(--navy); font-family:var(--mono); text-transform:uppercase; letter-spacing:.06em;}
+.deliverable pre{
+  white-space:pre-wrap; font-family:var(--mono); font-size:12.5px; color:#1c2c37; margin:0; line-height:1.6;
+}
+
+.builder{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:22px;}
+.steps{display:flex; gap:8px; margin-bottom:20px;}
+.step-pill{font-family:var(--mono); font-size:11px; padding:5px 11px; border-radius:20px; border:1px solid var(--line); color:var(--muted2);}
+.step-pill.active{border-color:var(--blue); color:var(--blue);}
+.step-pill.done{border-color:var(--good); color:var(--good);}
+.choice-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:10px; margin-bottom:18px;}
+.choice-card{border:1px solid var(--line); background:var(--bg2); border-radius:8px; padding:13px; cursor:pointer; font-size:13px;}
+.choice-card:hover{border-color:var(--blue);}
+.choice-card.picked{border-color:var(--blue); background:rgba(12,130,182,0.06);}
+.choice-card .ct{font-weight:600; margin-bottom:3px;}
+.choice-card .cd{color:var(--muted); font-size:12px;}
+label.f-label{display:block; font-size:12px; color:var(--muted); margin:14px 0 6px; font-family:var(--mono);}
+input[type=text], select{
+  width:100%; background:var(--bg2); border:1px solid var(--line); color:var(--text);
+  border-radius:6px; padding:10px 12px; font-family:var(--disp); font-size:14px;
+}
+input[type=text]:focus, select:focus{outline:none; border-color:var(--blue);}
+.builder-actions{display:flex; gap:10px; margin-top:22px;}
+.btn-primary{background:var(--blue); color:#ffffff; border:none; border-radius:6px; padding:10px 18px; font-weight:600; font-size:13px; cursor:pointer;}
+.btn-ghost{background:none; border:1px solid var(--line); color:var(--muted); border-radius:6px; padding:10px 18px; font-size:13px; cursor:pointer;}
+.btn-ghost:hover{border-color:var(--blue); color:var(--blue);}
+.review-box{background:var(--bg2); border:1px solid var(--line); border-radius:8px; padding:16px; font-size:13px; color:#334652;}
+.review-box div{margin-bottom:6px;}
+.review-box b{color:var(--text);}
+
+footer{margin-top:56px; padding-top:20px; border-top:1px solid var(--line); color:var(--muted2); font-size:11.5px; font-family:var(--mono); line-height:1.7;}
+.hitl{color:var(--muted); font-size:12px; margin-top:6px;}
+
+@media (max-width:640px){
+  .econ-strip{grid-template-columns:repeat(2,1fr);}
+  .hero-stats{gap:18px;}
+}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+const CONFIG = {
+  econLabels: ["Active design-win programs tracked","End markets served","Edge AI processors shipped to date","Model validation accuracy match"],
+  statLabel: "Faster CNN-to-CVflow deployment turnaround for design-in engineering",
+  statSign: "-",
+  statSuffix: "%",
+  statValue: 40,
+  runButton: "Run operator",
+  runNoun: "run",
+  outputLabel: "Deliverable",
+  rosterLabel: "The workforce",
+  builderCadences: ["Per engagement (real-time)","Per design review","Daily","Weekly"]
+};
+
+const AGENT_ROLES = {
+  modelintake:      { emoji:"🧠", label:"Model Intake Engineer",           tools:["receiveNetwork","confirmTargetSoC","save"] },
+  compileengineer:  { emoji:"⚙️", label:"CVflow Compiler Engineer",         tools:["sparsifyQuantize","compileHighLevel","generateDAGBinary","save"] },
+  validation:       { emoji:"🔬", label:"Model Validation Engineer",       tools:["validateAccuracy","runSmokeTest","save"] },
+  adasengineer:     { emoji:"🚗", label:"ADAS Systems Engineer",           tools:["captureADASReq","mapSoCFamily","save"] },
+  safetyengineer:   { emoji:"🛡️", label:"Functional Safety Engineer",      tools:["confirmSafetyLevel","reviewSafetyCase","save"] },
+  securityengineer: { emoji:"📹", label:"Security Applications Engineer",  tools:["captureSecurityReq","mapSecuritySoC","save"] },
+  roboticsengineer: { emoji:"🤖", label:"AIoT & Robotics Engineer",        tools:["captureRoboticsReq","confirmCooperOnboarding","save"] },
+  radarengineer:    { emoji:"📡", label:"Radar-Vision Fusion Engineer",    tools:["confirmRadarConfig","mapRadarToPipeline","save"] },
+  sdkspecialist:    { emoji:"🧰", label:"SDK & Reference Design Specialist", tools:["confirmSDKVersion","packageReferenceDesign","save"] },
+  accountintel:     { emoji:"📈", label:"Design-Win Intelligence Analyst", tools:["pullDesignWinStatus","flagRampPrograms","checkCompetitiveExposure","estimatePipelineValue","save"] },
+  supplyplanner:    { emoji:"🏭", label:"Supply & Allocation Planner",     tools:["checkFoundryCapacity","checkOSATCapacity","checkDistributionAllocation","save"] },
+  reviewer:         { emoji:"✅", label:"Design Review & Sign-off Lead",   tools:["compileDeliverable","signOff","save"] }
+};
+
+const WORKFLOWS = {
+  modelporting: {
+    name:"modelporting", title:"CNN Model Porting & CVflow Deployment", mode:"sequential",
+    deliverable:"CVflow Deployment Package",
+    sample:"Customer ResNet-50 object classifier, PyTorch, target CV72",
+    desc:"Takes a customer's trained neural network through sparsification, quantization, compilation, and validation onto a CVflow SoC.",
+    tag:"flagship",
+    tasks:[
+      {agent:"modelintake",     task:"Receive the customer's trained neural network and confirm the target CVflow SoC.", deps:[]},
+      {agent:"compileengineer", task:"Run the CNN Generation tool to sparsify and quantize the network for CVflow hardware.", deps:[0]},
+      {agent:"compileengineer", task:"Compile the optimized network into a high-level CVflow program.", deps:[1]},
+      {agent:"compileengineer", task:"Generate the compiled DAG executable binary for the target SoC.", deps:[2]},
+      {agent:"validation",      task:"Validate inference accuracy on the target hardware against the customer's reference dataset.", deps:[3]},
+      {agent:"reviewer",        task:"Package the deployment results and flag any retraining recommendation to the customer.", deps:[4]}
+    ]
+  },
+  adasdesignwin: {
+    name:"adasdesignwin", title:"Automotive ADAS Design-In & Safety Qualification", mode:"sequential",
+    deliverable:"ADAS Design-In Recommendation",
+    sample:"8-camera surround-view ADAS platform, L2+ target",
+    desc:"Maps an OEM's ADAS platform requirement to the right CVflow SoC and confirms functional safety compliance.",
+    tasks:[
+      {agent:"adasengineer",   task:"Capture the OEM's ADAS platform requirements: camera count, resolution, latency budget.", deps:[]},
+      {agent:"adasengineer",   task:"Map the requirement to the appropriate CVflow SoC family.", deps:[0]},
+      {agent:"safetyengineer", task:"Confirm the functional safety level required for the perception subsystem.", deps:[1]},
+      {agent:"safetyengineer", task:"Review documentation and the VLSI safety case status for the selected SoC.", deps:[2]},
+      {agent:"reviewer",       task:"Compile the design-in recommendation for the OEM's platform team.", deps:[3]}
+    ]
+  },
+  securitydesignwin: {
+    name:"securitydesignwin", title:"Security Camera Design-In", mode:"sequential",
+    deliverable:"Security Camera Design-In Package",
+    sample:"Low-light face detection camera, 4K encode, enterprise security OEM",
+    desc:"Maps a security camera OEM's analytics requirement to the right SoC and reference design.",
+    tasks:[
+      {agent:"securityengineer", task:"Capture the security camera OEM's analytics requirements: classification, face detection, low-light.", deps:[]},
+      {agent:"securityengineer", task:"Map the requirements to the appropriate SoC family and feature set.", deps:[0]},
+      {agent:"sdkspecialist",    task:"Confirm SDK and reference design availability for the target feature set.", deps:[1]},
+      {agent:"reviewer",         task:"Compile the design-in package for the camera OEM.", deps:[2]}
+    ]
+  },
+  aiotroboticsdesignwin: {
+    name:"aiotroboticsdesignwin", title:"AIoT & Robotics Onboarding", mode:"sequential",
+    deliverable:"AIoT/Robotics Onboarding Package",
+    sample:"Warehouse robot stereo-depth perception module, 5W power budget",
+    desc:"Onboards a robotics or industrial vendor onto the Cooper Developer Platform for model deployment.",
+    tasks:[
+      {agent:"roboticsengineer", task:"Capture the robotics vendor's perception requirements: stereo depth, object detection, power budget.", deps:[]},
+      {agent:"roboticsengineer", task:"Confirm the Cooper Developer Platform onboarding path for the vendor's model deployment workflow.", deps:[0]},
+      {agent:"sdkspecialist",    task:"Provide the relevant SDK and reference design for the target application.", deps:[1]},
+      {agent:"reviewer",         task:"Compile the onboarding package for the vendor's engineering team.", deps:[2]}
+    ]
+  },
+  radarfusion: {
+    name:"radarfusion", title:"Radar-Vision Fusion Integration", mode:"dag",
+    deliverable:"Radar-Vision Fusion Integration Report",
+    sample:"Oculii 4D imaging radar + CVflow camera fusion, Tier-1 ADAS program",
+    desc:"Integrates Oculii radar output with the CVflow perception pipeline and validates the fused object list.",
+    tasks:[
+      {agent:"radarengineer", task:"Confirm the Oculii radar configuration and target vehicle sensor layout.", deps:[]},
+      {agent:"radarengineer", task:"Map the radar point cloud output to the CVflow perception pipeline.", deps:[]},
+      {agent:"adasengineer",  task:"Validate the fused radar-camera object list against the OEM's ADAS requirement.", deps:[0,1]},
+      {agent:"reviewer",      task:"Compile the fusion integration report for the OEM/Tier-1 partner.", deps:[2]}
+    ]
+  },
+  sdksupport: {
+    name:"sdksupport", title:"SDK & Reference Design Support", mode:"sequential",
+    deliverable:"SDK & Reference Design Delivery",
+    sample:"SDK v5.2 request, custom reference design build",
+    desc:"Packages and smoke-tests an SDK and reference design build for delivery to a customer.",
+    tasks:[
+      {agent:"sdkspecialist", task:"Confirm the customer's target SDK version and reference design.", deps:[]},
+      {agent:"sdkspecialist", task:"Package the reference design build and toolchain for the customer's hardware.", deps:[0]},
+      {agent:"validation",    task:"Run a smoke test on the reference design build before delivery.", deps:[1]},
+      {agent:"reviewer",      task:"Deliver the SDK package and confirm the support ticket handoff.", deps:[2]}
+    ]
+  },
+  designwinintel: {
+    name:"designwinintel", title:"Design-Win & Account Intelligence", mode:"dag",
+    deliverable:"Account Design-Win Priority Brief",
+    sample:"Tier-1 automotive account, 9 active programs under review",
+    desc:"Rolls up design-win status across an account's programs and flags near-term ramp and expansion opportunities.",
+    tasks:[
+      {agent:"accountintel", task:"Pull current design-win status across the account's automotive/security/AIoT programs.", deps:[]},
+      {agent:"accountintel", task:"Flag programs approaching production ramp in the next two quarters.", deps:[]},
+      {agent:"accountintel", task:"Check competitive exposure at the account against other vision SoC vendors.", deps:[0,1]},
+      {agent:"accountintel", task:"Estimate the pipeline value against the account's platform roadmap.", deps:[2]},
+      {agent:"reviewer",     task:"Prioritize the account list for the sales and applications team.", deps:[3]}
+    ]
+  },
+  supplyplanning: {
+    name:"supplyplanning", title:"Supply & Allocation Planning", mode:"dag",
+    deliverable:"Supply & Allocation Commitment",
+    sample:"CV5 production ramp, foundry and distribution capacity check",
+    desc:"Confirms foundry, OSAT, and distribution capacity against a program's production ramp forecast.",
+    tasks:[
+      {agent:"supplyplanner", task:"Confirm foundry wafer capacity against the current production ramp forecast.", deps:[]},
+      {agent:"supplyplanner", task:"Confirm OSAT assembly/test capacity and lead time for the target SoC.", deps:[]},
+      {agent:"supplyplanner", task:"Check distribution allocation, including primary distribution partners.", deps:[0,1]},
+      {agent:"reviewer",      task:"Finalize the supply commitment and communicate lead time to the account team.", deps:[2]}
+    ]
+  }
+};
+
+const DTITLE = {
+  modelporting:"CVflow Deployment Package",
+  adasdesignwin:"ADAS Design-In Recommendation",
+  securitydesignwin:"Security Camera Design-In Package",
+  aiotroboticsdesignwin:"AIoT/Robotics Onboarding Package",
+  radarfusion:"Radar-Vision Fusion Integration Report",
+  sdksupport:"SDK & Reference Design Delivery",
+  designwinintel:"Account Design-Win Priority Brief",
+  supplyplanning:"Supply & Allocation Commitment"
+};
+
+const TOOLS = {
+  receiveNetwork: ()=>"Trained network received: ResNet-50 variant, PyTorch, 4.2M parameters",
+  confirmTargetSoC: ()=>"Target SoC confirmed: CV72, 5nm CVflow architecture",
+  sparsifyQuantize: ()=>"Network sparsified and quantized to INT8, 3.1x compute reduction",
+  compileHighLevel: ()=>"Optimized network compiled to CVflow high-level program",
+  generateDAGBinary: ()=>"DAG executable binary generated for the target SoC",
+  validateAccuracy: ()=>"Inference accuracy validated: 98.1% match to reference model (within 0.4pt)",
+  runSmokeTest: ()=>"Smoke test passed on reference design build",
+  captureADASReq: ()=>"ADAS platform requirements captured: 8-camera surround view, 30ms latency budget",
+  mapSoCFamily: ()=>"Requirement mapped to the CV3-AD family for L2+ ADAS",
+  confirmSafetyLevel: ()=>"Functional safety level confirmed: ASIL-B target for the perception subsystem",
+  reviewSafetyCase: ()=>"VLSI and documentation safety case reviewed, no open findings",
+  captureSecurityReq: ()=>"Analytics requirements captured: low-light face detection, 4K encode",
+  mapSecuritySoC: ()=>"Requirement mapped to the CV25 SoC with on-chip CNN classification",
+  captureRoboticsReq: ()=>"Perception requirements captured: stereo depth, 5W power budget",
+  confirmCooperOnboarding: ()=>"Cooper Developer Platform onboarding path confirmed for model deployment",
+  confirmRadarConfig: ()=>"Oculii radar configuration confirmed: 4D imaging radar, 300m range",
+  mapRadarToPipeline: ()=>"Radar point cloud mapped to the CVflow perception pipeline",
+  confirmSDKVersion: ()=>"SDK version confirmed: v5.2, matched to target hardware revision",
+  packageReferenceDesign: ()=>"Reference design build packaged with toolchain and documentation",
+  pullDesignWinStatus: ()=>"Design-win status pulled across 9 active programs at the account",
+  flagRampPrograms: ()=>"2 programs flagged approaching production ramp within two quarters",
+  checkCompetitiveExposure: ()=>"Competitive exposure checked: incumbent vision SoC present in 1 of 9 programs",
+  estimatePipelineValue: ()=>"Pipeline value estimated at $4.6M across the flagged programs",
+  checkFoundryCapacity: ()=>"Foundry wafer capacity checked against the production ramp forecast",
+  checkOSATCapacity: ()=>"OSAT assembly/test capacity and lead time confirmed",
+  checkDistributionAllocation: ()=>"Distribution allocation checked with the primary distribution partner",
+  compileDeliverable: ()=>"Deliverable compiled and formatted for the customer/account team",
+  signOff: ()=>"Package signed off for release",
+  save: ()=>"Saved to program record"
+};
+
+const FINAL = {
+modelporting:
+`CVFLOW DEPLOYMENT PACKAGE — Case #MP-77310
+Customer model: ResNet-50 variant object classifier, PyTorch, 4.2M parameters
+Target SoC: CV72 (5nm CVflow architecture)
+
+DEPLOYMENT SUMMARY
+- Sparsification/quantization: INT8, 3.1x compute reduction vs. dense FP32 baseline
+- Compilation: optimized network compiled to CVflow high-level program
+- DAG binary: generated and loaded onto target hardware
+- Validation: 98.1% inference accuracy match to customer's reference model (within 0.4pt)
+- Recommendation: no retraining required, ready for integration testing
+
+NOTE: illustrative sample output — all figures are placeholders for demonstration purposes only.`,
+
+adasdesignwin:
+`ADAS DESIGN-IN RECOMMENDATION — Program #AD-51042
+OEM platform: 8-camera surround-view, L2+ ADAS target
+
+RECOMMENDATION
+- Requirement: 8 cameras, 30ms end-to-end latency budget
+- SoC recommendation: CV3-AD family
+- Functional safety: ASIL-B target confirmed for the perception subsystem
+- Safety case: VLSI and documentation reviewed, no open findings
+
+Next step: functional safety documentation package for OEM's platform quality file.
+
+NOTE: illustrative sample output — all figures are placeholders for demonstration purposes only.`,
+
+securitydesignwin:
+`SECURITY CAMERA DESIGN-IN PACKAGE — Program #SC-63219
+Customer: enterprise security camera OEM
+Requirement: low-light face detection, 4K encode
+
+RECOMMENDATION
+- SoC recommendation: CV25, on-chip CNN classification
+- Feature fit: face detection, multi-object classification, HDR/low-light ISP
+- SDK and reference design: confirmed available for this feature set
+- Package ready for camera OEM's engineering review
+
+NOTE: illustrative sample output — all figures are placeholders for demonstration purposes only.`,
+
+aiotroboticsdesignwin:
+`AIOT/ROBOTICS ONBOARDING PACKAGE — Program #RB-40188
+Customer: warehouse robotics vendor
+Requirement: stereo depth perception, 5W power budget
+
+ONBOARDING SUMMARY
+- Perception requirement: stereo depth, obstacle detection
+- Cooper Developer Platform: onboarding path confirmed for model deployment
+- SDK and reference design: provided for target application
+- Package ready for vendor's engineering team
+
+NOTE: illustrative sample output — all figures are placeholders for demonstration purposes only.`,
+
+radarfusion:
+`RADAR-VISION FUSION INTEGRATION REPORT — Program #RF-29005
+Sensors: Oculii 4D imaging radar (300m range) + CVflow camera perception
+Partner: Tier-1 ADAS program
+
+FINDINGS
+- Radar configuration confirmed, sensor layout validated
+- Radar point cloud mapped to the CVflow perception pipeline
+- Fused radar-camera object list validated against the OEM's ADAS requirement
+- Recommendation: proceed to vehicle-level integration testing
+
+NOTE: illustrative sample output — all figures are placeholders for demonstration purposes only.`,
+
+sdksupport:
+`SDK & REFERENCE DESIGN DELIVERY — Ticket #SDK-88213
+Customer request: SDK v5.2, custom reference design build
+
+DELIVERY SUMMARY
+- SDK version confirmed: v5.2, matched to hardware revision
+- Reference design build packaged with toolchain and documentation
+- Smoke test: passed on reference design build
+- Package delivered, support ticket handed off to applications engineering
+
+NOTE: illustrative sample output — all figures are placeholders for demonstration purposes only.`,
+
+designwinintel:
+`ACCOUNT DESIGN-WIN PRIORITY BRIEF — Account: [Tier-1 Automotive OEM, confidential]
+Programs reviewed: 9 active
+
+FINDINGS
+- Design-win status: Ambarella designed into 7 of 9 programs
+- Ramp alert: 2 programs approaching production ramp within two quarters
+- Competitive exposure: incumbent vision SoC present in 1 of 9 programs
+- Estimated pipeline value: $4.6M across flagged programs
+
+Recommendation: prioritize the two near-term ramp programs for applications engineering support.
+
+NOTE: illustrative sample output — all figures are placeholders for demonstration purposes only.`,
+
+supplyplanning:
+`SUPPLY & ALLOCATION COMMITMENT — Case #SP-34410
+Program: CV5 production ramp, autonomous drone control application
+
+COMMITMENT SUMMARY
+- Foundry wafer capacity: checked against ramp forecast, no constraint identified
+- OSAT assembly/test capacity: confirmed, lead time within target
+- Distribution allocation: confirmed with primary distribution partner
+- Lead time committed and communicated to the account team
+
+NOTE: illustrative sample output — all figures are placeholders for demonstration purposes only.`
+};
+
+let EMPLOYEES = [
+  {id:"op1", name:"Nova Compile",   title:"CVflow Model Deployment Operator", wf:"modelporting",          handled:212, hrs:3.2, win:"40% faster deployment cycle", status:"idle"},
+  {id:"op2", name:"Dax Perceive",   title:"ADAS Design-In Operator",          wf:"adasdesignwin",          handled:38,  hrs:2.6, win:"ASIL-B path confirmed", status:"idle"},
+  {id:"op3", name:"Sable Watch",    title:"Security Design-In Operator",      wf:"securitydesignwin",      handled:96,  hrs:1.2, win:"CV25 feature-fit in 1 pass", status:"idle"},
+  {id:"op4", name:"Remy Onboard",   title:"AIoT/Robotics Onboarding Operator",wf:"aiotroboticsdesignwin",  handled:54,  hrs:1.5, win:"Cooper onboarding same-day", status:"idle"},
+  {id:"op5", name:"Iris Doppler",   title:"Radar-Vision Fusion Operator",     wf:"radarfusion",            handled:22,  hrs:2.9, win:"Fused object list validated", status:"idle"},
+  {id:"op6", name:"Cole Toolkit",   title:"SDK & Reference Design Operator",  wf:"sdksupport",             handled:410, hrs:0.6, win:"0 failed smoke tests shipped", status:"idle"},
+  {id:"op7", name:"Talia Pipeline", title:"Account Intelligence Operator",    wf:"designwinintel",         handled:31,  hrs:2.1, win:"$4.6M opportunity surfaced", status:"idle"},
+  {id:"op8", name:"Marcus Yield",   title:"Supply & Allocation Operator",     wf:"supplyplanning",         handled:47,  hrs:1.8, win:"Lead time locked pre-ramp", status:"idle"}
+];
+
+let state = {
+  view:"roster",
+  runningEmp:null,
+  runWf:null,
+  waves:[],
+  taskState:[],
+  feed:[],
+  runComplete:false,
+  builderStep:1,
+  builderBase:null,
+  builderName:"",
+  builderCadence:CONFIG.builderCadences[0],
+  builderFocus:""
+};
+let runTimer = null;
+
+function computeWaves(tasks, mode){
+  if(mode === "sequential"){ return tasks.map((_,i)=>[i]); }
+  const waveOf = new Array(tasks.length).fill(0);
+  tasks.forEach((t,i)=>{
+    if(t.deps.length===0){ waveOf[i]=0; }
+    else{ waveOf[i] = 1 + Math.max(...t.deps.map(d=>waveOf[d])); }
+  });
+  const maxWave = Math.max(...waveOf);
+  const waves = Array.from({length:maxWave+1},()=>[]);
+  waveOf.forEach((w,i)=>waves[w].push(i));
+  return waves;
+}
+
+function escapeHtml(s){
+  return s.replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+function render(){
+  const app = document.getElementById("app");
+  app.innerHTML = `
+    ${renderHero()}
+    ${state.view==="roster" ? renderRoster() : ""}
+    ${state.view==="run" ? renderRun() : ""}
+    ${renderBuilderSection()}
+    ${renderFooter()}
+  `;
+  attachHandlers();
+}
+
+function renderHero(){
+  return `
+  <div class="hero-field">
+    <div class="mark-row">
+      <svg class="eye-mark" viewBox="0 0 32 32" fill="none">
+        <path d="M2 16 C 8 6, 24 6, 30 16 C 24 26, 8 26, 2 16 Z" stroke="#0c82b6" stroke-width="2" fill="none"/>
+        <circle cx="16" cy="16" r="4.5" fill="#0c82b6"/>
+      </svg>
+      <div class="mark-label">Ambarella · Edge AI Vision / AI Workforce Prototype</div>
+    </div>
+    <h1 class="hero-title">A vision pipeline for every design-in: <span class="accent">an AI operator behind each stage of the CVflow deployment and sales motion.</span></h1>
+    <p class="hero-sub">From CNN model porting and ADAS safety qualification through security, AIoT, radar-vision fusion, and supply planning — each operator below is a real Ambarella workflow run by a small team of specialist agents.</p>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-big">${CONFIG.statSign}${CONFIG.statValue}${CONFIG.statSuffix}</div>
+        <div class="hero-stat-big-label">${CONFIG.statLabel}</div>
+      </div>
+    </div>
+    <div class="econ-strip">
+      <div class="econ-cell"><div class="econ-val">126</div><div class="econ-lbl">${CONFIG.econLabels[0]}</div></div>
+      <div class="econ-cell"><div class="econ-val">4</div><div class="econ-lbl">${CONFIG.econLabels[1]}</div></div>
+      <div class="econ-cell"><div class="econ-val">36M+</div><div class="econ-lbl">${CONFIG.econLabels[2]}</div></div>
+      <div class="econ-cell"><div class="econ-val">98.1%</div><div class="econ-lbl">${CONFIG.econLabels[3]}</div></div>
+    </div>
+  </div>`;
+}
+
+function renderRoster(){
+  const cards = EMPLOYEES.map(emp=>{
+    const wf = WORKFLOWS[emp.wf];
+    const isFlagship = wf.tag === "flagship";
+    const isNew = emp.isNew;
+    return `
+    <div class="op-card ${isFlagship?"flagship":""}">
+      ${isFlagship ? `<div class="op-tag">Flagship</div>` : (isNew ? `<div class="op-tag new">New</div>` : "")}
+      <div class="op-name">${emp.name}</div>
+      <div class="op-role">${emp.title}</div>
+      <div class="op-desc">${wf.desc}</div>
+      <div class="op-meta">
+        <span>Handled: <b>${emp.handled}</b></span>
+        <span>Avg hrs: <b>${emp.hrs}</b></span>
+        <span>Win: <b>${emp.win==="0"||emp.win===0?"—":emp.win}</b></span>
+      </div>
+      <div class="op-status"><span class="dot idle"></span>Idle — ready for next engagement</div>
+      <button class="run-btn" data-run="${emp.id}">${CONFIG.runButton}</button>
+    </div>`;
+  }).join("");
+
+  return `
+  <div class="section">
+    <div class="section-head">
+      <h2 class="section-title">${CONFIG.rosterLabel}</h2>
+      <span class="section-note">8 operators · 12 specialist agents · click Run to see one work an engagement</span>
+    </div>
+    <div class="roster-grid">${cards}</div>
+  </div>`;
+}
+
+function renderRun(){
+  const emp = state.runningEmp;
+  const wf = WORKFLOWS[state.runWf];
+  const wavesHtml = state.waves.map((wave)=>{
+    const chips = wave.map(idx=>{
+      const t = wf.tasks[idx];
+      const agent = AGENT_ROLES[t.agent];
+      const st = state.taskState[idx];
+      return `
+      <div class="task-chip ${st==='active'?'active':''} ${st==='done'?'complete':''}">
+        <span class="em">${agent.emoji}</span>
+        <span class="tx">${t.task}<span class="ag">${agent.label}</span></span>
+      </div>`;
+    }).join("");
+    return `<div class="wave">${chips}</div>`;
+  }).join("");
+
+  const feedHtml = state.feed.map(line=>`<div class="feed-line">${line}</div>`).join("");
+
+  const deliverableHtml = state.runComplete ? `
+    <div class="deliverable">
+      <h4>${CONFIG.outputLabel}: ${DTITLE[wf.name]}</h4>
+      <pre>${escapeHtml(FINAL[wf.name])}</pre>
+    </div>` : "";
+
+  return `
+  <div class="section">
+    <div class="run-panel">
+      <div class="run-head">
+        <div>
+          <h3>${emp.name} — ${wf.title}</h3>
+          <div class="sub">Sample engagement: ${wf.sample}</div>
+        </div>
+        <button class="back-link" data-back="1">&larr; Back to roster</button>
+      </div>
+      <div class="waves">${wavesHtml}</div>
+      <div class="feed">${feedHtml || '<div class="feed-line">Waiting to start...</div>'}</div>
+      ${deliverableHtml}
+    </div>
+  </div>`;
+}
+
+function renderBuilderSection(){
+  const wfOptions = Object.values(WORKFLOWS).map(wf=>`
+    <div class="choice-card ${state.builderBase===wf.name?'picked':''}" data-base="${wf.name}">
+      <div class="ct">${wf.title}</div>
+      <div class="cd">${wf.desc}</div>
+    </div>`).join("");
+
+  let stepBody = "";
+  if(state.builderStep===1){
+    stepBody = `
+      <p class="section-note" style="margin-bottom:14px;">Step 1 — pick the workflow this new operator will run.</p>
+      <div class="choice-grid">${wfOptions}</div>
+      <div class="builder-actions">
+        <button class="btn-primary" data-next="2" ${!state.builderBase?"disabled":""}>Next</button>
+      </div>`;
+  } else if(state.builderStep===2){
+    const cadenceOptions = CONFIG.builderCadences.map(c=>`<option ${state.builderCadence===c?"selected":""}>${c}</option>`).join("");
+    stepBody = `
+      <p class="section-note" style="margin-bottom:14px;">Step 2 — name the operator and set its cadence.</p>
+      <label class="f-label">Operator name</label>
+      <input type="text" id="builder-name" placeholder="e.g. Jules Aperture" value="${state.builderName}">
+      <label class="f-label">Run cadence</label>
+      <select id="builder-cadence">${cadenceOptions}</select>
+      <label class="f-label">Focus note (optional)</label>
+      <input type="text" id="builder-focus" placeholder="e.g. prioritize drone and UAV programs" value="${state.builderFocus}">
+      <div class="builder-actions">
+        <button class="btn-ghost" data-prev="1">Back</button>
+        <button class="btn-primary" data-next="3" ${!state.builderName?"disabled":""}>Next</button>
+      </div>`;
+  } else if(state.builderStep===3){
+    const wf = WORKFLOWS[state.builderBase];
+    stepBody = `
+      <p class="section-note" style="margin-bottom:14px;">Step 3 — review and add to the roster.</p>
+      <div class="review-box">
+        <div><b>Name:</b> ${state.builderName}</div>
+        <div><b>Workflow:</b> ${wf.title}</div>
+        <div><b>Cadence:</b> ${state.builderCadence}</div>
+        <div><b>Focus:</b> ${state.builderFocus || "—"}</div>
+      </div>
+      <div class="builder-actions">
+        <button class="btn-ghost" data-prev="2">Back</button>
+        <button class="btn-primary" data-confirm="1">Add to roster</button>
+      </div>`;
+  }
+
+  return `
+  <div class="section">
+    <div class="section-head">
+      <h2 class="section-title">Build a new operator</h2>
+      <span class="section-note">Clone any workflow above into a differently-tuned operator</span>
+    </div>
+    <div class="builder">
+      <div class="steps">
+        <span class="step-pill ${state.builderStep===1?'active':state.builderStep>1?'done':''}">1 · Workflow</span>
+        <span class="step-pill ${state.builderStep===2?'active':state.builderStep>2?'done':''}">2 · Identity</span>
+        <span class="step-pill ${state.builderStep===3?'active':''}">3 · Review</span>
+      </div>
+      ${stepBody}
+    </div>
+  </div>`;
+}
+
+function renderFooter(){
+  return `
+  <footer>
+    Illustrative prototype for internal discussion only. All figures, case numbers, and account references are placeholders and do not reflect actual Ambarella production, pricing, or customer data. No system shown here is connected to Ambarella's Cooper Developer Platform, CVflow toolchain, or CRM systems. Every deliverable produced by this workforce is intended for human review by an applications or field engineer before it reaches a customer.
+    <div class="hitl">Sources: ambarella.com (company site, technology and CVflow architecture pages), Ambarella FY2026 Q4/full-year financial results (Feb 26, 2026), Q1 FY2027 earnings call coverage (May 2026).</div>
+  </footer>`;
+}
+
+function attachHandlers(){
+  document.querySelectorAll("[data-run]").forEach(btn=>{
+    btn.addEventListener("click", ()=>startRun(btn.getAttribute("data-run")));
+  });
+  const back = document.querySelector("[data-back]");
+  if(back) back.addEventListener("click", ()=>{ clearInterval(runTimer); state.view="roster"; render(); });
+
+  document.querySelectorAll("[data-base]").forEach(card=>{
+    card.addEventListener("click", ()=>{ state.builderBase = card.getAttribute("data-base"); render(); });
+  });
+  const next = document.querySelector("[data-next]");
+  if(next) next.addEventListener("click", ()=>{
+    if(state.builderStep===1){ state.builderStep=2; }
+    else if(state.builderStep===2){
+      state.builderName = document.getElementById("builder-name").value || state.builderName;
+      state.builderCadence = document.getElementById("builder-cadence").value;
+      state.builderFocus = document.getElementById("builder-focus").value;
+      state.builderStep=3;
+    }
+    render();
+  });
+  const prev = document.querySelector("[data-prev]");
+  if(prev) prev.addEventListener("click", ()=>{
+    state.builderStep = parseInt(prev.getAttribute("data-prev"));
+    render();
+  });
+  const confirmBtn = document.querySelector("[data-confirm]");
+  if(confirmBtn) confirmBtn.addEventListener("click", ()=>{
+    const wf = WORKFLOWS[state.builderBase];
+    const newEmp = {
+      id:"custom-"+Date.now(), name:state.builderName, title:`${state.builderCadence} · ${wf.title} Operator`,
+      wf: wf.name, handled:0, hrs:0, win:"0", status:"idle", isNew:true
+    };
+    EMPLOYEES.push(newEmp);
+    state.builderStep=1; state.builderBase=null; state.builderName=""; state.builderFocus="";
+    render();
+  });
+}
+
+function startRun(empId){
+  clearInterval(runTimer);
+  const emp = EMPLOYEES.find(e=>e.id===empId);
+  const wf = WORKFLOWS[emp.wf];
+  state.view = "run";
+  state.runningEmp = emp;
+  state.runWf = emp.wf;
+  state.waves = computeWaves(wf.tasks, wf.mode);
+  state.taskState = wf.tasks.map(()=>"pending");
+  state.feed = [`<span class="ok">&#9656;</span> Starting <b>${wf.title}</b> for sample engagement: ${wf.sample}`];
+  state.runComplete = false;
+  render();
+
+  const order = [];
+  state.waves.forEach(wave=>wave.forEach(idx=>order.push(idx)));
+  let step = 0;
+  runTimer = setInterval(()=>{
+    if(step >= order.length){
+      clearInterval(runTimer);
+      state.feed.push(`<span class="ok">&#10003;</span> <b>${wf.title}</b> complete. ${TOOLS.save()}.`);
+      state.runComplete = true;
+      render();
+      return;
+    }
+    const idx = order[step];
+    const t = wf.tasks[idx];
+    const agent = AGENT_ROLES[t.agent];
+    state.taskState[idx] = "active";
+    render();
+
+    setTimeout(()=>{
+      const toolsExclSave = agent.tools.filter(k=>k!=="save");
+      const toolKey = toolsExclSave[idx % toolsExclSave.length];
+      const output = TOOLS[toolKey]();
+      state.feed.push(`${agent.emoji} <b>${agent.label}</b>: ${t.task}`);
+      state.feed.push(`&nbsp;&nbsp;&#8618; ${output}`);
+      state.taskState[idx] = "done";
+      render();
+      step++;
+    }, 550);
+  }, 900);
+}
+
+render();
+</script>
+</body>
+</html>
