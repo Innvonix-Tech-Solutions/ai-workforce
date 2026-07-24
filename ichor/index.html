@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ichor Systems — AI Workforce</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  :root{
+    --bg: #f2f4f7;
+    --bg-panel: #ffffff;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f5f8fb;
+    --border: #d7dfe7;
+    --border-soft: #e3e9ef;
+    --text: #16283a;
+    --text-dim: #52697d;
+    --text-faint: #8698a8;
+    --accent: #0a5f95;
+    --accent-soft: rgba(10,95,149,0.08);
+    --accent-strong: #0a5f95;
+    --amber: #c05a1f;
+    --amber-soft: rgba(192,90,31,0.09);
+    --good: #1e8a54;
+    --danger: #c0392b;
+    --trackA: #0a5f95;
+    --trackB: #c05a1f;
+    --radius: 10px;
+    --mono: 'SF Mono', 'Consolas', 'Menlo', monospace;
+    --sans: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, Roboto, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height:1.5;
+    padding: 28px 20px 80px;
+  }
+  .wrap{max-width:1180px;margin:0 auto;}
+
+  /* header */
+  header.hero{
+    display:flex; align-items:flex-start; justify-content:space-between; gap:24px;
+    padding:28px 30px; border-radius:var(--radius);
+    background:#ffffff;
+    border:1px solid var(--border);
+    border-top:4px solid var(--accent);
+    margin-bottom:22px;
+    flex-wrap:wrap;
+    box-shadow:0 1px 3px rgba(20,40,60,0.05);
+  }
+  .hero-left{max-width:720px;}
+  .mark{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--accent-strong); background:var(--accent-soft); border:1px solid rgba(10,95,149,0.35);
+    padding:5px 12px; border-radius:999px; margin-bottom:14px;
+  }
+  .mark::before{content:"●"; color:var(--accent-strong); font-size:9px;}
+  h1{font-size:28px; margin:0 0 8px; letter-spacing:-.01em; font-weight:650;}
+  .sub{color:var(--text-dim); font-size:15px; max-width:620px;}
+  .foot-note{margin-top:16px; font-size:12.5px; color:var(--text-faint); max-width:640px;}
+
+  .hero-right{
+    display:flex; flex-direction:column; gap:8px; align-items:flex-end; min-width:220px;
+  }
+  .lead-pill{
+    font-family:var(--mono); font-size:11.5px; color:var(--text-dim);
+    border:1px dashed var(--border); padding:8px 12px; border-radius:10px; text-align:right;
+    max-width:260px;
+  }
+
+  /* econ strip */
+  .econ{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:26px;
+  }
+  .econ .card{
+    background:var(--bg-card); border:1px solid var(--border-soft); border-radius:var(--radius);
+    padding:18px 20px;
+  }
+  .econ .num{font-size:26px; font-weight:650; letter-spacing:-.01em;}
+  .econ .num.up{color:var(--good);}
+  .econ .lbl{font-size:12.5px; color:var(--text-dim); margin-top:4px;}
+
+  /* section headers */
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between; margin:34px 0 14px;
+  }
+  .section-head h2{font-size:16px; margin:0; letter-spacing:.02em;}
+  .section-head .hint{font-size:12.5px; color:var(--text-faint);}
+
+  .track-band{
+    display:flex; align-items:center; gap:10px; margin:26px 0 12px;
+  }
+  .track-dot{width:9px; height:9px; border-radius:50%;}
+  .track-title{font-size:13px; text-transform:uppercase; letter-spacing:.12em; color:var(--text-dim); font-weight:600;}
+  .track-line{flex:1; height:1px; background:var(--border-soft);}
+
+  /* roster grid */
+  .roster{display:grid; grid-template-columns:repeat(auto-fill, minmax(268px,1fr)); gap:14px;}
+  .op-card{
+    background:var(--bg-card); border:1px solid var(--border-soft); border-radius:var(--radius);
+    padding:18px; cursor:pointer; transition:.15s border-color, .15s transform, .15s background;
+    display:flex; flex-direction:column; gap:10px; position:relative;
+  }
+  .op-card:hover{border-color:var(--accent); background:var(--bg-card-hover); transform:translateY(-1px);}
+  .op-card.flagship{border-color:rgba(224,169,64,0.55);}
+  .op-card .flag-tag{
+    position:absolute; top:14px; right:14px; font-family:var(--mono); font-size:9.5px;
+    text-transform:uppercase; letter-spacing:.1em; color:var(--amber); background:var(--amber-soft);
+    padding:3px 8px; border-radius:999px; border:1px solid rgba(224,169,64,0.4);
+  }
+  .op-top{display:flex; align-items:center; gap:10px;}
+  .op-name{font-weight:650; font-size:14.5px;}
+  .op-title{font-size:12px; color:var(--text-dim);}
+  .op-desc{font-size:12.5px; color:var(--text-dim); line-height:1.5; min-height:36px;}
+  .op-stats{display:flex; gap:14px; font-family:var(--mono); font-size:12px; color:var(--text-faint); border-top:1px solid var(--border-soft); padding-top:10px;}
+  .op-stats b{color:var(--text); font-weight:600;}
+  .op-status{font-size:11px; padding:3px 9px; border-radius:999px; font-family:var(--mono); text-transform:uppercase; letter-spacing:.06em;}
+  .op-status.idle{background:rgba(159,178,200,0.12); color:var(--text-dim);}
+  .op-status.running{background:rgba(10,95,149,0.16); color:var(--accent-strong);}
+  .op-status.done{background:rgba(76,195,138,0.15); color:var(--good);}
+  .run-btn{
+    margin-top:2px; align-self:flex-start; font-family:var(--mono); font-size:11.5px;
+    color:var(--accent-strong); background:none; border:1px solid rgba(10,95,149,0.4);
+    padding:6px 12px; border-radius:8px; cursor:pointer;
+  }
+  .run-btn:hover{background:var(--accent-soft);}
+
+  /* run panel */
+  .run-panel{
+    display:none; background:var(--bg-panel); border:1px solid var(--border); border-radius:var(--radius);
+    margin-top:26px; padding:22px; animation:fadein .2s ease;
+  }
+  @keyframes fadein{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+  .run-head{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:16px; flex-wrap:wrap;}
+  .run-head h3{margin:0 0 4px; font-size:17px;}
+  .run-sample{font-size:12.5px; color:var(--text-dim); max-width:640px; font-style:italic;}
+  .close-btn{background:none; border:1px solid var(--border); color:var(--text-dim); border-radius:8px; padding:6px 12px; cursor:pointer; font-size:12px;}
+  .close-btn:hover{border-color:var(--danger); color:var(--danger);}
+
+  .run-grid{display:grid; grid-template-columns:1.1fr 1fr; gap:18px;}
+  @media (max-width:820px){.run-grid{grid-template-columns:1fr;}}
+
+  .feed{
+    background:#0a1521; border:1px solid var(--border-soft); border-radius:10px; padding:14px;
+    font-family:var(--mono); font-size:12.5px; min-height:220px; max-height:420px; overflow-y:auto;
+  }
+  .feed-line{padding:6px 0; border-bottom:1px dashed var(--border-soft); opacity:0; animation:slidein .25s forwards;}
+  .feed-line:last-child{border-bottom:none;}
+  @keyframes slidein{from{opacity:0; transform:translateX(-4px);} to{opacity:1; transform:translateX(0);}}
+  .feed-line .tag{color:var(--accent-strong); margin-right:6px;}
+  .feed-line .out{color:var(--text-faint); display:block; margin-top:2px; padding-left:20px;}
+  .feed .pending{color:var(--text-faint);}
+  .feed .waiting{color:var(--text-faint); font-style:italic;}
+
+  .deliverable{
+    background:var(--bg-card); border:1px solid var(--border-soft); border-radius:10px; padding:16px;
+  }
+  .deliverable h4{margin:0 0 10px; font-size:13px; text-transform:uppercase; letter-spacing:.08em; color:var(--text-dim);}
+  .deliverable pre{
+    white-space:pre-wrap; word-wrap:break-word; font-family:var(--sans); font-size:13px; color:var(--text);
+    margin:0; line-height:1.6;
+  }
+  .deliverable .placeholder{color:var(--text-faint); font-size:12.5px; font-style:italic;}
+  .save-line{margin-top:12px; font-family:var(--mono); font-size:11.5px; color:var(--good); display:none;}
+
+  /* builder */
+  .builder{
+    background:var(--bg-panel); border:1px solid var(--border); border-radius:var(--radius);
+    margin-top:30px; padding:22px;
+  }
+  .builder h3{margin:0 0 4px; font-size:16px;}
+  .builder .sub2{font-size:12.5px; color:var(--text-dim); margin-bottom:18px;}
+  .steps{display:flex; gap:8px; margin-bottom:18px;}
+  .step-dot{flex:1; height:4px; border-radius:99px; background:var(--border-soft);}
+  .step-dot.active{background:var(--accent);}
+  .b-body{min-height:150px;}
+  .wf-pick{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:10px;}
+  .wf-opt{
+    border:1px solid var(--border-soft); border-radius:10px; padding:12px 14px; cursor:pointer; font-size:13px;
+  }
+  .wf-opt:hover{border-color:var(--accent);}
+  .wf-opt.sel{border-color:var(--accent); background:var(--accent-soft);}
+  .wf-opt .t{font-weight:600; margin-bottom:3px;}
+  .wf-opt .d{font-size:11.5px; color:var(--text-faint);}
+  label.field{display:block; font-size:12px; color:var(--text-dim); margin:14px 0 6px;}
+  input[type=text], select{
+    width:100%; background:#0a1521; border:1px solid var(--border); color:var(--text);
+    padding:10px 12px; border-radius:8px; font-size:13.5px; font-family:var(--sans);
+  }
+  .cadence-row{display:flex; gap:8px; flex-wrap:wrap;}
+  .cad-opt{border:1px solid var(--border-soft); padding:7px 13px; border-radius:999px; font-size:12px; cursor:pointer;}
+  .cad-opt.sel{border-color:var(--accent); background:var(--accent-soft); color:var(--accent-strong);}
+  .b-nav{display:flex; justify-content:space-between; margin-top:20px;}
+  .btn{
+    font-family:var(--sans); font-size:13px; padding:9px 18px; border-radius:9px; cursor:pointer; border:1px solid var(--border);
+    background:none; color:var(--text-dim);
+  }
+  .btn.primary{background:var(--accent); border-color:var(--accent); color:#04222a; font-weight:600;}
+  .btn.primary:disabled{opacity:.4; cursor:not-allowed;}
+  .btn:hover:not(:disabled){border-color:var(--accent);}
+  .confirm-summary{font-size:13px; color:var(--text-dim); line-height:1.7;}
+  .confirm-summary b{color:var(--text);}
+
+  footer{margin-top:46px; padding-top:18px; border-top:1px solid var(--border-soft); font-size:11.5px; color:var(--text-faint); line-height:1.7;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="hero-left">
+      <div class="mark" id="mark">ICHOR SYSTEMS · AI WORKFORCE PROTOTYPE</div>
+      <h1 id="headerTitle">The Ichor delivery floor, staffed with AI operators</h1>
+      <p class="sub" id="headerSub">
+        Eight of Ichor's real workflows — from RFQ response to legacy sustaining engineering —
+        rebuilt as autonomous teams of specialist agents. Run one, watch the agents hand off work,
+        and see the deliverable a program manager or account team would actually receive.
+      </p>
+      <p class="foot-note" id="leadNote">
+        Built from Ichor's public engineering, program-management, and supply-chain capabilities.
+        Nothing here reads from Ichor's live systems — every number and output below is illustrative.
+      </p>
+    </div>
+    <div class="hero-right">
+      <div class="lead-pill">For a stakeholder conversation, not a live system.<br>Every run is simulated. Every deliverable is human-reviewed before it ships.</div>
+    </div>
+  </header>
+
+  <div class="econ" id="econStrip"></div>
+
+  <div class="section-head">
+    <h2 id="rosterLabel">Workforce roster</h2>
+    <div class="hint">Click an operator to run it</div>
+  </div>
+  <div id="rosterRoot"></div>
+
+  <div class="run-panel" id="runPanel"></div>
+
+  <div class="builder">
+    <h3>Add an operator</h3>
+    <div class="sub2">Clone one of Ichor's workflow templates into a new operator on the roster — three steps.</div>
+    <div class="steps">
+      <div class="step-dot active" id="dot1"></div>
+      <div class="step-dot" id="dot2"></div>
+      <div class="step-dot" id="dot3"></div>
+    </div>
+    <div class="b-body" id="builderBody"></div>
+    <div class="b-nav">
+      <button class="btn" id="bBack" onclick="builderBack()" style="visibility:hidden;">Back</button>
+      <button class="btn primary" id="bNext" onclick="builderNext()" disabled>Next</button>
+    </div>
+  </div>
+
+  <footer>
+    <b>Disclaimer:</b> This is an illustrative prototype built from Ichor Systems' publicly available materials for discussion purposes only.
+    It is not connected to Ichor's ERP, PLM, quoting, or quality systems, and it does not reflect Ichor's actual staffing, financials, or
+    performance. All figures, deliverables, and outputs shown are placeholders labelled "illustrative" and are not real data.
+    Ichor Systems has not endorsed, reviewed, or commissioned this prototype. Every deliverable an operator like this produced in a
+    real deployment would go through human review before reaching a customer or being acted on internally.
+  </footer>
+
+</div>
+
+<script>
+/* ============================= DATA ============================= */
+
+const CONFIG = {
+  econLabels: ["Operators live", "Est. hours saved / mo", "Quotes & reports automated / mo", "Avg cycle-time cut"],
+  statSign: "+",
+  statSuffix: "",
+  runButton: "Run operator",
+  runNoun: "run",
+  outputLabel: "Deliverable",
+  rosterLabel: "Workforce roster",
+  trackLabels: { trackA: "Internal delivery & production ops", trackB: "OEM-facing & program wins" },
+  builderCadences: ["On request", "Daily", "Weekly", "Per RFQ"]
+};
+
+const AGENT_ROLES = {
+  researcher:        { emoji:"🔍", label:"Research Analyst",              tools:["scan_specs","market_scan","save"] },
+  process_engineer:  { emoji:"⚛️", label:"Process Engineer",              tools:["chemistry_check","flow_model","save"] },
+  mech_design:       { emoji:"📐", label:"Mechanical Design Engineer",    tools:["cad_model","tolerance_stack","save"] },
+  electrical_design: { emoji:"🔌", label:"Controls & Electrical Engineer",tools:["schematic_gen","plc_logic","save"] },
+  cost_estimator:    { emoji:"💰", label:"Cost & Quote Estimator",        tools:["cost_model","margin_calc","save"] },
+  sourcing_specialist:{emoji:"📦", label:"Sourcing Specialist",           tools:["supplier_scan","leadtime_check","save"] },
+  quality_engineer:  { emoji:"✅", label:"Quality Engineer",              tools:["inspection_plan","spc_check","save"] },
+  reliability_engineer:{emoji:"🧪",label:"Reliability & Test Engineer",  tools:["fmea_run","life_test","save"] },
+  data_engineer:     { emoji:"🗂️", label:"Data & Drawing Parser",         tools:["parse_bom","parse_drawing","save"] },
+  program_manager:   { emoji:"📋", label:"Program Manager",               tools:["schedule_build","risk_register","save"] },
+  writer:            { emoji:"✍️", label:"Technical Writer",              tools:["draft_doc","format_doc","save"] },
+  reviewer:          { emoji:"🔎", label:"Senior Reviewer",               tools:["compliance_check","final_review","save"] }
+};
+
+const WORKFLOWS = {
+  rfq_response: {
+    name:"RFQ & Quote Response", title:"RFQ & Quote Response",
+    mode:"sequential", deliverable:"Quote Package",
+    sample:"New RFQ from a leading etch OEM: 3-chamber gas delivery module, W-seal configuration, 45-day quote turnaround requested.",
+    desc:"Turns an incoming RFQ into a costed, technically-reviewed quote package ready for customer submission.",
+    track:"trackB", tag:"flagship",
+    tasks:[
+      {agent:"data_engineer",  task:"Parse the RFQ package: specs, drawings, BOM callouts, and customer T&Cs", deps:[]},
+      {agent:"process_engineer",task:"Assess process/chemistry compatibility and flag any non-standard wetted-path requirements", deps:[0]},
+      {agent:"mech_design",    task:"Rough out mechanical architecture and identify custom vs. catalog components", deps:[0]},
+      {agent:"sourcing_specialist",task:"Check lead times and pricing on long-lead valves, fittings, and raw material", deps:[2]},
+      {agent:"cost_estimator", task:"Build the cost model and target margin across labor, materials, and NRE", deps:[1,2,3]},
+      {agent:"reviewer",       task:"Run compliance/export-control check and assemble the final quote package", deps:[4]}
+    ]
+  },
+  reliability_validation: {
+    name:"Reliability, FMEA & Validation Reporting", title:"Reliability, FMEA & Validation Reporting",
+    mode:"dag", deliverable:"Validation Report",
+    sample:"Customer requests an FMEA and reliability data package ahead of tool qualification at their fab.",
+    desc:"Runs FMEA, functional and life testing, and packages a customer-ready validation report.",
+    track:"trackB",
+    tasks:[
+      {agent:"reliability_engineer", task:"Run FMEA against the module's failure modes and rank severity, occurrence, and detection", deps:[]},
+      {agent:"quality_engineer",     task:"Pull SPC and inspection data from the qualification build", deps:[]},
+      {agent:"process_engineer",     task:"Verify performance-to-spec across flow, pressure, and leak-rate test data", deps:[0]},
+      {agent:"data_engineer",        task:"Consolidate test logs and traceability records into a single dataset", deps:[1]},
+      {agent:"writer",               task:"Draft the customer-facing validation report narrative", deps:[2,3]}
+    ]
+  },
+  program_review: {
+    name:"Customer Program Review Prep", title:"Customer Program Review Prep",
+    mode:"sequential", deliverable:"QBR Brief",
+    sample:"Quarterly business review with a top-3 OEM account is in five days; need a program status brief.",
+    desc:"Assembles delivery performance, open risks, and roadmap talking points ahead of a customer QBR.",
+    track:"trackB",
+    tasks:[
+      {agent:"program_manager", task:"Pull on-time-delivery, quality escapes, and open risk-register items for the account", deps:[]},
+      {agent:"researcher",      task:"Scan recent customer announcements and roadmap signals relevant to the account", deps:[]},
+      {agent:"cost_estimator",  task:"Summarize program margin trend and flag any pricing actions", deps:[0]},
+      {agent:"writer",          task:"Draft the QBR talking-point brief with wins, risks, and asks", deps:[1,2]}
+    ]
+  },
+  competitive_intel: {
+    name:"Competitive & Regulatory Intelligence", title:"Competitive & Regulatory Intelligence",
+    mode:"sequential", deliverable:"Intel Brief",
+    sample:"An export-control update affects gas panel shipments to a key region; the account team needs a same-day brief.",
+    desc:"Tracks competitor moves and export/regulatory changes and turns them into an account-ready brief.",
+    track:"trackB",
+    tasks:[
+      {agent:"researcher", task:"Scan competitor filings, press, and job postings for relevant signals", deps:[]},
+      {agent:"reviewer",   task:"Check the finding against current export-control and trade-compliance rules", deps:[0]},
+      {agent:"process_engineer", task:"Assess technical implications for affected product lines", deps:[0]},
+      {agent:"writer",     task:"Draft the intel brief with recommended actions", deps:[1,2]}
+    ]
+  },
+  design_engineering: {
+    name:"Mechanical & Electrical Design / DFx", title:"Mechanical & Electrical Design / DFx",
+    mode:"dag", deliverable:"Design Package",
+    sample:"A new chamber platform requires a redesigned chemical delivery module within a tighter footprint spec.",
+    desc:"Runs concept-to-detail design and DFx review for a new or updated fluid delivery module.",
+    track:"trackA",
+    tasks:[
+      {agent:"mech_design",       task:"Develop the mechanical concept and tolerance stack for the module envelope", deps:[]},
+      {agent:"electrical_design", task:"Develop the controls architecture and instrumentation schematic", deps:[]},
+      {agent:"process_engineer",  task:"Review wetted-path materials and chemistry compatibility", deps:[0]},
+      {agent:"reviewer",          task:"Run DFx/DFM review against manufacturability and cost targets", deps:[0,1]},
+      {agent:"writer",            task:"Compile the design package and release notes", deps:[2,3]}
+    ]
+  },
+  npi_qualification: {
+    name:"New Product Introduction & Qualification Build", title:"NPI & Qualification Build",
+    mode:"sequential", deliverable:"NPI Qualification Report",
+    sample:"First qualification build of a new IMS chemical delivery platform starts next week.",
+    desc:"Coordinates the qualification build, functional test, and sign-off for a new platform.",
+    track:"trackA",
+    tasks:[
+      {agent:"program_manager",     task:"Build the NPI schedule and identify build and test milestones and owners", deps:[]},
+      {agent:"data_engineer",      task:"Parse the released BOM and drawing package for the qualification build", deps:[0]},
+      {agent:"quality_engineer",   task:"Define the inspection and test plan for the qualification units", deps:[1]},
+      {agent:"reliability_engineer",task:"Run functional and life test on the qualification build", deps:[2]},
+      {agent:"writer",             task:"Draft the NPI qualification sign-off report", deps:[3]}
+    ]
+  },
+  supply_chain_sourcing: {
+    name:"Supply Chain & Long-Lead Sourcing", title:"Supply Chain & Long-Lead Sourcing",
+    mode:"dag", deliverable:"Sourcing Plan",
+    sample:"Lead times on a critical valve family have stretched past 20 weeks; need an alternate sourcing plan.",
+    desc:"Finds qualified alternates, checks lead times and pricing, and builds a resilient sourcing plan.",
+    track:"trackA",
+    tasks:[
+      {agent:"sourcing_specialist", task:"Scan the qualified supplier base and lead times for the affected components", deps:[]},
+      {agent:"data_engineer",      task:"Pull current BOM usage and forecast demand for the affected parts", deps:[]},
+      {agent:"quality_engineer",   task:"Check qualification status of any alternate suppliers", deps:[0]},
+      {agent:"writer",             task:"Draft the sourcing plan with recommended dual-source strategy", deps:[1,2]}
+    ]
+  },
+  legacy_sustaining: {
+    name:"Legacy & Sustaining Engineering", title:"Legacy & Sustaining Engineering",
+    mode:"sequential", deliverable:"Obsolescence Response Plan",
+    sample:"A component on a 12-year-old platform is going end-of-life; three fielded customers still order it.",
+    desc:"Manages end-of-life components on legacy platforms and plans the sustaining response.",
+    track:"trackA",
+    tasks:[
+      {agent:"researcher",          task:"Identify affected fielded platforms and the customer install base", deps:[]},
+      {agent:"sourcing_specialist", task:"Check last-time-buy options and qualified alternates for the EOL part", deps:[0]},
+      {agent:"mech_design",         task:"Assess redesign effort if no drop-in alternate exists", deps:[1]},
+      {agent:"writer",              task:"Draft the obsolescence response plan and customer notification", deps:[2]}
+    ]
+  }
+};
+
+const DTITLE = {
+  rfq_response:"Quote Package — RFQ Response",
+  reliability_validation:"Validation Report — FMEA & Reliability",
+  program_review:"QBR Talking-Point Brief",
+  competitive_intel:"Competitive & Regulatory Intel Brief",
+  design_engineering:"Design Package — Concept to Release",
+  npi_qualification:"NPI Qualification Sign-Off Report",
+  supply_chain_sourcing:"Sourcing Plan — Long-Lead Components",
+  legacy_sustaining:"Obsolescence Response Plan"
+};
+
+const TOOLS = {
+  scan_specs:()=>"Parsed 14 spec callouts and 3 drawing sheets from the RFQ package",
+  market_scan:()=>"Scanned 22 recent filings, postings, and press mentions for relevant signals",
+  chemistry_check:()=>"Wetted-path chemistry check complete — no non-standard reagents flagged",
+  flow_model:()=>"Flow/pressure model run at nominal and worst-case conditions — within spec",
+  cad_model:()=>"Mechanical concept modeled — envelope fits within customer footprint spec",
+  tolerance_stack:()=>"Tolerance stack-up closed within ±0.08mm across the critical path",
+  schematic_gen:()=>"Controls schematic drafted — 6 I/O points, 2 interlocks defined",
+  plc_logic:()=>"PLC interlock logic drafted for the new instrumentation set",
+  cost_model:()=>"Cost model built across labor, materials, and NRE — target margin flagged",
+  margin_calc:()=>"Margin calculated at program target with a 4% contingency band",
+  supplier_scan:()=>"Scanned 9 qualified suppliers for the affected component family",
+  leadtime_check:()=>"Lead times pulled: 6-31 weeks across the affected part numbers",
+  inspection_plan:()=>"Inspection plan defined: 11 checkpoints across in-process and final QC",
+  spc_check:()=>"SPC data pulled from the last 3 qualification lots — within control limits",
+  fmea_run:()=>"FMEA run across 18 failure modes — 2 flagged for corrective action",
+  life_test:()=>"Functional and accelerated life test completed on qualification units",
+  parse_bom:()=>"Parsed released BOM: 142 line items, 9 long-lead flags",
+  parse_drawing:()=>"Parsed drawing package revision and callouts for the affected assembly",
+  schedule_build:()=>"Build and test schedule drafted with milestone owners assigned",
+  risk_register:()=>"Risk register pulled: 4 open items, 1 rated high-impact",
+  draft_doc:()=>"Drafted the narrative section in Ichor's standard deliverable format",
+  format_doc:()=>"Formatted the document to the customer-facing template",
+  compliance_check:()=>"Export-control and trade-compliance check passed with no flags",
+  final_review:()=>"Final senior review complete — package ready for release",
+  save:()=>"Saved to the program record"
+};
+
+const FINAL = {
+  rfq_response:
+`QUOTE PACKAGE — 3-Chamber Gas Delivery Module (W-Seal)
+
+Program: New Etch Platform, Customer RFQ #ICH-Q-2291 (illustrative)
+Quote validity: 45 days | Lead time quoted: 16 weeks first article, 10 weeks recurring
+
+Configuration: TMS modular architecture, W-seal interface, dual-zone chemistry compatibility
+Custom content: 3 of 22 line items require new tooling (est. NRE: $38,400)
+Long-lead flags: 2 valve families at 18-22 week lead time — dual-source alternate identified
+
+Cost summary (illustrative):
+  Materials .......... 61%
+  Labor & overhead ... 24%
+  NRE (amortized) .... 8%
+  Target margin ...... 7% (within program band)
+
+Compliance: export-control screen passed, no restricted-party flags
+Recommendation: submit as quoted; hold NRE as a separate line for customer visibility
+
+NOTE: illustrative figures for prototype purposes only — not a real quote.`,
+
+  reliability_validation:
+`VALIDATION REPORT — FMEA & Reliability Data Package
+
+Unit under test: IMS Chemical Delivery Module, Rev C (illustrative)
+FMEA: 18 failure modes assessed, 2 flagged (seal wear @ >5000 cycles, sensor drift @ high humidity)
+Both flagged items closed with design mitigations prior to release
+
+Test results:
+  Flow accuracy ........ within ±1.2% of setpoint across range
+  Leak rate ............ below detection threshold at all test pressures
+  Life test ............ 6,200 cycles completed, no seal degradation observed
+  SPC (last 3 lots) .... all characteristics within control limits
+
+Traceability: full lot and serial traceability compiled for the qualification build
+
+Recommendation: package is ready for customer submission ahead of fab qualification
+
+NOTE: illustrative data for prototype purposes only — not real test results.`,
+
+  program_review:
+`QBR TALKING-POINT BRIEF — Q3 Program Review (illustrative account)
+
+Delivery performance: 96.5% on-time, up from 93% last quarter
+Quality: 1 escape (non-critical), root cause closed, no repeat occurrences
+Risk register: 4 open items — 1 high-impact (long-lead valve exposure, mitigation in progress)
+Margin trend: stable, no pricing action needed this cycle
+Roadmap signal: customer has publicly signaled a new platform ramp in H2
+
+Talking points:
+  1. Lead with the on-time-delivery improvement
+  2. Proactively surface the long-lead valve risk and mitigation plan
+  3. Position for early engagement on the H2 platform ramp
+
+NOTE: illustrative figures for prototype purposes only — not real account data.`,
+
+  competitive_intel:
+`INTEL BRIEF — Export-Control Update, Gas Panel Shipments (illustrative)
+
+Trigger: regulatory update affecting shipments of certain gas panel configurations to one region
+Technical exposure: 2 active programs use an affected configuration
+Compliance check: current classification confirmed compliant under the updated rule, no license change required
+Competitor signal: one competitor has paused shipments to the region pending their own review
+
+Recommended actions:
+  1. Confirm classification with trade compliance in writing for the account file
+  2. Get ahead of customer questions with a short proactive note
+  3. Monitor for a second-order rule change over the next quarter
+
+NOTE: illustrative brief for prototype purposes only — not real regulatory guidance.`,
+
+  design_engineering:
+`DESIGN PACKAGE — Chemical Delivery Module, New Chamber Platform (illustrative)
+
+Mechanical concept: envelope closed within the tighter footprint spec, tolerance stack ±0.08mm
+Controls architecture: 6 I/O points, 2 interlocks, schematic drafted and reviewed
+Chemistry compatibility: wetted-path materials confirmed compatible, no reagent flags
+DFx/DFM review: 3 findings, all resolved (2 tooling simplifications, 1 fastener standardization)
+
+Release status: package compiled and ready for design review board
+
+NOTE: illustrative design summary for prototype purposes only — not a real release package.`,
+
+  npi_qualification:
+`NPI QUALIFICATION SIGN-OFF REPORT — New IMS Platform (illustrative)
+
+Schedule: build and test milestones tracked against a 6-week qualification window
+BOM: 142 line items parsed and released, 9 long-lead flags carried into the schedule
+Inspection plan: 11 checkpoints executed across in-process and final QC
+Functional & life test: completed on qualification units, no failures observed
+
+Sign-off: qualification build meets release criteria, recommend proceeding to pilot run
+
+NOTE: illustrative report for prototype purposes only — not a real qualification record.`,
+
+  supply_chain_sourcing:
+`SOURCING PLAN — Long-Lead Valve Family (illustrative)
+
+Affected components: 1 valve family across 6 part numbers, current lead time 20-31 weeks
+Demand pull: current BOM usage and 12-month forecast reviewed against the affected parts
+Alternate suppliers: 3 qualified alternates identified, 1 already approved for use
+Recommendation: dual-source with the approved alternate for 40% of forecast demand,
+                 place a bridge buy on the incumbent to cover the qualification gap
+
+NOTE: illustrative sourcing plan for prototype purposes only — not a real supplier assessment.`,
+
+  legacy_sustaining:
+`OBSOLESCENCE RESPONSE PLAN — Legacy Platform Component EOL (illustrative)
+
+Affected platform: 12-year-old fielded platform, 3 active customers still ordering the part
+Last-time-buy: window confirmed with the supplier, no drop-in alternate currently qualified
+Redesign assessment: minor redesign required, estimated 6-week engineering effort
+Recommendation: place a last-time-buy to bridge 18 months of demand while redesign
+                 and requalification proceed in parallel; notify affected customers proactively
+
+NOTE: illustrative response plan for prototype purposes only — not a real customer notification.`
+};
+
+let EMPLOYEES = [
+  { id:"op1", name:"RFQ Response Operator",        title:"Quoting & Program Wins",      wf:"rfq_response",             handled:"RFQs quoted",          hrs:22, win:"38% faster turnaround", status:"idle" },
+  { id:"op2", name:"Validation Reporting Operator", title:"Reliability & Test",          wf:"reliability_validation",   handled:"Validation packages",  hrs:14, win:"1.5 days saved per package", status:"idle" },
+  { id:"op3", name:"QBR Prep Operator",             title:"Program Management",          wf:"program_review",           handled:"QBR briefs",           hrs:6,  win:"Same-day brief turnaround", status:"idle" },
+  { id:"op4", name:"Intel Desk Operator",           title:"Competitive & Regulatory",     wf:"competitive_intel",        handled:"Intel briefs",         hrs:8,  win:"Same-day compliance read", status:"idle" },
+  { id:"op5", name:"Design & DFx Operator",         title:"Design Engineering",           wf:"design_engineering",       handled:"Design packages",      hrs:18, win:"1 design cycle cut", status:"idle" },
+  { id:"op6", name:"NPI Qualification Operator",    title:"New Product Introduction",     wf:"npi_qualification",       handled:"Qualification builds", hrs:20, win:"3 days faster sign-off", status:"idle" },
+  { id:"op7", name:"Sourcing Desk Operator",        title:"Supply Chain",                 wf:"supply_chain_sourcing",   handled:"Sourcing plans",       hrs:10, win:"2 alternates surfaced/plan", status:"idle" },
+  { id:"op8", name:"Sustaining Engineering Operator", title:"Legacy Support",             wf:"legacy_sustaining",       handled:"EOL responses",        hrs:9,  win:"Customer notice in 1 day", status:"idle" }
+];
+
+/* ============================= ENGINE (do not edit below this line) ============================= */
+
+document.getElementById("headerTitle").textContent = document.getElementById("headerTitle").textContent;
+document.getElementById("rosterLabel").textContent = CONFIG.rosterLabel;
+
+function renderEcon(){
+  const ops = EMPLOYEES.length;
+  const hrs = EMPLOYEES.reduce((a,e)=>a+e.hrs,0);
+  const handled = EMPLOYEES.length * 6; // illustrative monthly volume proxy
+  const cadenceCut = "31%";
+  const vals = [ops, hrs, handled, cadenceCut];
+  const root = document.getElementById("econStrip");
+  root.innerHTML = "";
+  CONFIG.econLabels.forEach((lbl,i)=>{
+    const card = document.createElement("div");
+    card.className = "card";
+    const isNum = typeof vals[i] === "number";
+    card.innerHTML = `<div class="num up">${isNum ? (CONFIG.statSign+vals[i]) : vals[i]}${isNum?CONFIG.statSuffix:""}</div><div class="lbl">${lbl}</div>`;
+    root.appendChild(card);
+  });
+}
+
+function renderRoster(){
+  const root = document.getElementById("rosterRoot");
+  root.innerHTML = "";
+  const tracks = [...new Set(Object.values(WORKFLOWS).map(w=>w.track).filter(Boolean))];
+  const hasTracks = tracks.length > 0;
+
+  function cardFor(emp){
+    const wf = WORKFLOWS[emp.wf];
+    const isFlag = wf.tag === "flagship";
+    const div = document.createElement("div");
+    div.className = "op-card" + (isFlag ? " flagship" : "");
+    div.onclick = ()=>runOperator(emp.id);
+    div.innerHTML = `
+      ${isFlag ? '<div class="flag-tag">Flagship</div>' : ''}
+      <div class="op-top">
+        <div>
+          <div class="op-name">${emp.name}</div>
+          <div class="op-title">${emp.title}</div>
+        </div>
+      </div>
+      <div class="op-desc">${wf.desc}</div>
+      <div class="op-stats">
+        <span><b>${emp.hrs}</b> hrs/mo</span>
+        <span>${emp.handled}</span>
+        <span style="margin-left:auto;">${emp.win === "0" || emp.win === 0 ? "—" : emp.win}</span>
+      </div>
+      <div style="display:flex; align-items:center; justify-content:space-between;">
+        <span class="op-status ${emp.status}">${emp.status}</span>
+        <button class="run-btn" onclick="event.stopPropagation(); runOperator('${emp.id}')">${CONFIG.runButton} →</button>
+      </div>
+    `;
+    return div;
+  }
+
+  if(hasTracks){
+    tracks.forEach(t=>{
+      const band = document.createElement("div");
+      band.className = "track-band";
+      const dotColor = t === "trackA" ? "var(--trackA)" : "var(--trackB)";
+      band.innerHTML = `<div class="track-dot" style="background:${dotColor}"></div><div class="track-title">${CONFIG.trackLabels[t] || t}</div><div class="track-line"></div>`;
+      root.appendChild(band);
+      const grid = document.createElement("div");
+      grid.className = "roster";
+      EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track === t).forEach(e=>grid.appendChild(cardFor(e)));
+      root.appendChild(grid);
+    });
+  } else {
+    const grid = document.createElement("div");
+    grid.className = "roster";
+    EMPLOYEES.forEach(e=>grid.appendChild(cardFor(e)));
+    root.appendChild(grid);
+  }
+}
+
+function topoWaves(tasks){
+  const waves = [];
+  const done = new Set();
+  const remaining = tasks.map((_,i)=>i);
+  let guard = 0;
+  while(done.size < tasks.length && guard < 50){
+    guard++;
+    const wave = remaining.filter(i => !done.has(i) && tasks[i].deps.every(d=>done.has(d)));
+    if(wave.length === 0) break;
+    waves.push(wave);
+    wave.forEach(i=>done.add(i));
+  }
+  return waves;
+}
+
+let runToken = 0;
+
+function runOperator(id){
+  const emp = EMPLOYEES.find(e=>e.id===id);
+  if(!emp) return;
+  const wf = WORKFLOWS[emp.wf];
+  emp.status = "running";
+  renderRoster();
+
+  const panel = document.getElementById("runPanel");
+  panel.style.display = "block";
+  panel.innerHTML = `
+    <div class="run-head">
+      <div>
+        <h3>${emp.name} — ${wf.title}</h3>
+        <div class="run-sample">"${wf.sample}"</div>
+      </div>
+      <button class="close-btn" onclick="closeRun('${emp.id}')">Close</button>
+    </div>
+    <div class="run-grid">
+      <div>
+        <div style="font-size:12px; color:var(--text-dim); margin-bottom:8px; text-transform:uppercase; letter-spacing:.06em;">Agent feed</div>
+        <div class="feed" id="feed"></div>
+      </div>
+      <div class="deliverable">
+        <h4>${CONFIG.outputLabel}: ${DTITLE[emp.wf]}</h4>
+        <div id="deliverableBody"><span class="placeholder">Deliverable will populate once the run completes…</span></div>
+        <div class="save-line" id="saveLine">✓ ${TOOLS.save()}</div>
+      </div>
+    </div>
+  `;
+  panel.scrollIntoView({behavior:"smooth", block:"nearest"});
+
+  const feed = document.getElementById("feed");
+  const myToken = ++runToken;
+  const tasks = wf.tasks;
+
+  function line(agentKey, text, toolOut){
+    const role = AGENT_ROLES[agentKey];
+    const el = document.createElement("div");
+    el.className = "feed-line";
+    el.innerHTML = `<span class="tag">${role.emoji} ${role.label}</span>${text}<span class="out">↳ ${toolOut}</span>`;
+    feed.appendChild(el);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  async function runSequential(){
+    for(let i=0;i<tasks.length;i++){
+      if(myToken !== runToken) return;
+      await wait(650);
+      const t = tasks[i];
+      const role = AGENT_ROLES[t.agent];
+      const toolKey = role.tools[i % (role.tools.length-1)];
+      line(t.agent, t.task, TOOLS[toolKey]());
+    }
+    finishRun(emp, wf);
+  }
+
+  async function runDag(){
+    const waves = topoWaves(tasks);
+    for(const wave of waves){
+      if(myToken !== runToken) return;
+      await wait(650);
+      wave.forEach((idx, k)=>{
+        const t = tasks[idx];
+        const role = AGENT_ROLES[t.agent];
+        const toolKey = role.tools[k % (role.tools.length-1)];
+        line(t.agent, t.task, TOOLS[toolKey]());
+      });
+    }
+    finishRun(emp, wf);
+  }
+
+  if(wf.mode === "dag") runDag(); else runSequential();
+}
+
+function wait(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+function finishRun(emp, wf){
+  emp.status = "done";
+  renderRoster();
+  const body = document.getElementById("deliverableBody");
+  if(body){
+    const pre = document.createElement("pre");
+    pre.textContent = FINAL[emp.wf];
+    body.innerHTML = "";
+    body.appendChild(pre);
+    const save = document.getElementById("saveLine");
+    if(save) save.style.display = "block";
+  }
+}
+
+function closeRun(id){
+  runToken++;
+  const emp = EMPLOYEES.find(e=>e.id===id);
+  if(emp && emp.status === "running") emp.status = "idle";
+  document.getElementById("runPanel").style.display = "none";
+  document.getElementById("runPanel").innerHTML = "";
+  renderRoster();
+}
+
+/* ---------- builder ---------- */
+let bStep = 1;
+let bWf = null;
+let bName = "";
+let bCadence = CONFIG.builderCadences[0];
+
+function renderBuilder(){
+  document.getElementById("dot1").classList.toggle("active", bStep>=1);
+  document.getElementById("dot2").classList.toggle("active", bStep>=2);
+  document.getElementById("dot3").classList.toggle("active", bStep>=3);
+  document.getElementById("bBack").style.visibility = bStep>1 ? "visible" : "hidden";
+  const body = document.getElementById("builderBody");
+  const nextBtn = document.getElementById("bNext");
+
+  if(bStep === 1){
+    body.innerHTML = `<div class="wf-pick" id="wfPick"></div>`;
+    const pick = document.getElementById("wfPick");
+    Object.keys(WORKFLOWS).forEach(key=>{
+      const wf = WORKFLOWS[key];
+      const el = document.createElement("div");
+      el.className = "wf-opt" + (bWf===key ? " sel" : "");
+      el.innerHTML = `<div class="t">${wf.title}</div><div class="d">${wf.deliverable} · ${CONFIG.trackLabels[wf.track]||""}</div>`;
+      el.onclick = ()=>{ bWf = key; renderBuilder(); };
+      pick.appendChild(el);
+    });
+    nextBtn.disabled = !bWf;
+    nextBtn.textContent = "Next";
+  } else if(bStep === 2){
+    body.innerHTML = `
+      <label class="field">Operator name</label>
+      <input type="text" id="bNameInput" placeholder="e.g. ${WORKFLOWS[bWf].title} Operator — West Region" value="${bName}">
+      <label class="field">Run cadence</label>
+      <div class="cadence-row" id="cadRow"></div>
+    `;
+    document.getElementById("bNameInput").oninput = (e)=>{ bName = e.target.value; nextBtn.disabled = !bName.trim(); };
+    const cadRow = document.getElementById("cadRow");
+    CONFIG.builderCadences.forEach(c=>{
+      const el = document.createElement("div");
+      el.className = "cad-opt" + (bCadence===c ? " sel" : "");
+      el.textContent = c;
+      el.onclick = ()=>{ bCadence = c; renderBuilder(); };
+      cadRow.appendChild(el);
+    });
+    nextBtn.disabled = !bName.trim();
+    nextBtn.textContent = "Next";
+  } else if(bStep === 3){
+    const wf = WORKFLOWS[bWf];
+    body.innerHTML = `
+      <div class="confirm-summary">
+        Ready to add <b>${bName || (wf.title+" Operator")}</b> to the roster.<br>
+        Workflow: <b>${wf.title}</b> (${CONFIG.trackLabels[wf.track]||""})<br>
+        Deliverable: <b>${wf.deliverable}</b><br>
+        Cadence: <b>${bCadence}</b><br><br>
+        This adds a new operator card to the roster below, ready to run.
+      </div>
+    `;
+    nextBtn.disabled = false;
+    nextBtn.textContent = "Add to roster";
+  }
+}
+
+function builderNext(){
+  if(bStep < 3){ bStep++; renderBuilder(); return; }
+  // finalize
+  const wf = WORKFLOWS[bWf];
+  const newEmp = {
+    id: "op" + (EMPLOYEES.length+1) + "_" + Date.now(),
+    name: bName.trim() || (wf.title + " Operator"),
+    title: CONFIG.trackLabels[wf.track] || wf.title,
+    wf: bWf,
+    handled: wf.deliverable + "s",
+    hrs: 8,
+    win: bCadence + " cadence",
+    status: "idle"
+  };
+  EMPLOYEES.push(newEmp);
+  renderRoster();
+  renderEcon();
+  bStep = 1; bWf = null; bName = ""; bCadence = CONFIG.builderCadences[0];
+  renderBuilder();
+  document.getElementById("rosterRoot").scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function builderBack(){
+  if(bStep>1){ bStep--; renderBuilder(); }
+}
+
+renderEcon();
+renderRoster();
+renderBuilder();
+</script>
+</body>
+</html>
