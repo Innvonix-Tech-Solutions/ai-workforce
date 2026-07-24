@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Airgain Design-Win Console — AI Workforce Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0E0B14;
+  --surface:#171220;
+  --surface-2:#1D1729;
+  --surface-3:#241D33;
+  --border:#332A47;
+  --border-soft:#251F35;
+  --text:#F1EDF7;
+  --muted:#A79AC0;
+  --muted-2:#6E6285;
+  --accent:#FF6A3D;
+  --accent-dim:#8A3A24;
+  --accent2:#4FC3F7;
+  --accent3:#B084F0;
+  --danger:#FF5C7A;
+  --font-display:'Archivo',sans-serif;
+  --font-body:'Inter',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 85% -8%, rgba(255,106,61,0.09), transparent 55%),
+    radial-gradient(900px 500px at 5% 10%, rgba(79,195,247,0.07), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent);}
+::selection{background:rgba(255,106,61,0.28);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+
+/* ---------- HEADER ---------- */
+.masthead{border-bottom:1px solid var(--border-soft);padding:26px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:38px;height:38px;border-radius:50%;
+  background:conic-gradient(from 220deg, var(--accent), var(--accent3), var(--accent2), var(--accent));
+  display:flex;align-items:center;justify-content:center;position:relative;
+}
+.mark-badge::after{content:'';width:16px;height:16px;border-radius:50%;background:var(--bg);}
+.mark-name{font-family:var(--font-display);font-weight:800;font-size:19px;letter-spacing:0.005em;}
+.mark-sub{font-family:var(--font-mono);font-size:10.5px;color:var(--muted-2);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px;}
+
+.band-readout{
+  font-family:var(--font-mono);font-size:12.5px;color:var(--accent2);
+  background:var(--surface);border:1px solid var(--border);border-radius:20px;
+  padding:8px 16px;display:flex;align-items:center;gap:10px;
+}
+.band-readout .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.hero{padding:44px 0 30px;display:grid;grid-template-columns:1.1fr 0.9fr;gap:40px;align-items:center;}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:30px 0 18px;}}
+.eyebrow{
+  font-family:var(--font-mono);font-size:11.5px;color:var(--accent);text-transform:uppercase;
+  letter-spacing:.12em;margin-bottom:14px;display:flex;align-items:center;gap:8px;
+}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent);}
+h1{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,4vw,42px);line-height:1.08;letter-spacing:-0.01em;margin:0 0 16px;}
+h1 span{color:var(--accent);}
+.lead{color:var(--muted);font-size:15.5px;max-width:53ch;margin:0 0 22px;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:var(--font-body);font-weight:600;font-size:13.5px;border-radius:24px;padding:11px 20px;cursor:pointer;border:1px solid transparent;transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--accent);color:#210900;border-color:var(--accent);}
+.btn-primary:hover{background:#ff8863;}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--accent2);color:var(--accent2);}
+
+/* radiation pattern signature */
+.polar{border:1px solid var(--border);border-radius:14px;background:var(--surface);padding:18px 18px 14px;}
+.polar-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+.polar-title{font-family:var(--font-mono);font-size:10.5px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em;}
+.polar-val{font-family:var(--font-mono);font-size:12px;color:var(--accent);}
+svg.pattern{width:100%;height:200px;display:block;}
+.polar-grid circle{fill:none;stroke:var(--border-soft);stroke-width:1;}
+.polar-grid line{stroke:var(--border-soft);stroke-width:1;}
+.lobe{fill:rgba(255,106,61,0.12);stroke:var(--accent);stroke-width:1.6;filter:drop-shadow(0 0 5px rgba(255,106,61,.45));}
+.polar-foot{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--font-mono);font-size:10.5px;color:var(--muted-2);}
+
+/* ---------- ECON STRIP ---------- */
+.econ{border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:760px){.econ{grid-template-columns:repeat(2,1fr);}}
+.econ-item{padding:6px 18px;border-left:1px solid var(--border-soft);}
+.econ-item:first-child{border-left:none;padding-left:0;}
+@media(max-width:760px){.econ-item:nth-child(2n+1){border-left:none;padding-left:0;}}
+.econ-num{font-family:var(--font-display);font-weight:800;font-size:26px;color:var(--text);}
+.econ-num small{font-size:14px;color:var(--accent);font-weight:700;}
+.econ-label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+section{padding:46px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.section-title{font-family:var(--font-display);font-weight:800;font-size:22px;}
+.section-sub{color:var(--muted);font-size:13.5px;max-width:60ch;margin-top:4px;}
+.track-label{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.1em;margin:28px 0 14px;padding-top:6px;border-top:1px dashed var(--border-soft);}
+.track-label:first-of-type{border-top:none;padding-top:0;margin-top:6px;}
+
+.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+@media(max-width:760px){.roster{grid-template-columns:1fr;}}
+.op-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;transition:border-color .15s ease;}
+.op-card:hover{border-color:var(--accent-dim);}
+.op-card.flagship{border-color:var(--accent);background:linear-gradient(180deg,rgba(255,106,61,0.08),var(--surface));}
+.op-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.op-name{font-family:var(--font-display);font-weight:700;font-size:15.5px;}
+.op-role{font-size:12px;color:var(--muted);margin-top:2px;}
+.flag-chip{font-family:var(--font-mono);font-size:10px;color:var(--accent);border:1px solid var(--accent);border-radius:20px;padding:2px 8px;white-space:nowrap;}
+.op-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+.op-stats{display:flex;gap:16px;margin-top:2px;}
+.op-stat{font-family:var(--font-mono);font-size:11.5px;color:var(--muted-2);}
+.op-stat b{color:var(--accent);font-size:13px;display:block;font-family:var(--font-body);font-weight:600;}
+.op-agents{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.chip{font-size:11px;background:var(--surface-3);border:1px solid var(--border);border-radius:20px;padding:3px 9px;color:var(--muted);}
+.op-actions{display:flex;gap:10px;margin-top:6px;}
+.run-btn{flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:600;font-size:13px;border-radius:22px;padding:9px;cursor:pointer;}
+.run-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+.run-panel{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;margin-top:22px;display:none;}
+.run-panel.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.run-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.run-head h3{font-family:var(--font-display);font-size:17px;margin:0;}
+.run-head .meta{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.close-run{background:none;border:1px solid var(--border);color:var(--muted);border-radius:20px;padding:6px 12px;cursor:pointer;font-size:12px;}
+.close-run:hover{color:var(--text);border-color:var(--accent2);}
+
+.feed{background:var(--bg);border:1px solid var(--border-soft);border-radius:10px;padding:14px 16px;height:260px;overflow-y:auto;font-family:var(--font-mono);font-size:12.5px;display:flex;flex-direction:column;gap:7px;}
+.feed-line{display:flex;gap:10px;align-items:flex-start;opacity:0;animation:appear .3s ease forwards;}
+@keyframes appear{to{opacity:1;}}
+.feed-line .tag{color:var(--accent);white-space:nowrap;}
+.feed-line .txt{color:var(--muted);}
+.feed-line.done .tag{color:var(--accent2);}
+.feed-line.done .txt{color:var(--text);}
+
+.progress-row{display:flex;gap:6px;margin:14px 0 6px;flex-wrap:wrap;}
+.pstep{flex:1;min-width:64px;height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;position:relative;}
+.pstep.active{background:var(--accent-dim);}
+.pstep.complete{background:var(--accent);}
+
+.deliverable{margin-top:18px;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:16px 18px;display:none;}
+.deliverable.show{display:block;animation:fadein .3s ease;}
+.deliverable h4{font-family:var(--font-display);font-size:14px;margin:0 0 10px;color:var(--accent);}
+.deliverable pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:12.5px;color:var(--text);margin:0;line-height:1.6;}
+.note{font-size:11px;color:var(--muted-2);margin-top:10px;font-style:italic;}
+
+.builder{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;}
+.build-steps{display:flex;gap:8px;margin-bottom:20px;}
+.build-step-dot{flex:1;height:3px;border-radius:2px;background:var(--surface-3);}
+.build-step-dot.on{background:var(--accent);}
+.build-body{min-height:200px;}
+.pick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+@media(max-width:700px){.pick-grid{grid-template-columns:1fr;}}
+.pick-card{border:1px solid var(--border);border-radius:12px;padding:14px;cursor:pointer;background:var(--surface-2);}
+.pick-card:hover{border-color:var(--accent2);}
+.pick-card.selected{border-color:var(--accent);background:rgba(255,106,61,0.07);}
+.pick-title{font-weight:600;font-size:13.5px;}
+.pick-desc{font-size:12px;color:var(--muted);margin-top:4px;}
+.field-row{margin-bottom:14px;}
+.field-row label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;}
+.field-row input,.field-row select{width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:10px 12px;font-family:var(--font-body);font-size:13.5px;}
+.build-nav{display:flex;justify-content:space-between;margin-top:20px;}
+.summary-box{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:16px;}
+.summary-box b{color:var(--accent);}
+
+footer{border-top:1px solid var(--border-soft);padding:28px 0 40px;}
+.foot-note{font-size:12px;color:var(--muted-2);max-width:80ch;line-height:1.6;}
+.foot-note strong{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark-row">
+      <div class="mark">
+        <div class="mark-badge"></div>
+        <div>
+          <div class="mark-name">Design-Win Console</div>
+          <div class="mark-sub">Airgain · AI Workforce Prototype</div>
+        </div>
+      </div>
+      <div class="band-readout">
+        <span class="dot"></span>
+        <span id="bandTxt">5G n77 · scanning 3.3–4.2 GHz</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero" style="padding-bottom:0;">
+    <div>
+      <div class="eyebrow">RF engineering · antennas & connectivity</div>
+      <h1>Eight operators to run Airgain's <span>quote-to-certified</span> loop</h1>
+      <p class="lead">Each operator below is a real Airgain workflow — an OEM RFQ, a multi-band antenna sprint, a carrier certification run — handed to a small team of specialist agents that works it end to end and hands back a reviewable deliverable.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="document.getElementById('roster-section').scrollIntoView({behavior:'smooth'})">View the roster</button>
+        <button class="btn btn-ghost" onclick="runOperator('rfq')">Run the flagship operator</button>
+      </div>
+    </div>
+    <div class="polar">
+      <div class="polar-top">
+        <span class="polar-title">MaxBeam array — live gain pattern</span>
+        <span class="polar-val" id="gainVal">6.2 dBi peak</span>
+      </div>
+      <svg class="pattern" viewBox="0 0 220 200" preserveAspectRatio="xMidYMid meet">
+        <g class="polar-grid" transform="translate(110,100)">
+          <circle r="30"></circle><circle r="60"></circle><circle r="88"></circle>
+          <line x1="-95" y1="0" x2="95" y2="0"></line>
+          <line x1="0" y1="-95" x2="0" y2="95"></line>
+        </g>
+        <path class="lobe" id="lobePath" transform="translate(110,100)" d=""></path>
+      </svg>
+      <div class="polar-foot">
+        <span>MIMO 4x4 · isolation nominal</span>
+        <span id="vswrVal">VSWR 1.32:1</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="econ wrap" style="padding-left:0;padding-right:0;">
+    <div class="econ-item">
+      <div class="econ-num">5.8<small>×</small></div>
+      <div class="econ-label">Faster OEM quote turnaround on inbound RFQs</div>
+    </div>
+    <div class="econ-item">
+      <div class="econ-num">1,000<small>+</small></div>
+      <div class="econ-label">Antenna designs in the library each operator can draw on</div>
+    </div>
+    <div class="econ-item">
+      <div class="econ-num">24<small> hrs</small></div>
+      <div class="econ-label">Median engineering hours returned per run</div>
+    </div>
+    <div class="econ-item">
+      <div class="econ-num">8<small>/8</small></div>
+      <div class="econ-label">Workflows covered, design through certification</div>
+    </div>
+  </div>
+
+  <section id="roster-section">
+    <div class="section-head">
+      <div>
+        <div class="section-title">The roster</div>
+        <div class="section-sub">Grouped by track. Run any operator to watch its agent team work a real Airgain-style task and produce a deliverable.</div>
+      </div>
+    </div>
+    <div id="rosterMount"></div>
+
+    <div class="run-panel" id="runPanel">
+      <div class="run-head">
+        <div>
+          <h3 id="runTitle">—</h3>
+          <div class="meta" id="runMeta">—</div>
+        </div>
+        <button class="close-run" onclick="closeRun()">Close</button>
+      </div>
+      <div class="progress-row" id="progressRow"></div>
+      <div class="feed" id="feed"></div>
+      <div class="deliverable" id="deliverable">
+        <h4 id="delivTitle">Deliverable</h4>
+        <pre id="delivBody"></pre>
+        <div class="note">NOTE: illustrative simulation for demonstration purposes — all figures are placeholders and every output is reviewed by an Airgain RF engineer or program manager before use.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-title">Build a new operator</div>
+        <div class="section-sub">Compose a ninth operator in three steps: pick the base workflow, assign its cadence, name it.</div>
+      </div>
+    </div>
+    <div class="builder">
+      <div class="build-steps">
+        <div class="build-step-dot on" id="dot1"></div>
+        <div class="build-step-dot" id="dot2"></div>
+        <div class="build-step-dot" id="dot3"></div>
+      </div>
+      <div class="build-body" id="buildBody"></div>
+      <div class="build-nav">
+        <button class="btn btn-ghost" id="backBtn" onclick="builderBack()" style="visibility:hidden;">Back</button>
+        <button class="btn btn-primary" id="nextBtn" onclick="builderNext()">Next</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="foot-note">
+      <strong>This is a sales/stakeholder prototype, not a live system.</strong> No Airgain systems, customer data, or proprietary antenna designs were used to build it — every deliverable, metric, and number above is an illustrative placeholder written to sound domain-authentic. Nothing here is submitted, filed, or transmitted anywhere; every run stays in this browser tab. Any resemblance to a real Airgain program, part number, or customer is coincidental. In production, every deliverable in this loop — quotes, certification filings, cost models, RMA reports — would be reviewed and signed off by a qualified Airgain RF engineer or program manager before it leaves the building.
+    </p>
+  </footer>
+</div>
+
+<script>
+/* =========================================================
+   DATA
+   ========================================================= */
+const AGENT_ROLES = {
+  rf:       {emoji:'📡', label:'RF / Antenna Design Engineer', tools:['antennaSim','patternTune','save']},
+  systems:  {emoji:'🛰️', label:'GNSS / 5G Systems Engineer', tools:['bandPlan','coexistCheck','save']},
+  test:     {emoji:'🧪', label:'OTA & Certification Test Engineer', tools:['otaSweep','labBooking','save']},
+  reg:      {emoji:'🛡️', label:'Regulatory Compliance Officer', tools:['fccPrep','ptcrbFile','save']},
+  intel:    {emoji:'🔍', label:'Design-Win Intel Analyst', tools:['oemScan','competitorScan','save']},
+  quote:    {emoji:'📋', label:'Proposal / Quote Engineer', tools:['specMatch','draftQuote','save']},
+  cost:     {emoji:'💰', label:'Pricing & Costing Analyst', tools:['bomCost','tierPricing','save']},
+  supply:   {emoji:'🏭', label:'Manufacturing & Supply Planner', tools:['cmCapacity','leadTimeScan','save']},
+  channel:  {emoji:'🚚', label:'Channel & Distributor Ops', tools:['partnerKit','orderSync','save']},
+  field:    {emoji:'🔧', label:'Field Support & RMA Engineer', tools:['failureAnalysis','rmaTrack','save']},
+  pm:       {emoji:'📊', label:'Program Manager', tools:['scheduleCheck','finalReview','save']},
+};
+
+const WORKFLOWS = {
+  rfq: {
+    name:'OEM Design-Win RFQ Response', title:'RFQ Response',
+    mode:'sequential', tag:'flagship', track:'trackA',
+    deliverable:'Quote package',
+    sample:'Fleet-gateway OEM RFQ: 5G/Wi-Fi 6E/GNSS combo antenna, 40k unit annual volume',
+    desc:'From an inbound RFQ to a signed-off quote: spec match against the design library, antenna proposal, pricing, and a compliance sanity check.',
+    tasks:[
+      {agent:'intel', task:'Log the RFQ and extract band plan, form factor, and volume targets', deps:[]},
+      {agent:'rf', task:'Match the spec against the existing 1,000+ antenna design library', deps:[0]},
+      {agent:'systems', task:'Confirm 5G/Wi-Fi/GNSS coexistence for the requested band combo', deps:[1]},
+      {agent:'quote', task:'Draft the technical proposal and spec sheet for the OEM', deps:[2]},
+      {agent:'cost', task:'Build tiered volume pricing against the target annual quantity', deps:[3]},
+      {agent:'reg', task:'Flag any FCC/PTCRB exposure the design change would trigger', deps:[3]},
+      {agent:'pm', task:'Assemble the quote package and flag open items for sign-off', deps:[4,5]},
+    ],
+  },
+  antdesign: {
+    name:'Multi-Band Antenna Design Sprint', title:'Antenna Design Sprint',
+    mode:'dag', track:'trackB',
+    deliverable:'Design package',
+    sample:'MaxBeam high-gain array for a fixed-wireless-access CPE, 5G n77/n78 plus Wi-Fi 6E',
+    desc:'RF and systems agents work the same antenna spec in parallel — pattern, isolation, coexistence — and converge on a design package ready for the lab.',
+    tasks:[
+      {agent:'rf', task:'Model radiation pattern and gain across the target band plan', deps:[]},
+      {agent:'rf', task:'Simulate MIMO isolation between array elements', deps:[]},
+      {agent:'systems', task:'Check coexistence and desense risk across 5G/Wi-Fi/GNSS chains', deps:[]},
+      {agent:'rf', task:'Converge the tuned design and freeze the mechanical envelope', deps:[0,1,2]},
+      {agent:'pm', task:'Compile the design package for lab validation', deps:[3]},
+    ],
+  },
+  certrun: {
+    name:'Carrier & Regulatory Certification Run', title:'Certification Run',
+    mode:'sequential', track:'trackB',
+    deliverable:'Certification status report',
+    sample:'AT&T and Verizon carrier certification for a Skywire-based fleet router',
+    desc:'Walks a finished design through OTA test, FCC/PTCRB filing, and carrier submission before it can ship into a network.',
+    tasks:[
+      {agent:'test', task:'Build the OTA test plan and book the certified lab slot', deps:[]},
+      {agent:'test', task:'Run the OTA sweep: TRP, TIS, and spurious emissions', deps:[0]},
+      {agent:'reg', task:'Prepare and file the FCC modular transmitter application', deps:[1]},
+      {agent:'reg', task:'Submit the PTCRB and carrier-specific certification package', deps:[2]},
+      {agent:'pm', task:'Track approvals and issue the certification status report', deps:[3]},
+    ],
+  },
+  intelscan: {
+    name:'Competitive Win/Loss & Market Intel Scan', title:'Market Intel Scan',
+    mode:'dag', track:'trackA',
+    deliverable:'Market intel brief',
+    sample:'Quarterly scan of competitor antenna launches and fleet-market design wins',
+    desc:'Scans competitor product launches, recent design-win/loss data, and price benchmarks in parallel, then rolls it into one brief.',
+    tasks:[
+      {agent:'intel', task:'Scan competitor antenna and router launches this quarter', deps:[]},
+      {agent:'intel', task:'Pull recent design win/loss notes from the sales pipeline', deps:[]},
+      {agent:'cost', task:'Benchmark competitor pricing against Airgain tiered pricing', deps:[]},
+      {agent:'pm', task:'Compile the market intel brief with a recommended response', deps:[0,1,2]},
+    ],
+  },
+  pricing: {
+    name:'Volume Pricing & BOM Cost Model', title:'Pricing & Cost Model',
+    mode:'sequential', track:'trackA',
+    deliverable:'Pricing model memo',
+    sample:'Repricing the Lumos external antenna line for a renewed 3-year fleet contract',
+    desc:'Builds a bottoms-up BOM cost model and tiered volume pricing for a renewal, renegotiation, or new program.',
+    tasks:[
+      {agent:'cost', task:'Break the BOM into material, labor, and tooling cost pools', deps:[]},
+      {agent:'supply', task:'Validate current component lead times and landed cost', deps:[0]},
+      {agent:'cost', task:'Build tiered volume pricing across the proposed quantity bands', deps:[1]},
+      {agent:'cost', task:'Run margin sensitivity against a 10% material cost swing', deps:[2]},
+      {agent:'pm', task:'Draft the pricing model memo for sign-off', deps:[3]},
+    ],
+  },
+  supplyplan: {
+    name:'Contract Manufacturer & Supply Coordination', title:'CM & Supply Coordination',
+    mode:'dag', track:'trackB',
+    deliverable:'Production readiness plan',
+    sample:'Ramping the SmartMax antenna line for a new 40k-unit annual OEM award',
+    desc:'Checks component lead times and contract-manufacturer capacity in parallel, then converges on a production readiness plan.',
+    tasks:[
+      {agent:'supply', task:'Scan long-lead component availability against the new BOM', deps:[]},
+      {agent:'supply', task:'Check contract manufacturer capacity for the ramp schedule', deps:[]},
+      {agent:'cost', task:'Estimate landed cost impact of any flagged component risk', deps:[0,1]},
+      {agent:'pm', task:'Issue the production readiness plan with mitigation items', deps:[2]},
+    ],
+  },
+  channelkit: {
+    name:'Channel Partner Enablement Pack', title:'Channel Enablement',
+    mode:'sequential', track:'trackA',
+    deliverable:'Partner enablement kit',
+    sample:'Onboarding a new VAR for the RECON13 rugged antenna line in the public-safety vertical',
+    desc:'Builds the spec sheets, pricing sheet, and training material a new distributor or VAR needs to start selling.',
+    tasks:[
+      {agent:'channel', task:'Assemble the partner onboarding checklist and account setup', deps:[]},
+      {agent:'quote', task:'Localize spec sheets for the new partner’s target vertical', deps:[0]},
+      {agent:'cost', task:'Attach the partner-tier pricing sheet', deps:[1]},
+      {agent:'pm', task:'Package the enablement kit and schedule the launch call', deps:[2]},
+    ],
+  },
+  rma: {
+    name:'Field RMA & Failure Analysis', title:'RMA & Failure Analysis',
+    mode:'sequential', track:'trackB',
+    deliverable:'RMA closure report',
+    sample:'Fleet customer reports intermittent GNSS dropout on 60 deployed units',
+    desc:'Takes an RMA from intake through root-cause analysis to a customer-facing closure report and corrective action.',
+    tasks:[
+      {agent:'field', task:'Log the RMA and reproduce the reported failure condition', deps:[]},
+      {agent:'rf', task:'Run root-cause analysis against the antenna and RF chain', deps:[0]},
+      {agent:'supply', task:'Check whether a component lot or supplier change correlates', deps:[1]},
+      {agent:'field', task:'Draft the corrective action and customer-facing report', deps:[2]},
+      {agent:'pm', task:'Close the RMA and log the corrective action for trend tracking', deps:[3]},
+    ],
+  },
+};
+
+const DTITLE = {
+  rfq:'Draft Quote Package Summary',
+  antdesign:'Antenna Design Package',
+  certrun:'Certification Status Report',
+  intelscan:'Market Intel Brief',
+  pricing:'Pricing Model Memo',
+  supplyplan:'Production Readiness Plan',
+  channelkit:'Partner Enablement Kit Summary',
+  rma:'RMA Closure Report',
+};
+
+const TOOLS = {
+  antennaSim:()=>'Design library match found, 3 candidates within 0.4 dB of target gain',
+  patternTune:()=>'Radiation pattern tuned, front-to-back ratio improved to 14.2 dB',
+  bandPlan:()=>'Band plan confirmed: n77/n78, Wi-Fi 6E, L1/L5 GNSS, no overlap conflicts',
+  coexistCheck:()=>'Coexistence check clean, desense risk below -3 dB threshold',
+  otaSweep:()=>'OTA sweep complete: TRP 24.1 dBm, TIS -104.3 dBm, within spec',
+  labBooking:()=>'Certified lab slot confirmed for next available test window',
+  fccPrep:()=>'FCC modular transmitter application drafted, exhibits attached',
+  ptcrbFile:()=>'PTCRB submission filed, carrier annexes for AT&T and Verizon attached',
+  oemScan:()=>'4 new OEM RFQs identified matching current design capability',
+  competitorScan:()=>'2 competitor product launches flagged in the fleet-antenna segment',
+  specMatch:()=>'Spec match scored 9.1/10 against the MaxBeam design family',
+  draftQuote:()=>'Technical proposal drafted, spec sheet auto-generated',
+  bomCost:()=>'BOM decomposed into 38 line items across 4 cost pools',
+  tierPricing:()=>'Tiered pricing built for 10k/25k/40k+ unit volume bands',
+  cmCapacity:()=>'Contract manufacturer capacity confirmed for ramp schedule',
+  leadTimeScan:()=>'2 components flagged with lead times exceeding 14 weeks',
+  partnerKit:()=>'Partner onboarding checklist generated, account created in CRM',
+  orderSync:()=>'Order flow synced to distributor portal',
+  failureAnalysis:()=>'Root cause traced to a connector torque variance in one production lot',
+  rmaTrack:()=>'RMA logged and linked to the affected production lot',
+  scheduleCheck:()=>'Schedule variance +0.6%, within tolerance',
+  finalReview:()=>'Package reviewed, routed for human sign-off',
+  save:()=>'Saved to program record',
+};
+
+const FINAL = {
+  rfq:
+`DRAFT QUOTE PACKAGE — Fleet-Gateway OEM RFQ
+5G / Wi-Fi 6E / GNSS Combo Antenna, 40,000 unit annual volume
+
+SPEC MATCH: 9.1/10 against the MaxBeam design family; 3 existing designs
+within 0.4 dB of the requested gain target, reducing NRE risk.
+
+TECHNICAL PROPOSAL (draft): Combo antenna covering n77/n78, Wi-Fi 6E, and
+L1/L5 GNSS with confirmed coexistence (desense risk below -3 dB threshold).
+Mechanical envelope fits the OEM's stated enclosure constraints.
+
+PRICING (draft): Tiered volume pricing built at 10k/25k/40k+ unit bands.
+Landed cost validated against current component lead times.
+
+COMPLIANCE FLAG: Design change requires a new FCC modular transmitter
+filing; no PTCRB re-test expected since the RF front-end is unchanged.
+
+OPEN ITEMS FOR HUMAN REVIEW: (1) confirm final tier pricing against
+current margin targets, (2) validate FCC filing scope with regulatory,
+(3) confirm mechanical fit with OEM's ID team before quote goes out.
+
+NOTE: illustrative draft — placeholder figures, not a real customer quote.`,
+
+  antdesign:
+`ANTENNA DESIGN PACKAGE — Multi-Band FWA CPE Array
+
+PATTERN: Radiation pattern tuned, front-to-back ratio improved to 14.2 dB,
+peak gain 6.2 dBi across the n77/n78 band plan.
+
+ISOLATION: MIMO element isolation simulated at >18 dB across the array,
+meeting the throughput target for 4x4 configuration.
+
+COEXISTENCE: 5G/Wi-Fi/GNSS chain coexistence checked clean; desense risk
+below the -3 dB threshold at all tested channel combinations.
+
+CONVERGED DESIGN: Mechanical envelope frozen at the target enclosure
+dimensions; no further trade-offs required between pattern and isolation.
+
+RECOMMENDATION: Release design package to the lab for physical
+validation and OTA pre-test.
+
+NOTE: illustrative simulation — placeholder figures for a representative
+antenna design, not an actual Airgain program.`,
+
+  certrun:
+`CERTIFICATION STATUS REPORT — Skywire Fleet Router
+
+OTA TEST: TRP 24.1 dBm, TIS -104.3 dBm, spurious emissions within FCC
+Part 15/22/24 limits. Test plan executed on schedule.
+
+FCC: Modular transmitter application filed with exhibits; no red flags
+in the pre-filing review.
+
+PTCRB / CARRIER: Submission filed with AT&T and Verizon annexes
+attached; module reuse should limit re-test to SIM, power, and antenna
+interfaces per standard integrated-device rules.
+
+STATUS: On track for certification within the standard review window;
+no open technical issues identified.
+
+NOTE: illustrative status report — placeholder data for demonstration.`,
+
+  intelscan:
+`MARKET INTEL BRIEF — Q3 Competitive Scan
+
+COMPETITOR LAUNCHES: 2 new competitor antenna products flagged in the
+fleet-connectivity segment, both targeting the same CBRS/5G band combo
+Airgain currently leads in.
+
+WIN/LOSS: Pipeline review shows wins concentrated in public-safety and
+fleet verticals; losses trace mostly to lead-time commitments rather
+than technical fit.
+
+PRICING BENCHMARK: Competitor pricing tracking within 4% of Airgain's
+current tiered pricing at the 25k-unit volume band.
+
+RECOMMENDATION: Hold current pricing; tighten quoted lead times on
+fleet RFQs to close the gap driving recent losses.
+
+NOTE: illustrative brief — placeholder figures for demonstration.`,
+
+  pricing:
+`PRICING MODEL MEMO — Lumos External Antenna Line Renewal
+
+BOM BREAKDOWN: 38 line items decomposed into material, labor, and
+tooling pools; material represents 61% of unit cost.
+
+LEAD TIME / LANDED COST: Current component lead times validated;
+no components currently flagged at elevated risk.
+
+TIERED PRICING: Volume bands set at 10k/25k/40k+ units, each with a
+margin floor consistent with the existing fleet contract structure.
+
+SENSITIVITY: Margin holds through a 10% material cost swing without
+breaching the customer's historical price ceiling.
+
+NOTE: illustrative pricing memo — placeholder figures, not an actual
+Airgain cost proposal.`,
+
+  supplyplan:
+`PRODUCTION READINESS PLAN — SmartMax Line Ramp
+
+COMPONENT SCAN: 2 components flagged with lead times exceeding 14
+weeks; both have a qualified second source already on file.
+
+CM CAPACITY: Contract manufacturer confirms capacity to support the
+ramp schedule with a 3-week buffer before the first shipment date.
+
+COST IMPACT: Flagged component risk estimated at low cost impact if
+second-sourced parts are pulled forward this quarter.
+
+RECOMMENDATION: Release long-lead purchase orders now against the
+flagged components; proceed with the ramp schedule as planned.
+
+NOTE: illustrative plan — placeholder figures for demonstration.`,
+
+  channelkit:
+`PARTNER ENABLEMENT KIT — RECON13 Public-Safety VAR Onboarding
+
+ONBOARDING: Partner account created and onboarding checklist issued,
+covering pricing tiers, support escalation path, and marketing assets.
+
+SPEC SHEETS: Localized for the public-safety vertical, highlighting
+IP67 rating, five-year warranty, and multi-band coverage relevant to
+patrol and command-vehicle deployments.
+
+PRICING: Partner-tier pricing sheet attached, consistent with current
+VAR program terms.
+
+LAUNCH: Kickoff call scheduled; partner training deck queued for
+delivery ahead of the call.
+
+NOTE: illustrative enablement kit — placeholder figures for demonstration.`,
+
+  rma:
+`RMA CLOSURE REPORT — Intermittent GNSS Dropout, 60-Unit Fleet Deployment
+
+INTAKE: Failure condition reproduced in lab; dropout correlates with
+vibration exposure above the standard test profile.
+
+ROOT CAUSE: Traced to a connector torque variance in one production
+lot; RF chain and antenna design confirmed not at fault.
+
+LOT CORRELATION: Affected units trace to a single production lot;
+no other lots show the same failure signature.
+
+CORRECTIVE ACTION: Torque spec tightened on the affected connector
+step; customer-facing report drafted with a proactive replacement
+offer for the affected lot.
+
+NOTE: illustrative closure report — placeholder figures for demonstration.`,
+};
+
+const EMPLOYEES = [
+  {id:'op1', name:'RFQ Response', title:'OEM Design-Win RFQ Response', wf:'rfq', handled:'Inbound OEM/ODM RFQs', hrs:24, win:'5.8x faster quote'},
+  {id:'op2', name:'Antenna Design Sprint', title:'Multi-Band Antenna Design Sprint', wf:'antdesign', handled:'New antenna specs, multi-band', hrs:20, win:'Converges in 1 pass'},
+  {id:'op3', name:'Certification Run', title:'Carrier & Regulatory Certification Run', wf:'certrun', handled:'FCC/PTCRB/carrier submissions', hrs:16, win:'Status same-day'},
+  {id:'op4', name:'Market Intel Scan', title:'Competitive Win/Loss & Market Intel Scan', wf:'intelscan', handled:'Competitor launches, pricing benchmarks', hrs:9, win:'Brief in 1 run'},
+  {id:'op5', name:'Pricing & Cost Model', title:'Volume Pricing & BOM Cost Model', wf:'pricing', handled:'Renewals, rebids, new pricing', hrs:14, win:'Within 4% of market'},
+  {id:'op6', name:'CM & Supply Coordination', title:'Contract Manufacturer & Supply Coordination', wf:'supplyplan', handled:'Ramp schedules, lead-time risk', hrs:12, win:'14-wk lead warning'},
+  {id:'op7', name:'Channel Enablement', title:'Channel Partner Enablement Pack', wf:'channelkit', handled:'New VAR / distributor onboarding', hrs:8, win:'Kit-ready in 1 run'},
+  {id:'op8', name:'RMA & Failure Analysis', title:'Field RMA & Failure Analysis', wf:'rma', handled:'Field returns, root-cause analysis', hrs:11, win:'Closure same week'},
+];
+
+const CONFIG = {
+  trackLabels:{trackA:'Design-Win, Pricing & Channel', trackB:'RF Engineering, Test & Compliance'},
+};
+
+/* =========================================================
+   RENDER ROSTER
+   ========================================================= */
+function agentChips(wfKey){
+  const wf = WORKFLOWS[wfKey];
+  const used = [...new Set(wf.tasks.map(t=>t.agent))];
+  return used.map(a=>`<span class="chip">${AGENT_ROLES[a].emoji} ${AGENT_ROLES[a].label}</span>`).join('');
+}
+
+function renderRoster(){
+  const mount = document.getElementById('rosterMount');
+  const tracks = ['trackA','trackB'];
+  let html = '';
+  tracks.forEach(tr=>{
+    html += `<div class="track-label">${CONFIG.trackLabels[tr]}</div><div class="roster">`;
+    EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tr).forEach(e=>{
+      const wf = WORKFLOWS[e.wf];
+      const isFlag = wf.tag==='flagship';
+      html += `
+      <div class="op-card ${isFlag?'flagship':''}">
+        <div class="op-top">
+          <div>
+            <div class="op-name">${e.name}</div>
+            <div class="op-role">${e.title}</div>
+          </div>
+          ${isFlag?'<span class="flag-chip">FLAGSHIP</span>':''}
+        </div>
+        <div class="op-desc">${wf.desc}</div>
+        <div class="op-stats">
+          <div class="op-stat">Handles<b>${e.handled}</b></div>
+          <div class="op-stat">Hrs saved/run<b>${e.hrs}</b></div>
+          <div class="op-stat">Signal<b>${e.win}</b></div>
+        </div>
+        <div class="op-agents">${agentChips(e.wf)}</div>
+        <div class="op-actions">
+          <button class="run-btn" onclick="runOperator('${e.wf}')">▶ Run this operator</button>
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  });
+  mount.innerHTML = html;
+}
+renderRoster();
+
+/* =========================================================
+   RUN ENGINE
+   ========================================================= */
+let runToken = 0;
+
+function closeRun(){
+  document.getElementById('runPanel').classList.remove('active');
+}
+
+async function runOperator(wfKey){
+  const wf = WORKFLOWS[wfKey];
+  const myToken = ++runToken;
+  const panel = document.getElementById('runPanel');
+  const feed = document.getElementById('feed');
+  const progressRow = document.getElementById('progressRow');
+  const deliverable = document.getElementById('deliverable');
+
+  panel.classList.add('active');
+  document.getElementById('runTitle').textContent = wf.name;
+  document.getElementById('runMeta').textContent = `${wf.mode==='dag'?'Parallel DAG':'Sequential'} · ${wf.tasks.length} tasks · sample: ${wf.sample}`;
+  feed.innerHTML = '';
+  deliverable.classList.remove('show');
+  progressRow.innerHTML = wf.tasks.map(()=>`<div class="pstep"></div>`).join('');
+  panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+
+  const steps = document.querySelectorAll('#progressRow .pstep');
+
+  function log(text, done){
+    const line = document.createElement('div');
+    line.className = 'feed-line' + (done?' done':'');
+    line.innerHTML = `<span class="tag">[${done?'done':'run'}]</span><span class="txt">${text}</span>`;
+    feed.appendChild(line);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  const wait = ms => new Promise(r=>setTimeout(r,ms));
+
+  if(wf.mode==='sequential'){
+    for(let i=0;i<wf.tasks.length;i++){
+      if(myToken!==runToken) return;
+      const t = wf.tasks[i];
+      steps[i].classList.add('active');
+      log(`${AGENT_ROLES[t.agent].emoji} ${AGENT_ROLES[t.agent].label} — ${t.task}`);
+      await wait(600 + Math.random()*400);
+      if(myToken!==runToken) return;
+      const toolKey = AGENT_ROLES[t.agent].tools[0];
+      log(`↳ ${TOOLS[toolKey] ? TOOLS[toolKey]() : 'Task complete'}`, true);
+      steps[i].classList.remove('active');
+      steps[i].classList.add('complete');
+      await wait(150);
+    }
+  } else {
+    const done = new Set();
+    const remaining = wf.tasks.map((t,i)=>i);
+    while(remaining.length){
+      const wave = remaining.filter(i=>wf.tasks[i].deps.every(d=>done.has(d)));
+      if(!wave.length) break;
+      wave.forEach(i=>steps[i].classList.add('active'));
+      wave.forEach(i=>{
+        const t = wf.tasks[i];
+        log(`${AGENT_ROLES[t.agent].emoji} ${AGENT_ROLES[t.agent].label} — ${t.task}`);
+      });
+      await wait(650 + Math.random()*400);
+      if(myToken!==runToken) return;
+      wave.forEach(i=>{
+        const t = wf.tasks[i];
+        const toolKey = AGENT_ROLES[t.agent].tools[0];
+        log(`↳ ${TOOLS[toolKey] ? TOOLS[toolKey]() : 'Task complete'}`, true);
+        steps[i].classList.remove('active');
+        steps[i].classList.add('complete');
+        done.add(i);
+      });
+      wave.forEach(i=>remaining.splice(remaining.indexOf(i),1));
+      await wait(150);
+    }
+  }
+
+  if(myToken!==runToken) return;
+  log(`💾 Saved to program record`, true);
+  await wait(300);
+  document.getElementById('delivTitle').textContent = DTITLE[wfKey];
+  document.getElementById('delivBody').textContent = FINAL[wfKey];
+  deliverable.classList.add('show');
+}
+
+/* =========================================================
+   BUILDER
+   ========================================================= */
+let buildStep = 1;
+let buildState = {baseWf:null, cadence:'Weekly', name:''};
+
+function builderRenderStep(){
+  document.getElementById('dot1').classList.toggle('on', buildStep>=1);
+  document.getElementById('dot2').classList.toggle('on', buildStep>=2);
+  document.getElementById('dot3').classList.toggle('on', buildStep>=3);
+  document.getElementById('backBtn').style.visibility = buildStep===1?'hidden':'visible';
+  document.getElementById('nextBtn').textContent = buildStep===3?'Create operator':'Next';
+
+  const body = document.getElementById('buildBody');
+  if(buildStep===1){
+    body.innerHTML = `<div class="pick-grid">` + Object.entries(WORKFLOWS).map(([k,w])=>`
+      <div class="pick-card ${buildState.baseWf===k?'selected':''}" onclick="pickWf('${k}')">
+        <div class="pick-title">${w.name}</div>
+        <div class="pick-desc">${w.desc}</div>
+      </div>`).join('') + `</div>`;
+  } else if(buildStep===2){
+    body.innerHTML = `
+      <div class="field-row">
+        <label>Run cadence</label>
+        <select id="cadenceSel" onchange="buildState.cadence=this.value">
+          <option ${buildState.cadence==='Continuous'?'selected':''}>Continuous</option>
+          <option ${buildState.cadence==='Daily'?'selected':''}>Daily</option>
+          <option ${buildState.cadence==='Weekly'?'selected':''}>Weekly</option>
+          <option ${buildState.cadence==='On new RFQ'?'selected':''}>On new RFQ</option>
+          <option ${buildState.cadence==='On new RMA'?'selected':''}>On new RMA</option>
+        </select>
+      </div>
+      <div class="field-row">
+        <label>Operator name</label>
+        <input id="nameInput" type="text" placeholder="e.g. EU Channel Desk" value="${buildState.name}" oninput="buildState.name=this.value">
+      </div>`;
+  } else {
+    const wf = WORKFLOWS[buildState.baseWf];
+    body.innerHTML = `
+      <div class="summary-box">
+        <p><b>${buildState.name || 'Untitled operator'}</b> — built on <b>${wf ? wf.name : '—'}</b></p>
+        <p>Cadence: <b>${buildState.cadence}</b></p>
+        <p>Agent team: ${wf ? [...new Set(wf.tasks.map(t=>t.agent))].map(a=>AGENT_ROLES[a].emoji+' '+AGENT_ROLES[a].label).join(', ') : '—'}</p>
+        <p style="color:var(--muted);font-size:12.5px;margin-top:10px;">This adds a ninth operator to the roster below, cloned from the workflow above with your cadence and name.</p>
+      </div>`;
+  }
+}
+
+function pickWf(k){
+  buildState.baseWf = k;
+  builderRenderStep();
+}
+
+function builderNext(){
+  if(buildStep===1 && !buildState.baseWf){ alert('Pick a base workflow first.'); return; }
+  if(buildStep===3){
+    const wf = WORKFLOWS[buildState.baseWf];
+    const newKey = 'custom_'+Date.now();
+    WORKFLOWS[newKey] = {...wf, name: buildState.name || (wf.name+' (custom)'), tag:undefined};
+    DTITLE[newKey] = DTITLE[buildState.baseWf];
+    FINAL[newKey] = FINAL[buildState.baseWf];
+    EMPLOYEES.push({
+      id:'custom_'+Date.now(), name: buildState.name || 'Custom Operator',
+      title: WORKFLOWS[newKey].name, wf:newKey,
+      handled: buildState.cadence+' cadence', hrs: 10, win:'New',
+    });
+    renderRoster();
+    buildStep = 1; buildState = {baseWf:null, cadence:'Weekly', name:''};
+    builderRenderStep();
+    document.getElementById('roster-section').scrollIntoView({behavior:'smooth'});
+    return;
+  }
+  buildStep++;
+  builderRenderStep();
+}
+function builderBack(){
+  buildStep--;
+  builderRenderStep();
+}
+builderRenderStep();
+
+/* =========================================================
+   HEADER BAND READOUT + RADIATION PATTERN ANIMATION
+   ========================================================= */
+const BANDS = ['5G n77 · scanning 3.3–4.2 GHz','5G n78 · scanning 3.3–3.8 GHz','Wi-Fi 6E · scanning 5.9–7.1 GHz','GNSS L1/L5 · scanning 1.1–1.6 GHz','CBRS · scanning 3.55–3.7 GHz'];
+let bandIdx = 0;
+setInterval(()=>{
+  bandIdx = (bandIdx+1)%BANDS.length;
+  document.getElementById('bandTxt').textContent = BANDS[bandIdx];
+}, 2600);
+
+let patternT = 0;
+function polarPoint(cx, cy, angleDeg, r){
+  const a = (angleDeg-90) * Math.PI/180;
+  return [cx + r*Math.cos(a), cy + r*Math.sin(a)];
+}
+function drawPattern(){
+  patternT += 0.02;
+  let d = '';
+  // build a two-lobe pattern with slow rotation and gentle breathing
+  const rot = Math.sin(patternT*0.4)*8;
+  for(let a=0; a<=360; a+=5){
+    const rad = (a+rot)*Math.PI/180;
+    const shape = Math.pow(Math.abs(Math.cos(rad)), 1.6) * 0.75 + Math.pow(Math.abs(Math.sin(rad*2)), 3) * 0.25;
+    const breathing = 1 + Math.sin(patternT*1.3 + a*0.01)*0.03;
+    const r = 12 + shape*80*breathing;
+    const [x,y] = polarPoint(0,0,a,r);
+    d += (a===0?'M':'L') + x.toFixed(1) + ',' + y.toFixed(1) + ' ';
+  }
+  d += 'Z';
+  document.getElementById('lobePath').setAttribute('d', d);
+  const peak = (5.4 + Math.sin(patternT*0.6)*0.9).toFixed(1);
+  document.getElementById('gainVal').textContent = `${peak} dBi peak`;
+  const vswr = (1.28 + Math.abs(Math.sin(patternT*0.9))*0.14).toFixed(2);
+  document.getElementById('vswrVal').textContent = `VSWR ${vswr}:1`;
+  requestAnimationFrame(drawPattern);
+}
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  requestAnimationFrame(drawPattern);
+} else {
+  document.getElementById('lobePath').setAttribute('d','M0,-60 L60,0 L0,60 L-60,0 Z');
+}
+</script>
+</body>
+</html>
