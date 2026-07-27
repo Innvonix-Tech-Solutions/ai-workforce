@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Innvonix · Enterprise Multi-Agent Architecture — section</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Innvonix design-system tokens: red #E3484C (pressed #B63A3D), ink #0B0B0B, Poppins/Manrope,
+   radius sm4/md8/lg16/pill999, flat at rest / lift on hover, 1440 container.
+   NOTE: neutral greys (--surface/--muted/--border/--line) are placeholders; swap to the exact
+   neutral tokens in the design-system tokens.md before shipping. */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#E3484C;--red-press:#B63A3D;--ink:#0B0B0B;--white:#FFFFFF;
+  --surface:#F6F6F7;--surface2:#FFFFFF;--muted:#5B5B60;--border:#E6E6E9;--line:#CFCFD4;
+  --r-sm:4px;--r-md:8px;--r-lg:16px;--r-pill:999px;
+  --ease:cubic-bezier(0.2,0.8,0.2,1);--base:250ms;--lift:0 12px 30px rgba(11,11,11,.10);
+}
+body{background:var(--surface2);color:var(--ink);font-family:'Manrope',system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+h2,h3,.font-h{font-family:'Poppins',system-ui,Arial,sans-serif}
+.sec{background:var(--surface);width:100%}
+.wrap{max-width:1200px;margin:0 auto;padding:88px 32px}
+.head{max-width:74ch}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--red)}
+.eyebrow .dot{width:7px;height:7px;border-radius:var(--r-pill);background:var(--red)}
+.eyebrow .by{color:var(--muted);font-weight:600;letter-spacing:1.2px}
+.h2{font-weight:600;font-size:38px;line-height:1.12;color:var(--ink);margin:16px 0 0}
+.sub{font-family:'Poppins';font-weight:500;font-size:20px;color:var(--muted);margin-top:10px}
+.desc{font-size:17px;line-height:1.6;color:var(--muted);margin-top:18px;max-width:74ch;font-weight:500}
+.desc b{color:var(--ink);font-weight:700}
+/* ===== diagram ===== */
+.diagram{max-width:760px;margin:52px auto 0;display:flex;flex-direction:column;align-items:center}
+.node{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 22px;text-align:center;width:100%;max-width:520px;transition:box-shadow var(--base) var(--ease),transform var(--base) var(--ease)}
+.node:hover{box-shadow:var(--lift);transform:translateY(-2px)}
+.node .t{font-family:'Poppins';font-weight:600;font-size:16px;color:var(--ink)}
+.node .s{font-size:12.5px;color:var(--muted);margin-top:3px;letter-spacing:.2px}
+.node.io{max-width:360px;background:transparent;border-style:dashed}
+.node.io .t{color:var(--muted);font-weight:600;font-size:13px;letter-spacing:1.5px;text-transform:uppercase}
+.node.orch{max-width:560px;border:1.5px solid var(--red)}
+.node.orch .t{color:var(--red)}
+.node.outcome{max-width:360px;background:var(--red);border-color:var(--red)}
+.node.outcome .t{color:var(--white)}
+.node.outcome .s{color:rgba(255,255,255,.85)}
+.conn{width:2px;height:26px;background:var(--line)}
+.caret{width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid var(--line);margin-bottom:-2px}
+.branch{position:relative;width:100%;height:22px}
+.branch .hbar{position:absolute;top:0;left:11%;right:11%;height:2px;background:var(--line)}
+.branch .ticks{position:absolute;top:0;left:0;right:0;height:22px;display:grid;grid-template-columns:repeat(4,1fr)}
+.branch .ticks span{width:2px;height:22px;background:var(--line);justify-self:center}
+.agents{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;width:100%}
+.agent{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-md);padding:16px 12px;text-align:center;transition:box-shadow var(--base) var(--ease),transform var(--base) var(--ease)}
+.agent:hover{box-shadow:var(--lift);transform:translateY(-2px)}
+.agent .k{font-family:'Manrope';font-weight:700;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--red)}
+.agent .t{font-family:'Poppins';font-weight:600;font-size:15px;color:var(--ink);margin-top:6px}
+.agent .d{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45}
+.layer{width:100%;max-width:560px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 22px;text-align:center}
+.layer .lt{font-family:'Poppins';font-weight:600;font-size:15px;color:var(--ink)}
+.layer .chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px}
+.chip{font-family:'Manrope';font-weight:600;font-size:12.5px;color:var(--ink);background:var(--surface);border:1px solid var(--border);border-radius:var(--r-pill);padding:6px 14px}
+@media(max-width:760px){
+  .h2{font-size:30px}.wrap{padding:56px 22px}
+  .branch{display:none}
+  .agents{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+<section class="sec">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow"><span class="dot"></span>Enterprise Multi-Agent Architecture <span class="by">· Powered by Intellonix</span></span>
+      <h2 class="h2">Orchestrated intelligence for complex enterprise operations.</h2>
+      <p class="desc">Our Enterprise Multi-Agent Architecture lets specialized AI agents work together under a central orchestration layer, combining planning, reasoning, execution and shared enterprise knowledge to run complex workflows end to end. <b>It connects to your ERP, CRM, databases and APIs, and operates inside your security and governance controls, so every outcome is traceable, measurable and owned by you.</b></p>
+    </div>
+
+    <div class="diagram">
+      <div class="node io"><div class="t">Business Objective</div></div>
+      <div class="conn"></div><div class="caret"></div>
+
+      <div class="node orch"><div class="t">Supervisor / Orchestrator</div><div class="s">Planning · Coordination · Governance</div></div>
+      <div class="conn"></div>
+
+      <div class="branch"><div class="hbar"></div><div class="ticks"><span></span><span></span><span></span><span></span></div></div>
+      <div class="agents">
+        <div class="agent"><div class="k">Research</div><div class="t">Research Agent</div><div class="d">Gathers and grounds context</div></div>
+        <div class="agent"><div class="k">Analytics</div><div class="t">Analytics Agent</div><div class="d">Computes, models, verifies</div></div>
+        <div class="agent"><div class="k">Domain</div><div class="t">Domain Agent</div><div class="d">Applies expert judgement</div></div>
+        <div class="agent"><div class="k">Execution</div><div class="t">Execution Agent</div><div class="d">Drafts and acts on the result</div></div>
+      </div>
+      <div class="branch"><div class="hbar" style="top:20px"></div><div class="ticks"><span></span><span></span><span></span><span></span></div></div>
+
+      <div class="node"><div class="t">Shared Memory &amp; Context</div><div class="s">Agents read and write a common working state</div></div>
+      <div class="conn"></div><div class="caret"></div>
+
+      <div class="layer">
+        <div class="lt">Enterprise data &amp; knowledge layer</div>
+        <div class="chips"><span class="chip">Enterprise Knowledge</span><span class="chip">ERP</span><span class="chip">CRM</span><span class="chip">APIs</span><span class="chip">Databases</span></div>
+      </div>
+      <div class="conn"></div><div class="caret"></div>
+
+      <div class="node outcome"><div class="t">Business Outcome</div><div class="s">Secure · governed · measurable</div></div>
+    </div>
+  </div>
+</section>
+</body>
+</html>
