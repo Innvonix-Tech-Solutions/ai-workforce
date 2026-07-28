@@ -49,3 +49,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/ewmfg
 https://innvonix-tech-solutions.github.io/ai-workforce/diodes
 
 https://innvonix-tech-solutions.github.io/ai-workforce/microvision
+
+https://innvonix-tech-solutions.github.io/ai-workforce/rab
