@@ -45,3 +45,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/fmindustries
 https://innvonix-tech-solutions.github.io/ai-workforce/lightwavelogic
 
 https://innvonix-tech-solutions.github.io/ai-workforce/ewmfg
+
+https://innvonix-tech-solutions.github.io/ai-workforce/diodes
