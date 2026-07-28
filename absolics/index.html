@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Absolics AI Workforce — Built by Innvonix Tech Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@600,700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root{
+    --canvas:#FFFFFF; --surface:#FAFAFA; --surface2:#F2F2F2; --border:#E4E4E4;
+    --accent:#005EB8; /* Absolics Blue */
+    --accent-dim:rgba(0, 94, 184, .07);
+    --accent-line:rgba(0, 94, 184, .35);
+    --text:#1A1A1A; --hi:#000000; --tert:#767676; --done:#9A9A9A;
+  }
+  body{ background:var(--canvas); color:var(--text); font-family:'Inter',system-ui,sans-serif;
+    font-feature-settings:"cv11","ss03"; -webkit-font-smoothing:antialiased; min-height:100vh; }
+  h1,h2,h3,.display{ font-family:'General Sans','Inter',sans-serif; }
+  .tnum{ font-variant-numeric:tabular-nums; }
+  .hidden{ display:none !important; }
+
+  /* HEADER */
+  .header{ background:var(--canvas); border-bottom:1px solid var(--border); padding:16px 30px;
+    display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:50; }
+  .logo{ display:flex; align-items:center; gap:12px; }
+  .logo .mark{ width:32px; height:32px; border:1px solid var(--accent-line); border-radius:8px;
+    display:flex; align-items:center; justify-content:center; color:var(--accent); font-weight:700;
+    font-family:'General Sans',sans-serif; font-size:16px; }
+  .logo .t{ font-size:15px; font-weight:600; color:var(--hi); letter-spacing:-.01em; }
+  .logo .s{ font-size:11px; color:var(--tert); margin-top:1px; }
+  .badge{ border:1px solid var(--border); border-radius:6px; padding:6px 12px; font-size:11px; color:var(--tert); }
+  .badge b{ color:var(--hi); font-weight:600; }
+
+  /* TABS */
+  .tabs{ max-width:1140px; margin:0 auto; padding:22px 24px 0; display:flex; gap:6px; }
+  .tab{ padding:10px 18px; font-size:13px; font-weight:600; color:var(--tert); cursor:pointer;
+    border:1px solid transparent; border-radius:9px 9px 0 0; background:transparent; transition:.2s; }
+  .tab:hover{ color:var(--hi); }
+  .tab.active{ color:var(--hi); background:var(--surface); border-color:var(--border); border-bottom-color:var(--surface); }
+
+  .main{ max-width:1140px; margin:0 auto; padding:24px; }
+
+  .lead{ font-size:14px; color:var(--text); line-height:1.5; max-width:760px; margin-bottom:20px; }
+  .lead b{ color:var(--hi); font-weight:600; }
+
+  /* ECONOMICS STRIP */
+  .econ{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:26px; }
+  .econ .cell{ background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px 18px; }
+  .econ .v{ font-size:26px; font-weight:700; color:var(--hi); font-family:'General Sans',sans-serif; }
+  .econ .v .u{ color:var(--accent); }
+  .econ .k{ font-size:11px; color:var(--tert); margin-top:4px; line-height:1.35; }
+  @media(max-width:780px){ .econ{ grid-template-columns:repeat(2,1fr); }}
+
+  .section-label{ font-size:11px; font-weight:600; letter-spacing:1.5px; color:var(--tert);
+    text-transform:uppercase; margin:6px 0 14px; display:flex; align-items:center; gap:10px; }
+  .section-label::after{ content:''; flex:1; height:1px; background:var(--border); }
+
+  /* ROSTER */
+  .roster{ display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:16px; }
+  .emp{ background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:18px; transition:.2s; }
+  .emp:hover{ border-color:#cfcfcf; }
+  .emp.working{ border-color:var(--accent); }
+  .emp-top{ display:flex; align-items:center; gap:13px; margin-bottom:14px; }
+  .avatar{ width:46px; height:46px; border-radius:50%; background:var(--surface2); border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--hi);
+    font-family:'General Sans',sans-serif; font-size:17px; flex-shrink:0; position:relative; }
+  .emp.working .avatar{ border-color:var(--accent); }
+  .emp.working .avatar::after{ content:''; position:absolute; right:-2px; bottom:-2px; width:11px; height:11px;
+    background:var(--accent); border:2px solid var(--surface); border-radius:50%; animation:pulse 1.1s infinite; }
+  @keyframes pulse{ 0%,100%{opacity:1} 50%{opacity:.3} }
+  .emp-name{ font-size:15px; font-weight:700; color:var(--hi); }
+  .emp-title{ font-size:12px; color:var(--tert); margin-top:1px; }
+  .emp-owns{ font-size:12px; color:var(--text); margin-bottom:10px; }
+  .emp-owns b{ color:var(--hi); font-weight:600; }
+  .team{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px; }
+  .team .chip{ font-size:10.5px; color:var(--tert); background:var(--canvas); border:1px solid var(--border);
+    border-radius:6px; padding:3px 8px; display:flex; align-items:center; gap:4px; }
+  .emp-stats{ display:flex; gap:16px; padding:12px 0; border-top:1px solid var(--border); margin-bottom:13px; }
+  .emp-stats .st{ font-size:11px; color:var(--tert); }
+  .emp-stats .st b{ display:block; font-size:16px; color:var(--hi); font-weight:700; font-family:'General Sans',sans-serif; }
+  .emp-actions{ display:flex; gap:8px; }
+  .btn{ font-family:inherit; font-size:12.5px; font-weight:600; border-radius:8px; padding:9px 14px; cursor:pointer;
+    border:1px solid var(--border); background:var(--canvas); color:var(--hi); transition:.15s; }
+  .btn:hover{ border-color:#bdbdbd; }
+  .btn.primary{ background:var(--accent); border-color:var(--accent); color:#fff; }
+  .btn.primary:hover{ opacity:.9; }
+  .btn.primary:disabled{ opacity:.4; cursor:not-allowed; }
+  .btn.ghost{ background:transparent; }
+  .btn.big{ padding:12px 22px; font-size:13.5px; }
+
+  .hire-card{ border:1.5px dashed var(--border); background:transparent; border-radius:14px; padding:18px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+    cursor:pointer; min-height:200px; transition:.2s; }
+  .hire-card:hover{ border-color:var(--accent); }
+  .hire-card .plus{ width:42px; height:42px; border-radius:50%; border:1px solid var(--accent-line); color:var(--accent);
+    display:flex; align-items:center; justify-content:center; font-size:22px; margin-bottom:10px; }
+  .hire-card .h{ font-size:14px; font-weight:600; color:var(--hi); }
+  .hire-card .p{ font-size:12px; color:var(--tert); margin-top:4px; max-width:200px; }
+
+  /* RUN PANEL */
+  .run{ margin-top:26px; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:22px; }
+  .run-head{ display:flex; align-items:center; gap:13px; margin-bottom:8px; }
+  .run-head .emp-name{ font-size:16px; }
+  .run-sub{ font-size:12px; color:var(--tert); margin-bottom:16px; }
+  .run-input{ display:flex; gap:10px; align-items:flex-end; margin-bottom:18px; }
+  .run-input textarea{ flex:1; background:var(--canvas); border:1px solid var(--border); border-radius:10px;
+    padding:12px 14px; font-family:inherit; font-size:13px; color:var(--hi); resize:none; min-height:58px; outline:none; line-height:1.45; }
+  .run-input textarea:focus{ border-color:var(--accent); }
+
+  .phases{ display:flex; border:1px solid var(--border); border-radius:10px; overflow:hidden; margin-bottom:16px; background:var(--canvas); }
+  .ph{ flex:1; padding:11px 14px; display:flex; align-items:center; gap:9px; border-right:1px solid var(--border); }
+  .ph:last-child{ border-right:none; }
+  .ph.active{ background:var(--accent-dim); }
+  .ph.done{ background:var(--surface2); }
+  .ph .dot{ width:22px; height:22px; border-radius:50%; border:1.5px solid var(--border); background:var(--surface2);
+    display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:var(--tert); flex-shrink:0; }
+  .ph.active .dot{ border-color:var(--accent); color:var(--accent); }
+  .ph.done .dot{ border-color:var(--done); color:var(--done); }
+  .ph .l{ font-size:12px; font-weight:600; color:var(--tert); }
+  .ph.active .l{ color:var(--hi); }
+
+  .agent-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:10px; margin-bottom:16px; }
+  .acard{ background:var(--canvas); border:1px solid var(--border); border-radius:10px; padding:13px; opacity:.5; transition:.3s; }
+  .acard.visible{ opacity:1; } 
+  .acard.running{ border-color:var(--accent); opacity:1; } 
+  .acard.done{ border-color:#cfcfcf; opacity:1; }
+  .acard .ae{ font-size:18px; margin-bottom:6px; }
+  .acard .ar{ font-size:12.5px; font-weight:700; color:var(--hi); }
+  .acard .at{ font-size:11px; color:var(--tert); line-height:1.45; margin-top:3px; }
+  .acard .as{ margin-top:9px; font-size:11px; font-weight:600; display:flex; align-items:center; gap:6px; color:var(--tert); }
+  .acard .sd{ width:6px; height:6px; border-radius:50%; background:var(--tert); }
+  .acard.running .sd{ background:var(--accent); animation:pulse 1.1s infinite; }
+  .acard.done .sd{ background:var(--done); }
+
+  .feed{ background:var(--canvas); border:1px solid var(--border); border-radius:10px; height:170px; overflow-y:auto;
+    padding:8px 0; font-size:11.5px; font-family:'Inter',monospace; margin-bottom:16px; }
+  .feed::-webkit-scrollbar{ width:4px; } 
+  .feed::-webkit-scrollbar-thumb{ background:var(--border); border-radius:2px; }
+  .frow{ padding:3px 16px; display:grid; grid-template-columns:64px 150px 1fr; gap:9px; animation:fade .3s; }
+  @keyframes fade{ from{opacity:0} to{opacity:1} }
+  .frow .ft{ color:var(--tert); } 
+  .frow .fa{ color:var(--hi); } 
+  .frow .fd{ color:var(--text); opacity:.85; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+  .result{ display:grid; grid-template-columns:260px 1fr; gap:14px; margin-bottom:8px; }
+  @media(max-width:760px){ .result{ grid-template-columns:1fr; } }
+  .rstats{ background:var(--canvas); border:1px solid var(--border); border-radius:10px; padding:18px; }
+  .rrow{ display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); font-size:12px; }
+  .rrow:last-child{ border-bottom:none; } 
+  .rrow .k{ color:var(--tert); } 
+  .rrow .v{ color:var(--hi); font-weight:600; }
+  .rout{ background:var(--canvas); border:1px solid var(--border); border-radius:10px; overflow:hidden; }
+  .rout .rh{ padding:12px 16px; border-bottom:1px solid var(--border); font-size:12px; font-weight:600; color:var(--hi); }
+  .rout .rb{ padding:18px; font-size:12.5px; line-height:1.7; white-space:pre-wrap; max-height:320px; overflow-y:auto; }
+  .rout .rb::-webkit-scrollbar{ width:4px; } 
+  .rout .rb::-webkit-scrollbar-thumb{ background:var(--border); border-radius:2px; }
+  .donebar{ background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px 18px; margin-top:14px; font-size:13px; color:var(--text); }
+  .donebar b{ color:var(--hi); }
+
+  /* BUILDER */
+  .steps{ display:flex; gap:8px; margin-bottom:22px; }
+  .step{ flex:1; padding:12px 14px; border:1px solid var(--border); border-radius:10px; background:var(--surface); }
+  .step .n{ font-size:11px; font-weight:700; color:var(--tert); letter-spacing:1px; }
+  .step.active .n{ color:var(--accent); }
+  .step .l{ font-size:13px; font-weight:600; color:var(--hi); margin-top:2px; }
+  .step .d{ font-size:11px; color:var(--tert); margin-top:2px; }
+
+  .wf-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:12px; }
+  .wf{ border:1px solid var(--border); border-radius:11px; padding:15px; cursor:pointer; background:var(--surface); transition:.15s; }
+  .wf:hover{ border-color:#bdbdbd; }
+  .wf.sel{ border-color:var(--accent); background:var(--accent-dim); }
+  .wf .wn{ font-size:14px; font-weight:700; color:var(--hi); }
+  .wf .wd{ font-size:11.5px; color:var(--tert); margin-top:5px; line-height:1.4; }
+  .wf .wm{ font-size:10px; color:var(--accent); margin-top:8px; font-weight:600; text-transform:uppercase; letter-spacing:.5px; }
+
+  .task-row{ display:flex; align-items:center; gap:12px; padding:12px 14px; border:1px solid var(--border);
+    border-radius:10px; background:var(--surface); margin-bottom:8px; }
+  .task-row .tn{ width:24px; height:24px; border-radius:50%; background:var(--surface2); border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:var(--hi); flex-shrink:0; }
+  .task-row .tt{ flex:1; font-size:12.5px; color:var(--text); line-height:1.4; }
+  .task-row select{ font-family:inherit; font-size:12px; color:var(--hi); border:1px solid var(--border);
+    border-radius:7px; padding:7px 9px; background:var(--canvas); min-width:170px; }
+
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-size:12px; font-weight:600; color:var(--hi); margin-bottom:6px; }
+  .field input[type=text]{ width:100%; font-family:inherit; font-size:13px; color:var(--hi); border:1px solid var(--border);
+    border-radius:9px; padding:11px 13px; outline:none; background:var(--canvas); }
+  .field input:focus{ border-color:var(--accent); }
+  .seg{ display:inline-flex; border:1px solid var(--border); border-radius:9px; overflow:hidden; }
+  .seg button{ font-family:inherit; font-size:12px; padding:9px 15px; border:none; background:var(--canvas); color:var(--tert); cursor:pointer; border-right:1px solid var(--border); }
+  .seg button:last-child{ border-right:none; }
+  .seg button.on{ background:var(--accent); color:#fff; }
+  .checks{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chk{ font-size:12px; color:var(--text); border:1px solid var(--border); border-radius:8px; padding:8px 12px; cursor:pointer; user-select:none; background:var(--canvas); }
+  .chk.on{ border-color:var(--accent); color:var(--hi); background:var(--accent-dim); }
+  .builder-nav{ display:flex; justify-content:space-between; margin-top:22px; }
+  .preview-emp{ background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px; margin-top:8px; }
+
+  @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">
+    <div class="mark">A</div>
+    <div>
+      <div class="t">AI Workforce Platform</div>
+      <div class="s">Built by Innvonix Tech Solutions · for Absolics Inc.</div>
+    </div>
+  </div>
+  <div class="badge">White-label demo · <b>Innvonix Tech Solutions</b></div>
+</header>
+
+<div class="tabs">
+  <button class="tab active" id="tabWorkforce" onclick="setView('workforce')">Your AI workforce</button>
+  <button class="tab" id="tabHire" onclick="setView('hire')">Hire an AI employee</button>
+</div>
+
+<div class="main">
+
+  <!-- WORKFORCE VIEW -->
+  <div id="view-workforce">
+    <div class="lead">Each AI employee is a <b>workflow turned into a digital hire</b>: a fixed team of specialist agents, a defined job, and your house standards baked in. You manage them like staff — assign a task and the employee runs its whole workflow end to end.</div>
+
+    <div class="econ" id="econStrip"></div>
+
+    <div class="section-label">Your roster</div>
+    <div class="roster" id="roster"></div>
+
+    <div id="runPanel"></div>
+  </div>
+
+  <!-- HIRE / BUILDER VIEW -->
+  <div id="view-hire" class="hidden">
+    <div class="lead">Build a new AI employee in three steps: <b>pick the workflow</b> it will own, <b>assign each task to an agent</b>, then <b>give it a name and a job description</b>. It joins your roster and is ready to work.</div>
+    <div class="steps" id="builderSteps"></div>
+    <div id="builderBody"></div>
+    <div class="builder-nav" id="builderNav"></div>
+  </div>
+
+</div>
+
+<script>
+// ════════════════════ AGENTS ════════════════════
+const AGENT_ROLES = {
+  substrate_designer:    { emoji:'🔬', label:'Substrate Designer',          tools:['design_substrate','simulate_thermal','save_to_context'] },
+  material_scientist:    { emoji:'🧪', label:'Material Scientist',          tools:['analyze_materials','test_heat_resistance','save_to_context'] },
+  process_engineer:       { emoji:'⚙️', label:'Process Engineer',            tools:['optimize_process','monitor_yield','save_to_context'] },
+  quality_control:        { emoji:'✅', label:'Quality Control Engineer',     tools:['inspect_substrate','test_electrical','save_to_context'] },
+  automation_specialist: { emoji:'🤖', label:'Automation Specialist',       tools:['program_robots','calibrate_sensors','save_to_context'] },
+  supply_chain_manager:  { emoji:'📦', label:'Supply Chain Manager',        tools:['manage_inventory','coordinate_logistics','save_to_context'] },
+  rnd_scientist:         { emoji:'🔭', label:'R&D Scientist',              tools:['research_innovations','develop_prototypes','save_to_context'] },
+  patent_advisor:        { emoji:'📜', label:'Patent Advisor',              tools:['file_patents','analyze_ip','save_to_context'] },
+  data_analyst:          { emoji:'📊', label:'Data Analyst',                tools:['analyze_production_data','generate_reports','save_to_context'] },
+  iot_specialist:        { emoji:'🌐', label:'IoT Specialist',               tools:['setup_sensors','monitor_iot_data','save_to_context'] },
+  compliance_officer:    { emoji:'🔒', label:'Compliance Officer',           tools:['ensure_standards','audit_processes','save_to_context'] },
+  procurement_manager:   { emoji:'🛒', label:'Procurement Manager',          tools:['source_materials','negotiate_contracts','save_to_context'] }
+};
+
+const ROLE_KEYS = Object.keys(AGENT_ROLES);
+
+// ════════════════════ WORKFLOWS ════════════════════
+const WORKFLOWS = {
+  substrate_design: {
+    name:'Glass Substrate Design', 
+    deliverable:'substrate_design', 
+    mode:'sequential',
+    sample:'Design a new glass substrate for high-performance AI applications.',
+    desc:'Designs glass substrates optimized for thermal stability, electrical performance, and manufacturability.',
+    tasks:[
+      { agent:'substrate_designer', task:'Design glass substrate layout for thermal and electrical requirements.', deps:[] },
+      { agent:'material_scientist', task:'Analyze material properties for heat resistance and electrical insulation.', deps:[0] },
+      { agent:'substrate_designer', task:'Simulate thermal performance and electrical signal integrity.', deps:[1] },
+      { agent:'quality_control', task:'Validate design against industry standards and client specifications.', deps:[2] },
+      { agent:'patent_advisor', task:'File patent applications for innovative substrate designs.', deps:[3] }
+    ]
+  },
+  material_development: {
+    name:'Advanced Material Development', 
+    deliverable:'material_development', 
+    mode:'sequential',
+    sample:'Develop and test new glass materials for semiconductor substrates.',
+    desc:'Develops and tests advanced glass materials with superior thermal, mechanical, and electrical properties.',
+    tasks:[
+      { agent:'material_scientist', task:'Research and select candidate glass materials for substrate use.', deps:[] },
+      { agent:'material_scientist', task:'Test heat resistance, thermal conductivity, and electrical properties.', deps:[0] },
+      { agent:'rnd_scientist', task:'Develop prototypes of new glass materials.', deps:[1] },
+      { agent:'quality_control', task:'Conduct durability and reliability testing on material prototypes.', deps:[2] },
+      { agent:'data_analyst', task:'Analyze test data and generate material performance reports.', deps:[3] }
+    ]
+  },
+  process_optimization: {
+    name:'Manufacturing Process Optimization', 
+    deliverable:'process_optimization', 
+    mode:'dag',
+    sample:'Optimize the glass substrate manufacturing process for higher yield and lower cost.',
+    desc:'Optimizes manufacturing processes to improve yield, reduce defects, and lower production costs.',
+    tasks:[
+      { agent:'process_engineer', task:'Analyze current manufacturing process for bottlenecks and inefficiencies.', deps:[] },
+      { agent:'automation_specialist', task:'Program and calibrate robotic systems for precise substrate handling.', deps:[] },
+      { agent:'iot_specialist', task:'Set up IoT sensors for real-time monitoring of process parameters.', deps:[] },
+      { agent:'process_engineer', task:'Implement process improvements and monitor results.', deps:[0,1,2] },
+      { agent:'quality_control', task:'Verify process improvements meet quality and yield targets.', deps:[3] }
+    ]
+  },
+  quality_assurance: {
+    name:'Quality Assurance & Testing', 
+    deliverable:'quality_assurance', 
+    mode:'sequential',
+    sample:'Perform comprehensive quality testing on a batch of glass substrates.',
+    desc:'Performs rigorous testing to ensure substrates meet electrical, thermal, and mechanical specifications.',
+    tasks:[
+      { agent:'quality_control', task:'Inspect substrates for visual defects and dimensional accuracy.', deps:[] },
+      { agent:'quality_control', task:'Test electrical performance and signal integrity.', deps:[0] },
+      { agent:'quality_control', task:'Conduct thermal cycling and stress tests.', deps:[1] },
+      { agent:'data_analyst', task:'Analyze test data and identify any patterns or anomalies.', deps:[2] },
+      { agent:'compliance_officer', task:'Ensure all testing complies with industry standards and regulations.', deps:[3] }
+    ]
+  },
+  automation_integration: {
+    name:'Automation & Robotics Integration', 
+    deliverable:'automation_integration', 
+    mode:'sequential',
+    sample:'Integrate robotic systems and IoT sensors into the production line.',
+    desc:'Deploys and integrates automation and IoT systems to enhance production efficiency and data collection.',
+    tasks:[
+      { agent:'automation_specialist', task:'Program robotic systems for substrate handling and processing.', deps:[] },
+      { agent:'iot_specialist', task:'Install and configure IoT sensors for real-time data collection.', deps:[0] },
+      { agent:'automation_specialist', task:'Calibrate and test robotic systems for accuracy and reliability.', deps:[1] },
+      { agent:'process_engineer', task:'Integrate automation systems with existing production workflows.', deps:[2] },
+      { agent:'quality_control', task:'Verify automation systems meet performance and quality standards.', deps:[3] }
+    ]
+  },
+  supply_chain_management: {
+    name:'Supply Chain & Procurement', 
+    deliverable:'supply_chain_management', 
+    mode:'sequential',
+    sample:'Manage procurement of raw materials and coordinate with suppliers.',
+    desc:'Manages the procurement of raw materials, coordinates with suppliers, and ensures timely delivery.',
+    tasks:[
+      { agent:'procurement_manager', task:'Identify and source high-quality raw materials for substrate production.', deps:[] },
+      { agent:'supply_chain_manager', task:'Coordinate logistics and manage inventory levels.', deps:[0] },
+      { agent:'procurement_manager', task:'Negotiate contracts with suppliers for favorable terms.', deps:[1] },
+      { agent:'supply_chain_manager', task:'Monitor supplier performance and resolve any issues.', deps:[2] },
+      { agent:'data_analyst', task:'Analyze supply chain data to identify cost-saving opportunities.', deps:[3] }
+    ]
+  },
+  rnd_innovation: {
+    name:'R&D and Innovation', 
+    deliverable:'rnd_innovation', 
+    mode:'dag',
+    sample:'Research and develop next-generation glass substrate technologies.',
+    desc:'Drives innovation by researching and developing new technologies and solutions for glass substrates.',
+    tasks:[
+      { agent:'rnd_scientist', task:'Research emerging technologies and trends in glass substrates.', deps:[] },
+      { agent:'material_scientist', task:'Develop new material formulations for improved performance.', deps:[] },
+      { agent:'substrate_designer', task:'Design next-generation substrate prototypes.', deps:[0,1] },
+      { agent:'rnd_scientist', task:'Test and validate new substrate designs and materials.', deps:[2] },
+      { agent:'patent_advisor', task:'File patents for innovative technologies and designs.', deps:[3] }
+    ]
+  },
+  compliance_audit: {
+    name:'Compliance & Audit', 
+    deliverable:'compliance_audit', 
+    mode:'sequential',
+    sample:'Conduct a compliance audit of manufacturing processes and documentation.',
+    desc:'Ensures all processes, products, and documentation comply with industry standards and regulations.',
+    tasks:[
+      { agent:'compliance_officer', task:'Review manufacturing processes for compliance with industry standards.', deps:[] },
+      { agent:'compliance_officer', task:'Audit quality control and testing procedures.', deps:[0] },
+      { agent:'compliance_officer', task:'Verify documentation and reporting meet regulatory requirements.', deps:[1] },
+      { agent:'data_analyst', task:'Generate compliance reports and identify areas for improvement.', deps:[2] },
+      { agent:'compliance_officer', task:'Implement corrective actions for any compliance issues found.', deps:[3] }
+    ]
+  }
+};
+
+// ════════════════════ DELIVERABLE TITLES ═══════════════════
+const DELIVERABLE_TITLES = {
+  substrate_design: 'Glass Substrate Design Specification',
+  material_development: 'Advanced Material Development Report',
+  process_optimization: 'Manufacturing Process Optimization Plan',
+  quality_assurance: 'Quality Assurance & Testing Report',
+  automation_integration: 'Automation & Robotics Integration Report',
+  supply_chain_management: 'Supply Chain & Procurement Report',
+  rnd_innovation: 'R&D Innovation Report',
+  compliance_audit: 'Compliance Audit Report'
+};
+
+// ════════════════════ SIMULATED OUTPUTS ════════════════════
+const TOOL_OUTPUTS = {
+  design_substrate:()=>'Designed glass substrate layout with optimized thermal vias and electrical pathways.',
+  simulate_thermal:()=>'Simulated thermal performance: Max temp 120°C, heat dissipation rate 95%.',
+  analyze_materials:()=>'Analyzed 5 glass materials: Borosilicate, Fused Silica, Aluminosilicate, Quartz, and Soda-Lime.',
+  test_heat_resistance:()=>'Tested heat resistance: All materials stable up to 400°C, minimal deformation.',
+  optimize_process:()=>'Optimized manufacturing process: Reduced cycle time by 15%, improved yield by 10%.',
+  monitor_yield:()=>'Monitored yield: Current batch yield at 98%, defects reduced by 20%.',
+  inspect_substrate:()=>'Inspected 100 substrates: 99% passed visual inspection, 1% minor defects.',
+  test_electrical:()=>'Tested electrical performance: Signal integrity 99.9%, resistance within spec.',
+  program_robots:()=>'Programmed robotic systems for precise substrate handling and processing.',
+  calibrate_sensors:()=>'Calibrated IoT sensors for real-time monitoring of temperature, pressure, and humidity.',
+  manage_inventory:()=>'Managed inventory: Raw materials stocked for 30 days, no shortages.',
+  coordinate_logistics:()=>'Coordinated logistics: All shipments on time, no delays reported.',
+  research_innovations:()=>'Researched 3 emerging technologies: Glass interposers, 3D packaging, and embedded passives.',
+  develop_prototypes:()=>'Developed 2 new substrate prototypes with enhanced thermal and electrical properties.',
+  file_patents:()=>'Filed 3 patent applications for innovative substrate designs and manufacturing processes.',
+  analyze_ip:()=>'Analyzed IP portfolio: 67 patents filed, 10 granted, 57 pending.',
+  analyze_production_data:()=>'Analyzed production data: Identified 3 trends for process improvement.',
+  generate_reports:()=>'Generated comprehensive production and quality reports.',
+  setup_sensors:()=>'Set up IoT sensors across production line for real-time data collection.',
+  monitor_iot_data:()=>'Monitored IoT data: All parameters within normal ranges, no anomalies detected.',
+  ensure_standards:()=>'Ensured compliance with ISO 9001, IPC-A-600, and JEDEC standards.',
+  audit_processes:()=>'Audited manufacturing processes: All processes compliant with industry standards.',
+  source_materials:()=>'Sourced high-quality raw materials from 3 certified suppliers.',
+  negotiate_contracts:()=>'Negotiated contracts with suppliers: Achieved 10% cost reduction on key materials.',
+  save_to_context:()=>'Saved to shared memory for downstream agents.'
+};
+
+function toolOut(t){ return (TOOL_OUTPUTS[t]||(()=>'Executed.'))(); }
+
+// ════════════════════ FINAL OUTPUTS ═════════════════════
+const FINAL_OUTPUTS = {
+  substrate_design:`GLASS SUBSTRATE DESIGN SPECIFICATION  (illustrative sample output)
+
+--- 
+**Project Overview**
+- **Client**: High-Performance Computing Corp
+- **Application**: AI Accelerator Package
+- **Substrate Size**: 500mm x 500mm
+- **Layer Count**: 8
+
+--- 
+**Design Specifications**
+1. **Thermal Management**:
+   - Max Operating Temperature: 150°C
+   - Heat Dissipation: 95% efficiency
+   - Thermal Vias: 10,000 (0.1mm diameter)
+
+2. **Electrical Performance**:
+   - Signal Integrity: 99.9%
+   - Dielectric Constant: 4.2
+   - Resistance: < 0.1 Ω/cm²
+
+3. **Mechanical Properties**:
+   - Flatness: ± 0.05%
+   - Surface Roughness: < 0.5 µm
+   - Flexural Strength: 300 MPa
+
+--- 
+**Material Selection**
+- **Primary Material**: Borosilicate Glass
+- **Coefficient of Thermal Expansion (CTE)**: 3.3 ppm/°C
+- **Thermal Conductivity**: 1.1 W/m·K
+- **Electrical Insulation**: > 10¹⁴ Ω·cm
+
+--- 
+**Manufacturability Analysis**
+- **Feasibility**: High
+- **Estimated Yield**: 95%
+- **Process Complexity**: Medium
+- **Cost Estimate**: $250 per substrate (at scale)
+
+--- 
+**Validation Results**
+- Thermal Simulation: Passed
+- Electrical Simulation: Passed
+- Mechanical Stress Test: Passed
+
+→ Saved: Glass Substrate Design Specification (PDF)
+NOTE: Illustrative output. Human review required.`,
+
+  material_development:`ADVANCED MATERIAL DEVELOPMENT REPORT  (illustrative sample output)
+
+--- 
+**Project Overview**
+- **Objective**: Develop glass material with superior thermal and electrical properties
+- **Timeline**: 12 months
+- **Budget**: $2.5M
+
+--- 
+**Material Candidates**
+| Material | Thermal Conductivity (W/m·K) | CTE (ppm/°C) | Dielectric Constant | Cost Index |
+|---------|-------------------------------|--------------|-------------------|------------|
+| Borosilicate | 1.1 | 3.3 | 4.2 | Medium |
+| Fused Silica | 1.4 | 0.5 | 3.8 | High |
+| Aluminosilicate | 1.2 | 4.5 | 5.0 | Low |
+| Quartz | 1.3 | 0.4 | 3.7 | Very High |
+
+--- 
+**Selected Material**: Enhanced Borosilicate Glass
+- **Thermal Conductivity**: 1.3 W/m·K (20% improvement)
+- **CTE**: 2.8 ppm/°C (15% improvement)
+- **Dielectric Constant**: 3.9 (7% improvement)
+- **Heat Resistance**: 450°C (50°C improvement)
+
+--- 
+**Prototype Development**
+- **Batch Size**: 50 substrates
+- **Dimensions**: 300mm x 300mm x 0.5mm
+- **Testing Results**:
+  - Thermal Cycling: Passed 1000 cycles
+  - Electrical Testing: Passed all parameters
+  - Mechanical Testing: Passed all stress tests
+
+--- 
+**Performance Comparison**
+- **vs. Traditional Organic Substrates**:
+  - 40% better thermal conductivity
+  - 60% lower CTE
+  - 30% higher electrical insulation
+
+→ Saved: Advanced Material Development Report (PDF)
+NOTE: Illustrative output. Human review required.`,
+
+  process_optimization:`MANUFACTURING PROCESS OPTIMIZATION PLAN  (illustrative sample output)
+
+--- 
+**Current Process Analysis**
+- **Cycle Time**: 48 hours
+- **Yield**: 85%
+- **Defect Rate**: 15%
+- **Cost per Substrate**: $300
+
+--- 
+**Identified Bottlenecks**
+1. **Etching Process**: 30% of cycle time, 40% of defects
+2. **Via Formation**: 25% of cycle time, 30% of defects
+3. **Surface Finishing**: 20% of cycle time, 20% of defects
+
+--- 
+**Proposed Improvements**
+1. **Etching Optimization**:
+   - New Chemical Mixture: Reduces etching time by 25%
+   - Temperature Control: Improves uniformity by 15%
+   - Expected Impact: 10% yield improvement
+
+2. **Via Formation Enhancement**:
+   - Laser Drilling: Replaces mechanical drilling
+   - Precision: ± 0.01mm (improved from ± 0.05mm)
+   - Expected Impact: 8% yield improvement
+
+3. **Automation Integration**:
+   - Robotic Handling: Reduces human error by 50%
+   - IoT Monitoring: Real-time quality control
+   - Expected Impact: 5% yield improvement
+
+--- 
+**Expected Results**
+- **New Cycle Time**: 36 hours (-25%)
+- **New Yield**: 95% (+10%)
+- **New Defect Rate**: 5% (-10%)
+- **New Cost per Substrate**: $250 (-17%)
+
+--- 
+**Implementation Timeline**
+- **Phase 1 (Month 1-3)**: Etching optimization
+- **Phase 2 (Month 4-6)**: Via formation enhancement
+- **Phase 3 (Month 7-9)**: Automation integration
+- **Full Implementation (Month 12)**: All improvements deployed
+
+→ Saved: Manufacturing Process Optimization Plan (PDF)
+NOTE: Illustrative output. Human review required.`,
+
+  quality_assurance:`QUALITY ASSURANCE & TESTING REPORT  (illustrative sample output)
+
+--- 
+**Test Summary**
+- **Batch Size**: 1,000 substrates
+- **Test Date**: July 28, 2026
+- **Total Tests**: 15
+- **Pass Rate**: 99.8%
+
+--- 
+**Test Results**
+1. **Visual Inspection**:
+   - Passed: 999
+   - Failed: 1 (minor surface defect)
+   - Pass Rate: 99.9%
+
+2. **Dimensional Accuracy**:
+   - All substrates within ± 0.02mm
+   - Pass Rate: 100%
+
+3. **Electrical Performance**:
+   - Signal Integrity: 99.9% (spec: > 99.5%)
+   - Resistance: 0.08 Ω/cm² (spec: < 0.1 Ω/cm²)
+   - Pass Rate: 100%
+
+4. **Thermal Performance**:
+   - Max Temperature: 155°C (spec: > 150°C)
+   - Heat Dissipation: 96% (spec: > 95%)
+   - Pass Rate: 100%
+
+5. **Mechanical Strength**:
+   - Flexural Strength: 310 MPa (spec: > 300 MPa)
+   - Surface Roughness: 0.4 µm (spec: < 0.5 µm)
+   - Pass Rate: 100%
+
+--- 
+**Thermal Cycling Test**
+- **Cycles**: 1,000
+- **Temperature Range**: -50°C to 150°C
+- **Results**: No failures, no deformation
+
+--- 
+**Reliability Assessment**
+- **Mean Time Between Failures (MTBF)**: > 1,000,000 hours
+- **Failure Rate**: < 0.01%
+- **Confidence Level**: 99.9%
+
+→ Saved: Quality Assurance & Testing Report (PDF)
+NOTE: Illustrative output. Human review required.`,
+
+  automation_integration:`AUTOMATION & ROBOTICS INTEGRATION REPORT  (illustrative sample output)
+
+--- 
+**Project Overview**
+- **Scope**: Full production line automation
+- **Timeline**: 6 months
+- **Budget**: $5M
+
+--- 
+**Automation Systems Deployed**
+1. **Robotic Handling System**:
+   - **Model**: ABB IRB 4600
+   - **Capacity**: 200 substrates/hour
+   - **Precision**: ± 0.01mm
+   - **Uptime**: 99.5%
+
+2. **IoT Sensor Network**:
+   - **Temperature Sensors**: 50 (accuracy: ± 0.1°C)
+   - **Pressure Sensors**: 30 (accuracy: ± 0.01 bar)
+   - **Humidity Sensors**: 20 (accuracy: ± 1% RH)
+
+3. **Process Control System**:
+   - **Software**: Siemens SIMATIC PCS 7
+   - **Response Time**: < 100ms
+   - **Data Logging**: Continuous, 24/7
+
+--- 
+**Integration Details**
+- **Existing Workflow**: Seamless integration with current processes
+- **Data Collection**: Real-time monitoring of all critical parameters
+- **Alert System**: Immediate notifications for any deviations
+
+--- 
+**Performance Metrics**
+- **Throughput Increase**: 35%
+- **Defect Reduction**: 40%
+- **Energy Savings**: 15%
+- **Labor Savings**: 50% (reduced from 20 to 10 operators per shift)
+
+--- 
+**ROI Analysis**
+- **Investment**: $5M
+- **Annual Savings**: $2.5M
+- **Payback Period**: 2 years
+- **5-Year ROI**: 300%
+
+→ Saved: Automation & Robotics Integration Report (PDF)
+NOTE: Illustrative output. Human review required.`,
+
+  supply_chain_management:`SUPPLY CHAIN & PROCUREMENT REPORT  (illustrative sample output)
+
+--- 
+**Supply Chain Overview**
+- **Suppliers**: 15 active suppliers
+- **Materials**: 40 different raw materials
+- **Lead Time**: Average 14 days
+
+--- 
+**Key Suppliers**
+| Supplier | Material | Quality Rating | Delivery Performance | Contract Value |
+|---------|---------|----------------|----------------------|----------------|
+| Corning | Borosilicate Glass | 98% | 99% | $12M/year |
+| AGC | Fused Silica | 97% | 98% | $8M/year |
+| HOYA | Quartz | 99% | 100% | $5M/year |
+
+--- 
+**Inventory Status**
+- **Raw Materials**: 30 days stock
+- **Work in Progress**: 15 days
+- **Finished Goods**: 10 days
+- **Total Inventory Value**: $8.5M
+
+--- 
+**Procurement Achievements**
+1. **Cost Reduction**:
+   - Borosilicate Glass: -12% ($1.4M annual savings)
+   - Fused Silica: -8% ($640K annual savings)
+   - Total Savings: $2.5M/year
+
+2. **Supplier Performance**:
+   - On-Time Delivery: 99.2%
+   - Quality Acceptance: 99.5%
+   - Lead Time Reduction: -2 days average
+
+3. **Risk Mitigation**:
+   - Dual Sourcing: Implemented for 80% of critical materials
+   - Safety Stock: Maintained for all high-risk items
+   - Contracts: Long-term agreements with key suppliers
+
+--- 
+**Logistics Coordination**
+- **Inbound Shipments**: 100% on time
+- **Outbound Shipments**: 99.8% on time
+- **Transportation Costs**: Reduced by 10% through optimization
+
+→ Saved: Supply Chain & Procurement Report (PDF)
+NOTE: Illustrative output. Human review required.`,
+
+  rnd_innovation:`R&D INNOVATION REPORT  (illustrative sample output)
+
+--- 
+**Innovation Focus Areas**
+1. **Glass Interposers**:
+   - **Status**: Prototype phase
+   - **Potential**: 50% improvement in signal integrity
+   - **Patents Filed**: 5
+
+2. **3D Packaging**:
+   - **Status**: Research phase
+   - **Potential**: 40% reduction in package size
+   - **Patents Filed**: 3
+
+3. **Embedded Passives**:
+   - **Status**: Development phase
+   - **Potential**: 30% reduction in component count
+   - **Patents Filed**: 2
+
+--- 
+**Prototype Development**
+- **Glass Interposer Prototype**:
+  - Size: 100mm x 100mm
+  - Layers: 12
+  - Via Density: 50,000/cm²
+  - Testing Results: All electrical and thermal tests passed
+
+- **3D Package Prototype**:
+  - Size: 50mm x 50mm x 5mm
+  - Integration: 4 dies stacked
+  - Thermal Performance: 20% better than 2D packages
+
+--- 
+**Patent Portfolio**
+- **Total Patents Filed**: 67
+- **Patents Granted**: 10
+- **Patents Pending**: 57
+- **Key Technologies**: Glass substrates, thermal management, electrical interconnects
+
+--- 
+**R&D Investment**
+- **Annual Budget**: $10M
+- **Team Size**: 25 researchers and engineers
+- **Facilities**: State-of-the-art lab in Covington, GA
+
+--- 
+**Collaborations**
+- **Universities**: Georgia Tech, MIT, Stanford
+- **Industry Partners**: Intel, NVIDIA, TSMC
+- **Government**: DARPA, Department of Energy
+
+→ Saved: R&D Innovation Report (PDF)
+NOTE: Illustrative output. Human review required.`,
+
+  compliance_audit:`COMPLIANCE AUDIT REPORT  (illustrative sample output)
+
+--- 
+**Audit Scope**
+- **Period**: January 1, 2026 - June 30, 2026
+- **Auditor**: Internal Compliance Team
+- **Standards**: ISO 9001, IPC-A-600, JEDEC
+
+--- 
+**Findings Summary**
+- **Total Findings**: 12
+- **Critical**: 0
+- **Major**: 2
+- **Minor**: 10
+
+--- 
+**Major Findings**
+1. **Documentation Gap**:
+   - **Issue**: Missing process documentation for new substrate design
+   - **Impact**: Medium
+   - **Corrective Action**: Documentation completed and reviewed
+   - **Status**: Closed
+
+2. **Training Deficiency**:
+   - **Issue**: Insufficient training records for new hires
+   - **Impact**: Medium
+   - **Corrective Action**: Training program enhanced, records updated
+   - **Status**: Closed
+
+--- 
+**Minor Findings**
+- **Procedure Updates**: 5 instances of outdated procedures
+- **Record Keeping**: 3 instances of incomplete records
+- **Equipment Calibration**: 2 instances of overdue calibration
+
+--- 
+**Compliance Status**
+- **ISO 9001**: Compliant
+- **IPC-A-600**: Compliant
+- **JEDEC Standards**: Compliant
+- **Internal Standards**: 98% compliant
+
+--- 
+**Recommendations**
+1. Implement monthly documentation reviews
+2. Enhance training tracking system
+3. Schedule regular equipment calibration
+4. Conduct quarterly internal audits
+
+→ Saved: Compliance Audit Report (PDF)
+NOTE: Illustrative output. Human review required.`
+};
+
+// ════════════════════ STATE ════════════════════
+let EMPLOYEES = [
+  { id:'alex',    name:'Alex',    title:'AI Substrate Designer',           wf:'substrate_design',        shipped:22, hrs:300, fte:0.8, status:'idle' },
+  { id:'blake',   name:'Blake',   title:'AI Material Scientist',          wf:'material_development',     shipped:18, hrs:250, fte:0.7, status:'idle' },
+  { id:'casey',   name:'Casey',   title:'AI Process Engineer',            wf:'process_optimization',      shipped:25, hrs:350, fte:0.9, status:'idle' },
+  { id:'dana',    name:'Dana',    title:'AI Quality Control Lead',        wf:'quality_assurance',         shipped:20, hrs:200, fte:0.5, status:'idle' },
+  { id:'eve',     name:'Eve',     title:'AI Automation Specialist',        wf:'automation_integration',    shipped:15, hrs:180, fte:0.45, status:'idle' },
+  { id:'frank',   name:'Frank',   title:'AI Supply Chain Manager',        wf:'supply_chain_management',   shipped:12, hrs:160, fte:0.4, status:'idle' },
+  { id:'grace',   name:'Grace',   title:'AI R&D Scientist',               wf:'rnd_innovation',            shipped:10, hrs:220, fte:0.6, status:'idle' },
+  { id:'henry',   name:'Henry',   title:'AI Compliance Officer',           wf:'compliance_audit',          shipped:8,  hrs:120, fte:0.3, status:'idle' }
+];
+
+let running = false;
+
+// ════════════════════ HELPERS ════════════════════
+const $ = id => document.getElementById(id);
+function now(){ return new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'}); }
+const sleep = ms => new Promise(r=>setTimeout(r,ms));
+const rand = (a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+function monogram(name){ return name.trim().slice(0,2).toUpperCase(); }
+
+// ════════════════════ VIEWS ════════════════════
+function setView(v){
+  $('view-workforce').classList.toggle('hidden', v!=='workforce');
+  $('view-hire').classList.toggle('hidden', v!=='hire');
+  $('tabWorkforce').classList.toggle('active', v==='workforce');
+  $('tabHire').classList.toggle('active', v==='hire');
+  if(v==='hire') initBuilder();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function renderEcon(){
+  const total = EMPLOYEES.length;
+  const shipped = EMPLOYEES.reduce((s,e)=>s+e.shipped,0);
+  const hrs = EMPLOYEES.reduce((s,e)=>s+e.hrs,0);
+  const fte = EMPLOYEES.reduce((s,e)=>s+e.fte,0).toFixed(1);
+  const cells = [
+    [total+'', 'AI employees on the roster'],
+    [shipped+'', 'Client deliverables shipped'],
+    ['~'+hrs.toLocaleString(), 'Engineering-hours saved'],
+    ['≈'+fte+'<span class="u"> FTE</span>', 'Workforce capacity, no headcount added'],
+  ];
+  $('econStrip').innerHTML = cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');
+}
+
+function renderRoster(){
+  const html = EMPLOYEES.map(e=>{
+    const wf = WORKFLOWS[e.wf];
+    const team = wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i)
+      .map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');
+    return `<div class="emp ${e.status==='working'?'working':''}" id="emp-${e.id}">
+      <div class="emp-top">
+        <div class="avatar">${monogram(e.name)}</div>
+        <div><div class="emp-name">${e.name}</div><div class="emp-title">${e.title}</div></div>
+      </div>
+      <div class="emp-owns">Owns: <b>${wf.name}</b></div>
+      <div class="team">${team}</div>
+      <div class="emp-stats">
+        <div class="st"><b class="tnum">${e.shipped}</b>deliverables</div>
+        <div class="st"><b class="tnum">~${e.hrs}</b>hrs saved</div>
+        <div class="st"><b class="tnum">≈${e.fte}</b>FTE</div>
+      </div>
+      <div class="emp-actions">
+        <button class="btn primary" onclick="assign('${e.id}')">Assign a task</button>
+        <button class="btn ghost" onclick="assign('${e.id}')">View workflow</button>
+      </div>
+    </div>`;
+  }).join('');
+  const hire = `<div class="hire-card" onclick="setView('hire')">
+      <div class="plus">+</div><div class="h">Hire a new AI employee</div>
+      <div class="p">Pick a workflow, assign the tasks, define the role.</div></div>`;
+  $('roster').innerHTML = html + hire;
+}
+
+// ════════════════════ RUN AN EMPLOYEE ════════════════════
+function assign(empId){
+  if(running) return;
+  const e = EMPLOYEES.find(x=>x.id===empId);
+  const wf = WORKFLOWS[e.wf];
+  $('runPanel').innerHTML = `
+    <div class="run" id="run">
+      <div class="run-head">
+        <div class="avatar">${monogram(e.name)}</div>
+        <div><div class="emp-name">${e.name} · ${e.title}</div><div class="run-sub">Owns ${wf.name}. Give a task and ${e.name} runs the full workflow.</div></div>
+      </div>
+      <div class="run-input">
+        <textarea id="taskInput">${wf.sample}</textarea>
+        <button class="btn primary big" id="goBtn" onclick="runEmployee('${e.id}')">▶ Put ${e.name} to work</button>
+      </div>
+      <div id="runStage"></div>
+    </div>`;
+  $('run').scrollIntoView({behavior:'smooth', block:'start'});
+  $('taskInput').focus();
+}
+
+async function runEmployee(empId){
+  if(running) return; running = true;
+  const e = EMPLOYEES.find(x=>x.id===empId);
+  const wf = WORKFLOWS[e.wf];
+  const task = ($('taskInput').value||wf.sample).trim();
+  $('goBtn').disabled = true;
+  e.status='working'; const card=$('emp-'+e.id); if(card) card.classList.add('working');
+
+  const stage = $('runStage');
+  stage.innerHTML = `
+    <div class="phases">
+      <div class="ph active" id="ph1"><div class="dot">1</div><div class="l">Assign & plan</div></div>
+      <div class="ph" id="ph2"><div class="dot">2</div><div class="l">Agents work</div></div>
+      <div class="ph" id="ph3"><div class="dot">3</div><div class="l">Deliverable</div></div>
+    </div>
+    <div class="agent-grid" id="agrid"></div>
+    <div class="feed" id="feed"></div>
+    <div id="resultArea"></div>`;
+
+  const feed = $('feed');
+  function log(roleKey, detail){
+    const r = AGENT_ROLES[roleKey];
+    const nm = r ? (r.emoji+' '+r.label) : '◆ '+e.name;
+    const row=document.createElement('div'); row.className='frow';
+    row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${detail.substring(0,130)}</span>`;
+    feed.appendChild(row); feed.scrollTop=feed.scrollHeight;
+  }
+
+  log(null, `Task received: "${task.substring(0,60)}${task.length>60?'…':''}"`);
+  log(null, `Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);
+  await sleep(rand(700,1100));
+
+  const grid=$('agrid');
+  wf.tasks.forEach((t,i)=>{
+    const r=AGENT_ROLES[t.agent];
+    const c=document.createElement('div'); c.className='acard'; c.id='ac-'+i;
+    c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div>
+      <div class="at">${t.task}</div>
+      <div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;
+    grid.appendChild(c);
+    setTimeout(()=>c.classList.add('visible'), i*90);
+  });
+  await sleep(600);
+
+  $('ph1').classList.remove('active'); $('ph1').classList.add('done'); $('ph1').querySelector('.dot').textContent='✓';
+  $('ph2').classList.add('active');
+
+  const done = new Set();
+  async function runOne(i){
+    const t=wf.tasks[i], r=AGENT_ROLES[t.agent];
+    const c=$('ac-'+i), st=$('ast-'+i);
+    c.classList.remove('visible'); c.classList.add('running'); st.textContent='Working…';
+    log(t.agent, t.task.substring(0,70));
+    await sleep(rand(450,800));
+    for(const tool of r.tools){
+      log(t.agent, tool+'( ) → '+toolOut(tool));
+      await sleep(rand(450,850));
+    }
+    c.classList.remove('running'); c.classList.add('done'); st.textContent='Done';
+    log(t.agent, 'Output saved to shared memory');
+    done.add(i);
+  }
+
+  if(wf.mode==='sequential'){
+    for(let i=0;i<wf.tasks.length;i++) await runOne(i);
+  } else {
+    while(done.size<wf.tasks.length){
+      const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));
+      if(!ready.length) break;
+      if(ready.length>1) await Promise.all(ready.map(runOne)); else await runOne(ready[0]);
+    }
+  }
+
+  $('ph2').classList.remove('active'); $('ph2').classList.add('done'); $('ph2').querySelector('.dot').textContent='✓';
+  $('ph3').classList.add('active'); $('ph3').querySelector('.dot').textContent='✓'; $('ph3').classList.add('done');
+  await sleep(400);
+
+  const hrsThis = wf.tasks.length*rand(5,8);
+  const out = FINAL_OUTPUTS[wf.deliverable] || 'Deliverable ready.';
+  $('resultArea').innerHTML = `
+    <div class="result">
+      <div class="rstats">
+        <div class="rrow"><span class="k">Employee</span><span class="v">${e.name}</span></div>
+        <div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div>
+        <div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div>
+        <div class="rrow"><span class="k">Mode</span><span class="v">${wf.mode.toUpperCase()}</span></div>
+        <div class="rrow"><span class="k">Engineering-hours saved</span><span class="v tnum">≈ ${hrsThis}</span></div>
+      </div>
+      <div class="rout">
+        <div class="rh">Deliverable · ${DELIVERABLE_TITLES[wf.deliverable]||'Output'}</div>
+        <div class="rb">${out}</div>
+      </div>
+    </div>
+    <div class="donebar"><b>${e.name} finished.</b> Workflow complete, deliverable saved, and ${e.name}'s record updated. Figures shown are illustrative; in production each agent calls live models on your own data, panels and house rubric.</div>`;
+
+  e.shipped += 1; e.hrs += hrsThis; e.status='idle';
+  if(card) card.classList.remove('working');
+  renderEcon(); renderRoster();
+  running=false;
+}
+
+// ════════════════════ BUILDER ════════════════════
+let draft = { wf:null, mode:null, assign:[], name:'', title:'', cadence:'On-demand', guardrails:['Follow industry standards','Document all processes'] };
+let stepIdx = 1;
+
+function initBuilder(){ 
+  stepIdx=1; 
+  draft={ wf:null, mode:null, assign:[], name:'', title:'', cadence:'On-demand', guardrails:['Follow industry standards','Document all processes'] }; 
+  renderBuilder(); 
+}
+
+function renderBuilder(){
+  const steps=[['01','Pick a workflow','What this employee will own'],['02','Assign the tasks','Who does what, in what order'],['03','Define the role','Name, title, cadence, guardrails']];
+  $('builderSteps').innerHTML = steps.map((s,i)=>`<div class="step ${stepIdx===i+1?'active':''}" onclick="stepIdx > ${i+1} ? setBuilderStep(${i+1}) : null">
+      <div class="n">${s[0]}</div><div class="l">${s[1]}</div><div class="d">${s[2]}</div></div>`).join('');
+  if(stepIdx===1) renderStep1();
+  else if(stepIdx===2) renderStep2();
+  else renderStep3();
+  renderBuilderNav();
+}
+
+function setBuilderStep(step) {
+  stepIdx = step;
+  renderBuilder();
+}
+
+function renderStep1(){
+  const tiles = Object.keys(WORKFLOWS).map(id=>{
+    const w=WORKFLOWS[id];
+    return `<div class="wf ${draft.wf===id?'sel':''}" onclick="pickWf('${id}')">
+      <div class="wn">${w.name}</div><div class="wd">${w.desc}</div>
+      <div class="wm">${w.tasks.length} agents · ${w.mode} mode</div></div>`;
+  }).join('');
+  $('builderBody').innerHTML = `<div class="section-label">Choose the workflow</div><div class="wf-grid">${tiles}</div>`;
+}
+
+function pickWf(id){
+  draft.wf=id; 
+  draft.mode=WORKFLOWS[id].mode;
+  draft.assign=WORKFLOWS[id].tasks.map(t=>t.agent);
+  if(!draft.title){ draft.title='AI '+WORKFLOWS[id].name.split(/[&/]/)[0].trim()+' Lead'; }
+  renderBuilder();
+}
+
+function renderStep2(){
+  const w=WORKFLOWS[draft.wf];
+  const opts = ROLE_KEYS.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  const rows = w.tasks.map((t,i)=>`<div class="task-row">
+      <div class="tn">${i+1}</div>
+      <div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for step ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div>
+      <select onchange="draft.assign[${i}]=this.value">${opts}</select>
+    </div>`).join('');
+  $('builderBody').innerHTML = `
+    <div class="section-label">Assign each task to an agent — this is the job description</div>
+    <div style="margin-bottom:14px">${rows}</div>
+    <div class="field"><label>Execution mode</label>
+      <div class="seg">
+        ${['sequential','dag','parallel'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';renderStep2()">${m==='dag'?'Auto (parallel where safe)':m.charAt(0).toUpperCase()+m.slice(1)}</button>`).join('')}
+      </div>
+    </div>`;
+  const selects=$('builderBody').querySelectorAll('select');
+  selects.forEach((s,i)=>{ s.value=draft.assign[i]; });
+}
+
+function renderStep3(){
+  const w=WORKFLOWS[draft.wf];
+  const guards=['Follow industry standards','Document all processes','Conduct regular audits','Maintain certification'];
+  const sources=['Industry publications','Internal R&D','Supplier data','Customer feedback'];
+  if(!draft._sources) draft._sources=['Industry publications','Internal R&D'];
+  $('builderBody').innerHTML = `
+    <div class="section-label">Define the role</div>
+    <div class="field"><label>Employee name</label><input type="text" id="fName" placeholder="e.g. Alex" value="${draft.name}" oninput="draft.name=this.value;refreshPreview()"></div>
+    <div class="field"><label>Job title</label><input type="text" id="fTitle" placeholder="e.g. AI Substrate Designer" value="${draft.title}" oninput="draft.title=this.value;refreshPreview()"></div>
+    <div class="field"><label>Cadence</label>
+      <div class="seg">${['On-demand','Daily','Weekly','Monthly'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';renderStep3()">${c}</button>`).join('')}</div></div>
+    <div class="field"><label>Guardrails</label><div class="checks">${guards.map(g=>`<div class="chk ${draft.guardrails.includes(g)?'on':''}" onclick="toggleArr(draft.guardrails,'${g}');renderStep3()">${draft.guardrails.includes(g)?'✓ ':''}${g}</div>`).join('')}</div></div>
+    <div class="field"><label>Data sources</label><div class="checks">${sources.map(s=>`<div class="chk ${draft._sources.includes(s)?'on':''}" onclick="toggleArr(draft._sources,'${s}');renderStep3()">${draft._sources.includes(s)?'✓ ':''}${s}</div>`).join('')}</div></div>
+    <div class="section-label">Preview</div>
+    <div id="previewEmp"></div>`;
+  refreshPreview();
+}
+
+function toggleArr(arr,v){ 
+  const i=arr.indexOf(v); 
+  if(i<0) arr.push(v); 
+  else arr.splice(i,1); 
+}
+
+function refreshPreview(){
+  const w=WORKFLOWS[draft.wf];
+  const team=draft.assign.filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');
+  const nm=draft.name||'New hire';
+  const pe=$('previewEmp'); if(!pe) return;
+  pe.innerHTML=`<div class="preview-emp"><div class="emp-top"><div class="avatar">${monogram(nm)}</div>
+    <div><div class="emp-name">${nm}</div><div class="emp-title">${draft.title||'AI employee'}</div></div></div>
+    <div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${(draft.mode||w.mode).toUpperCase()} mode</div>
+    <div class="team">${team}</div></div>`;
+}
+
+function renderBuilderNav(){
+  let left = stepIdx>1 ? `<button class="btn ghost" onclick="setBuilderStep(${stepIdx-1})">← Back</button>` : `<span></span>`;
+  let right;
+  if(stepIdx===1) right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){setBuilderStep(2);renderBuilder()}">Next: assign tasks →</button>`;
+  else if(stepIdx===2) right=`<button class="btn primary" onclick="setBuilderStep(3);renderBuilder()">Next: define role →</button>`;
+  else right=`<button class="btn primary" onclick="hire()">✓ Hire this AI employee</button>`;
+  $('builderNav').innerHTML = left+right;
+}
+
+function hire(){
+  const w=WORKFLOWS[draft.wf];
+  const name=(draft.name||'').trim()||'New Hire';
+  const wfId='custom_'+Date.now();
+  WORKFLOWS[wfId]={ 
+    name:w.name, 
+    deliverable:w.deliverable, 
+    mode:draft.mode||w.mode, 
+    sample:w.sample, 
+    desc:w.desc,
+    tasks:w.tasks.map((t,i)=>({ agent:draft.assign[i]||t.agent, task:t.task, deps:t.deps })) 
+  };
+  const id='emp_'+Date.now();
+  EMPLOYEES.push({ id, name, title:draft.title||('AI '+w.name+' Lead'), wf:wfId, shipped:0, hrs:0, fte:0.5, status:'idle', isNew:true }); 
+  renderEcon(); renderRoster();
+  setView('workforce');
+  setTimeout(()=>{ 
+    const c=$('emp-'+id); 
+    if(c){ 
+      c.scrollIntoView({behavior:'smooth',block:'center'}); 
+      c.style.boxShadow='0 0 0 2px var(--accent)'; 
+      setTimeout(()=>c.style.boxShadow='',1800);
+    } 
+  },300);
+}
+
+// ════════════════════ INIT ════════════════════
+renderEcon();
+renderRoster();
+</script>
+</body>
+</html>
