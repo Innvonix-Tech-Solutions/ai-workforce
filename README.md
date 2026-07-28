@@ -53,3 +53,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/microvision
 https://innvonix-tech-solutions.github.io/ai-workforce/rab
 
 https://innvonix-tech-solutions.github.io/ai-workforce/absolics
+
+https://innvonix-tech-solutions.github.io/ai-workforce/aehr
