@@ -51,3 +51,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/diodes
 https://innvonix-tech-solutions.github.io/ai-workforce/microvision
 
 https://innvonix-tech-solutions.github.io/ai-workforce/rab
+
+https://innvonix-tech-solutions.github.io/ai-workforce/absolics
