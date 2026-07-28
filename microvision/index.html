@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MicroVision Perception Console — AI Workforce Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0E13;
+  --surface:#111821;
+  --surface-2:#161F2A;
+  --surface-3:#1C2733;
+  --border:#293643;
+  --border-soft:#1B2530;
+  --text:#E8EEF3;
+  --muted:#8FA0AE;
+  --muted-2:#586773;
+  --accent:#00C2FF;
+  --accent-dim:#0A5A78;
+  --accent2:#FF5C4D;
+  --accent3:#FFB020;
+  --danger:#FF5C4D;
+  --font-display:'Chakra Petch',sans-serif;
+  --font-body:'Inter',sans-serif;
+  --font-mono:'Fira Code',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 90% -8%, rgba(0,194,255,0.09), transparent 55%),
+    radial-gradient(900px 480px at 5% 8%, rgba(255,92,77,0.05), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent);}
+::selection{background:rgba(0,194,255,0.28);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:26px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:38px;height:38px;border-radius:6px;
+  background:linear-gradient(155deg,var(--surface-3),var(--surface-2));
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--accent);font-family:var(--font-mono);font-weight:600;font-size:11px;
+}
+.mark-name{font-family:var(--font-display);font-weight:700;font-size:19px;letter-spacing:0.01em;}
+.mark-sub{font-family:var(--font-mono);font-size:10.5px;color:var(--muted-2);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px;}
+
+.scan-readout{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent3);
+  background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:8px 14px;display:flex;align-items:center;gap:10px;
+}
+.scan-readout .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.hero{padding:44px 0 30px;display:grid;grid-template-columns:1.1fr 0.9fr;gap:40px;align-items:center;}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:30px 0 18px;}}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent);}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(29px,4.1vw,43px);line-height:1.08;letter-spacing:-0.005em;margin:0 0 16px;}
+h1 span{color:var(--accent);}
+.lead{color:var(--muted);font-size:15.5px;max-width:53ch;margin:0 0 22px;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:var(--font-body);font-weight:600;font-size:13.5px;border-radius:6px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--accent);color:#00212E;border-color:var(--accent);}
+.btn-primary:hover{background:#4dd5ff;}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--accent2);color:var(--accent2);}
+
+/* lidar point-cloud signature */
+.scope{border:1px solid var(--border);border-radius:10px;background:var(--surface);padding:18px 18px 14px;}
+.scope-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
+.scope-title{font-family:var(--font-mono);font-size:10.5px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em;}
+.scope-val{font-family:var(--font-mono);font-size:12px;color:var(--accent3);}
+svg.trace{width:100%;height:210px;display:block;}
+.scan-grid circle{fill:none;stroke:var(--border-soft);stroke-width:1;}
+.scan-grid line{stroke:var(--border-soft);stroke-width:1;}
+.scope-foot{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--font-mono);font-size:10.5px;color:var(--muted-2);}
+
+.econ{border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:760px){.econ{grid-template-columns:repeat(2,1fr);}}
+.econ-item{padding:6px 18px;border-left:1px solid var(--border-soft);}
+.econ-item:first-child{border-left:none;padding-left:0;}
+@media(max-width:760px){.econ-item:nth-child(2n+1){border-left:none;padding-left:0;}}
+.econ-num{font-family:var(--font-display);font-weight:700;font-size:26px;color:var(--text);}
+.econ-num small{font-size:14px;color:var(--accent);font-weight:700;}
+.econ-label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+section{padding:46px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.section-title{font-family:var(--font-display);font-weight:700;font-size:22px;}
+.section-sub{color:var(--muted);font-size:13.5px;max-width:60ch;margin-top:4px;}
+.track-label{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.1em;margin:28px 0 14px;padding-top:6px;border-top:1px dashed var(--border-soft);}
+.track-label:first-of-type{border-top:none;padding-top:0;margin-top:6px;}
+
+.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+@media(max-width:760px){.roster{grid-template-columns:1fr;}}
+.op-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:10px;transition:border-color .15s ease;}
+.op-card:hover{border-color:var(--accent-dim);}
+.op-card.flagship{border-color:var(--accent2);background:linear-gradient(180deg,rgba(255,92,77,0.06),var(--surface));}
+.op-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.op-name{font-family:var(--font-display);font-weight:700;font-size:15.5px;}
+.op-role{font-size:12px;color:var(--muted);margin-top:2px;}
+.flag-chip{font-family:var(--font-mono);font-size:10px;color:var(--accent2);border:1px solid var(--accent2);border-radius:20px;padding:2px 8px;white-space:nowrap;}
+.op-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+.op-stats{display:flex;gap:16px;margin-top:2px;}
+.op-stat{font-family:var(--font-mono);font-size:11.5px;color:var(--muted-2);}
+.op-stat b{color:var(--accent);font-size:13px;display:block;font-family:var(--font-body);font-weight:600;}
+.op-agents{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.chip{font-size:11px;background:var(--surface-3);border:1px solid var(--border);border-radius:20px;padding:3px 9px;color:var(--muted);}
+.op-actions{display:flex;gap:10px;margin-top:6px;}
+.run-btn{flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:600;font-size:13px;border-radius:6px;padding:9px;cursor:pointer;}
+.run-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+.run-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;margin-top:22px;display:none;}
+.run-panel.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.run-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.run-head h3{font-family:var(--font-display);font-size:17px;margin:0;}
+.run-head .meta{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.close-run{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:6px 10px;cursor:pointer;font-size:12px;}
+.close-run:hover{color:var(--text);border-color:var(--accent2);}
+
+.feed{background:var(--bg);border:1px solid var(--border-soft);border-radius:8px;padding:14px 16px;height:260px;overflow-y:auto;font-family:var(--font-mono);font-size:12.5px;display:flex;flex-direction:column;gap:7px;}
+.feed-line{display:flex;gap:10px;align-items:flex-start;opacity:0;animation:appear .3s ease forwards;}
+@keyframes appear{to{opacity:1;}}
+.feed-line .tag{color:var(--accent3);white-space:nowrap;}
+.feed-line .txt{color:var(--muted);}
+.feed-line.done .tag{color:var(--accent);}
+.feed-line.done .txt{color:var(--text);}
+
+.progress-row{display:flex;gap:6px;margin:14px 0 6px;flex-wrap:wrap;}
+.pstep{flex:1;min-width:64px;height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;position:relative;}
+.pstep.active{background:var(--accent-dim);}
+.pstep.complete{background:var(--accent);}
+
+.deliverable{margin-top:18px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:16px 18px;display:none;}
+.deliverable.show{display:block;animation:fadein .3s ease;}
+.deliverable h4{font-family:var(--font-display);font-size:14px;margin:0 0 10px;color:var(--accent);}
+.deliverable pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:12.5px;color:var(--text);margin:0;line-height:1.6;}
+.note{font-size:11px;color:var(--muted-2);margin-top:10px;font-style:italic;}
+
+.builder{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;}
+.build-steps{display:flex;gap:8px;margin-bottom:20px;}
+.build-step-dot{flex:1;height:3px;border-radius:2px;background:var(--surface-3);}
+.build-step-dot.on{background:var(--accent);}
+.build-body{min-height:200px;}
+.pick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+@media(max-width:700px){.pick-grid{grid-template-columns:1fr;}}
+.pick-card{border:1px solid var(--border);border-radius:8px;padding:14px;cursor:pointer;background:var(--surface-2);}
+.pick-card:hover{border-color:var(--accent3);}
+.pick-card.selected{border-color:var(--accent);background:rgba(0,194,255,0.07);}
+.pick-title{font-weight:600;font-size:13.5px;}
+.pick-desc{font-size:12px;color:var(--muted);margin-top:4px;}
+.field-row{margin-bottom:14px;}
+.field-row label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;}
+.field-row input,.field-row select{width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:10px 12px;font-family:var(--font-body);font-size:13.5px;}
+.build-nav{display:flex;justify-content:space-between;margin-top:20px;}
+.summary-box{background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:16px;}
+.summary-box b{color:var(--accent);}
+
+footer{border-top:1px solid var(--border-soft);padding:28px 0 40px;}
+.foot-note{font-size:12px;color:var(--muted-2);max-width:80ch;line-height:1.6;}
+.foot-note strong{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark-row">
+      <div class="mark">
+        <div class="mark-badge">MV</div>
+        <div>
+          <div class="mark-name">Perception Console</div>
+          <div class="mark-sub">MicroVision · AI Workforce Prototype</div>
+        </div>
+      </div>
+      <div class="scan-readout">
+        <span class="dot"></span>
+        <span id="siteTxt">Colorado Springs ASIC lab · active</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero" style="padding-bottom:0;">
+    <div>
+      <div class="eyebrow">Lidar 2.0 · MOVIA · IRIS · HALO</div>
+      <h1>Eight operators to run MicroVision's <span>portfolio-to-production</span> loop</h1>
+      <p class="lead">Each operator below is a real MicroVision workflow — reactivating a Luminar-era customer engagement, qualifying IRIS for a defense program, tracking the Scantinel FMCW roadmap — handed to a small team of specialist agents that works it end to end and hands back a reviewable deliverable.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="document.getElementById('roster-section').scrollIntoView({behavior:'smooth'})">View the roster</button>
+        <button class="btn btn-ghost" onclick="runOperator('legacyconvert')">Run the flagship operator</button>
+      </div>
+    </div>
+    <div class="scope">
+      <div class="scope-top">
+        <span class="scope-title">IRIS sensor — live point cloud</span>
+        <span class="scope-val" id="rangeVal">247 m detected range</span>
+      </div>
+      <svg class="trace" viewBox="0 0 300 210" preserveAspectRatio="xMidYMid meet">
+        <g class="scan-grid" transform="translate(150,205)">
+          <circle r="50"></circle><circle r="100"></circle><circle r="150"></circle>
+          <line x1="-150" y1="0" x2="150" y2="0"></line>
+          <line x1="0" y1="-195" x2="0" y2="0"></line>
+        </g>
+        <g id="sweepGroup" transform="translate(150,205)"></g>
+        <g id="pointGroup"></g>
+      </svg>
+      <div class="scope-foot">
+        <span>1550nm ToF · eye-safe</span>
+        <span id="densityVal">312 pts/deg\u00b2</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="econ wrap" style="padding-left:0;padding-right:0;">
+    <div class="econ-item">
+      <div class="econ-num">5.6<small>×</small></div>
+      <div class="econ-label">Faster reactivation of dormant customer engagements</div>
+    </div>
+    <div class="econ-item">
+      <div class="econ-num">30<small></small></div>
+      <div class="econ-label">Legacy Luminar engagements the roster is built to convert</div>
+    </div>
+    <div class="econ-item">
+      <div class="econ-num">19<small> hrs</small></div>
+      <div class="econ-label">Median engineering hours returned per run</div>
+    </div>
+    <div class="econ-item">
+      <div class="econ-num">8<small>/8</small></div>
+      <div class="econ-label">Workflows covered, portfolio through production</div>
+    </div>
+  </div>
+
+  <section id="roster-section">
+    <div class="section-head">
+      <div>
+        <div class="section-title">The roster</div>
+        <div class="section-sub">Grouped by track. Run any operator to watch its agent team work a real MicroVision-style task and produce a deliverable.</div>
+      </div>
+    </div>
+    <div id="rosterMount"></div>
+
+    <div class="run-panel" id="runPanel">
+      <div class="run-head">
+        <div>
+          <h3 id="runTitle">—</h3>
+          <div class="meta" id="runMeta">—</div>
+        </div>
+        <button class="close-run" onclick="closeRun()">Close</button>
+      </div>
+      <div class="progress-row" id="progressRow"></div>
+      <div class="feed" id="feed"></div>
+      <div class="deliverable" id="deliverable">
+        <h4 id="delivTitle">Deliverable</h4>
+        <pre id="delivBody"></pre>
+        <div class="note">NOTE: illustrative simulation for demonstration purposes — all figures are placeholders and every output is reviewed by a MicroVision engineer, program lead, or commercial officer before use.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-title">Build a new operator</div>
+        <div class="section-sub">Compose a ninth operator in three steps: pick the base workflow, assign its cadence, name it.</div>
+      </div>
+    </div>
+    <div class="builder">
+      <div class="build-steps">
+        <div class="build-step-dot on" id="dot1"></div>
+        <div class="build-step-dot" id="dot2"></div>
+        <div class="build-step-dot" id="dot3"></div>
+      </div>
+      <div class="build-body" id="buildBody"></div>
+      <div class="build-nav">
+        <button class="btn btn-ghost" id="backBtn" onclick="builderBack()" style="visibility:hidden;">Back</button>
+        <button class="btn btn-primary" id="nextBtn" onclick="builderNext()">Next</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="foot-note">
+      <strong>This is a sales/stakeholder prototype, not a live system.</strong> No MicroVision systems, customer data, or proprietary sensor designs were used to build it — every deliverable, metric, and number above is an illustrative placeholder written to sound domain-authentic. Nothing here is submitted, filed, or transmitted anywhere; every run stays in this browser tab. Any resemblance to a real MicroVision program, customer, or partner is coincidental. In production, every deliverable in this loop — commercial terms, qualification reports, investor disclosures, integration plans — would be reviewed and signed off by a qualified MicroVision engineer, program lead, or commercial officer before it leaves the building.
+    </p>
+  </footer>
+</div>
+
+<script>
+/* =========================================================
+   DATA
+   ========================================================= */
+const AGENT_ROLES = {
+  lidar:    {emoji:'📡', label:'Lidar Systems Engineer', tools:['sensorSim','rangeModel','save']},
+  percept:  {emoji:'🧠', label:'Perception Software Engineer', tools:['fusionCheck','swBenchmark','save']},
+  mfg:      {emoji:'🏭', label:'Manufacturing & Site Integration Engineer', tools:['siteCapacity','lineSetup','save']},
+  auto:     {emoji:'🚗', label:'Automotive Program Engineer', tools:['oemSpecMatch','productionCheck','save']},
+  defense:  {emoji:'🛡️', label:'Defense & Security Program Manager', tools:['reqIntake','procurementSync','save']},
+  channel:  {emoji:'🏗️', label:'Industrial Channel Manager', tools:['resellerScan','pipelineSync','save']},
+  conv:     {emoji:'🔍', label:'Customer Conversion Analyst', tools:['engageStatus','mdaAssess','save']},
+  quote:    {emoji:'💰', label:'Commercial & Pricing Analyst', tools:['revenueMix','priceQuote','save']},
+  mna:      {emoji:'🧩', label:'Asset Integration Analyst', tools:['ipMap','roadmapMerge','save']},
+  ir:       {emoji:'📊', label:'Investor Relations Analyst', tools:['financialsPull','guidanceCheck','save']},
+  reliab:   {emoji:'🧪', label:'Reliability & Qualification Engineer', tools:['envTest','autoGradeCheck','save']},
+};
+
+const WORKFLOWS = {
+  legacyconvert: {
+    name:'Legacy Customer Engagement Conversion', title:'Legacy Engagement Conversion',
+    mode:'sequential', tag:'flagship', track:'trackA',
+    deliverable:'Conversion status package',
+    sample:'Reactivating a dormant Luminar-era engagement with a Tier-1 automotive supplier for IRIS integration',
+    desc:'Works through the roughly 30 customer engagements inherited from the Luminar acquisition: assess status, re-engage, and draft the commercial terms to move each toward a purchase order or master development agreement.',
+    tasks:[
+      {agent:'conv', task:'Pull the engagement record and assess current status against the original Luminar scope', deps:[]},
+      {agent:'conv', task:'Score the engagement for reactivation priority based on program stage and fit', deps:[0]},
+      {agent:'auto', task:'Confirm IRIS/HALO spec still matches the customer\u2019s current program requirements', deps:[1]},
+      {agent:'quote', task:'Draft updated commercial terms toward a supply agreement or MDA', deps:[2]},
+      {agent:'ir', task:'Flag the engagement\u2019s potential contribution to 2026 revenue guidance', deps:[3]},
+      {agent:'conv', task:'Assemble the conversion status package and flag open items for sign-off', deps:[4]},
+    ],
+  },
+  roadmap: {
+    name:'Cross-Portfolio Technology Roadmap Integration', title:'Technology Roadmap Integration',
+    mode:'dag', track:'trackB',
+    deliverable:'Unified roadmap brief',
+    sample:'Merging Ibeo, Luminar (IRIS/HALO), and Scantinel FMCW technology roadmaps into one product line plan',
+    desc:'Lidar and perception software agents work the merged technology stack in parallel — hardware architecture and software layer — and converge on a unified roadmap brief spanning MOVIA, IRIS, HALO, and FMCW.',
+    tasks:[
+      {agent:'lidar', task:'Map hardware architecture overlap across MOVIA, IRIS, HALO, and FMCW sensor lines', deps:[]},
+      {agent:'percept', task:'Assess perception software reuse potential across the merged sensor lines', deps:[]},
+      {agent:'mna', task:'Identify IP conflicts or redundancies across the acquired technology stacks', deps:[0,1]},
+      {agent:'conv', task:'Compile the unified roadmap brief with sequencing recommendations', deps:[2]},
+    ],
+  },
+  defensequal: {
+    name:'Defense & UGV Program Qualification', title:'Defense Program Qualification',
+    mode:'sequential', track:'trackB',
+    deliverable:'Qualification & procurement package',
+    sample:'IRIS sensor qualification for an unmanned ground vehicle force-protection program',
+    desc:'Walks an IRIS or HALO sensor through environmental qualification and defense procurement coordination via the J.A. Green channel before a program award.',
+    tasks:[
+      {agent:'defense', task:'Log program requirements and confirm applicable defense procurement pathway', deps:[]},
+      {agent:'reliab', task:'Run environmental qualification: shock, vibration, and temperature extremes', deps:[0]},
+      {agent:'reliab', task:'Confirm eye-safety and detection-range performance against program spec', deps:[1]},
+      {agent:'defense', task:'Coordinate procurement submission through the J.A. Green defense channel', deps:[2]},
+      {agent:'conv', task:'Issue the qualification and procurement status package', deps:[3]},
+    ],
+  },
+  industrialchannel: {
+    name:'Industrial Channel Pipeline Management', title:'Industrial Channel Pipeline',
+    mode:'dag', track:'trackA',
+    deliverable:'Channel pipeline report',
+    sample:'Quarterly pipeline review for MOVIA S industrial evaluations across the IDI Laser reseller network',
+    desc:'Scans reseller pipeline activity and competitive positioning in parallel across the fragmented industrial lidar market, then rolls it into one channel report.',
+    tasks:[
+      {agent:'channel', task:'Pull MOVIA S evaluation and proof-of-concept pipeline from IDI Laser and other resellers', deps:[]},
+      {agent:'channel', task:'Flag deals nearing conversion from evaluation to purchase order', deps:[]},
+      {agent:'quote', task:'Benchmark reseller pricing against solid-state competitor offerings', deps:[]},
+      {agent:'conv', task:'Compile the channel pipeline report with recommended focus accounts', deps:[0,1,2]},
+    ],
+  },
+  autoprogram: {
+    name:'Automotive Production Program Support', title:'Automotive Program Support',
+    mode:'sequential', track:'trackA',
+    deliverable:'Program support package',
+    sample:'Ongoing IRIS technical support for an active OEM series-production vehicle program',
+    desc:'Supports an active automotive production program with technical response, spec confirmation, and qualification data on an ongoing basis.',
+    tasks:[
+      {agent:'auto', task:'Log the OEM technical support request and current production milestone', deps:[]},
+      {agent:'lidar', task:'Match the request against current IRIS/HALO performance and configuration data', deps:[0]},
+      {agent:'reliab', task:'Pull relevant automotive-grade qualification data for the request', deps:[1]},
+      {agent:'auto', task:'Draft the technical response and confirm production timeline impact', deps:[2]},
+      {agent:'conv', task:'Issue the program support package for account team review', deps:[3]},
+    ],
+  },
+  siteintegration: {
+    name:'Site & Asset Integration Planning', title:'Site & Asset Integration',
+    mode:'dag', track:'trackB',
+    deliverable:'Integration plan',
+    sample:'Integrating the Orlando validation facility and Colorado Springs ASIC team into MicroVision\u2019s manufacturing network',
+    desc:'Manufacturing and asset-integration agents work facility consolidation and IP transfer in parallel across the Redmond, Colorado Springs, and Orlando sites, converging on an integration plan.',
+    tasks:[
+      {agent:'mfg', task:'Assess Redmond, Colorado Springs, and Orlando site capacity and role allocation', deps:[]},
+      {agent:'mna', task:'Map acquired IP and equipment against the consolidated site plan', deps:[]},
+      {agent:'mfg', task:'Identify consolidation opportunities without disrupting active production programs', deps:[0,1]},
+      {agent:'conv', task:'Issue the site and asset integration plan for executive review', deps:[2]},
+    ],
+  },
+  investor: {
+    name:'Quarterly Investor Disclosure Package', title:'Investor Disclosure Package',
+    mode:'sequential', track:'trackA',
+    deliverable:'Earnings package draft',
+    sample:'Q3 2026 earnings release covering revenue mix across IRIS, MOVIA, and engineering services',
+    desc:'Pulls quarterly financials and revenue-mix data together into a draft earnings package ahead of quarterly disclosure.',
+    tasks:[
+      {agent:'ir', task:'Pull quarterly financials: revenue mix across IRIS, MOVIA L/S, and engineering services', deps:[]},
+      {agent:'conv', task:'Summarize customer conversion and reseller pipeline progress for the quarter', deps:[]},
+      {agent:'ir', task:'Check revenue mix and guidance language against prior quarterly disclosures', deps:[0,1]},
+      {agent:'ir', task:'Route the draft earnings package for legal and executive review', deps:[2]},
+    ],
+  },
+  fmcwdev: {
+    name:'FMCW Next-Gen Sensor Development Tracking', title:'FMCW Development Tracking',
+    mode:'sequential', track:'trackB',
+    deliverable:'Development milestone report',
+    sample:'Tracking the Scantinel-derived FMCW ultra-long-range sensor toward its A-sample milestone',
+    desc:'Tracks the FMCW sensor acquired from Scantinel Photonics through simulation, tape-out readiness, and A-sample milestone reporting.',
+    tasks:[
+      {agent:'lidar', task:'Review current FMCW range and velocity simulation results against target spec', deps:[]},
+      {agent:'percept', task:'Assess perception software integration readiness for the FMCW data stream', deps:[0]},
+      {agent:'mfg', task:'Check tape-out readiness and foundry scheduling for the A-sample run', deps:[1]},
+      {agent:'conv', task:'Issue the development milestone report ahead of the A-sample target date', deps:[2]},
+    ],
+  },
+};
+
+const DTITLE = {
+  legacyconvert:'Conversion Status Package',
+  roadmap:'Unified Roadmap Brief',
+  defensequal:'Qualification & Procurement Package',
+  industrialchannel:'Channel Pipeline Report',
+  autoprogram:'Program Support Package',
+  siteintegration:'Site & Asset Integration Plan',
+  investor:'Draft Earnings Package',
+  fmcwdev:'FMCW Development Milestone Report',
+};
+
+const TOOLS = {
+  sensorSim:()=>'Sensor architecture overlap mapped across 4 acquired product lines',
+  rangeModel:()=>'Range model confirms 250m detection performance holds across configurations',
+  fusionCheck:()=>'Sensor fusion compatibility confirmed across MOVIA and IRIS data formats',
+  swBenchmark:()=>'Software reuse potential estimated at 62% across merged perception stack',
+  siteCapacity:()=>'Site capacity assessed: Redmond HQ, Colorado Springs ASIC, Orlando validation',
+  lineSetup:()=>'Production line setup validated for current program volume',
+  oemSpecMatch:()=>'OEM spec match confirmed against current IRIS/HALO configuration data',
+  productionCheck:()=>'Production milestone check shows program on schedule',
+  reqIntake:()=>'Program requirements logged, procurement pathway confirmed as sole-source eligible',
+  procurementSync:()=>'Procurement submission synced through the J.A. Green defense channel',
+  resellerScan:()=>'Reseller pipeline scanned across IDI Laser and regional partner network',
+  pipelineSync:()=>'3 deals flagged nearing conversion from evaluation to purchase order',
+  engageStatus:()=>'Engagement status confirmed against original Luminar program scope',
+  mdaAssess:()=>'Master development agreement terms assessed for readiness to draft',
+  revenueMix:()=>'Revenue mix confirmed: IRIS ~70%, MOVIA L/S ~20%, services ~13% of 2026 outlook',
+  priceQuote:()=>'Commercial terms drafted consistent with current program pricing bands',
+  ipMap:()=>'Acquired IP mapped across Ibeo, Luminar, and Scantinel technology stacks',
+  roadmapMerge:()=>'Roadmap sequencing drafted prioritizing near-term IRIS/MOVIA S milestones',
+  financialsPull:()=>'Quarterly financials pulled: revenue mix and cash position confirmed',
+  guidanceCheck:()=>'Guidance language checked for consistency against prior quarterly disclosures',
+  envTest:()=>'Environmental qualification passed: shock, vibration, -40\u00b0C to 85\u00b0C thermal range',
+  autoGradeCheck:()=>'Automotive-grade and eye-safety compliance confirmed for the sensor configuration',
+  save:()=>'Saved to program record',
+};
+
+const FINAL = {
+  legacyconvert:
+`CONVERSION STATUS PACKAGE — Tier-1 Automotive Supplier Engagement
+IRIS Sensor Integration, Originally Scoped Under Luminar
+
+ENGAGEMENT STATUS: Original Luminar-era scope confirmed still active;
+program has not lapsed despite the ownership transition.
+
+REACTIVATION PRIORITY: Scored high priority based on program stage
+(pre-production) and continued fit with current IRIS configuration.
+
+TECHNICAL MATCH: IRIS spec confirmed to still match the customer's
+current program requirements; no configuration changes needed.
+
+COMMERCIAL TERMS (draft): Updated terms drafted toward a supply
+agreement, structured to convert into a master development agreement
+upon customer confirmation.
+
+REVENUE IMPACT: Flagged as a potential contributor to 2026 revenue
+guidance, consistent with the IRIS product line's expected ~70% share
+of full-year revenue.
+
+OPEN ITEMS FOR HUMAN REVIEW: (1) confirm updated commercial terms with
+the commercial team, (2) validate program timeline hasn't shifted
+since the original Luminar engagement, (3) schedule a customer
+milestone call to formalize the MDA.
+
+NOTE: illustrative status package — placeholder figures, not an actual
+customer program.`,
+
+  roadmap:
+`UNIFIED ROADMAP BRIEF — MOVIA / IRIS / HALO / FMCW Integration
+
+HARDWARE OVERLAP: Architecture overlap mapped across the 4 acquired
+product lines; MOVIA (solid-state, 905nm-class) and IRIS/HALO
+(1550nm ToF) share limited hardware commonality, while FMCW
+(Scantinel-derived) is architecturally distinct.
+
+SOFTWARE REUSE: Perception software reuse potential estimated at 62%
+across the merged stack, supporting the company's software-first
+"Lidar 2.0" positioning.
+
+IP REVIEW: No blocking IP conflicts identified across the Ibeo,
+Luminar, and Scantinel technology stacks; some redundant patent
+claims flagged for portfolio rationalization.
+
+RECOMMENDATION: Sequence near-term engineering investment toward
+MOVIA S launch and IRIS customer conversion, with FMCW development
+continuing on its independent timeline toward A-sample.
+
+NOTE: illustrative roadmap brief — placeholder figures for
+demonstration, not an actual MicroVision product roadmap.`,
+
+  defensequal:
+`QUALIFICATION & PROCUREMENT PACKAGE — UGV Force-Protection Program
+
+REQUIREMENTS: Program requirements logged; procurement pathway
+confirmed eligible for a sole-source justification given IRIS's
+unique long-range 1550nm performance profile.
+
+ENVIRONMENTAL QUALIFICATION: Shock, vibration, and thermal range
+(-40\u00b0C to 85\u00b0C) qualification passed with no anomalies logged.
+
+PERFORMANCE CONFIRMATION: Eye-safety and 250m+ detection range
+performance confirmed against the program's stated requirements.
+
+PROCUREMENT: Submission coordinated through the J.A. Green defense
+channel; program office briefing scheduled following package
+submission.
+
+STATUS: Ready for program office review; no open technical issues
+identified.
+
+NOTE: illustrative package — placeholder data, not an actual defense
+program submission.`,
+
+  industrialchannel:
+`CHANNEL PIPELINE REPORT — MOVIA S Industrial Evaluations, Q3
+
+PIPELINE VOLUME: Evaluation and proof-of-concept pipeline pulled
+across IDI Laser and the regional reseller network; consistent with
+the broader base of MOVIA S customer engagements currently in
+pre-production evaluation.
+
+CONVERSION SIGNALS: 3 deals flagged nearing conversion from
+evaluation to purchase order, concentrated in automation and
+critical-infrastructure use cases.
+
+COMPETITIVE BENCHMARK: Reseller pricing tracking competitively
+against solid-state alternatives, with MOVIA S's lower cost structure
+cited as a differentiator versus electromechanical spinning lidar.
+
+RECOMMENDATION: Prioritize account support for the 3 flagged deals
+ahead of the MOVIA S commercial launch.
+
+NOTE: illustrative pipeline report — placeholder figures for
+demonstration.`,
+
+  autoprogram:
+`PROGRAM SUPPORT PACKAGE — Active OEM Series-Production Support
+
+REQUEST: OEM technical support request logged against an active
+production milestone for an in-market vehicle program.
+
+SPEC MATCH: Request matched against current IRIS/HALO performance and
+configuration data; no discrepancy identified versus the deployed
+configuration.
+
+QUALIFICATION DATA: Relevant automotive-grade qualification data
+pulled and attached in support of the customer's request.
+
+TECHNICAL RESPONSE: Draft response prepared confirming no impact to
+the customer's production timeline.
+
+STATUS: Ready for account team review before submission to the OEM.
+
+NOTE: illustrative support package — placeholder figures, not an
+actual customer communication.`,
+
+  siteintegration:
+`SITE & ASSET INTEGRATION PLAN — Redmond / Colorado Springs / Orlando
+
+SITE CAPACITY: Redmond serves as corporate HQ and software
+development; Colorado Springs (ex-Luminar) provides ASIC design
+capability; Orlando (ex-Luminar) provides validation and testing
+infrastructure valued in the hundreds of millions of dollars.
+
+IP & EQUIPMENT MAP: Acquired IP and equipment mapped against the
+consolidated site plan; no immediate relocation required for
+equipment supporting active production programs.
+
+CONSOLIDATION OPPORTUNITIES: Limited near-term consolidation
+identified that would not disrupt current IRIS production support;
+longer-term opportunities flagged for the next fiscal year review.
+
+RECOMMENDATION: Maintain current site configuration through the
+present production cycle; revisit consolidation options at the next
+annual planning cycle.
+
+NOTE: illustrative integration plan — placeholder figures for
+demonstration, not an actual MicroVision facilities plan.`,
+
+  investor:
+`DRAFT EARNINGS PACKAGE — Q3 2026
+
+REVENUE MIX: IRIS confirmed at approximately 70% of full-year revenue
+outlook, MOVIA L/S combined at approximately 20%, and engineering
+services at approximately 13%, consistent with prior quarterly
+disclosure.
+
+CUSTOMER CONVERSION: Progress summarized on converting legacy Luminar
+customer engagements into purchase orders, supply agreements, and
+master development agreements.
+
+RESELLER PIPELINE: MOVIA S evaluation pipeline and IDI Laser/J.A.
+Green channel progress summarized for the quarter.
+
+DISCLOSURE CHECK: Revenue mix and guidance language checked for
+consistency against prior quarterly filings; no material
+inconsistencies flagged.
+
+STATUS: Draft routed for legal and executive review ahead of the
+scheduled release date.
+
+NOTE: illustrative draft package — placeholder figures, not actual
+MicroVision financial results. Final disclosures must be reviewed by
+legal and executive leadership before release.`,
+
+  fmcwdev:
+`FMCW DEVELOPMENT MILESTONE REPORT — Scantinel-Derived Ultra-Long-Range Sensor
+
+SIMULATION: Range and velocity simulation results reviewed against
+the target 1 km detection specification; current results track toward
+the program's stated performance goals.
+
+SOFTWARE INTEGRATION: Perception software integration readiness
+assessed for the FMCW data stream; additional work identified to
+support simultaneous range-and-velocity output in the existing
+software stack.
+
+TAPE-OUT READINESS: Foundry scheduling checked against the mid-2027
+A-sample target; current schedule tracking on plan.
+
+RECOMMENDATION: Proceed toward tape-out on the current schedule;
+flag the software integration workstream for additional resourcing.
+
+NOTE: illustrative milestone report — placeholder figures for
+demonstration, not actual MicroVision program data.`,
+};
+
+const EMPLOYEES = [
+  {id:'op1', name:'Legacy Engagement Conversion', title:'Legacy Customer Engagement Conversion', wf:'legacyconvert', handled:'Inherited Luminar customer engagements', hrs:19, win:'5.6x faster reactivation'},
+  {id:'op2', name:'Roadmap Integration', title:'Cross-Portfolio Technology Roadmap Integration', wf:'roadmap', handled:'Ibeo/Luminar/Scantinel roadmap merge', hrs:17, win:'Converges in 1 pass'},
+  {id:'op3', name:'Defense Qualification', title:'Defense & UGV Program Qualification', wf:'defensequal', handled:'Defense & security program intake', hrs:22, win:'Package same week'},
+  {id:'op4', name:'Industrial Channel Pipeline', title:'Industrial Channel Pipeline Management', wf:'industrialchannel', handled:'IDI Laser & reseller pipeline', hrs:11, win:'Report in 1 run'},
+  {id:'op5', name:'Automotive Program Support', title:'Automotive Production Program Support', wf:'autoprogram', handled:'Active OEM production programs', hrs:15, win:'Response same-day'},
+  {id:'op6', name:'Site & Asset Integration', title:'Site & Asset Integration Planning', wf:'siteintegration', handled:'Redmond/Colorado Springs/Orlando planning', hrs:14, win:'Plan in 1 run'},
+  {id:'op7', name:'Investor Disclosure Desk', title:'Quarterly Investor Disclosure Package', wf:'investor', handled:'Quarterly earnings package prep', hrs:13, win:'Draft same week'},
+  {id:'op8', name:'FMCW Development Tracker', title:'FMCW Next-Gen Sensor Development Tracking', wf:'fmcwdev', handled:'Scantinel FMCW program milestones', hrs:10, win:'Report on schedule'},
+];
+
+const CONFIG = {
+  trackLabels:{trackA:'Commercial, Customer & Channel', trackB:'Engineering, Integration & Qualification'},
+};
+
+/* =========================================================
+   RENDER ROSTER
+   ========================================================= */
+function agentChips(wfKey){
+  const wf = WORKFLOWS[wfKey];
+  const used = [...new Set(wf.tasks.map(t=>t.agent))];
+  return used.map(a=>`<span class="chip">${AGENT_ROLES[a].emoji} ${AGENT_ROLES[a].label}</span>`).join('');
+}
+
+function renderRoster(){
+  const mount = document.getElementById('rosterMount');
+  const tracks = ['trackA','trackB'];
+  let html = '';
+  tracks.forEach(tr=>{
+    html += `<div class="track-label">${CONFIG.trackLabels[tr]}</div><div class="roster">`;
+    EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tr).forEach(e=>{
+      const wf = WORKFLOWS[e.wf];
+      const isFlag = wf.tag==='flagship';
+      html += `
+      <div class="op-card ${isFlag?'flagship':''}">
+        <div class="op-top">
+          <div>
+            <div class="op-name">${e.name}</div>
+            <div class="op-role">${e.title}</div>
+          </div>
+          ${isFlag?'<span class="flag-chip">FLAGSHIP</span>':''}
+        </div>
+        <div class="op-desc">${wf.desc}</div>
+        <div class="op-stats">
+          <div class="op-stat">Handles<b>${e.handled}</b></div>
+          <div class="op-stat">Hrs saved/run<b>${e.hrs}</b></div>
+          <div class="op-stat">Signal<b>${e.win}</b></div>
+        </div>
+        <div class="op-agents">${agentChips(e.wf)}</div>
+        <div class="op-actions">
+          <button class="run-btn" onclick="runOperator('${e.wf}')">▶ Run this operator</button>
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  });
+  mount.innerHTML = html;
+}
+renderRoster();
+
+/* =========================================================
+   RUN ENGINE
+   ========================================================= */
+let runToken = 0;
+
+function closeRun(){
+  document.getElementById('runPanel').classList.remove('active');
+}
+
+async function runOperator(wfKey){
+  const wf = WORKFLOWS[wfKey];
+  const myToken = ++runToken;
+  const panel = document.getElementById('runPanel');
+  const feed = document.getElementById('feed');
+  const progressRow = document.getElementById('progressRow');
+  const deliverable = document.getElementById('deliverable');
+
+  panel.classList.add('active');
+  document.getElementById('runTitle').textContent = wf.name;
+  document.getElementById('runMeta').textContent = `${wf.mode==='dag'?'Parallel DAG':'Sequential'} · ${wf.tasks.length} tasks · sample: ${wf.sample}`;
+  feed.innerHTML = '';
+  deliverable.classList.remove('show');
+  progressRow.innerHTML = wf.tasks.map(()=>`<div class="pstep"></div>`).join('');
+  panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+
+  const steps = document.querySelectorAll('#progressRow .pstep');
+
+  function log(text, done){
+    const line = document.createElement('div');
+    line.className = 'feed-line' + (done?' done':'');
+    line.innerHTML = `<span class="tag">[${done?'done':'run'}]</span><span class="txt">${text}</span>`;
+    feed.appendChild(line);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  const wait = ms => new Promise(r=>setTimeout(r,ms));
+
+  if(wf.mode==='sequential'){
+    for(let i=0;i<wf.tasks.length;i++){
+      if(myToken!==runToken) return;
+      const t = wf.tasks[i];
+      steps[i].classList.add('active');
+      log(`${AGENT_ROLES[t.agent].emoji} ${AGENT_ROLES[t.agent].label} — ${t.task}`);
+      await wait(600 + Math.random()*400);
+      if(myToken!==runToken) return;
+      const toolKey = AGENT_ROLES[t.agent].tools[0];
+      log(`↳ ${TOOLS[toolKey] ? TOOLS[toolKey]() : 'Task complete'}`, true);
+      steps[i].classList.remove('active');
+      steps[i].classList.add('complete');
+      await wait(150);
+    }
+  } else {
+    const done = new Set();
+    const remaining = wf.tasks.map((t,i)=>i);
+    while(remaining.length){
+      const wave = remaining.filter(i=>wf.tasks[i].deps.every(d=>done.has(d)));
+      if(!wave.length) break;
+      wave.forEach(i=>steps[i].classList.add('active'));
+      wave.forEach(i=>{
+        const t = wf.tasks[i];
+        log(`${AGENT_ROLES[t.agent].emoji} ${AGENT_ROLES[t.agent].label} — ${t.task}`);
+      });
+      await wait(650 + Math.random()*400);
+      if(myToken!==runToken) return;
+      wave.forEach(i=>{
+        const t = wf.tasks[i];
+        const toolKey = AGENT_ROLES[t.agent].tools[0];
+        log(`↳ ${TOOLS[toolKey] ? TOOLS[toolKey]() : 'Task complete'}`, true);
+        steps[i].classList.remove('active');
+        steps[i].classList.add('complete');
+        done.add(i);
+      });
+      wave.forEach(i=>remaining.splice(remaining.indexOf(i),1));
+      await wait(150);
+    }
+  }
+
+  if(myToken!==runToken) return;
+  log(`💾 Saved to program record`, true);
+  await wait(300);
+  document.getElementById('delivTitle').textContent = DTITLE[wfKey];
+  document.getElementById('delivBody').textContent = FINAL[wfKey];
+  deliverable.classList.add('show');
+}
+
+/* =========================================================
+   BUILDER
+   ========================================================= */
+let buildStep = 1;
+let buildState = {baseWf:null, cadence:'Weekly', name:''};
+
+function builderRenderStep(){
+  document.getElementById('dot1').classList.toggle('on', buildStep>=1);
+  document.getElementById('dot2').classList.toggle('on', buildStep>=2);
+  document.getElementById('dot3').classList.toggle('on', buildStep>=3);
+  document.getElementById('backBtn').style.visibility = buildStep===1?'hidden':'visible';
+  document.getElementById('nextBtn').textContent = buildStep===3?'Create operator':'Next';
+
+  const body = document.getElementById('buildBody');
+  if(buildStep===1){
+    body.innerHTML = `<div class="pick-grid">` + Object.entries(WORKFLOWS).map(([k,w])=>`
+      <div class="pick-card ${buildState.baseWf===k?'selected':''}" onclick="pickWf('${k}')">
+        <div class="pick-title">${w.name}</div>
+        <div class="pick-desc">${w.desc}</div>
+      </div>`).join('') + `</div>`;
+  } else if(buildStep===2){
+    body.innerHTML = `
+      <div class="field-row">
+        <label>Run cadence</label>
+        <select id="cadenceSel" onchange="buildState.cadence=this.value">
+          <option ${buildState.cadence==='Continuous'?'selected':''}>Continuous</option>
+          <option ${buildState.cadence==='Daily'?'selected':''}>Daily</option>
+          <option ${buildState.cadence==='Weekly'?'selected':''}>Weekly</option>
+          <option ${buildState.cadence==='On new engagement'?'selected':''}>On new engagement</option>
+          <option ${buildState.cadence==='On program milestone'?'selected':''}>On program milestone</option>
+        </select>
+      </div>
+      <div class="field-row">
+        <label>Operator name</label>
+        <input id="nameInput" type="text" placeholder="e.g. EU Defense Desk" value="${buildState.name}" oninput="buildState.name=this.value">
+      </div>`;
+  } else {
+    const wf = WORKFLOWS[buildState.baseWf];
+    body.innerHTML = `
+      <div class="summary-box">
+        <p><b>${buildState.name || 'Untitled operator'}</b> — built on <b>${wf ? wf.name : '—'}</b></p>
+        <p>Cadence: <b>${buildState.cadence}</b></p>
+        <p>Agent team: ${wf ? [...new Set(wf.tasks.map(t=>t.agent))].map(a=>AGENT_ROLES[a].emoji+' '+AGENT_ROLES[a].label).join(', ') : '—'}</p>
+        <p style="color:var(--muted);font-size:12.5px;margin-top:10px;">This adds a ninth operator to the roster below, cloned from the workflow above with your cadence and name.</p>
+      </div>`;
+  }
+}
+
+function pickWf(k){
+  buildState.baseWf = k;
+  builderRenderStep();
+}
+
+function builderNext(){
+  if(buildStep===1 && !buildState.baseWf){ alert('Pick a base workflow first.'); return; }
+  if(buildStep===3){
+    const wf = WORKFLOWS[buildState.baseWf];
+    const newKey = 'custom_'+Date.now();
+    WORKFLOWS[newKey] = {...wf, name: buildState.name || (wf.name+' (custom)'), tag:undefined};
+    DTITLE[newKey] = DTITLE[buildState.baseWf];
+    FINAL[newKey] = FINAL[buildState.baseWf];
+    EMPLOYEES.push({
+      id:'custom_'+Date.now(), name: buildState.name || 'Custom Operator',
+      title: WORKFLOWS[newKey].name, wf:newKey,
+      handled: buildState.cadence+' cadence', hrs: 10, win:'New',
+    });
+    renderRoster();
+    buildStep = 1; buildState = {baseWf:null, cadence:'Weekly', name:''};
+    builderRenderStep();
+    document.getElementById('roster-section').scrollIntoView({behavior:'smooth'});
+    return;
+  }
+  buildStep++;
+  builderRenderStep();
+}
+function builderBack(){
+  buildStep--;
+  builderRenderStep();
+}
+builderRenderStep();
+
+/* =========================================================
+   HEADER SITE READOUT + LIDAR POINT-CLOUD ANIMATION
+   ========================================================= */
+const SITES = ['Colorado Springs ASIC lab \u00b7 active','Orlando validation facility \u00b7 active','Redmond HQ \u00b7 software integration','Germany office \u00b7 EU customer support'];
+let siteIdx = 0;
+setInterval(()=>{
+  siteIdx = (siteIdx+1)%SITES.length;
+  document.getElementById('siteTxt').textContent = SITES[siteIdx];
+}, 3000);
+
+const NS = 'http://www.w3.org/2000/svg';
+const sweepGroup = document.getElementById('sweepGroup');
+const pointGroup = document.getElementById('pointGroup');
+const sweepLine = document.createElementNS(NS,'line');
+sweepLine.setAttribute('x1','0'); sweepLine.setAttribute('y1','0');
+sweepLine.setAttribute('stroke','var(--accent)'); sweepLine.setAttribute('stroke-width','1.2');
+sweepLine.setAttribute('opacity','0.7');
+sweepGroup.appendChild(sweepLine);
+
+// Fixed target shape: a simple car-like silhouette of points at set angles/ranges
+const TARGETS = [];
+for(let a=-25; a<=25; a+=3){
+  TARGETS.push({angle:a, range: 130 + Math.sin(a*0.2)*8});
+}
+for(let a=40; a<=55; a+=4){
+  TARGETS.push({angle:a, range: 90});
+}
+const targetDots = TARGETS.map(t=>{
+  const c = document.createElementNS(NS,'circle');
+  c.setAttribute('r','2');
+  c.setAttribute('fill','var(--accent2)');
+  c.setAttribute('opacity','0');
+  pointGroup.appendChild(c);
+  return {el:c, angle:t.angle, range:t.range, lit:0};
+});
+
+let sweepAngle = -70;
+let sweepDir = 1;
+function polarXY(angleDeg, r){
+  const a = (angleDeg-90) * Math.PI/180;
+  return [r*Math.cos(a), r*Math.sin(a)];
+}
+function drawScan(){
+  sweepAngle += sweepDir * 0.9;
+  if(sweepAngle > 70){ sweepDir = -1; }
+  if(sweepAngle < -70){ sweepDir = 1; }
+  const [sx, sy] = polarXY(sweepAngle, 195);
+  sweepLine.setAttribute('x2', sx.toFixed(1));
+  sweepLine.setAttribute('y2', sy.toFixed(1));
+
+  targetDots.forEach(d=>{
+    const angleDiff = Math.abs(d.angle - sweepAngle);
+    if(angleDiff < 2.5){ d.lit = 1; }
+    d.lit *= 0.965;
+    const [x,y] = polarXY(d.angle, d.range);
+    d.el.setAttribute('cx', x.toFixed(1));
+    d.el.setAttribute('cy', (y-205+205).toFixed(1)); // relative offset handled by group translate
+    d.el.setAttribute('opacity', Math.min(0.95, d.lit).toFixed(2));
+  });
+
+  const range = (240 + Math.sin(Date.now()*0.0006)*8).toFixed(0);
+  document.getElementById('rangeVal').textContent = `${range} m detected range`;
+  const density = (300 + Math.sin(Date.now()*0.0009)*15).toFixed(0);
+  document.getElementById('densityVal').textContent = `${density} pts/deg\u00b2`;
+  requestAnimationFrame(drawScan);
+}
+// pointGroup needs the same translate as sweepGroup
+pointGroup.setAttribute('transform','translate(150,205)');
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  requestAnimationFrame(drawScan);
+} else {
+  sweepLine.setAttribute('x2','0'); sweepLine.setAttribute('y2','-150');
+  targetDots.forEach(d=>{
+    const [x,y] = polarXY(d.angle, d.range);
+    d.el.setAttribute('cx', x.toFixed(1));
+    d.el.setAttribute('cy', y.toFixed(1));
+    d.el.setAttribute('opacity','0.6');
+  });
+}
+</script>
+</body>
+</html>
