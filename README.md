@@ -69,3 +69,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/amtechsys
 https://innvonix-tech-solutions.github.io/ai-workforce/simplemills
 
 https://innvonix-tech-solutions.github.io/ai-workforce/purewafer
+
+https://innvonix-tech-solutions.github.io/ai-workforce/everspin
