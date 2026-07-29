@@ -65,3 +65,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/cerrowire
 https://innvonix-tech-solutions.github.io/ai-workforce/presperse
 
 https://innvonix-tech-solutions.github.io/ai-workforce/amtechsys
+
+https://innvonix-tech-solutions.github.io/ai-workforce/simplemills
