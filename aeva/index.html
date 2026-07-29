@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aeva Program Console — AI Workforce Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Public+Sans:wght@400;500;600&family=Overpass+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080B12;
+  --surface:#0F1420;
+  --surface-2:#141B29;
+  --surface-3:#1A2332;
+  --border:#283344;
+  --border-soft:#1B2332;
+  --text:#E9EDF5;
+  --muted:#8D99AD;
+  --muted-2:#59657A;
+  --accent:#6C7BFF;
+  --accent-dim:#3A3F8A;
+  --accent2:#FF4D6D;
+  --accent3:#22D3EE;
+  --danger:#FF4D6D;
+  --font-display:'Syne',sans-serif;
+  --font-body:'Public Sans',sans-serif;
+  --font-mono:'Overpass Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 90% -8%, rgba(108,123,255,0.10), transparent 55%),
+    radial-gradient(900px 480px at 5% 8%, rgba(34,211,238,0.06), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent);}
+::selection{background:rgba(108,123,255,0.28);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:26px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:38px;height:38px;border-radius:8px;
+  background:linear-gradient(155deg,var(--surface-3),var(--surface-2));
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--accent);font-family:var(--font-mono);font-weight:600;font-size:11px;
+}
+.mark-name{font-family:var(--font-display);font-weight:800;font-size:19px;letter-spacing:0.005em;}
+.mark-sub{font-family:var(--font-mono);font-size:10.5px;color:var(--muted-2);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px;}
+
+.prog-readout{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent3);
+  background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:8px 14px;display:flex;align-items:center;gap:10px;
+}
+.prog-readout .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.hero{padding:44px 0 30px;display:grid;grid-template-columns:1.1fr 0.9fr;gap:40px;align-items:center;}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:30px 0 18px;}}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent);}
+h1{font-family:var(--font-display);font-weight:800;font-size:clamp(29px,4.1vw,43px);line-height:1.08;letter-spacing:-0.005em;margin:0 0 16px;}
+h1 span{color:var(--accent);}
+.lead{color:var(--muted);font-size:15.5px;max-width:53ch;margin:0 0 22px;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:var(--font-body);font-weight:600;font-size:13.5px;border-radius:8px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--accent);color:#0B0E1C;border-color:var(--accent);}
+.btn-primary:hover{background:#8b97ff;}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--accent3);color:var(--accent3);}
+
+/* FMCW velocity point-cloud signature */
+.scope{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:18px 18px 14px;}
+.scope-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
+.scope-title{font-family:var(--font-mono);font-size:10.5px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em;}
+.scope-val{font-family:var(--font-mono);font-size:12px;color:var(--accent2);}
+svg.trace{width:100%;height:200px;display:block;}
+.road-grid line{stroke:var(--border-soft);stroke-width:1;}
+.scope-foot{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--font-mono);font-size:10.5px;color:var(--muted-2);}
+.legend{display:flex;gap:14px;margin-top:4px;}
+.legend span{display:flex;align-items:center;gap:5px;font-family:var(--font-mono);font-size:10px;color:var(--muted-2);}
+.legend i{width:8px;height:8px;border-radius:50%;display:inline-block;}
+
+.econ{border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:760px){.econ{grid-template-columns:repeat(2,1fr);}}
+.econ-item{padding:6px 18px;border-left:1px solid var(--border-soft);}
+.econ-item:first-child{border-left:none;padding-left:0;}
+@media(max-width:760px){.econ-item:nth-child(2n+1){border-left:none;padding-left:0;}}
+.econ-num{font-family:var(--font-display);font-weight:800;font-size:26px;color:var(--text);}
+.econ-num small{font-size:14px;color:var(--accent);font-weight:700;}
+.econ-label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+section{padding:46px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.section-title{font-family:var(--font-display);font-weight:800;font-size:22px;}
+.section-sub{color:var(--muted);font-size:13.5px;max-width:60ch;margin-top:4px;}
+.track-label{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.1em;margin:28px 0 14px;padding-top:6px;border-top:1px dashed var(--border-soft);}
+.track-label:first-of-type{border-top:none;padding-top:0;margin-top:6px;}
+
+.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+@media(max-width:760px){.roster{grid-template-columns:1fr;}}
+.op-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:10px;transition:border-color .15s ease;}
+.op-card:hover{border-color:var(--accent-dim);}
+.op-card.flagship{border-color:var(--accent2);background:linear-gradient(180deg,rgba(255,77,109,0.07),var(--surface));}
+.op-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.op-name{font-family:var(--font-display);font-weight:700;font-size:15.5px;}
+.op-role{font-size:12px;color:var(--muted);margin-top:2px;}
+.flag-chip{font-family:var(--font-mono);font-size:10px;color:var(--accent2);border:1px solid var(--accent2);border-radius:20px;padding:2px 8px;white-space:nowrap;}
+.op-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+.op-stats{display:flex;gap:16px;margin-top:2px;}
+.op-stat{font-family:var(--font-mono);font-size:11.5px;color:var(--muted-2);}
+.op-stat b{color:var(--accent);font-size:13px;display:block;font-family:var(--font-body);font-weight:600;}
+.op-agents{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.chip{font-size:11px;background:var(--surface-3);border:1px solid var(--border);border-radius:20px;padding:3px 9px;color:var(--muted);}
+.op-actions{display:flex;gap:10px;margin-top:6px;}
+.run-btn{flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:600;font-size:13px;border-radius:8px;padding:9px;cursor:pointer;}
+.run-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+.run-panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;margin-top:22px;display:none;}
+.run-panel.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.run-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.run-head h3{font-family:var(--font-display);font-size:17px;margin:0;}
+.run-head .meta{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.close-run{background:none;border:1px solid var(--border);color:var(--muted);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:12px;}
+.close-run:hover{color:var(--text);border-color:var(--accent3);}
+
+.feed{background:var(--bg);border:1px solid var(--border-soft);border-radius:10px;padding:14px 16px;height:260px;overflow-y:auto;font-family:var(--font-mono);font-size:12.5px;display:flex;flex-direction:column;gap:7px;}
+.feed-line{display:flex;gap:10px;align-items:flex-start;opacity:0;animation:appear .3s ease forwards;}
+@keyframes appear{to{opacity:1;}}
+.feed-line .tag{color:var(--accent2);white-space:nowrap;}
+.feed-line .txt{color:var(--muted);}
+.feed-line.done .tag{color:var(--accent);}
+.feed-line.done .txt{color:var(--text);}
+
+.progress-row{display:flex;gap:6px;margin:14px 0 6px;flex-wrap:wrap;}
+.pstep{flex:1;min-width:64px;height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;position:relative;}
+.pstep.active{background:var(--accent-dim);}
+.pstep.complete{background:var(--accent);}
+
+.deliverable{margin-top:18px;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:16px 18px;display:none;}
+.deliverable.show{display:block;animation:fadein .3s ease;}
+.deliverable h4{font-family:var(--font-display);font-size:14px;margin:0 0 10px;color:var(--accent);}
+.deliverable pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:12.5px;color:var(--text);margin:0;line-height:1.6;}
+.note{font-size:11px;color:var(--muted-2);margin-top:10px;font-style:italic;}
+
+.builder{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;}
+.build-steps{display:flex;gap:8px;margin-bottom:20px;}
+.build-step-dot{flex:1;height:3px;border-radius:2px;background:var(--surface-3);}
+.build-step-dot.on{background:var(--accent);}
+.build-body{min-height:200px;}
+.pick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+@media(max-width:700px){.pick-grid{grid-template-columns:1fr;}}
+.pick-card{border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;background:var(--surface-2);}
+.pick-card:hover{border-color:var(--accent3);}
+.pick-card.selected{border-color:var(--accent);background:rgba(108,123,255,0.08);}
+.pick-title{font-weight:600;font-size:13.5px;}
+.pick-desc{font-size:12px;color:var(--muted);margin-top:4px;}
+.field-row{margin-bottom:14px;}
+.field-row label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;}
+.field-row input,.field-row select{width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:10px 12px;font-family:var(--font-body);font-size:13.5px;}
+.build-nav{display:flex;justify-content:space-between;margin-top:20px;}
+.summary-box{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:16px;}
+.summary-box b{color:var(--accent);}
+
+footer{border-top:1px solid var(--border-soft);padding:28px 0 40px;}
+.foot-note{font-size:12px;color:var(--muted-2);max-width:80ch;line-height:1.6;}
+.foot-note strong{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark-row">
+      <div class="mark">
+        <div class="mark-badge">4D</div>
+        <div>
+          <div class="mark-name">Program Console</div>
+          <div class="mark-sub">Aeva Technologies · AI Workforce Prototype</div>
+        </div>
+      </div>
+      <div class="prog-readout">
+        <span class="dot"></span>
+        <span id="progTxt">Daimler Truck · C-sample delivery underway</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero" style="padding-bottom:0;">
+    <div>
+      <div class="eyebrow">FMCW 4D lidar · Atlas · CoreVision · X1</div>
+      <h1>Eight operators to run Aeva's <span>program-to-production</span> loop</h1>
+      <p class="lead">Each operator below is a real Aeva workflow — tracking a Daimler Truck production milestone, building an ISO 26262 safety case, scanning the defense and industrial pipeline — handed to a small team of specialist agents that works it end to end and hands back a reviewable deliverable.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="document.getElementById('roster-section').scrollIntoView({behavior:'smooth'})">View the roster</button>
+        <button class="btn btn-ghost" onclick="runOperator('programtrack')">Run the flagship operator</button>
+      </div>
+    </div>
+    <div class="scope">
+      <div class="scope-top">
+        <span class="scope-title">Atlas sensor — live 4D point cloud</span>
+        <span class="scope-val" id="velVal">-38 mph closing</span>
+      </div>
+      <svg class="trace" viewBox="0 0 300 190" preserveAspectRatio="xMidYMid meet">
+        <g class="road-grid">
+          <line x1="0" y1="20" x2="300" y2="20"></line>
+          <line x1="0" y1="60" x2="300" y2="60"></line>
+          <line x1="0" y1="100" x2="300" y2="100"></line>
+          <line x1="0" y1="140" x2="300" y2="140"></line>
+          <line x1="0" y1="180" x2="300" y2="180"></line>
+        </g>
+        <g id="pcGroup"></g>
+      </svg>
+      <div class="legend">
+        <span><i style="background:var(--accent2);"></i>closing velocity</span>
+        <span><i style="background:var(--accent3);"></i>receding / static</span>
+      </div>
+      <div class="scope-foot">
+        <span>500m max range · immune to solar interference</span>
+        <span id="rangeVal2">312 m</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="econ wrap" style="padding-left:0;padding-right:0;">
+    <div class="econ-item">
+      <div class="econ-num">5.9<small>×</small></div>
+      <div class="econ-label">Faster safety-case turnaround per production milestone</div>
+    </div>
+    <div class="econ-item">
+      <div class="econ-num">$80B<small></small></div>
+      <div class="econ-label">Addressable market the roster is built to help capture across 6 verticals</div>
+    </div>
+    <div class="econ-item">
+      <div class="econ-num">23<small> hrs</small></div>
+      <div class="econ-label">Median engineering hours returned per run</div>
+    </div>
+    <div class="econ-item">
+      <div class="econ-num">8<small>/8</small></div>
+      <div class="econ-label">Workflows covered, chip design through investor disclosure</div>
+    </div>
+  </div>
+
+  <section id="roster-section">
+    <div class="section-head">
+      <div>
+        <div class="section-title">The roster</div>
+        <div class="section-sub">Grouped by track. Run any operator to watch its agent team work a real Aeva-style task and produce a deliverable.</div>
+      </div>
+    </div>
+    <div id="rosterMount"></div>
+
+    <div class="run-panel" id="runPanel">
+      <div class="run-head">
+        <div>
+          <h3 id="runTitle">—</h3>
+          <div class="meta" id="runMeta">—</div>
+        </div>
+        <button class="close-run" onclick="closeRun()">Close</button>
+      </div>
+      <div class="progress-row" id="progressRow"></div>
+      <div class="feed" id="feed"></div>
+      <div class="deliverable" id="deliverable">
+        <h4 id="delivTitle">Deliverable</h4>
+        <pre id="delivBody"></pre>
+        <div class="note">NOTE: illustrative simulation for demonstration purposes — all figures are placeholders and every output is reviewed by an Aeva engineer, safety lead, or program manager before use.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-title">Build a new operator</div>
+        <div class="section-sub">Compose a ninth operator in three steps: pick the base workflow, assign its cadence, name it.</div>
+      </div>
+    </div>
+    <div class="builder">
+      <div class="build-steps">
+        <div class="build-step-dot on" id="dot1"></div>
+        <div class="build-step-dot" id="dot2"></div>
+        <div class="build-step-dot" id="dot3"></div>
+      </div>
+      <div class="build-body" id="buildBody"></div>
+      <div class="build-nav">
+        <button class="btn btn-ghost" id="backBtn" onclick="builderBack()" style="visibility:hidden;">Back</button>
+        <button class="btn btn-primary" id="nextBtn" onclick="builderNext()">Next</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="foot-note">
+      <strong>This is a sales/stakeholder prototype, not a live system.</strong> No Aeva systems, customer data, or proprietary photonics designs were used to build it — every deliverable, metric, and number above is an illustrative placeholder written to sound domain-authentic. Nothing here is submitted, filed, or transmitted anywhere; every run stays in this browser tab. Any resemblance to a real Aeva program, customer, or partner is coincidental. In production, every deliverable in this loop — safety cases, cybersecurity assessments, commercial terms, investor disclosures — would be reviewed and signed off by a qualified Aeva engineer, safety lead, or executive before it leaves the building.
+    </p>
+  </footer>
+</div>
+
+<script>
+/* =========================================================
+   DATA
+   ========================================================= */
+const AGENT_ROLES = {
+  oem:      {emoji:'🚛', label:'OEM Program Engineer', tools:['programStatus','specConfirm','save']},
+  chip:     {emoji:'🔬', label:'Photonics / Chip Design Engineer', tools:['chipLayout','moduleSupply','save']},
+  fmcw:     {emoji:'🧮', label:'FMCW Signal Processing Engineer', tools:['dopplerSim','socBenchmark','save']},
+  percept:  {emoji:'🧠', label:'Perception Software Engineer', tools:['classifyCheck','trackingSim','save']},
+  safety:   {emoji:'🛡️', label:'Functional Safety Engineer', tools:['hazardAnalysis','asilAllocate','save']},
+  cyber:    {emoji:'🔒', label:'Cybersecurity Engineer', tools:['tara','mitigationDesign','save']},
+  mfg:      {emoji:'🏭', label:'Manufacturing & Fab Scaling Coordinator', tools:['lineCapacity','yieldScan','save']},
+  test:     {emoji:'🧪', label:'Environmental & Reliability Test Engineer', tools:['envTest','ip69kCheck','save']},
+  bd:       {emoji:'🔍', label:'Business Development / New Vertical Analyst', tools:['defenseScan','industrialScan','save']},
+  quote:    {emoji:'💰', label:'Commercial & Pricing Analyst', tools:['volumePricing','costCurve','save']},
+  ir:       {emoji:'📊', label:'Investor Relations Analyst', tools:['financialsPull','guidanceCheck','save']},
+  pm:       {emoji:'📋', label:'Program Manager', tools:['scheduleCheck','finalReview','save']},
+};
+
+const WORKFLOWS = {
+  programtrack: {
+    name:'OEM Production Program Milestone Tracking', title:'Program Milestone Tracking',
+    mode:'sequential', tag:'flagship', track:'trackA',
+    deliverable:'Program milestone package',
+    sample:'Daimler Truck Atlas C-sample delivery, tracking toward 2027 start of production',
+    desc:'From a production program\u2019s current milestone to a status package: sensor spec confirmation, safety and cybersecurity case status, and delivery schedule sign-off.',
+    tasks:[
+      {agent:'pm', task:'Pull program status against the production-intent milestone schedule', deps:[]},
+      {agent:'oem', task:'Confirm sensor configuration matches the OEM\u2019s current integration spec', deps:[0]},
+      {agent:'safety', task:'Check functional safety case status against the program\u2019s ASIL target', deps:[1]},
+      {agent:'cyber', task:'Check cybersecurity case status against the ISO 21434 milestone', deps:[1]},
+      {agent:'quote', task:'Confirm delivery schedule and commercial terms for the next sensor batch', deps:[2,3]},
+      {agent:'pm', task:'Assemble the program milestone package and flag open items for sign-off', deps:[4]},
+    ],
+  },
+  chipdesign: {
+    name:'FMCW Chip & SoC Design Sprint', title:'Chip & SoC Design Sprint',
+    mode:'dag', track:'trackB',
+    deliverable:'Design sprint package',
+    sample:'Next-generation CoreVision Lidar-on-Chip module paired with an updated Aeva X1 SoC revision',
+    desc:'Photonics and signal-processing agents work the same chip generation in parallel — transmitter/detector layout and Doppler velocity extraction — and converge on a design package.',
+    tasks:[
+      {agent:'chip', task:'Model the CoreVision Lidar-on-Chip transmitter and detector layout', deps:[]},
+      {agent:'fmcw', task:'Simulate Doppler velocity extraction performance on the updated X1 SoC', deps:[]},
+      {agent:'percept', task:'Assess perception software integration against the new chip\u2019s output format', deps:[0,1]},
+      {agent:'pm', task:'Compile the design sprint package for engineering review', deps:[2]},
+    ],
+  },
+  safetycase: {
+    name:'ISO 26262 Functional Safety Case Development', title:'Functional Safety Case',
+    mode:'sequential', track:'trackB',
+    deliverable:'Safety case report',
+    sample:'ASIL-B(D) functional safety case for the Atlas Ultra sensor ahead of a 2028 SOP program',
+    desc:'Builds the functional safety case a passenger OEM requires before production, from hazard analysis through verification testing to a submission-ready report.',
+    tasks:[
+      {agent:'safety', task:'Run hazard analysis and risk assessment against ISO 26262', deps:[]},
+      {agent:'safety', task:'Derive safety requirements and confirm ASIL allocation', deps:[0]},
+      {agent:'test', task:'Run environmental and IP69K verification testing supporting the safety case', deps:[1]},
+      {agent:'safety', task:'Compile the functional safety case report', deps:[2]},
+      {agent:'pm', task:'Route the safety case for OEM functional safety submission', deps:[3]},
+    ],
+  },
+  cyberassess: {
+    name:'ISO 21434 Cybersecurity Assessment', title:'Cybersecurity Assessment',
+    mode:'sequential', track:'trackB',
+    deliverable:'Cybersecurity case report',
+    sample:'Threat analysis and risk assessment for the Atlas sensor\u2019s vehicle network interface',
+    desc:'Runs a threat analysis and risk assessment (TARA) against the sensor\u2019s communication interfaces and produces a cybersecurity case ready for OEM submission.',
+    tasks:[
+      {agent:'cyber', task:'Run threat analysis and risk assessment (TARA) against the sensor\u2019s interfaces', deps:[]},
+      {agent:'cyber', task:'Assess cybersecurity risk and prioritize mitigations', deps:[0]},
+      {agent:'cyber', task:'Design and validate the prioritized mitigation controls', deps:[1]},
+      {agent:'pm', task:'Compile the cybersecurity case report for OEM submission', deps:[2]},
+    ],
+  },
+  scaling: {
+    name:'Mass Production Scaling & Fab Ramp', title:'Production Scaling & Fab Ramp',
+    mode:'dag', track:'trackB',
+    deliverable:'Scaling plan',
+    sample:'Scaling the automated final assembly line toward a 100,000 unit annual production target',
+    desc:'Manufacturing and chip-supply agents check assembly automation capacity and module supply chain readiness in parallel, converging on a scaling plan.',
+    tasks:[
+      {agent:'mfg', task:'Check assembly line automation capacity toward the annual unit target', deps:[]},
+      {agent:'chip', task:'Assess CoreVision module supply chain capacity for the ramp', deps:[]},
+      {agent:'mfg', task:'Identify yield bottlenecks across the automated final assembly line', deps:[0,1]},
+      {agent:'pm', task:'Issue the scaling plan with capacity milestones', deps:[2]},
+    ],
+  },
+  newvertical: {
+    name:'New Vertical Design-Win Pipeline', title:'New Vertical Pipeline Scan',
+    mode:'dag', track:'trackA',
+    deliverable:'Vertical pipeline brief',
+    sample:'Quarterly pipeline scan across defense, smart infrastructure, and industrial automation verticals',
+    desc:'Scans the defense, smart-infrastructure, and industrial-automation pipelines in parallel, building on existing relationships, then rolls it into one pipeline brief.',
+    tasks:[
+      {agent:'bd', task:'Scan the defense sector pipeline building on the existing autonomous-vehicle relationship', deps:[]},
+      {agent:'bd', task:'Scan the smart infrastructure and traffic-management pipeline for new city deployments', deps:[]},
+      {agent:'bd', task:'Scan the industrial automation pipeline building on existing factory-inspection relationships', deps:[]},
+      {agent:'pm', task:'Compile the new vertical pipeline brief with prioritized next steps', deps:[0,1,2]},
+    ],
+  },
+  pricing: {
+    name:'OEM Commercial Terms & Volume Pricing', title:'Commercial Terms & Pricing',
+    mode:'sequential', track:'trackA',
+    deliverable:'Commercial terms memo',
+    sample:'Volume pricing for the next production milestone batch ahead of a scheduled OEM cost-down review',
+    desc:'Builds the volume pricing model and cost-down curve for an upcoming production milestone, ready for commercial sign-off.',
+    tasks:[
+      {agent:'quote', task:'Build the volume pricing model for the next production milestone batch', deps:[]},
+      {agent:'quote', task:'Benchmark pricing against the program\u2019s target cost-down curve', deps:[0]},
+      {agent:'pm', task:'Confirm commercial terms align with delivery schedule commitments', deps:[1]},
+      {agent:'pm', task:'Draft the commercial terms memo for sign-off', deps:[2]},
+    ],
+  },
+  investor: {
+    name:'Quarterly Investor Disclosure Package', title:'Investor Disclosure Package',
+    mode:'sequential', track:'trackA',
+    deliverable:'Earnings package draft',
+    sample:'Quarterly earnings release covering automotive, defense, and industrial program progress',
+    desc:'Pulls quarterly financials and program-milestone progress together into a draft earnings package ahead of quarterly disclosure.',
+    tasks:[
+      {agent:'ir', task:'Pull quarterly financials: revenue, liquidity, and operating expense trend', deps:[]},
+      {agent:'pm', task:'Summarize automotive, defense, and industrial program milestone progress', deps:[]},
+      {agent:'ir', task:'Check guidance language against prior quarterly disclosures', deps:[0,1]},
+      {agent:'ir', task:'Route the draft earnings package for legal and executive review', deps:[2]},
+    ],
+  },
+};
+
+const DTITLE = {
+  programtrack:'Program Milestone Package',
+  chipdesign:'Design Sprint Package',
+  safetycase:'Functional Safety Case Report',
+  cyberassess:'Cybersecurity Case Report',
+  scaling:'Production Scaling Plan',
+  newvertical:'Vertical Pipeline Brief',
+  pricing:'Commercial Terms Memo',
+  investor:'Draft Earnings Package',
+};
+
+const TOOLS = {
+  programStatus:()=>'Program status confirmed on schedule against the C-sample delivery milestone',
+  specConfirm:()=>'Sensor configuration confirmed to match the OEM\u2019s current integration spec',
+  chipLayout:()=>'Transmitter/detector layout modeled, 70% size reduction confirmed vs. prior generation',
+  moduleSupply:()=>'CoreVision module supply chain capacity confirmed for the design\u2019s target volume',
+  dopplerSim:()=>'Doppler velocity extraction simulated with sub-1 km/h resolution at 300m range',
+  socBenchmark:()=>'X1 SoC benchmark shows processing headroom for the updated data rate',
+  classifyCheck:()=>'Classification and tracking pipeline confirmed compatible with the new output format',
+  trackingSim:()=>'Multi-object tracking simulation holds through the tested velocity range',
+  hazardAnalysis:()=>'Hazard analysis complete, 14 hazards catalogued against ISO 26262 Part 3',
+  asilAllocate:()=>'ASIL-B(D) allocation confirmed across the sensor\u2019s critical safety functions',
+  tara:()=>'Threat analysis and risk assessment complete, 6 threat vectors catalogued',
+  mitigationDesign:()=>'Mitigation controls designed for all high-priority threat vectors',
+  lineCapacity:()=>'Assembly line automation capacity confirmed at 68% of the annual unit target',
+  yieldScan:()=>'Yield scan flags 1 sub-assembly station as the current bottleneck',
+  envTest:()=>'Environmental verification passed: -40\u00b0C to 85\u00b0C, vibration profile within spec',
+  ip69kCheck:()=>'IP69K ingress protection confirmed for the sensor housing',
+  defenseScan:()=>'2 new defense program opportunities flagged building on the existing relationship',
+  industrialScan:()=>'3 new industrial inspection opportunities flagged in adjacent manufacturing verticals',
+  volumePricing:()=>'Volume pricing model built for the next production milestone batch',
+  costCurve:()=>'Pricing benchmarked within 5% of the program\u2019s target cost-down curve',
+  financialsPull:()=>'Quarterly financials pulled: revenue, liquidity, and opex trend confirmed',
+  guidanceCheck:()=>'Guidance language checked for consistency against prior quarterly disclosures',
+  scheduleCheck:()=>'Schedule variance +1.1%, within tolerance',
+  finalReview:()=>'Package reviewed, routed for human sign-off',
+  save:()=>'Saved to program record',
+};
+
+const FINAL = {
+  programtrack:
+`PROGRAM MILESTONE PACKAGE — Daimler Truck Atlas Program
+C-Sample Delivery, Tracking Toward 2027 Start of Production
+
+STATUS: Program confirmed on schedule against the current C-sample
+delivery milestone; no schedule slippage identified.
+
+SENSOR CONFIGURATION: Atlas configuration confirmed to match the
+customer\u2019s current autonomous truck integration spec; no changes
+required ahead of the next delivery batch.
+
+SAFETY CASE STATUS: Functional safety case tracking on schedule
+against the program\u2019s ASIL target; no open blocking items.
+
+CYBERSECURITY STATUS: ISO 21434 cybersecurity case milestone
+confirmed on schedule; TARA update scheduled ahead of the next
+program gate review.
+
+COMMERCIAL: Delivery schedule and commercial terms confirmed for the
+next sensor batch, consistent with the program\u2019s long-range delivery
+plan.
+
+OPEN ITEMS FOR HUMAN REVIEW: (1) confirm the next program gate review
+date with the customer\u2019s engineering team, (2) validate safety case
+documentation is current for this build revision, (3) confirm
+commercial terms with the account team before the next batch ships.
+
+NOTE: illustrative status package — placeholder figures, not actual
+Daimler Truck program data.`,
+
+  chipdesign:
+`DESIGN SPRINT PACKAGE — Next-Gen CoreVision + X1 SoC Revision
+
+CHIP LAYOUT: Transmitter and detector layout modeled with a 70% size
+reduction confirmed relative to the prior generation module.
+
+SIGNAL PROCESSING: Doppler velocity extraction simulated with
+sub-1 km/h resolution at 300m range on the updated X1 SoC.
+
+PERCEPTION INTEGRATION: Classification and tracking pipeline
+confirmed compatible with the new chip\u2019s output data format; no
+software rework required for the core pipeline.
+
+RECOMMENDATION: Proceed to physical prototyping for the updated
+module and SoC revision ahead of formal automotive qualification.
+
+NOTE: illustrative design sprint package — placeholder figures for a
+representative chip generation, not an actual Aeva product.`,
+
+  safetycase:
+`FUNCTIONAL SAFETY CASE REPORT — Atlas Ultra, ASIL-B(D)
+
+HAZARD ANALYSIS: Complete under ISO 26262 Part 3; 14 hazards
+catalogued across the sensor\u2019s critical detection and ranging
+functions.
+
+ASIL ALLOCATION: ASIL-B(D) allocation confirmed across the sensor\u2019s
+critical safety functions, consistent with the target OEM\u2019s program
+requirements.
+
+ENVIRONMENTAL VERIFICATION: Testing passed across -40\u00b0C to 85\u00b0C and
+the program\u2019s vibration profile; IP69K ingress protection confirmed
+for the sensor housing.
+
+DISPOSITION: Safety case report compiled and ready for OEM functional
+safety submission.
+
+NOTE: illustrative safety case — placeholder figures for
+demonstration, not an actual Aeva program submission.`,
+
+  cyberassess:
+`CYBERSECURITY CASE REPORT — Atlas Vehicle Network Interface
+
+THREAT ANALYSIS: TARA complete; 6 threat vectors catalogued across
+the sensor\u2019s vehicle network and diagnostic interfaces.
+
+RISK ASSESSMENT: Risk prioritization complete; 2 vectors flagged
+high-priority for mitigation ahead of the next program gate.
+
+MITIGATION: Controls designed and validated for all high-priority
+threat vectors identified in the assessment.
+
+DISPOSITION: Cybersecurity case report compiled and ready for OEM
+submission under ISO 21434.
+
+NOTE: illustrative cybersecurity case — placeholder figures for
+demonstration, not an actual Aeva program submission.`,
+
+  scaling:
+`PRODUCTION SCALING PLAN — Automated Final Assembly Line
+
+LINE CAPACITY: Assembly line automation confirmed at 68% of the
+annual unit target; remaining capacity plan tracks toward the
+company\u2019s stated scaling objective.
+
+MODULE SUPPLY: CoreVision module supply chain capacity confirmed
+sufficient to support the ramp schedule.
+
+YIELD BOTTLENECK: 1 sub-assembly station flagged as the current
+bottleneck; capacity expansion recommended at that station ahead of
+the next volume step-up.
+
+RECOMMENDATION: Approve targeted capacity expansion at the flagged
+station; proceed with the broader ramp schedule as planned.
+
+NOTE: illustrative scaling plan — placeholder figures for
+demonstration, not actual Aeva manufacturing data.`,
+
+  newvertical:
+`VERTICAL PIPELINE BRIEF — Q3 Defense, Infrastructure & Industrial Scan
+
+DEFENSE: 2 new program opportunities flagged building on the existing
+autonomous ground vehicle relationship; both align with the
+company\u2019s current defense-sector positioning.
+
+SMART INFRASTRUCTURE: Continued interest identified in expanding the
+traffic-management platform to additional municipal deployments
+beyond the current active city program.
+
+INDUSTRIAL: 3 new factory-inspection opportunities flagged in
+adjacent manufacturing verticals, building on existing industrial
+sensing relationships.
+
+RECOMMENDATION: Prioritize the 2 flagged defense opportunities this
+quarter given program stage and fit; continue nurturing the
+infrastructure and industrial leads on standard cadence.
+
+NOTE: illustrative pipeline brief — placeholder figures for
+demonstration.`,
+
+  pricing:
+`COMMERCIAL TERMS MEMO — Next Production Milestone Batch
+
+VOLUME PRICING: Model built for the next production milestone batch,
+consistent with the program\u2019s existing commercial framework.
+
+COST-DOWN BENCHMARK: Pricing benchmarked within 5% of the program\u2019s
+target cost-down curve for this stage of the production ramp.
+
+SCHEDULE ALIGNMENT: Commercial terms confirmed to align with the
+delivery schedule commitments already communicated to the customer.
+
+STATUS: Draft terms ready for commercial and executive sign-off ahead
+of the next batch order.
+
+NOTE: illustrative terms memo — placeholder figures, not an actual
+Aeva commercial agreement.`,
+
+  investor:
+`DRAFT EARNINGS PACKAGE — Quarterly Release
+
+FINANCIALS: Revenue, liquidity, and operating expense trend pulled
+for the quarter; figures consistent with the company\u2019s recent
+disclosure history of scaling revenue alongside continued investment.
+
+PROGRAM PROGRESS: Automotive, defense, and industrial program
+milestones summarized, including production program status and new
+vertical pipeline developments.
+
+DISCLOSURE CHECK: Guidance language checked for consistency against
+prior quarterly filings; no material inconsistencies flagged.
+
+STATUS: Draft routed for legal and executive review ahead of the
+scheduled release date.
+
+NOTE: illustrative draft package — placeholder figures, not actual
+Aeva financial results. Final disclosures must be reviewed by legal
+and executive leadership before release.`,
+};
+
+const EMPLOYEES = [
+  {id:'op1', name:'Program Milestone Tracking', title:'OEM Production Program Milestone Tracking', wf:'programtrack', handled:'Daimler Truck & passenger OEM programs', hrs:23, win:'5.9x faster status package'},
+  {id:'op2', name:'New Vertical Pipeline Scan', title:'New Vertical Design-Win Pipeline', wf:'newvertical', handled:'Defense, ITS & industrial pipeline', hrs:12, win:'Brief in 1 run'},
+  {id:'op3', name:'Commercial Terms & Pricing', title:'OEM Commercial Terms & Volume Pricing', wf:'pricing', handled:'Production milestone pricing', hrs:9, win:'Memo in 1 run'},
+  {id:'op4', name:'Investor Disclosure Desk', title:'Quarterly Investor Disclosure Package', wf:'investor', handled:'Quarterly earnings package prep', hrs:14, win:'Draft same week'},
+  {id:'op5', name:'Chip & SoC Design Sprint', title:'FMCW Chip & SoC Design Sprint', wf:'chipdesign', handled:'CoreVision & X1 next-gen design', hrs:21, win:'Converges in 1 pass'},
+  {id:'op6', name:'Functional Safety Case', title:'ISO 26262 Functional Safety Case Development', wf:'safetycase', handled:'ASIL-B(D) safety case development', hrs:26, win:'Submission-ready in 1 run'},
+  {id:'op7', name:'Cybersecurity Assessment', title:'ISO 21434 Cybersecurity Assessment', wf:'cyberassess', handled:'TARA & mitigation design', hrs:17, win:'Case ready same week'},
+  {id:'op8', name:'Production Scaling & Fab Ramp', title:'Mass Production Scaling & Fab Ramp', wf:'scaling', handled:'Assembly line & module supply scaling', hrs:15, win:'Plan converges fast'},
+];
+
+const CONFIG = {
+  trackLabels:{trackA:'Program, Commercial & Investor Relations', trackB:'Photonics, Safety & Manufacturing Engineering'},
+};
+
+/* =========================================================
+   RENDER ROSTER
+   ========================================================= */
+function agentChips(wfKey){
+  const wf = WORKFLOWS[wfKey];
+  const used = [...new Set(wf.tasks.map(t=>t.agent))];
+  return used.map(a=>`<span class="chip">${AGENT_ROLES[a].emoji} ${AGENT_ROLES[a].label}</span>`).join('');
+}
+
+function renderRoster(){
+  const mount = document.getElementById('rosterMount');
+  const tracks = ['trackA','trackB'];
+  let html = '';
+  tracks.forEach(tr=>{
+    html += `<div class="track-label">${CONFIG.trackLabels[tr]}</div><div class="roster">`;
+    EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tr).forEach(e=>{
+      const wf = WORKFLOWS[e.wf];
+      const isFlag = wf.tag==='flagship';
+      html += `
+      <div class="op-card ${isFlag?'flagship':''}">
+        <div class="op-top">
+          <div>
+            <div class="op-name">${e.name}</div>
+            <div class="op-role">${e.title}</div>
+          </div>
+          ${isFlag?'<span class="flag-chip">FLAGSHIP</span>':''}
+        </div>
+        <div class="op-desc">${wf.desc}</div>
+        <div class="op-stats">
+          <div class="op-stat">Handles<b>${e.handled}</b></div>
+          <div class="op-stat">Hrs saved/run<b>${e.hrs}</b></div>
+          <div class="op-stat">Signal<b>${e.win}</b></div>
+        </div>
+        <div class="op-agents">${agentChips(e.wf)}</div>
+        <div class="op-actions">
+          <button class="run-btn" onclick="runOperator('${e.wf}')">▶ Run this operator</button>
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  });
+  mount.innerHTML = html;
+}
+renderRoster();
+
+/* =========================================================
+   RUN ENGINE
+   ========================================================= */
+let runToken = 0;
+
+function closeRun(){
+  document.getElementById('runPanel').classList.remove('active');
+}
+
+async function runOperator(wfKey){
+  const wf = WORKFLOWS[wfKey];
+  const myToken = ++runToken;
+  const panel = document.getElementById('runPanel');
+  const feed = document.getElementById('feed');
+  const progressRow = document.getElementById('progressRow');
+  const deliverable = document.getElementById('deliverable');
+
+  panel.classList.add('active');
+  document.getElementById('runTitle').textContent = wf.name;
+  document.getElementById('runMeta').textContent = `${wf.mode==='dag'?'Parallel DAG':'Sequential'} · ${wf.tasks.length} tasks · sample: ${wf.sample}`;
+  feed.innerHTML = '';
+  deliverable.classList.remove('show');
+  progressRow.innerHTML = wf.tasks.map(()=>`<div class="pstep"></div>`).join('');
+  panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+
+  const steps = document.querySelectorAll('#progressRow .pstep');
+
+  function log(text, done){
+    const line = document.createElement('div');
+    line.className = 'feed-line' + (done?' done':'');
+    line.innerHTML = `<span class="tag">[${done?'done':'run'}]</span><span class="txt">${text}</span>`;
+    feed.appendChild(line);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  const wait = ms => new Promise(r=>setTimeout(r,ms));
+
+  if(wf.mode==='sequential'){
+    for(let i=0;i<wf.tasks.length;i++){
+      if(myToken!==runToken) return;
+      const t = wf.tasks[i];
+      steps[i].classList.add('active');
+      log(`${AGENT_ROLES[t.agent].emoji} ${AGENT_ROLES[t.agent].label} — ${t.task}`);
+      await wait(600 + Math.random()*400);
+      if(myToken!==runToken) return;
+      const toolKey = AGENT_ROLES[t.agent].tools[0];
+      log(`↳ ${TOOLS[toolKey] ? TOOLS[toolKey]() : 'Task complete'}`, true);
+      steps[i].classList.remove('active');
+      steps[i].classList.add('complete');
+      await wait(150);
+    }
+  } else {
+    const done = new Set();
+    const remaining = wf.tasks.map((t,i)=>i);
+    while(remaining.length){
+      const wave = remaining.filter(i=>wf.tasks[i].deps.every(d=>done.has(d)));
+      if(!wave.length) break;
+      wave.forEach(i=>steps[i].classList.add('active'));
+      wave.forEach(i=>{
+        const t = wf.tasks[i];
+        log(`${AGENT_ROLES[t.agent].emoji} ${AGENT_ROLES[t.agent].label} — ${t.task}`);
+      });
+      await wait(650 + Math.random()*400);
+      if(myToken!==runToken) return;
+      wave.forEach(i=>{
+        const t = wf.tasks[i];
+        const toolKey = AGENT_ROLES[t.agent].tools[0];
+        log(`↳ ${TOOLS[toolKey] ? TOOLS[toolKey]() : 'Task complete'}`, true);
+        steps[i].classList.remove('active');
+        steps[i].classList.add('complete');
+        done.add(i);
+      });
+      wave.forEach(i=>remaining.splice(remaining.indexOf(i),1));
+      await wait(150);
+    }
+  }
+
+  if(myToken!==runToken) return;
+  log(`💾 Saved to program record`, true);
+  await wait(300);
+  document.getElementById('delivTitle').textContent = DTITLE[wfKey];
+  document.getElementById('delivBody').textContent = FINAL[wfKey];
+  deliverable.classList.add('show');
+}
+
+/* =========================================================
+   BUILDER
+   ========================================================= */
+let buildStep = 1;
+let buildState = {baseWf:null, cadence:'Weekly', name:''};
+
+function builderRenderStep(){
+  document.getElementById('dot1').classList.toggle('on', buildStep>=1);
+  document.getElementById('dot2').classList.toggle('on', buildStep>=2);
+  document.getElementById('dot3').classList.toggle('on', buildStep>=3);
+  document.getElementById('backBtn').style.visibility = buildStep===1?'hidden':'visible';
+  document.getElementById('nextBtn').textContent = buildStep===3?'Create operator':'Next';
+
+  const body = document.getElementById('buildBody');
+  if(buildStep===1){
+    body.innerHTML = `<div class="pick-grid">` + Object.entries(WORKFLOWS).map(([k,w])=>`
+      <div class="pick-card ${buildState.baseWf===k?'selected':''}" onclick="pickWf('${k}')">
+        <div class="pick-title">${w.name}</div>
+        <div class="pick-desc">${w.desc}</div>
+      </div>`).join('') + `</div>`;
+  } else if(buildStep===2){
+    body.innerHTML = `
+      <div class="field-row">
+        <label>Run cadence</label>
+        <select id="cadenceSel" onchange="buildState.cadence=this.value">
+          <option ${buildState.cadence==='Continuous'?'selected':''}>Continuous</option>
+          <option ${buildState.cadence==='Daily'?'selected':''}>Daily</option>
+          <option ${buildState.cadence==='Weekly'?'selected':''}>Weekly</option>
+          <option ${buildState.cadence==='On program gate'?'selected':''}>On program gate</option>
+          <option ${buildState.cadence==='On new opportunity'?'selected':''}>On new opportunity</option>
+        </select>
+      </div>
+      <div class="field-row">
+        <label>Operator name</label>
+        <input id="nameInput" type="text" placeholder="e.g. EU OEM Desk" value="${buildState.name}" oninput="buildState.name=this.value">
+      </div>`;
+  } else {
+    const wf = WORKFLOWS[buildState.baseWf];
+    body.innerHTML = `
+      <div class="summary-box">
+        <p><b>${buildState.name || 'Untitled operator'}</b> — built on <b>${wf ? wf.name : '—'}</b></p>
+        <p>Cadence: <b>${buildState.cadence}</b></p>
+        <p>Agent team: ${wf ? [...new Set(wf.tasks.map(t=>t.agent))].map(a=>AGENT_ROLES[a].emoji+' '+AGENT_ROLES[a].label).join(', ') : '—'}</p>
+        <p style="color:var(--muted);font-size:12.5px;margin-top:10px;">This adds a ninth operator to the roster below, cloned from the workflow above with your cadence and name.</p>
+      </div>`;
+  }
+}
+
+function pickWf(k){
+  buildState.baseWf = k;
+  builderRenderStep();
+}
+
+function builderNext(){
+  if(buildStep===1 && !buildState.baseWf){ alert('Pick a base workflow first.'); return; }
+  if(buildStep===3){
+    const wf = WORKFLOWS[buildState.baseWf];
+    const newKey = 'custom_'+Date.now();
+    WORKFLOWS[newKey] = {...wf, name: buildState.name || (wf.name+' (custom)'), tag:undefined};
+    DTITLE[newKey] = DTITLE[buildState.baseWf];
+    FINAL[newKey] = FINAL[buildState.baseWf];
+    EMPLOYEES.push({
+      id:'custom_'+Date.now(), name: buildState.name || 'Custom Operator',
+      title: WORKFLOWS[newKey].name, wf:newKey,
+      handled: buildState.cadence+' cadence', hrs: 10, win:'New',
+    });
+    renderRoster();
+    buildStep = 1; buildState = {baseWf:null, cadence:'Weekly', name:''};
+    builderRenderStep();
+    document.getElementById('roster-section').scrollIntoView({behavior:'smooth'});
+    return;
+  }
+  buildStep++;
+  builderRenderStep();
+}
+function builderBack(){
+  buildStep--;
+  builderRenderStep();
+}
+builderRenderStep();
+
+/* =========================================================
+   HEADER PROGRAM READOUT + VELOCITY POINT-CLOUD ANIMATION
+   ========================================================= */
+const PROGS = ['Daimler Truck \u00b7 C-sample delivery underway','European OEM \u00b7 Atlas Ultra integration active','NVIDIA DRIVE Hyperion \u00b7 reference sensor validated','Forterra defense \u00b7 platform integration active'];
+let progIdx = 0;
+setInterval(()=>{
+  progIdx = (progIdx+1)%PROGS.length;
+  document.getElementById('progTxt').textContent = PROGS[progIdx];
+}, 3000);
+
+const NS = 'http://www.w3.org/2000/svg';
+const pcGroup = document.getElementById('pcGroup');
+const NUM_PTS = 60;
+const pts = [];
+for(let i=0;i<NUM_PTS;i++){
+  const lane = Math.floor(Math.random()*3);
+  const c = document.createElementNS(NS,'circle');
+  c.setAttribute('r', (1.4 + Math.random()*1.8).toFixed(1));
+  pcGroup.appendChild(c);
+  pts.push({
+    el:c,
+    x: Math.random()*300,
+    y: 15 + lane*55 + Math.random()*40,
+    vx: -(0.4 + Math.random()*1.6) * (lane===1?1.4:0.8),
+    closing: Math.random() > 0.4,
+  });
+}
+function drawPointCloud(){
+  pts.forEach(p=>{
+    p.x += p.vx;
+    if(p.x < -5){ p.x = 305; }
+    p.el.setAttribute('cx', p.x.toFixed(1));
+    p.el.setAttribute('cy', p.y.toFixed(1));
+    p.el.setAttribute('fill', p.closing ? 'var(--accent2)' : 'var(--accent3)');
+    p.el.setAttribute('opacity', 0.55 + Math.abs(Math.sin(p.x*0.03))*0.35);
+  });
+  const vel = (30 + Math.sin(Date.now()*0.0007)*12).toFixed(0);
+  document.getElementById('velVal').textContent = `-${vel} mph closing`;
+  const rng = (280 + Math.sin(Date.now()*0.0005)*40).toFixed(0);
+  document.getElementById('rangeVal2').textContent = `${rng} m`;
+  requestAnimationFrame(drawPointCloud);
+}
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  requestAnimationFrame(drawPointCloud);
+} else {
+  pts.forEach(p=>{
+    p.el.setAttribute('cx', p.x.toFixed(1));
+    p.el.setAttribute('cy', p.y.toFixed(1));
+    p.el.setAttribute('fill', p.closing ? 'var(--accent2)' : 'var(--accent3)');
+    p.el.setAttribute('opacity','0.6');
+  });
+}
+</script>
+</body>
+</html>
