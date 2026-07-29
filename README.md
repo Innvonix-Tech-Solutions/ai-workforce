@@ -59,3 +59,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/aehr
 https://innvonix-tech-solutions.github.io/ai-workforce/aeva
 
 https://innvonix-tech-solutions.github.io/ai-workforce/hsc
+
+https://innvonix-tech-solutions.github.io/ai-workforce/cerrowire
