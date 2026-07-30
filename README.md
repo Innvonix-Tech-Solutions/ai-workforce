@@ -75,3 +75,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/everspin
 https://innvonix-tech-solutions.github.io/ai-workforce/dynex
 
 https://innvonix-tech-solutions.github.io/ai-workforce/ouster
+
+https://innvonix-tech-solutions.github.io/ai-workforce/liverright
