@@ -85,3 +85,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/poettech
 https://innvonix-tech-solutions.github.io/ai-workforce/cirtronics
 
 https://innvonix-tech-solutions.github.io/ai-workforce/micross
+
+https://innvonix-tech-solutions.github.io/ai-workforce/palomar
