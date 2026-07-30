@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menlo Micro — AI Commercial &amp; Operational Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#ffffff;
+  --surface:#f8f9fa;
+  --surface2:#eef1f5;
+  --border:#d2d3d3;
+  --accent:#fd4633;
+  --accent-dim:rgba(253,70,51,.08);
+  --accent-line:rgba(253,70,51,.30);
+  --red-bright:#d3342a;
+  --navy:#1d264f;
+  --navy-dim:rgba(29,38,79,.08);
+  --navy-line:rgba(29,38,79,.30);
+  --slate:#454747;
+  --slate-line:rgba(69,71,71,.30);
+  --text:#454747;
+  --hi:#000000;
+  --tert:#717373;
+  --ok:#16a34a;
+  --ok-dim:rgba(22,163,74,.10);
+  --gold:#a4761b;
+  --gold-bg:#fdf6e6;
+  --gold-line:#e8cf94
+}
+body{background:var(--canvas);color:var(--text);font-family:Raleway,"IBM Plex Sans",system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:36px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--navy));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px;letter-spacing:.5px}
+.htitle{font-size:15px;font-weight:700;color:var(--hi);font-family:Raleway,sans-serif}.hsub{font-size:11px;color:var(--tert);margin-top:1px}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert)}.badge b{color:var(--accent)}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none;font-family:Raleway,sans-serif;letter-spacing:.5px;text-transform:uppercase}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.5;max-width:900px;margin-bottom:14px}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.commercial{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.operations{background:var(--navy-dim);color:var(--navy);border:1px solid var(--navy-line)}
+.tag.hero{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:24px;font-weight:700;color:var(--accent);font-family:Raleway,sans-serif}.cell .v .u{color:var(--navy)}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px}
+.slabel{font-size:11px;font-weight:800;letter-spacing:1.2px;color:var(--navy);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Raleway,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert)}
+.emp-owns{font-size:12px;margin-bottom:10px}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:inherit;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:var(--accent-line)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+.btn.primary:hover{background:var(--red-bright);border-color:var(--red-bright)}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--accent)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:var(--accent-line)}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:14px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 13px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="header">
+<div class="logo"><div class="mark">MM</div>
+<div><div class="htitle">Menlo Micro · AI Commercial &amp; Operational Workforce</div><div class="hsub">AI operators that discover 5G &amp; defense OEM accounts, quote Ideal Switch® MEMS modules, validate 10B cycle reliability, audit MEMS fab yields, and automate ATE wafer testing</div></div></div>
+<div class="badge">Independent concept &nbsp;·&nbsp; <b>illustrative</b></div>
+</header>
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>a commercial or MEMS engineering workflow turned into an autonomous team of agents</b>. One track wins the work: it finds 5G infrastructure, defense radar, and ATE instrumentation OEMs seeking to replace legacy electromechanical relays, quotes Ideal Switch® SP4T/DPDT modules with custom substrates, responds to military RFP tenders, and tracks market intelligence. The other track delivers the MEMS engineering and production: it runs 10-billion cycle reliability audits, optimizes 8-inch glass wafer fab yields, generates ATE wafer probe test vectors, and manages MEMS mask revision ECOs. Point one at an OEM design-in case, an S-parameter dataset, or a MEMS wafer probe file and it runs the loop, then hands back a review-ready output for an engineering lead to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial</span> find, quote, tender, win</span>
+<span><span class="tag operations">MEMS &amp; ops</span> 10B cycle test, fab yield, ATE, ECO</span>
+<span><span class="tag hero">Flagship</span> the deepest example run</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+<div class="foot">Independent concept prototype prepared for a conversation with Menlo Micro (Menlo Microsystems). It is not affiliated with, endorsed by, or built on Menlo Micro systems or data. All operators and outputs are illustrative simulations; OEM accounts, S-parameters, wafer yields, NRE quotes, and MEMS reliability reports are placeholders. A human RF engineer, MEMS fab manager, or sales director reviews and approves every quote, reliability audit, fab yield release, ITAR check, and wafer mask ECO file.</div>
+<script>
+const AGENT_ROLES={
+mems_architect:{emoji:'⚡',label:'Ideal Switch® RF Architect',tools:['analyze_mems','save']},
+rf_application_eng:{emoji:'📡',label:'RF & Microwave Application Lead',tools:['calc_s_params','save']},
+quality_reliability:{emoji:'🛡️',label:'MEMS Reliability & Life Cycle Auditor',tools:['audit_life_cycles','save']},
+ate_test_eng:{emoji:'🧪',label:'ATE & Wafer Probe Test Specialist',tools:['run_ate_plan','save']},
+fab_yield_eng:{emoji:'🔬',label:'MEMS Fabrication & Yield Engineer',tools:['optimize_yield','save']},
+oem_prospector:{emoji:'🧲',label:'5G & Defense OEM Account Sourcing',tools:['source_oem_accounts','save']},
+rfq_pricing_eng:{emoji:'🧮',label:'MEMS Switch & Substrate Quoting',tools:['build_mems_quote','save']},
+defense_compliance:{emoji:'📋',label:'Defense & Aerospace Compliance Auditor',tools:['check_defense_spec','save']},
+eco_revision_lead:{emoji:'🔄',label:'Wafer Mask & Package Revision Lead',tools:['eval_mask_eco','save']},
+supply_planner:{emoji:'📦',label:'MEMS Wafer & Package Supply Lead',tools:['plan_wafer_supply','save']},
+writer:{emoji:'✍️',label:'Technical & Proposal Writer',tools:['compose','save']},
+reviewer:{emoji:'✅',label:'RF QA & Engineering Reviewer',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+const TRACKS=[['commercial','Commercial & Sales Activities'],['operations','MEMS Engineering & Manufacturing Operations']];
+const WORKFLOWS={
+scout:{name:'5G & defense OEM RF design-in discovery',title:'AI Opportunity Scout',mode:'dag',track:'commercial',deliverable:'Target RF OEM Account & Design-In Discovery List',
+sample:'Identify aerospace, 5G infrastructure, and ATE test instrumentation OEMs seeking to replace legacy electromechanical relays with Ideal Switch® MEMS.',
+desc:'Agents map OEM RF switch demand, source VP of Engineering and Lead RF Architect contacts, score application fit, and build the target design-in pipeline.',
+tasks:[{agent:'oem_prospector',task:'Source tier-1 defense radar, 5G massive MIMO, and RF ATE test instrument OEMs.',deps:[]},
+{agent:'rf_application_eng',task:'Score accounts on power handling (up to 1000W), insertion loss (<0.5dB), and size reduction needs.',deps:[0]},
+{agent:'writer',task:'Compile target OEM account list with key RF design lead contacts.',deps:[1]}]},
+quote:{name:'Ideal Switch® & custom RF module quoting',title:'AI Ideal Switch® Quoting Operator',mode:'sequential',track:'commercial',deliverable:'Ideal Switch® Volume & Substrate Module Quote',
+sample:'Generate volume pricing quote for 100,000 units/year MM5130 high-power RF SP4T switches + custom evaluation substrates.',
+desc:'Agents confirm RF package requirements, calculate silicon/glass substrate wafer yield, scale volume pricing breaks ($8.50/unit @ 100k), and issue quote.',
+tasks:[{agent:'rf_application_eng',task:'Confirm RF frequency range (DC to 26GHz), power rating (25W CW), and packaging (LGA vs QFN).',deps:[]},
+{agent:'rfq_pricing_eng',task:'Calculate MEMS wafer fabrication cost, high-reliability screening fees, and volume price breaks ($8.50/unit @ 100k volume).',deps:[0]},
+{agent:'writer',task:'Produce formal customer-ready Ideal Switch® commercial proposal.',deps:[1]}]},
+tender:{name:'Aerospace & defense RF system RFP response',title:'AI Defense RF RFP Response Operator',mode:'dag',track:'commercial',deliverable:'Defense & Aerospace Ideal Switch® RFP Response',
+sample:'Prepare technical proposal for US Defense Department phased-array radar beamforming switch matrix tender.',
+desc:'Agents verify MIL-STD-883 screening compliance, structure NRE custom package tooling, and compile technical defense proposal.',
+tasks:[{agent:'defense_compliance',task:'Verify MIL-STD-883 qualification, radiation hardness, and ITAR compliance.',deps:[]},
+{agent:'rfq_pricing_eng',task:'Structure custom beamforming substrate NRE tooling ($15,000) and prototype delivery schedule.',deps:[0]},
+{agent:'writer',task:'Generate comprehensive defense RF switch tender response.',deps:[1]}]},
+radar:{name:'RF switch market & competitor intelligence',title:'AI RF Market Intelligence',mode:'dag',track:'commercial',deliverable:'RF Switch Market & MEMS Competitive Intelligence Brief',
+sample:'Analyze solid-state PIN diode and electromechanical relay replacement trends across 5G and defense markets.',
+desc:'Agents track competitive RF switch benchmarks, analyze Ideal Switch® power/size superiority metrics, and build market intelligence brief.',
+tasks:[{agent:'oem_prospector',task:'Gather competitor RF switch specifications (Skyworks, Qorvo, Teledyne) and lead-time benchmarks.',deps:[]},
+{agent:'rf_application_eng',task:'Highlight Ideal Switch® 99% size reduction, 1000x faster switching speed, and 10+ billion cycle endurance.',deps:[]},
+{agent:'writer',task:'Produce quarterly RF market intelligence and competitive positioning brief.',deps:[0,1]}]},
+mems_validation:{name:'Ideal Switch® 10B cycle reliability & RF audit',title:'AI Ideal Switch® Reliability Operator',mode:'dag',track:'operations',tag:'flagship',deliverable:'Ideal Switch® Reliability & 10-Billion Cycle Validation Dossier',
+sample:'Execute 10-billion cycle lifetime validation and RF parameter audit for MM5600 40Gbps differential switch.',
+desc:'Agents simulate MEMS beam contact resistance over 10B cycles, audit insertion loss drift at 125°C, verify ESD protection, and publish reliability dossier.',
+tasks:[{agent:'mems_architect',task:'Simulate glass substrate electro-thermal stress and MEMS beam contact mechanical fatigue.',deps:[]},
+{agent:'quality_reliability',task:'Audit 10-billion cycle switching endurance data and cold-switched RF power testing at 100W.',deps:[]},
+{agent:'ate_test_eng',task:'Program automated wafer probe station to measure S-parameter S11/S21 drift over temperature.',deps:[0,1]},
+{agent:'reviewer',task:'QA all reliability logs against MIL-STD-883 Method 1010 thermal cycling standards.',deps:[2]},
+{agent:'writer',task:'Produce complete Ideal Switch® reliability qualification report.',deps:[3]}]},
+fab_yield:{name:'MEMS wafer fab yield & process optimization',title:'AI MEMS Fab Yield Operator',mode:'sequential',track:'operations',deliverable:'MEMS Wafer Fab Yield Optimization Report',
+sample:'Optimize 8-inch glass substrate MEMS wafer fabrication line yield for MM5120 high-power switch.',
+desc:'Agents analyze wafer probe parametric data, identify contact metal deposition variations, and optimize fab lithography recipes.',
+tasks:[{agent:'fab_yield_eng',task:'Analyze wafer-level parametric test data across 8-inch MEMS glass substrate line.',deps:[]},
+{agent:'mems_architect',task:'Adjust MEMS actuator gap spacing tolerances to improve first-pass wafer yield (+12.4%).',deps:[0]},
+{agent:'reviewer',task:'QA wafer lot release metrics against ISO 9001 fab standards.',deps:[1]},
+{agent:'writer',task:'Produce comprehensive MEMS fab yield optimization report.',deps:[2]}]},
+ate_test:{name:'ATE wafer probe & RF test program generation',title:'AI ATE Test Strategy Operator',mode:'dag',track:'operations',deliverable:'ATE Wafer Probe & High-Power RF Test Strategy',
+sample:'Generate automated ATE test program for high-density 26GHz RF switch matrix wafer probing.',
+desc:'Agents configure vector network analyzer (VNA) calibration, set RF power handling stress limits, and generate ATE probe card pin maps.',
+tasks:[{agent:'ate_test_eng',task:'Configure 50-ohm VNA S-parameter calibration matrix from DC to 26GHz.',deps:[]},
+{agent:'rf_application_eng',task:'Set RF hot-switching power threshold limits and IP3 intermodulation distortion test vectors.',deps:[]},
+{agent:'writer',task:'Produce ATE wafer probe test strategy and pin map documentation.',deps:[0,1]}]},
+mask_eco:{name:'Wafer mask ECO & packaging revision control',title:'AI MEMS Revision Control Operator',mode:'sequential',track:'operations',deliverable:'MEMS Wafer Mask ECO & Packaging Impact Assessment',
+sample:'Evaluate ECO-2026-114 (MEMS contact metallization mask revision & LGA package redesign for MM5130).',
+desc:'Agents evaluate wafer mask revision diffs, recalculate package parasitic capacitance, and update device data sheets.',
+tasks:[{agent:'eco_revision_lead',task:'Compare photolithography mask layer diffs between Rev B and Rev C.',deps:[]},
+{agent:'supply_planner',task:'Assess wafer inventory in-process scrap risk and package lead-frame re-tooling schedule.',deps:[0]},
+{agent:'writer',task:'Publish integrated MEMS mask ECO cut-over matrix and updated datasheet.',deps:[1]}]},
+};
+const DTITLE={
+scout:'Target RF OEM Account & Design-In Discovery List',
+quote:'Ideal Switch® Volume & Substrate Module Quote',
+tender:'Defense & Aerospace Ideal Switch® RFP Response',
+radar:'RF Switch Market & MEMS Competitive Intelligence Brief',
+mems_validation:'Ideal Switch® Reliability & 10-Billion Cycle Validation Dossier',
+fab_yield:'MEMS Wafer Fab Yield Optimization Report',
+ate_test:'ATE Wafer Probe & High-Power RF Test Strategy',
+mask_eco:'MEMS Wafer Mask ECO & Packaging Impact Assessment'
+};
+const TOOLS={
+source_oem_accounts:()=>'Sourced tier-1 defense radar, 5G massive MIMO & ATE test instrument OEM contacts.',
+score_fit:()=>'Scored accounts on power handling (1000W), insertion loss (<0.5dB), and size reduction.',
+build_mems_quote:()=>'Calculated MEMS wafer fab cost, screening fees, and volume pricing ($8.50/unit @ 100k).',
+check_defense_spec:()=>'Verified MIL-STD-883 qualification, radiation hardness & ITAR compliance.',
+analyze_mems:()=>'Simulated glass substrate electro-thermal stress and MEMS beam contact fatigue.',
+audit_life_cycles:()=>'Audited 10-billion cycle switching endurance & 100W cold-switched RF power testing.',
+run_ate_plan:()=>'Configured 50-ohm VNA S-parameter calibration matrix from DC to 26GHz.',
+optimize_yield:()=>'Analyzed 8-inch MEMS glass substrate wafer probe data; +12.4% yield gain achieved.',
+eval_mask_eco:()=>'Extracted photolithography mask layer diffs between Rev B and Rev C.',
+plan_wafer_supply:()=>'Assessed in-process wafer scrap risk and package lead-frame tooling schedule.',
+calc_s_params:()=>'Calculated S11 return loss and S21 insertion loss curves across DC-26GHz band.',
+compose:()=>'Drafted in a clear, RF-engineered, MIL-STD & ISO standards-aware style, review-ready.',
+qa_review:()=>'QA: S-parameter limits, contact resistance limits, and qualification compliance checked.',
+save:()=>'Saved to shared context for downstream agents.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+const FINAL={
+scout:`TARGET RF OEM ACCOUNT & DESIGN-IN DISCOVERY LIST (illustrative)
+Scanned aerospace, defense radar, 5G infrastructure, and ATE test equipment OEMs.
+
+A-Tier Priority OEM Target Accounts:
+1. Raytheon / Northrop Defense Systems (Phased-Array Radar) — MIL-STD-883 spec — Fit Score: 96
+2. Ericsson / Nokia 5G Systems (Massive MIMO Antenna Tuning) — High Power / Low Loss — Fit Score: 92
+3. Advantest / Teradyne (Wafer Probe ATE Instrumentation) — High Density SP4T — Fit Score: 88
+4. GE HealthCare (MRI Surface Coil RF Switching) — Non-Magnetic MEMS — Fit Score: 84
+
+Key Decision Makers: VP of RF Engineering, Chief System Architect, Director of Procurement.
+→ Saved: target_oem_accounts, rf_specs, fit_scores
+NOTE: illustrative; not affiliated with Menlo Micro.`,
+quote:`IDEAL SWITCH® VOLUME & SUBSTRATE MODULE QUOTE (illustrative)
+Client Project: 5G Massive MIMO Antenna Tuning Module
+Annual Volume: 100,000 units (MM5130 High-Power SP4T Switch)
+
+Technical Specifications
+• Frequency: DC to 26GHz | Power Handling: 25W CW / 150W Pulsed | Insertion Loss: <0.4dB @ 6GHz
+• Package: 5.0mm x 5.0mm LGA | Endurance: 10+ Billion Cycles
+
+Pricing & Substrate Tooling Breakdown
+• Unit Price (@ 100,000 unit volume break): $8.50 / unit
+• Custom RF Evaluation Substrate & Test Jig Tooling: $4,500.00 (One-time NRE)
+• Production Delivery Lead Time: 6 weeks from PO confirmation.
+→ Saved: mems_switch_quote, nre_breakdown
+NOTE: illustrative.`,
+tender:`DEFENSE & AEROSPACE IDEAL SWITCH® RFP RESPONSE (illustrative)
+RFP Reference: US Department of Defense Phased-Array Radar Beamforming Switch Matrix
+
+Military Qualification & Compliance
+• MIL-STD-883 Test Methods: Method 1010 Thermal Cycling & Method 2002 Mechanical Shock VERIFIED.
+• Radiation Hardness: Inherently radiation-tolerant glass-on-silicon substrate.
+• Security & ITAR: Sourced & packaged in ITAR-compliant domestic facility.
+
+Proposal Milestone Schedule
+• Phase 1: Prototype Custom Substrate Delivery (100 units): 4 Weeks ($15,000 NRE).
+• Phase 2: Full Flight-Qualified Production (10,000 units/year): Delivery starting Q3 2026.
+→ Saved: defense_rf_rfp_response, mil_std_certificate
+NOTE: illustrative.`,
+radar:`RF SWITCH MARKET & MEMS COMPETITIVE INTELLIGENCE BRIEF (illustrative)
+Market Disruption & Semiconductor Trends
+• Solid-State PIN Diodes: High power consumption and non-linear distortion limiting 5G/6G performance.
+• Electromechanical Relays: Bulk physical size and slow switching speeds (ms) creating bottleneck in ATE & Radar.
+
+Menlo Micro Ideal Switch® Superiority Metrics
+• Size: 99% smaller than conventional electromechanical relays.
+• Speed: 1000x faster switching (~10 microseconds vs ~10 milliseconds).
+• Endurance: 10+ Billion cycles (10,000x longer lifespan than mechanical relays).
+→ Saved: rf_market_brief, competitive_positioning
+NOTE: illustrative.`,
+mems_validation:`IDEAL SWITCH® RELIABILITY & 10-BILLION CYCLE VALIDATION DOSSIER (illustrative · flagship)
+Target Device: MM5600 40Gbps Differential Switch
+Qualification Standard: MIL-STD-883 & JEDEC Reliability Protocol
+
+Endurance & RF Performance Summary
+• Switching Endurance Test: 10.4 Billion cycles completed with ZERO contact welding or resistance degradation.
+• Contact Resistance: Maintained <0.5 ohms across all 10B cycles.
+• RF Insertion Loss Drift @ 125°C: <0.05dB change over 1,000 operating hours.
+• ESD Immunity: Human Body Model (HBM) Class 2 (2000V) verified.
+
+QA Sign-Off
+• Verified by Senior Reliability Engineer. Cleared for flight and medical production.
+→ Saved: mems_reliability_qualification, endurance_logs
+NOTE: illustrative; confirm against device data sheet.`,
+fab_yield:`MEMS WAFER FAB YIELD OPTIMIZATION REPORT (illustrative)
+Fab Facility: 8-Inch MEMS Glass Substrate Fabrication Line
+Target Wafer Lot: MM5120 High-Power Switch (Lot #W-88492)
+
+Parametric Test & Yield Results
+• Wafer-Level Parametric Test Yield: 94.6% (+12.4% yield gain post-optimization).
+• Actuator Gap Uniformity: Critical dimension (CD) variation reduced to <1.8% across 8-inch wafer.
+• Contact Metal Sputtering: Oxide thickness controlled to ±15 Angstroms.
+
+Release Status: Wafer lot passed ISO 9001 fab release criteria; cleared for dicing and packaging.
+→ Saved: mems_fab_yield_report, parametric_maps
+NOTE: illustrative.`,
+ate_test:`ATE WAFER PROBE & HIGH-POWER RF TEST STRATEGY (illustrative)
+Test Station: 26GHz Automated Vector Network Analyzer (VNA) Probe Station
+Target Device: High-Density MEMS Switch Matrix Wafer
+
+Test Vector Configuration
+• 50-Ohm S-Parameter Sweep: DC to 26GHz (S11 Return Loss & S21 Insertion Loss 100% audited).
+• Hot-Switching Power Limit Test: Verified up to 25W CW power handling.
+• IP3 Intermodulation Distortion: >95 dBm linearity confirmed.
+
+ATE Output: Automatic probe card step-and-repeat program generated for 100% wafer screening.
+→ Saved: ate_test_strategy, vna_calibration_map
+NOTE: illustrative.`,
+mask_eco:`MEMS WAFER MASK ECO & PACKAGING IMPACT ASSESSMENT (illustrative)
+Engineering Change Order: ECO-2026-114
+Affected Device: MM5130 High-Power SP4T Switch (Rev B -> Rev C)
+
+Change Scope & Mask Diff
+• Photolithography Mask Revision: Optimized beam anchor geometry to reduce actuation voltage by 8%.
+• Packaging Modification: Enhanced LGA thermal pad grounding for improved high-power dissipation.
+
+Inventory Cut-Over & Scrap Impact
+• In-Process Wafer Inventory: 12 Wafers at Rev B (Cleared for non-ITAR commercial orders).
+• Tooling Cost: Rev C mask reticle set ($18,000 amortized across production run).
+• Cut-Over Date: Effective starting Wafer Lot #W-89000.
+→ Saved: mems_mask_eco_matrix, datasheet_rev_c
+NOTE: illustrative.`,
+};
+let EMPLOYEES=[
+{id:'scout',name:'Scout',title:'AI Opportunity Scout',wf:'scout',handled:210,hrs:70,win:0,status:'idle'},
+{id:'quote',name:'Quote',title:'AI Ideal Switch® Quoting',wf:'quote',handled:155,hrs:95,win:45,status:'idle'},
+{id:'tender',name:'Tender',title:'AI Defense RF Response',wf:'tender',handled:105,hrs:115,win:50,status:'idle'},
+{id:'radar',name:'Radar',title:'AI RF Market Intelligence',wf:'radar',handled:140,hrs:45,win:15,status:'idle'},
+{id:'mems',name:'Sentinel',title:'AI Ideal Switch® Reliability',wf:'mems_validation',handled:130,hrs:150,win:70,status:'idle'},
+{id:'fab',name:'Atlas',title:'AI MEMS Fab Yield Operator',wf:'fab_yield',handled:175,hrs:100,win:55,status:'idle'},
+{id:'ate',name:'Vanguard',title:'AI ATE Test Strategy Operator',wf:'ate_test',handled:135,hrs:85,win:48,status:'idle'},
+{id:'eco',name:'Nexus',title:'AI MEMS Revision Control',wf:'mask_eco',handled:145,hrs:90,win:52,status:'idle'},
+];
+let running=false;
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const now=()=>new Date().toLocaleTimeString('en-GB');
+const mono=n=>n.trim().slice(0,2).toUpperCase();
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Commercial</span>';if(wf.track==='operations')s+='<span class="tag operations">MEMS &amp; Ops</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+function setView(v){
+$('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');
+$('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');
+if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderEcon(){
+const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);
+const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;
+const cells=[[total,'AI operators (commercial + MEMS engineering)'],[h.toLocaleString(),'quotes, MEMS audits & ATE runs handled'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','RF engineer & sales hours saved / month'],['+'+avg+'%','avg turnaround improvement']];
+$('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');
+}
+function empCard(e){const wf=WORKFLOWS[e.wf];
+const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');
+return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}">
+<div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div>
+<div class="emp-owns">Owns: <b>${wf.name}</b></div>
+<div class="team">${team}</div>
+<div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'—'}</b>faster</div></div>
+<div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a project / RFQ</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;
+}
+function renderRoster(){
+const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;
+let html='';
+TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;
+html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});
+const untracked=EMPLOYEES.filter(e=>!WORKFLOWS[e.wf].track);
+if(untracked.length)html+=`<div class="slabel">Other</div><div class="roster">`+untracked.map(empCard).join('')+`</div>`;
+$('roster').innerHTML=html;
+}
+function assign(id){
+if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+$('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div>
+<div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at an OEM account, an S-parameter file, or a MEMS wafer probe log and ${e.name} runs the whole loop.</div></div></div>
+<div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div>
+<div id="stage"></div></div>`;
+$('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();
+}
+async function runEmp(id){
+if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;
+e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');
+const stage=$('stage');
+stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div>
+<div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div>
+<div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;
+const feed=$('feed');
+function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;
+const row=document.createElement('div');row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,150)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}
+log(null,`Input received: "${obj.substring(0,54)}…"`);
+log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);
+await sleep(rand(700,1100));
+const grid=$('agrid');
+wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;
+c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;
+grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});
+await sleep(600);
+$('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');
+const done=new Set();
+async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);
+c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';
+log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));
+for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}
+c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}
+if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}
+else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;
+if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}
+$('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');
+await sleep(400);
+const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(6,44);
+$('resultArea').innerHTML=`<div class="result"><div class="rstats">
+<div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div>
+<div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div>
+<div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'Commercial & Sales':'MEMS Engineering & Ops'}</span></div>
+<div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div>
+<div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div>
+<div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div>
+<div class="donebar"><b>${e.name} produced a review-ready output.</b> Execution, reliability auditing and QA complete, ready for an RF engineer, MEMS fab manager, or sales director to review and confirm. Illustrative simulation placeholder.</div>`;
+e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;
+}
+// builder
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per design-in',step:1};renderBuilder();}
+function renderBuilder(){
+const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];
+$('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();
+}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+
+Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+
+w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+
+`<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;
+document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div>
+<div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. Micro" oninput="draft.name=this.value"></div>
+<div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI RF Switch Specialist" oninput="draft.title=this.value"></div>
+<div class="field"><label>Cadence</label><div class="seg">`+['Per design-in','Per wafer lot','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div>
+<div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;
+let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();
+const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};
+DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];
+const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});
+renderEcon();renderRoster();setView('ops');
+setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);
+}
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
