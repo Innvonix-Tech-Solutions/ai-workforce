@@ -77,3 +77,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/dynex
 https://innvonix-tech-solutions.github.io/ai-workforce/ouster
 
 https://innvonix-tech-solutions.github.io/ai-workforce/liverright
+
+https://innvonix-tech-solutions.github.io/ai-workforce/menlomicro
