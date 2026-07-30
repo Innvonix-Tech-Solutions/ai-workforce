@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ouster Perception Console — AI Workforce Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Karla:wght@400;500;600&family=Red+Hat+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0F0C;
+  --surface:#101712;
+  --surface-2:#151F18;
+  --surface-3:#1B271F;
+  --border:#28362D;
+  --border-soft:#1B251F;
+  --text:#E9F2EC;
+  --muted:#93A69B;
+  --muted-2:#5C6E63;
+  --accent:#9BFF6B;
+  --accent-dim:#3E7A2C;
+  --accent2:#FFB84D;
+  --accent3:#5BD1E0;
+  --danger:#FF5C5C;
+  --font-display:'Outfit',sans-serif;
+  --font-body:'Karla',sans-serif;
+  --font-mono:'Red Hat Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 90% -8%, rgba(155,255,107,0.08), transparent 55%),
+    radial-gradient(900px 480px at 5% 6%, rgba(91,209,224,0.06), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent);}
+::selection{background:rgba(155,255,107,0.25);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:26px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:38px;height:38px;border-radius:8px;
+  background:linear-gradient(155deg,var(--surface-3),var(--surface-2));
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--accent);font-family:var(--font-mono);font-weight:600;font-size:11px;
+}
+.mark-name{font-family:var(--font-display);font-weight:700;font-size:19px;letter-spacing:0.01em;}
+.mark-sub{font-family:var(--font-mono);font-size:10.5px;color:var(--muted-2);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px;}
+
+.feed-readout{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent2);
+  background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:8px 14px;display:flex;align-items:center;gap:10px;
+}
+.feed-readout .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.hero{padding:44px 0 30px;display:grid;grid-template-columns:1.1fr 0.9fr;gap:40px;align-items:center;}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:30px 0 18px;}}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent);}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(28px,4vw,42px);line-height:1.08;letter-spacing:-0.01em;margin:0 0 16px;}
+h1 span{color:var(--accent);}
+.lead{color:var(--muted);font-size:15.5px;max-width:53ch;margin:0 0 22px;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:var(--font-body);font-weight:700;font-size:13.5px;border-radius:8px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--accent);color:#08210B;border-color:var(--accent);}
+.btn-primary:hover{background:#b6ff92;}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--accent3);color:var(--accent3);}
+
+/* traffic perception signature */
+.scope{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:18px 18px 14px;}
+.scope-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
+.scope-title{font-family:var(--font-mono);font-size:10.5px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em;}
+.scope-val{font-family:var(--font-mono);font-size:12px;color:var(--accent2);}
+svg.trace{width:100%;height:200px;display:block;}
+.scope-grid line{stroke:var(--border-soft);stroke-width:1;}
+.scope-foot{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--font-mono);font-size:10.5px;color:var(--muted-2);}
+
+.econ{border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:760px){.econ{grid-template-columns:repeat(2,1fr);}}
+.econ-item{padding:6px 18px;border-left:1px solid var(--border-soft);}
+.econ-item:first-child{border-left:none;padding-left:0;}
+@media(max-width:760px){.econ-item:nth-child(2n+1){border-left:none;padding-left:0;}}
+.econ-num{font-family:var(--font-display);font-weight:700;font-size:26px;color:var(--text);}
+.econ-num small{font-size:14px;color:var(--accent);font-weight:700;}
+.econ-label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+section{padding:46px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.section-title{font-family:var(--font-display);font-weight:700;font-size:22px;}
+.section-sub{color:var(--muted);font-size:13.5px;max-width:60ch;margin-top:4px;}
+.track-label{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.1em;margin:28px 0 14px;padding-top:6px;border-top:1px dashed var(--border-soft);}
+.track-label:first-of-type{border-top:none;padding-top:0;margin-top:6px;}
+
+.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+@media(max-width:760px){.roster{grid-template-columns:1fr;}}
+.op-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:10px;transition:border-color .15s ease;}
+.op-card:hover{border-color:var(--accent-dim);}
+.op-card.flagship{border-color:var(--accent2);background:linear-gradient(180deg,rgba(255,184,77,0.07),var(--surface));}
+.op-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.op-name{font-family:var(--font-display);font-weight:700;font-size:15.5px;}
+.op-role{font-size:12px;color:var(--muted);margin-top:2px;}
+.flag-chip{font-family:var(--font-mono);font-size:10px;color:var(--accent2);border:1px solid var(--accent2);border-radius:20px;padding:2px 8px;white-space:nowrap;}
+.op-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+.op-stats{display:flex;gap:16px;margin-top:2px;}
+.op-stat{font-family:var(--font-mono);font-size:11.5px;color:var(--muted-2);}
+.op-stat b{color:var(--accent);font-size:13px;display:block;font-family:var(--font-body);font-weight:600;}
+.op-agents{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.chip{font-size:11px;background:var(--surface-3);border:1px solid var(--border);border-radius:20px;padding:3px 9px;color:var(--muted);}
+.op-actions{display:flex;gap:10px;margin-top:6px;}
+.run-btn{flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:700;font-size:13px;border-radius:8px;padding:9px;cursor:pointer;}
+.run-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+.run-panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;margin-top:22px;display:none;}
+.run-panel.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.run-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.run-head h3{font-family:var(--font-display);font-size:17px;margin:0;}
+.run-head .meta{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.close-run{background:none;border:1px solid var(--border);color:var(--muted);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:12px;}
+.close-run:hover{color:var(--text);border-color:var(--accent3);}
+
+.feed{background:var(--bg);border:1px solid var(--border-soft);border-radius:10px;padding:14px 16px;height:260px;overflow-y:auto;font-family:var(--font-mono);font-size:12.5px;display:flex;flex-direction:column;gap:7px;}
+.feed-line{display:flex;gap:10px;align-items:flex-start;opacity:0;animation:appear .3s ease forwards;}
+@keyframes appear{to{opacity:1;}}
+.feed-line .tag{color:var(--accent2);white-space:nowrap;}
+.feed-line .txt{color:var(--muted);}
+.feed-line.done .tag{color:var(--accent);}
+.feed-line.done .txt{color:var(--text);}
+
+.progress-row{display:flex;gap:6px;margin:14px 0 6px;flex-wrap:wrap;}
+.pstep{flex:1;min-width:64px;height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;position:relative;}
+.pstep.active{background:var(--accent-dim);}
+.pstep.complete{background:var(--accent);}
+
+.deliverable{margin-top:18px;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:16px 18px;display:none;}
+.deliverable.show{display:block;animation:fadein .3s ease;}
+.deliverable h4{font-family:var(--font-display);font-size:14px;margin:0 0 10px;color:var(--accent);}
+.deliverable pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:12.5px;color:var(--text);margin:0;line-height:1.6;}
+.note{font-size:11px;color:var(--muted-2);margin-top:10px;font-style:italic;}
+
+.builder{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;}
+.build-steps{display:flex;gap:8px;margin-bottom:20px;}
+.build-step-dot{flex:1;height:3px;border-radius:2px;background:var(--surface-3);}
+.build-step-dot.on{background:var(--accent);}
+.build-body{min-height:200px;}
+.pick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+@media(max-width:700px){.pick-grid{grid-template-columns:1fr;}}
+.pick-card{border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;background:var(--surface-2);}
+.pick-card:hover{border-color:var(--accent3);}
+.pick-card.selected{border-color:var(--accent);background:rgba(155,255,107,0.07);}
+.pick-title{font-weight:600;font-size:13.5px;}
+.pick-desc{font-size:12px;color:var(--muted);margin-top:4px;}
+.field-row{margin-bottom:14px;}
+.field-row label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;}
+.field-row input,.field-row select{width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:10px 12px;font-family:var(--font-body);font-size:13.5px;}
+.build-nav{display:flex;justify-content:space-between;margin-top:20px;}
+.summary-box{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:16px;}
+.summary-box b{color:var(--accent);}
+
+footer{border-top:1px solid var(--border-soft);padding:28px 0 40px;}
+.foot-note{font-size:12px;color:var(--muted-2);max-width:80ch;line-height:1.6;}
+.foot-note strong{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark-row">
+      <div class="mark">
+        <div class="mark-badge">OS</div>
+        <div>
+          <div class="mark-name">Perception Console</div>
+          <div class="mark-sub">Ouster · AI Workforce Prototype</div>
+        </div>
+      </div>
+      <div class="feed-readout">
+        <span class="dot"></span>
+        <span id="siteTxt">BlueCity · Georgia DOT intersection feed</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero" style="padding-bottom:0;">
+    <div>
+      <div class="eyebrow">Digital lidar · cameras · perception software</div>
+      <h1>Eight operators to run Ouster's <span>sensor-to-platform</span> loop</h1>
+      <p class="lead">Each operator below is a real Ouster workflow — standing up a BlueCity traffic deployment, qualifying Rev8 on NVIDIA DRIVE Hyperion, integrating a robotics partner — handed to a small team of specialist agents that works it end to end and hands back a reviewable deliverable.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="document.getElementById('roster-section').scrollIntoView({behavior:'smooth'})">View the roster</button>
+        <button class="btn btn-ghost" onclick="runOperator('municipaldeploy')">Run the flagship operator</button>
+      </div>
+    </div>
+    <div class="scope">
+      <div class="scope-top">
+        <span class="scope-title">BlueCity — live intersection detection</span>
+        <span class="scope-val" id="countVal">14 tracked objects</span>
+      </div>
+      <svg class="trace" viewBox="0 0 300 200" preserveAspectRatio="xMidYMid meet">
+        <g class="scope-grid">
+          <line x1="0" y1="100" x2="300" y2="100"></line>
+          <line x1="150" y1="0" x2="150" y2="200"></line>
+          <line x1="0" y1="50" x2="300" y2="50"></line>
+          <line x1="0" y1="150" x2="300" y2="150"></line>
+          <line x1="75" y1="0" x2="75" y2="200"></line>
+          <line x1="225" y1="0" x2="225" y2="200"></line>
+        </g>
+        <g id="roadGroup"></g>
+        <g id="boxGroup"></g>
+      </svg>
+      <div class="scope-foot">
+        <span>NEMA TS2 certified · 128-channel Rev8</span>
+        <span id="throughputVal">312 vehicles/hr</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="econ wrap" style="padding-left:0;padding-right:0;">
+    <div class="econ-item">
+      <div class="econ-num">5.3<small>×</small></div>
+      <div class="econ-label">Faster municipal RFP-to-deployment turnaround</div>
+    </div>
+    <div class="econ-item">
+      <div class="econ-num">700<small>+</small></div>
+      <div class="econ-label">BlueCity deployments the roster is built to support and expand</div>
+    </div>
+    <div class="econ-item">
+      <div class="econ-num">18<small> hrs</small></div>
+      <div class="econ-label">Median engineering hours returned per run</div>
+    </div>
+    <div class="econ-item">
+      <div class="econ-num">8<small>/8</small></div>
+      <div class="econ-label">Workflows covered, sensor design-in through platform delivery</div>
+    </div>
+  </div>
+
+  <section id="roster-section">
+    <div class="section-head">
+      <div>
+        <div class="section-title">The roster</div>
+        <div class="section-sub">Grouped by track. Run any operator to watch its agent team work a real Ouster-style task and produce a deliverable.</div>
+      </div>
+    </div>
+    <div id="rosterMount"></div>
+
+    <div class="run-panel" id="runPanel">
+      <div class="run-head">
+        <div>
+          <h3 id="runTitle">—</h3>
+          <div class="meta" id="runMeta">—</div>
+        </div>
+        <button class="close-run" onclick="closeRun()">Close</button>
+      </div>
+      <div class="progress-row" id="progressRow"></div>
+      <div class="feed" id="feed"></div>
+      <div class="deliverable" id="deliverable">
+        <h4 id="delivTitle">Deliverable</h4>
+        <pre id="delivBody"></pre>
+        <div class="note">NOTE: illustrative simulation for demonstration purposes — all figures are placeholders and every output is reviewed by an Ouster engineer, program lead, or commercial officer before use.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-title">Build a new operator</div>
+        <div class="section-sub">Compose a ninth operator in three steps: pick the base workflow, assign its cadence, name it.</div>
+      </div>
+    </div>
+    <div class="builder">
+      <div class="build-steps">
+        <div class="build-step-dot on" id="dot1"></div>
+        <div class="build-step-dot" id="dot2"></div>
+        <div class="build-step-dot" id="dot3"></div>
+      </div>
+      <div class="build-body" id="buildBody"></div>
+      <div class="build-nav">
+        <button class="btn btn-ghost" id="backBtn" onclick="builderBack()" style="visibility:hidden;">Back</button>
+        <button class="btn btn-primary" id="nextBtn" onclick="builderNext()">Next</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="foot-note">
+      <strong>This is a sales/stakeholder prototype, not a live system.</strong> No Ouster systems, customer data, or proprietary sensor or software designs were used to build it — every deliverable, metric, and number above is an illustrative placeholder written to sound domain-authentic. Nothing here is submitted, filed, or transmitted anywhere; every run stays in this browser tab. Program and partner names reference publicly reported Ouster relationships (e.g. Georgia DOT, NVIDIA DRIVE Hyperion, Genetec, Constellis, FieldAI, Gecko Robotics) for realism only — no confidential program details are represented. In production, every deliverable in this loop — certification reports, integration plans, commercial terms, investor disclosures — would be reviewed and signed off by a qualified Ouster engineer, program lead, or executive before it leaves the building.
+    </p>
+  </footer>
+</div>
+
+<script>
+/* =========================================================
+   DATA
+   ========================================================= */
+const AGENT_ROLES = {
+  hw:       {emoji:'📡', label:'Lidar Hardware Engineer', tools:['sensorSpecMatch','channelConfig','save']},
+  percept:  {emoji:'🖥️', label:'Perception Software Engineer', tools:['aiModelCheck','fusionBenchmark','save']},
+  infra:    {emoji:'🚦', label:'Smart Infrastructure Program Manager', tools:['intersectionScope','actuationCheck','save']},
+  security: {emoji:'🛡️', label:'Security & Logistics Solutions Engineer', tools:['geminiConfig','platformIntegrate','save']},
+  robotics: {emoji:'🤖', label:'Robotics Partnerships Engineer', tools:['partnerApiCheck','payloadFit','save']},
+  auto:     {emoji:'🚗', label:'Automotive Design-In Engineer', tools:['oemSpecMatch','hyperionCheck','save']},
+  mna:      {emoji:'🧩', label:'M&A Integration Analyst', tools:['assetMap','roadmapMerge','save']},
+  cert:     {emoji:'📜', label:'Certification & Standards Engineer', tools:['nemaTest','certDocDraft','save']},
+  quote:    {emoji:'💰', label:'Commercial & Bookings Analyst', tools:['attachRateModel','termsDraft','save']},
+  bd:       {emoji:'🔍', label:'Business Development Analyst', tools:['tenderScan','competitiveScan','save']},
+  ir:       {emoji:'📊', label:'Investor Relations Analyst', tools:['financialsPull','guidanceCheck','save']},
+  pm:       {emoji:'📋', label:'Program Manager', tools:['packageAssemble','scheduleCheck','save']},
+};
+
+const WORKFLOWS = {
+  municipaldeploy: {
+    name:'Municipal Traffic Actuation Deployment', title:'Municipal Deployment',
+    mode:'sequential', tag:'flagship', track:'trackA',
+    deliverable:'Deployment status package',
+    sample:'City DOT intersection upgrade: 12-intersection BlueCity traffic actuation rollout',
+    desc:'From a DOT or city RFP to a certified installation plan: spec match against BlueCity, NEMA TS2 compliance, and commercial terms ready for the city\u2019s procurement office.',
+    tasks:[
+      {agent:'bd', task:'Log the DOT/city RFP and extract intersection count, timeline, and funding source', deps:[]},
+      {agent:'infra', task:'Scope BlueCity sensor placement and traffic actuation requirements per intersection', deps:[0]},
+      {agent:'cert', task:'Confirm NEMA TS2 detection certification applies to the proposed configuration', deps:[1]},
+      {agent:'quote', task:'Draft commercial terms for the multi-intersection rollout', deps:[2]},
+      {agent:'pm', task:'Assemble the deployment status package and flag open items for sign-off', deps:[3]},
+    ],
+  },
+  geminideploy: {
+    name:'Security & Logistics Software Rollout', title:'Gemini Deployment',
+    mode:'sequential', track:'trackA',
+    deliverable:'Rollout plan',
+    sample:'Rolling out Gemini security and logistics perception software across a distribution warehouse network',
+    desc:'Takes a Gemini deployment from customer intake through platform integration (Genetec, Constellis LEXSO) to a site rollout plan.',
+    tasks:[
+      {agent:'security', task:'Log the customer\u2019s security or logistics use case and site count', deps:[]},
+      {agent:'security', task:'Configure Gemini detection and analytics profiles for the use case', deps:[0]},
+      {agent:'percept', task:'Confirm integration compatibility with the customer\u2019s existing security platform', deps:[1]},
+      {agent:'pm', task:'Issue the site rollout plan and track customer sign-off', deps:[2]},
+    ],
+  },
+  autohyperion: {
+    name:'Automotive Design-In & NVIDIA Hyperion Qualification', title:'Automotive Design-In',
+    mode:'dag', track:'trackB',
+    deliverable:'Qualification status package',
+    sample:'Rev8 sensor design-in for an ADAS program integrating on the NVIDIA DRIVE Hyperion platform',
+    desc:'Hardware and perception agents work sensor spec match and Hyperion platform qualification in parallel, converging on a design-in status package for the OEM.',
+    tasks:[
+      {agent:'hw', task:'Match Rev8 sensor configuration against the OEM\u2019s mounting and field-of-view requirements', deps:[]},
+      {agent:'auto', task:'Check current NVIDIA DRIVE Hyperion qualification status for the sensor configuration', deps:[]},
+      {agent:'percept', task:'Confirm perception software output format matches the Hyperion reference stack', deps:[0,1]},
+      {agent:'pm', task:'Compile the qualification status package for OEM review', deps:[2]},
+    ],
+  },
+  roboticsintegration: {
+    name:'Robotics Partner Integration', title:'Robotics Partner Integration',
+    mode:'dag', track:'trackB',
+    deliverable:'Integration package',
+    sample:'Integrating Ouster sensors into a humanoid robotics platform alongside a physical-AI software partner',
+    desc:'Robotics and perception agents work API compatibility and physical sensor payload fit in parallel for a new robotics partner integration.',
+    tasks:[
+      {agent:'robotics', task:'Check API compatibility with the partner\u2019s robotics software stack', deps:[]},
+      {agent:'hw', task:'Confirm sensor payload fit within the robot\u2019s size, weight, and power budget', deps:[]},
+      {agent:'percept', task:'Validate perception output latency meets the partner\u2019s real-time control loop requirement', deps:[0,1]},
+      {agent:'pm', task:'Compile the integration package for partner review', deps:[2]},
+    ],
+  },
+  pipelinescan: {
+    name:'Municipal RFP & Tender Pipeline Scan', title:'RFP Pipeline Scan',
+    mode:'dag', track:'trackA',
+    deliverable:'Pipeline brief',
+    sample:'Quarterly scan of new DOT and municipal tenders across the Americas, EMEA, and APAC',
+    desc:'Scans new government tenders and competitive positioning in parallel, then rolls it into one pipeline brief with recommended focus regions.',
+    tasks:[
+      {agent:'bd', task:'Scan new DOT and municipal tenders for intelligent transportation systems', deps:[]},
+      {agent:'bd', task:'Scan new security and logistics automation opportunities', deps:[]},
+      {agent:'quote', task:'Benchmark competitive positioning against other lidar and camera vendors', deps:[]},
+      {agent:'pm', task:'Compile the pipeline brief with recommended focus regions', deps:[0,1,2]},
+    ],
+  },
+  certrun: {
+    name:'NEMA TS2 & Functional Certification Run', title:'Certification Run',
+    mode:'sequential', track:'trackB',
+    deliverable:'Certification report',
+    sample:'NEMA TS2 recertification for an updated Rev8-based BlueCity detection configuration',
+    desc:'Walks an updated sensor or software configuration through NEMA TS2 (or equivalent) certification testing and documentation.',
+    tasks:[
+      {agent:'cert', task:'Build the certification test plan against the current NEMA TS2 standard', deps:[]},
+      {agent:'cert', task:'Run the detection accuracy and false-actuation test battery', deps:[0]},
+      {agent:'infra', task:'Correlate test results against real-world intersection performance data', deps:[1]},
+      {agent:'pm', task:'Issue the certification report and disposition', deps:[2]},
+    ],
+  },
+  sensorfusion: {
+    name:'Camera-Lidar Sensor Fusion Integration', title:'Sensor Fusion Integration',
+    mode:'dag', track:'trackB',
+    deliverable:'Fusion roadmap brief',
+    sample:'Integrating acquired camera technology with existing lidar sensors into a unified multi-sensor perception stack',
+    desc:'Hardware and perception agents work camera-lidar calibration and AI model fusion in parallel, converging on a roadmap for the unified multi-sensor product line.',
+    tasks:[
+      {agent:'hw', task:'Assess camera-lidar physical mounting and calibration requirements', deps:[]},
+      {agent:'percept', task:'Assess AI model fusion approach for combined camera and lidar data streams', deps:[]},
+      {agent:'mna', task:'Map acquired camera IP against the existing perception software roadmap', deps:[0,1]},
+      {agent:'pm', task:'Compile the fusion roadmap brief with sequencing recommendations', deps:[2]},
+    ],
+  },
+  investor: {
+    name:'Quarterly Investor Disclosure Package', title:'Investor Disclosure Package',
+    mode:'sequential', track:'trackA',
+    deliverable:'Earnings package draft',
+    sample:'Quarterly earnings release covering vertical revenue mix and software-attach bookings growth',
+    desc:'Pulls quarterly financials and vertical revenue mix together into a draft earnings package ahead of quarterly disclosure.',
+    tasks:[
+      {agent:'ir', task:'Pull quarterly financials: product revenue, vertical mix, and bookings growth', deps:[]},
+      {agent:'quote', task:'Summarize software-attach rate trends across BlueCity and Gemini deployments', deps:[]},
+      {agent:'ir', task:'Draft the earnings release and check guidance language against prior disclosures', deps:[0,1]},
+      {agent:'ir', task:'Route the draft package for legal and executive review', deps:[2]},
+    ],
+  },
+};
+
+const DTITLE = {
+  municipaldeploy:'Deployment Status Package',
+  geminideploy:'Gemini Rollout Plan',
+  autohyperion:'Hyperion Qualification Status Package',
+  roboticsintegration:'Robotics Integration Package',
+  pipelinescan:'RFP & Tender Pipeline Brief',
+  certrun:'NEMA TS2 Certification Report',
+  sensorfusion:'Sensor Fusion Roadmap Brief',
+  investor:'Draft Earnings Package',
+};
+
+const TOOLS = {
+  sensorSpecMatch:()=>'Rev8 configuration matched to the OEM\u2019s mounting and field-of-view spec',
+  channelConfig:()=>'128-channel configuration confirmed at 2.62M points/sec dual-return mode',
+  aiModelCheck:()=>'Multi-sensor AI model output confirmed compatible with the target integration',
+  fusionBenchmark:()=>'Fusion benchmark shows 94.2% detection consistency across camera and lidar streams',
+  intersectionScope:()=>'Sensor placement scoped for 12 intersections with actuation zone overlays',
+  actuationCheck:()=>'Traffic actuation logic confirmed compatible with the city\u2019s existing signal controllers',
+  geminiConfig:()=>'Gemini detection and analytics profiles configured for the logistics use case',
+  platformIntegrate:()=>'Integration compatibility confirmed with the customer\u2019s Genetec Security Center deployment',
+  partnerApiCheck:()=>'API compatibility confirmed with the robotics partner\u2019s perception middleware',
+  payloadFit:()=>'Sensor payload confirmed within the robot\u2019s size, weight, and power budget',
+  oemSpecMatch:()=>'Sensor spec matched against the OEM\u2019s ADAS mounting requirements',
+  hyperionCheck:()=>'NVIDIA DRIVE Hyperion qualification status confirmed current for this configuration',
+  assetMap:()=>'Acquired camera IP mapped against the existing perception software roadmap',
+  roadmapMerge:()=>'Fusion roadmap sequencing drafted prioritizing near-term BlueCity integration',
+  nemaTest:()=>'NEMA TS2 test plan built against the current detection zone configuration',
+  certDocDraft:()=>'Certification documentation drafted, 9 of 10 test sections complete',
+  attachRateModel:()=>'Software-attach rate modeled at 38% across new BlueCity and Gemini bookings',
+  termsDraft:()=>'Commercial terms drafted for the multi-intersection rollout',
+  tenderScan:()=>'6 new DOT and municipal tenders identified this quarter',
+  competitiveScan:()=>'2 competitor lidar vendors flagged bidding on overlapping tenders',
+  financialsPull:()=>'Quarterly financials pulled: product revenue and vertical mix confirmed',
+  guidanceCheck:()=>'Guidance language checked for consistency against prior quarterly disclosures',
+  packageAssemble:()=>'Package assembled and routed for review',
+  scheduleCheck:()=>'Schedule variance +0.5%, within tolerance',
+  save:()=>'Saved to program record',
+};
+
+const FINAL = {
+  municipaldeploy:
+`DEPLOYMENT STATUS PACKAGE — City DOT Intersection Upgrade
+12-Intersection BlueCity Traffic Actuation Rollout
+
+RFP SUMMARY: Intersection count, timeline, and funding source logged
+against the city\u2019s procurement schedule; project consistent with the
+scope of prior DOT deployments in this region.
+
+SENSOR PLACEMENT: BlueCity sensor placement scoped for all 12
+intersections with actuation zone overlays matched to existing signal
+controller locations.
+
+CERTIFICATION: NEMA TS2 detection certification confirmed applicable
+to the proposed configuration; no additional certification cycle
+required.
+
+COMMERCIAL TERMS (draft): Terms drafted for the multi-intersection
+rollout, structured consistent with prior comparable DOT contracts.
+
+OPEN ITEMS FOR HUMAN REVIEW: (1) confirm commercial terms with the
+account team, (2) validate signal controller compatibility with city
+engineering staff, (3) confirm installation schedule around active
+traffic patterns.
+
+NOTE: illustrative status package — placeholder figures, not an actual
+customer program.`,
+
+  geminideploy:
+`GEMINI ROLLOUT PLAN — Distribution Warehouse Network
+
+USE CASE: Security and logistics automation use case logged across
+the customer\u2019s warehouse network; site count consistent with a
+phased regional rollout approach.
+
+CONFIGURATION: Gemini detection and analytics profiles configured for
+inventory movement tracking and perimeter security alerting.
+
+PLATFORM INTEGRATION: Compatibility confirmed with the customer\u2019s
+existing Genetec Security Center deployment; single-interface fusion
+of lidar and video surveillance data feasible without additional
+middleware.
+
+STATUS: Rollout plan ready for customer sign-off; phased deployment
+recommended starting with the highest-traffic distribution site.
+
+NOTE: illustrative rollout plan — placeholder figures, not an actual
+customer deployment.`,
+
+  autohyperion:
+`HYPERION QUALIFICATION STATUS PACKAGE — Rev8 ADAS Design-In
+
+SENSOR MATCH: Rev8 configuration matched against the OEM\u2019s mounting
+and field-of-view requirements; no configuration changes required for
+this program.
+
+HYPERION STATUS: NVIDIA DRIVE Hyperion qualification confirmed current
+for this sensor configuration, supporting the OEM\u2019s reference
+platform integration path.
+
+PERCEPTION OUTPUT: Software output format confirmed compatible with
+the Hyperion reference stack; no additional data transformation layer
+needed.
+
+RECOMMENDATION: Proceed to OEM bench testing with the current
+qualified configuration.
+
+NOTE: illustrative status package — placeholder figures, not an
+actual OEM program.`,
+
+  roboticsintegration:
+`ROBOTICS INTEGRATION PACKAGE — Humanoid Platform Sensor Integration
+
+API COMPATIBILITY: Confirmed compatible with the robotics partner\u2019s
+perception middleware; standard data output format requires no custom
+adapter.
+
+PAYLOAD FIT: Sensor payload confirmed within the robot\u2019s size,
+weight, and power budget at the current mounting configuration.
+
+LATENCY VALIDATION: Perception output latency confirmed within the
+partner\u2019s real-time control loop requirement.
+
+RECOMMENDATION: Proceed to joint bench testing ahead of a field pilot
+with the robotics partner.
+
+NOTE: illustrative integration package — placeholder figures for
+demonstration, not an actual Ouster partner program.`,
+
+  pipelinescan:
+`RFP & TENDER PIPELINE BRIEF — Q3 Multi-Region Scan
+
+MUNICIPAL / DOT: 6 new DOT and municipal tenders identified this
+quarter for intelligent transportation systems, concentrated in
+North America and select EMEA markets.
+
+SECURITY / LOGISTICS: New opportunities flagged in distribution and
+warehouse security automation, consistent with continued Gemini
+demand growth in that segment.
+
+COMPETITIVE LANDSCAPE: 2 competitor lidar vendors flagged bidding on
+overlapping tenders; BlueCity\u2019s NEMA TS2 certification and existing
+DOT track record cited as differentiators in bid strategy.
+
+RECOMMENDATION: Prioritize response resources on the 3 tenders with
+the clearest near-term award timeline.
+
+NOTE: illustrative pipeline brief — placeholder figures for
+demonstration.`,
+
+  certrun:
+`NEMA TS2 CERTIFICATION REPORT — Updated BlueCity Configuration
+
+TEST PLAN: Built against the current NEMA TS2 detection zone
+configuration standard for the updated Rev8-based sensor.
+
+DETECTION TESTING: Detection accuracy and false-actuation test
+battery complete; results within the certification threshold across
+all tested traffic scenarios.
+
+CORRELATION: Test results correlated against real-world intersection
+performance data from existing comparable deployments; no discrepancy
+identified.
+
+DISPOSITION: PASS. Configuration cleared for continued use in NEMA
+TS2-certified traffic actuation deployments.
+
+NOTE: illustrative certification report — placeholder data for
+demonstration.`,
+
+  sensorfusion:
+`SENSOR FUSION ROADMAP BRIEF — Camera-Lidar Integration
+
+CALIBRATION: Physical mounting and calibration requirements assessed
+for combined camera-lidar sensor configurations across the existing
+Rev8 product line.
+
+AI MODEL FUSION: Fusion approach assessed for combining camera and
+lidar data streams within the existing multi-sensor AI model
+architecture.
+
+IP MAPPING: Acquired camera technology mapped against the existing
+perception software roadmap; complementary fit identified with
+minimal overlap.
+
+RECOMMENDATION: Sequence near-term integration work toward smart
+infrastructure and security use cases, where combined camera-lidar
+fusion offers the clearest customer value.
+
+NOTE: illustrative roadmap brief — placeholder figures for
+demonstration, not an actual Ouster product roadmap.`,
+
+  investor:
+`DRAFT EARNINGS PACKAGE — Quarterly Release
+
+FINANCIALS: Product revenue, vertical mix, and bookings growth pulled
+for the quarter, consistent with continued smart infrastructure
+revenue leadership and growing software-attach rates.
+
+SOFTWARE ATTACH: Attach-rate trends summarized across BlueCity and
+Gemini deployments; growth trajectory consistent with the installed
+base expansion strategy.
+
+GUIDANCE CHECK: Language checked for consistency against prior
+quarterly disclosures; no material inconsistencies flagged.
+
+STATUS: Draft routed for legal and executive review ahead of the
+scheduled release date.
+
+NOTE: illustrative draft package — placeholder figures, not actual
+Ouster financial results. Final disclosures must be reviewed by legal
+and executive leadership before release.`,
+};
+
+const EMPLOYEES = [
+  {id:'op1', name:'Municipal Deployment', title:'Municipal Traffic Actuation Deployment', wf:'municipaldeploy', handled:'DOT & city BlueCity rollouts', hrs:18, win:'5.3x faster deployment'},
+  {id:'op2', name:'Gemini Rollout Desk', title:'Security & Logistics Software Rollout', wf:'geminideploy', handled:'Warehouse & security Gemini rollouts', hrs:13, win:'Plan same week'},
+  {id:'op3', name:'Automotive Design-In', title:'Automotive Design-In & NVIDIA Hyperion Qualification', wf:'autohyperion', handled:'ADAS/Hyperion sensor programs', hrs:21, win:'Converges in 1 pass'},
+  {id:'op4', name:'Robotics Integration', title:'Robotics Partner Integration', wf:'roboticsintegration', handled:'Humanoid & physical-AI partners', hrs:16, win:'Package in 1 run'},
+  {id:'op5', name:'RFP Pipeline Scan', title:'Municipal RFP & Tender Pipeline Scan', wf:'pipelinescan', handled:'DOT, security & logistics tenders', hrs:11, win:'Brief in 1 run'},
+  {id:'op6', name:'NEMA TS2 Certification', title:'NEMA TS2 & Functional Certification Run', wf:'certrun', handled:'Detection configuration certification', hrs:15, win:'Report same-day'},
+  {id:'op7', name:'Sensor Fusion Roadmap', title:'Camera-Lidar Sensor Fusion Integration', wf:'sensorfusion', handled:'Camera/lidar multi-sensor roadmap', hrs:19, win:'Roadmap in 1 run'},
+  {id:'op8', name:'Investor Disclosure Desk', title:'Quarterly Investor Disclosure Package', wf:'investor', handled:'Quarterly earnings package prep', hrs:14, win:'Draft same week'},
+];
+
+const CONFIG = {
+  trackLabels:{trackA:'Smart Infrastructure, Security & Commercial', trackB:'Hardware, Robotics & Platform Engineering'},
+};
+
+/* =========================================================
+   RENDER ROSTER
+   ========================================================= */
+function agentChips(wfKey){
+  const wf = WORKFLOWS[wfKey];
+  const used = [...new Set(wf.tasks.map(t=>t.agent))];
+  return used.map(a=>`<span class="chip">${AGENT_ROLES[a].emoji} ${AGENT_ROLES[a].label}</span>`).join('');
+}
+
+function renderRoster(){
+  const mount = document.getElementById('rosterMount');
+  const tracks = ['trackA','trackB'];
+  let html = '';
+  tracks.forEach(tr=>{
+    html += `<div class="track-label">${CONFIG.trackLabels[tr]}</div><div class="roster">`;
+    EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tr).forEach(e=>{
+      const wf = WORKFLOWS[e.wf];
+      const isFlag = wf.tag==='flagship';
+      html += `
+      <div class="op-card ${isFlag?'flagship':''}">
+        <div class="op-top">
+          <div>
+            <div class="op-name">${e.name}</div>
+            <div class="op-role">${e.title}</div>
+          </div>
+          ${isFlag?'<span class="flag-chip">FLAGSHIP</span>':''}
+        </div>
+        <div class="op-desc">${wf.desc}</div>
+        <div class="op-stats">
+          <div class="op-stat">Handles<b>${e.handled}</b></div>
+          <div class="op-stat">Hrs saved/run<b>${e.hrs}</b></div>
+          <div class="op-stat">Signal<b>${e.win}</b></div>
+        </div>
+        <div class="op-agents">${agentChips(e.wf)}</div>
+        <div class="op-actions">
+          <button class="run-btn" onclick="runOperator('${e.wf}')">▶ Run this operator</button>
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  });
+  mount.innerHTML = html;
+}
+renderRoster();
+
+/* =========================================================
+   RUN ENGINE
+   ========================================================= */
+let runToken = 0;
+
+function closeRun(){
+  document.getElementById('runPanel').classList.remove('active');
+}
+
+async function runOperator(wfKey){
+  const wf = WORKFLOWS[wfKey];
+  const myToken = ++runToken;
+  const panel = document.getElementById('runPanel');
+  const feed = document.getElementById('feed');
+  const progressRow = document.getElementById('progressRow');
+  const deliverable = document.getElementById('deliverable');
+
+  panel.classList.add('active');
+  document.getElementById('runTitle').textContent = wf.name;
+  document.getElementById('runMeta').textContent = `${wf.mode==='dag'?'Parallel DAG':'Sequential'} · ${wf.tasks.length} tasks · sample: ${wf.sample}`;
+  feed.innerHTML = '';
+  deliverable.classList.remove('show');
+  progressRow.innerHTML = wf.tasks.map(()=>`<div class="pstep"></div>`).join('');
+  panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+
+  const steps = document.querySelectorAll('#progressRow .pstep');
+
+  function log(text, done){
+    const line = document.createElement('div');
+    line.className = 'feed-line' + (done?' done':'');
+    line.innerHTML = `<span class="tag">[${done?'done':'run'}]</span><span class="txt">${text}</span>`;
+    feed.appendChild(line);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  const wait = ms => new Promise(r=>setTimeout(r,ms));
+
+  if(wf.mode==='sequential'){
+    for(let i=0;i<wf.tasks.length;i++){
+      if(myToken!==runToken) return;
+      const t = wf.tasks[i];
+      steps[i].classList.add('active');
+      log(`${AGENT_ROLES[t.agent].emoji} ${AGENT_ROLES[t.agent].label} — ${t.task}`);
+      await wait(600 + Math.random()*400);
+      if(myToken!==runToken) return;
+      const toolKey = AGENT_ROLES[t.agent].tools[0];
+      log(`↳ ${TOOLS[toolKey] ? TOOLS[toolKey]() : 'Task complete'}`, true);
+      steps[i].classList.remove('active');
+      steps[i].classList.add('complete');
+      await wait(150);
+    }
+  } else {
+    const done = new Set();
+    const remaining = wf.tasks.map((t,i)=>i);
+    while(remaining.length){
+      const wave = remaining.filter(i=>wf.tasks[i].deps.every(d=>done.has(d)));
+      if(!wave.length) break;
+      wave.forEach(i=>steps[i].classList.add('active'));
+      wave.forEach(i=>{
+        const t = wf.tasks[i];
+        log(`${AGENT_ROLES[t.agent].emoji} ${AGENT_ROLES[t.agent].label} — ${t.task}`);
+      });
+      await wait(650 + Math.random()*400);
+      if(myToken!==runToken) return;
+      wave.forEach(i=>{
+        const t = wf.tasks[i];
+        const toolKey = AGENT_ROLES[t.agent].tools[0];
+        log(`↳ ${TOOLS[toolKey] ? TOOLS[toolKey]() : 'Task complete'}`, true);
+        steps[i].classList.remove('active');
+        steps[i].classList.add('complete');
+        done.add(i);
+      });
+      wave.forEach(i=>remaining.splice(remaining.indexOf(i),1));
+      await wait(150);
+    }
+  }
+
+  if(myToken!==runToken) return;
+  log(`💾 Saved to program record`, true);
+  await wait(300);
+  document.getElementById('delivTitle').textContent = DTITLE[wfKey];
+  document.getElementById('delivBody').textContent = FINAL[wfKey];
+  deliverable.classList.add('show');
+}
+
+/* =========================================================
+   BUILDER
+   ========================================================= */
+let buildStep = 1;
+let buildState = {baseWf:null, cadence:'Weekly', name:''};
+
+function builderRenderStep(){
+  document.getElementById('dot1').classList.toggle('on', buildStep>=1);
+  document.getElementById('dot2').classList.toggle('on', buildStep>=2);
+  document.getElementById('dot3').classList.toggle('on', buildStep>=3);
+  document.getElementById('backBtn').style.visibility = buildStep===1?'hidden':'visible';
+  document.getElementById('nextBtn').textContent = buildStep===3?'Create operator':'Next';
+
+  const body = document.getElementById('buildBody');
+  if(buildStep===1){
+    body.innerHTML = `<div class="pick-grid">` + Object.entries(WORKFLOWS).map(([k,w])=>`
+      <div class="pick-card ${buildState.baseWf===k?'selected':''}" onclick="pickWf('${k}')">
+        <div class="pick-title">${w.name}</div>
+        <div class="pick-desc">${w.desc}</div>
+      </div>`).join('') + `</div>`;
+  } else if(buildStep===2){
+    body.innerHTML = `
+      <div class="field-row">
+        <label>Run cadence</label>
+        <select id="cadenceSel" onchange="buildState.cadence=this.value">
+          <option ${buildState.cadence==='Continuous'?'selected':''}>Continuous</option>
+          <option ${buildState.cadence==='Daily'?'selected':''}>Daily</option>
+          <option ${buildState.cadence==='Weekly'?'selected':''}>Weekly</option>
+          <option ${buildState.cadence==='On new RFP'?'selected':''}>On new RFP</option>
+          <option ${buildState.cadence==='On program milestone'?'selected':''}>On program milestone</option>
+        </select>
+      </div>
+      <div class="field-row">
+        <label>Operator name</label>
+        <input id="nameInput" type="text" placeholder="e.g. EMEA Municipal Desk" value="${buildState.name}" oninput="buildState.name=this.value">
+      </div>`;
+  } else {
+    const wf = WORKFLOWS[buildState.baseWf];
+    body.innerHTML = `
+      <div class="summary-box">
+        <p><b>${buildState.name || 'Untitled operator'}</b> — built on <b>${wf ? wf.name : '—'}</b></p>
+        <p>Cadence: <b>${buildState.cadence}</b></p>
+        <p>Agent team: ${wf ? [...new Set(wf.tasks.map(t=>t.agent))].map(a=>AGENT_ROLES[a].emoji+' '+AGENT_ROLES[a].label).join(', ') : '—'}</p>
+        <p style="color:var(--muted);font-size:12.5px;margin-top:10px;">This adds a ninth operator to the roster below, cloned from the workflow above with your cadence and name.</p>
+      </div>`;
+  }
+}
+
+function pickWf(k){
+  buildState.baseWf = k;
+  builderRenderStep();
+}
+
+function builderNext(){
+  if(buildStep===1 && !buildState.baseWf){ alert('Pick a base workflow first.'); return; }
+  if(buildStep===3){
+    const wf = WORKFLOWS[buildState.baseWf];
+    const newKey = 'custom_'+Date.now();
+    WORKFLOWS[newKey] = {...wf, name: buildState.name || (wf.name+' (custom)'), tag:undefined};
+    DTITLE[newKey] = DTITLE[buildState.baseWf];
+    FINAL[newKey] = FINAL[buildState.baseWf];
+    EMPLOYEES.push({
+      id:'custom_'+Date.now(), name: buildState.name || 'Custom Operator',
+      title: WORKFLOWS[newKey].name, wf:newKey,
+      handled: buildState.cadence+' cadence', hrs: 10, win:'New',
+    });
+    renderRoster();
+    buildStep = 1; buildState = {baseWf:null, cadence:'Weekly', name:''};
+    builderRenderStep();
+    document.getElementById('roster-section').scrollIntoView({behavior:'smooth'});
+    return;
+  }
+  buildStep++;
+  builderRenderStep();
+}
+function builderBack(){
+  buildStep--;
+  builderRenderStep();
+}
+builderRenderStep();
+
+/* =========================================================
+   HEADER SITE READOUT + INTERSECTION DETECTION ANIMATION
+   ========================================================= */
+const SITES = ['BlueCity · Georgia DOT intersection feed','BlueCity · MetLife Stadium event zone','Gemini · Warehouse security feed','BlueCity · Arizona traffic actuation feed'];
+let siteIdx = 0;
+setInterval(()=>{
+  siteIdx = (siteIdx+1)%SITES.length;
+  document.getElementById('siteTxt').textContent = SITES[siteIdx];
+}, 3000);
+
+const NS = 'http://www.w3.org/2000/svg';
+const roadGroup = document.getElementById('roadGroup');
+const boxGroup = document.getElementById('boxGroup');
+
+const roadH = document.createElementNS(NS,'rect');
+roadH.setAttribute('x','0'); roadH.setAttribute('y','80'); roadH.setAttribute('width','300'); roadH.setAttribute('height','40');
+roadH.setAttribute('fill','var(--surface-3)'); roadH.setAttribute('opacity','0.5');
+roadGroup.appendChild(roadH);
+const roadV = document.createElementNS(NS,'rect');
+roadV.setAttribute('x','130'); roadV.setAttribute('y','0'); roadV.setAttribute('width','40'); roadV.setAttribute('height','200');
+roadV.setAttribute('fill','var(--surface-3)'); roadV.setAttribute('opacity','0.5');
+roadGroup.appendChild(roadV);
+
+const NUM_VEH = 8;
+const vehicles = [];
+for(let i=0;i<NUM_VEH;i++){
+  const g = document.createElementNS(NS,'g');
+  const rect = document.createElementNS(NS,'rect');
+  rect.setAttribute('width','14'); rect.setAttribute('height','8'); rect.setAttribute('rx','1.5');
+  rect.setAttribute('fill','none'); rect.setAttribute('stroke','var(--accent)'); rect.setAttribute('stroke-width','1.3');
+  g.appendChild(rect);
+  boxGroup.appendChild(g);
+  const horizontal = i % 2 === 0;
+  vehicles.push({
+    g, rect, horizontal,
+    pos: Math.random(),
+    speed: 0.15 + Math.random()*0.25,
+    lane: horizontal ? (Math.random() > 0.5 ? 88 : 108) : (Math.random() > 0.5 ? 138 : 158),
+    isPed: i === NUM_VEH - 1,
+  });
+}
+let sceneT = 0;
+function drawScene(){
+  sceneT += 0.016;
+  let count = 0;
+  vehicles.forEach(v=>{
+    v.pos += v.speed * 0.01;
+    if(v.pos > 1.15) v.pos = -0.15;
+    let x, y;
+    if(v.horizontal){
+      x = v.pos * 320 - 10;
+      y = v.lane;
+    } else {
+      x = v.lane;
+      y = v.pos * 220 - 10;
+    }
+    v.g.setAttribute('transform', `translate(${x.toFixed(1)},${y.toFixed(1)}) rotate(${v.horizontal?0:90} 7 4)`);
+    const inView = x > -15 && x < 315 && y > -15 && y < 215;
+    v.rect.setAttribute('stroke', v.isPed ? 'var(--accent2)' : 'var(--accent)');
+    v.rect.setAttribute('opacity', inView ? 0.9 : 0);
+    if(inView) count++;
+  });
+  document.getElementById('countVal').textContent = `${count} tracked objects`;
+  const throughput = (300 + Math.sin(sceneT*0.5)*30).toFixed(0);
+  document.getElementById('throughputVal').textContent = `${throughput} vehicles/hr`;
+  requestAnimationFrame(drawScene);
+}
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  requestAnimationFrame(drawScene);
+} else {
+  vehicles.forEach((v,i)=>{
+    v.g.setAttribute('transform', `translate(${40+i*30},${v.lane})`);
+    v.rect.setAttribute('opacity','0.7');
+  });
+}
+</script>
+</body>
+</html>
