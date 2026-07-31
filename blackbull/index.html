@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SigmaTron International Console — AI Commercial &amp; EMS Manufacturing Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#090e17;
+  --surface:#111827;
+  --surface-2:#1f2937;
+  --surface-3:#374151;
+  --border:#2d3748;
+  --border-soft:#1a2332;
+  --text:#e8edf5;
+  --muted:#94a3b8;
+  --muted-2:#5c6e8c;
+  --accent:#e11d48;
+  --accent-dim:rgba(225,29,72,0.15);
+  --accent-line:rgba(225,29,72,0.35);
+  --accent2:#f59e0b;
+  --accent2-bg:rgba(245,158,11,0.08);
+  --accent3:#38bdf8;
+  --danger:#ef4444;
+  --ok:#10b981;
+  --font-display:'Rajdhani',sans-serif;
+  --font-body:'Work Sans',sans-serif;
+  --font-mono:'Roboto Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 88% -8%, rgba(225,29,72,0.10), transparent 55%),
+    radial-gradient(900px 480px at 5% 5%, rgba(245,158,11,0.07), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+a{color:var(--accent);}
+::selection{background:rgba(225,29,72,0.28);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+.hidden{display:none!important;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:24px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:42px;height:40px;border-radius:8px;
+  background:linear-gradient(135deg,#9f1239,#e11d48);
+  border:1px solid var(--accent-line);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:var(--font-mono);font-weight:700;font-size:13px;
+  box-shadow:0 0 16px rgba(225,29,72,0.2);
+}
+.mark-name{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:0.02em;color:#fff;}
+.mark-sub{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px;}
+
+.line-readout{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent);
+  background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:8px 14px;display:flex;align-items:center;gap:10px;
+}
+.line-readout .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.tabs{display:flex;gap:8px;margin-top:20px;border-bottom:1px solid var(--border-soft);}
+.tab-btn{
+  background:transparent;border:none;color:var(--muted);padding:10px 18px;font-family:var(--font-body);
+  font-size:13.5px;font-weight:600;cursor:pointer;border-radius:8px 8px 0 0;transition:all 0.15s ease;
+}
+.tab-btn:hover{color:var(--text);background:var(--surface-2);}
+.tab-btn.active{color:var(--accent);background:var(--surface);border:1px solid var(--border);border-bottom-color:var(--surface);}
+
+.hero{padding:36px 0 28px;display:grid;grid-template-columns:1.15fr 0.85fr;gap:40px;align-items:center;}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:24px 0 18px;}}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent);}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(30px,4vw,42px);line-height:1.08;letter-spacing:-0.005em;margin:0 0 14px;color:#fff;}
+h1 span{color:var(--accent);background:linear-gradient(90deg,#e11d48,#fb7185);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.lead{color:var(--muted);font-size:15px;max-width:55ch;margin:0 0 22px;line-height:1.6;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:var(--font-body);font-weight:600;font-size:13.5px;border-radius:6px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700;}
+.btn-primary:hover{background:#f43f5e;box-shadow:0 0 16px rgba(225,29,72,0.3);}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--accent3);color:var(--accent3);}
+
+/* SMT Diagnostics Graphic Card */
+.wafer{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:18px 18px 14px;box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+.wafer-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+.wafer-title{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em;}
+.wafer-val{font-family:var(--font-mono);font-size:12px;color:var(--accent);font-weight:600;}
+svg.wafermap{width:100%;height:210px;display:block;}
+.wafer-outline{fill:none;stroke:var(--border);stroke-width:1.5;}
+.wafer-grid-line{stroke:var(--border-soft);stroke-width:0.5;stroke-dasharray:2 2;}
+.wafer-foot{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+
+.econ{border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:760px){.econ{grid-template-columns:repeat(2,1fr);}}
+.econ-item{padding:6px 18px;border-left:1px solid var(--border-soft);}
+.econ-item:first-child{border-left:none;padding-left:0;}
+@media(max-width:760px){.econ-item:nth-child(2n+1){border-left:none;padding-left:0;}}
+.econ-num{font-family:var(--font-display);font-weight:700;font-size:28px;color:#fff;}
+.econ-num small{font-size:14px;color:var(--accent);font-weight:700;}
+.econ-label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+section{padding:36px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.section-title{font-family:var(--font-display);font-weight:700;font-size:24px;color:#fff;}
+.section-sub{color:var(--muted);font-size:13.5px;max-width:62ch;margin-top:4px;}
+.track-label{font-family:var(--font-mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin:28px 0 14px;padding-top:10px;border-top:1px dashed var(--border-soft);}
+.track-label:first-of-type{border-top:none;padding-top:0;margin-top:6px;}
+
+.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+@media(max-width:760px){.roster{grid-template-columns:1fr;}}
+.op-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;transition:all .15s ease;}
+.op-card:hover{border-color:var(--accent-line);transform:translateY(-2px);}
+.op-card.flagship{border-color:var(--accent2);background:linear-gradient(180deg,rgba(245,158,11,0.08),var(--surface));}
+.op-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.op-name{font-family:var(--font-display);font-weight:700;font-size:18px;color:#fff;}
+.op-role{font-size:12.5px;color:var(--muted);margin-top:2px;}
+.flag-chip{font-family:var(--font-mono);font-size:10px;color:var(--accent2);border:1px solid var(--accent2);background:var(--accent2-bg);border-radius:20px;padding:2px 8px;white-space:nowrap;}
+.op-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+.op-stats{display:flex;gap:18px;margin-top:2px;}
+.op-stat{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.op-stat b{color:var(--accent);font-size:14px;display:block;font-family:var(--font-body);font-weight:600;}
+.op-agents{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.chip{font-size:11px;background:var(--surface-3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;color:var(--text);}
+.op-actions{display:flex;gap:10px;margin-top:6px;}
+.run-btn{flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:600;font-size:13px;border-radius:6px;padding:10px;cursor:pointer;transition:all 0.15s ease;}
+.run-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+
+.run-panel{background:var(--surface);border:1px solid var(--accent-line);border-radius:12px;padding:24px;margin-top:24px;display:none;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+.run-panel.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.run-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.run-head h3{font-family:var(--font-display);font-size:20px;margin:0;color:#fff;}
+.run-head .meta{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.close-run{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:6px 12px;cursor:pointer;font-size:12px;}
+.close-run:hover{color:var(--text);border-color:var(--accent3);}
+
+.feed{background:var(--bg);border:1px solid var(--border-soft);border-radius:8px;padding:16px;height:260px;overflow-y:auto;font-family:var(--font-mono);font-size:12px;display:flex;flex-direction:column;gap:8px;}
+.feed-line{display:flex;gap:10px;align-items:flex-start;opacity:0;animation:appear .3s ease forwards;}
+@keyframes appear{to{opacity:1;}}
+.feed-line .tag{color:var(--accent2);white-space:nowrap;}
+.feed-line .txt{color:var(--muted);}
+.feed-line.done .tag{color:var(--accent);}
+.feed-line.done .txt{color:var(--text);}
+
+.progress-row{display:flex;gap:6px;margin:16px 0 8px;flex-wrap:wrap;}
+.pstep{flex:1;min-width:64px;height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;position:relative;}
+.pstep.active{background:var(--accent-dim);}
+.pstep.complete{background:var(--accent);box-shadow:0 0 8px var(--accent);}
+
+.deliverable{margin-top:20px;background:var(--surface-2);border:1px solid var(--accent-line);border-radius:8px;padding:18px 20px;display:none;}
+.deliverable.show{display:block;animation:fadein .3s ease;}
+.deliverable h4{font-family:var(--font-display);font-size:17px;margin:0 0 12px;color:var(--accent);}
+.deliverable pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:12.5px;color:var(--text);margin:0;line-height:1.65;}
+.note{font-size:11px;color:var(--muted-2);margin-top:12px;font-style:italic;}
+
+/* BUILDER STYLING (DYNEX FUNCTIONAL FLOW) */
+.steps-bar{display:flex;gap:10px;margin-bottom:24px;}
+.step-item{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);}
+.step-item.active{border-color:var(--accent);background:var(--surface-3);}
+.step-item .step-num{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--muted-2);}
+.step-item.active .step-num{color:var(--accent);}
+.step-item .step-lbl{font-size:13.5px;font-weight:600;color:var(--text);margin-top:2px;}
+
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.wf-card{border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;background:var(--surface-2);transition:all 0.15s ease;}
+.wf-card:hover{border-color:var(--accent3);}
+.wf-card.sel{border-color:var(--accent);background:rgba(225,29,72,0.08);}
+.wf-title{font-family:var(--font-display);font-weight:700;font-size:16px;color:#fff;}
+.wf-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45;}
+.wf-meta{font-family:var(--font-mono);font-size:10.5px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase;}
+
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);margin-bottom:10px;}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--accent);flex-shrink:0;}
+.task-row .tt{flex:1;font-size:13px;color:var(--text);}
+.task-row select{font-family:var(--font-body);font-size:12.5px;border:1px solid var(--border);border-radius:6px;padding:8px 10px;background:var(--surface);color:var(--text);outline:none;min-width:210px;}
+.task-row select:focus{border-color:var(--accent);}
+
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.field input{width:100%;font-family:var(--font-body);font-size:13.5px;border:1px solid var(--border);border-radius:8px;padding:11px 13px;background:var(--surface-2);color:var(--text);outline:none;}
+.field input:focus{border-color:var(--accent);}
+
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.seg button{font-family:var(--font-body);font-size:12.5px;padding:9px 16px;border:none;background:var(--surface-2);color:var(--muted);cursor:pointer;border-right:1px solid var(--border);}
+.seg button:last-child{border-right:none;}
+.seg button.on{background:var(--accent);color:#fff;font-weight:700;}
+
+.bnav{display:flex;justify-content:space-between;margin-top:24px;}
+
+footer{border-top:1px solid var(--border-soft);padding:30px 0 44px;}
+.foot-note{font-size:12px;color:var(--muted-2);max-width:85ch;line-height:1.6;}
+.foot-note strong{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark-row">
+      <div class="mark">
+        <div class="mark-badge">SG</div>
+        <div>
+          <div class="mark-name">SigmaTron International Console</div>
+          <div class="mark-sub">SigmaTron International Inc. · AI Workforce Prototype</div>
+        </div>
+      </div>
+      <div class="line-readout">
+        <span class="dot"></span>
+        <span id="lineTxt">SigmaTron Global EMS Network · One Source, Global Options® Active</span>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tabA" onclick="setView('ops')">The AI Workforce Roster</button>
+      <button class="tab-btn" id="tabB" onclick="setView('hire')">+ Add an AI Operator</button>
+    </div>
+  </header>
+
+  <div id="view-ops">
+    <section class="hero" style="padding-bottom:10px;">
+      <div>
+        <div class="eyebrow">Full-Service Electronics Manufacturing (EMS)</div>
+        <h1>Eight operators to run SigmaTron's <span>BOM-to-boxbuild</span> loop</h1>
+        <p class="lead">Each operator below is a real SigmaTron International workflow — analyzing high-density SMT PCBA DFM, scrubbing 500-line electronic BOMs for component lifecycle risks, configuring Flying Probe / ICT test suites, and auditing ISO 13485 &amp; IATF 16949 quality compliance — handed to a team of specialist AI agents that works it end-to-end.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('roster-section').scrollIntoView({behavior:'smooth'})">View the Roster</button>
+          <button class="btn btn-ghost" onclick="runOperator('pcba_dfm')">Run Flagship Operator</button>
+        </div>
+      </div>
+
+      <div class="wafer">
+        <div class="wafer-top">
+          <span class="wafer-title">SigmaTron SMT Placement Diagnostics</span>
+          <span class="wafer-val" id="yieldVal">99.4% First-Pass SMT Yield</span>
+        </div>
+        <svg class="wafermap" viewBox="0 0 220 210" preserveAspectRatio="xMidYMid meet">
+          <circle class="wafer-outline" cx="110" cy="105" r="92"></circle>
+          <line class="wafer-grid-line" x1="20" y1="105" x2="200" y2="105"></line>
+          <line class="wafer-grid-line" x1="110" y1="15" x2="110" y2="195"></line>
+          <g id="dieGrid"></g>
+        </svg>
+        <div class="wafer-foot">
+          <span>7 Global Fabs (US, MX, CN, VN) · Lot SG-2607-PCBA</span>
+          <span id="binVal">Pass: 3,820 / 3,842 PCB Assemblies</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="econ">
+      <div class="econ-item">
+        <div class="econ-num">5.6<small>×</small></div>
+        <div class="econ-label">Faster SMT DFM &amp; quote turnaround for complex PCBAs</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">45,000<small>+</small></div>
+        <div class="econ-label">Active ICs &amp; passive component MPNs scrubbed</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">26<small> hrs</small></div>
+        <div class="econ-label">Median manufacturing &amp; engineering hours returned per run</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">8<small>/8</small></div>
+        <div class="econ-label">Workflows covered, PCBA DFM through ISO 13485 audit</div>
+      </div>
+    </div>
+
+    <section id="roster-section">
+      <div class="section-head">
+        <div>
+          <div class="section-title">The AI Workforce Roster</div>
+          <div class="section-sub">Grouped into Commercial and EMS Manufacturing tracks. Click run on any operator to watch its agent team execute in real time.</div>
+        </div>
+      </div>
+
+      <div id="rosterContainer"></div>
+    </section>
+
+    <!-- Run Panel -->
+    <div class="run-panel" id="runPanel">
+      <div class="run-head">
+        <div>
+          <h3 id="runTitle">Running Operator...</h3>
+          <div class="meta" id="runSub">Simulated multi-agent execution feed</div>
+        </div>
+        <button class="close-run" onclick="closeRun()">✕ Close View</button>
+      </div>
+      <div class="progress-row" id="progressRow"></div>
+      <div class="feed" id="feedArea"></div>
+      <div class="deliverable" id="deliverableBox">
+        <h4 id="delivTitle">Review-Ready Output</h4>
+        <pre id="delivCode"></pre>
+        <div class="note">Human-in-the-loop oversight active. Outputs verified by SigmaTron EMS engineering management. Illustrative simulation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="section-title">Add an AI Operator</div>
+          <div class="section-sub">Stand up a new AI operator in three steps: pick the workflow, assign each task to an agent via dropdown, then name it and set cadence.</div>
+        </div>
+      </div>
+
+      <div class="steps-bar" id="bSteps"></div>
+      <div id="bBody"></div>
+      <div class="bnav" id="bNav"></div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="foot-note">
+      <strong>Independent Concept Prototype</strong> prepared for a conversation with <strong>SigmaTron International Inc.</strong> It is not affiliated with, endorsed by, or built on SigmaTron systems or data. All operators, SMT yields, component lead times, labor estimates, and quotes are illustrative simulations. A senior EMS process engineer, quality manager, or commercial director reviews and approves every quote, PCBA DFM package, ICT suite, and compliance release.
+    </div>
+  </footer>
+</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'Medical & Automotive Market Intelligence', tools: ['research_oem', 'save'] },
+  smt_eng: { emoji: '🔬', label: 'SMT & High-Density PCBA Engineer', tools: ['analyze_pcba_dfm', 'save'] },
+  bom_scrubber: { emoji: '📑', label: 'Electronic Component & BOM Health Specialist', tools: ['scrub_pcba_bom', 'save'] },
+  cost_eng: { emoji: '🧮', label: 'SMT Placement & Box Build Costing Specialist', tools: ['calc_smt_cost', 'save'] },
+  ict_spec: { emoji: '⚡', label: 'Flying Probe & In-Circuit Test Specialist', tools: ['plan_ict_suite', 'save'] },
+  quality_auditor: { emoji: '🛡️', label: 'ISO 13485 & IATF 16949 Quality Auditor', tools: ['audit_iso_iatf', 'save'] },
+  procurement: { emoji: '📦', label: 'Semiconductor & Active Component Planner', tools: ['plan_chip_supply', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'OEM & EMS Solution Proposal Writer', tools: ['compose_doc', 'save'] },
+  qa_reviewer: { emoji: '✅', label: 'QA & Senior EMS Reviewer', tools: ['qa_review', 'save'] },
+  prospector: { emoji: '🧲', label: 'Industrial & Medical Account Prospector', tools: ['source_accounts', 'save'] },
+  boxbuild_eng: { emoji: '🏭', label: 'System-Level Box Build Architect', tools: ['model_boxbuild', 'save'] },
+  npi_coord: { emoji: '🚀', label: 'NPI Launch & Tooling Coordinator', tools: ['plan_npi_line', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+const TRACKS = [
+  { key: 'commercial', title: 'Commercial & Defense Tenders' },
+  { key: 'operations', title: 'EMS Engineering & Manufacturing Operations' }
+];
+
+const WORKFLOWS = {
+  scout: {
+    name: 'OEM Medical & Automotive Discovery',
+    title: 'AI Opportunity Scout',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'OEM Medical & Automotive Prospect Dossier',
+    desc: 'Maps OEM medical device makers and automotive electronics Tier-1s seeking global EMS nearshore footprint.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan medical device NPI filings and automotive IATF 16949 supply requirements.', deps: [] },
+      { agent: 'prospector', task: 'Source VP Supply Chain, Director of EMS Operations, and NPI Engineering Managers.', deps: [] },
+      { agent: 'smt_eng', task: 'Score fit on high-density SMT 0201/BGA placement, box build, and USMCA nearshoring.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce target OEM prospect dossier.', deps: [2] }
+    ]
+  },
+  quote: {
+    name: 'High-Mix PCBA & Box Build Quoting',
+    title: 'AI EMS Quoter',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'High-Mix PCBA & Box Build Commercial Quote',
+    desc: 'Models SMT placement CPH rates, thru-hole wave soldering labor, stencils, ICT tooling, and volume pricing.',
+    tasks: [
+      { agent: 'bom_scrubber', task: 'Review Gerber CAD files, BOM lines, SMT component packaging, and BGA ball pitch.', deps: [] },
+      { agent: 'cost_eng', task: 'Model SMT feeder setup time, pick-and-place cph, manual insertion, and box build labor.', deps: [0] },
+      { agent: 'procurement', task: 'Confirm franchise distributor semiconductor pricing and lead times across global IPO.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Assemble formal High-Mix PCBA Commercial Quote.', deps: [2] }
+    ]
+  },
+  tender: {
+    name: 'Medical & Automotive RFP Response',
+    title: 'AI Tender Specialist',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Medical & Automotive RFP Response Package',
+    desc: 'Audits ISO 13485, FDA 21 CFR Part 820, and IATF 16949 compliance for high-reliability electronics tenders.',
+    tasks: [
+      { agent: 'researcher', task: 'Parse RFP quality agreements, traceability requirements, and PPAP Level 3 specs.', deps: [] },
+      { agent: 'quality_auditor', task: 'Verify ISO 13485 medical cleanroom standards and IATF 16949 automotive certification.', deps: [0] },
+      { agent: 'cost_eng', task: 'Structure nearshore Mexico (Acuna/Tijuana) vs offshore Asia (China/Vietnam) pricing tiers.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce formal RFP response package.', deps: [2] }
+    ]
+  },
+  intel: {
+    name: 'Global Component Shortage & EMS Radar',
+    title: 'AI Supply Chain Intelligence',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Global Component Shortage & Market Risk Brief',
+    desc: 'Tracks micro-controller lead times, MLCC ceramic capacitor pricing, and leverages SigmaTron One Source, Global Options®.',
+    tasks: [
+      { agent: 'researcher', task: 'Monitor wafer fab lead times, distributor allocations, and resin material pricing.', deps: [] },
+      { agent: 'smt_eng', task: 'Benchmark SigmaTron SMT line capability against regional EMS competitors.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile strategic EMS component intelligence brief.', deps: [0, 1] }
+    ]
+  },
+  pcba_dfm: {
+    name: 'High-Density SMT & PCBA DFM Package',
+    title: 'AI PCBA DFM Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'High-Density SMT & PCBA DFM Review Package',
+    desc: 'Analyzes Gerber copper layers, thermal pad relief, BGA voiding risk, and scrubs BOM for active EOL & long-lead ICs.',
+    tasks: [
+      { agent: 'smt_eng', task: 'Analyze SMT pad layout, thermal copper balance, fiducial clearance, and BGA solder mask definitions.', deps: [] },
+      { agent: 'bom_scrubber', task: 'Cross-reference 450 IC & passive MPNs against SiliconExpert & Octopart for EOL and 26-wk lead times.', deps: [0] },
+      { agent: 'procurement', task: 'Identify drop-in pin-to-pin active replacement MCUs and LDO voltage regulators.', deps: [1] },
+      { agent: 'quality_auditor', task: 'Audit stencil aperture design and reflow soldering profile against IPC-A-610 Class 3.', deps: [2] },
+      { agent: 'reviewer', task: 'QA DFM findings and compile customer engineering package.', deps: [3] },
+      { agent: 'proposal_writer', task: 'Produce final High-Density SMT & PCBA DFM Review Package.', deps: [4] }
+    ]
+  },
+  ict_test: {
+    name: 'Flying Probe & In-Circuit Test (ICT) Setup',
+    title: 'AI Test & NPI Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'Flying Probe & ICT Test Strategy Package',
+    desc: 'Generates test point coverage maps, designs bed-of-nails ICT fixtures, and configures automated flying probe routines.',
+    tasks: [
+      { agent: 'ict_spec', task: 'Analyze CAD test point access; calculate analog component and digital boundary scan coverage.', deps: [] },
+      { agent: 'npi_coord', task: 'Configure Teradyne/Keysight ICT bed-of-nails fixture Gerber data and Flying Probe test program.', deps: [0] },
+      { agent: 'reviewer', task: 'Verify 98.5% fault isolation target and short/open circuit thresholds.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce Flying Probe & ICT Test Strategy Package.', deps: [2] }
+    ]
+  },
+  quality: {
+    name: 'ISO 13485 & IATF 16949 Quality Audit',
+    title: 'AI Quality & Compliance Auditor',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'ISO 13485 & IATF 16949 Traceability Release',
+    desc: 'Audits 3D AOI inspection records, X-ray BGA voiding reports (<10% threshold), and component lot traceability.',
+    tasks: [
+      { agent: 'quality_auditor', task: 'Audit 3D Solder Paste Inspection (SPI) logs and BGA 2D/3D X-ray inspection images.', deps: [] },
+      { agent: 'reviewer', task: 'Verify serial number scanning logs and component batch traceability in SigmaTron MES.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile ISO 13485 & IATF 16949 Traceability Release Brief.', deps: [0, 1] }
+    ]
+  },
+  supplyplan: {
+    name: 'Component Lifecycle & EOL Buffer Stock Plan',
+    title: 'AI Component Supply Planner',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'Component Lifecycle & EOL Safety Stock Plan',
+    desc: 'Monitors end-of-life (EOL) component notices, structures strategic safety stock, and coordinates global IPO buffer stock.',
+    tasks: [
+      { agent: 'procurement', task: 'Evaluate semiconductor factory lead times and distributor franchise stock levels.', deps: [] },
+      { agent: 'bom_scrubber', task: 'Flag single-sourced active ICs across 20 active medical and industrial programs.', deps: [] },
+      { agent: 'cost_eng', task: 'Structure 90-day component safety stock buffer in SigmaTron Taiwan SCC facility.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce Component Lifecycle & EOL Safety Stock Plan.', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'OEM Medical & Automotive Prospect Dossier',
+  quote: 'High-Mix PCBA & Box Build Commercial Quote',
+  tender: 'Medical & Automotive RFP Response Package',
+  intel: 'Global Component Shortage & Market Risk Brief',
+  pcba_dfm: 'High-Density SMT & PCBA DFM Review Package',
+  ict_test: 'Flying Probe & ICT Test Strategy Package',
+  quality: 'ISO 13485 & IATF 16949 Traceability Release',
+  supplyplan: 'Component Lifecycle & EOL Safety Stock Plan'
+};
+
+const TOOLS = {
+  research_oem: () => 'Scanned FDA medical device filings, automotive Tier-1 supplier awards, and SEC filings.',
+  source_accounts: () => 'Sourced verified VP Operations and Supply Chain Directors; deduped CRM records.',
+  analyze_pcba_dfm: () => 'Analyzed Gerber layers; identified 3 SMT copper balance risks and 1 BGA solder mask thermal relief issue.',
+  scrub_pcba_bom: () => 'Scrubbed 450 component MPNs; flagged 3 active ICs as NRND/EOL with 26-wk lead times.',
+  calc_smt_cost: () => 'Calculated SMT line cph (45,000 cph), reflow oven profile energy cost, and manual box build assembly labor.',
+  plan_ict_suite: () => 'Generated Flying Probe test netlist; verified 98.7% test node access coverage.',
+  audit_iso_iatf: () => 'Audited 3D SPI and X-ray BGA voiding logs (<8.2% voiding achieved) against IPC-A-610 Class 3.',
+  plan_chip_supply: () => 'Cross-referenced global IPO inventory in Taiwan; secured 12-week buffer for critical MCUs.',
+  model_boxbuild: () => 'Structured final enclosure assembly sequence, wire routing, and functional burn-in test checklist.',
+  compose_doc: () => 'Compiled EMS manufacturing metrics into clear, review-ready engineering documentation.',
+  qa_review: () => 'Audited report completeness and checked standards alignment; ready for EMS Engineering VP sign-off.',
+  save: () => 'Saved deliverable artifact to shared project repository.'
+};
+
+function toolOut(t) { return (TOOLS[t] || (() => 'Executed successfully.'))(); }
+
+const FINAL = {
+  scout: `OEM MEDICAL & AUTOMOTIVE PROSPECT DOSSIER (illustrative)
+Target Sector: High-Reliability Medical Devices & Automotive Electronics
+Target Location: North America & Global Nearshore Hubs
+
+A-Tier Qualified OEM Prospects:
+1. CardioTech Instruments — Portable Patient Monitor PCBA — Fit Score: 96/100
+   • Key Contacts: VP Operations, NPI Engineering Manager
+   • Requirement: ISO 13485 Cleanroom Assembly, USMCA Mexico Nearshore
+2. AutoSense Dynamics — ADAS Radar Module — Fit Score: 92/100
+   • Key Contacts: Director of Global Supply Chain
+   • Requirement: IATF 16949 Certification, 100% X-ray BGA Inspection
+3. Solis Industrial Systems — Smart Power Inverter Box Build — Fit Score: 89/100
+   • Key Contacts: VP Manufacturing
+
+Strategic Positioning:
+Highlight SigmaTron "One Source, Global Options®" strategy, 7 global manufacturing sites, and Taiwan International Purchasing Office.
+
+NOTE: Illustrative simulation prepared for SigmaTron International Inc.`,
+
+  quote: `HIGH-MIX PCBA & BOX BUILD COMMERCIAL QUOTE (illustrative)
+Customer: CardioTech Instruments
+Program: Medical Grade Patient Monitor PCBA & Enclosure Box Build
+Volume Tiers: 5,000 / 15,000 / 50,000 units annually
+
+Commercial Breakdown:
+• SMT Assembly (280 SMT Components, Dual-Sided 0201/BGA): $38.50 / unit
+• Thru-Hole Wave Soldering & Manual Touch-Up: $14.20 / unit
+• Flying Probe & 100% In-Circuit Test (ICT): $6.80 / unit
+• Conformal Coating & Final Box Build Integration: $22.00 / unit
+
+Tooling & NRE:
+• SMT Laser-Cut Stencils & ICT Bed-of-Nails Fixtures: $6,500 (One-time NRE)
+
+Manufacturing Location:
+• Tijuana, Mexico (USMCA Nearshore) with US NPI engineering sign-off
+
+NOTE: Illustrative simulation; pricing and lead times are placeholders.`,
+
+  tender: `MEDICAL & AUTOMOTIVE RFP RESPONSE PACKAGE (illustrative)
+Tender ID: MED-AUT-EMS-2026-09
+Scope: High-Mix ISO 13485 & IATF 16949 Electronics Contract Manufacturing
+
+Compliance Verification:
+• ISO 13485:2016 Medical Quality Management: Certified
+• FDA 21 CFR Part 820 Medical Registration: Active
+• IATF 16949:2016 Automotive Standard: Certified across MX & US plants
+• IPC-A-610 Class 3 Workmanship: Fully Mapped & Compliant
+
+Technical Offer:
+• 100% 3D Solder Paste Inspection (SPI) and 3D Automated Optical Inspection (AOI)
+• Full real-time component-level MES lot traceability
+
+NOTE: Illustrative simulation; confirm against RFP specifications.`,
+
+  intel: `GLOBAL COMPONENT SHORTAGE & MARKET RISK BRIEF (illustrative)
+Focus: Global Semiconductor Lead Times & EMS Supply Chain Dynamics
+
+Key Insights:
+1. Microcontroller Lead Times: 32-bit Automotive MCU lead times extending to 24 weeks; early stocking via Taiwan IPO recommended.
+2. Reshoring to Mexico: USMCA nearshoring driving 30% increase in SMT line allocation across Chihuahua and Tijuana facilities.
+3. SigmaTron Strategic Advantage:
+   - One Source, Global Options® unified MES/ERP platform ensures seamless transition from NPI to volume production.
+   - Proactive BOM scrubbing reduces component-driven line stoppages by 85%.
+
+NOTE: Illustrative simulation.`,
+
+  pcba_dfm: `HIGH-DENSITY SMT & PCBA DFM REVIEW PACKAGE (illustrative · flagship)
+Program: Portable Ultrasound Processor Card
+BOM Lines Analyzed: 450 Components (Dual-Sided SMT, 0.4mm BGA Pitch)
+
+DFM Engineering Findings:
+1. Thermal Relief: Copper pour on Layer 2 lacks thermal relief spoke geometry on 8 ground pins; high risk of cold solder joints during reflow.
+2. BGA Clearance: BGA U12 via-in-pad design lacks plug-and-cap sealing; potential solder wicking away from BGA balls.
+3. Stencil Aperture: Recommended 10% reduction in stencil thickness for 0201 passives to eliminate solder bridging.
+
+BOM Health & Component Scrub:
+• Total Active MPNs: 450
+• NRND / EOL Components Identified: 2 (STMicroelectronics MCU & TI LDO Regulator)
+• Recommended Drop-In Alternates:
+  - MCU Alternative: STM32F429IIT6 (Direct drop-in, 8-wk lead time vs 26-wk)
+  - LDO Alternative: TPS7A8400ARGRR (Pin-compatible)
+
+Summary:
+Resolving the alternate MCU saves an estimated 18 weeks of production lead time.
+
+NOTE: Illustrative simulation; review with SigmaTron EMS engineering team.`,
+
+  ict_test: `FLYING PROBE & ICT TEST STRATEGY PACKAGE (illustrative)
+Program: Industrial Motor Controller PCBA
+
+Test Strategy Specification:
+1. Test Node Access: 432 of 445 nets accessible via bottom-side test points (97.1% coverage).
+2. Flying Probe Program: Configured for 100% component value verification, shorts, opens, and diode orientation checks.
+3. Boundary Scan (JTAG): Integrated JTAG test suite for BGA U1 and FPGA U4 logic verification.
+
+Estimated Test Cycle Time: 48 seconds per board.
+
+NOTE: Illustrative simulation.`,
+
+  quality: `ISO 13485 & IATF 16949 TRACEABILITY RELEASE (illustrative)
+Production Lot: SG-PCBA-2026-11
+Quality Standard: ISO 13485:2016 / IATF 16949 / IPC-A-610 Class 3
+
+Audit Checklist Results:
+• 3D SPI Solder Volume Inspection: Passed (100% pads within 80-120% target solder volume)
+• 3D X-Ray BGA Voiding Analysis: BGA U12 average voiding at 6.4% (well below 15% IPC limit)
+• MES Barcode Traceability: 100% component reel ID to board serial number mapping verified
+
+Outcome: Quality Release Approved. Device History Record (DHR) complete.
+
+NOTE: Illustrative simulation.`,
+
+  supplyplan: `COMPONENT LIFECYCLE & EOL SAFETY STOCK PLAN (illustrative)
+Scope: 20 Active Medical & Industrial OEM Production Programs
+
+Supply Risk Breakdown:
+• Low Risk / Standard Lead Time (<6 wks): 82% of BOM lines
+• Medium Risk / Allocation (6-14 wks): 12% of BOM lines
+• High Risk / EOL & Single-Source (>16 wks): 6% (Custom ICs and specialty connectors)
+
+Action Plan:
+1. Authorize 90-day safety stock buffer at SigmaTron Taiwan SCC for 14 high-risk ICs.
+2. Establish pre-cleared alternate AVL listings for passive capacitor reels.
+
+NOTE: Illustrative simulation.`
+};
+
+let EMPLOYEES = [
+  { id: 'scout', name: 'Scout', title: 'AI Opportunity Scout', wf: 'scout', handled: 150, hrs: 46, win: 28, status: 'idle' },
+  { id: 'quote', name: 'Quote', title: 'AI EMS Quoter', wf: 'quote', handled: 235, hrs: 102, win: 48, status: 'idle' },
+  { id: 'tender', name: 'Tender', title: 'AI Tender Specialist', wf: 'tender', handled: 98, hrs: 82, win: 38, status: 'idle' },
+  { id: 'intel', name: 'Radar', title: 'AI Supply Chain Intelligence', wf: 'intel', handled: 120, hrs: 34, win: 18, status: 'idle' },
+  { id: 'pcba_dfm', name: 'PCBADFM', title: 'AI PCBA DFM Specialist', wf: 'pcba_dfm', handled: 345, hrs: 205, win: 66, status: 'idle' },
+  { id: 'ict_test', name: 'ICTSpec', title: 'AI Test & NPI Specialist', wf: 'ict_test', handled: 185, hrs: 92, win: 44, status: 'idle' },
+  { id: 'quality', name: 'QualityAudit', title: 'AI Quality & Compliance Auditor', wf: 'quality', handled: 305, hrs: 118, win: 56, status: 'idle' },
+  { id: 'supplyplan', name: 'SupplyPlan', title: 'AI Component Supply Planner', wf: 'supplyplan', handled: 160, hrs: 65, win: 0, status: 'idle' }
+];
+
+/* Render Functions */
+function drawWaferGrid() {
+  const grid = document.getElementById("dieGrid");
+  let rects = '';
+  for (let x = -8; x <= 8; x++) {
+    for (let y = -8; y <= 8; y++) {
+      if (x*x + y*y <= 60) {
+        const px = 110 + x * 10 - 4;
+        const py = 105 + y * 10 - 4;
+        const pass = (Math.abs(x*y) % 9 !== 4);
+        const fill = pass ? 'rgba(225, 29, 72, 0.45)' : 'rgba(239, 68, 68, 0.6)';
+        rects += `<rect x="${px}" y="${py}" width="8" height="8" rx="1.5" fill="${fill}"></rect>`;
+      }
+    }
+  }
+  grid.innerHTML = rects;
+}
+
+function renderRoster() {
+  const container = document.getElementById("rosterContainer");
+  let html = '';
+  TRACKS.forEach(tr => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === tr.key);
+    if (!list.length) return;
+    html += `<div class="track-label">${tr.title}</div><div class="roster">`;
+    html += list.map(empCard).join('');
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+}
+
+function empCard(e) {
+  const wf = WORKFLOWS[e.wf] || {};
+  const isFlag = wf.tag === 'flagship';
+  const team = (wf.tasks || []).map(t => t.agent).filter((v, i, a) => a.indexOf(v) === i).map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  return `
+    <div class="op-card ${isFlag ? 'flagship' : ''}" id="emp-${e.id}">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${e.name}</div>
+          <div class="op-role">${e.title}</div>
+        </div>
+        ${isFlag ? '<span class="flag-chip">★ FLAGSHIP OPERATOR</span>' : ''}
+      </div>
+      <div class="op-desc">${wf.desc || ''}</div>
+      <div class="op-agents">${team}</div>
+      <div class="op-stats">
+        <div class="op-stat"><b>${e.handled.toLocaleString()}</b> runs</div>
+        <div class="op-stat"><b>~${e.hrs} hrs</b> saved/mo</div>
+        <div class="op-stat"><b>+${e.win}%</b> speedup</div>
+      </div>
+      <div class="op-actions">
+        <button class="run-btn" onclick="runOperator('${e.wf}')">▶ Run ${e.name}</button>
+      </div>
+    </div>
+  `;
+}
+
+function setView(v) {
+  document.getElementById('view-ops').classList.toggle('hidden', v !== 'ops');
+  document.getElementById('view-hire').classList.toggle('hidden', v !== 'hire');
+  document.getElementById('tabA').classList.toggle('active', v === 'ops');
+  document.getElementById('tabB').classList.toggle('active', v === 'hire');
+  if (v === 'hire') initBuilder();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+let isRunning = false;
+async function runOperator(wfKey) {
+  if (isRunning) return;
+  isRunning = true;
+  const wf = WORKFLOWS[wfKey];
+  if (!wf) return;
+
+  const panel = document.getElementById("runPanel");
+  const title = document.getElementById("runTitle");
+  const sub = document.getElementById("runSub");
+  const progress = document.getElementById("progressRow");
+  const feed = document.getElementById("feedArea");
+  const deliv = document.getElementById("deliverableBox");
+
+  panel.classList.add("active");
+  deliv.classList.remove("show");
+  title.innerText = `Executing Operator: ${wf.name}`;
+  sub.innerText = `Mode: ${wf.mode.toUpperCase()} · ${wf.tasks.length} Specialist Agents`;
+
+  progress.innerHTML = wf.tasks.map((_, i) => `<div class="pstep" id="ps_${i}"></div>`).join('');
+  feed.innerHTML = '';
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  function addFeedLine(agentKey, txt, isDone = false) {
+    const role = AGENT_ROLES[agentKey] || { emoji: '🤖', label: agentKey };
+    const div = document.createElement('div');
+    div.className = `feed-line ${isDone ? 'done' : ''}`;
+    div.innerHTML = `<span class="tag">[${role.emoji} ${role.label}]</span><span class="txt">${txt}</span>`;
+    feed.appendChild(div);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  addFeedLine(wf.tasks[0].agent, `Initializing ${wf.name} autonomous workflow loop...`);
+  await new Promise(r => setTimeout(r, 600));
+
+  for (let i = 0; i < wf.tasks.length; i++) {
+    const t = wf.tasks[i];
+    const stepEl = document.getElementById(`ps_${i}`);
+    if (stepEl) stepEl.classList.add("active");
+
+    addFeedLine(t.agent, `Executing Task ${i+1}: ${t.task}`);
+    await new Promise(r => setTimeout(r, 800));
+
+    const role = AGENT_ROLES[t.agent];
+    if (role && role.tools) {
+      for (const tool of role.tools) {
+        addFeedLine(t.agent, `Invoked tool '${tool}( )' -> ${toolOut(tool)}`);
+        await new Promise(r => setTimeout(r, 600));
+      }
+    }
+
+    if (stepEl) {
+      stepEl.classList.remove("active");
+      stepEl.classList.add("complete");
+    }
+    addFeedLine(t.agent, `Task ${i+1} completed. Artifact saved to shared EMS memory store.`, true);
+  }
+
+  await new Promise(r => setTimeout(r, 400));
+  document.getElementById("delivTitle").innerText = `Review-Ready Output · ${DTITLE[wfKey] || 'Deliverable'}`;
+  document.getElementById("delivCode").innerText = FINAL[wfKey] || "Execution completed successfully.";
+  deliv.classList.add("show");
+
+  isRunning = false;
+}
+
+function closeRun() {
+  document.getElementById("runPanel").classList.remove("active");
+}
+
+/* DYNEX BUILDER FLOW IMPLEMENTATION */
+let draft = {};
+function initBuilder() {
+  draft = { wf: null, mode: 'sequential', assign: [], name: '', title: '', cadence: 'Per project', step: 1 };
+  renderBuilder();
+}
+
+function renderBuilder() {
+  const steps = [['01', 'Pick a workflow'], ['02', 'Assign the agents'], ['03', 'Name & cadence']];
+  document.getElementById('bSteps').innerHTML = steps.map((s, i) => `
+    <div class="step-item ${draft.step === i + 1 ? 'active' : ''}">
+      <div class="step-num">${s[0]}</div>
+      <div class="step-lbl">${s[1]}</div>
+    </div>
+  `).join('');
+
+  if (draft.step === 1) bS1();
+  else if (draft.step === 2) bS2();
+  else bS3();
+  bNav();
+}
+
+function bS1() {
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 1: Choose Baseline EMS Workflow</label></div>
+    <div class="wf-grid">
+      ${Object.keys(WORKFLOWS).map(k => {
+        const w = WORKFLOWS[k];
+        return `
+          <div class="wf-card ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')">
+            <div class="wf-title">${w.name}</div>
+            <div class="wf-desc">${w.desc}</div>
+            <div class="wf-meta">${w.tasks.length} agents · ${w.mode}</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 2: Assign Each Task to a Specialist Agent</label></div>
+    ${w.tasks.map((t, i) => `
+      <div class="task-row">
+        <div class="tn">${i + 1}</div>
+        <div class="tt">
+          ${t.task}
+          ${t.deps.length ? `<span style="color:var(--muted-2);font-family:var(--font-mono);font-size:11px;"> · waits for step ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}
+        </div>
+        <select onchange="draft.assign[${i}]=this.value">${opts}</select>
+      </div>
+    `).join('')}
+    <div class="field" style="margin-top:16px;">
+      <label>Execution Mode</label>
+      <div class="seg">
+        ${['sequential', 'dag'].map(m => `
+          <button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (Parallel DAG)' : 'Sequential'}</button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 3: Name Operator &amp; Set Cadence</label></div>
+    <div class="field">
+      <label>Operator Name</label>
+      <input type="text" value="${draft.name}" placeholder="e.g. High-Mix SMT Specialist" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Role Title</label>
+      <input type="text" value="${draft.title}" placeholder="e.g. Autonomous EMS Engineer" oninput="draft.title=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Cadence</label>
+      <div class="seg">
+        ${['Per project', 'Per PCBA', 'Weekly', 'On-demand'].map(c => `
+          <button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>
+        `).join('')}
+      </div>
+    </div>
+    <div class="field" style="margin-top:20px;">
+      <label>Live Operator Card Preview</label>
+      <div id="previewCardArea"></div>
+    </div>
+  `;
+  renderPreview();
+}
+
+function renderPreview() {
+  const w = WORKFLOWS[draft.wf];
+  const area = document.getElementById('previewCardArea');
+  if (!area) return;
+  
+  const team = draft.assign.map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  area.innerHTML = `
+    <div class="op-card" style="max-width:440px;">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${draft.name || 'New Operator'}</div>
+          <div class="op-role">${draft.title || 'AI Operator'}</div>
+        </div>
+      </div>
+      <div class="op-desc">Owns <b>${w.name}</b> · ${draft.cadence} · ${draft.mode.toUpperCase()}</div>
+      <div class="op-agents">${team}</div>
+    </div>
+  `;
+}
+
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn btn-ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right = '';
+  if (draft.step === 1) right = `<button class="btn btn-primary" ${draft.wf ? '' : 'disabled'} onclick="draft.step=2;renderBuilder()">Next: Assign Agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn btn-primary" onclick="draft.step=3;renderBuilder()">Next: Name &amp; Cadence →</button>`;
+  else right = `<button class="btn btn-primary" onclick="hire()">✓ Add this AI Operator</button>`;
+
+  document.getElementById('bNav').innerHTML = left + right;
+}
+
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  
+  WORKFLOWS[wfId] = {
+    name: w.name,
+    title: draft.title || w.title,
+    mode: draft.mode || w.mode,
+    track: w.track,
+    deliverable: w.deliverable,
+    desc: w.desc,
+    tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps }))
+  };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({
+    id, name,
+    title: draft.title || w.title,
+    wf: wfId,
+    handled: 0,
+    hrs: Math.floor(Math.random() * 60) + 40,
+    win: 0,
+    status: 'idle'
+  });
+
+  renderRoster();
+  setView('ops');
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  drawWaferGrid();
+  renderRoster();
+});
+</script>
+</body>
+</html>
