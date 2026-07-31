@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>East West Manufacturing Console — AI Commercial &amp; IMS Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080e18;
+  --surface:#101827;
+  --surface-2:#192337;
+  --surface-3:#27344d;
+  --border:#27344d;
+  --border-soft:#141d2e;
+  --text:#e8edf5;
+  --muted:#94a3b8;
+  --muted-2:#5c6e8c;
+  --accent:#2babe2;
+  --accent-dim:rgba(43,171,226,0.15);
+  --accent-line:rgba(43,171,226,0.35);
+  --accent2:#f59e0b;
+  --accent2-bg:rgba(245,158,11,0.08);
+  --accent3:#38bdf8;
+  --danger:#ef4444;
+  --ok:#10b981;
+  --font-display:'Rajdhani',sans-serif;
+  --font-body:'Work Sans',sans-serif;
+  --font-mono:'Roboto Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 88% -8%, rgba(43,171,226,0.10), transparent 55%),
+    radial-gradient(900px 480px at 5% 5%, rgba(245,158,11,0.07), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+a{color:var(--accent);}
+::selection{background:rgba(43,171,226,0.28);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+.hidden{display:none!important;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:24px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:42px;height:40px;border-radius:8px;
+  background:linear-gradient(135deg,#005993,#2babe2);
+  border:1px solid var(--accent-line);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:var(--font-mono);font-weight:700;font-size:13px;
+  box-shadow:0 0 16px rgba(43,171,226,0.2);
+}
+.mark-name{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:0.02em;color:#fff;}
+.mark-sub{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px;}
+
+.line-readout{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent);
+  background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:8px 14px;display:flex;align-items:center;gap:10px;
+}
+.line-readout .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.tabs{display:flex;gap:8px;margin-top:20px;border-bottom:1px solid var(--border-soft);}
+.tab-btn{
+  background:transparent;border:none;color:var(--muted);padding:10px 18px;font-family:var(--font-body);
+  font-size:13.5px;font-weight:600;cursor:pointer;border-radius:8px 8px 0 0;transition:all 0.15s ease;
+}
+.tab-btn:hover{color:var(--text);background:var(--surface-2);}
+.tab-btn.active{color:var(--accent);background:var(--surface);border:1px solid var(--border);border-bottom-color:var(--surface);}
+
+.hero{padding:36px 0 28px;display:grid;grid-template-columns:1.15fr 0.85fr;gap:40px;align-items:center;}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:24px 0 18px;}}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent);}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(30px,4vw,42px);line-height:1.08;letter-spacing:-0.005em;margin:0 0 14px;color:#fff;}
+h1 span{color:var(--accent);background:linear-gradient(90deg,#2babe2,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.lead{color:var(--muted);font-size:15px;max-width:55ch;margin:0 0 22px;line-height:1.6;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:var(--font-body);font-weight:600;font-size:13.5px;border-radius:6px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--accent);color:#041321;border-color:var(--accent);font-weight:700;}
+.btn-primary:hover{background:#38bdf8;box-shadow:0 0 16px rgba(43,171,226,0.3);}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--accent3);color:var(--accent3);}
+
+/* IMS Multi-Commodity Diagnostics Graphic Card */
+.wafer{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:18px 18px 14px;box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+.wafer-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+.wafer-title{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em;}
+.wafer-val{font-family:var(--font-mono);font-size:12px;color:var(--accent);font-weight:600;}
+svg.wafermap{width:100%;height:210px;display:block;}
+.wafer-outline{fill:none;stroke:var(--border);stroke-width:1.5;}
+.wafer-grid-line{stroke:var(--border-soft);stroke-width:0.5;stroke-dasharray:2 2;}
+.wafer-foot{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+
+.econ{border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:760px){.econ{grid-template-columns:repeat(2,1fr);}}
+.econ-item{padding:6px 18px;border-left:1px solid var(--border-soft);}
+.econ-item:first-child{border-left:none;padding-left:0;}
+@media(max-width:760px){.econ-item:nth-child(2n+1){border-left:none;padding-left:0;}}
+.econ-num{font-family:var(--font-display);font-weight:700;font-size:28px;color:#fff;}
+.econ-num small{font-size:14px;color:var(--accent);font-weight:700;}
+.econ-label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+section{padding:36px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.section-title{font-family:var(--font-display);font-weight:700;font-size:24px;color:#fff;}
+.section-sub{color:var(--muted);font-size:13.5px;max-width:62ch;margin-top:4px;}
+.track-label{font-family:var(--font-mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin:28px 0 14px;padding-top:10px;border-top:1px dashed var(--border-soft);}
+.track-label:first-of-type{border-top:none;padding-top:0;margin-top:6px;}
+
+.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+@media(max-width:760px){.roster{grid-template-columns:1fr;}}
+.op-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;transition:all .15s ease;}
+.op-card:hover{border-color:var(--accent-line);transform:translateY(-2px);}
+.op-card.flagship{border-color:var(--accent2);background:linear-gradient(180deg,rgba(245,158,11,0.08),var(--surface));}
+.op-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.op-name{font-family:var(--font-display);font-weight:700;font-size:18px;color:#fff;}
+.op-role{font-size:12.5px;color:var(--muted);margin-top:2px;}
+.flag-chip{font-family:var(--font-mono);font-size:10px;color:var(--accent2);border:1px solid var(--accent2);background:var(--accent2-bg);border-radius:20px;padding:2px 8px;white-space:nowrap;}
+.op-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+.op-stats{display:flex;gap:18px;margin-top:2px;}
+.op-stat{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.op-stat b{color:var(--accent);font-size:14px;display:block;font-family:var(--font-body);font-weight:600;}
+.op-agents{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.chip{font-size:11px;background:var(--surface-3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;color:var(--text);}
+.op-actions{display:flex;gap:10px;margin-top:6px;}
+.run-btn{flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:600;font-size:13px;border-radius:6px;padding:10px;cursor:pointer;transition:all 0.15s ease;}
+.run-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+
+.run-panel{background:var(--surface);border:1px solid var(--accent-line);border-radius:12px;padding:24px;margin-top:24px;display:none;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+.run-panel.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.run-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.run-head h3{font-family:var(--font-display);font-size:20px;margin:0;color:#fff;}
+.run-head .meta{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.close-run{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:6px 12px;cursor:pointer;font-size:12px;}
+.close-run:hover{color:var(--text);border-color:var(--accent3);}
+
+.feed{background:var(--bg);border:1px solid var(--border-soft);border-radius:8px;padding:16px;height:260px;overflow-y:auto;font-family:var(--font-mono);font-size:12px;display:flex;flex-direction:column;gap:8px;}
+.feed-line{display:flex;gap:10px;align-items:flex-start;opacity:0;animation:appear .3s ease forwards;}
+@keyframes appear{to{opacity:1;}}
+.feed-line .tag{color:var(--accent2);white-space:nowrap;}
+.feed-line .txt{color:var(--muted);}
+.feed-line.done .tag{color:var(--accent);}
+.feed-line.done .txt{color:var(--text);}
+
+.progress-row{display:flex;gap:6px;margin:16px 0 8px;flex-wrap:wrap;}
+.pstep{flex:1;min-width:64px;height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;position:relative;}
+.pstep.active{background:var(--accent-dim);}
+.pstep.complete{background:var(--accent);box-shadow:0 0 8px var(--accent);}
+
+.deliverable{margin-top:20px;background:var(--surface-2);border:1px solid var(--accent-line);border-radius:8px;padding:18px 20px;display:none;}
+.deliverable.show{display:block;animation:fadein .3s ease;}
+.deliverable h4{font-family:var(--font-display);font-size:17px;margin:0 0 12px;color:var(--accent);}
+.deliverable pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:12.5px;color:var(--text);margin:0;line-height:1.65;}
+.note{font-size:11px;color:var(--muted-2);margin-top:12px;font-style:italic;}
+
+/* BUILDER STYLING (DYNEX FUNCTIONAL FLOW) */
+.steps-bar{display:flex;gap:10px;margin-bottom:24px;}
+.step-item{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);}
+.step-item.active{border-color:var(--accent);background:var(--surface-3);}
+.step-item .step-num{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--muted-2);}
+.step-item.active .step-num{color:var(--accent);}
+.step-item .step-lbl{font-size:13.5px;font-weight:600;color:var(--text);margin-top:2px;}
+
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.wf-card{border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;background:var(--surface-2);transition:all 0.15s ease;}
+.wf-card:hover{border-color:var(--accent3);}
+.wf-card.sel{border-color:var(--accent);background:rgba(43,171,226,0.08);}
+.wf-title{font-family:var(--font-display);font-weight:700;font-size:16px;color:#fff;}
+.wf-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45;}
+.wf-meta{font-family:var(--font-mono);font-size:10.5px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase;}
+
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);margin-bottom:10px;}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--accent);flex-shrink:0;}
+.task-row .tt{flex:1;font-size:13px;color:var(--text);}
+.task-row select{font-family:var(--font-body);font-size:12.5px;border:1px solid var(--border);border-radius:6px;padding:8px 10px;background:var(--surface);color:var(--text);outline:none;min-width:210px;}
+.task-row select:focus{border-color:var(--accent);}
+
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.field input{width:100%;font-family:var(--font-body);font-size:13.5px;border:1px solid var(--border);border-radius:8px;padding:11px 13px;background:var(--surface-2);color:var(--text);outline:none;}
+.field input:focus{border-color:var(--accent);}
+
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.seg button{font-family:var(--font-body);font-size:12.5px;padding:9px 16px;border:none;background:var(--surface-2);color:var(--muted);cursor:pointer;border-right:1px solid var(--border);}
+.seg button:last-child{border-right:none;}
+.seg button.on{background:var(--accent);color:#041321;font-weight:700;}
+
+.bnav{display:flex;justify-content:space-between;margin-top:24px;}
+
+footer{border-top:1px solid var(--border-soft);padding:30px 0 44px;}
+.foot-note{font-size:12px;color:var(--muted-2);max-width:85ch;line-height:1.6;}
+.foot-note strong{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark-row">
+      <div class="mark">
+        <div class="mark-badge">EW</div>
+        <div>
+          <div class="mark-name">East West Manufacturing Console</div>
+          <div class="mark-sub">East West Manufacturing (ewme.com / ewmfg.com) · AI Workforce Prototype</div>
+        </div>
+      </div>
+      <div class="line-readout">
+        <span class="dot"></span>
+        <span id="lineTxt">East West Global IMS Network · 9 Facilities Across 7 Countries Active</span>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tabA" onclick="setView('ops')">The AI Workforce Roster</button>
+      <button class="tab-btn" id="tabB" onclick="setView('hire')">+ Add an AI Operator</button>
+    </div>
+  </header>
+
+  <div id="view-ops">
+    <section class="hero" style="padding-bottom:10px;">
+      <div>
+        <div class="eyebrow">Integrated Manufacturing Services (IMS)</div>
+        <h1>Eight operators to run East West's <span>design-to-distribution</span> loop</h1>
+        <p class="lead">Each operator below is a real East West Manufacturing workflow — analyzing multi-commodity DFM across PCBA, die casting, and plastic injection molding, scrubbing 500-line electronic and mechanical BOMs for global sourcing risks, managing NPI line transfers across 9 global facilities, and auditing ISO 13485 medical and ISO 9001 quality compliance — handed to a team of specialist AI agents that works it end-to-end.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('roster-section').scrollIntoView({behavior:'smooth'})">View the Roster</button>
+          <button class="btn btn-ghost" onclick="runOperator('dfm_scrub')">Run Flagship Operator</button>
+        </div>
+      </div>
+
+      <div class="wafer">
+        <div class="wafer-top">
+          <span class="wafer-title">East West Global Line Diagnostics</span>
+          <span class="wafer-val" id="yieldVal">99.3% Integrated IMS Yield</span>
+        </div>
+        <svg class="wafermap" viewBox="0 0 220 210" preserveAspectRatio="xMidYMid meet">
+          <circle class="wafer-outline" cx="110" cy="105" r="92"></circle>
+          <line class="wafer-grid-line" x1="20" y1="105" x2="200" y2="105"></line>
+          <line class="wafer-grid-line" x1="110" y1="15" x2="110" y2="195"></line>
+          <g id="dieGrid"></g>
+        </svg>
+        <div class="wafer-foot">
+          <span>9 Global Fabs (US, MX, VN, CR, CN) · Lot EW-2607-IMS</span>
+          <span id="binVal">Pass: 5,140 / 5,176 Assemblies</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="econ">
+      <div class="econ-item">
+        <div class="econ-num">5.7<small>×</small></div>
+        <div class="econ-label">Faster DFM &amp; quote turnaround for multi-commodity box builds</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">50,000<small>+</small></div>
+        <div class="econ-label">Electrical &amp; mechanical BOM line items cross-referenced</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">25<small> hrs</small></div>
+        <div class="econ-label">Median manufacturing &amp; engineering hours returned per run</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">8<small>/8</small></div>
+        <div class="econ-label">Workflows covered, DFM scrub through ISO 13485 release</div>
+      </div>
+    </div>
+
+    <section id="roster-section">
+      <div class="section-head">
+        <div>
+          <div class="section-title">The AI Workforce Roster</div>
+          <div class="section-sub">Grouped into Commercial and IMS Operations tracks. Click run on any operator to watch its agent team execute in real time.</div>
+        </div>
+      </div>
+
+      <div id="rosterContainer"></div>
+    </section>
+
+    <!-- Run Panel -->
+    <div class="run-panel" id="runPanel">
+      <div class="run-head">
+        <div>
+          <h3 id="runTitle">Running Operator...</h3>
+          <div class="meta" id="runSub">Simulated multi-agent execution feed</div>
+        </div>
+        <button class="close-run" onclick="closeRun()">✕ Close View</button>
+      </div>
+      <div class="progress-row" id="progressRow"></div>
+      <div class="feed" id="feedArea"></div>
+      <div class="deliverable" id="deliverableBox">
+        <h4 id="delivTitle">Review-Ready Output</h4>
+        <pre id="delivCode"></pre>
+        <div class="note">Human-in-the-loop oversight active. Outputs verified by East West IMS engineering management. Illustrative simulation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="section-title">Add an AI Operator</div>
+          <div class="section-sub">Stand up a new AI operator in three steps: pick the workflow, assign each task to an agent via dropdown, then name it and set cadence.</div>
+        </div>
+      </div>
+
+      <div class="steps-bar" id="bSteps"></div>
+      <div id="bBody"></div>
+      <div class="bnav" id="bNav"></div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="foot-note">
+      <strong>Independent Concept Prototype</strong> prepared for a conversation with <strong>East West Manufacturing (ewme.com / ewmfg.com)</strong>. It is not affiliated with, endorsed by, or built on East West systems or data. All operators, IMS yields, tooling lead times, labor estimates, and quotes are illustrative simulations. A senior IMS process engineer, quality manager, or commercial director reviews and approves every quote, multi-commodity DFM package, tooling design, and compliance release.
+    </div>
+  </footer>
+</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'Global Industrial & Medical Market Intelligence', tools: ['research_oem', 'save'] },
+  dfm_eng: { emoji: '🔬', label: 'Multi-Commodity DFM & Metals/Plastics Engineer', tools: ['analyze_multi_dfm', 'save'] },
+  bom_scrubber: { emoji: '📑', label: 'Global BOM Health & Component Specialist', tools: ['scrub_global_bom', 'save'] },
+  cost_eng: { emoji: '🧮', label: 'Tooling, Stamping & Assembly Costing Specialist', tools: ['calc_ims_cost', 'save'] },
+  quality_auditor: { emoji: '🛡️', label: 'ISO 13485 & ISO 9001 Quality Auditor', tools: ['audit_iso_standards', 'save'] },
+  procurement: { emoji: '📦', label: 'Global Sourcing & Metals Logistics Planner', tools: ['plan_global_supply', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'OEM & Global RFP Solution Writer', tools: ['compose_doc', 'save'] },
+  qa_reviewer: { emoji: '✅', label: 'QA & Senior Manufacturing Reviewer', tools: ['qa_review', 'save'] },
+  prospector: { emoji: '🧲', label: 'Global Industrial & OEM Account Prospector', tools: ['source_accounts', 'save'] },
+  pcba_eng: { emoji: '⚡', label: 'High-Density SMT & Box Build Specialist', tools: ['model_pcba_boxbuild', 'save'] },
+  tooling_spec: { emoji: '🛠️', label: 'Die Stamping & Injection Mold Tooling Specialist', tools: ['plan_mold_tooling', 'save'] },
+  logistics_coord: { emoji: '🚢', label: 'International Freight & Nearshore Logistics Coordinator', tools: ['plan_freight_route', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+const TRACKS = [
+  { key: 'commercial', title: 'Commercial & Global Tenders' },
+  { key: 'operations', title: 'IMS Manufacturing & Engineering Operations' }
+];
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Global OEM Industrial & Medical Discovery',
+    title: 'AI Opportunity Scout',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Global OEM Industrial & Medical Prospect Dossier',
+    desc: 'Maps OEM medical device makers and industrial equipment leaders seeking integrated PCBA, metal stamping, and plastic overmolding.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan global industrial automation expansions and medical OEM contract awards.', deps: [] },
+      { agent: 'prospector', task: 'Source VP Supply Chain, Director of Global Procurement, and NPI Engineering Leaders.', deps: [] },
+      { agent: 'dfm_eng', task: 'Score fit on PCBA complexity, metal die casting, nearshore Mexico/Costa Rica vs offshore Vietnam/China options.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce target OEM prospect dossier.', deps: [2] }
+    ]
+  },
+  quote: {
+    name: 'Multi-Commodity EMS & Metals Quoting',
+    title: 'AI Integrated IMS Quoter',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Multi-Commodity IMS Commercial Quote',
+    desc: 'Models SMT PCBA assembly labor, aluminum die casting mold NRE, sheet metal stamping, and global freight costs.',
+    tasks: [
+      { agent: 'bom_scrubber', task: 'Review 3D CAD mechanical enclosures, PCBA Gerber layers, and 350-line multi-commodity BOM.', deps: [] },
+      { agent: 'cost_eng', task: 'Model plastic injection mold tooling, metal stamping die cost, SMT placement cph, and assembly labor.', deps: [0] },
+      { agent: 'procurement', task: 'Confirm active electronic components, resin, and aluminum ingot market pricing.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Assemble formal Multi-Commodity IMS Commercial Quote.', deps: [2] }
+    ]
+  },
+  tender: {
+    name: 'Medical & Industrial Global RFP Response',
+    title: 'AI Tender Specialist',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Medical & Industrial Global RFP Response Package',
+    desc: 'Audits ISO 13485 medical cleanroom standards, FDA 21 CFR Part 820, and ISO 9001 compliance for multi-plant manufacturing.',
+    tasks: [
+      { agent: 'researcher', task: 'Parse RFP quality agreements, IP protection terms, and nearshoring logistics SLAs.', deps: [] },
+      { agent: 'quality_auditor', task: 'Verify ISO 13485 medical cleanroom certifications across Costa Rica and Mexico facilities.', deps: [0] },
+      { agent: 'cost_eng', task: 'Structure dual-plant production pricing tiers (US NPI + Mexico/Vietnam volume execution).', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce formal RFP response package.', deps: [2] }
+    ]
+  },
+  intel: {
+    name: 'Global Supply Chain & Raw Material Radar',
+    title: 'AI Supply Chain Intelligence',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Global Supply Chain & Raw Material Risk Brief',
+    desc: 'Tracks aluminum ingot pricing, resin tariffs, semiconductor allocations, and highlights East West 9-facility resilience.',
+    tasks: [
+      { agent: 'researcher', task: 'Monitor ocean freight container rates, aluminum and copper spot prices, and micro-controller lead times.', deps: [] },
+      { agent: 'dfm_eng', task: 'Benchmark East West integrated multi-commodity capabilities against single-service EMS competitors.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile strategic supply chain intelligence brief.', deps: [0, 1] }
+    ]
+  },
+  dfm_scrub: {
+    name: 'Multi-Commodity DFM & Tooling Scrub',
+    title: 'AI Global DFM Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'Multi-Commodity DFM & Tooling Review Package',
+    desc: 'Analyzes SMT PCBA layout, metal die casting wall thicknesses, mold draft angles, and scrubs BOM for EOL electronic components.',
+    tasks: [
+      { agent: 'dfm_eng', task: 'Analyze aluminum die casting wall thickness (2.5mm target), mold draft angle (2-deg), and thermal ribbing.', deps: [] },
+      { agent: 'pcba_eng', task: 'Review SMT BGA fan-out, solder mask clearance, thermal copper relief, and IPC Class 2/3 specs.', deps: [0] },
+      { agent: 'bom_scrubber', task: 'Cross-reference 380 electronic MPNs and custom hardware fasteners for EOL and 24-wk lead times.', deps: [1] },
+      { agent: 'tooling_spec', task: 'Verify plastic injection mold core/cavity steel specs (H13 steel) and stamping die progression.', deps: [2] },
+      { agent: 'reviewer', task: 'QA multi-commodity engineering findings and compile customer DFM package.', deps: [3] },
+      { agent: 'proposal_writer', task: 'Produce final Multi-Commodity DFM & Tooling Review Package.', deps: [4] }
+    ]
+  },
+  npi_launch: {
+    name: 'Global Supply Chain & NPI Line Transfer',
+    title: 'AI NPI Launch Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'Global NPI Line Transfer & Ramp Package',
+    desc: 'Manages seamless NPI prototype build in US plant and coordinates tooling transfer to nearshore Mexico/Costa Rica high-volume lines.',
+    tasks: [
+      { agent: 'npi_coord', task: 'Coordinate prototype build review at US engineering center; establish Golden Unit master assembly.', deps: [] },
+      { agent: 'logistics_coord', task: 'Manage mold tooling export, custom fixtures, and MES process replication in Mexico plant.', deps: [0] },
+      { agent: 'reviewer', task: 'Verify First Article Inspection (FAI) reports and process capability Cpk > 1.67.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce Global NPI Line Transfer & Ramp Package.', deps: [2] }
+    ]
+  },
+  quality: {
+    name: 'ISO 13485 & ISO 9001 Quality Audit',
+    title: 'AI Quality & Compliance Auditor',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'ISO 13485 & Multi-Site Quality Traceability Release',
+    desc: 'Audits 3D AOI inspection records, CMM dimensional reports for metal castings, and component batch MES lot logs.',
+    tasks: [
+      { agent: 'quality_auditor', task: 'Audit CMM 3D coordinate measuring data for die cast enclosure tolerances (+/-0.05mm).', deps: [] },
+      { agent: 'reviewer', task: 'Verify 3D AOI/SPI PCBA inspection logs and medical device master history records (DHR).', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile ISO 13485 Multi-Site Quality Traceability Release Brief.', deps: [0, 1] }
+    ]
+  },
+  supplyplan: {
+    name: 'Nearshore & Offshore Logistics Buffer Plan',
+    title: 'AI Supply Chain Planner',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'Global Logistics & Safety Stock Buffer Plan',
+    desc: 'Structures 60-day safety stock buffers across US distribution centers to buffer ocean freight lead times from Vietnam/China.',
+    tasks: [
+      { agent: 'procurement', task: 'Evaluate semiconductor factory lead times and raw aluminum stock levels across 9 sites.', deps: [] },
+      { agent: 'logistics_coord', task: 'Model USMCA nearshore trucking vs trans-Pacific ocean freight transit times.', deps: [] },
+      { agent: 'cost_eng', task: 'Structure strategic finished goods inventory buffer in US warehouse.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce Global Logistics & Safety Stock Buffer Plan.', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'Global OEM Industrial & Medical Prospect Dossier',
+  quote: 'Multi-Commodity IMS Commercial Quote',
+  tender: 'Medical & Industrial Global RFP Response Package',
+  intel: 'Global Supply Chain & Raw Material Risk Brief',
+  dfm_scrub: 'Multi-Commodity DFM & Tooling Review Package',
+  npi_launch: 'Global NPI Line Transfer & Ramp Package',
+  quality: 'ISO 13485 Multi-Site Quality Traceability Release',
+  supplyplan: 'Global Logistics & Safety Stock Buffer Plan'
+};
+
+const TOOLS = {
+  research_oem: () => 'Scanned global industrial automation news, medical device FDA filings, and SEC filings.',
+  source_accounts: () => 'Sourced verified VP Supply Chain and Global Procurement Directors; deduped CRM records.',
+  analyze_multi_dfm: () => 'Analyzed 3D CAD step file; identified 2 wall thickness variations (2.0mm vs 3.5mm) causing die cast porosity.',
+  scrub_global_bom: () => 'Scrubbed 380 electronic and mechanical MPNs; flagged 2 active ICs as EOL with 24-wk lead times.',
+  calc_ims_cost: () => 'Calculated SMT line cph (48,000 cph), aluminum die cast shot rate, mold tooling NRE, and assembly labor.',
+  audit_iso_standards: () => 'Audited CMM dimensional reports and 3D AOI inspection logs against ISO 13485 cleanroom standards.',
+  plan_global_supply: () => 'Cross-referenced 9 global facility inventories; secured 8-week resin and electronic component safety buffer.',
+  model_pcba_boxbuild: () => 'Structured electromechanical box build assembly sequence, cable routing, and final burn-in test suite.',
+  plan_mold_tooling: () => 'Configured H13 steel injection mold tooling design and 4-cavity die casting mold base.',
+  plan_freight_route: () => 'Modeled USMCA nearshore cross-border customs clearing and trans-Pacific container freight schedules.',
+  compose_doc: () => 'Compiled IMS manufacturing metrics into clear, review-ready engineering documentation.',
+  qa_review: () => 'Audited report completeness and checked standards alignment; ready for IMS Engineering VP sign-off.',
+  save: () => 'Saved deliverable artifact to shared project repository.'
+};
+
+function toolOut(t) { return (TOOLS[t] || (() => 'Executed successfully.'))(); }
+
+const FINAL = {
+  scout: `GLOBAL OEM INDUSTRIAL & MEDICAL PROSPECT DOSSIER (illustrative)
+Target Sector: Industrial Automation Controls & Medical Diagnostic Enclosures
+Target Location: North America & Global Nearshore/Offshore Hubs
+
+A-Tier Qualified OEM Prospects:
+1. Omnisense Medical Dynamics — Portable Blood Analyzer Assembly — Fit Score: 97/100
+   • Key Contacts: VP Supply Chain, Director of NPI Engineering
+   • Requirement: ISO 13485 Cleanroom PCBA + Plastic Overmolding (Costa Rica Facility)
+2. HydroFlow Controls — Smart Water Meter Enclosure & PCBA — Fit Score: 93/100
+   • Key Contacts: Director of Global Procurement
+   • Requirement: Precision Aluminum Die Casting + SMT PCBA + USMCA Mexico Assembly
+3. AeroGrid Robotics — Heavy Duty Servo Actuator — Fit Score: 90/100
+   • Key Contacts: VP Manufacturing
+
+Strategic Positioning:
+Highlight East West "Integrated Manufacturing Services (IMS)" model, 9 global facilities in 7 countries, and seamless US-to-nearshore NPI transfers.
+
+NOTE: Illustrative simulation prepared for East West Manufacturing (ewme.com / ewmfg.com).`,
+
+  quote: `MULTI-COMMODITY IMS COMMERCIAL QUOTE (illustrative)
+Customer: Omnisense Medical Dynamics
+Program: Medical Blood Analyzer PCBA, Aluminum Casting & Plastic Box Build
+Volume Tiers: 10,000 / 25,000 / 75,000 units annually
+
+Commercial Breakdown:
+• SMT Assembly (240 Components, Dual-Sided 0201/BGA): $34.50 / unit
+• Precision Aluminum Die Cast & Machined Enclosure: $28.00 / unit
+• Custom Polyurethane Molded Gasket & Plastic Bezel: $12.50 / unit
+• Final Electromechanical Box Build, Functional Test & Packaging: $18.00 / unit
+
+Tooling & NRE:
+• Aluminum Die Cast Mold & Plastic Injection Mold Tooling: $28,500 (One-time NRE)
+
+Manufacturing Location Strategy:
+• US Plant (NPI & First Article) -> Juarez, Mexico Plant (High-Volume Assembly)
+
+NOTE: Illustrative simulation; pricing and lead times are placeholders.`,
+
+  tender: `MEDICAL & INDUSTRIAL GLOBAL RFP RESPONSE PACKAGE (illustrative)
+Tender ID: US-GLOBAL-IMS-2026-14
+Scope: Integrated Multi-Commodity Contract Manufacturing (PCBA, Metal & Plastics)
+
+Compliance Verification:
+• ISO 13485:2016 Medical Quality Management: Certified across US, MX, and CR facilities
+• FDA 21 CFR Part 820 Registration: Active & Compliant
+• ISO 9001:2015 Quality Management: Certified across all 9 global facilities
+• IPC-A-610 Class 2/3 Workmanship: Fully Mapped & Compliant
+
+Technical Offer:
+• Single-account engineering ownership with unified MES traceability across 7 countries
+
+NOTE: Illustrative simulation; confirm against RFP specifications.`,
+
+  intel: `GLOBAL SUPPLY CHAIN & RAW MATERIAL RISK BRIEF (illustrative)
+Focus: Global Electronics & Metals Raw Material Market Dynamics
+
+Key Insights:
+1. Aluminum & Copper Volatility: Aluminum ingot prices fluctuating +/-8%; index-linked pricing agreements recommended.
+2. Nearshore Demand Surge: USMCA nearshoring driving 35% growth in Mexico and Costa Rica facility utilization.
+3. East West Strategic Advantage:
+   - 9 facilities across 7 countries provide geopolitical risk hedging and dual-sourcing options.
+   - Integrated PCBA + metals + plastics under one roof eliminates multi-tier supplier margin markups.
+
+NOTE: Illustrative simulation.`,
+
+  dfm_scrub: `MULTI-COMMODITY DFM & TOOLING REVIEW PACKAGE (illustrative · flagship)
+Program: Smart Industrial Automation Gateway & Enclosure
+Files Analyzed: 3D STEP Mechanical Enclosure, Gerber PCBA Dataset, 380 BOM Line Items
+
+DFM Engineering Findings:
+1. Metal Die Casting: Wall thickness varies from 1.8mm to 4.2mm near mounting bosses; recommended uniform 2.5mm wall to eliminate shrinkage porosity and sink marks.
+2. Mold Draft Angle: Internal ribs exhibit 0.5-degree draft angle; recommended increase to 2.0 degrees for clean mold ejection without drag marks.
+3. PCBA Thermal Relief: Ground plane copper pour lacks thermal relief on 6 power inductors; high risk of cold solder joints during SMT reflow.
+
+BOM Health & Component Sourcing Scrub:
+• Total Active MPNs: 380
+• EOL / Long-Lead Components Identified: 2 (Microchip MCU & NXP Interface IC)
+• Recommended Drop-In Alternates:
+  - MCU Alternative: SAME54P20A (Pin-compatible, 6-wk lead time vs 24-wk)
+  - Interface IC Alternative: TJA1051T (Direct drop-in)
+
+Summary:
+ Resolving die casting wall thickness and alternate MCU eliminates 18 weeks of NPI tooling and component delay.
+
+NOTE: Illustrative simulation; review with East West IMS engineering team.`,
+
+  npi_launch: `GLOBAL NPI LINE TRANSFER & RAMP PACKAGE (illustrative)
+Program: Medical Diagnostic Control Console
+
+Line Transfer Sequence:
+1. US Engineering Center (Atlanta, GA): Build 50 NPI prototype units; validate Golden Unit performance.
+2. Process Documentation: Capture 3D AOI inspection rules, CNC machining programs, and MES routing.
+3. Nearshore Ramp (San Jose, Costa Rica): Replicate line setup; execute 100-unit pilot run.
+
+First Article Inspection (FAI) Cpk Result: 1.82 (Exceeds 1.67 requirement — PASS).
+
+NOTE: Illustrative simulation.`,
+
+  quality: `ISO 13485 MULTI-SITE QUALITY TRACEABILITY RELEASE (illustrative)
+Production Lot: EW-IMS-2026-09
+Quality Standard: ISO 13485:2016 / ISO 9001:2015 / IPC-A-610 Class 3
+
+Audit Checklist Results:
+• CMM 3D Dimensional Inspection: Passed (All 42 die cast enclosure dimensions within +/-0.04mm tolerance)
+• 3D SPI & X-Ray BGA Inspection: Solder paste coverage 100%; BGA voiding averaged 5.8% (well below 15% limit)
+• MES Global Lot Traceability: 100% component reel and aluminum batch traceability verified
+
+Outcome: Quality Release Approved. Certificate of Conformance (CoC) issued.
+
+NOTE: Illustrative simulation.`,
+
+  supplyplan: `GLOBAL LOGISTICS & SAFETY STOCK BUFFER PLAN (illustrative)
+Scope: 25 Active OEM Production Programs across US, MX, CR, VN, and CN Facilities
+
+Supply Risk Breakdown:
+• Low Risk / Local Sourced (<4 wks): 80% of BOM lines
+• Medium Risk / Ocean Freight (4-8 wks): 14% of BOM lines
+• High Risk / Long-Lead ICs (>16 wks): 6% (Custom semiconductors)
+
+Action Plan:
+1. Establish 60-day safety stock buffer at US warehouse for high-risk active ICs.
+2. Utilize USMCA expedited trucking for Mexico-to-US shipments to guarantee 48-hour delivery.
+
+NOTE: Illustrative simulation.`
+};
+
+let EMPLOYEES = [
+  { id: 'scout', name: 'Scout', title: 'AI Opportunity Scout', wf: 'scout', handled: 160, hrs: 48, win: 28, status: 'idle' },
+  { id: 'quote', name: 'Quote', title: 'AI Integrated IMS Quoter', wf: 'quote', handled: 240, hrs: 105, win: 50, status: 'idle' },
+  { id: 'tender', name: 'Tender', title: 'AI Tender Specialist', wf: 'tender', handled: 100, hrs: 85, win: 40, status: 'idle' },
+  { id: 'intel', name: 'Radar', title: 'AI Supply Chain Intelligence', wf: 'intel', handled: 125, hrs: 36, win: 18, status: 'idle' },
+  { id: 'dfm_scrub', name: 'GlobalDFM', title: 'AI Global DFM Specialist', wf: 'dfm_scrub', handled: 350, hrs: 210, win: 66, status: 'idle' },
+  { id: 'npi_launch', name: 'NPILaunch', title: 'AI NPI Launch Specialist', wf: 'npi_launch', handled: 190, hrs: 95, win: 45, status: 'idle' },
+  { id: 'quality', name: 'QualityAudit', title: 'AI Quality & Compliance Auditor', wf: 'quality', handled: 310, hrs: 120, win: 56, status: 'idle' },
+  { id: 'supplyplan', name: 'SupplyPlan', title: 'AI Supply Chain Planner', wf: 'supplyplan', handled: 165, hrs: 68, win: 0, status: 'idle' }
+];
+
+/* Render Functions */
+function drawWaferGrid() {
+  const grid = document.getElementById("dieGrid");
+  let rects = '';
+  for (let x = -8; x <= 8; x++) {
+    for (let y = -8; y <= 8; y++) {
+      if (x*x + y*y <= 60) {
+        const px = 110 + x * 10 - 4;
+        const py = 105 + y * 10 - 4;
+        const pass = (Math.abs(x*y) % 9 !== 3);
+        const fill = pass ? 'rgba(43, 171, 226, 0.45)' : 'rgba(239, 68, 68, 0.6)';
+        rects += `<rect x="${px}" y="${py}" width="8" height="8" rx="1.5" fill="${fill}"></rect>`;
+      }
+    }
+  }
+  grid.innerHTML = rects;
+}
+
+function renderRoster() {
+  const container = document.getElementById("rosterContainer");
+  let html = '';
+  TRACKS.forEach(tr => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === tr.key);
+    if (!list.length) return;
+    html += `<div class="track-label">${tr.title}</div><div class="roster">`;
+    html += list.map(empCard).join('');
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+}
+
+function empCard(e) {
+  const wf = WORKFLOWS[e.wf] || {};
+  const isFlag = wf.tag === 'flagship';
+  const team = (wf.tasks || []).map(t => t.agent).filter((v, i, a) => a.indexOf(v) === i).map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  return `
+    <div class="op-card ${isFlag ? 'flagship' : ''}" id="emp-${e.id}">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${e.name}</div>
+          <div class="op-role">${e.title}</div>
+        </div>
+        ${isFlag ? '<span class="flag-chip">★ FLAGSHIP OPERATOR</span>' : ''}
+      </div>
+      <div class="op-desc">${wf.desc || ''}</div>
+      <div class="op-agents">${team}</div>
+      <div class="op-stats">
+        <div class="op-stat"><b>${e.handled.toLocaleString()}</b> runs</div>
+        <div class="op-stat"><b>~${e.hrs} hrs</b> saved/mo</div>
+        <div class="op-stat"><b>+${e.win}%</b> speedup</div>
+      </div>
+      <div class="op-actions">
+        <button class="run-btn" onclick="runOperator('${e.wf}')">▶ Run ${e.name}</button>
+      </div>
+    </div>
+  `;
+}
+
+function setView(v) {
+  document.getElementById('view-ops').classList.toggle('hidden', v !== 'ops');
+  document.getElementById('view-hire').classList.toggle('hidden', v !== 'hire');
+  document.getElementById('tabA').classList.toggle('active', v === 'ops');
+  document.getElementById('tabB').classList.toggle('active', v === 'hire');
+  if (v === 'hire') initBuilder();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+let isRunning = false;
+async function runOperator(wfKey) {
+  if (isRunning) return;
+  isRunning = true;
+  const wf = WORKFLOWS[wfKey];
+  if (!wf) return;
+
+  const panel = document.getElementById("runPanel");
+  const title = document.getElementById("runTitle");
+  const sub = document.getElementById("runSub");
+  const progress = document.getElementById("progressRow");
+  const feed = document.getElementById("feedArea");
+  const deliv = document.getElementById("deliverableBox");
+
+  panel.classList.add("active");
+  deliv.classList.remove("show");
+  title.innerText = `Executing Operator: ${wf.name}`;
+  sub.innerText = `Mode: ${wf.mode.toUpperCase()} · ${wf.tasks.length} Specialist Agents`;
+
+  progress.innerHTML = wf.tasks.map((_, i) => `<div class="pstep" id="ps_${i}"></div>`).join('');
+  feed.innerHTML = '';
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  function addFeedLine(agentKey, txt, isDone = false) {
+    const role = AGENT_ROLES[agentKey] || { emoji: '🤖', label: agentKey };
+    const div = document.createElement('div');
+    div.className = `feed-line ${isDone ? 'done' : ''}`;
+    div.innerHTML = `<span class="tag">[${role.emoji} ${role.label}]</span><span class="txt">${txt}</span>`;
+    feed.appendChild(div);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  addFeedLine(wf.tasks[0].agent, `Initializing ${wf.name} autonomous workflow loop...`);
+  await new Promise(r => setTimeout(r, 600));
+
+  for (let i = 0; i < wf.tasks.length; i++) {
+    const t = wf.tasks[i];
+    const stepEl = document.getElementById(`ps_${i}`);
+    if (stepEl) stepEl.classList.add("active");
+
+    addFeedLine(t.agent, `Executing Task ${i+1}: ${t.task}`);
+    await new Promise(r => setTimeout(r, 800));
+
+    const role = AGENT_ROLES[t.agent];
+    if (role && role.tools) {
+      for (const tool of role.tools) {
+        addFeedLine(t.agent, `Invoked tool '${tool}( )' -> ${toolOut(tool)}`);
+        await new Promise(r => setTimeout(r, 600));
+      }
+    }
+
+    if (stepEl) {
+      stepEl.classList.remove("active");
+      stepEl.classList.add("complete");
+    }
+    addFeedLine(t.agent, `Task ${i+1} completed. Artifact saved to shared IMS project store.`, true);
+  }
+
+  await new Promise(r => setTimeout(r, 400));
+  document.getElementById("delivTitle").innerText = `Review-Ready Output · ${DTITLE[wfKey] || 'Deliverable'}`;
+  document.getElementById("delivCode").innerText = FINAL[wfKey] || "Execution completed successfully.";
+  deliv.classList.add("show");
+
+  isRunning = false;
+}
+
+function closeRun() {
+  document.getElementById("runPanel").classList.remove("active");
+}
+
+/* DYNEX BUILDER FLOW IMPLEMENTATION */
+let draft = {};
+function initBuilder() {
+  draft = { wf: null, mode: 'sequential', assign: [], name: '', title: '', cadence: 'Per project', step: 1 };
+  renderBuilder();
+}
+
+function renderBuilder() {
+  const steps = [['01', 'Pick a workflow'], ['02', 'Assign the agents'], ['03', 'Name & cadence']];
+  document.getElementById('bSteps').innerHTML = steps.map((s, i) => `
+    <div class="step-item ${draft.step === i + 1 ? 'active' : ''}">
+      <div class="step-num">${s[0]}</div>
+      <div class="step-lbl">${s[1]}</div>
+    </div>
+  `).join('');
+
+  if (draft.step === 1) bS1();
+  else if (draft.step === 2) bS2();
+  else bS3();
+  bNav();
+}
+
+function bS1() {
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 1: Choose Baseline IMS Workflow</label></div>
+    <div class="wf-grid">
+      ${Object.keys(WORKFLOWS).map(k => {
+        const w = WORKFLOWS[k];
+        return `
+          <div class="wf-card ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')">
+            <div class="wf-title">${w.name}</div>
+            <div class="wf-desc">${w.desc}</div>
+            <div class="wf-meta">${w.tasks.length} agents · ${w.mode}</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 2: Assign Each Task to a Specialist Agent</label></div>
+    ${w.tasks.map((t, i) => `
+      <div class="task-row">
+        <div class="tn">${i + 1}</div>
+        <div class="tt">
+          ${t.task}
+          ${t.deps.length ? `<span style="color:var(--muted-2);font-family:var(--font-mono);font-size:11px;"> · waits for step ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}
+        </div>
+        <select onchange="draft.assign[${i}]=this.value">${opts}</select>
+      </div>
+    `).join('')}
+    <div class="field" style="margin-top:16px;">
+      <label>Execution Mode</label>
+      <div class="seg">
+        ${['sequential', 'dag'].map(m => `
+          <button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (Parallel DAG)' : 'Sequential'}</button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 3: Name Operator &amp; Set Cadence</label></div>
+    <div class="field">
+      <label>Operator Name</label>
+      <input type="text" value="${draft.name}" placeholder="e.g. Multi-Commodity IMS Specialist" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Role Title</label>
+      <input type="text" value="${draft.title}" placeholder="e.g. Autonomous IMS Engineer" oninput="draft.title=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Cadence</label>
+      <div class="seg">
+        ${['Per project', 'Per build', 'Weekly', 'On-demand'].map(c => `
+          <button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>
+        `).join('')}
+      </div>
+    </div>
+    <div class="field" style="margin-top:20px;">
+      <label>Live Operator Card Preview</label>
+      <div id="previewCardArea"></div>
+    </div>
+  `;
+  renderPreview();
+}
+
+function renderPreview() {
+  const w = WORKFLOWS[draft.wf];
+  const area = document.getElementById('previewCardArea');
+  if (!area) return;
+  
+  const team = draft.assign.map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  area.innerHTML = `
+    <div class="op-card" style="max-width:440px;">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${draft.name || 'New Operator'}</div>
+          <div class="op-role">${draft.title || 'AI Operator'}</div>
+        </div>
+      </div>
+      <div class="op-desc">Owns <b>${w.name}</b> · ${draft.cadence} · ${draft.mode.toUpperCase()}</div>
+      <div class="op-agents">${team}</div>
+    </div>
+  `;
+}
+
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn btn-ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right = '';
+  if (draft.step === 1) right = `<button class="btn btn-primary" ${draft.wf ? '' : 'disabled'} onclick="draft.step=2;renderBuilder()">Next: Assign Agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn btn-primary" onclick="draft.step=3;renderBuilder()">Next: Name &amp; Cadence →</button>`;
+  else right = `<button class="btn btn-primary" onclick="hire()">✓ Add this AI Operator</button>`;
+
+  document.getElementById('bNav').innerHTML = left + right;
+}
+
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  
+  WORKFLOWS[wfId] = {
+    name: w.name,
+    title: draft.title || w.title,
+    mode: draft.mode || w.mode,
+    track: w.track,
+    deliverable: w.deliverable,
+    desc: w.desc,
+    tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps }))
+  };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({
+    id, name,
+    title: draft.title || w.title,
+    wf: wfId,
+    handled: 0,
+    hrs: Math.floor(Math.random() * 60) + 40,
+    win: 0,
+    status: 'idle'
+  });
+
+  renderRoster();
+  setView('ops');
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  drawWaferGrid();
+  renderRoster();
+});
+</script>
+</body>
+</html>
