@@ -105,3 +105,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/sigmatron
 https://innvonix-tech-solutions.github.io/ai-workforce/blackbull
 
 https://innvonix-tech-solutions.github.io/ai-workforce/wolfspeed
+
+https://innvonix-tech-solutions.github.io/ai-workforce/zentech
