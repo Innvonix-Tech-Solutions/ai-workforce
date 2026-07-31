@@ -99,3 +99,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/nhanced
 https://innvonix-tech-solutions.github.io/ai-workforce/globalwafers
 
 https://innvonix-tech-solutions.github.io/ai-workforce/nortech
+
+https://innvonix-tech-solutions.github.io/ai-workforce/sigmatron
