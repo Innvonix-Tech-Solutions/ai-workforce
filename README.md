@@ -95,3 +95,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/rochester
 https://innvonix-tech-solutions.github.io/ai-workforce/ttm
 
 https://innvonix-tech-solutions.github.io/ai-workforce/nhanced
+
+https://innvonix-tech-solutions.github.io/ai-workforce/globalwafers
