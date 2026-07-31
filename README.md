@@ -113,3 +113,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/proactivepcb
 https://innvonix-tech-solutions.github.io/ai-workforce/form-energy
 
 https://innvonix-tech-solutions.github.io/ai-workforce/altest
+
+https://innvonix-tech-solutions.github.io/ai-workforce/east-west
