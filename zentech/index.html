@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zentech Program Console — AI Workforce Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Figtree:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0D0C0B;
+  --surface:#161412;
+  --surface-2:#1C1917;
+  --surface-3:#24201D;
+  --border:#39332C;
+  --border-soft:#241F1B;
+  --text:#EFEBE6;
+  --muted:#A79C8E;
+  --muted-2:#6B6257;
+  --accent:#E8963D;
+  --accent-dim:#7A4F1E;
+  --accent2:#7FD1FF;
+  --accent3:#5FD97A;
+  --danger:#FF5C5C;
+  --font-display:'Barlow Semi Condensed',sans-serif;
+  --font-body:'Figtree',sans-serif;
+  --font-mono:'DM Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 88% -8%, rgba(232,150,61,0.08), transparent 55%),
+    radial-gradient(900px 480px at 5% 6%, rgba(127,209,255,0.06), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent);}
+::selection{background:rgba(232,150,61,0.28);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:26px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:38px;height:38px;border-radius:6px;
+  background:linear-gradient(155deg,var(--surface-3),var(--surface-2));
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--accent);font-family:var(--font-mono);font-weight:500;font-size:11px;
+}
+.mark-name{font-family:var(--font-display);font-weight:700;font-size:20px;letter-spacing:0.01em;}
+.mark-sub{font-family:var(--font-mono);font-size:10.5px;color:var(--muted-2);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px;}
+
+.site-readout{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent2);
+  background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:8px 14px;display:flex;align-items:center;gap:10px;
+}
+.site-readout .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.hero{padding:44px 0 30px;display:grid;grid-template-columns:1.1fr 0.9fr;gap:40px;align-items:center;}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:30px 0 18px;}}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent);}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(30px,4.2vw,44px);line-height:1.06;letter-spacing:-0.005em;margin:0 0 16px;}
+h1 span{color:var(--accent);}
+.lead{color:var(--muted);font-size:15.5px;max-width:53ch;margin:0 0 22px;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:var(--font-body);font-weight:600;font-size:13.5px;border-radius:6px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--accent);color:#1D0F00;border-color:var(--accent);}
+.btn-primary:hover{background:#f0ab5e;}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--accent2);color:var(--accent2);}
+
+/* x-ray inspection signature */
+.scope{border:1px solid var(--border);border-radius:10px;background:var(--surface);padding:18px 18px 14px;}
+.scope-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
+.scope-title{font-family:var(--font-mono);font-size:10.5px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em;}
+.scope-val{font-family:var(--font-mono);font-size:12px;color:var(--accent2);}
+svg.trace{width:100%;height:200px;display:block;}
+.scope-foot{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--font-mono);font-size:10.5px;color:var(--muted-2);}
+
+.econ{border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:760px){.econ{grid-template-columns:repeat(2,1fr);}}
+.econ-item{padding:6px 18px;border-left:1px solid var(--border-soft);}
+.econ-item:first-child{border-left:none;padding-left:0;}
+@media(max-width:760px){.econ-item:nth-child(2n+1){border-left:none;padding-left:0;}}
+.econ-num{font-family:var(--font-display);font-weight:700;font-size:27px;color:var(--text);}
+.econ-num small{font-size:14px;color:var(--accent);font-weight:700;}
+.econ-label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+section{padding:46px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.section-title{font-family:var(--font-display);font-weight:700;font-size:23px;}
+.section-sub{color:var(--muted);font-size:13.5px;max-width:60ch;margin-top:4px;}
+.track-label{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.1em;margin:28px 0 14px;padding-top:6px;border-top:1px dashed var(--border-soft);}
+.track-label:first-of-type{border-top:none;padding-top:0;margin-top:6px;}
+
+.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+@media(max-width:760px){.roster{grid-template-columns:1fr;}}
+.op-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:10px;transition:border-color .15s ease;}
+.op-card:hover{border-color:var(--accent-dim);}
+.op-card.flagship{border-color:var(--accent2);background:linear-gradient(180deg,rgba(127,209,255,0.06),var(--surface));}
+.op-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.op-name{font-family:var(--font-display);font-weight:700;font-size:16.5px;}
+.op-role{font-size:12px;color:var(--muted);margin-top:2px;}
+.flag-chip{font-family:var(--font-mono);font-size:10px;color:var(--accent2);border:1px solid var(--accent2);border-radius:20px;padding:2px 8px;white-space:nowrap;}
+.op-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+.op-stats{display:flex;gap:16px;margin-top:2px;}
+.op-stat{font-family:var(--font-mono);font-size:11.5px;color:var(--muted-2);}
+.op-stat b{color:var(--accent);font-size:13px;display:block;font-family:var(--font-body);font-weight:600;}
+.op-agents{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.chip{font-size:11px;background:var(--surface-3);border:1px solid var(--border);border-radius:20px;padding:3px 9px;color:var(--muted);}
+.op-actions{display:flex;gap:10px;margin-top:6px;}
+.run-btn{flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:600;font-size:13px;border-radius:6px;padding:9px;cursor:pointer;}
+.run-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+.run-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;margin-top:22px;display:none;}
+.run-panel.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.run-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.run-head h3{font-family:var(--font-display);font-size:18px;margin:0;}
+.run-head .meta{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.close-run{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:6px 10px;cursor:pointer;font-size:12px;}
+.close-run:hover{color:var(--text);border-color:var(--accent2);}
+
+.feed{background:var(--bg);border:1px solid var(--border-soft);border-radius:8px;padding:14px 16px;height:260px;overflow-y:auto;font-family:var(--font-mono);font-size:12.5px;display:flex;flex-direction:column;gap:7px;}
+.feed-line{display:flex;gap:10px;align-items:flex-start;opacity:0;animation:appear .3s ease forwards;}
+@keyframes appear{to{opacity:1;}}
+.feed-line .tag{color:var(--accent2);white-space:nowrap;}
+.feed-line .txt{color:var(--muted);}
+.feed-line.done .tag{color:var(--accent);}
+.feed-line.done .txt{color:var(--text);}
+
+.progress-row{display:flex;gap:6px;margin:14px 0 6px;flex-wrap:wrap;}
+.pstep{flex:1;min-width:64px;height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;position:relative;}
+.pstep.active{background:var(--accent-dim);}
+.pstep.complete{background:var(--accent);}
+
+.deliverable{margin-top:18px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:16px 18px;display:none;}
+.deliverable.show{display:block;animation:fadein .3s ease;}
+.deliverable h4{font-family:var(--font-display);font-size:15px;margin:0 0 10px;color:var(--accent);}
+.deliverable pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:12.5px;color:var(--text);margin:0;line-height:1.6;}
+.note{font-size:11px;color:var(--muted-2);margin-top:10px;font-style:italic;}
+
+.builder{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;}
+.build-steps{display:flex;gap:8px;margin-bottom:20px;}
+.build-step-dot{flex:1;height:3px;border-radius:2px;background:var(--surface-3);}
+.build-step-dot.on{background:var(--accent);}
+.build-body{min-height:200px;}
+.pick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+@media(max-width:700px){.pick-grid{grid-template-columns:1fr;}}
+.pick-card{border:1px solid var(--border);border-radius:8px;padding:14px;cursor:pointer;background:var(--surface-2);}
+.pick-card:hover{border-color:var(--accent2);}
+.pick-card.selected{border-color:var(--accent);background:rgba(232,150,61,0.07);}
+.pick-title{font-weight:600;font-size:13.5px;}
+.pick-desc{font-size:12px;color:var(--muted);margin-top:4px;}
+.field-row{margin-bottom:14px;}
+.field-row label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;}
+.field-row input,.field-row select{width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:10px 12px;font-family:var(--font-body);font-size:13.5px;}
+.build-nav{display:flex;justify-content:space-between;margin-top:20px;}
+.summary-box{background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:16px;}
+.summary-box b{color:var(--accent);}
+
+footer{border-top:1px solid var(--border-soft);padding:28px 0 40px;}
+.foot-note{font-size:12px;color:var(--muted-2);max-width:80ch;line-height:1.6;}
+.foot-note strong{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark-row">
+      <div class="mark">
+        <div class="mark-badge">ZT</div>
+        <div>
+          <div class="mark-name">Program Console</div>
+          <div class="mark-sub">Zentech Manufacturing · AI Workforce Prototype</div>
+        </div>
+      </div>
+      <div class="site-readout">
+        <span class="dot"></span>
+        <span id="siteTxt">Baltimore, MD · Class 3 line active</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero" style="padding-bottom:0;">
+    <div>
+      <div class="eyebrow">Mission-critical EMS · defense, aerospace & medical</div>
+      <h1>Eight operators to run Zentech's <span>quote-to-shipment</span> loop</h1>
+      <p class="lead">Each operator below is a real Zentech workflow — quoting a Class 3 circuit card assembly, screening a component lot for Trusted Source compliance, planning capacity across three facilities — handed to a small team of specialist agents that works it end to end and hands back a reviewable deliverable.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="document.getElementById('roster-section').scrollIntoView({behavior:'smooth'})">View the roster</button>
+        <button class="btn btn-ghost" onclick="runOperator('rfqquote')">Run the flagship operator</button>
+      </div>
+    </div>
+    <div class="scope">
+      <div class="scope-top">
+        <span class="scope-title">Automated X-ray inspection — live scan</span>
+        <span class="scope-val" id="defectVal">0 voids flagged</span>
+      </div>
+      <svg class="trace" viewBox="0 0 300 190" preserveAspectRatio="xMidYMid meet">
+        <rect x="10" y="10" width="280" height="170" rx="4" fill="none" stroke="var(--border)" stroke-width="1"></rect>
+        <g id="padGrid"></g>
+        <line id="scanLine" x1="10" y1="10" x2="290" y2="10" stroke="var(--accent2)" stroke-width="1.5" opacity="0.8"></line>
+      </svg>
+      <div class="scope-foot">
+        <span>IPC-610 Class 3 · BGA void inspection</span>
+        <span id="coverageVal">scan coverage 0%</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="econ wrap" style="padding-left:0;padding-right:0;">
+    <div class="econ-item">
+      <div class="econ-num">6.3<small>×</small></div>
+      <div class="econ-label">Faster RFQ-to-quote turnaround for defense & medical customers</div>
+    </div>
+    <div class="econ-item">
+      <div class="econ-num">3<small></small></div>
+      <div class="econ-label">Facilities the roster coordinates production across</div>
+    </div>
+    <div class="econ-item">
+      <div class="econ-num">19<small> hrs</small></div>
+      <div class="econ-label">Median engineering hours returned per run</div>
+    </div>
+    <div class="econ-item">
+      <div class="econ-num">8<small>/8</small></div>
+      <div class="econ-label">Workflows covered, quote through shipment</div>
+    </div>
+  </div>
+
+  <section id="roster-section">
+    <div class="section-head">
+      <div>
+        <div class="section-title">The roster</div>
+        <div class="section-sub">Grouped by track. Run any operator to watch its agent team work a real Zentech-style task and produce a deliverable.</div>
+      </div>
+    </div>
+    <div id="rosterMount"></div>
+
+    <div class="run-panel" id="runPanel">
+      <div class="run-head">
+        <div>
+          <h3 id="runTitle">—</h3>
+          <div class="meta" id="runMeta">—</div>
+        </div>
+        <button class="close-run" onclick="closeRun()">Close</button>
+      </div>
+      <div class="progress-row" id="progressRow"></div>
+      <div class="feed" id="feed"></div>
+      <div class="deliverable" id="deliverable">
+        <h4 id="delivTitle">Deliverable</h4>
+        <pre id="delivBody"></pre>
+        <div class="note">NOTE: illustrative simulation for demonstration purposes — all figures are placeholders and every output is reviewed by a Zentech quality, compliance, or program engineer before use.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-title">Build a new operator</div>
+        <div class="section-sub">Compose a ninth operator in three steps: pick the base workflow, assign its cadence, name it.</div>
+      </div>
+    </div>
+    <div class="builder">
+      <div class="build-steps">
+        <div class="build-step-dot on" id="dot1"></div>
+        <div class="build-step-dot" id="dot2"></div>
+        <div class="build-step-dot" id="dot3"></div>
+      </div>
+      <div class="build-body" id="buildBody"></div>
+      <div class="build-nav">
+        <button class="btn btn-ghost" id="backBtn" onclick="builderBack()" style="visibility:hidden;">Back</button>
+        <button class="btn btn-primary" id="nextBtn" onclick="builderNext()">Next</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="foot-note">
+      <strong>This is a sales/stakeholder prototype, not a live system.</strong> No Zentech systems, customer data, or proprietary program details were used to build it — every deliverable, metric, and number above is an illustrative placeholder written to sound domain-authentic. Nothing here is submitted, filed, or transmitted anywhere; every run stays in this browser tab. Any resemblance to a real Zentech program, part number, or customer is coincidental. In production, every deliverable in this loop — quotes, compliance reports, inspection dispositions, capacity plans — would be reviewed and signed off by a qualified Zentech quality, compliance, or program engineer before it leaves the building.
+    </p>
+  </footer>
+</div>
+
+<script>
+/* =========================================================
+   DATA
+   ========================================================= */
+const AGENT_ROLES = {
+  pm:         {emoji:'📋', label:'Program Manager', tools:['packageAssemble','scheduleCheck','save']},
+  quote:      {emoji:'🧮', label:'RFQ & Quote Engineer', tools:['dfmReview','costModel','save']},
+  compliance: {emoji:'🛡️', label:'Export Control & Compliance Officer', tools:['itarScreen','remediationDraft','save']},
+  planning:   {emoji:'🏭', label:'Production Planning Engineer', tools:['routingSetup','scheduleImpact','save']},
+  supply:     {emoji:'🔗', label:'Supply Chain & Obsolescence Specialist', tools:['eolScan','altSourceIdentify','save']},
+  quality:    {emoji:'🔬', label:'Quality & Inspection Engineer', tools:['inspectionPlan','xrayInspect','save']},
+  trusted:    {emoji:'🔍', label:'Trusted Source & Traceability Analyst', tools:['traceVerify','lotIntake','save']},
+  cyber:      {emoji:'🖥️', label:'Cybersecurity Compliance Analyst', tools:['controlReview','gapScore','save']},
+  capacity:   {emoji:'🏗️', label:'Multi-Site Capacity Planner', tools:['capacityAssess','workloadModel','save']},
+  cable:      {emoji:'🧰', label:'Cable & Mechanical Assembly Engineer', tools:['harnessReview','buildPlanDraft','save']},
+};
+
+const WORKFLOWS = {
+  rfqquote: {
+    name:'RFQ Intake & DFM Quote Response', title:'RFQ & DFM Quote',
+    mode:'sequential', tag:'flagship', track:'trackA',
+    deliverable:'Quote package',
+    sample:'Defense prime RFQ for a Class 3 RF/microwave circuit card assembly, 500-unit annual volume',
+    desc:'From an inbound RFQ to a submitted quote: design-for-manufacturability review, Class 3 feasibility check, ITAR screening, and a cost-driven price quote.',
+    tasks:[
+      {agent:'pm', task:'Log the RFQ and extract technical requirements, class level, and volume', deps:[]},
+      {agent:'quote', task:'Run a design-for-manufacturability (DFM) review against the submitted Gerber and BOM data', deps:[0]},
+      {agent:'quality', task:'Confirm IPC-610 Class 3 and any Space Addendum requirements are achievable on current lines', deps:[1]},
+      {agent:'compliance', task:'Screen the RFQ for ITAR/export control classification and customer eligibility', deps:[1]},
+      {agent:'quote', task:'Build the cost and price quote for the target annual volume', deps:[2,3]},
+      {agent:'pm', task:'Assemble the quote package and flag open items for sign-off', deps:[4]},
+    ],
+  },
+  npi: {
+    name:'New Program Introduction (NPI) Onboarding', title:'NPI Onboarding',
+    mode:'sequential', track:'trackA',
+    deliverable:'Production kickoff package',
+    sample:'Onboarding a newly awarded DoD radar subsystem circuit card assembly program',
+    desc:'Walks a freshly awarded contract from technical data package review through routing setup and first article inspection to a production kickoff.',
+    tasks:[
+      {agent:'pm', task:'Review the contract award package and technical data package requirements', deps:[]},
+      {agent:'planning', task:'Set up the BOM and production routing in the manufacturing system', deps:[0]},
+      {agent:'supply', task:'Release long-lead component purchase orders against the new routing', deps:[1]},
+      {agent:'quality', task:'Draft the first article inspection plan against the customer\u2019s acceptance criteria', deps:[1]},
+      {agent:'pm', task:'Issue the production kickoff package', deps:[2,3]},
+    ],
+  },
+  trustedsource: {
+    name:'Trusted Source & Counterfeit Component Screening', title:'Trusted Source Screening',
+    mode:'sequential', track:'trackA',
+    deliverable:'Trusted Source compliance report',
+    sample:'Screening an incoming lot of RF components for a Trusted Source-certified space program build',
+    desc:'Traces an incoming component lot through IPC 1791 Trusted Assembler verification and physical counterfeit-detection screening before it enters production.',
+    tasks:[
+      {agent:'trusted', task:'Log the incoming component lot and claimed traceability documentation', deps:[]},
+      {agent:'trusted', task:'Verify lot traceability against IPC 1791 Trusted Assembler requirements', deps:[0]},
+      {agent:'quality', task:'Run physical counterfeit-detection screening against reference samples', deps:[1]},
+      {agent:'pm', task:'Issue the Trusted Source compliance report for the program record', deps:[2]},
+    ],
+  },
+  cybercompliance: {
+    name:'NIST 800-171 Cybersecurity Compliance Audit Prep', title:'Cybersecurity Audit Prep',
+    mode:'sequential', track:'trackA',
+    deliverable:'Audit readiness report',
+    sample:'Preparing for an annual NIST 800-171 assessment ahead of a DoD contract renewal',
+    desc:'Reviews current control implementation against the NIST 800-171 control set and drafts a remediation plan ahead of a formal assessment.',
+    tasks:[
+      {agent:'cyber', task:'Review current control implementation against the NIST 800-171 control set', deps:[]},
+      {agent:'cyber', task:'Identify control gaps and score assessment readiness', deps:[0]},
+      {agent:'compliance', task:'Draft a remediation plan for the highest-priority gaps', deps:[1]},
+      {agent:'pm', task:'Issue the audit readiness report for executive review', deps:[2]},
+    ],
+  },
+  qualityinspect: {
+    name:'Class 3 / Space Addendum Quality Inspection Run', title:'Class 3 Quality Inspection',
+    mode:'sequential', track:'trackB',
+    deliverable:'Quality inspection report',
+    sample:'Final inspection of a Space Addendum-qualified circuit card assembly ahead of customer shipment',
+    desc:'Runs a completed assembly through visual, x-ray, and functional inspection against IPC J-STD-001 Space Addendum requirements before shipment.',
+    tasks:[
+      {agent:'quality', task:'Build the inspection plan against IPC J-STD-001 Space Addendum requirements', deps:[]},
+      {agent:'quality', task:'Run visual and automated x-ray inspection against the built assemblies', deps:[0]},
+      {agent:'quality', task:'Run functional test against the customer\u2019s acceptance test procedure', deps:[1]},
+      {agent:'pm', task:'Disposition any nonconformances and issue the quality report', deps:[2]},
+    ],
+  },
+  obsolescence: {
+    name:'Long-Lead Component & Obsolescence Management', title:'Obsolescence Management',
+    mode:'dag', track:'trackB',
+    deliverable:'Obsolescence mitigation plan',
+    sample:'Quarterly BOM scan across active DoD programs for end-of-life and long-lead component risk',
+    desc:'Scans active program BOMs for end-of-life notices and long-lead risk in parallel, then converges on a mitigation plan before a shortage hits a delivery date.',
+    tasks:[
+      {agent:'supply', task:'Scan active program BOMs against distributor end-of-life notices', deps:[]},
+      {agent:'supply', task:'Identify qualified alternate sources for flagged components', deps:[]},
+      {agent:'planning', task:'Estimate production schedule impact of any flagged component risk', deps:[0,1]},
+      {agent:'pm', task:'Compile the obsolescence mitigation plan with recommended action', deps:[2]},
+    ],
+  },
+  capacityplan: {
+    name:'Multi-Site Production Capacity Planning', title:'Multi-Site Capacity Planning',
+    mode:'dag', track:'trackB',
+    deliverable:'Capacity plan',
+    sample:'Quarterly capacity planning across the Baltimore, Richardson, and Bloomington facilities',
+    desc:'Checks equipment utilization and active program workload in parallel across all three sites, then converges on a workload-balancing plan.',
+    tasks:[
+      {agent:'capacity', task:'Assess current production capacity and equipment utilization across all three sites', deps:[]},
+      {agent:'planning', task:'Pull the active program workload and delivery schedule commitments', deps:[]},
+      {agent:'capacity', task:'Model workload-balancing options across sites for the coming quarter', deps:[0,1]},
+      {agent:'pm', task:'Issue the multi-site capacity plan for operations review', deps:[2]},
+    ],
+  },
+  boxbuild: {
+    name:'Cable/Wire Harness & Box Build Integration', title:'Box Build Integration',
+    mode:'sequential', track:'trackB',
+    deliverable:'Production package',
+    sample:'Integrating a cable harness and enclosure box-build for a shipboard electronics program',
+    desc:'Takes a mechanical BOM through harness design, build-plan drafting, and integration test planning for a completed box-build assembly.',
+    tasks:[
+      {agent:'cable', task:'Review the mechanical BOM and interconnect drawings for the harness design', deps:[]},
+      {agent:'cable', task:'Draft the harness and cable assembly build plan', deps:[0]},
+      {agent:'quality', task:'Draft the integration test plan for the completed box-build assembly', deps:[1]},
+      {agent:'pm', task:'Issue the production package for the box-build program', deps:[2]},
+    ],
+  },
+};
+
+const DTITLE = {
+  rfqquote:'Quote Package Summary',
+  npi:'Production Kickoff Package',
+  trustedsource:'Trusted Source Compliance Report',
+  cybercompliance:'Audit Readiness Report',
+  qualityinspect:'Quality Inspection Report',
+  obsolescence:'Obsolescence Mitigation Plan',
+  capacityplan:'Multi-Site Capacity Plan',
+  boxbuild:'Box Build Production Package',
+};
+
+const TOOLS = {
+  packageAssemble:()=>'Package assembled and routed for review',
+  scheduleCheck:()=>'Schedule variance -0.3%, within tolerance',
+  dfmReview:()=>'DFM review complete, 2 minor panelization notes returned to customer',
+  costModel:()=>'Cost model closed within 5% of comparable historical program data',
+  itarScreen:()=>'ITAR classification confirmed, 0 hits on denied-party screening',
+  remediationDraft:()=>'Remediation plan drafted for the 3 highest-priority control gaps',
+  routingSetup:()=>'BOM and routing established in the manufacturing execution system',
+  scheduleImpact:()=>'Schedule impact estimated at +1 week for the flagged component risk',
+  eolScan:()=>'3 line items flagged end-of-life within 12 months across active programs',
+  altSourceIdentify:()=>'Qualified alternate source identified for 2 of 3 flagged components',
+  inspectionPlan:()=>'Inspection plan built against IPC J-STD-001 Class 3 acceptance criteria',
+  xrayInspect:()=>'Automated x-ray inspection complete, 0 BGA voids exceeding threshold',
+  traceVerify:()=>'Lot traceability verified against IPC 1791 Trusted Assembler chain-of-custody',
+  lotIntake:()=>'Component lot logged with full chain-of-custody documentation attached',
+  controlReview:()=>'Control implementation reviewed against the NIST 800-171 control set',
+  gapScore:()=>'Assessment readiness scored at 92%, 3 control gaps identified',
+  capacityAssess:()=>'Equipment utilization assessed at 78% average across all three sites',
+  workloadModel:()=>'Workload-balancing model built for the coming quarter across all sites',
+  harnessReview:()=>'Mechanical BOM and interconnect drawings reviewed, no discrepancies found',
+  buildPlanDraft:()=>'Harness and cable assembly build plan drafted with routing sequence',
+  save:()=>'Saved to program record',
+};
+
+const FINAL = {
+  rfqquote:
+`QUOTE PACKAGE — Defense Prime RFQ
+Class 3 RF/Microwave Circuit Card Assembly, 500-Unit Annual Volume
+
+DFM REVIEW: Gerber and BOM data reviewed; 2 minor panelization notes
+returned to the customer, no blocking design issues identified.
+
+CLASS 3 FEASIBILITY: Confirmed achievable on current production
+lines; no additional Space Addendum qualification required for this
+build.
+
+EXPORT SCREEN: ITAR classification confirmed for the deliverable
+item; 0 hits on denied-party screening for the named customer.
+
+COST & PRICING (draft): Cost model closes within 5% of comparable
+historical program data; price quote built for the 500-unit annual
+volume at standard program margin.
+
+OPEN ITEMS FOR HUMAN REVIEW: (1) confirm final pricing with the
+account team, (2) route the 2 panelization notes to the customer for
+sign-off, (3) confirm production line availability against the
+customer\u2019s required delivery date.
+
+NOTE: illustrative quote package — placeholder figures, not an actual
+customer quote.`,
+
+  npi:
+`PRODUCTION KICKOFF PACKAGE — DoD Radar Subsystem CCA Program
+
+AWARD REVIEW: Contract award package and technical data package
+requirements reviewed; 1 item (test procedure format) flagged for
+clarification with the customer\u2019s contracting officer.
+
+PRODUCTION SETUP: BOM and routing established in the manufacturing
+execution system, aligned to the customer\u2019s technical data package.
+
+PROCUREMENT: Long-lead purchase orders released for 4 line items
+with lead times exceeding 16 weeks.
+
+FIRST ARTICLE: Inspection plan drafted, aligned to the customer\u2019s
+acceptance test procedure and Class 3 requirements.
+
+KICKOFF: Production kickoff scheduled; open item (test procedure
+format clarification) tracked to close before first article delivery.
+
+NOTE: illustrative kickoff package — placeholder figures for
+demonstration.`,
+
+  trustedsource:
+`TRUSTED SOURCE COMPLIANCE REPORT — Incoming RF Component Lot
+
+LOT INTAKE: Component lot logged with claimed traceability
+documentation attached, consistent with the program\u2019s Trusted Source
+requirements.
+
+TRACEABILITY VERIFICATION: Lot traceability verified against IPC 1791
+Trusted Assembler chain-of-custody requirements; no gaps identified
+in the documented supply chain.
+
+COUNTERFEIT SCREENING: Physical screening against reference samples
+completed with no anomalies detected; markings and package
+characteristics consistent with genuine production.
+
+DISPOSITION: Lot approved for use on the Trusted Source-certified
+program build.
+
+NOTE: illustrative compliance report — placeholder figures for
+demonstration.`,
+
+  cybercompliance:
+`AUDIT READINESS REPORT — NIST 800-171 Assessment Prep
+
+CONTROL REVIEW: Current control implementation reviewed against the
+full NIST 800-171 control set ahead of the annual assessment.
+
+GAP ASSESSMENT: Assessment readiness scored at 92%; 3 control gaps
+identified, concentrated in access-control logging and
+configuration-management documentation.
+
+REMEDIATION PLAN: Remediation plan drafted for the 3 highest-priority
+gaps, with target closure dates ahead of the scheduled assessment
+window.
+
+STATUS: On track for the assessment date pending closure of the 3
+flagged gaps.
+
+NOTE: illustrative readiness report — placeholder figures for
+demonstration, not an actual Zentech compliance record.`,
+
+  qualityinspect:
+`QUALITY INSPECTION REPORT — Space Addendum Circuit Card Assembly
+
+INSPECTION PLAN: Built against IPC J-STD-001 Space Addendum
+requirements and the customer\u2019s acceptance test procedure.
+
+X-RAY INSPECTION: Automated x-ray inspection complete across all
+BGA and hidden-joint locations; 0 voids exceeding the acceptance
+threshold.
+
+FUNCTIONAL TEST: Functional test executed against the customer\u2019s
+acceptance test procedure; all units passed within specification.
+
+DISPOSITION: PASS. Assemblies cleared for shipment; no
+nonconformances logged for this lot.
+
+NOTE: illustrative inspection report — placeholder data for
+demonstration.`,
+
+  obsolescence:
+`OBSOLESCENCE MITIGATION PLAN — Quarterly BOM Scan
+
+SCAN RESULT: 3 line items flagged for end-of-life within 12 months
+across active DoD program BOMs.
+
+ALTERNATE SOURCING: Qualified alternate source identified for 2 of
+the 3 flagged components; the third has no drop-in equivalent
+currently qualified.
+
+SCHEDULE IMPACT: Estimated at +1 week for the flagged component
+without an identified alternate, if a lifetime buy is not executed
+this quarter.
+
+RECOMMENDATION: Execute a lifetime buy on the unresolved component
+this quarter; proceed with alternate-source qualification for the
+other two.
+
+NOTE: illustrative mitigation plan — placeholder figures for
+demonstration.`,
+
+  capacityplan:
+`MULTI-SITE CAPACITY PLAN — Baltimore / Richardson / Bloomington, Q3
+
+UTILIZATION: Equipment utilization assessed at 78% average across
+all three sites, with Baltimore trending highest due to current
+Class 3 program volume.
+
+WORKLOAD: Active program workload and delivery commitments pulled
+across all sites for the coming quarter.
+
+BALANCING MODEL: Workload-balancing options modeled to shift select
+lower-complexity builds from Baltimore to Bloomington, freeing Class
+3 capacity for higher-priority defense programs.
+
+RECOMMENDATION: Proceed with the proposed workload shift; revisit
+balancing at the next quarterly planning cycle.
+
+NOTE: illustrative capacity plan — placeholder figures for
+demonstration, not actual Zentech facility data.`,
+
+  boxbuild:
+`BOX BUILD PRODUCTION PACKAGE — Shipboard Electronics Program
+
+MECHANICAL REVIEW: Mechanical BOM and interconnect drawings reviewed
+for the harness design; no discrepancies found against the customer\u2019s
+drawing package.
+
+BUILD PLAN: Harness and cable assembly build plan drafted, including
+routing sequence and over-molded cable requirements.
+
+INTEGRATION TEST: Test plan drafted for the completed box-build
+assembly, covering continuity, insulation resistance, and mechanical
+fit checks.
+
+STATUS: Ready for production release pending final customer drawing
+sign-off.
+
+NOTE: illustrative production package — placeholder figures, not an
+actual customer program.`,
+};
+
+const EMPLOYEES = [
+  {id:'op1', name:'RFQ & DFM Quote', title:'RFQ Intake & DFM Quote Response', wf:'rfqquote', handled:'Inbound defense, aerospace & medical RFQs', hrs:19, win:'6.3x faster quote'},
+  {id:'op2', name:'NPI Onboarding', title:'New Program Introduction (NPI) Onboarding', wf:'npi', handled:'Newly awarded program contracts', hrs:21, win:'Kickoff same week'},
+  {id:'op3', name:'Trusted Source Screening', title:'Trusted Source & Counterfeit Component Screening', wf:'trustedsource', handled:'IPC 1791 component lot verification', hrs:7, win:'Report same-day'},
+  {id:'op4', name:'Cybersecurity Audit Prep', title:'NIST 800-171 Cybersecurity Compliance Audit Prep', wf:'cybercompliance', handled:'Annual DoD cyber assessments', hrs:14, win:'92% readiness score'},
+  {id:'op5', name:'Class 3 Quality Inspection', title:'Class 3 / Space Addendum Quality Inspection Run', wf:'qualityinspect', handled:'Final inspection before shipment', hrs:16, win:'Report on disposition'},
+  {id:'op6', name:'Obsolescence Management', title:'Long-Lead Component & Obsolescence Management', wf:'obsolescence', handled:'Quarterly BOM risk scans', hrs:12, win:'12-mo lead visibility'},
+  {id:'op7', name:'Multi-Site Capacity Planning', title:'Multi-Site Production Capacity Planning', wf:'capacityplan', handled:'Baltimore/Richardson/Bloomington scheduling', hrs:13, win:'Plan in 1 run'},
+  {id:'op8', name:'Box Build Integration', title:'Cable/Wire Harness & Box Build Integration', wf:'boxbuild', handled:'Harness & enclosure integration programs', hrs:11, win:'Package in 1 run'},
+];
+
+const CONFIG = {
+  trackLabels:{trackA:'Business Development, Program & Compliance', trackB:'Manufacturing, Quality & Supply Chain Engineering'},
+};
+
+/* =========================================================
+   RENDER ROSTER
+   ========================================================= */
+function agentChips(wfKey){
+  const wf = WORKFLOWS[wfKey];
+  const used = [...new Set(wf.tasks.map(t=>t.agent))];
+  return used.map(a=>`<span class="chip">${AGENT_ROLES[a].emoji} ${AGENT_ROLES[a].label}</span>`).join('');
+}
+
+function renderRoster(){
+  const mount = document.getElementById('rosterMount');
+  const tracks = ['trackA','trackB'];
+  let html = '';
+  tracks.forEach(tr=>{
+    html += `<div class="track-label">${CONFIG.trackLabels[tr]}</div><div class="roster">`;
+    EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tr).forEach(e=>{
+      const wf = WORKFLOWS[e.wf];
+      const isFlag = wf.tag==='flagship';
+      html += `
+      <div class="op-card ${isFlag?'flagship':''}">
+        <div class="op-top">
+          <div>
+            <div class="op-name">${e.name}</div>
+            <div class="op-role">${e.title}</div>
+          </div>
+          ${isFlag?'<span class="flag-chip">FLAGSHIP</span>':''}
+        </div>
+        <div class="op-desc">${wf.desc}</div>
+        <div class="op-stats">
+          <div class="op-stat">Handles<b>${e.handled}</b></div>
+          <div class="op-stat">Hrs saved/run<b>${e.hrs}</b></div>
+          <div class="op-stat">Signal<b>${e.win}</b></div>
+        </div>
+        <div class="op-agents">${agentChips(e.wf)}</div>
+        <div class="op-actions">
+          <button class="run-btn" onclick="runOperator('${e.wf}')">▶ Run this operator</button>
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  });
+  mount.innerHTML = html;
+}
+renderRoster();
+
+/* =========================================================
+   RUN ENGINE
+   ========================================================= */
+let runToken = 0;
+
+function closeRun(){
+  document.getElementById('runPanel').classList.remove('active');
+}
+
+async function runOperator(wfKey){
+  const wf = WORKFLOWS[wfKey];
+  const myToken = ++runToken;
+  const panel = document.getElementById('runPanel');
+  const feed = document.getElementById('feed');
+  const progressRow = document.getElementById('progressRow');
+  const deliverable = document.getElementById('deliverable');
+
+  panel.classList.add('active');
+  document.getElementById('runTitle').textContent = wf.name;
+  document.getElementById('runMeta').textContent = `${wf.mode==='dag'?'Parallel DAG':'Sequential'} · ${wf.tasks.length} tasks · sample: ${wf.sample}`;
+  feed.innerHTML = '';
+  deliverable.classList.remove('show');
+  progressRow.innerHTML = wf.tasks.map(()=>`<div class="pstep"></div>`).join('');
+  panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+
+  const steps = document.querySelectorAll('#progressRow .pstep');
+
+  function log(text, done){
+    const line = document.createElement('div');
+    line.className = 'feed-line' + (done?' done':'');
+    line.innerHTML = `<span class="tag">[${done?'done':'run'}]</span><span class="txt">${text}</span>`;
+    feed.appendChild(line);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  const wait = ms => new Promise(r=>setTimeout(r,ms));
+
+  if(wf.mode==='sequential'){
+    for(let i=0;i<wf.tasks.length;i++){
+      if(myToken!==runToken) return;
+      const t = wf.tasks[i];
+      steps[i].classList.add('active');
+      log(`${AGENT_ROLES[t.agent].emoji} ${AGENT_ROLES[t.agent].label} — ${t.task}`);
+      await wait(600 + Math.random()*400);
+      if(myToken!==runToken) return;
+      const toolKey = AGENT_ROLES[t.agent].tools[0];
+      log(`↳ ${TOOLS[toolKey] ? TOOLS[toolKey]() : 'Task complete'}`, true);
+      steps[i].classList.remove('active');
+      steps[i].classList.add('complete');
+      await wait(150);
+    }
+  } else {
+    const done = new Set();
+    const remaining = wf.tasks.map((t,i)=>i);
+    while(remaining.length){
+      const wave = remaining.filter(i=>wf.tasks[i].deps.every(d=>done.has(d)));
+      if(!wave.length) break;
+      wave.forEach(i=>steps[i].classList.add('active'));
+      wave.forEach(i=>{
+        const t = wf.tasks[i];
+        log(`${AGENT_ROLES[t.agent].emoji} ${AGENT_ROLES[t.agent].label} — ${t.task}`);
+      });
+      await wait(650 + Math.random()*400);
+      if(myToken!==runToken) return;
+      wave.forEach(i=>{
+        const t = wf.tasks[i];
+        const toolKey = AGENT_ROLES[t.agent].tools[0];
+        log(`↳ ${TOOLS[toolKey] ? TOOLS[toolKey]() : 'Task complete'}`, true);
+        steps[i].classList.remove('active');
+        steps[i].classList.add('complete');
+        done.add(i);
+      });
+      wave.forEach(i=>remaining.splice(remaining.indexOf(i),1));
+      await wait(150);
+    }
+  }
+
+  if(myToken!==runToken) return;
+  log(`💾 Saved to program record`, true);
+  await wait(300);
+  document.getElementById('delivTitle').textContent = DTITLE[wfKey];
+  document.getElementById('delivBody').textContent = FINAL[wfKey];
+  deliverable.classList.add('show');
+}
+
+/* =========================================================
+   BUILDER
+   ========================================================= */
+let buildStep = 1;
+let buildState = {baseWf:null, cadence:'Weekly', name:''};
+
+function builderRenderStep(){
+  document.getElementById('dot1').classList.toggle('on', buildStep>=1);
+  document.getElementById('dot2').classList.toggle('on', buildStep>=2);
+  document.getElementById('dot3').classList.toggle('on', buildStep>=3);
+  document.getElementById('backBtn').style.visibility = buildStep===1?'hidden':'visible';
+  document.getElementById('nextBtn').textContent = buildStep===3?'Create operator':'Next';
+
+  const body = document.getElementById('buildBody');
+  if(buildStep===1){
+    body.innerHTML = `<div class="pick-grid">` + Object.entries(WORKFLOWS).map(([k,w])=>`
+      <div class="pick-card ${buildState.baseWf===k?'selected':''}" onclick="pickWf('${k}')">
+        <div class="pick-title">${w.name}</div>
+        <div class="pick-desc">${w.desc}</div>
+      </div>`).join('') + `</div>`;
+  } else if(buildStep===2){
+    body.innerHTML = `
+      <div class="field-row">
+        <label>Run cadence</label>
+        <select id="cadenceSel" onchange="buildState.cadence=this.value">
+          <option ${buildState.cadence==='Continuous'?'selected':''}>Continuous</option>
+          <option ${buildState.cadence==='Daily'?'selected':''}>Daily</option>
+          <option ${buildState.cadence==='Weekly'?'selected':''}>Weekly</option>
+          <option ${buildState.cadence==='On new RFQ'?'selected':''}>On new RFQ</option>
+          <option ${buildState.cadence==='On new award'?'selected':''}>On new award</option>
+        </select>
+      </div>
+      <div class="field-row">
+        <label>Operator name</label>
+        <input id="nameInput" type="text" placeholder="e.g. Richardson Site Desk" value="${buildState.name}" oninput="buildState.name=this.value">
+      </div>`;
+  } else {
+    const wf = WORKFLOWS[buildState.baseWf];
+    body.innerHTML = `
+      <div class="summary-box">
+        <p><b>${buildState.name || 'Untitled operator'}</b> — built on <b>${wf ? wf.name : '—'}</b></p>
+        <p>Cadence: <b>${buildState.cadence}</b></p>
+        <p>Agent team: ${wf ? [...new Set(wf.tasks.map(t=>t.agent))].map(a=>AGENT_ROLES[a].emoji+' '+AGENT_ROLES[a].label).join(', ') : '—'}</p>
+        <p style="color:var(--muted);font-size:12.5px;margin-top:10px;">This adds a ninth operator to the roster below, cloned from the workflow above with your cadence and name.</p>
+      </div>`;
+  }
+}
+
+function pickWf(k){
+  buildState.baseWf = k;
+  builderRenderStep();
+}
+
+function builderNext(){
+  if(buildStep===1 && !buildState.baseWf){ alert('Pick a base workflow first.'); return; }
+  if(buildStep===3){
+    const wf = WORKFLOWS[buildState.baseWf];
+    const newKey = 'custom_'+Date.now();
+    WORKFLOWS[newKey] = {...wf, name: buildState.name || (wf.name+' (custom)'), tag:undefined};
+    DTITLE[newKey] = DTITLE[buildState.baseWf];
+    FINAL[newKey] = FINAL[buildState.baseWf];
+    EMPLOYEES.push({
+      id:'custom_'+Date.now(), name: buildState.name || 'Custom Operator',
+      title: WORKFLOWS[newKey].name, wf:newKey,
+      handled: buildState.cadence+' cadence', hrs: 10, win:'New',
+    });
+    renderRoster();
+    buildStep = 1; buildState = {baseWf:null, cadence:'Weekly', name:''};
+    builderRenderStep();
+    document.getElementById('roster-section').scrollIntoView({behavior:'smooth'});
+    return;
+  }
+  buildStep++;
+  builderRenderStep();
+}
+function builderBack(){
+  buildStep--;
+  builderRenderStep();
+}
+builderRenderStep();
+
+/* =========================================================
+   HEADER SITE READOUT + X-RAY INSPECTION ANIMATION
+   ========================================================= */
+const SITES = ['Baltimore, MD \u00b7 Class 3 line active','Richardson, TX \u00b7 Class 3 line active','Bloomington, IL \u00b7 box-build line active'];
+let siteIdx = 0;
+setInterval(()=>{
+  siteIdx = (siteIdx+1)%SITES.length;
+  document.getElementById('siteTxt').textContent = SITES[siteIdx];
+}, 3000);
+
+const NS = 'http://www.w3.org/2000/svg';
+const padGrid = document.getElementById('padGrid');
+const PAD_ROWS = 8, PAD_COLS = 10;
+const pads = [];
+for(let r=0;r<PAD_ROWS;r++){
+  for(let c=0;c<PAD_COLS;c++){
+    const x = 30 + c*24;
+    const y = 25 + r*18;
+    const circle = document.createElementNS(NS,'circle');
+    circle.setAttribute('cx', x);
+    circle.setAttribute('cy', y);
+    circle.setAttribute('r', '5');
+    circle.setAttribute('fill', 'none');
+    circle.setAttribute('stroke', 'var(--border)');
+    circle.setAttribute('stroke-width', '1');
+    padGrid.appendChild(circle);
+    const isVoid = Math.random() < 0.04;
+    pads.push({el:circle, y, revealed:false, isVoid});
+  }
+}
+
+let scanY = 10;
+let scanDir = 1;
+let voidCount = 0;
+function drawScan(){
+  scanY += scanDir * 1.1;
+  if(scanY > 180){ scanDir = -1; }
+  if(scanY < 10){ scanDir = 1; resetPads(); }
+  document.getElementById('scanLine').setAttribute('y1', scanY.toFixed(1));
+  document.getElementById('scanLine').setAttribute('y2', scanY.toFixed(1));
+
+  pads.forEach(p=>{
+    if(!p.revealed && Math.abs(p.y - scanY) < 9){
+      p.revealed = true;
+      if(p.isVoid){
+        p.el.setAttribute('fill','var(--danger)');
+        p.el.setAttribute('stroke','var(--danger)');
+        voidCount++;
+      } else {
+        p.el.setAttribute('fill','rgba(127,209,255,0.35)');
+        p.el.setAttribute('stroke','var(--accent2)');
+      }
+    }
+  });
+
+  const revealedCount = pads.filter(p=>p.revealed).length;
+  const coverage = Math.round((revealedCount/pads.length)*100);
+  document.getElementById('coverageVal').textContent = `scan coverage ${coverage}%`;
+  document.getElementById('defectVal').textContent = `${voidCount} voids flagged`;
+  requestAnimationFrame(drawScan);
+}
+function resetPads(){
+  voidCount = 0;
+  pads.forEach(p=>{
+    p.revealed = false;
+    p.el.setAttribute('fill','none');
+    p.el.setAttribute('stroke','var(--border)');
+  });
+}
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  requestAnimationFrame(drawScan);
+} else {
+  pads.forEach(p=>{
+    p.el.setAttribute('fill', p.isVoid ? 'var(--danger)' : 'rgba(127,209,255,0.35)');
+    p.el.setAttribute('stroke', p.isVoid ? 'var(--danger)' : 'var(--accent2)');
+  });
+}
+</script>
+</body>
+</html>
