@@ -97,3 +97,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/ttm
 https://innvonix-tech-solutions.github.io/ai-workforce/nhanced
 
 https://innvonix-tech-solutions.github.io/ai-workforce/globalwafers
+
+https://innvonix-tech-solutions.github.io/ai-workforce/nortech
