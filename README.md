@@ -103,3 +103,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/nortech
 https://innvonix-tech-solutions.github.io/ai-workforce/sigmatron
 
 https://innvonix-tech-solutions.github.io/ai-workforce/blackbull
+
+https://innvonix-tech-solutions.github.io/ai-workforce/wolfspeed
