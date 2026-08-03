@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CEVA, Inc. — AI Commercial &amp; Operational Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#ffffff;
+  --surface:#f8fbfc;
+  --surface2:#eef1f5;
+  --border:#dce1e7;
+  --accent:#0650e1;
+  --accent-dim:rgba(6,80,225,.08);
+  --accent-line:rgba(6,80,225,.30);
+  --orange:#ff5a00;
+  --orange-dim:rgba(255,90,0,.10);
+  --orange-line:rgba(255,90,0,.35);
+  --orange-bg:#fff7ef;
+  --blue-soft:#d7e5ff;
+  --slate:#122c49;
+  --slate-dim:rgba(18,44,73,.08);
+  --slate-line:rgba(18,44,73,.30);
+  --text:#021e3d;
+  --hi:#021e3d;
+  --tert:#65686b;
+  --ok:#16a34a;
+  --ok-dim:rgba(22,163,74,.10);
+  --gold:#a4761b;
+  --gold-bg:#fdf6e6;
+  --gold-line:#e8cf94
+}
+body{background:var(--canvas);color:var(--text);font-family:"IBM Plex Sans",Manrope,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:36px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--orange));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;letter-spacing:.5px}
+.htitle{font-size:15px;font-weight:700;color:var(--hi);font-family:"IBM Plex Sans",sans-serif}.hsub{font-size:11px;color:var(--tert);margin-top:1px}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert)}.badge b{color:var(--orange)}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:600;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.5;max-width:900px;margin-bottom:14px}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.commercial{background:var(--orange-bg);color:var(--orange);border:1px solid var(--orange-line)}
+.tag.operations{background:var(--slate-dim);color:var(--slate);border:1px solid var(--slate-line)}
+.tag.hero{background:var(--orange);color:#fff;border:1px solid var(--orange)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:24px;font-weight:700;color:var(--orange);font-family:"IBM Plex Sans",sans-serif}.cell .v .u{color:var(--accent)}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--orange);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:"IBM Plex Sans Condensed",sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--orange)}.emp.hero{border-color:var(--orange-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--orange-bg);border:1px solid var(--orange-line);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--orange);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--orange)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert)}
+.emp-owns{font-size:12px;margin-bottom:10px}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:inherit;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:var(--orange-line)}.btn.primary{background:var(--orange);border-color:var(--orange);color:#fff}
+.btn.primary:hover{background:#e04e00;border-color:#e04e00}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--orange)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--orange-line);color:var(--orange);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--orange)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--orange-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--orange);color:var(--orange)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--orange);opacity:1}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--orange);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Manrope,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--orange)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--orange)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:var(--orange-line)}.wf.sel{border-color:var(--orange);background:var(--orange-dim)}
+.wf .wn{font-size:14px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4}.wf .wm{font-size:10px;color:var(--orange);margin-top:8px;font-weight:600;text-transform:uppercase}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 13px;outline:none}.field input:focus{border-color:var(--orange)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--orange);color:#fff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="header">
+<div class="logo"><div class="mark">CEVA</div>
+<div><div class="htitle">CEVA, Inc. · AI Commercial &amp; Operational Workforce</div><div class="hsub">AI operators that discover fabless chipmakers, quote NeuPro-Nano NPU &amp; Bluetooth IP licenses, qualify 22nm PPA synthesis, run FPGA emulation, and optimize NeuPro Studio compilers</div></div></div>
+<div class="badge">Independent concept &nbsp;·&nbsp; <b>illustrative</b></div>
+</header>
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>a commercial or semiconductor IP engineering workflow turned into an autonomous team of agents</b>. One track wins the work: it finds fabless chipmakers, automotive OEMs, and hearable/wearable developers seeking Bluetooth 5.4, Wi-Fi 7, and NeuPro-Nano NPU IP cores, quotes license fees and per-chip royalties, responds to automotive Tier-1 master IP tenders, and tracks smart edge market adoption. The other track delivers the silicon IP engineering and software compiler optimization: it qualifies NeuPro-Nano NPU 22nm PPA synthesis, runs real-time Bluetooth 5.4 Channel Sounding FPGA emulation, optimizes NeuPro Studio INT8 neural network compilation, and manages RTL core ECOs. Point one at a fabless account, a 22nm PPA synthesis report, or an AXI4 RTL file and it runs the loop, then hands back a review-ready output for a silicon IP engineering manager to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial</span> find, quote, tender, win</span>
+<span><span class="tag operations">Silicon IP &amp; ops</span> PPA qual, FPGA emulation, compiler, ECO</span>
+<span><span class="tag hero">Flagship</span> the deepest example run</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+<div class="foot">Independent concept prototype prepared for a conversation with CEVA, Inc. It is not affiliated with, endorsed by, or built on CEVA systems or data. All operators and outputs are illustrative simulations; fabless chipmaker accounts, NeuPro-Nano PPA yields, IP license quotes, royalty structures, and qualification reports are placeholders. A human silicon IP architect, DSP design manager, or IP licensing sales director reviews and approves every quote, PPA qualification audit, FPGA emulation release, ISO 26262 check, and RTL ECO file.</div>
+<script>
+const AGENT_ROLES={
+dsp_npu_architect:{emoji:'⚡',label:'DSP & NeuPro-Nano NPU Silicon Architect',tools:['analyze_ceva_ip','save']},
+wireless_phy_lead:{emoji:'📡',label:'Bluetooth 5.4 & Wi-Fi 7 Wireless PHY/MAC Lead',tools:['calc_wireless_ppa','save']},
+automotive_safety_auditor:{emoji:'🛡️',label:'ISO 26262 ASIL-B/D & Functional Safety Auditor',tools:['audit_ip_safety','save']},
+fpga_emulation_eng:{emoji:'🧪',label:'FPGA Emulation & Silicon Verification Lead',tools:['run_emulation_test','save']},
+eda_flow_eng:{emoji:'🏭',label:'Synopsys & Cadence EDA PPA Optimization Lead',tools:['optimize_eda_flow','save']},
+fabless_account_mgr:{emoji:'🧲',label:'Fabless Semiconductor & OEM Sourcing Lead',tools:['source_fabless_accounts','save']},
+ip_pricing_eng:{emoji:'🧮',label:'Silicon IP License & Royalty Quoting Specialist',tools:['build_ceva_quote','save']},
+tinyml_compiler_analyst:{emoji:'📊',label:'NeuPro Studio & TinyML Compiler Specialist',tools:['compile_nn_model','save']},
+eco_revision_lead:{emoji:'🔄',label:'RTL Core & Firmware ECO Revision Lead',tools:['eval_rtl_eco','save']},
+spatial_audio_spec:{emoji:'🎧',label:'RealSpace® Spatial Audio & Sensor Fusion Spec',tools:['inspect_audio_dsp','save']},
+writer:{emoji:'✍️',label:'Technical IP Proposal Writer',tools:['compose','save']},
+reviewer:{emoji:'✅',label:'Semiconductor IP QA Reviewer',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+const TRACKS=[['commercial','Commercial & Sales Activities'],['operations','Semiconductor Silicon IP Engineering & Compiler Operations']];
+const WORKFLOWS={
+scout:{name:'Fabless semiconductor & OEM Smart Edge IP discovery',title:'AI Opportunity Scout',mode:'dag',track:'commercial',deliverable:'Target Fabless Chipmaker & OEM IP Discovery List',
+sample:'Identify tier-1 fabless semiconductor companies, automotive OEMs, and hearable/wearable manufacturers seeking Bluetooth 5.4, Wi-Fi 7, and NeuPro-Nano NPU IP cores.',
+desc:'Agents map smart edge SoC roadmaps, source VP of Engineering and IP Procurement contacts, score PPA application fit, and build the target CEVA sales pipeline.',
+tasks:[{agent:'fabless_account_mgr',task:'Source tier-1 fabless chipmakers (Qualcomm, Nordic Semi, Sony, Realtek), automotive Tier-1s, and hearable OEMs.',deps:[]},
+{agent:'dsp_npu_architect',task:'Score accounts on SoC volume projections (10M+ chips/yr), wireless standard requirements (Bluetooth Channel Sounding / Wi-Fi 7), and edge AI TOPS/Watt fit.',deps:[0]},
+{agent:'writer',task:'Compile target fabless account lead list with key VP of Engineering and Silicon IP Procurement contacts.',deps:[1]}]},
+quote:{name:'NeuPro-Nano NPU & Bluetooth 5.4 IP licensing & royalty quote',title:'AI CEVA IP Quoting Operator',mode:'sequential',track:'commercial',deliverable:'Turnkey Silicon IP License Fee & Per-Unit Royalty Proposal',
+sample:'Generate commercial proposal for NeuPro-Nano NPU Core + RivieraWaves Bluetooth 5.4 IP license for a 22nm Smart Wearable SoC.',
+desc:'Agents confirm IP deliverables (RTL verilog, testbenches, software SDK), calculate NRE license fees ($850,000 upfront), set per-unit royalty rates ($0.12/chip), and issue proposal.',
+tasks:[{agent:'dsp_npu_architect',task:'Confirm IP core configuration (NeuPro-Nano microNPU, 128 INT8 MACs/cycle, dual-mode Bluetooth 5.4 MAC/PHY).',deps:[]},
+{agent:'ip_pricing_eng',task:'Structure upfront IP license fee ($850k NRE), volume royalty tiers ($0.12/chip @ 10M units), and maintenance SDK support fees.',deps:[0]},
+{agent:'writer',task:'Produce formal customer-ready CEVA silicon IP licensing proposal.',deps:[1]}]},
+tender:{name:'Enterprise automotive ADAS & spatial audio master IP tender',title:'AI Enterprise IP Partnership Tender Operator',mode:'dag',track:'commercial',deliverable:'Enterprise Automotive & Smart Edge Master IP Supply Tender',
+sample:'Prepare 5-year multi-SoC master IP licensing agreement for a global automotive Tier-1 supplier (SensPro Radar DSP + RealSpace® Audio).',
+desc:'Agents verify ISO 26262 ASIL-D functional safety compliance, model multi-project IP portfolio discounts, and compile master IP tender response.',
+tasks:[{agent:'automotive_safety_auditor',task:'Verify ISO 26262 ASIL-B/D safety packages, failure modes effects and diagnostic analysis (FMEDA), and MISRA-C software compliance.',deps:[]},
+{agent:'ip_pricing_eng',task:'Structure multi-SoC enterprise license cap ($4.2M master agreement) and tiered royalty volume schedules.',deps:[0]},
+{agent:'writer',task:'Generate comprehensive enterprise semiconductor IP tender response.',deps:[1]}]},
+radar:{name:'Edge AI & wireless IP adoption competitive intelligence',title:'AI Semiconductor IP Market Intelligence',mode:'dag',track:'commercial',deliverable:'Smart Edge IP Adoption & Competitive Intelligence Brief',
+sample:'Analyze competitive PPA (Power, Performance, Area) benchmarks for NeuPro-Nano NPU versus Arm Ethos-U55 and Cadence Tensilica.',
+desc:'Agents track competitor IP licensing models (Arm, Cadence, Synopsys ARC, Imagination), benchmark CEVA TOPS/Watt superiority, and build market intelligence brief.',
+tasks:[{agent:'fabless_account_mgr',task:'Gather competitor IP licensing terms, silicon footprint (mm²), and customer tape-out announcements.',deps:[]},
+{agent:'dsp_npu_architect',task:'Highlight CEVA AI Fabric ultra-low-power microNPU efficiency, zero-latency vector DSP extensions, and unified NeuPro Studio compiler advantages.',deps:[]},
+{agent:'writer',task:'Produce quarterly smart edge silicon IP market intelligence and competitive positioning brief.',deps:[0,1]}]},
+ip_qualification:{name:'NeuPro-Nano NPU 22nm Ultra-Low-Power PPA & silicon qualification',title:'AI IP Qualification Operator',mode:'dag',track:'operations',tag:'flagship',deliverable:'NeuPro-Nano NPU 22nm Silicon PPA Qualification Dossier',
+sample:'Execute 22nm TSMC/GF process node PPA synthesis, power gating verification, and GDSII tape-out readiness qualification for NeuPro-Nano NPU.',
+desc:'Agents verify gate count (<150k gates), active power consumption (<3.2mW @ 400MHz), TinyML keyword spotting latency (<4.1ms), and publish qualification dossier.',
+tasks:[{agent:'dsp_npu_architect',task:'Simulate INT8/INT16 matrix multiplication pipeline, memory bandwidth utilization, and clock-gating efficiency.',deps:[]},
+{agent:'eda_flow_eng',task:'Run Synopsys Design Compiler synthesis and Cadence Innovus place-and-route targeting 22nm ULP library (0.042mm² core area).',deps:[]},
+{agent:'fpga_emulation_eng',task:'Program Xilinx UltraScale+ FPGA board to run live ML Commons TinyML benchmarks (Keyword Spotting, Visual Wake Words).',deps:[0,1]},
+{agent:'reviewer',task:'QA all PPA timing closure reports, CDC (clock domain crossing) checks, and linting clean logs.',deps:[2]},
+{agent:'writer',task:'Produce complete NeuPro-Nano NPU silicon PPA qualification report.',deps:[3]}]},
+wireless_emulation:{name:'RivieraWaves Bluetooth 5.4 & Channel Sounding FPGA emulation',title:'AI Wireless Emulation Operator',mode:'sequential',track:'operations',deliverable:'Bluetooth 5.4 & Channel Sounding FPGA Emulation Report',
+sample:'Execute real-time FPGA emulation of RivieraWaves Bluetooth 5.4 IP core with High-Accuracy Distance Measurement (HADM).',
+desc:'Agents calibrate Phase-Based Ranging (PBR) algorithms, verify RF physical layer modem BER under multipath fading, and optimize MAC packet throughput.',
+tasks:[{agent:'wireless_phy_lead',task:'Simulate Bluetooth 5.4 Channel Sounding I/Q phase measurement accuracy (<10cm distance estimation precision).',deps:[]},
+{agent:'fpga_emulation_eng',task:'Execute multi-node FPGA hardware-in-the-loop (HIL) testing across 50,000 simulated packet transmissions.',deps:[0]},
+{agent:'reviewer',task:'QA Bluetooth SIG qualification test suite compliance logs and PHY layer spectral mask compliance.',deps:[1]},
+{agent:'writer',task:'Produce comprehensive Bluetooth 5.4 FPGA emulation and verification report.',deps:[2]}]},
+compiler_opt:{name:'NeuPro Studio NN compiler & INT8 quantization optimization',title:'AI Neural Compiler Operator',mode:'dag',track:'operations',deliverable:'NeuPro Studio Compiler Optimization & Model Profiling Report',
+sample:'Optimize MobileNetV2 and YOLO-Fastest vision models for NeuPro-Nano microNPU execution via post-training INT8 quantization.',
+desc:'Agents profile layer fusing, memory buffer allocation, and INT8 quantization accuracy retention (>98.2% top-1 accuracy), generating optimized C code headers.',
+tasks:[{agent:'tinyml_compiler_analyst',task:'Convert PyTorch/TensorFlow Lite ONNX computational graphs into NeuPro-Nano vector instructions with automatic operator fusing.',deps:[]},
+{agent:'spatial_audio_spec',task:'Optimize RealSpace® 3D spatial audio room impulse response (RIR) filter kernels on Ceva-BX2 audio DSP.',deps:[]},
+{agent:'writer',task:'Produce NeuPro Studio neural compiler optimization and benchmark documentation.',deps:[0,1]}]},
+mask_eco:{name:'RTL IP core ECO & AXI bus revision control',title:'AI Silicon IP Revision Control Operator',mode:'sequential',track:'operations',deliverable:'RTL Core ECO & AXI Bus Interface Revision Assessment',
+sample:'Evaluate ECO-2026-708 (AXI4-Stream low-latency DMA bridge update & clock-domain-crossing synchronizer hardening for Ceva-BX1 DSP).',
+desc:'Agents evaluate SystemVerilog RTL diffs, recalculate formal equivalence verification (Conformal EC), and update customer IP integration manuals.',
+tasks:[{agent:'eco_revision_lead',task:'Compare SystemVerilog RTL diffs and formal verification assertions between Rev C and Rev D.',deps:[]},
+{agent:'eda_flow_eng',task:'Run formal equivalence check (FEC) and static timing analysis (STA) across corner conditions.',deps:[0]},
+{agent:'writer',task:'Publish integrated CEVA IP core ECO cut-over matrix and updated customer integration guide.',deps:[1]}]},
+};
+const DTITLE={
+scout:'Target Fabless Chipmaker & OEM IP Discovery List',
+quote:'Turnkey Silicon IP License Fee & Per-Unit Royalty Proposal',
+tender:'Enterprise Automotive & Smart Edge Master IP Supply Tender',
+radar:'Smart Edge IP Adoption & Competitive Intelligence Brief',
+ip_qualification:'NeuPro-Nano NPU 22nm Silicon PPA Qualification Dossier',
+wireless_emulation:'Bluetooth 5.4 & Channel Sounding FPGA Emulation Report',
+compiler_opt:'NeuPro Studio Compiler Optimization & Model Profiling Report',
+mask_eco:'RTL Core ECO & AXI Bus Interface Revision Assessment'
+};
+const TOOLS={
+source_fabless_accounts:()=>'Sourced tier-1 fabless chipmakers (Qualcomm, Nordic Semi, Sony), automotive Tier-1s & hearable OEMs.',
+analyze_ceva_ip:()=>'Simulated INT8/INT16 matrix multiplication pipeline & clock-gating efficiency.',
+build_ceva_quote:()=>'Structured upfront IP license fee ($850k NRE), volume royalties ($0.12/chip) & SDK maintenance.',
+audit_ip_safety:()=>'Verified ISO 26262 ASIL-B/D safety packages, FMEDA & MISRA-C software compliance.',
+calc_wireless_ppa:()=>'Simulated Bluetooth 5.4 Channel Sounding I/Q phase measurement accuracy (<10cm precision).',
+run_emulation_test:()=>'Programmed Xilinx UltraScale+ FPGA board; TinyML Keyword Spotting latency <4.1ms verified.',
+optimize_eda_flow:()=>'Ran Synopsys Design Compiler synthesis & Cadence Innovus P&R (0.042mm² core area achieved).',
+compile_nn_model:()=>'Converted PyTorch/TFLite ONNX graphs into NeuPro-Nano vector instructions with layer fusing.',
+eval_rtl_eco:()=>'Extracted SystemVerilog RTL diffs & formal verification assertions between Rev C and Rev D.',
+inspect_audio_dsp:()=>'Optimized RealSpace® 3D spatial audio RIR filter kernels on Ceva-BX2 audio DSP.',
+compose:()=>'Drafted in a clear, semiconductor silicon IP, SystemVerilog RTL & EDA flow-aware style, review-ready.',
+qa_review:()=>'QA: timing closure (zero WNS), CDC synchronizers & Bluetooth SIG qualification checked.',
+save:()=>'Saved to shared context for downstream agents.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+const FINAL={
+scout:`TARGET FABLESS CHIPMAKER & OEM IP DISCOVERY LIST (illustrative)
+Scanned tier-1 fabless semiconductor vendors, automotive Tier-1s, and hearable/wearable OEMs.
+
+A-Tier Priority Silicon IP Target Accounts:
+1. Nordic Semiconductor (Ultra-Low-Power Cellular IoT & Bluetooth SoCs) — Fit Score: 98
+2. Sony Semiconductor (Smart Vision Sensor + Edge AI Processing) — Fit Score: 96
+3. Leading Hearable OEM (Spatial Audio & Active Noise Cancellation) — Fit Score: 93
+4. Tier-1 Automotive ADAS Chipmaker (SensPro Radar DSP & ASIL-D Safety) — Fit Score: 90
+
+Key Decision Makers: VP of SoC Architecture, Director of Silicon IP Sourcing, Lead DSP Engineer.
+→ Saved: target_fabless_accounts, ip_requirements, fit_scores
+NOTE: illustrative; not affiliated with CEVA, Inc.`,
+quote:`TURNKEY SILICON IP LICENSE FEE & PER-UNIT ROYALTY PROPOSAL (illustrative)
+Client Partner: Tier-1 Smart Wearable & IoT SoC Vendor
+Licensing Scope: NeuPro-Nano™ MicroNPU IP Core + RivieraWaves™ Bluetooth 5.4 Dual-Mode Core (22nm ULP Process)
+
+IP Deliverables & Verification Deliverables
+• RTL Deliverables: Synthesizable SystemVerilog, UVM Testbenches, SDC Constraint Files
+• Software SDK: NeuPro Studio NN Compiler, Bluetooth 5.4 Stack, RealSpace® Audio Drivers
+• Target Process Node: 22nm Ultra-Low Power (TSMC / GlobalFoundries)
+
+Financial & Royalty Structure
+• One-Time Upfront IP License Fee (NRE): $850,000.00
+• Per-Unit Royalty Rate (@ 10M-25M Volume Tier): $0.12 / chip shipped
+• Annual SDK Maintenance & Tech Support: $65,000.00 / year
+→ Saved: ceva_ip_quote, royalty_tier_manifest
+NOTE: illustrative.`,
+tender:`ENTERPRISE AUTOMOTIVE & SMART EDGE MASTER IP SUPPLY TENDER (illustrative)
+RFP Reference: 5-Year Master Silicon IP Licensing Agreement for Global Automotive Tier-1
+
+Functional Safety & Automotive Compliance
+• ISO 26262 Certification: ASIL-D System-Level Safety Package & FMEDA Report
+• Quality & Software Standards: Automotive Grade 1 (-40°C to +125°C), MISRA-C Compliant Drivers
+
+Master Commercial Terms
+• Portfolio License Cap: $4,200,000.00 upfront for unlimited SoC design tape-outs over 5 years.
+• Global Engineering Support: Dedicated CEVA FAE (Field Application Engineer) team assigned.
+→ Saved: enterprise_ip_tender, iso26262_asil_d_dossier
+NOTE: illustrative.`,
+radar:`SMART EDGE IP ADOPTION & COMPETITIVE INTELLIGENCE BRIEF (illustrative)
+Smart Edge AI & Connectivity IP Market Trends
+• MicroNPU Disruption: Shift from power-hungry general-purpose CPUs to dedicated microNPUs (<5mW) for always-on TinyML tasks.
+• Bluetooth 5.4 Channel Sounding: Rapid adoption in automotive digital keys and asset tracking.
+
+CEVA AI Fabric Competitive Advantage
+• TOPS/Watt Leadership: NeuPro-Nano achieves 3x higher TOPS/Watt than Arm Ethos-U55 in 22nm process.
+• Unified Software: NeuPro Studio compiler bridges PyTorch models directly to hardware instructions without manual assembly coding.
+→ Saved: smart_edge_ip_brief, competitive_positioning
+NOTE: illustrative.`,
+ip_qualification:`NEUPRO-NANO NPU 22NM SILICON PPA QUALIFICATION DOSSIER (illustrative · flagship)
+Target IP Core: NeuPro-Nano™ Ultra-Low-Power MicroNPU (Rev B)
+Process Node: TSMC 22nm ULP Process | Target Frequency: 400 MHz
+
+PPA (Power, Performance, Area) & Benchmark Results
+• Core Area Footprint: 0.042 mm² (Including memory control logic & 16KB SRAM buffer).
+• Active Power Consumption: 3.12 mW @ 400MHz / 0.8V VDD.
+• Standby Leakage Power: 14.2 µW with aggressive power gating.
+• ML Commons TinyML Benchmark: Keyword Spotting inference latency 4.08 ms @ 99.1% accuracy.
+
+QA Sign-Off
+• Verified by VP of Silicon IP Engineering. Cleared for customer SoC GDSII tape-out integration.
+→ Saved: neupro_npu_ppa_dossier, timing_closure_reports
+NOTE: illustrative; confirm against customer SoC floorplan.`,
+wireless_emulation:`BLUETOOTH 5.4 & CHANNEL SOUNDING FPGA EMULATION REPORT (illustrative)
+Target IP Core: RivieraWaves™ Bluetooth 5.4 Controller with Channel Sounding (HADM)
+Verification Platform: Dual Xilinx UltraScale+ FPGA Hardware-in-the-Loop (HIL) Bench
+
+Emulation & Distance Measurement Performance
+• Distance Estimation Accuracy: ±7.4 cm average error across 50,000 simulated multipath packet exchanges.
+• Phase-Based Ranging (PBR) Latency: 1.2 ms per ranging measurement cycle.
+• Bit Error Rate (BER): 0.00% across 2.4GHz ISM band under simulated +10dBm co-located Wi-Fi 7 interference.
+
+Release Status: Passed Bluetooth SIG qualification test suite; cleared for customer PHY integration.
+→ Saved: bluetooth_emulation_report, channel_sounding_logs
+NOTE: illustrative.`,
+compiler_opt:`NEUPRO STUDIO COMPILER OPTIMIZATION & MODEL PROFILING REPORT (illustrative)
+Neural Network Compiler: CEVA NeuPro Studio v4.1
+Target Models: MobileNetV2 (Vision) & Keyword Spotting (Audio)
+
+Compiler Optimization Results
+• Operator Fusing: 42% reduction in memory transfer cycles via fused Conv2D + Relu6 + Depthwise layers.
+• Post-Training INT8 Quantization: Top-1 classification accuracy retained at 98.4% (vs 98.6% FP32 float baseline).
+• Header Output: C-code headers and weights binary generated for bare-metal ARM Cortex-M / RISC-V microcontrollers.
+
+Output: Model compilation profile validated for real-time edge AI execution.
+→ Saved: neupro_studio_optimization_report, int8_quant_weights
+NOTE: illustrative.`,
+mask_eco:`RTL CORE ECO & AXI BUS INTERFACE REVISION ASSESSMENT (illustrative)
+Engineering Change Order: ECO-2026-708
+Affected IP Core: Ceva-BX1 Audio DSP / AXI4-Stream Interface (Rev C -> Rev D)
+
+Change Scope & Bus Performance Optimization
+• AXI4-Stream DMA Bridge: Hardened clock-domain-crossing (CDC) synchronizers to eliminate metastable states.
+• Memory Latency Reduction: Reduced DMA burst transfer setup time by 4 clock cycles.
+
+Formal Verification & Cut-Over Schedule
+• Formal Equivalence Check (FEC): 100% formal proof match via Cadence Conformal EC.
+• Customer Integration Impact: Drop-in replacement for existing Ceva-BX1 licensees; zero pinout changes.
+→ Saved: rtl_eco_matrix, rev_d_integration_guide
+NOTE: illustrative.`,
+};
+let EMPLOYEES=[
+{id:'scout',name:'Scout',title:'AI Opportunity Scout',wf:'scout',handled:270,hrs:100,win:0,status:'idle'},
+{id:'quote',name:'Quote',title:'AI CEVA IP Quoting',wf:'quote',handled:210,hrs:125,win:60,status:'idle'},
+{id:'tender',name:'Tender',title:'AI Enterprise IP Operator',wf:'tender',handled:155,hrs:145,win:65,status:'idle'},
+{id:'radar',name:'Radar',title:'AI Silicon Market Intelligence',wf:'radar',handled:195,hrs:75,win:30,status:'idle'},
+{id:'qual',name:'Sentinel',title:'AI IP Qualification Operator',wf:'ip_qualification',handled:185,hrs:200,win:88,status:'idle'},
+{id:'emulation',name:'Atlas',title:'AI Wireless Emulation Operator',wf:'wireless_emulation',handled:230,hrs:135,win:70,status:'idle'},
+{id:'compiler',name:'Vanguard',title:'AI Neural Compiler Operator',wf:'compiler_opt',handled:190,hrs:115,win:60,status:'idle'},
+{id:'eco',name:'Nexus',title:'AI Silicon Revision Control',wf:'mask_eco',handled:195,hrs:120,win:65,status:'idle'},
+];
+let running=false;
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const now=()=>new Date().toLocaleTimeString('en-GB');
+const mono=n=>n.trim().slice(0,2).toUpperCase();
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Commercial</span>';if(wf.track==='operations')s+='<span class="tag operations">Silicon IP &amp; Ops</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+function setView(v){
+$('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');
+$('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');
+if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderEcon(){
+const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);
+const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;
+const cells=[[total,'AI operators (commercial + silicon IP engineering)'],[h.toLocaleString(),'quotes, PPA audits & FPGA emulation runs handled'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','silicon architect & sales hours saved / month'],['+'+avg+'%','avg turnaround improvement']];
+$('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');
+}
+function empCard(e){const wf=WORKFLOWS[e.wf];
+const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');
+return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}">
+<div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div>
+<div class="emp-owns">Owns: <b>${wf.name}</b></div>
+<div class="team">${team}</div>
+<div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'—'}</b>faster</div></div>
+<div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a project / RFQ</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;
+}
+function renderRoster(){
+const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;
+let html='';
+TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;
+html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});
+const untracked=EMPLOYEES.filter(e=>!WORKFLOWS[e.wf].track);
+if(untracked.length)html+=`<div class="slabel">Other</div><div class="roster">`+untracked.map(empCard).join('')+`</div>`;
+$('roster').innerHTML=html;
+}
+function assign(id){
+if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+$('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div>
+<div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a fabless account, a 22nm PPA synthesis report, or an AXI4 RTL file and ${e.name} runs the whole loop.</div></div></div>
+<div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div>
+<div id="stage"></div></div>`;
+$('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();
+}
+async function runEmp(id){
+if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;
+e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');
+const stage=$('stage');
+stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div>
+<div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div>
+<div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;
+const feed=$('feed');
+function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;
+const row=document.createElement('div');row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,150)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}
+log(null,`Input received: "${obj.substring(0,54)}…"`);
+log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);
+await sleep(rand(700,1100));
+const grid=$('agrid');
+wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;
+c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;
+grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});
+await sleep(600);
+$('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');
+const done=new Set();
+async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);
+c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';
+log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));
+for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}
+c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}
+if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}
+else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;
+if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}
+$('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');
+await sleep(400);
+const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(6,44);
+$('resultArea').innerHTML=`<div class="result"><div class="rstats">
+<div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div>
+<div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div>
+<div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'Commercial & Sales':'Silicon IP & Ops'}</span></div>
+<div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div>
+<div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div>
+<div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div>
+<div class="donebar"><b>${e.name} produced a review-ready output.</b> Execution, silicon IP auditing and QA complete, ready for a silicon IP architect, DSP design manager, or IP licensing sales director to review and confirm. Illustrative simulation placeholder.</div>`;
+e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;
+}
+// builder
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per SoC project',step:1};renderBuilder();}
+function renderBuilder(){
+const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];
+$('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();
+}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+
+Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+
+w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+
+`<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;
+document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div>
+<div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. NeuPro" oninput="draft.name=this.value"></div>
+<div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Silicon IP Specialist" oninput="draft.title=this.value"></div>
+<div class="field"><label>Cadence</label><div class="seg">`+['Per SoC project','Per IP release','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div>
+<div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;
+let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();
+const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};
+DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];
+const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});
+renderEcon();renderRoster();setView('ops');
+setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--orange)';setTimeout(()=>c.style.boxShadow='',1800);}},250);
+}
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
