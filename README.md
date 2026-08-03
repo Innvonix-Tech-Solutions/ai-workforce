@@ -127,3 +127,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/liverright/payer_aco
 https://innvonix-tech-solutions.github.io/ai-workforce/zo-skinhealth
 
 https://innvonix-tech-solutions.github.io/ai-workforce/ceva
+
+https://innvonix-tech-solutions.github.io/ai-workforce/tecsur
