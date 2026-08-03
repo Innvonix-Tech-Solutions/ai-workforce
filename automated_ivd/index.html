@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automated IVD Systems — Dubai &amp; UAE Channel Partner AI Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f2f7fb;--surface2:#dae9f4;--border:#bdcde0;--accent:#005a9c;
+--accent-dim:rgba(0,90,156,.07);--accent-line:rgba(0,90,156,.30);--slate:#334155;--slate-line:rgba(51,65,85,.32);--text:#1e293b;--hi:#0f172a;--tert:#64748b;--ok:#16a34a;--ok-dim:rgba(22,163,74,.10);--gold:#a4761b;--gold-bg:#fdf6e6;--gold-line:#e8cf94}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:36px;height:34px;border-radius:8px;background:linear-gradient(135deg,#0b2545,#005a9c);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;letter-spacing:.5px}
+.htitle{font-size:15px;font-weight:600;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert)}.badge b{color:var(--accent)}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:600;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.5;max-width:900px;margin-bottom:14px}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.commercial{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(51,65,85,.08);color:var(--slate);border:1px solid var(--slate-line)}
+.tag.hero{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:24px;font-weight:700;color:var(--hi)}.cell .v .u{color:var(--accent)}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px}
+.slabel{font-size:11px;font-weight:600;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert)}
+.emp-owns{font-size:12px;margin-bottom:10px}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:inherit;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#38bdf8}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#38bdf8}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:14px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 13px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="logo"><div class="mark">IVD</div>
+    <div><div class="htitle">Automated IVD Systems · Dubai &amp; UAE Channel Partner Acquisition AI Workforce</div><div class="hsub">Specialized AI operators designed strictly to discover, deeply research, map products, and rate channel partners in Dubai &amp; the UAE</div></div></div>
+  <div class="badge">Independent concept &nbsp;·&nbsp; <b>Dubai Focus</b></div>
+</header>
+<div class="tabs">
+  <button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+  <button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+<div class="main">
+  <div id="view-ops">
+    <div class="lead">Each AI operator is <b>a dedicated Dubai channel partner acquisition &amp; enablement workflow turned into an autonomous team of agents</b>. One track focuses on channel partner discovery and rating: it scans IVD (In Vitro Diagnostics) and medical lab equipment distributors in Dubai, performs deep research on their brand portfolio and lab footprint, maps potential automated microplate product lines (2-plate &amp; 4-plate ELISA systems, microplate washers, reagent consumables), and scores commercial potential. The other track manages partner onboarding and regional enablement: it drafts territory distribution contracts, plans biomedical engineer technical training in Dubai, monitors regional hospital tenders, and audits partner sales targets. Point one at a Dubai distributor or a partner proposal, and it runs the loop, then hands back a review-ready output for your team to present over a meeting call.</div>
+    <div class="legend">
+      <span><span class="tag commercial">Partner Acquisition</span> find, research, map, rate</span>
+      <span><span class="tag operations">Enablement &amp; Ops</span> contract, train, tenders, audit</span>
+      <span><span class="tag hero">Flagship</span> deep research &amp; rating run</span>
+    </div>
+    <div class="econ" id="econ"></div>
+    <div id="roster"></div>
+    <div id="runPanel"></div>
+  </div>
+  <div id="view-hire" class="hidden">
+    <div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+    <div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+  </div>
+</div>
+<div class="foot">Independent concept prototype prepared by Innvonix Tech Solutions for clinical diagnostic and IVD platform demonstrations. Focused exclusively on the Dubai, UAE, and GCC regional channel partner landscape. All distributor profiles, product mappings, scores, and contract terms are illustrative generic simulations. A qualified VP of International Sales, Channel Director, or Regional Manager reviews and approves every channel partner rating, distribution contract, and product allocation. This is an administrative demo tool for presentation calls.</div>
+
+<script>
+const AGENT_ROLES={
+  dubai_scout:{emoji:'🇦🇪',label:'Dubai IVD & Lab Market Scout',tools:['search_dubai_distributors','save']},
+  deep_researcher:{emoji:'🔎',label:'Distributor Portfolio & Capability Researcher',tools:['research_partner_portfolio','audit_mohap_status','save']},
+  product_matcher:{emoji:'🧬',label:'Automated Microplate Product Matcher',tools:['match_ivd_products','save']},
+  partner_scorer:{emoji:'📊',label:'IVD Channel Partner Scorer',tools:['score_partner_potential','rank_distributors','save']},
+  contract_spec:{emoji:'📜',label:'Dubai Territory & Legal Agreement Specialist',tools:['draft_partner_agreement','save']},
+  enablement_spec:{emoji:'🎓',label:'Biomedical Engineering Training Specialist',tools:['plan_technical_training','save']},
+  tender_radar:{emoji:'🛰️',label:'UAE Healthcare & Hospital Tender Radar',tools:['scan_uae_tenders','save']},
+  writer:{emoji:'✍️',label:'Executive Partner Evaluation Writer',tools:['compose','save']},
+  reviewer:{emoji:'✅',label:'Regional Director Reviewer',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+const TRACKS=[['commercial','Channel Partner Acquisition & Rating (Dubai focus)'],['operations','Channel Enablement & Operations (Dubai / UAE)']];
+const WORKFLOWS={
+  dubaiscout:{name:'Dubai & UAE distributor discovery',title:'Dubai Partner Scout',mode:'dag',track:'commercial',deliverable:'Dubai & UAE Medical Lab Distributor Directory',
+    sample:'Find top-tier IVD, clinical lab equipment, and immunoassay distributors operating in Dubai Healthcare City, JAFZA, and Abu Dhabi.',
+    desc:'Agents scan UAE medical distributor registries, source healthcare procurement contacts, filter active MOHAP registrations, and build directory.',
+    tasks:[{agent:'dubai_scout',task:'Scan Dubai and UAE commercial registries for IVD, immunoassay, and clinical diagnostics distributors.',deps:[]},
+      {agent:'deep_researcher',task:'Verify UAE Ministry of Health (MOHAP) & Dubai Health Authority (DHA) medical device distributor licenses.',deps:[0]},
+      {agent:'partner_scorer',task:'Filter distributors with established sales channels into Dubai private hospital labs and government health networks.',deps:[1]},
+      {agent:'writer',task:'Compile the verified Dubai & UAE clinical distributor directory.',deps:[2]}]},
+  deepresearch:{name:'Deep distributor portfolio research',title:'Distributor Portfolio Researcher',mode:'sequential',track:'commercial',deliverable:'Distributor Deep-Dive & Capability Intelligence Report',
+    sample:'Conduct a deep-dive research on Pharma-Med Dubai LLC and Gulf Diagnostic Equipment UAE: analyze existing brand portfolio, lab coverage, and service teams.',
+    desc:'Agents analyze competing diagnostic brands carried, evaluate biomedical engineer headcount in Dubai, map hospital client footprint, and report.',
+    tasks:[{agent:'deep_researcher',task:'Analyze existing brand portfolio carried (e.g. Roche, Abbott, Siemens, Bio-Rad, DiaSorin) for product conflicts.',deps:[]},
+      {agent:'deep_researcher',task:'Evaluate distributor infrastructure: Dubai warehouse cold-chain capacity (2°C–8°C), biomedical engineers, and application specialists.',deps:[0]},
+      {agent:'partner_scorer',task:'Assess distributor reputation across Dubai private lab chains (e.g. Al Borg, Medsol, Aster, Prime Healthcare).',deps:[1]},
+      {agent:'writer',task:'Produce the comprehensive distributor deep-dive intelligence report.',deps:[2]}]},
+  productmatch:{name:'Automated microplate product line matching',title:'Microplate Product Matcher',mode:'sequential',track:'commercial',deliverable:'Product Allocation & Revenue Potential Matrix',
+    sample:'Map automated microplate product lines (2-plate & 4-plate ELISA systems, microplate washers, consumables) to specific Dubai distributor market segments.',
+    desc:'Agents match automated ELISA systems to distributor customer tiers (mid-volume labs vs. high-volume blood banks), and project revenues.',
+    tasks:[{agent:'product_matcher',task:'Match 2-Plate Automated ELISA Systems to mid-sized private diagnostic labs and clinic networks across Dubai.',deps:[]},
+      {agent:'product_matcher',task:'Match 4-Plate High-Throughput Automated Systems to Dubai government hospitals (DHA/SEHA) and central blood banks.',deps:[0]},
+      {agent:'product_matcher',task:'Calculate recurring annual revenue potential for proprietary microplate tips, deep-well strips, and reagent consumables.',deps:[1]},
+      {agent:'writer',task:'Produce the automated microplate product line matching and revenue allocation matrix.',deps:[2]}]},
+  partnerevaluator:{name:'Channel partner rating & business scoring',title:'Partner Rating Engine',mode:'dag',track:'commercial',tag:'flagship',deliverable:'Dubai Channel Partner Evaluation & Rating Matrix',
+    sample:'Evaluate and rate 5 shortlisted Dubai distributors (Pharma-Med LLC, Gulf Diagnostic, Biomedical Solutions FZ, Middle East Health, Emirates BioLab).',
+    desc:'Agents execute deep research, analyze brand synergies, evaluate IVD product fit, compute weighted business ratings (1-100), and issue matrix.',
+    tasks:[{agent:'dubai_scout',task:'Ingest target Dubai distributor profiles & commercial registration data.',deps:[]},
+      {agent:'deep_researcher',task:'Analyze distributor financial stability, biomedical engineering staff size in Dubai, and MOHAP clearance.',deps:[0]},
+      {agent:'product_matcher',task:'Map 2-Plate & 4-Plate Automated ELISA product fit against distributor existing reagent and assay portfolio.',deps:[1]},
+      {agent:'partner_scorer',task:'Calculate weighted commercial rating scores (Market Reach 30%, Service Strength 25%, Brand Synergy 25%, Financials 20%).',deps:[2]},
+      {agent:'reviewer',task:'Regional Director QA Review: validate top-rated partner recommendation.',deps:[3]},
+      {agent:'writer',task:'Produce the executive Dubai Channel Partner Rating & Business Potential Matrix.',deps:[4]}]},
+  onboardpartner:{name:'Partner contract & territory agreement',title:'Partner Agreement Specialist',mode:'sequential',track:'operations',deliverable:'Dubai Distribution Agreement & MOHAP Package',
+    sample:'Draft exclusive Dubai & Northern Emirates distribution agreement for 2-plate & 4-plate automated ELISA systems with top-rated partner.',
+    desc:'Agents draft territory exclusivity terms, set annual purchase quotas in USD, outline warranty support SLAs, and format MOHAP registration file.',
+    tasks:[{agent:'contract_spec',task:'Draft exclusive distribution contract for Dubai & Northern Emirates territory.',deps:[]},
+      {agent:'contract_spec',task:'Set annual minimum instrument purchase quotas (2-Plate & 4-Plate Processors) and consumable re-order commitments.',deps:[0]},
+      {agent:'contract_spec',task:'Prepare UAE MOHAP medical device registration support package for automated microplate instruments.',deps:[1]},
+      {agent:'writer',task:'Produce the distribution agreement and MOHAP registration dossier.',deps:[2]}]},
+  enablementwork:{name:'Biomedical engineer & sales training',title:'Dubai Enablement Specialist',mode:'dag',track:'operations',deliverable:'Distributor Technical Training & Certification Plan',
+    sample:'Design a 5-day technical service & clinical application training program in Dubai for distributor biomedical engineers on 2-plate & 4-plate processors.',
+    desc:'Agents design hands-on service engineer curriculum, clinical control software setup, preventive maintenance certification, and schedule.',
+    tasks:[{agent:'enablement_spec',task:'Design technical service curriculum: liquid handling calibration, optical reader alignment, and board replacement.',deps:[]},
+      {agent:'enablement_spec',task:'Structure clinical application training: assay programming, LIS/HIS interface integration, and user workflow.',deps:[0]},
+      {agent:'enablement_spec',task:'Set up Certified Biomedical Service Engineer accreditation protocol for Dubai staff.',deps:[1]},
+      {agent:'writer',task:'Produce the distributor technical training and certification plan.',deps:[2]}]},
+  tenderwork:{name:'Dubai & UAE hospital tender radar',title:'UAE Tender Radar',mode:'dag',track:'operations',deliverable:'Dubai Hospital & MOHAP Tender Intelligence Brief',
+    sample:'Scan active DHA (Dubai Health Authority) and MOHAP public tenders for automated immunoassay and ELISA microplate instrumentation.',
+    desc:'Agents monitor UAE Ministry of Health, DHA, and private hospital tenders, identify instrument specs match, and alert channel partner.',
+    tasks:[{agent:'tender_radar',task:'Monitor public tenders from Dubai Health Authority (DHA), SEHA Abu Dhabi, and Ministry of Health.',deps:[]},
+      {agent:'product_matcher',task:'Match tender specifications against 4-Plate Processing Capacity and open-system reagent flexibility.',deps:[0]},
+      {agent:'contract_spec',task:'Prepare technical tender compliance matrix and compliance certificates for distributor submission.',deps:[1]},
+      {agent:'writer',task:'Produce the Dubai hospital tender intelligence and joint bid proposal brief.',deps:[2]}]},
+  partnerauditwork:{name:'Distributor sales & SLA audit',title:'Partner Performance Auditor',mode:'dag',track:'operations',deliverable:'Quarterly Distributor Performance & Audit Report',
+    sample:'Audit Q1 performance of Dubai channel partner: track instrument placements, consumable re-orders, and service call response times.',
+    desc:'Agents audit quarterly sales target achievement, verify cold-chain warehouse compliance in Dubai, review service ticket logs, and report.',
+    tasks:[{agent:'partner_scorer',task:'Audit quarterly instrument placements (2-Plate / 4-Plate Systems) against contract commitment.',deps:[]},
+      {agent:'deep_researcher',task:'Verify distributor cold-chain warehouse temperature logs in JAFZA / Dubai Industrial City for reagent kits.',deps:[0]},
+      {agent:'enablement_spec',task:'Review customer service response SLA (<4 hour response target across Dubai hospital labs).',deps:[1]},
+      {agent:'writer',task:'Produce the quarterly channel partner audit and performance evaluation report.',deps:[2]}]},
+};
+const DTITLE={dubaiscout:'Dubai & UAE Medical Lab Distributor Directory',deepresearch:'Distributor Deep-Dive & Capability Intelligence Report',productmatch:'Product Allocation & Revenue Potential Matrix',partnerevaluator:'Dubai Channel Partner Evaluation & Rating Matrix',onboardpartner:'Dubai Distribution Agreement & MOHAP Package',enablementwork:'Distributor Technical Training & Certification Plan',tenderwork:'Dubai Hospital & MOHAP Tender Intelligence Brief',partnerauditwork:'Quarterly Distributor Performance & Audit Report'};
+const TOOLS={
+  search_dubai_distributors:()=>'Scanned UAE commercial databases; identified 14 medical lab distributors in Dubai.',
+  research_partner_portfolio:()=>'Analyzed brand portfolios: checked Bio-Rad, DiaSorin, Euroimmun & Roche representation.',
+  audit_mohap_status:()=>'Audited MOHAP licenses: verified active UAE Ministry of Health medical device importer status.',
+  match_ivd_products:()=>'Matched products: 2-Plate System mapped to private clinics; 4-Plate System mapped to central hospital labs.',
+  score_partner_potential:()=>'Computed weighted business score: evaluated Market Reach, Service Strength, & Financials.',
+  rank_distributors:()=>'Ranked distributors: top 3 partners scored 88/100, 84/100, and 79/100.',
+  draft_partner_agreement:()=>'Drafted distribution agreement: defined Dubai & Northern Emirates territory & annual quotas.',
+  plan_technical_training:()=>'Designed 5-day Dubai training program for 8 distributor biomedical service engineers.',
+  scan_uae_tenders:()=>'Scanned DHA tenders: flagged 2 active automated ELISA processing tenders.',
+  qa_review:()=>'Regional Director QA complete: confirmed #1 ranked Dubai partner recommendation.',
+  compose:()=>'Drafted in a clear, executive-grade, Middle East channel-compliant style, review-ready.',
+  save:()=>'Saved to shared channel management context for sign-off.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+const FINAL={
+dubaiscout:`DUBAI & UAE MEDICAL LAB DISTRIBUTOR DIRECTORY  (illustrative simulation)
+
+Scanned IVD, immunoassay, and clinical laboratory equipment distributors operating in Dubai & UAE.
+
+Verified Dubai Distributor Candidates
+1. Gulf Diagnostic Equipment LLC (Dubai Healthcare City) — MOHAP Licensed | 34 Biomedical Engineers | Focus: Clinical IVD
+2. Pharma-Med Middle East FZ-LLC (JAFZA, Dubai) — MOHAP Licensed | 28 Biomedical Engineers | Focus: Automated Assays & Immunoassay
+3. Biomedical Solutions UAE (Dubai Industrial City) — MOHAP Licensed | 19 Engineers | Focus: Blood Banks & Reference Labs
+4. Emirates Healthcare & Lab Supplies (Abu Dhabi / Dubai) — MOHAP Licensed | 22 Engineers | Focus: Government Hospitals
+
+Target Customer Network: Dubai Health Authority (DHA), Al Borg Diagnostics, Medsol, Aster Labs, Prime Healthcare.
+
+→ Saved: dubai_distributors_directory, mohap_licenses, contact_index
+NOTE: illustrative concept simulation.`,
+deepresearch:`DISTRIBUTOR DEEP-DIVE & CAPABILITY INTELLIGENCE REPORT  (illustrative)
+
+Target Partner Audited: Pharma-Med Middle East FZ-LLC  (Dubai, UAE)
+
+1. Brand Portfolio & Conflict Analysis
+• Current Lines Carried: Diagnostic reagents for infectious disease & auto-immunity (No conflicting ELISA processor hardware).
+• Hardware Gap: Lacks proprietary 2-plate & 4-plate automated ELISA microplate processing hardware (Perfect fit for 2-Plate & 4-Plate Systems).
+
+2. Technical Service & Infrastructure Capacity (Dubai)
+• Biomedical Service Engineers: 12 Certified Field Engineers based in Dubai, 4 in Abu Dhabi.
+• Warehouse & Cold-Chain: 1,800 sq. m. temperature-controlled warehouse in JAFZA (2°C–8°C certified cold storage).
+• Customer Response Time: <3.5 Hours average emergency service SLA across Dubai private and public hospital labs.
+
+3. Commercial Hospital & Lab Reach
+• Active Accounts: 42 Clinical Laboratories across Dubai, Sharjah, and Abu Dhabi.
+
+→ Saved: distributor_deepdive_report, infrastructure_audit, brand_matrix
+NOTE: illustrative simulation.`,
+productmatch:`PRODUCT ALLOCATION & REVENUE POTENTIAL MATRIX  (illustrative)
+
+Region: Dubai & Northern Emirates (UAE)
+Target Distributor: Gulf Diagnostic Equipment LLC
+
+Automated Microplate Product Line Allocation
+1. 2-Plate Automated ELISA Processing System
+   • Target Segment: Mid-volume private diagnostic labs, specialized clinics, & university research labs in Dubai.
+   • Projected Placements: 8 Units in Year 1  |  Unit Price: $34,000 USD  |  Hardware Revenue: $272,000 USD
+2. 4-Plate High-Throughput Automated System
+   • Target Segment: DHA Central Labs, Dubai Hospital, Rashid Hospital, & Reference Testing Centers.
+   • Projected Placements: 4 Units in Year 1  |  Unit Price: $58,000 USD  |  Hardware Revenue: $232,000 USD
+3. Microplate Consumables & Reagent Tips
+   • Target Segment: Installed base recurring consumable replenishment.
+   • Projected Consumable Revenue: $185,000 USD / Year (Recurring 72% Margin)
+
+Total Year-1 Projected Revenue: $689,000 USD
+
+→ Saved: product_allocation_matrix, revenue_forecast, consumable_model
+NOTE: illustrative simulation.`,
+partnerevaluator:`DUBAI CHANNEL PARTNER EVALUATION & RATING MATRIX  (illustrative · flagship)
+
+Evaluation Scope: Commercial Rating of Shortlisted Distributors in Dubai, UAE
+
+Distributor Business Ratings & Ranking (Out of 100)
+
+🥇 #1 Ranked: Pharma-Med Middle East FZ-LLC (Dubai) — Total Rating: 91.5 / 100
+• Market Reach in Dubai/UAE (30% weight): 94/100 — 48 Active Clinical Lab Accounts across Dubai & Abu Dhabi.
+• Biomedical Service Capability (25% weight): 92/100 — 12 Dedicated Service Engineers in Dubai; 24/7 Support.
+• Automated System Synergy (25% weight): 95/100 — High demand for 2-Plate/4-Plate Systems to automate open ELISA assays.
+• Financial Stability & Credit (20% weight): 83/100 — Strong balance sheet; bank guarantee for $500k USD.
+→ Recommendation: Pursue Exclusive Territory Distribution Contract for Dubai & Northern Emirates.
+
+🥈 #2 Ranked: Gulf Diagnostic Equipment LLC (Dubai) — Total Rating: 86.0 / 100
+• Market Reach: 88/100 | Service Strength: 90/100 | Synergy: 82/100 | Financials: 84/100
+→ Recommendation: Backup partner candidate; strong government hospital presence.
+
+🥉 #3 Ranked: Biomedical Solutions UAE (Dubai Industrial City) — Total Rating: 78.5 / 100
+• Market Reach: 75/100 | Service Strength: 80/100 | Synergy: 82/100 | Financials: 78/100
+
+→ Saved: partner_rating_matrix, executive_summary, recommendation_brief
+NOTE: illustrative flagship simulation; requires VP Sales approval.`,
+onboardpartner:`DUBAI DISTRIBUTION AGREEMENT & MOHAP DOSSIER  (illustrative)
+
+Partner: Pharma-Med Middle East FZ-LLC (Dubai, UAE)
+Territory: Dubai & Northern Emirates (Sharjah, Ajman, RAK, UAQ, Fujairah)
+
+Key Agreement Terms
+• Exclusivity: Exclusive sales rights for 2-Plate & 4-Plate automated ELISA systems in designated territory.
+• Annual Minimum Purchase Quotas: Year 1: $450,000 USD (Includes 8 2-Plate units, 3 4-Plate units, + consumables).
+• Warranty & Spare Parts: 14-Month factory warranty; distributor maintains $45,000 USD local spare parts kit in Dubai.
+
+MOHAP Medical Device Registration Package
+• Documents Compiled: ISO 13485 Certificate, CE Mark Dossier, Free Sale Certificate (FSC), Declaration of Conformity.
+
+→ Saved: distribution_agreement_draft, quota_schedule, mohap_dossier
+NOTE: illustrative simulation.`,
+enablementwork:`DISTRIBUTOR TECHNICAL TRAINING & CERTIFICATION PLAN  (illustrative)
+
+Training Location: Regional Training Center / Partner Facility in Dubai
+Target Audience: 8 Biomedical Service Engineers & 4 Clinical Application Specialists
+
+5-Day Technical Curriculum Structure
+• Day 1-2: 2-Plate & 4-Plate Hardware Architecture, Optical Reader Alignment, Liquid Handling Calibration.
+• Day 3: Clinical Control Software Setup, Assay Method Programming, LIS Bi-Directional Interface Setup.
+• Day 4: Preventive Maintenance Protocol, Troubleshooting Error Codes, Field Board Replacement.
+• Day 5: Hands-on Qualification Exam & Certification Award.
+
+→ Saved: technical_training_plan, certification_curriculum, exam_rubric
+NOTE: illustrative simulation.`,
+tenderwork:`DUBAI HOSPITAL & MOHAP TENDER INTELLIGENCE BRIEF  (illustrative)
+
+Tender Ref: DHA-IVD-2026-ELISA-09
+Issuing Authority: Dubai Health Authority (DHA) — Central Hospital Procurement
+
+Tender Requirements & Automated System Match
+• Requirement: Automated 4-Plate Microplate Processor with onboard washer, incubator, & barcode reader.
+• System Match: 4-Plate Automated System fully complies with all technical clauses.
+• Key Differentiator: Open-system capability allows DHA labs to run any commercial ELISA assay kit.
+
+Joint Bidding Strategy
+• Primary Bidder: Pharma-Med Middle East LLC (Dubai Licensed Distributor).
+• Manufacturer Support: Factory technical compliance matrix, authorization letter, and warranty guarantee.
+
+→ Saved: dha_tender_brief, compliance_matrix, joint_bid_strategy
+NOTE: illustrative simulation.`,
+partnerauditwork:`QUARTERLY DISTRIBUTOR PERFORMANCE & AUDIT REPORT  (illustrative)
+
+Audit Period: Q1 Performance Evaluation  |  Partner: Pharma-Med Middle East (Dubai)
+
+Performance Scorecard
+• Instrument Sales Quota: 3 / 3 Placements Achieved (2x 2-Plate, 1x 4-Plate in Dubai private labs) — 100% Target Met.
+• Consumable Re-Orders: $52,000 USD ordered vs. $45,000 USD target — 115% Target Met.
+• JAFZA Cold-Chain Audit: Warehouse temperature logs audited: 100% compliant with 2°C–8°C range.
+• Service Call SLA: Average response time across Dubai labs = 2.8 Hours (Target <4.0 Hours) — PASSED.
+
+Overall Status: Tier-1 Preferred Distributor Status Maintained.
+
+→ Saved: quarterly_audit_report, warehouse_audit_log, sla_scorecard
+NOTE: illustrative simulation.`,
+};
+let EMPLOYEES=[
+ {id:'dubaiscout',name:'DubaiScout',title:'Dubai Partner Scout',wf:'dubaiscout',handled:185,hrs:45,win:0,status:'idle'},
+ {id:'deepresearch',name:'DeepResearch',title:'Distributor Researcher',wf:'deepresearch',handled:140,hrs:88,win:0,status:'idle'},
+ {id:'productmatch',name:'ProductMatch',title:'Microplate Product Matcher',wf:'productmatch',handled:165,hrs:75,win:0,status:'idle'},
+ {id:'partnerevaluator',name:'PartnerEvaluator',title:'Partner Rating Engine',wf:'partnerevaluator',handled:310,hrs:210,win:68,status:'idle'},
+ {id:'onboardpartner',name:'OnboardPartner',title:'Partner Agreement Specialist',wf:'onboardpartner',handled:130,hrs:95,win:42,status:'idle'},
+ {id:'enablement',name:'Enablement',title:'Dubai Enablement Specialist',wf:'enablementwork',handled:120,hrs:80,win:0,status:'idle'},
+ {id:'tender',name:'Tender',title:'UAE Tender Radar',wf:'tenderwork',handled:150,hrs:90,win:46,status:'idle'},
+ {id:'partneraudit',name:'PartnerAudit',title:'Partner Performance Auditor',wf:'partnerauditwork',handled:110,hrs:60,win:0,status:'idle'},
+];
+let running=false;
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const now=()=>new Date().toLocaleTimeString('en-GB');
+const mono=n=>n.trim().slice(0,2).toUpperCase();
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Acquisition</span>';if(wf.track==='operations')s+='<span class="tag operations">Enablement</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+function setView(v){
+  $('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');
+  $('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');
+  if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderEcon(){
+  const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);
+  const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;
+  const cells=[[total,'AI operators (acquisition + enablement)'],[h.toLocaleString(),'Dubai distributor profiles & ratings completed'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','sales director hours saved / month'],['Dubai & UAE','targeted geographic focus']];
+  $('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');
+}
+function empCard(e){const wf=WORKFLOWS[e.wf];
+  const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');
+  return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}">
+   <div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div>
+   <div class="emp-owns">Owns: <b>${wf.name}</b></div>
+   <div class="team">${team}</div>
+   <div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'—'}</b>faster</div></div>
+   <div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on Dubai distributor</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;
+}
+function renderRoster(){
+  const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;
+  let html='';
+  TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;
+    html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});
+  const untracked=EMPLOYEES.filter(e=>!WORKFLOWS[e.wf].track);
+  if(untracked.length)html+=`<div class="slabel">Other</div><div class="roster">`+untracked.map(empCard).join('')+`</div>`;
+  $('roster').innerHTML=html;
+}
+function assign(id){
+  if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+  $('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div>
+    <div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a Dubai distributor candidate or partner proposal and ${e.name} runs the whole loop.</div></div></div>
+    <div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div>
+    <div id="stage"></div></div>`;
+  $('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();
+}
+async function runEmp(id){
+  if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+  const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;
+  e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');
+  const stage=$('stage');
+  stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div>
+    <div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div>
+    <div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;
+  const feed=$('feed');
+  function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;
+    const row=document.createElement('div');row.className='frow';row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,150)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}
+  log(null,`Input received: "${obj.substring(0,54)}…"`);
+  log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);
+  await sleep(rand(700,1100));
+  const grid=$('agrid');
+  wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;
+    c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;
+    grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});
+  await sleep(600);
+  $('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');
+  const done=new Set();
+  async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);
+    c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';
+    log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));
+    for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}
+    c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}
+  if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}
+  else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;
+    if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}
+  $('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');
+  await sleep(400);
+  const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(6,44);
+  $('resultArea').innerHTML=`<div class="result"><div class="rstats">
+    <div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div>
+    <div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div>
+    <div class="rrow"><span class="k">Focus Region</span><span class="v">Dubai &amp; UAE</span></div>
+    <div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div>
+    <div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div>
+    <div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div>
+    <div class="donebar"><b>${e.name} produced a review-ready output.</b> Dubai channel partner evaluation, product allocation, and commercial rating complete, ready for a sales executive to present on a meeting call. Illustrative simulation.</div>`;
+  e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;
+}
+// builder
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per distributor',step:1};renderBuilder();}
+function renderBuilder(){
+  const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];
+  $('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+  if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();
+}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+
+  Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  $('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+
+    w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+
+    `<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;
+  document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div>
+  <div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. PartnerEvaluator" oninput="draft.name=this.value"></div>
+  <div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Channel Partner Scorer" oninput="draft.title=this.value"></div>
+  <div class="field"><label>Cadence</label><div class="seg">`+['Per distributor','Per quarter','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div>
+  <div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;
+  let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+  else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+  else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();
+  const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};
+  DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];
+  const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});
+  renderEcon();renderRoster();setView('ops');
+  setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);
+}
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
