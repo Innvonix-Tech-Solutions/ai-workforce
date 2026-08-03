@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tecsur — Modern Data &amp; Analytics Platform (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f3f6fb;--surface2:#e6edf6;--border:#d8e2ef;--accent:#15487e;--accent2:#e8933a;
+--accent-dim:rgba(21,72,126,.07);--accent-line:rgba(21,72,126,.28);--text:#1e2733;--hi:#0e1a28;--tert:#66788c;--ok:#1a9e57;--bad:#d1453f;--bar:#e9eef6;--c1:#15487e;--c2:#3f86c4;--c3:#e8933a;--c4:#1a9e57;--c5:#8a63c9}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:15px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:38px;height:34px;border-radius:8px;background:linear-gradient(135deg,#123f70,#3f86c4);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;letter-spacing:.5px}
+.htitle{font-size:15px;font-weight:600;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert)}.badge b{color:var(--accent)}
+.tabs{max-width:1200px;margin:0 auto;padding:20px 24px 0;display:flex;gap:6px;flex-wrap:wrap}
+.tab{padding:10px 18px;font-size:13px;font-weight:600;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1200px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:960px;margin-bottom:16px}.lead b{color:var(--hi)}
+.h2{font-size:12px;font-weight:700;letter-spacing:1.1px;color:var(--tert);text-transform:uppercase;margin:24px 0 12px;display:flex;align-items:center;gap:10px}.h2::after{content:"";flex:1;height:1px;background:var(--border)}
+.aswitch{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.achip{padding:9px 15px;font-size:12.5px;font-weight:600;border:1px solid var(--border);border-radius:9px;background:#fff;color:var(--tert);cursor:pointer}
+.achip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.achip .es{font-size:10.5px;font-weight:500;opacity:.75;display:block}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:6px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:15px 16px}
+.kpi .kv{font-size:23px;font-weight:700;color:var(--hi)}.kpi .kv small{font-size:13px;color:var(--tert);font-weight:600}
+.kpi .kk{font-size:11.5px;color:var(--tert);margin-top:3px}
+.kpi .kd{font-size:11px;font-weight:600;margin-top:6px}.kd.up{color:var(--ok)}.kd.down{color:var(--bad)}
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px;margin-top:14px}
+.chart{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px}
+.chart .ct{font-size:13px;font-weight:700;color:var(--hi)}.chart .cs{font-size:11px;color:var(--tert);margin-top:1px;margin-bottom:12px}
+.bar{display:grid;grid-template-columns:120px 1fr 52px;align-items:center;gap:10px;margin-bottom:9px;font-size:12px}
+.bar .bl{color:var(--tert);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar .bt{height:16px;background:var(--bar);border-radius:4px;overflow:hidden}.bar .bt i{display:block;height:100%;border-radius:4px}
+.bar .bv{text-align:right;font-weight:700;color:var(--hi)}
+.donut{display:flex;align-items:center;gap:18px}
+.dleg{font-size:12px}.dleg div{display:flex;align-items:center;gap:8px;margin-bottom:7px;color:var(--tert)}.dleg .sw{width:11px;height:11px;border-radius:3px;flex-shrink:0}.dleg b{color:var(--hi);margin-left:auto}
+.archrow{display:grid;grid-template-columns:150px 1fr;gap:14px;margin-bottom:12px;align-items:stretch}
+@media(max-width:820px){.archrow{grid-template-columns:1fr}}
+.archlbl{background:var(--accent);color:#fff;border-radius:11px;padding:14px;display:flex;flex-direction:column;justify-content:center}
+.archlbl .an{font-size:13px;font-weight:700}.archlbl .ad{font-size:11px;opacity:.85;margin-top:3px;line-height:1.35}
+.archlbl.alt{background:var(--surface2);color:var(--hi)}.archlbl.alt .ad{opacity:.7;color:var(--tert)}
+.nodes{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}
+.node{flex:1;min-width:130px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 13px}
+.node .nn{font-size:12.5px;font-weight:700;color:var(--hi)}.node .nd{font-size:11px;color:var(--tert);margin-top:2px;line-height:1.35}
+.node .tech{font-size:10px;color:var(--accent);font-weight:600;margin-top:6px}
+.medallion{display:flex;gap:8px;flex-wrap:wrap}.medallion .node{border-left:3px solid}
+.arrowdown{text-align:center;color:var(--accent-line);font-size:15px;margin:2px 0}
+.cross{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:8px}
+.cnode{background:#fff;border:1px dashed var(--border);border-radius:10px;padding:11px 13px}
+.cnode .nn{font-size:12px;font-weight:700;color:var(--hi)}.cnode .nd{font-size:11px;color:var(--tert);margin-top:2px;line-height:1.35}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.tbl th{text-align:left;background:var(--surface);color:var(--hi);font-weight:700;padding:9px 12px;border-bottom:1px solid var(--border);font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top}.tbl tr:last-child td{border-bottom:none}
+.phase{display:grid;grid-template-columns:70px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--border)}
+.phase:last-child{border-bottom:none}
+.pnum{width:52px;height:52px;border-radius:12px;background:var(--accent-dim);color:var(--accent);font-size:19px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.pt{font-size:14px;font-weight:700;color:var(--hi)}.pw{font-size:11px;color:var(--accent2);font-weight:700;margin-top:1px}
+.pd{font-size:12.5px;color:var(--text);line-height:1.5;margin-top:6px}
+.note{font-size:12px;color:var(--tert);background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin:12px 0;line-height:1.5}
+.foot{max-width:1200px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="logo"><div class="mark">TS</div>
+    <div><div class="htitle">Tecsur &middot; Modern Data &amp; Analytics Platform</div><div class="hsub">A lakehouse that turns operational data from four business areas into decision-ready BI</div></div></div>
+  <div class="badge">Innvonix concept &nbsp;&middot;&nbsp; <b>illustrative</b></div>
+</header>
+<div class="tabs">
+  <button class="tab active" id="tab-bi" onclick="setTab('bi')">Analytics dashboard</button>
+  <button class="tab" id="tab-arch" onclick="setTab('arch')">Data architecture</button>
+  <button class="tab" id="tab-src" onclick="setTab('src')">Sources &amp; model</button>
+  <button class="tab" id="tab-plan" onclick="setTab('plan')">Delivery approach</button>
+</div>
+<div class="main">
+
+<div id="view-bi">
+  <div class="lead">A single analytics layer over Tecsur's four operating areas. Field, ERP, warehouse and charging systems feed one governed model, so a manager sees the same trusted numbers a director does. Figures below are <b>illustrative sample data</b> to show the shape of the reporting, not real Tecsur results.</div>
+  <div class="aswitch" id="aswitch"></div>
+  <div id="areaBody"></div>
+</div>
+
+<div id="view-arch" class="hidden">
+  <div class="lead">A <b>lakehouse reference architecture</b> sized for a 100 to 200 person company handling thousands of records a day across several operational systems. It ingests each source once, curates it in three layers, and serves one semantic model to BI, self-service and forecasting. Cloud-agnostic; the reference stack below leans AWS, with the Azure and Power BI equivalents where Tecsur already runs Microsoft.</div>
+  <div id="archBody"></div>
+  <div class="h2">Cross-cutting foundations</div>
+  <div class="cross" id="crossBody"></div>
+</div>
+
+<div id="view-src" class="hidden">
+  <div class="lead">The four areas and their operational source systems. Volumes are illustrative and sized for the opportunity: thousands of new records a day, tens of thousands active at any time. Each source is ingested on the cadence its decisions need, from near real-time charging telemetry to daily ERP batches.</div>
+  <div class="h2">Operational sources by area</div>
+  <table class="tbl" id="srcTbl"></table>
+  <div class="h2">Star-schema marts (gold layer)</div>
+  <table class="tbl" id="martTbl"></table>
+</div>
+
+<div id="view-plan" class="hidden">
+  <div class="lead">A phased build that puts one business area into production early, proves the value, then rolls out the rest on the same foundation. Indicative for a 100 to 200 person company; the exact schedule is set after a short discovery.</div>
+  <div id="planBody"></div>
+  <div class="note">Innvonix delivers this with a senior-led pod: a data architect, two data engineers, a BI developer and a part-time analytics lead, with a Tecsur product owner from each area. The foundation is built once; each new area after the first typically lands in three to four weeks because the ingestion, governance and semantic patterns are already in place.</div>
+</div>
+
+</div>
+<div class="foot">Independent concept prototype prepared by Innvonix Tech Solutions for a conversation with Tecsur. Not affiliated with, endorsed by, or built on Tecsur, Luz del Sur or China Three Gorges systems or data. All dashboards, figures, sources and volumes are illustrative placeholders to show the shape of the platform, not real Tecsur results. Named products are reference examples; the final stack is chosen with Tecsur.</div>
+
+<script>
+const fmt=n=>n.toLocaleString('en-US');
+const C=['var(--c1)','var(--c2)','var(--c3)','var(--c4)','var(--c5)'];
+const AREAS=[
+ {id:'resumen',es:'Resumen ejecutivo',en:'Executive overview'},
+ {id:'proyectos',es:'Proyectos y Obras',en:'Projects & works'},
+ {id:'oym',es:'Operación y Mantenimiento',en:'Operation & maintenance'},
+ {id:'almacen',es:'Comercial y Almacén',en:'Sales & warehouse'},
+ {id:'emob',es:'Electromovilidad',en:'Tecsur Mobility'},
+];
+const DASH={
+ resumen:{kpis:[
+   {v:'48,200',k:'Records integrated (active)',d:'+3.1k / day',up:1},
+   {v:'6',k:'Source systems connected'},
+   {v:'4',k:'Business areas with analytics'},
+   {v:'&lt; 15 <small>min</small>',k:'Data freshness (hot sources)'}],
+  bars:[{t:'Contribution by area',s:'Illustrative monthly value, S/. thousands',u:'',d:[['Proyectos y Obras',4200],['Comercial y Almacén',2600],['Operación y Mant.',1900],['Electromovilidad',220]]}],
+  line:{t:'Integrated records per day',s:'Across all six sources, last 14 days',u:'',pts:[38,41,40,44,46,45,47,46,48,47,49,48,50,48],mul:1000},
+  bars2:[{t:'Pipeline health by source',s:'On-time load success, last 30 days',u:'%',d:[['ERP / Finanzas',99],['Campo O&M',97],['Almacén WMS',99],['Carga EV',98],['GIS red',96],['Planillas',94]]}]},
+ proyectos:{kpis:[
+   {v:'27',k:'Active projects'},
+   {v:'82<small>%</small>',k:'On schedule',d:'+4 pts vs Q2',up:1},
+   {v:'+6.4<small>%</small>',k:'Budget variance',d:'over budget',up:0},
+   {v:'S/. 12.4M',k:'Backlog value'},
+   {v:'94 <small>d</small>',k:'Avg cycle time'}],
+  bars:[{t:'Projects by stage',s:'Design, works, testing, closeout',u:'',d:[['En diseño',6],['En obra',12],['En pruebas',4],['Cerrado (YTD)',5]]}],
+  line2:{t:'Physical progress vs plan',s:'Portfolio %, last 8 months',u:'%',a:[52,58,63,67,72,76,80,84],b:[54,60,66,71,76,81,86,90]},
+  bars2:[{t:'Budget vs actual, top projects',s:'Variance %, red = over',u:'%',signed:1,d:[['SE Pachacámac',12],['Red MT Villa',7],['Línea AT Sur',-3],['Alumbrado Lima',9],['SE Cieneguilla',4]]}]},
+ oym:{kpis:[
+   {v:'143',k:'Open work orders'},
+   {v:'4.8 <small>h</small>',k:'Mean time to repair',d:'-0.6h vs Q2',up:1},
+   {v:'91<small>%</small>',k:'SLA compliance',d:'+2 pts',up:1},
+   {v:'12',k:'Emergencies today'},
+   {v:'18',k:'Crews deployed'}],
+  donut:{t:'Work orders by type',s:'Share this month',d:[['Preventivo',44],['Correctivo',38],['Emergencia',18]]},
+  bars:[{t:'Emergencies by voltage level',s:'BT / MT / AT, this month',u:'',d:[['Baja tensión (BT)',186],['Media tensión (MT)',74],['Alta tensión (AT)',12]]}],
+  line:{t:'SLA compliance trend',s:'% within target, last 12 weeks',u:'%',pts:[86,87,85,88,89,88,90,89,91,90,92,91],mul:1}},
+ almacen:{kpis:[
+   {v:'S/. 8.9M',k:'Inventory value'},
+   {v:'5.2x',k:'Stock turns (annual)'},
+   {v:'34',k:'Quotes pending'},
+   {v:'96<small>%</small>',k:'Order fill rate',d:'+1 pt',up:1},
+   {v:'21',k:'SKUs below min'}],
+  bars:[{t:'Inventory by category',s:'Value, S/. thousands',u:'',d:[['Conductores',3100],['Postes',1800],['Luminarias',1500],['Aisladores',1300],['Ferretería',1200]]}],
+  line:{t:'Material sales',s:'S/. thousands, last 8 months',u:'',pts:[1900,2100,2050,2300,2200,2450,2380,2600],mul:1},
+  bars2:[{t:'Top moving SKUs',s:'Units dispatched, this month',u:'',d:[['Cable N2XSY 22kV',420],['Poste PRFV 13m',260],['Luminaria LED AP',540],['Conector cuña',980],['Aislador polim.',610]]}]},
+ emob:{kpis:[
+   {v:'1,240',k:'Charging sessions / mo'},
+   {v:'86,400',k:'Energy delivered (kWh)'},
+   {v:'98.6<small>%</small>',k:'Station uptime',d:'+0.4 pt',up:1},
+   {v:'74<small>%</small>',k:'Fleet utilization'},
+   {v:'S/. 220K',k:'Charging revenue / mo'}],
+  bars:[{t:'Sessions by station',s:'This month',u:'',d:[['Estación Central',360],['San Juan',280],['Surco',240],['Villa El Salvador',210],['Chorrillos',150]]}],
+  line:{t:'Energy delivered per day',s:'kWh, last 14 days',u:'',pts:[2.6,2.8,2.9,2.7,3.1,3.0,3.2,2.9,3.1,3.3,3.0,3.2,3.1,3.0],mul:1000},
+  bars2:[{t:'Uptime by station',s:'% available, last 30 days',u:'%',d:[['Estación Central',99.4],['San Juan',98.9],['Surco',98.2],['Villa El Salvador',97.8],['Chorrillos',98.7]]}]},
+};
+function barChart(c){const max=Math.max.apply(null,c.d.map(x=>Math.abs(x[1])))||1;
+ return '<div class="chart"><div class="ct">'+c.t+'</div><div class="cs">'+c.s+'</div>'+
+  c.d.map((x,i)=>{const pct=Math.round(Math.abs(x[1])/max*100);const col=c.signed?(x[1]<0?'var(--bad)':'var(--ok)'):C[i%5];
+   const val=c.signed&&x[1]>0?'+'+x[1]:x[1];return '<div class="bar"><span class="bl">'+x[0]+'</span><span class="bt"><i style="width:'+pct+'%;background:'+col+'"></i></span><span class="bv">'+val+(c.u?(' '+c.u):'')+'</span></div>';}).join('')+'</div>';}
+function donutChart(c){const tot=c.d.reduce((s,x)=>s+x[1],0);let acc=0;const segs=c.d.map((x,i)=>{const a=acc/tot*360;acc+=x[1];const b=acc/tot*360;return C[i%5]+' '+a+'deg '+b+'deg';}).join(',');
+ return '<div class="chart"><div class="ct">'+c.t+'</div><div class="cs">'+c.s+'</div><div class="donut">'+
+   '<div style="width:120px;height:120px;border-radius:50%;background:conic-gradient('+segs+');flex-shrink:0;position:relative"><div style="position:absolute;inset:22px;background:#fff;border-radius:50%"></div></div>'+
+   '<div class="dleg" style="flex:1">'+c.d.map((x,i)=>'<div><span class="sw" style="background:'+C[i%5]+'"></span>'+x[0]+'<b>'+x[1]+'%</b></div>').join('')+'</div></div></div>';}
+function lineChart(c){const pts=c.pts,mx=Math.max.apply(null,pts),mn=Math.min.apply(null,pts),W=300,H=90,pad=6;
+ const xs=i=>pad+i*(W-2*pad)/(pts.length-1),ys=v=>H-pad-(v-mn)/((mx-mn)||1)*(H-2*pad);
+ const path=pts.map((v,i)=>(i?'L':'M')+xs(i).toFixed(1)+','+ys(v).toFixed(1)).join(' ');
+ const area=path+' L'+xs(pts.length-1).toFixed(1)+','+(H-pad)+' L'+pad+','+(H-pad)+' Z';
+ const last=(pts[pts.length-1]*(c.mul||1));
+ return '<div class="chart"><div class="ct">'+c.t+'</div><div class="cs">'+c.s+'</div>'+
+   '<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="110" preserveAspectRatio="none"><path d="'+area+'" fill="var(--accent-dim)"/><path d="'+path+'" fill="none" stroke="var(--accent)" stroke-width="2"/></svg>'+
+   '<div style="font-size:12px;color:var(--tert);margin-top:6px">Latest: <b style="color:var(--hi)">'+fmt(Math.round(last))+c.u+'</b></div></div>';}
+function line2Chart(c){const all=c.a.concat(c.b),mx=Math.max.apply(null,all),mn=Math.min.apply(null,all),W=300,H=90,pad=6;
+ const xs=i=>pad+i*(W-2*pad)/(c.a.length-1),ys=v=>H-pad-(v-mn)/((mx-mn)||1)*(H-2*pad);
+ const p=a=>a.map((v,i)=>(i?'L':'M')+xs(i).toFixed(1)+','+ys(v).toFixed(1)).join(' ');
+ return '<div class="chart"><div class="ct">'+c.t+'</div><div class="cs">'+c.s+'</div>'+
+   '<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="110" preserveAspectRatio="none"><path d="'+p(c.b)+'" fill="none" stroke="var(--accent-line)" stroke-width="2" stroke-dasharray="4 3"/><path d="'+p(c.a)+'" fill="none" stroke="var(--accent)" stroke-width="2"/></svg>'+
+   '<div style="font-size:11.5px;color:var(--tert);margin-top:6px"><span style="color:var(--accent);font-weight:700">&mdash; Actual</span> &nbsp; <span style="font-weight:700">- - Plan</span></div></div>';}
+function renderArea(id){const d=DASH[id];let h='<div class="kpis">'+d.kpis.map(k=>'<div class="kpi"><div class="kv">'+k.v+'</div><div class="kk">'+k.k+'</div>'+(k.d?'<div class="kd '+(k.up?'up':'down')+'">'+(k.up?'▲':'▼')+' '+k.d+'</div>':'')+'</div>').join('')+'</div><div class="charts">';
+ (d.bars||[]).forEach(c=>h+=barChart(c));if(d.donut)h+=donutChart(d.donut);if(d.line)h+=lineChart(d.line);if(d.line2)h+=line2Chart(d.line2);(d.bars2||[]).forEach(c=>h+=barChart(c));
+ h+='</div>';document.getElementById('areaBody').innerHTML=h;}
+function renderSwitch(cur){document.getElementById('aswitch').innerHTML=AREAS.map(a=>'<button class="achip '+(a.id===cur?'on':'')+'" onclick="pickArea(\''+a.id+'\')">'+a.es+'<span class="es">'+a.en+'</span></button>').join('');}
+let curArea='resumen';
+function pickArea(id){curArea=id;renderSwitch(id);renderArea(id);window.scrollTo({top:0,behavior:'smooth'});}
+const ARCH=[
+ {lbl:'Sources',desc:'Operational systems, one connector each',nodes:[
+   {nn:'ERP / Finance',nd:'Projects, POs, costs, billing',tech:'DB / API'},
+   {nn:'Field O&M',nd:'Work orders, crews, emergencies',tech:'Mobile / API'},
+   {nn:'Warehouse (WMS)',nd:'Stock, dispatch, quotes',tech:'DB'},
+   {nn:'EV charging',nd:'Sessions, energy, uptime',tech:'Telemetry / API'},
+   {nn:'GIS network',nd:'Assets, feeders, geolocation',tech:'GIS / files'},
+   {nn:'Spreadsheets',nd:'Manual trackers, forms',tech:'Excel / SharePoint'}]},
+ {lbl:'Ingestion',desc:'Batch + change-data-capture',nodes:[
+   {nn:'Batch ELT',nd:'Scheduled loads for ERP, WMS, GIS',tech:'AWS Glue / ADF'},
+   {nn:'CDC / streaming',nd:'Near real-time for charging & O&M',tech:'DMS / Event Hub'},
+   {nn:'Orchestration',nd:'Dependencies, retries, alerts',tech:'Airflow / Step Functions'}]},
+ {lbl:'Lakehouse',desc:'Three curated layers',medallion:1,nodes:[
+   {nn:'Bronze — raw',nd:'Landed as-is, full history, immutable',tech:'S3 / ADLS',col:'#b07a3a'},
+   {nn:'Silver — curated',nd:'Cleaned, conformed, deduplicated, typed',tech:'Delta / Iceberg',col:'#8a9aa6'},
+   {nn:'Gold — marts',nd:'Star schemas per business area, business logic',tech:'Redshift / Synapse',col:'#e8933a'}]},
+ {lbl:'Transform',desc:'Modeling & data quality',nodes:[
+   {nn:'Transformations',nd:'Versioned SQL models, tests, docs',tech:'dbt'},
+   {nn:'Data quality',nd:'Freshness, nulls, ranges, referential checks',tech:'dbt tests / GE'},
+   {nn:'Business logic',nd:'SLA, backlog, turns, uptime definitions',tech:'Semantic rules'}]},
+ {lbl:'Semantic',desc:'One shared metrics model',nodes:[
+   {nn:'Metrics layer',nd:'Certified KPIs, one definition each',tech:'Semantic model'},
+   {nn:'Catalog & lineage',nd:'Searchable, source-to-report traceable',tech:'Glue Catalog / Purview'},
+   {nn:'Row-level security',nd:'Area and role-based access',tech:'RLS'}]},
+ {lbl:'Consumption',desc:'Where people work',alt:1,nodes:[
+   {nn:'BI dashboards',nd:'The four-area analytics in this demo',tech:'Power BI / QuickSight'},
+   {nn:'Self-service',nd:'Governed ad-hoc analysis for analysts',tech:'Certified datasets'},
+   {nn:'Forecasting & alerts',nd:'Demand, stock-outs, SLA risk, uptime',tech:'ML / notifications'}]},
+];
+const CROSS=[
+ {nn:'Security',nd:'Encryption at rest and in transit, IAM roles, secrets management, audit logs.'},
+ {nn:'Governance',nd:'Data catalog, ownership per area, business glossary, certified metrics.'},
+ {nn:'Data quality',nd:'Automated tests at every layer; a load does not publish if it fails.'},
+ {nn:'Cost & scale',nd:'Serverless where it fits; pay for compute used; scales with record volume.'},
+ {nn:'Observability',nd:'Pipeline monitoring, freshness SLAs, failure alerts to the data team.'},
+];
+function renderArch(){document.getElementById('archBody').innerHTML=ARCH.map((r,i)=>{
+  const inner=r.medallion?'<div class="medallion">'+r.nodes.map(n=>'<div class="node" style="border-left-color:'+n.col+'"><div class="nn">'+n.nn+'</div><div class="nd">'+n.nd+'</div><div class="tech">'+n.tech+'</div></div>').join('')+'</div>'
+   :'<div class="nodes">'+r.nodes.map(n=>'<div class="node"><div class="nn">'+n.nn+'</div><div class="nd">'+n.nd+'</div><div class="tech">'+n.tech+'</div></div>').join('')+'</div>';
+  return '<div class="archrow"><div class="archlbl '+(r.alt?'alt':'')+'"><div class="an">'+r.lbl+'</div><div class="ad">'+r.desc+'</div></div>'+inner+'</div>'+(i<ARCH.length-1?'<div class="arrowdown">▼</div>':'');
+ }).join('');
+ document.getElementById('crossBody').innerHTML=CROSS.map(c=>'<div class="cnode"><div class="nn">'+c.nn+'</div><div class="nd">'+c.nd+'</div></div>').join('');}
+const SRC=[
+ ['Proyectos y Obras','ERP / project system','Projects, budgets, POs, progress, billing','Daily batch','~8,000 active'],
+ ['Operación y Mant.','Field O&M / work-order app','Work orders, crews, SLA, emergencies (BT/MT/AT)','Every 15 min (CDC)','~14,000 / mo'],
+ ['Comercial y Almacén','Warehouse (WMS) + quotes','Stock, dispatch, fill rate, quotes, sales','Hourly + daily','~12,000 SKUs / moves'],
+ ['Electromovilidad','EV charging platform + fleet','Sessions, energy (kWh), uptime, fleet use','Near real-time','~1,200 sessions / mo'],
+ ['Cross-area','GIS network','Assets, feeders, geolocation for maps','Weekly','~40,000 assets'],
+ ['Cross-area','Spreadsheets / forms','Manual trackers not yet in a system','Daily','varies'],
+];
+const MART=[
+ ['fact_proyecto','Project & works facts','budget, actual, progress, cycle time, backlog','dim_proyecto, dim_cliente, dim_fecha'],
+ ['fact_orden_trabajo','O&M work orders','MTTR, SLA, type, voltage level, crew','dim_activo, dim_cuadrilla, dim_fecha'],
+ ['fact_inventario','Warehouse & sales','stock value, turns, fill rate, dispatch','dim_material, dim_almacen, dim_fecha'],
+ ['fact_carga_ev','Charging sessions','sessions, kWh, uptime, revenue','dim_estacion, dim_vehiculo, dim_fecha'],
+];
+function renderSrc(){
+ document.getElementById('srcTbl').innerHTML='<tr><th>Area</th><th>Source system</th><th>What it holds</th><th>Refresh</th><th>Volume (illustrative)</th></tr>'+
+  SRC.map(r=>'<tr><td><b>'+r[0]+'</b></td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td>'+r[4]+'</td></tr>').join('');
+ document.getElementById('martTbl').innerHTML='<tr><th>Fact table</th><th>Grain</th><th>Key measures</th><th>Dimensions</th></tr>'+
+  MART.map(r=>'<tr><td><b>'+r[0]+'</b></td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td></tr>').join('');}
+const PLAN=[
+ ['1','Discovery & blueprint','2 to 3 weeks','Confirm the four areas, source systems and access, KPI definitions and the target cloud (AWS or Azure/Power BI). Output: the architecture, the metric catalog and the backlog.'],
+ ['2','Foundation','3 to 4 weeks','Stand up the lakehouse, ingestion, orchestration, security and governance. Land the first source end to end into bronze, silver and gold.'],
+ ['3','First area live','3 to 4 weeks','Take one area (recommended: Operación y Mantenimiento) fully to production dashboards, so the value is visible early and the patterns are proven.'],
+ ['4','Roll out remaining areas','3 to 4 weeks each','Proyectos, Almacén and Electromovilidad onto the same foundation, reusing ingestion, governance and semantic patterns.'],
+ ['5','Analytics & forecasting','Ongoing','Add forecasting and alerts: material demand and stock-outs, SLA-breach risk, project overrun early warning, charging uptime. Enable governed self-service.'],
+];
+function renderPlan(){document.getElementById('planBody').innerHTML=PLAN.map(p=>'<div class="phase"><div class="pnum">'+p[0]+'</div><div><div class="pt">'+p[1]+'</div><div class="pw">'+p[2]+'</div><div class="pd">'+p[3]+'</div></div></div>').join('');}
+function setTab(t){['bi','arch','src','plan'].forEach(x=>{document.getElementById('view-'+x).classList.toggle('hidden',x!==t);document.getElementById('tab-'+x).classList.toggle('active',x===t);});
+ if(t==='arch')renderArch();if(t==='src')renderSrc();if(t==='plan')renderPlan();window.scrollTo({top:0,behavior:'smooth'});}
+renderSwitch(curArea);renderArea(curArea);
+</script>
+</body>
+</html>
