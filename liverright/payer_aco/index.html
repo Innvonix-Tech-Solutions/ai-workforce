@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LiverRight — AI Payer &amp; ACO Business Development Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f8fafc;--surface2:#e2e8f0;--border:#cbd5e1;--accent:#e2583e;
+--accent-dim:rgba(226,88,62,.07);--accent-line:rgba(226,88,62,.30);--slate:#334155;--slate-line:rgba(51,65,85,.32);--text:#1e293b;--hi:#0f172a;--tert:#64748b;--ok:#16a34a;--ok-dim:rgba(22,163,74,.10);--gold:#a4761b;--gold-bg:#fdf6e6;--gold-line:#e8cf94}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:36px;height:34px;border-radius:8px;background:linear-gradient(135deg,#0e1f38,#e2583e);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;letter-spacing:.5px}
+.htitle{font-size:15px;font-weight:600;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert)}.badge b{color:var(--accent)}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:600;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.5;max-width:900px;margin-bottom:14px}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.commercial{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(51,65,85,.08);color:var(--slate);border:1px solid var(--slate-line)}
+.tag.hero{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:24px;font-weight:700;color:var(--hi)}.cell .v .u{color:var(--accent)}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px}
+.slabel{font-size:11px;font-weight:600;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert)}
+.emp-owns{font-size:12px;margin-bottom:10px}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:inherit;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#f97316}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#f97316}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:14px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 13px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="logo"><div class="mark">LR</div>
+    <div><div class="htitle">LiverRight · AI Payer &amp; ACO Business Development Workforce</div><div class="hsub">AI operators that automate multi-threaded payer acquisition, map ACO decision units, generate $3,032/mo cost ROI hooks, &amp; orchestrate BD for Brandon Tudor</div></div></div>
+  <div class="badge">Independent concept &nbsp;·&nbsp; <b>illustrative</b></div>
+</header>
+<div class="tabs">
+  <button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+  <button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+<div class="main">
+  <div id="view-ops">
+    <div class="lead">Each AI operator is <b>a 5-stage commercial payer acquisition or virtual hepatology workflow turned into an autonomous team of agents</b>. One track closes 6-to-7 figure Payer, ACO, and MCO contracts: it ingests CMS ACO public data and CDC liver disease prevalence rates, maps multi-threaded decision units (CMO, VP Pop Health, CFO, VP Contracting), generates role-calibrated outreach anchored in $3,032/mo cirrhosis cost avoidance, orchestrates follow-ups, and prepares pre-meeting briefs for Brandon Tudor &amp; Pete Celano. The other track delivers virtual clinical care: it manages patient intake, FibroScan®/FibroSpect® stratification, board-certified telehepatologist triage, ALT/AST lab normalization tracking, and quality governance. Point one at a target health plan, CMS ACO ID, or patient cohort, and it runs the loop, then hands back a review-ready output for leadership approval.</div>
+    <div class="legend">
+      <span><span class="tag commercial">Payer &amp; ACO BD</span> identify, map, pitch, orchestrate, learn</span>
+      <span><span class="tag operations">Virtual Care &amp; Ops</span> intake, outcomes, audit, capacity</span>
+      <span><span class="tag hero">Flagship</span> 5-stage Payer BD engine</span>
+    </div>
+    <div class="econ" id="econ"></div>
+    <div id="roster"></div>
+    <div id="runPanel"></div>
+  </div>
+  <div id="view-hire" class="hidden">
+    <div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+    <div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+  </div>
+</div>
+<div class="foot">Independent concept prototype prepared by Innvonix Tech Solutions for a conversation with Brandon Tudor (CEO) and the leadership team at LiverRight. It is not affiliated with, endorsed by, or built on LiverRight internal IT systems. All operators, payer scores, stakeholder maps, and cost avoidance models are illustrative simulations. A qualified executive, medical director, or BD leader reviews and approves every health plan proposal, clinical care plan, and commercial contract. This is an administrative demo tool for executive presentation calls.</div>
+
+<script>
+const AGENT_ROLES={
+  cms_scout:{emoji:'🏥',label:'CMS ACO & Payer Data Identifier',tools:['ingest_cms_aco','score_population_relevance','save']},
+  stakeholder_mapper:{emoji:'🗺️',label:'Multi-Threaded Payer Decision Mapper',tools:['map_decision_unit','enrich_stakeholders','save']},
+  outreach_generator:{emoji:'✍️',label:'Role-Calibrated Outreach Generator',tools:['build_cmo_hook','build_cfo_roi','compose','save']},
+  bd_orchestrator:{emoji:'🔄',label:'Follow-Up & Meeting Brief Orchestrator',tools:['track_engagement','build_premeeting_brief','save']},
+  feedback_learner:{emoji:'📊',label:'Sales Intelligence & Objection Learner',tools:['analyze_objections','update_vbc_model','save']},
+  care_coord:{emoji:'🩺',label:'Virtual Hepatology Care Coordinator',tools:['triage_patient','schedule_hepatologist','save']},
+  outcomes_analyst:{emoji:'📈',label:'Clinical Outcomes & Cost Avoidance Analyst',tools:['calculate_cirrhosis_avoidance','save']},
+  quality_auditor:{emoji:'📋',label:'HIPAA & Telehepatology Quality Auditor',tools:['verify_licensure','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+const TRACKS=[['commercial','Payer & ACO Business Development (5-Stage Engine)'],['operations','Virtual Hepatology Clinical Care & Operations']];
+const WORKFLOWS={
+  scout:{name:'Stage 1: Payer & ACO Target Identification',title:'AI Payer Scout',mode:'dag',track:'commercial',deliverable:'Ranked Payer & ACO Target List',
+    sample:'Ingest CMS MSSP ACO data, Medicaid MCO registries, and CDC MASLD state prevalence to identify top 50 target health plans.',
+    desc:'Agents ingest CMS ACO data, NCQA health plan accreditations, and CDC metabolic disease prevalence to score and rank target payers.',
+    tasks:[{agent:'cms_scout',task:'Ingest CMS ACO public files, attributed member counts, and state Medicaid MCO directories.',deps:[]},
+      {agent:'cms_scout',task:'Cross-reference CDC state-level MASLD/MASH prevalence rates (obesity, diabetes, alcohol consumption).',deps:[0]},
+      {agent:'cms_scout',task:'Score target organizations on Population Relevance, Value-Based Care Maturity, and Telehepatology Coverage.',deps:[1]},
+      {agent:'outreach_generator',task:'Produce the prioritized target payer & ACO list with priority scores and rationale.',deps:[2]}]},
+  mapstakeholders:{name:'Stage 2: Multi-Threaded Stakeholder Mapping',title:'AI Decision Unit Mapper',mode:'sequential',track:'commercial',deliverable:'Target Organization Decision Unit Map',
+    sample:'Map decision unit for Florida Blue Medicare ACO: Chief Medical Officer, VP Population Health, CFO, and VP Contracting.',
+    desc:'Agents identify the 4 key roles (CMO, VP Pop Health, CFO, VP Contracting), enrich contacts with tenure and public stance, and map influence.',
+    tasks:[{agent:'stakeholder_mapper',task:'Identify CMO/Medical Director, VP Population Health, CFO, and VP Contracting for target health plan.',deps:[]},
+      {agent:'stakeholder_mapper',task:'Enrich contact profiles: role tenure, LinkedIn activity on MASLD/VBC, and existing telehealth vendor ties.',deps:[0]},
+      {agent:'stakeholder_mapper',task:'Map influence hierarchy: Economic Buyer vs. Clinical Champion vs. Commercial Gatekeeper.',deps:[1]},
+      {agent:'outreach_generator',task:'Produce the multi-threaded stakeholder map with contact context and engagement priority.',deps:[2]}]},
+  generateoutreach:{name:'Stage 3: Role-Calibrated Personalised Outreach',title:'AI Personalised Pitcher',mode:'dag',track:'commercial',deliverable:'Role-Calibrated Outreach Messaging Matrix',
+    sample:'Generate 4 tailored outreach emails for Texas Health Resources ACO anchored in LiverRight outcomes & $3,032/mo cirrhosis cost study.',
+    desc:'Agents craft role-specific messages: CMO (clinical referral gap), VP Pop Health ($3,032/mo cost avoidance), CFO (ROI model), Contracting (VBC PMPM).',
+    tasks:[{agent:'outreach_generator',task:'CMO Outreach: Position LiverRight as virtual hepatology department closing specialist care gaps.',deps:[]},
+      {agent:'outreach_generator',task:'VP Pop Health Outreach: Frame early MASLD/MASH diagnosis around Northwestern $3,032/mo cirrhosis cost study.',deps:[]},
+      {agent:'outreach_generator',task:'CFO & VP Contracting Outreach: Model late-stage liver disease cost avoidance vs. turnkey VBC PMPM pricing.',deps:[0,1]},
+      {agent:'outreach_generator',task:'Compile the 4-role personalized outreach messaging matrix for executive approval.',deps:[2]}]},
+  bdengine:{name:'Stage 1–5: Full Payer BD Engine',title:'AI Payer BD Operator',mode:'dag',track:'commercial',tag:'flagship',deliverable:'End-to-End Payer BD Campaign & Pre-Brief Package',
+    sample:'Run full 5-stage BD campaign for Highmark Health ACO: Target scoring → Decision unit mapping → 4-role outreach → Follow-up → Pre-meeting brief for Brandon Tudor.',
+    desc:'Agents run all 5 stages: identify ACO target, map decision unit, draft role-calibrated pitches, orchestrate 5-day/10-day follow-ups, & generate pre-meeting brief for Brandon Tudor & Pete Celano.',
+    tasks:[{agent:'cms_scout',task:'Stage 1: Ingest CMS ACO data & CDC state MASLD rates; score target health plan relevance.',deps:[]},
+      {agent:'stakeholder_mapper',task:'Stage 2: Map 4-stakeholder decision unit (CMO, VP Pop Health, CFO, VP Contracting).',deps:[0]},
+      {agent:'outreach_generator',task:'Stage 3: Draft role-calibrated outreach using $3,032/mo Northwestern cirrhosis cost study.',deps:[1]},
+      {agent:'bd_orchestrator',task:'Stage 4: Orchestrate 5-day angle switch, 10-day escalation, & auto-generate pre-meeting brief for Brandon Tudor.',deps:[2]},
+      {agent:'feedback_learner',task:'Stage 5: Feed back objection patterns (e.g. existing GI vendor) to refine future outreach weighting.',deps:[3]},
+      {agent:'outreach_generator',task:'Produce the complete Payer & ACO BD campaign package and executive pre-brief.',deps:[4]}]},
+  careonboard:{name:'Virtual Hepatology Care Coordination',title:'AI Care Coordinator',mode:'sequential',track:'operations',tag:'flagship',deliverable:'Virtual Hepatology Patient Care & Triage Package',
+    sample:'Triage a high-risk MASLD patient referred by primary care: process ALT/AST lab results, FibroScan® score, and assign Board-Certified Hepatologist.',
+    desc:'Agents process patient intake, evaluate FibroScan®/FibroSpect® fibrosis scores, triage to Board-Certified Hepatologist, and issue care plan.',
+    tasks:[{agent:'care_coord',task:'Ingest patient primary care referral, ALT/AST lab panel, and FIB-4 / FibroScan® scores.',deps:[]},
+      {agent:'care_coord',task:'Stratify liver disease risk: F0-F1 mild vs. F2-F3 moderate fibrosis vs. F4 compensated cirrhosis.',deps:[0]},
+      {agent:'care_coord',task:'Schedule virtual telehepatology consultation with state-licensed Board-Certified Hepatologist.',deps:[1]},
+      {agent:'quality_auditor',task:'Verify HIPAA compliance, state medical board licensure, and EHR care plan synchronization.',deps:[2]},
+      {agent:'outreach_generator',task:'Produce the complete virtual hepatology care plan and primary care feedback report.',deps:[3]}]},
+  outcomeswork:{name:'Clinical Outcomes & Cost Avoidance Analysis',title:'AI Outcomes Analyst',mode:'sequential',track:'operations',deliverable:'Payer Clinical Outcomes & Cost Avoidance Report',
+    sample:'Analyze ALT/AST lab normalization and fibrosis regression across 1,200 member cohort; calculate cost savings vs $3,032/mo benchmark.',
+    desc:'Agents track clinical lab improvements across patient cohorts, model cost avoidance against Northwestern University benchmarks, and produce report.',
+    tasks:[{agent:'outcomes_analyst',task:'Ingest longitudinal patient lab data: track ALT/AST normalization and weight loss metrics.',deps:[]},
+      {agent:'outcomes_analyst',task:'Calculate hospital admission & cirrhosis complication reduction vs. traditional referral pathways.',deps:[0]},
+      {agent:'outcomes_analyst',task:'Model total per-member-per-month (PMPM) savings using $3,032/mo late-stage cirrhosis cost baseline.',deps:[1]},
+      {agent:'outreach_generator',task:'Produce the payer clinical outcomes and cost avoidance ROI report.',deps:[2]}]},
+  qualitywork:{name:'Telehepatology Governance & Quality Audit',title:'AI Quality Auditor',mode:'dag',track:'operations',deliverable:'Clinical Governance & HIPAA Compliance Audit',
+    sample:'Audit 100 virtual telehepatology consultations: verify physician multi-state licensure, EHR sync, and clinical quality guidelines.',
+    desc:'Agents audit hepatologist state licensure, check EHR documentation timeliness, verify HIPAA encryption, and issue compliance report.',
+    tasks:[{agent:'quality_auditor',task:'Audit active state medical board licenses for LiverRight network hepatologists.',deps:[]},
+      {agent:'quality_auditor',task:'Check telehepatology consultation notes for AASLD clinical practice guideline adherence.',deps:[0]},
+      {agent:'quality_auditor',task:'Verify end-to-end HIPAA data encryption and primary care provider note distribution.',deps:[1]},
+      {agent:'outreach_generator',task:'Produce the clinical governance and quality audit report.',deps:[2]}]},
+  capacityplanwork:{name:'Hepatologist Network Capacity Planning',title:'AI Network Capacity Manager',mode:'dag',track:'operations',deliverable:'Hepatologist Network & Diagnostic Capacity Plan',
+    sample:'Forecast 90-day telehepatology appointment capacity and Mobile FibroScan® partner scheduling across 5 key payer states.',
+    desc:'Agents monitor hepatologist appointment availability, map geographic expansion states, audit mobile FibroScan® partners, and write plan.',
+    tasks:[{agent:'care_coord',task:'Audit telehepatology appointment slot utilization across 5 licensed health plan states.',deps:[]},
+      {agent:'cms_scout',task:'Map upcoming payer contract go-live dates against hepatologist state license coverage.',deps:[0]},
+      {agent:'care_coord',task:'Schedule mobile FibroScan® & diagnostic lab partner capacity for member screening days.',deps:[1]},
+      {agent:'outreach_generator',task:'Produce the hepatologist network and diagnostic capacity plan.',deps:[2]}]},
+};
+const DTITLE={scout:'Ranked Payer & ACO Target List',mapstakeholders:'Target Organization Decision Unit Map',generateoutreach:'Role-Calibrated Outreach Messaging Matrix',bdengine:'End-to-End Payer BD Campaign & Pre-Brief Package',careonboard:'Virtual Hepatology Patient Care & Triage Package',outcomeswork:'Payer Clinical Outcomes & Cost Avoidance Report',qualitywork:'Clinical Governance & HIPAA Compliance Audit',capacityplanwork:'Hepatologist Network & Diagnostic Capacity Plan'};
+const TOOLS={
+  ingest_cms_aco:()=>'Ingested CMS MSSP ACO registry: 480 ACOs filtered by attributed lives.',
+  score_population_relevance:()=>'Cross-referenced CDC state MASLD rates; target ACO scored 94/100 relevance.',
+  map_decision_unit:()=>'Mapped decision unit: CMO, VP Pop Health, CFO, & VP Network Contracting identified.',
+  enrich_stakeholders:()=>'Enriched profile: CMO posted on VBC specialty care; CFO focused on ER reduction.',
+  build_cmo_hook:()=>'Drafted CMO hook: LiverRight diagnoses MASH 14 weeks faster than local GI wait times.',
+  build_cfo_roi:()=>'Drafted CFO ROI hook: Referenced $3,032/mo Northwestern cirrhosis cost study.',
+  track_engagement:()=>'Engineered follow-up: 5-day angle switch to cost savings; 10-day escalation to VP Pop Health.',
+  build_premeeting_brief:()=>'Generated Brandon Tudor pre-brief: executive background, key pain points, & talking points.',
+  analyze_objections:()=>'Learned objection pattern: "Already have GI vendor" → Auto-positioned LiverRight as sub-specialty partner.',
+  triage_patient:()=>'Processed FIB-4 score 2.8 → Triaged to Board-Certified Hepatologist consult in 48 hours.',
+  calculate_cirrhosis_avoidance:()=>'Calculated cost savings: $418,000 annual cost avoidance per 1,000 attributed MASLD lives.',
+  verify_licensure:()=>'Verified 100% active state licensure & AASLD clinical guideline compliance.',
+  compose:()=>'Drafted in a executive-grade, payer-compliant, clinical style, review-ready for Brandon Tudor.',
+  save:()=>'Saved to shared commercial BD context for sign-off.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+const FINAL={
+scout:`STAGE 1: RANKED PAYER & ACO TARGET LIST  (illustrative)
+
+Ingested CMS MSSP ACO data, state Medicaid MCO registries, and CDC metabolic disease prevalence.
+
+Top Payer & ACO Targets (Pursue Now)
+1. Florida Blue Medicare ACO — Attributed Lives: 185,000 | State MASLD Rate: 28.4% | VBC Score: 96
+2. Texas Health Resources ACO — Attributed Lives: 140,000 | State MASLD Rate: 31.2% | VBC Score: 94
+3. Highmark Health Choice MCO — Attributed Lives: 210,000 | State MASLD Rate: 26.8% | VBC Score: 91
+4. Advocate Health ACO — Attributed Lives: 165,000 | State MASLD Rate: 27.5% | VBC Score: 88
+
+Target Pitch: Virtual Hepatology Department model reducing $3,032/mo late-stage cirrhosis costs.
+
+→ Saved: payer_target_list, cdc_prevalence_data, vbc_maturity_scores
+NOTE: illustrative concept simulation.`,
+mapstakeholders:`STAGE 2: STAKEHOLDER DECISION UNIT MAP  (illustrative)
+
+Target Organization: Florida Blue Medicare ACO
+
+Multi-Threaded Decision Unit
+1. Chief Medical Officer (Clinical Gate)
+   • Profile: Dr. Marcus Vance, MD | 3 Yrs in Role | Recent Post: "Closing Specialty Care Access Gaps"
+   • Hook Angle: Early MASH detection; LiverRight diagnoses 14 weeks faster than local GI waitlists.
+2. VP Population Health (Outcomes Gate)
+   • Profile: Sarah Jenkins, RN, MSN | Focus: Chronic disease management & ER reduction.
+   • Hook Angle: $3,032/mo cirrhosis cost avoidance (Northwestern University Study).
+3. Chief Financial Officer (Cost Savings Gate)
+   • Profile: Robert Chen, CPA | Focus: PMPM medical loss ratio (MLR) optimization.
+   • Hook Angle: Shared savings VBC contract model; zero upfront capital investment.
+4. VP Network Contracting (Commercial Gate)
+   • Profile: Elena Rodriguez | Focus: Turnkey specialty benefit contracts.
+   • Hook Angle: Plug-and-play telehepatology benefit without adding specialist headcount.
+
+→ Saved: stakeholder_decision_map, executive_bios, engagement_hierarchy
+NOTE: illustrative simulation.`,
+generateoutreach:`STAGE 3: ROLE-CALIBRATED OUTREACH MESSAGING MATRIX  (illustrative)
+
+Target: Florida Blue Medicare ACO
+
+1. Medical Director / CMO Outreach
+"Dear Dr. Vance — In Florida, approximately 28.4% of your attributed Medicare members are estimated to have undiagnosed steatotic liver disease based on CDC metabolic data. LiverRight's board-certified hepatologists diagnose MASH an average of 14 weeks faster than traditional GI referral pathways — without adding a single specialist to your network footprint. Attached is our clinical outcome dataset."
+
+2. VP Population Health Outreach
+"Hi Sarah — Late-stage cirrhosis costs health plans an average of $3,032 per patient per month according to Northwestern University research. LiverRight acts as a virtual hepatology department for ACOs, screening high-risk metabolic patients early to prevent hospitalizations. We would love to share our outcomes data from our current 1,200-patient cohort."
+
+3. CFO / Finance Outreach
+"Dear Mr. Chen — Early intervention in MASLD/MASH represents one of the highest-ROI population health opportunities in Medicare Advantage today. By catching fibrosis at F1-F2 instead of F4 cirrhosis, LiverRight saves an estimated $36,000 per patient annually. Let's schedule a 15-minute cost modeling conversation tailored to Florida Blue's population size."
+
+4. VP Contracting Outreach
+"Hi Elena — LiverRight offers a turnkey, value-based specialty benefit structure (PMPM or shared savings) with 100% board-certified hepatologist coverage. We handle intake, FibroScan® triage, and ongoing management seamlessly."
+
+→ Saved: outreach_matrix, clinical_data_attachment, roi_cost_model
+NOTE: illustrative simulation.`,
+bdengine:`STAGE 1–5: END-TO-END PAYER BD CAMPAIGN & PRE-BRIEF PACKAGE  (illustrative · flagship)
+
+Target Account: Highmark Health Choice ACO  (210,000 Attributed Lives)
+
+1. Campaign Execution Summary
+• Stage 1 Target Prioritization: Scored 93/100 (High MASLD prevalence in PA/WV).
+• Stage 2 Stakeholder Mapping: Identified CMO, VP Pop Health, CFO, and VP Contracting.
+• Stage 3 Outreach Generated: 4 Role-calibrated emails deployed with $3,032/mo cost study.
+• Stage 4 Engagement Signal: CMO opened email 3x; VP Pop Health accepted LinkedIn request & requested discovery call.
+
+2. Pre-Meeting Brief for Brandon Tudor & Pete Celano
+• Meeting Scheduled: Thursday, 2:00 PM EST via Teams
+• Attendees: Dr. Arthur Pendelton (CMO) & Lisa Vance (VP Population Health, Highmark)
+• Key Objectives: Present Virtual Hepatology Department model & review 1,200-patient outcomes data.
+• Suggested Talking Points:
+  1. Highlight Northwestern $3,032/mo cirrhosis cost benchmark.
+  2. Explain how LiverRight offloads overwhelmed local GI practices.
+  3. Offer a 90-day pilot cohort for Highmark's top 500 high-risk diabetic members.
+
+3. Stage 5 Objection Pattern Feedback
+• Learned Pattern: Highmark currently uses general GI telehealth for routine reflux.
+• AI Adjustment: Re-weighted outreach to position LiverRight as a *sub-specialty hepatology partner*, not a general GI competitor.
+
+→ Saved: payer_bd_campaign_package, brandon_tudor_prebrief, objection_learning_log
+NOTE: illustrative flagship simulation; ready for Brandon Tudor review.`,
+careonboard:`VIRTUAL HEPATOLOGY PATIENT CARE & TRIAGE PACKAGE  (illustrative · flagship)
+
+Patient ID: LR-88412  |  Referring Provider: Internal Medicine Associate Group
+Insurance Payer: Florida Blue Medicare Advantage
+
+1. Clinical Intake & Risk Stratification
+• Lab Results: ALT 84 U/L | AST 68 U/L | Platelets 165k (FIB-4 Score: 2.74 - High Risk)
+• Diagnostic Imaging: Mobile FibroScan® result = 11.2 kPa (Consistent with F3 Advanced Fibrosis).
+• Triage Status: Urgent Virtual Telehepatology Consult Assigned (within 48 Hours).
+
+2. Hepatologist Care Plan Deployed
+• Assigned Specialist: Dr. Eleanor Vance, MD (Board-Certified Transplant Hepatologist).
+• Treatment Protocol: MASH lifestyle modification + GLP-1 therapy coordination + quarterly ALT/AST tracking.
+• Primary Care Sync: Automated care plan summary transmitted to referring PCP via EHR interface.
+
+→ Saved: patient_triage_package, hepatologist_care_plan, pcp_sync_note
+NOTE: illustrative; requires Board-Certified Hepatologist sign-off.`,
+outcomeswork:`PAYER CLINICAL OUTCOMES & COST AVOIDANCE REPORT  (illustrative)
+
+Cohort Size: 1,200 Attributed Health Plan Members (12-Month Follow-Up)
+Payer Partner: Regional Medicare Advantage Health Plan
+
+1. Clinical Outcomes Metrics
+• ALT/AST Normalization: 74% of patients achieved normal liver enzyme levels within 6 months.
+• Fibrosis Regression / Stabilization: 88% of F2-F3 patients showed zero progression to cirrhosis.
+• Specialist Access Time: Mean time to hepatologist consult = 3.2 Days vs. 114 Days local GI waitlist.
+
+2. Financial Cost Avoidance (Northwestern University Benchmark)
+• Late-Stage Cirrhosis Cost Baseline: $3,032 per patient per month ($36,384 / year).
+• Decompensated Cirrhosis Admissions Avoided: 14 Projected Hospitalizations Prevented.
+• Net Annual Cost Savings: $508,400 USD across 1,200 member cohort ($35.30 PMPM savings).
+
+→ Saved: clinical_outcomes_report, cost_savings_chart, pmpm_roi_model
+NOTE: illustrative simulation.`,
+qualitywork:`CLINICAL GOVERNANCE & HIPAA COMPLIANCE AUDIT  (illustrative)
+
+Audit Period: Q1 Clinical Quality Review  |  Scope: 100% Virtual Telehepatology Consultations
+
+Quality Scorecard Results
+• Physician State Licensure: 100% Active Licensure verified across all patient states — PASSED.
+• AASLD Guideline Adherence: 98.2% compliance with MASH screening & staging protocols — PASSED.
+• Primary Care Note Delivery: 96.5% of consult notes delivered to PCP within 24 hours — PASSED.
+• HIPAA Data Encryption: End-to-end 256-bit AES encryption verified across video & EHR sync — PASSED.
+
+→ Saved: clinical_governance_report, licensure_index, hipaa_compliance_cert
+NOTE: illustrative simulation.`,
+capacityplanwork:`HEPATOLOGIST NETWORK & DIAGNOSTIC CAPACITY PLAN  (illustrative)
+
+Scope: LiverRight Virtual Specialist Network & Mobile Screening Partners
+
+1. Telehepatology Appointment Capacity
+• Active Board-Certified Hepatologists: 18 Multi-State Licensed Specialists.
+• Monthly Consult Capacity: 1,440 Virtual Consultations (Current Utilization: 68%).
+• 90-Day Expansion Plan: Adding 4 Hepatologists licensed in TX, FL, PA, and NY.
+
+2. Diagnostic Partner Coordination
+• Mobile FibroScan® Capacity: 400 On-site screening slots / month for health plan member health fairs.
+• Quest / LabCorp Lab Integration: Bi-directional lab order routing active.
+
+→ Saved: capacity_plan, hepatologist_roster, screening_schedule
+NOTE: illustrative simulation.`,
+};
+let EMPLOYEES=[
+ {id:'scout',name:'PayerScout',title:'AI Payer & ACO Identifier',wf:'scout',handled:220,hrs:55,win:0,status:'idle'},
+ {id:'mapstakeholders',name:'StakeholderMapper',title:'AI Decision Unit Mapper',wf:'mapstakeholders',handled:160,hrs:95,win:0,status:'idle'},
+ {id:'generateoutreach',name:'PayerPitcher',title:'AI Personalised Pitcher',wf:'generateoutreach',handled:195,hrs:85,win:0,status:'idle'},
+ {id:'bdengine',name:'BDOrchestrator',title:'AI Payer BD Operator',wf:'bdengine',handled:340,hrs:240,win:72,status:'idle'},
+ {id:'careonboard',name:'CareOnboard',title:'AI Care Coordinator',wf:'careonboard',handled:290,hrs:180,win:65,status:'idle'},
+ {id:'outcomes',name:'OutcomesEngine',title:'AI Outcomes Analyst',wf:'outcomeswork',handled:210,hrs:120,win:52,status:'idle'},
+ {id:'quality',name:'ClinicalAudit',title:'AI Quality Auditor',wf:'qualitywork',handled:145,hrs:70,win:0,status:'idle'},
+ {id:'capacity',name:'NetworkSupply',title:'AI Network Capacity Manager',wf:'capacityplanwork',handled:130,hrs:60,win:0,status:'idle'},
+];
+let running=false;
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const now=()=>new Date().toLocaleTimeString('en-GB');
+const mono=n=>n.trim().slice(0,2).toUpperCase();
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Payer BD</span>';if(wf.track==='operations')s+='<span class="tag operations">Clinical Care</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+function setView(v){
+  $('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');
+  $('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');
+  if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderEcon(){
+  const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);
+  const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;
+  const cells=[[total,'AI operators (Payer BD + Virtual Care)'],[h.toLocaleString(),'payer campaigns, stakeholder maps & care plans'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','executive & clinician hours saved / month'],['+'+avg+'%','avg BD campaign & triage speed']];
+  $('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');
+}
+function empCard(e){const wf=WORKFLOWS[e.wf];
+  const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');
+  return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}">
+   <div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div>
+   <div class="emp-owns">Owns: <b>${wf.name}</b></div>
+   <div class="team">${team}</div>
+   <div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'—'}</b>faster</div></div>
+   <div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a health plan / patient</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;
+}
+function renderRoster(){
+  const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;
+  let html='';
+  TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;
+    html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});
+  const untracked=EMPLOYEES.filter(e=>!WORKFLOWS[e.wf].track);
+  if(untracked.length)html+=`<div class="slabel">Other</div><div class="roster">`+untracked.map(empCard).join('')+`</div>`;
+  $('roster').innerHTML=html;
+}
+function assign(id){
+  if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+  $('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div>
+    <div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a target health plan, CMS ACO ID or patient referral and ${e.name} runs the whole loop.</div></div></div>
+    <div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div>
+    <div id="stage"></div></div>`;
+  $('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();
+}
+async function runEmp(id){
+  if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+  const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;
+  e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');
+  const stage=$('stage');
+  stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div>
+    <div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div>
+    <div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;
+  const feed=$('feed');
+  function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;
+    const row=document.createElement('div');row.className='frow';row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,150)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}
+  log(null,`Input received: "${obj.substring(0,54)}…"`);
+  log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);
+  await sleep(rand(700,1100));
+  const grid=$('agrid');
+  wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;
+    c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;
+    grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});
+  await sleep(600);
+  $('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');
+  const done=new Set();
+  async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);
+    c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';
+    log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));
+    for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}
+    c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}
+  if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}
+  else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;
+    if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}
+  $('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');
+  await sleep(400);
+  const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(6,44);
+  $('resultArea').innerHTML=`<div class="result"><div class="rstats">
+    <div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div>
+    <div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div>
+    <div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'Payer & ACO Business Development':'Virtual Care & Operations'}</span></div>
+    <div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div>
+    <div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div>
+    <div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div>
+    <div class="donebar"><b>${e.name} produced a review-ready output.</b> Payer BD campaign, multi-threaded outreach, and Brandon Tudor pre-brief complete, ready for executive leadership review. Illustrative simulation.</div>`;
+  e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;
+}
+// builder
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per health plan',step:1};renderBuilder();}
+function renderBuilder(){
+  const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];
+  $('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+  if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();
+}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+
+  Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  $('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+
+    w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+
+    `<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;
+  document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div>
+  <div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. BDOrchestrator" oninput="draft.name=this.value"></div>
+  <div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Payer BD Specialist" oninput="draft.title=this.value"></div>
+  <div class="field"><label>Cadence</label><div class="seg">`+['Per health plan','Per ACO','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div>
+  <div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;
+  let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+  else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+  else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();
+  const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};
+  DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];
+  const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});
+  renderEcon();renderRoster();setView('ops');
+  setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);
+}
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
