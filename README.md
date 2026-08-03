@@ -119,3 +119,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/east-west
 https://innvonix-tech-solutions.github.io/ai-workforce/sai-corp
 
 https://innvonix-tech-solutions.github.io/ai-workforce/automated_ivd
+
+https://innvonix-tech-solutions.github.io/ai-workforce/1x-technologies
