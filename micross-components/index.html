@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Micross Components &mdash; AI Commercial &amp; Engineering Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f0f4f8;--surface2:#dce5ef;--border:#c4d1de;--accent:#1b3a5c;
+--accent-dim:rgba(27,58,92,.07);--accent-line:rgba(27,58,92,.30);--slate:#4a5563;--slate-line:rgba(74,85,99,.32);--text:#1c2530;--hi:#0f1a26;--tert:#69737f;--ok:#16a34a;--ok-dim:rgba(22,163,74,.10);--gold:#a4761b;--gold-bg:#fdf6e6;--gold-line:#e8cf94}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:36px;height:34px;border-radius:8px;background:linear-gradient(135deg,#1b3a5c,#2e6299);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;letter-spacing:.5px}
+.htitle{font-size:15px;font-weight:600;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert)}.badge b{color:var(--accent)}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:600;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.5;max-width:900px;margin-bottom:14px}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.commercial{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(74,85,99,.08);color:var(--slate);border:1px solid var(--slate-line)}
+.tag.hero{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:24px;font-weight:700;color:var(--hi)}.cell .v .u{color:var(--accent)}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px}
+.slabel{font-size:11px;font-weight:600;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert)}
+.emp-owns{font-size:12px;margin-bottom:10px}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:inherit;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#8aa4be}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#8aa4be}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:14px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 13px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="header">
+<div class="logo"><div class="mark">MC</div>
+<div><div class="htitle">Micross Components &middot; AI Commercial &amp; Engineering Workforce</div><div class="hsub">AI operators that find defense and space programs, source hi-rel die and components, upscreen to MIL-STD-883, package MCMs, and sustain the installed base</div></div></div>
+<div class="badge">Independent concept &nbsp;&middot;&nbsp; <b>illustrative</b></div>
+</header>
+
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>a commercial or engineering workflow turned into an autonomous team of agents</b>. One track captures the work: it finds defense primes and space programs that need hi-rel microelectronics, qualifies the requirement against Micross capabilities, responds to RFQs and sole-source justifications, and tracks the competitive and obsolescence landscape. The other track delivers the product: it sources bare die and wafers, upscreens plastic parts to MIL-STD-883, builds hermetic MCM packages, runs lot acceptance testing, and sustains legacy programs against DMS obsolescence. Point one at a program, a part number or a sustainment case and it runs the loop, then hands back a review-ready output for a person to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial</span> find, qualify, quote, win programs</span>
+<span><span class="tag operations">Engineering &amp; production</span> die, packaging, test, sustainment</span>
+<span><span class="tag hero">Flagship</span> the deepest example run</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+
+<div class="foot">Independent concept prototype prepared by Innvonix Tech Solutions for a conversation with Micross Components. It is not affiliated with, endorsed by, or built on Micross systems or data. All operators and outputs are illustrative simulations; programs, part numbers, pricing, test results, packaging specs and lead times are placeholders. A human engineer, quality manager or program manager reviews and approves every die source, upscreen, package design, test report, quote and compliance check. This is not a production system and produces no deliverable for a real program.</div>
+
+<script>
+const AGENT_ROLES={
+researcher:{emoji:'🔎',label:'Defense & Space Market Research',tools:['research','save']},
+prospector:{emoji:'🧲',label:'Program & Prime Sourcing',tools:['source_programs','save']},
+qualifier:{emoji:'🎯',label:'Requirement & Capability Fit',tools:['score_fit','save']},
+diesource:{emoji:'🔬',label:'Die & Wafer Sourcing',tools:['source_die','check_inventory','save']},
+packaging:{emoji:'📦',label:'Advanced Packaging & MCM',tools:['design_package','save']},
+testing:{emoji:'🧪',label:'Test & Upscreening (MIL-STD-883)',tools:['run_screen','save']},
+quality:{emoji:'📋',label:'Quality & Compliance (QML/AS9100)',tools:['check_compliance','save']},
+sustain:{emoji:'🛡️',label:'Lifecycle & DMS Sustainment',tools:['check_obsolescence','plan_sustain','save']},
+pricing:{emoji:'🧮',label:'Quoting & Program Pricing',tools:['build_quote','save']},
+clientintel:{emoji:'🛰️',label:'Competitor & Supply Intelligence',tools:['profile_competitor','save']},
+writer:{emoji:'✍️',label:'Proposal & Report Writer',tools:['compose','save']},
+reviewer:{emoji:'✅',label:'QA & Standards Review',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+
+const TRACKS=[['commercial','Commercial & program capture'],['operations','Engineering & production services']];
+
+const WORKFLOWS={
+scout:{name:'Program & prime discovery',title:'AI Program Scout',mode:'dag',track:'commercial',deliverable:'Target Program & Prime List',
+sample:'Find defense primes and space integrators with upcoming programs that need hi-rel microelectronics: rad-hard ICs, hermetic MCMs, bare die, or upscreened components.',
+desc:'Agents scan defense and space programs, source prime contacts and procurement leads, score capability fit, and build the ranked target list.',
+tasks:[{agent:'researcher',task:'Map upcoming defense, space and medical programs requiring hi-rel microelectronics (rad-hard, hermetic, MIL-spec).',deps:[]},
+{agent:'prospector',task:'Source prime contractor contacts: program managers, procurement leads, component engineers by program.',deps:[]},
+{agent:'qualifier',task:'Score fit against Micross capabilities: die sourcing, packaging (MCM/hermetic), upscreening, DMS support.',deps:[0,1]},
+{agent:'writer',task:'Compile the ranked target program and prime list with capability match and recommended approach.',deps:[2]}]},
+
+rfq:{name:'RFQ & sole-source response',title:'AI RFQ Responder',mode:'sequential',track:'commercial',deliverable:'RFQ / Sole-Source Response',
+sample:'A defense prime issued an RFQ for rad-hard power management ICs in hermetic packages for a satellite program. Read the requirements, map compliance, price it, and produce the response.',
+desc:'Agents read the RFQ, map quality and compliance, price the build, and produce the response.',
+tasks:[{agent:'researcher',task:'Read the RFQ: part numbers, quantities, screening level (Class B/S/K), delivery, packaging and compliance requirements.',deps:[]},
+{agent:'quality',task:'Map compliance: QML status, MIL-STD-883, SMD/5962, AS9100, ITAR, radiation lot acceptance.',deps:[0]},
+{agent:'pricing',task:'Price the build: die cost, packaging, screening, test, NRE and lot charges.',deps:[1]},
+{agent:'writer',task:'Produce the RFQ or sole-source justification response.',deps:[2]}]},
+
+quote:{name:'Component & service quoting',title:'AI Component Pricer',mode:'sequential',track:'commercial',deliverable:'Component & Service Quote',
+sample:'Quote 500 units of a hi-rel diode in hermetic SMD package, upscreened to MIL-STD-883 Class B, with full lot acceptance testing.',
+desc:'Agents confirm the part and service configuration, build the quote, verify lead time and supply, and produce the quote document.',
+tasks:[{agent:'qualifier',task:'Confirm the part, screening level (Class B/S/K), package type (hermetic/plastic), quantity and delivery.',deps:[]},
+{agent:'diesource',task:'Check die availability, wafer lot status, and alternate sources if the OCM is end-of-life.',deps:[0]},
+{agent:'pricing',task:'Build the quote: die, packaging, screening, test, kitting and handling charges.',deps:[1]},
+{agent:'writer',task:'Produce the component and service quote document.',deps:[2]}]},
+
+radar:{name:'Competitor & obsolescence intelligence',title:'AI Supply Intel',mode:'dag',track:'commercial',deliverable:'Competitor & Obsolescence Brief',
+sample:'Which hi-rel component suppliers are competing for defense packaging and upscreening work, what parts are going obsolete, and where does Micross have a unique position?',
+desc:'Agents profile competing suppliers, scan obsolescence and end-of-life notices, assess the Micross position, and produce the brief.',
+tasks:[{agent:'clientintel',task:'Profile competing hi-rel suppliers: Cobham, Micropac, SemiDice, Data Device Corp, VPT, and boutique packaging houses.',deps:[]},
+{agent:'researcher',task:'Scan product change notices (PCNs), end-of-life (EOL) and last-time-buy (LTB) alerts from major OCMs.',deps:[]},
+{agent:'sustain',task:'Assess where Micross wins: single-source packaging + test + die, QML, AEMtec advanced packaging, DMS sustainment depth.',deps:[0,1]},
+{agent:'writer',task:'Produce the competitor and obsolescence intelligence brief.',deps:[2]}]},
+
+upscreen:{name:'Upscreening & MIL-STD-883 test',title:'AI Upscreen Engineer',mode:'sequential',track:'operations',tag:'flagship',deliverable:'Upscreening & Test Report',
+sample:'Upscreen 1,000 units of a commercial plastic-packaged FPGA to MIL-STD-883 Class B for a missile guidance system. Run the full environmental and electrical screen, DPA, and produce the test report.',
+desc:'Agents define the screening flow, source the commercial parts, run the environmental and electrical screens, perform DPA, QA-review, and produce the report.',
+tasks:[{agent:'testing',task:'Define the MIL-STD-883 screening flow: Group A electricals, Group B (thermal cycle, HTOL, moisture), Group C/D mechanicals, DPA.',deps:[]},
+{agent:'diesource',task:'Source the commercial parts: verify OCM lot, date code, traceability, and quantity against the screening yield assumption.',deps:[0]},
+{agent:'testing',task:'Run the screening: burn-in (160h @ 125C), thermal cycling (-65/+150C, 100 cycles), PIND, hermeticity (if repackaged), electricals at -55/+125C.',deps:[1]},
+{agent:'quality',task:'Perform DPA (destructive physical analysis) on sample units; verify die attach, wire bonds, passivation, metallization.',deps:[2]},
+{agent:'reviewer',task:'QA-review the screening data against MIL-STD-883 TM requirements and the program specification; flag any out-of-spec.',deps:[3]},
+{agent:'writer',task:'Produce the upscreening and test report with lot summary, yield, DPA results and compliance matrix.',deps:[4]}]},
+
+mcmpackage:{name:'Hermetic MCM packaging',title:'AI Packaging Engineer',mode:'sequential',track:'operations',deliverable:'MCM Package Design & Build Report',
+sample:'Design and build a hermetic multi-chip module (MCM) integrating a rad-hard processor, SRAM and power management die for a satellite payload board.',
+desc:'Agents design the MCM substrate and interconnect, source the bare die, build the package, test it, and produce the build report.',
+tasks:[{agent:'packaging',task:'Design the MCM: substrate (LTCC/HTCC/thin-film), cavity layout, wire bond or flip-chip interconnect, lid seal plan.',deps:[]},
+{agent:'diesource',task:'Source the bare die: rad-hard processor, SRAM and PMIC from authorized OCM die banks or Micross inventory.',deps:[0]},
+{agent:'packaging',task:'Build the MCM: die attach, wire bond (Au or Al), lid seal (seam weld or solder), mark and serialise.',deps:[1]},
+{agent:'testing',task:'Test the MCM: hermeticity (fine and gross leak per MIL-STD-883 TM1014), electricals, PIND, external visual.',deps:[2]},
+{agent:'writer',task:'Produce the MCM package design and build report.',deps:[3]}]},
+
+dms:{name:'DMS & obsolescence sustainment',title:'AI Sustainment Planner',mode:'dag',track:'operations',deliverable:'DMS Sustainment Plan',
+sample:'A legacy avionics program needs 2,000 units of a discontinued power MOSFET. The OCM issued an EOL 18 months ago. Find or recreate supply and sustain the program.',
+desc:'Agents check obsolescence status, search for alternate die or last-time-buy inventory, plan the sustain path, and produce the plan.',
+tasks:[{agent:'sustain',task:'Check obsolescence status: OCM EOL/LTB date, remaining inventory, authorized aftermarket sources, GIDEP alerts.',deps:[]},
+{agent:'diesource',task:'Search for bare die: OCM die bank, Micross bonded inventory, alternate-source qualification, or foundry re-creation.',deps:[0]},
+{agent:'quality',task:'Verify traceability and conformance: CoC, lot history, DPA on sample, radiation lot acceptance if space-grade.',deps:[1]},
+{agent:'writer',task:'Produce the DMS sustainment plan with source, repackaging path, requalification steps and timeline.',deps:[2]}]},
+
+radlot:{name:'Radiation lot acceptance testing',title:'AI Rad-Test Engineer',mode:'sequential',track:'operations',deliverable:'Radiation Lot Acceptance Report',
+sample:'Run radiation lot acceptance testing (RLAT) on a lot of rad-hard ADCs for a GEO satellite: total ionizing dose (TID), single-event effects (SEE), and dose-rate survivability.',
+desc:'Agents define the radiation test plan, coordinate with the test lab, run TID and SEE testing, QA-review, and produce the report.',
+tasks:[{agent:'testing',task:'Define the radiation test plan: TID level and dose rate (per MIL-STD-883 TM1019), SEE (LET threshold, cross-section), dose-rate latch-up.',deps:[]},
+{agent:'testing',task:'Coordinate with the radiation test lab: beam time, fixturing, sample size, bias conditions, pre- and post-irradiation electricals.',deps:[0]},
+{agent:'quality',task:'Run TID testing: irradiate at 50-300 rad(Si)/s to 100 krad(Si); measure parametric drift at intermediate steps.',deps:[1]},
+{agent:'reviewer',task:'QA-review the radiation data against the program specification and DSCC requirements; flag any parametric drift.',deps:[2]},
+{agent:'writer',task:'Produce the radiation lot acceptance report with TID curves, SEE cross-sections and compliance summary.',deps:[3]}]},
+};
+
+const DTITLE={scout:'Target Program & Prime List',rfq:'RFQ / Sole-Source Response',quote:'Component & Service Quote',radar:'Competitor & Obsolescence Brief',upscreen:'Upscreening & Test Report',mcmpackage:'MCM Package Design & Build Report',dms:'DMS Sustainment Plan',radlot:'Radiation Lot Acceptance Report'};
+
+const TOOLS={
+research:()=>'Gathered defense, space and medical program intel; sources ranked by recency and clearance level.',
+source_programs:()=>'Sourced prime contacts, program managers and procurement leads; deduped against CRM.',
+score_fit:()=>'Scored against Micross capabilities: packaging, test, die sourcing, QML, DMS; priority set.',
+source_die:()=>'Sourced bare die and wafers; checked OCM die bank, bonded inventory and alternate sources.',
+check_inventory:()=>'Checked Micross bonded inventory, lot status, date codes and traceability.',
+design_package:()=>'Designed the MCM/hermetic package: substrate, cavity, interconnect, lid seal plan.',
+run_screen:()=>'Ran the MIL-STD-883 screening flow: burn-in, thermal cycle, PIND, hermeticity, electricals.',
+check_compliance:()=>'Checked QML, MIL-STD-883, SMD/5962, AS9100, ITAR and radiation compliance.',
+check_obsolescence:()=>'Checked EOL/LTB status, GIDEP alerts, PCNs and remaining authorized inventory.',
+plan_sustain:()=>'Planned the DMS sustainment path: alternate die, repackaging, requalification, timeline.',
+build_quote:()=>'Built the quote: die, packaging, screening, test, NRE, lot charges and lead time.',
+profile_competitor:()=>'Profiled competing hi-rel suppliers and their capabilities; two gaps identified.',
+qa_review:()=>'QA: screening data, DPA, compliance and completeness checked; items flagged for sign-off.',
+compose:()=>'Drafted in a clear, mil-spec-aware, program-ready style, review-ready.',
+save:()=>'Saved to shared context for downstream agents.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+
+const FINAL={
+scout:`TARGET PROGRAM & PRIME LIST (illustrative)
+
+Scanned defense, space and medical programs requiring hi-rel microelectronics.
+
+A-tier (pursue now)
+1. Satellite bus integrator — rad-hard power management MCM — QML hermetic — fit 94
+2. Missile defense prime — upscreened FPGAs (MIL-STD-883 Class S) — fit 91
+3. Avionics tier-1 — hermetic DC-DC converters, DMS sustainment — fit 88
+4. Space launch vehicle — rad-hard ADC/DAC die, RLAT required — fit 85
+5. Medical implant OEM — hermetic hybrid assembly, ISO 13485 — fit 82
+
+Contacts: Program Manager, Component Engineer, Procurement Lead.
+Note: sales cycle typically runs RFQ → qualification → production lot.
+
+→ Saved: program_list, contacts, fit_scores
+
+NOTE: illustrative; not affiliated with Micross Components.`,
+
+rfq:`RFQ / SOLE-SOURCE RESPONSE (illustrative)
+
+RFQ: satellite program, rad-hard power management ICs in hermetic packages.
+
+Requirements
+• Part: rad-hard PMIC (100 krad TID, SEL-immune)
+• Quantity: 200 flight + 50 engineering
+• Screening: MIL-STD-883 Class S, RLAT per TM1019
+• Package: hermetic flatpack, QML qualified
+
+Compliance
+• QML: Micross listed, hermetic IC line qualified
+• MIL-STD-883: full Class S screening capability
+• ITAR: compliant, TAA-eligible
+• Radiation: RLAT facility access confirmed
+
+Price
+• Die + packaging + Class S screening + RLAT
+• NRE for substrate tooling
+• Lead time: 22 weeks ARO
+
+→ Saved: rfq_response, compliance_map, pricing
+
+NOTE: illustrative; all pricing and part numbers are placeholders.`,
+
+quote:`COMPONENT & SERVICE QUOTE (illustrative)
+
+Part: hi-rel diode, hermetic SMD package.
+Quantity: 500 units.
+Screening: MIL-STD-883 Class B.
+
+Quote
+• Die sourcing: from OCM authorized die bank
+• Package: hermetic SMD (kovar/glass, seam-weld lid)
+• Screening: Group A electricals (-55/+125C), burn-in (160h/125C), thermal cycle (100 cycles)
+• Lot acceptance: DPA on 3 units, SEM, bond pull
+• Lead time: 16 weeks ARO
+
+→ Saved: quote.pdf, screening_flow, lead_time
+
+NOTE: illustrative; all pricing redacted.`,
+
+radar:`COMPETITOR & OBSOLESCENCE BRIEF (illustrative)
+
+Landscape
+• Cobham Advanced Electronic Solutions: strong rad-hard ASICs; limited MCM packaging
+• Micropac Industries: hi-rel diodes and hybrids; narrower die sourcing
+• SemiDice: bare die specialist; no packaging or test
+• Data Device Corp: MIL-spec data bus; niche
+• VPT: DC-DC converters; narrow product line
+
+Where Micross wins
+• Single-source integration: die sourcing + packaging + upscreening + test under one roof
+• QML-certified hermetic packaging (IC and MCM)
+• AEMtec acquisition adds advanced packaging, flip-chip, 3D integration
+• DMS sustainment depth: bonded die inventory, foundry re-creation, legacy program support
+• Broadest hi-rel portfolio: ICs, discretes, passives, SiC, solid-state batteries, memory
+
+Obsolescence watch
+• 14 PCNs and 6 EOL notices flagged in the last quarter
+• 3 programs at risk from OCM discontinuations (power MOSFETs, legacy ADCs, rad-hard SRAM)
+
+→ Saved: competitor_profiles, obsolescence_alerts, win_themes
+
+NOTE: illustrative; not affiliated with Micross Components.`,
+
+upscreen:`UPSCREENING & TEST REPORT (illustrative · flagship)
+
+Part: commercial plastic FPGA, upscreened to MIL-STD-883 Class B.
+Quantity: 1,000 units submitted, 962 units passed (96.2% yield).
+
+Screening flow
+1. Incoming inspection and ESD audit
+2. Non-destructive bond pull (sample)
+3. Stabilization bake (24h @ 150C)
+4. Thermal cycling: -65C to +150C, 100 cycles — 1,000/1,000 pass
+5. Burn-in: 160h @ 125C, dynamic bias — 988/1,000 pass (12 parametric drift)
+6. PIND (where applicable): N/A (plastic package)
+7. Final electricals at -55C, +25C, +125C — 962/988 pass (26 marginal leakage)
+8. External visual per TM2009
+
+DPA (destructive physical analysis) — 5 units
+• Die attach: epoxy, void < 10%, compliant
+• Wire bonds: Au ball bond, pull > 3g, shear > 30g, compliant
+• Passivation: intact, no cracks
+• Metallization: no corrosion, step coverage adequate
+
+Compliance
+• MIL-STD-883: Class B requirements met on 962 passing units
+• Traceability: OCM lot, date code, screening records documented
+• 1 item flagged: 26 units with marginal leakage at 125C — recommended for engineering review
+
+→ Saved: test_report, yield_summary, dpa_results, compliance_matrix
+
+NOTE: illustrative; confirm against the program specification and MIL-STD-883 TM requirements.`,
+
+mcmpackage:`MCM PACKAGE DESIGN & BUILD REPORT (illustrative)
+
+Configuration: hermetic MCM for satellite payload board.
+
+Design
+• Substrate: LTCC (low-temperature co-fired ceramic), 10-layer, 25mm x 25mm
+• Die: rad-hard processor + 2x SRAM + PMIC (4 die total)
+• Interconnect: Au wire bond (25um), 312 I/O
+• Lid: kovar, seam-weld hermetic seal
+• Mark: MIL-STD-883 TM2015 compliant
+
+Die sourcing
+• Processor: OCM die bank, lot DPA on file, 100 krad TID qualified
+• SRAM: Micross bonded inventory, date code < 2 years
+• PMIC: authorized aftermarket, full traceability
+
+Build
+• Die attach: AuSn eutectic (processor), epoxy (SRAM, PMIC)
+• Wire bond: thermosonic Au ball, 100% pull tested
+• Lid seal: seam weld, 100% gross and fine leak tested
+• Serialised and marked per customer spec
+
+Test
+• Hermeticity: fine leak < 1E-8 atm·cc/s (per TM1014), gross leak pass — 100% pass
+• Electricals: functional, parametric at -55/+25/+125C — 100% pass
+• PIND: no loose particles detected
+• External visual: no defects
+
+→ Saved: mcm_design, build_report, test_data, traceability
+
+NOTE: illustrative; confirm against the program ICD and MIL-STD-883.`,
+
+dms:`DMS SUSTAINMENT PLAN (illustrative)
+
+Part: discontinued power MOSFET (OCM EOL 18 months ago).
+Program: legacy avionics, 2,000 units required over 5 years.
+
+Obsolescence status
+• OCM: end-of-life, no remaining wafer inventory
+• Last-time-buy: expired, 340 units remaining in authorized distribution
+• GIDEP alert: filed, no alternate qualified
+
+Sustainment path
+1. Immediate: procure remaining 340 units from authorized stock (verified traceability)
+2. Near-term: source bare die from OCM die bank or aftermarket; repackage in hermetic TO-257
+3. Long-term: qualify alternate die (form/fit/function equivalent) through Micross foundry partner
+4. Requalification: MIL-STD-883 Group A/B/C screening on repackaged units; DPA on 5 samples
+
+Timeline
+• Phase 1 (340 units): 8 weeks
+• Phase 2 (repackage): 20 weeks
+• Phase 3 (alternate qual): 36 weeks
+
+Risk
+• Die bank availability uncertain — recommend bonding 500 die immediately
+• Alternate die requires delta qualification by the program office
+
+→ Saved: sustainment_plan, source_options, timeline, risk_register
+
+NOTE: illustrative; confirm with the program office and DCMA.`,
+
+radlot:`RADIATION LOT ACCEPTANCE REPORT (illustrative)
+
+Part: rad-hard ADC for GEO satellite.
+Lot: 100 units, wafer lot #WL-2024-0847.
+
+TID testing (per MIL-STD-883 TM1019, Condition A)
+• Dose rate: 100 rad(Si)/s
+• Steps: 10, 20, 50, 75, 100 krad(Si)
+• Sample: 10 units, biased during irradiation
+• Result: all parametric within spec through 100 krad(Si)
+• DNL drift: < 0.1 LSB at 100 krad — PASS
+• ENOB drift: < 0.2 bits at 100 krad — PASS
+
+SEE testing
+• Heavy-ion beam: LET range 1–80 MeV·cm2/mg
+• SEL threshold: > 80 MeV·cm2/mg — SEL-immune (PASS)
+• SEU cross-section: < 1E-10 cm2/bit at 40 MeV·cm2/mg — PASS
+
+Dose-rate survivability
+• Prompt dose: 1E8 rad(Si)/s, 20 ns pulse
+• Result: no latch-up, functional recovery < 100 us — PASS
+
+Compliance
+• MIL-STD-883 TM1019: PASS
+• Program spec (100 krad TID, SEL-immune): PASS
+• 0 items flagged
+
+→ Saved: tid_curves, see_cross_sections, dose_rate_data, compliance_summary
+
+NOTE: illustrative; confirm against the program radiation requirements and DSCC lot acceptance criteria.`,
+};
+
+let EMPLOYEES=[
+{id:'scout',name:'Scout',title:'AI Program Scout',wf:'scout',handled:180,hrs:44,win:0,status:'idle'},
+{id:'rfqbot',name:'RFQ-Bot',title:'AI RFQ Responder',wf:'rfq',handled:130,hrs:92,win:46,status:'idle'},
+{id:'pricer',name:'Pricer',title:'AI Component Pricer',wf:'quote',handled:210,hrs:68,win:38,status:'idle'},
+{id:'radar',name:'Radar',title:'AI Supply Intel',wf:'radar',handled:140,hrs:32,win:0,status:'idle'},
+{id:'screener',name:'Screener',title:'AI Upscreen Engineer',wf:'upscreen',handled:260,hrs:180,win:58,status:'idle'},
+{id:'packager',name:'Packager',title:'AI Packaging Engineer',wf:'mcmpackage',handled:120,hrs:140,win:52,status:'idle'},
+{id:'sustainer',name:'Sustainer',title:'AI Sustainment Planner',wf:'dms',handled:190,hrs:96,win:40,status:'idle'},
+{id:'radtest',name:'RadTest',title:'AI Rad-Test Engineer',wf:'radlot',handled:90,hrs:110,win:44,status:'idle'},
+];
+
+let running=false;
+
+/* ═══════════════  ENGINE (do not edit below this line)  ═══════════════ */
+
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const now=()=>new Date().toLocaleTimeString('en-GB');
+const mono=n=>n.trim().slice(0,2).toUpperCase();
+
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Commercial</span>';if(wf.track==='operations')s+='<span class="tag operations">Engineering</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+
+function setView(v){
+$('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');
+$('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');
+if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function renderEcon(){
+const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);
+const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;
+const cells=[[total,'AI operators (commercial + engineering)'],[h.toLocaleString(),'RFQs, screens & builds handled'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','engineer & QA hours saved / month'],['+'+avg+'%','avg turnaround improvement']];
+$('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');
+}
+
+function empCard(e){const wf=WORKFLOWS[e.wf];
+const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');
+return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}">
+<div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div>
+<div class="emp-owns">Owns: <b>${wf.name}</b></div>
+<div class="team">${team}</div>
+<div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'—'}</b>faster</div></div>
+<div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a program / part</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;
+}
+
+function renderRoster(){
+const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;
+let html='';
+TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;
+html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});
+const untracked=EMPLOYEES.filter(e=>!WORKFLOWS[e.wf].track);
+if(untracked.length)html+=`<div class="slabel">Other</div><div class="roster">`+untracked.map(empCard).join('')+`</div>`;
+$('roster').innerHTML=html;
+}
+
+function assign(id){
+if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+$('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div>
+<div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a program, a part number or a sustainment case and ${e.name} runs the whole loop.</div></div></div>
+<div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div>
+<div id="stage"></div></div>`;
+$('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();
+}
+
+async function runEmp(id){
+if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;
+e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');
+const stage=$('stage');
+stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div>
+<div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div>
+<div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;
+const feed=$('feed');
+function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;
+const row=document.createElement('div');row.className='frow';row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,150)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}
+log(null,`Input received: "${obj.substring(0,54)}…"`);
+log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);
+await sleep(rand(700,1100));
+const grid=$('agrid');
+wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;
+c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;
+grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});
+await sleep(600);
+$('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');
+const done=new Set();
+async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);
+c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';
+log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));
+for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}
+c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}
+if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}
+else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;
+if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}
+$('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');
+await sleep(400);
+const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(6,44);
+$('resultArea').innerHTML=`<div class="result"><div class="rstats">
+<div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div>
+<div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div>
+<div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'Commercial & program capture':'Engineering & production services'}</span></div>
+<div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div>
+<div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div>
+<div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div>
+<div class="donebar"><b>${e.name} produced a review-ready output.</b> Read, adapt and QA complete, ready for an engineer, quality manager or program manager to confirm against the program specification and MIL-STD requirements. Illustrative simulation, not a production deliverable.</div>`;
+e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;
+}
+
+// builder
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per program',step:1};renderBuilder();}
+function renderBuilder(){
+const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];
+$('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();
+}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+
+Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+
+w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+
+`<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;
+document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div>
+<div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. Inspector" oninput="draft.name=this.value"></div>
+<div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Test Engineer" oninput="draft.title=this.value"></div>
+<div class="field"><label>Cadence</label><div class="seg">`+['Per program','Per lot','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div>
+<div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;
+let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();
+const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};
+DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];
+const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});
+renderEcon();renderRoster();setView('ops');
+setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);
+}
+
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
