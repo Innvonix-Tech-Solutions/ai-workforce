@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Silicon Labs &mdash; AI Commercial &amp; Engineering Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#fdf2f3;--surface2:#fae1e3;--border:#f0c6cb;--accent:#C8102E;
+--accent-dim:rgba(200,16,46,.07);--accent-line:rgba(200,16,46,.30);--slate:#4a5563;--slate-line:rgba(74,85,99,.32);--text:#1c2530;--hi:#0f1a26;--tert:#69737f;--ok:#16a34a;--ok-dim:rgba(22,163,74,.10);--gold:#a4761b;--gold-bg:#fdf6e6;--gold-line:#e8cf94}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:36px;height:34px;border-radius:8px;background:linear-gradient(135deg,#C8102E,#e84057);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;letter-spacing:.5px}
+.htitle{font-size:15px;font-weight:600;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert)}.badge b{color:var(--accent)}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:600;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.5;max-width:900px;margin-bottom:14px}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.commercial{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(74,85,99,.08);color:var(--slate);border:1px solid var(--slate-line)}
+.tag.hero{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:24px;font-weight:700;color:var(--hi)}.cell .v .u{color:var(--accent)}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px}
+.slabel{font-size:11px;font-weight:600;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert)}
+.emp-owns{font-size:12px;margin-bottom:10px}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:inherit;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#e8a0a8}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#e8a0a8}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:14px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 13px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="header">
+<div class="logo"><div class="mark">SL</div>
+<div><div class="htitle">Silicon Labs &middot; AI Commercial &amp; Engineering Workforce</div><div class="hsub">AI operators that find design wins, recommend the right SoC, build firmware stacks, certify products, and enable customers worldwide</div></div></div>
+<div class="badge">Independent concept &nbsp;&middot;&nbsp; <b>illustrative</b></div>
+</header>
+
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>a commercial or engineering workflow turned into an autonomous team of agents</b>. One track wins the design wins: it finds OEMs and ODMs building IoT products that need wireless SoCs, qualifies the opportunity, recommends the right Series 3 or xG22 platform, quotes the volume, and tracks the competitive landscape. The other track delivers the product: it maps SoC selection to the customer requirement, builds the Simplicity Studio firmware project, handles FCC/CE and protocol certifications, and produces reference designs and enablement materials. Point one at a prospect, a customer requirement, or a product SKU and it runs the loop, then hands back a review-ready output for a person to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial</span> find, qualify, win design wins</span>
+<span><span class="tag operations">Engineering</span> silicon, SDK, certification, enablement</span>
+<span><span class="tag hero">Flagship</span> the deepest example run</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+
+<div class="foot">Independent concept prototype prepared by Innvonix Tech Solutions for a conversation with Silicon Labs. It is not affiliated with, endorsed by, or built on Silicon Labs systems or data. All operators and outputs are illustrative simulations; accounts, SoCs, firmware builds, certifications, pricing and lead times are placeholders. A human engineer, FAE or manager reviews and approves every platform recommendation, firmware build, certification, quote and compliance check. This is not a product and produces no production output.</div>
+
+<script>
+/* ═══════════════════════  DATA (fill per company)  ═══════════════════════ */
+
+const AGENT_ROLES={
+researcher:{emoji:'🔎',label:'Market & IoT Research',tools:['research','save']},
+prospector:{emoji:'🧲',label:'Account & Design-Win Sourcing',tools:['source_accounts','save']},
+qualifier:{emoji:'🎯',label:'Design-Win Qualification',tools:['score_fit','save']},
+fae:{emoji:'🛠️',label:'Field Application Engineering',tools:['read_design','recommend_platform','save']},
+silicon:{emoji:'🔬',label:'Silicon & SoC Architecture',tools:['analyze_spec','map_integration','save']},
+sdk:{emoji:'💻',label:'SDK & Firmware Engineering',tools:['build_stack','test_firmware','save']},
+pricing:{emoji:'🧮',label:'Pricing & Quoting',tools:['build_quote','save']},
+cert:{emoji:'📋',label:'Certification & Compliance',tools:['check_compliance','save']},
+security:{emoji:'🔒',label:'Security & Secure Vault',tools:['audit_security','save']},
+clientintel:{emoji:'🛰️',label:'Competitor & Market Intelligence',tools:['profile_competitor','save']},
+writer:{emoji:'✍️',label:'Proposal & Technical Writer',tools:['compose','save']},
+reviewer:{emoji:'✅',label:'QA & Design Review',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+
+const TRACKS=[['commercial','Commercial & design wins'],['operations','Engineering & product']];
+
+const WORKFLOWS={
+scout:{name:'Design-win opportunity discovery',title:'AI Opportunity Scout',mode:'dag',track:'commercial',deliverable:'Target Account List',
+sample:'Find OEMs and ODMs building smart home, industrial IoT and smart metering products that need wireless SoCs, and rank them.',
+desc:'Agents map IoT OEMs and ODMs by vertical, source accounts and contacts, score design-win fit, and build the ranked target list.',
+tasks:[{agent:'researcher',task:'Map IoT verticals (smart home, industrial, metering, ESL, medical) and identify OEMs/ODMs building connected products.',deps:[]},
+{agent:'prospector',task:'Source the engineering, purchasing and distributor contacts by region; dedupe against CRM.',deps:[]},
+{agent:'qualifier',task:'Score on wireless needs (BLE, Wi-Fi, Zigbee, Matter, Thread), volume, timeline and platform fit (Series 3, xG22, SiWx917).',deps:[0,1]},
+{agent:'writer',task:'Compile the ranked target account list with vertical, platform fit and recommended next action.',deps:[2]}]},
+
+designwin:{name:'Design-win pursuit & FAE support',title:'AI Virtual FAE',mode:'sequential',track:'commercial',deliverable:'Platform Proposal',
+sample:'A smart home OEM needs a multiprotocol SoC for a Matter-over-Thread hub with BLE commissioning. Evaluate their requirements and recommend the right platform.',
+desc:'Agents review the customer requirement, recommend the right SoC platform, map security features, and produce the platform proposal.',
+tasks:[{agent:'fae',task:'Review the customer requirement: protocols, power budget, compute, RF, form factor and timeline.',deps:[]},
+{agent:'fae',task:'Recommend the platform: Series 3 SiMG301 for multiprotocol, xG22 for ultra-low-power, SiWx917 for Wi-Fi 6.',deps:[0]},
+{agent:'security',task:'Map Secure Vault features (PSA Level 3/4, secure boot, anti-tamper) to the customer security requirement.',deps:[1]},
+{agent:'writer',task:'Produce the platform proposal with SoC selection rationale, block diagram and next steps.',deps:[2]}]},
+
+quote:{name:'Pricing & volume quote',title:'AI Volume Pricer',mode:'sequential',track:'commercial',deliverable:'Volume Pricing Quote',
+sample:'An industrial OEM needs 500K units/year of SiWx917 for a Wi-Fi 6 sensor. Price it with lead time and supply options.',
+desc:'Agents confirm the volume and configuration, build the quote, verify supply and lead time, and produce the pricing agreement.',
+tasks:[{agent:'qualifier',task:'Confirm the volume, configuration and packaging: SoC vs module, QFN vs BGA, tape-and-reel.',deps:[]},
+{agent:'pricing',task:'Build the volume pricing quote: unit cost tiers, NRE if custom, tooling.',deps:[0]},
+{agent:'reviewer',task:'Review the quote parameters against margin guidelines and competitive positioning.',deps:[1]},
+{agent:'writer',task:'Produce the volume pricing quote document.',deps:[2]}]},
+
+radar:{name:'Competitor & market intelligence',title:'AI Market Intel',mode:'dag',track:'commercial',deliverable:'Competitor Battlecard',
+sample:'How are Nordic (nRF54), Espressif (ESP32), NXP and Qualcomm positioned in low-power IoT wireless, and where does Silicon Labs win?',
+desc:'Agents scan competitor releases, analyze technical positioning, draft the battlecard, and review the positioning.',
+tasks:[{agent:'clientintel',task:'Profile competing IoT chipmakers: Nordic nRF54, Espressif ESP32-C/H, NXP, Qualcomm, TI CC26xx.',deps:[]},
+{agent:'researcher',task:'Gather demand signals: Matter adoption, Wi-Fi HaLow, Ambient IoT, ESL growth, smart metering tenders.',deps:[]},
+{agent:'silicon',task:'Compare silicon specs: power (TX/RX/sleep), compute (Cortex-M33 vs M4), RF performance, integration, security level.',deps:[0,1]},
+{agent:'writer',task:'Produce the competitor battlecard with win themes and talk tracks for FAEs.',deps:[2]}]},
+
+platform:{name:'Platform & SoC selection guide',title:'AI SoC Architect',mode:'sequential',track:'operations',tag:'flagship',deliverable:'SoC Platform Selection Package',
+sample:'A customer is building an ultra-low-power electronic shelf label (ESL). Evaluate their power budget, RF needs, protocol stack and certifications, and recommend the right SoC with a complete selection package.',
+desc:'Agents evaluate the customer requirement in depth, select the base SoC, check protocol stack support, verify certifications, audit security posture, QA the selection, and produce the package.',
+tasks:[{agent:'silicon',task:'Evaluate the customer power budget (TX/RX/sleep), RF requirements (range, protocol, band), compute needs and form factor.',deps:[]},
+{agent:'silicon',task:'Select the base SoC: xG22 for ultra-low-power BLE, SiMG301 for multiprotocol Matter, SiWx917 for Wi-Fi 6 + BLE.',deps:[0]},
+{agent:'sdk',task:'Check protocol stack support in GSDK: BLE 5.4, Zigbee 3.0, Matter 1.1, Thread 1.3, Wi-SUN, proprietary.',deps:[1]},
+{agent:'cert',task:'Verify required certifications: FCC/CE/IC for the target markets, Bluetooth SIG, Wi-Fi Alliance, CSA Matter.',deps:[1]},
+{agent:'security',task:'Audit Secure Vault posture: PSA Level 3 vs 4, secure boot chain, secure key storage, anti-tamper.',deps:[2]},
+{agent:'reviewer',task:'QA the platform selection against the customer requirement, power budget, and certification matrix.',deps:[3,4]},
+{agent:'writer',task:'Produce the SoC platform selection package with rationale, block diagram, power analysis and certification roadmap.',deps:[5]}]},
+
+sdkstack:{name:'SDK & firmware stack build',title:'AI Firmware Builder',mode:'sequential',track:'operations',deliverable:'Firmware Build Package',
+sample:'Configure a Simplicity Studio project for a Matter light bulb on EFR32MG24, select the wireless stack, build the firmware and test it.',
+desc:'Agents configure the Simplicity Studio project, select the wireless stack, build the base firmware, QA-test it, and produce the build package.',
+tasks:[{agent:'sdk',task:'Configure the Simplicity Studio v5 project: select the board (BRD4186C), GSDK version, and project template.',deps:[]},
+{agent:'sdk',task:'Select and configure the wireless stack: Matter 1.1 over Thread, BLE for commissioning, OTA DFU.',deps:[0]},
+{agent:'sdk',task:'Build the base firmware image: compile, link, generate the .s37/.hex, check flash and RAM usage.',deps:[1]},
+{agent:'reviewer',task:'QA-test the firmware: flash to the board, verify radio TX/RX, protocol join, OTA update, power profile.',deps:[2]},
+{agent:'writer',task:'Produce the firmware build package with build log, binary, flash map and test results.',deps:[3]}]},
+
+certification:{name:'Regulatory & certification package',title:'AI Compliance Auditor',mode:'dag',track:'operations',deliverable:'Certification & Compliance Report',
+sample:'Prepare the certification package for a SiWx917 Wi-Fi 6 + BLE product targeting US, EU and Canada markets.',
+desc:'Agents identify required regulatory certs, check protocol certifications, audit Secure Vault, and produce the compliance report.',
+tasks:[{agent:'cert',task:'Identify required regulatory certifications: FCC Part 15 (US), CE RED (EU), IC RSS (Canada), and any market-specific requirements.',deps:[]},
+{agent:'cert',task:'Check protocol certifications: Bluetooth SIG QDID, Wi-Fi Alliance, CSA Matter certification, Thread Group.',deps:[0]},
+{agent:'security',task:'Audit Secure Vault: PSA Level 3/4 certification status, secure boot, secure debug, key provisioning.',deps:[0]},
+{agent:'reviewer',task:'QA the certification matrix: cross-check regulatory + protocol + security against target markets.',deps:[1,2]},
+{agent:'writer',task:'Produce the certification and compliance report with timeline, lab requirements and cost estimate.',deps:[3]}]},
+
+enablement:{name:'Customer enablement & reference design',title:'AI Enablement Publisher',mode:'dag',track:'operations',deliverable:'Reference Design & App Notes',
+sample:'Produce a reference design package for a BLE asset tracker using xG22, including schematic, app note, eval board guide and training materials.',
+desc:'Agents define the reference architecture, draft app notes, create the eval board guide, QA-review, and produce the enablement package.',
+tasks:[{agent:'silicon',task:'Define the reference architecture: SoC selection, antenna design, power supply, peripheral mapping.',deps:[]},
+{agent:'fae',task:'Draft the application note: design guidelines, RF layout, BOM optimization, power consumption tips.',deps:[0]},
+{agent:'writer',task:'Create the evaluation board user guide: getting started, Simplicity Studio setup, demo firmware.',deps:[0]},
+{agent:'reviewer',task:'QA-review all materials: technical accuracy, branding, compliance with Silicon Labs documentation standards.',deps:[1,2]},
+{agent:'writer',task:'Produce the final enablement package: reference schematic, app note, eval guide, training deck.',deps:[3]}]},
+};
+
+const DTITLE={scout:'Target Account List',designwin:'Platform Proposal Package',quote:'Volume Pricing Quote',radar:'Competitor Battlecard',platform:'SoC Platform Selection Package',sdkstack:'Firmware Build Package',certification:'Certification & Compliance Report',enablement:'Reference Design & App Notes'};
+
+const TOOLS={
+research:()=>'Gathered IoT market, vertical and demand context; sources ranked by recency.',
+source_accounts:()=>'Sourced engineering, purchasing and distributor contacts; deduped against CRM.',
+score_fit:()=>'Scored on wireless needs, volume, timeline and platform fit; priority set.',
+read_design:()=>'Read the customer requirement: protocols, power budget, compute, RF and form factor.',
+recommend_platform:()=>'Recommended platform: Series 3 / xG22 / SiWx917 based on the requirement matrix.',
+analyze_spec:()=>'Analyzed silicon specs: power (TX/RX/sleep), compute, RF, integration and security.',
+map_integration:()=>'Mapped integration: peripherals, antenna, power supply, form factor constraints.',
+build_stack:()=>'Built the wireless stack in Simplicity Studio; GSDK configured and compiled.',
+test_firmware:()=>'Tested firmware: flashed to board, radio TX/RX verified, protocol joined, power profiled.',
+build_quote:()=>'Built the volume pricing quote; unit cost tiers and supply options modelled.',
+check_compliance:()=>'Checked regulatory (FCC/CE/IC) and protocol (SIG/WiFi Alliance/CSA) compliance.',
+audit_security:()=>'Audited Secure Vault: PSA Level, secure boot, key storage, anti-tamper checked.',
+profile_competitor:()=>'Profiled competing IoT chipmakers and their latest moves; two gaps found.',
+qa_review:()=>'QA: requirement fit, specs, compliance and completeness checked; items flagged for sign-off.',
+compose:()=>'Drafted in a clear, technical, standards-aware style, review-ready.',
+save:()=>'Saved to shared context for downstream agents.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()} 
+
+const FINAL={
+scout:`TARGET ACCOUNT LIST (illustrative)
+
+Scanned IoT OEMs and ODMs across smart home, industrial, metering, ESL and medical verticals.
+
+A-tier (pursue now)
+1. Smart home OEM (Matter hub + accessories) — Series 3 SiMG301 — fit 94
+2. Industrial sensor company (BLE mesh + Wi-SUN) — xG22 + FG23 — fit 90
+3. Smart metering integrator (sub-GHz mesh, 200K units) — FG23 — fit 87
+4. ESL solution provider (BLE 5.4, ultra-low-power) — xG22 — fit 85
+5. Medical wearable startup (BLE + proprietary) — BG22 — fit 82
+
+Contacts: VP Engineering, Purchasing Manager, Distributor Principal.
+Note: design-win cycle typically runs evaluation → prototype → production ramp.
+
+→ Saved: opportunity_list, contacts, fit_scores
+
+NOTE: illustrative; not affiliated with Silicon Labs.`,
+
+designwin:`PLATFORM PROPOSAL (illustrative)
+
+Customer: smart home OEM building a Matter-over-Thread hub with BLE commissioning.
+
+Requirement
+• Protocols: Matter 1.1 over Thread, BLE 5.4 for commissioning, Zigbee 3.0 backward compat
+• Compute: local AI/ML for occupancy, voice trigger
+• Security: PSA Level 3+ (Secure Vault Mid or High)
+
+Recommendation
+• SoC: Series 3 SiMG301 (multiprotocol, AI/ML accelerator, PSA Level 4)
+• Stack: GSDK with Matter + Thread + BLE concurrent
+• Security: Secure Vault High (PSA Level 4, secure boot, anti-tamper)
+
+Next steps
+• Ship SLWSTK6030A Wireless Starter Kit for evaluation
+• FAE on-site support for RF layout and antenna design
+
+→ Saved: proposal.pdf, block_diagram, next_steps
+
+NOTE: illustrative; not affiliated with Silicon Labs.`,
+
+quote:`VOLUME PRICING QUOTE (illustrative)
+
+Customer: industrial OEM, Wi-Fi 6 sensor product.
+
+Configuration
+• Part: SiWx917 (Wi-Fi 6 + BLE 5.4 SoC)
+• Package: QFN-56, tape-and-reel
+• Volume: 500,000 units/year
+
+Quote
+• Tier pricing modelled across 100K / 250K / 500K annual volumes
+• Lead time: 12 weeks standard, 8 weeks with buffer stock agreement
+• Supply: dual-source wafer fab confirmed; no single-point-of-failure
+
+→ Saved: quote.pdf, pricing_model, supply_confirmation
+
+NOTE: illustrative; all pricing redacted.`,
+
+radar:`COMPETITOR BATTLECARD (illustrative)
+
+Landscape
+• Nordic nRF54: strong BLE, growing Matter; weaker on Wi-Fi, no integrated AI/ML
+• Espressif ESP32: price leader; weaker security (no PSA Level 3+), limited protocol cert support
+• NXP: strong industrial presence; fragmented IoT portfolio
+• Qualcomm: Wi-Fi/BT combo strong; overkill for constrained IoT
+• TI CC26xx: good sub-GHz; narrower protocol breadth
+
+Where Silicon Labs wins
+• Protocol breadth: BLE + Wi-Fi + Zigbee + Thread + Matter + Z-Wave + Wi-SUN + proprietary
+• Security: only vendor with PSA Level 4 (Secure Vault High) in production
+• Ecosystem: Simplicity Studio + GSDK + 35,000 customers + global FAE network
+• Series 3: AI/ML hardware acceleration + multiprotocol concurrency
+
+Talk tracks for FAEs
+1. "Open ecosystem, not lock-in" — 1,000+ reference designs, 35,000 customers
+2. "Security is not optional" — PSA Level 4, EU Cyber Resilience Act ready
+3. "One platform, any protocol" — Series 3 runs Matter + Zigbee + BLE concurrently
+
+→ Saved: battlecard, competitor_profiles, talk_tracks
+
+NOTE: illustrative; not affiliated with Silicon Labs.`,
+
+platform:`SoC PLATFORM SELECTION PACKAGE (illustrative · flagship)
+
+Customer: building an ultra-low-power electronic shelf label (ESL).
+
+Power analysis
+• TX: 4.8 mA @ 0 dBm (target < 5 mA)
+• RX: 4.1 mA (target < 5 mA)
+• Sleep: 1.2 µA with RTC (target < 1.5 µA)
+• Battery life estimate: 5+ years on CR2032
+
+SoC selection
+• EFR32BG22C224 (xG22 family)
+• Cortex-M33 @ 76.8 MHz, 512 KB flash, 32 KB RAM
+• BLE 5.2 + proprietary protocol support
+• LFXO or LFRCO for ultra-low-power timekeeping
+
+Protocol stack
+• GSDK v4.3 with BLE 5.2 stack
+• Proprietary sub-GHz backup for long-range ESL update
+• OTA DFU via BLE for field updates
+
+Certifications required
+• FCC Part 15.247 (US), CE RED (EU), IC RSS-247 (Canada)
+• Bluetooth SIG QDID (BLE 5.2)
+
+Security
+• Secure Vault Mid: PSA Level 3, secure boot, secure debug lock
+• Root of trust and secure key storage provisioned at factory
+
+QA review
+• Power budget: PASS (all parameters within target)
+• Protocol support: PASS (BLE 5.2 + proprietary confirmed in GSDK)
+• Certification: 2 items flagged (need to confirm antenna gain for FCC, CE module exemption)
+
+→ Saved: selection_package, power_analysis, cert_matrix, block_diagram
+
+NOTE: illustrative; confirm against the customer datasheet and lab measurements.`,
+
+sdkstack:`FIRMWARE BUILD PACKAGE (illustrative)
+
+Project: Matter light bulb on EFR32MG24.
+
+Simplicity Studio v5 configuration
+• Board: BRD4186C (EFR32MG24 Radio Board)
+• GSDK: v4.3.0
+• Template: Matter — Lighting App
+
+Wireless stack
+• Matter 1.1 over Thread
+• BLE 5.4 for commissioning and OTA
+• Thread 1.3 Border Router compatible
+
+Build result
+• Compile: SUCCESS (0 errors, 2 warnings — unused variable, deprecated API)
+• Flash usage: 840 KB / 1536 KB (54.7%)
+• RAM usage: 128 KB / 256 KB (50.0%)
+• Binary: matter_light.s37
+
+QA test
+• Flash: SUCCESS (J-Link, 12.4 seconds)
+• Radio TX/RX: PASS (BLE advertising, Thread MLE)
+• Protocol join: PASS (commissioned via chip-tool, joined Thread network)
+• OTA DFU: PASS (BLE OTA, 2 min 14 sec)
+• Power profile: 4.2 mA active, 1.8 µA sleep
+
+→ Saved: matter_light.s37, build_log, flash_map, test_results
+
+NOTE: illustrative; verify against actual hardware.`,
+
+certification:`CERTIFICATION & COMPLIANCE REPORT (illustrative)
+
+Target: SiWx917 Wi-Fi 6 + BLE product, US/EU/Canada markets.
+
+Regulatory certifications
+• FCC Part 15.247 / 15.407: pre-scan PASS (conducted + radiated within limits)
+• CE RED EN 300 328 / EN 301 893: pre-scan PASS
+• IC RSS-247: pre-scan PASS
+• Estimated lab timeline: 6–8 weeks
+
+Protocol certifications
+• Wi-Fi Alliance: Wi-Fi CERTIFIED 6 — PRE-CERT PASS
+• Bluetooth SIG: QDID pending (BLE 5.4 stack qualified)
+• CSA Matter: certification path identified (Matter 1.1 over Wi-Fi)
+
+Security audit
+• Secure Vault: PSA Level 3 — PASS
+• Secure boot chain: verified
+• Secure key provisioning: factory provisioning flow documented
+• Anti-tamper: glitch detection and voltage monitoring enabled
+
+QA cross-check
+• All target markets covered
+• 1 item flagged: confirm antenna gain measurement for FCC filing
+
+→ Saved: cert_report, pre_scan_results, security_audit, timeline
+
+NOTE: illustrative; confirm with accredited test lab.`,
+
+enablement:`REFERENCE DESIGN & APP NOTES (illustrative)
+
+Target: BLE asset tracker using xG22 (EFR32BG22).
+
+Reference architecture
+• SoC: EFR32BG22C224 (BLE 5.2, Cortex-M33)
+• Antenna: chip antenna (2.4 GHz, PCB-mount)
+• Power: CR2032 coin cell, 3.0V direct supply
+• Peripherals: I2C accelerometer, SPI flash for log storage
+
+Application note (AN1234)
+• RF layout guidelines for BG22 QFN-40
+• BOM optimization: < $3.50 at 100K volume
+• Power consumption: 18 µA average, 5+ year battery life
+• OTA DFU implementation guide
+
+Evaluation board guide (UG567)
+• Getting started with BRD4184B
+• Simplicity Studio project import
+• Demo firmware: BLE beacon + asset tracking
+
+QA review
+• Technical accuracy: PASS
+• Branding and formatting: PASS (Silicon Labs documentation standards)
+• 1 item flagged: update antenna matching network values for production revision
+
+→ Saved: reference_schematic.pdf, AN1234.pdf, UG567.pdf, training_deck
+
+NOTE: illustrative; verify against production hardware.`,
+};
+
+let EMPLOYEES=[
+{id:'scout',name:'Scout',title:'AI Opportunity Scout',wf:'scout',handled:200,hrs:50,win:0,status:'idle'},
+{id:'vfae',name:'V-FAE',title:'AI Virtual FAE',wf:'designwin',handled:120,hrs:80,win:42,status:'idle'},
+{id:'pricer',name:'Pricer',title:'AI Volume Pricer',wf:'quote',handled:90,hrs:64,win:38,status:'idle'},
+{id:'radar',name:'Radar',title:'AI Market Intel',wf:'radar',handled:150,hrs:36,win:0,status:'idle'},
+{id:'architect',name:'Architect',title:'AI SoC Architect',wf:'platform',handled:240,hrs:160,win:56,status:'idle'},
+{id:'builder',name:'Builder',title:'AI Firmware Builder',wf:'sdkstack',handled:190,hrs:120,win:48,status:'idle'},
+{id:'auditor',name:'Auditor',title:'AI Compliance Auditor',wf:'certification',handled:170,hrs:88,win:34,status:'idle'},
+{id:'enabler',name:'Enabler',title:'AI Enablement Publisher',wf:'enablement',handled:130,hrs:70,win:0,status:'idle'},
+];
+
+let running=false;
+
+/* ═══════════════  ENGINE (do not edit below this line)  ═══════════════ */
+
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const now=()=>new Date().toLocaleTimeString('en-GB');
+const mono=n=>n.trim().slice(0,2).toUpperCase();
+
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Commercial</span>';if(wf.track==='operations')s+='<span class="tag operations">Engineering</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+
+function setView(v){
+$('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');
+$('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');
+if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function renderEcon(){
+const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);
+const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;
+const cells=[[total,'AI operators (commercial + engineering)'],[h.toLocaleString(),'design wins, builds & runs handled'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','engineer & FAE hours saved / month'],['+'+avg+'%','avg turnaround improvement']];
+$('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');
+}
+
+function empCard(e){const wf=WORKFLOWS[e.wf];
+const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');
+return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}">
+<div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div>
+<div class="emp-owns">Owns: <b>${wf.name}</b></div>
+<div class="team">${team}</div>
+<div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'—'}</b>faster</div></div>
+<div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a prospect / requirement</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;
+}
+
+function renderRoster(){
+const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;
+let html='';
+TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;
+html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});
+const untracked=EMPLOYEES.filter(e=>!WORKFLOWS[e.wf].track);
+if(untracked.length)html+=`<div class="slabel">Other</div><div class="roster">`+untracked.map(empCard).join('')+`</div>`;
+$('roster').innerHTML=html;
+}
+
+function assign(id){
+if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+$('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div>
+<div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a prospect, a customer requirement or a product SKU and ${e.name} runs the whole loop.</div></div></div>
+<div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div>
+<div id="stage"></div></div>`;
+$('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();
+}
+
+async function runEmp(id){
+if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;
+e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');
+const stage=$('stage');
+stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div>
+<div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div>
+<div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;
+const feed=$('feed');
+function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;
+const row=document.createElement('div');row.className='frow';row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,150)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}
+log(null,`Input received: "${obj.substring(0,54)}…"`);
+log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);
+await sleep(rand(700,1100));
+const grid=$('agrid');
+wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;
+c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;
+grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});
+await sleep(600);
+$('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');
+const done=new Set();
+async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);
+c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';
+log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));
+for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}
+c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}
+if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}
+else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;
+if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}
+$('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');
+await sleep(400);
+const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(6,44);
+$('resultArea').innerHTML=`<div class="result"><div class="rstats">
+<div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div>
+<div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div>
+<div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'Commercial & design wins':'Engineering & product'}</span></div>
+<div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div>
+<div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div>
+<div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div>
+<div class="donebar"><b>${e.name} produced a review-ready output.</b> Read, adapt and QA complete, ready for an engineer, FAE or manager to confirm against the customer requirement and product specifications. Illustrative simulation, not a production output.</div>`;
+e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;
+}
+
+// builder
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per design win',step:1};renderBuilder();}
+function renderBuilder(){
+const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];
+$('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();
+}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+
+Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+
+w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+
+`<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;
+document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div>
+<div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. Navigator" oninput="draft.name=this.value"></div>
+<div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Platform Architect" oninput="draft.title=this.value"></div>
+<div class="field"><label>Cadence</label><div class="seg">`+['Per design win','Per product','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div>
+<div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;
+let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();
+const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};
+DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];
+const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});
+renderEcon();renderRoster();setView('ops');
+setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);
+}
+
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
