@@ -131,3 +131,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/ceva
 https://innvonix-tech-solutions.github.io/ai-workforce/tecsur
 
 https://innvonix-tech-solutions.github.io/ai-workforce/tektronix
+
+https://innvonix-tech-solutions.github.io/ai-workforce/mintos
