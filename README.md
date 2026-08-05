@@ -139,3 +139,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/handwave
 https://innvonix-tech-solutions.github.io/ai-workforce/silabs
 
 https://innvonix-tech-solutions.github.io/ai-workforce/micross-components
+
+https://innvonix-tech-solutions.github.io/ai-workforce/ltd-material
