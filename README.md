@@ -133,3 +133,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/tecsur
 https://innvonix-tech-solutions.github.io/ai-workforce/tektronix
 
 https://innvonix-tech-solutions.github.io/ai-workforce/mintos
+
+https://innvonix-tech-solutions.github.io/ai-workforce/handwave
