@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mintos Console — AI Commercial &amp; Wealth Engineering Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060b14;
+  --surface:#0f172a;
+  --surface-2:#1e293b;
+  --surface-3:#334155;
+  --border:#1e293b;
+  --border-soft:#111c30;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --muted-2:#64748b;
+  --accent:#00d494;
+  --accent-dim:rgba(0,212,148,0.15);
+  --accent-line:rgba(0,212,148,0.35);
+  --accent2:#f59e0b;
+  --accent2-bg:rgba(245,158,11,0.08);
+  --accent3:#06b6d4;
+  --danger:#ef4444;
+  --ok:#10b981;
+  --font-display:'Rajdhani',sans-serif;
+  --font-body:'Work Sans',sans-serif;
+  --font-mono:'Roboto Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 88% -8%, rgba(0,212,148,0.10), transparent 55%),
+    radial-gradient(900px 480px at 5% 5%, rgba(245,158,11,0.07), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+a{color:var(--accent);}
+::selection{background:rgba(0,212,148,0.28);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+.hidden{display:none!important;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:24px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:42px;height:40px;border-radius:8px;
+  background:linear-gradient(135deg,#059669,#00d494);
+  border:1px solid var(--accent-line);
+  display:flex;align-items:center;justify-content:center;
+  color:#060b14;font-family:var(--font-mono);font-weight:800;font-size:15px;
+  box-shadow:0 0 16px rgba(0,212,148,0.25);
+}
+.mark-name{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:0.02em;color:#fff;}
+.mark-sub{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px;}
+
+.line-readout{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent);
+  background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:8px 14px;display:flex;align-items:center;gap:10px;
+}
+.line-readout .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.tabs{display:flex;gap:8px;margin-top:20px;border-bottom:1px solid var(--border-soft);}
+.tab-btn{
+  background:transparent;border:none;color:var(--muted);padding:10px 18px;font-family:var(--font-body);
+  font-size:13.5px;font-weight:600;cursor:pointer;border-radius:8px 8px 0 0;transition:all 0.15s ease;
+}
+.tab-btn:hover{color:var(--text);background:var(--surface-2);}
+.tab-btn.active{color:var(--accent);background:var(--surface);border:1px solid var(--border);border-bottom-color:var(--surface);}
+
+.hero{padding:36px 0 28px;display:grid;grid-template-columns:1.15fr 0.85fr;gap:40px;align-items:center;}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:24px 0 18px;}}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent);}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(30px,4vw,42px);line-height:1.08;letter-spacing:-0.005em;margin:0 0 14px;color:#fff;}
+h1 span{color:var(--accent);background:linear-gradient(90deg,#00d494,#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.lead{color:var(--muted);font-size:15px;max-width:55ch;margin:0 0 22px;line-height:1.6;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:var(--font-body);font-weight:600;font-size:13.5px;border-radius:6px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--accent);color:#060b14;border-color:var(--accent);font-weight:700;}
+.btn-primary:hover{background:#34d399;box-shadow:0 0 16px rgba(0,212,148,0.3);}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--accent3);color:var(--accent3);}
+
+/* Investment & Yield Diagnostics Graphic Card */
+.wafer{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:18px 18px 14px;box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+.wafer-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+.wafer-title{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em;}
+.wafer-val{font-family:var(--font-mono);font-size:12px;color:var(--accent);font-weight:600;}
+svg.wafermap{width:100%;height:210px;display:block;}
+.wafer-outline{fill:none;stroke:var(--border);stroke-width:1.5;}
+.wafer-grid-line{stroke:var(--border-soft);stroke-width:0.5;stroke-dasharray:2 2;}
+.wafer-foot{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+
+.econ{border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:760px){.econ{grid-template-columns:repeat(2,1fr);}}
+.econ-item{padding:6px 18px;border-left:1px solid var(--border-soft);}
+.econ-item:first-child{border-left:none;padding-left:0;}
+@media(max-width:760px){.econ-item:nth-child(2n+1){border-left:none;padding-left:0;}}
+.econ-num{font-family:var(--font-display);font-weight:700;font-size:28px;color:#fff;}
+.econ-num small{font-size:14px;color:var(--accent);font-weight:700;}
+.econ-label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+section{padding:36px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.section-title{font-family:var(--font-display);font-weight:700;font-size:24px;color:#fff;}
+.section-sub{color:var(--muted);font-size:13.5px;max-width:62ch;margin-top:4px;}
+.track-label{font-family:var(--font-mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin:28px 0 14px;padding-top:10px;border-top:1px dashed var(--border-soft);}
+.track-label:first-of-type{border-top:none;padding-top:0;margin-top:6px;}
+
+.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+@media(max-width:760px){.roster{grid-template-columns:1fr;}}
+.op-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;transition:all .15s ease;}
+.op-card:hover{border-color:var(--accent-line);transform:translateY(-2px);}
+.op-card.flagship{border-color:var(--accent2);background:linear-gradient(180deg,rgba(245,158,11,0.08),var(--surface));}
+.op-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.op-name{font-family:var(--font-display);font-weight:700;font-size:18px;color:#fff;}
+.op-role{font-size:12.5px;color:var(--muted);margin-top:2px;}
+.flag-chip{font-family:var(--font-mono);font-size:10px;color:var(--accent2);border:1px solid var(--accent2);background:var(--accent2-bg);border-radius:20px;padding:2px 8px;white-space:nowrap;}
+.op-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+.op-stats{display:flex;gap:18px;margin-top:2px;}
+.op-stat{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.op-stat b{color:var(--accent);font-size:14px;display:block;font-family:var(--font-body);font-weight:600;}
+.op-agents{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.chip{font-size:11px;background:var(--surface-3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;color:var(--text);}
+.op-actions{display:flex;gap:10px;margin-top:6px;}
+.run-btn{flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:600;font-size:13px;border-radius:6px;padding:10px;cursor:pointer;transition:all 0.15s ease;}
+.run-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+
+.run-panel{background:var(--surface);border:1px solid var(--accent-line);border-radius:12px;padding:24px;margin-top:24px;display:none;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+.run-panel.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.run-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.run-head h3{font-family:var(--font-display);font-size:20px;margin:0;color:#fff;}
+.run-head .meta{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.close-run{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:6px 12px;cursor:pointer;font-size:12px;}
+.close-run:hover{color:var(--text);border-color:var(--accent3);}
+
+.feed{background:var(--bg);border:1px solid var(--border-soft);border-radius:8px;padding:16px;height:260px;overflow-y:auto;font-family:var(--font-mono);font-size:12px;display:flex;flex-direction:column;gap:8px;}
+.feed-line{display:flex;gap:10px;align-items:flex-start;opacity:0;animation:appear .3s ease forwards;}
+@keyframes appear{to{opacity:1;}}
+.feed-line .tag{color:var(--accent2);white-space:nowrap;}
+.feed-line .txt{color:var(--muted);}
+.feed-line.done .tag{color:var(--accent);}
+.feed-line.done .txt{color:var(--text);}
+
+.progress-row{display:flex;gap:6px;margin:16px 0 8px;flex-wrap:wrap;}
+.pstep{flex:1;min-width:64px;height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;position:relative;}
+.pstep.active{background:var(--accent-dim);}
+.pstep.complete{background:var(--accent);box-shadow:0 0 8px var(--accent);}
+
+.deliverable{margin-top:20px;background:var(--surface-2);border:1px solid var(--accent-line);border-radius:8px;padding:18px 20px;display:none;}
+.deliverable.show{display:block;animation:fadein .3s ease;}
+.deliverable h4{font-family:var(--font-display);font-size:17px;margin:0 0 12px;color:var(--accent);}
+.deliverable pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:12.5px;color:var(--text);margin:0;line-height:1.65;}
+.note{font-size:11px;color:var(--muted-2);margin-top:12px;font-style:italic;}
+
+/* BUILDER STYLING (DYNEX FUNCTIONAL FLOW) */
+.steps-bar{display:flex;gap:10px;margin-bottom:24px;}
+.step-item{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);}
+.step-item.active{border-color:var(--accent);background:var(--surface-3);}
+.step-item .step-num{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--muted-2);}
+.step-item.active .step-num{color:var(--accent);}
+.step-item .step-lbl{font-size:13.5px;font-weight:600;color:var(--text);margin-top:2px;}
+
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.wf-card{border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;background:var(--surface-2);transition:all 0.15s ease;}
+.wf-card:hover{border-color:var(--accent3);}
+.wf-card.sel{border-color:var(--accent);background:rgba(0,212,148,0.08);}
+.wf-title{font-family:var(--font-display);font-weight:700;font-size:16px;color:#fff;}
+.wf-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45;}
+.wf-meta{font-family:var(--font-mono);font-size:10.5px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase;}
+
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);margin-bottom:10px;}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--accent);flex-shrink:0;}
+.task-row .tt{flex:1;font-size:13px;color:var(--text);}
+.task-row select{font-family:var(--font-body);font-size:12.5px;border:1px solid var(--border);border-radius:6px;padding:8px 10px;background:var(--surface);color:var(--text);outline:none;min-width:210px;}
+.task-row select:focus{border-color:var(--accent);}
+
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.field input{width:100%;font-family:var(--font-body);font-size:13.5px;border:1px solid var(--border);border-radius:8px;padding:11px 13px;background:var(--surface-2);color:var(--text);outline:none;}
+.field input:focus{border-color:var(--accent);}
+
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.seg button{font-family:var(--font-body);font-size:12.5px;padding:9px 16px;border:none;background:var(--surface-2);color:var(--muted);cursor:pointer;border-right:1px solid var(--border);}
+.seg button:last-child{border-right:none;}
+.seg button.on{background:var(--accent);color:#060b14;font-weight:700;}
+
+.bnav{display:flex;justify-content:space-between;margin-top:24px;}
+
+footer{border-top:1px solid var(--border-soft);padding:30px 0 44px;}
+.foot-note{font-size:12px;color:var(--muted-2);max-width:85ch;line-height:1.6;}
+.foot-note strong{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark-row">
+      <div class="mark">
+        <div class="mark-badge">M</div>
+        <div>
+          <div class="mark-name">Mintos Platform Console</div>
+          <div class="mark-sub">Mintos (mintos.com) · AI Workforce Prototype</div>
+        </div>
+      </div>
+      <div class="line-readout">
+        <span class="dot"></span>
+        <span id="lineTxt">Mintos MiFID II Investment Engine · Regulated by Latvijas Banka Active</span>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tabA" onclick="setView('ops')">The AI Workforce Roster</button>
+      <button class="tab-btn" id="tabB" onclick="setView('hire')">+ Add an AI Operator</button>
+    </div>
+  </header>
+
+  <div id="view-ops">
+    <section class="hero" style="padding-bottom:10px;">
+      <div>
+        <div class="eyebrow">European Multi-Asset Investment Platform</div>
+        <h1>Eight operators to run Mintos' <span>yield-to-compliance</span> loop</h1>
+        <p class="lead">Each operator below is a real Mintos platform workflow — analyzing high-yield Fractional Bond ISIN structures, scrubbing 500-line credit portfolios across European loan originators, optimizing custom automated reinvestment strategies, and auditing MiFID II regulatory compliance and Latvijas Banka investor protection rules — handed to a team of specialist AI agents that works it end-to-end.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('roster-section').scrollIntoView({behavior:'smooth'})">View the Roster</button>
+          <button class="btn btn-ghost" onclick="runOperator('bond_scrub')">Run Flagship Operator</button>
+        </div>
+      </div>
+
+      <div class="wafer">
+        <div class="wafer-top">
+          <span class="wafer-title">Mintos Yield &amp; Risk Diagnostics</span>
+          <span class="wafer-val" id="yieldVal">9.85% Weighted Net Yield</span>
+        </div>
+        <svg class="wafermap" viewBox="0 0 220 210" preserveAspectRatio="xMidYMid meet">
+          <circle class="wafer-outline" cx="110" cy="105" r="92"></circle>
+          <line class="wafer-grid-line" x1="20" y1="105" x2="200" y2="105"></line>
+          <line class="wafer-grid-line" x1="110" y1="15" x2="110" y2="195"></line>
+          <g id="dieGrid"></g>
+        </svg>
+        <div class="wafer-foot">
+          <span>MiFID II Licensed Firm · Portfolio MNT-2608-EUR</span>
+          <span id="binVal">Pass: €640M Active Assets</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="econ">
+      <div class="econ-item">
+        <div class="econ-num">6.4<small>×</small></div>
+        <div class="econ-label">Faster credit risk &amp; Fractional Bond ISIN analysis</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">50,000<small>+</small></div>
+        <div class="econ-label">Underlying loan Notes &amp; Fractional Bonds monitored</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">26<small> hrs</small></div>
+        <div class="econ-label">Median portfolio engineering hours returned per run</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">8<small>/8</small></div>
+        <div class="econ-label">Workflows covered, Fractional Bond scrub through MiFID audit</div>
+      </div>
+    </div>
+
+    <section id="roster-section">
+      <div class="section-head">
+        <div>
+          <div class="section-title">The AI Workforce Roster</div>
+          <div class="section-sub">Grouped into Commercial Growth and MiFID Investment Operations tracks. Click run on any operator to watch its agent team execute in real time.</div>
+        </div>
+      </div>
+
+      <div id="rosterContainer"></div>
+    </section>
+
+    <!-- Run Panel -->
+    <div class="run-panel" id="runPanel">
+      <div class="run-head">
+        <div>
+          <h3 id="runTitle">Running Operator...</h3>
+          <div class="meta" id="runSub">Simulated multi-agent execution feed</div>
+        </div>
+        <button class="close-run" onclick="closeRun()">✕ Close View</button>
+      </div>
+      <div class="progress-row" id="progressRow"></div>
+      <div class="feed" id="feedArea"></div>
+      <div class="deliverable" id="deliverableBox">
+        <h4 id="delivTitle">Review-Ready Output</h4>
+        <pre id="delivCode"></pre>
+        <div class="note">Human-in-the-loop oversight active. Outputs verified by Mintos investment committee. Illustrative simulation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="section-title">Add an AI Operator</div>
+          <div class="section-sub">Stand up a new AI operator in three steps: pick the workflow, assign each task to an agent via dropdown, then name it and set cadence.</div>
+        </div>
+      </div>
+
+      <div class="steps-bar" id="bSteps"></div>
+      <div id="bBody"></div>
+      <div class="bnav" id="bNav"></div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="foot-note">
+      <strong>Independent Concept Prototype</strong> prepared for a conversation with <strong>Mintos (mintos.com)</strong>. It is not affiliated with, endorsed by, or built on Mintos systems or data. All operators, yields, portfolio returns, and compliance reviews are illustrative simulations. A licensed investment manager, risk officer, or compliance director reviews and approves every bond structure, risk score, and MiFID II release.
+    </div>
+  </footer>
+</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'European Wealth & Fixed Income Market Intelligence', tools: ['research_market', 'save'] },
+  credit_analyst: { emoji: '🔬', label: 'Fractional Bond & Corporate Credit Analyst', tools: ['analyze_credit_risk', 'save'] },
+  risk_scrubber: { emoji: '📑', label: 'Loan Originator Risk & Buyback Health Specialist', tools: ['scrub_lender_risk', 'save'] },
+  yield_modeler: { emoji: '🧮', label: 'Fixed Income & Fractional Bond Yield Modeler', tools: ['calc_bond_yield', 'save'] },
+  mifid_auditor: { emoji: '🛡️', label: 'MiFID II & Latvijas Banka Compliance Auditor', tools: ['audit_mifid_rules', 'save'] },
+  portfolio_planner: { emoji: '📦', label: 'Automated Reinvestment & ETF Asset Allocator', tools: ['plan_asset_allocation', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'Institutional Wealth RFP Solution Writer', tools: ['compose_doc', 'save'] },
+  qa_reviewer: { emoji: '✅', label: 'Senior Investment Engineering Reviewer', tools: ['qa_review', 'save'] },
+  prospector: { emoji: '🧲', label: 'European Investor & Wealth Manager Prospector', tools: ['source_investors', 'save'] },
+  secondary_trader: { emoji: '⚡', label: 'Secondary Market Liquidity & Order Book Specialist', tools: ['analyze_liquidity', 'save'] },
+  bond_structurer: { emoji: '🏛️', label: 'ISIN-Backed Fractional Bond Structuring Architect', tools: ['structure_isin_bond', 'save'] },
+  cash_manager: { emoji: '💶', label: 'Smart Cash & Money Market Fund Manager', tools: ['manage_smart_cash', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+const TRACKS = [
+  { key: 'commercial', title: 'Commercial & Investor Growth' },
+  { key: 'operations', title: 'MiFID Investment & Risk Operations' }
+];
+
+const WORKFLOWS = {
+  scout: {
+    name: 'European High-Net-Worth & Retail Investor Scouting',
+    title: 'AI Investor Growth Scout',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'European Investor Prospect Dossier',
+    desc: 'Maps European retail investors, family offices, and wealth advisors seeking high-yield Fractional Bonds (€50 min) and loan Notes.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan European wealth management trends, retail fixed income inflows, and P2P market shifts.', deps: [] },
+      { agent: 'prospector', task: 'Source verified Independent Financial Advisors (IFAs), family offices, and tech-forward investors.', deps: [] },
+      { agent: 'yield_modeler', task: 'Score yield fit on 8%-12% Fractional Bonds and Smart Cash money market accounts.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce target investor prospect dossier.', deps: [2] }
+    ]
+  },
+  quote: {
+    name: 'Fractional Bond & Automated Portfolio Structuring',
+    title: 'AI Yield Structurer',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Custom Fractional Bond & Portfolio Proposal',
+    desc: 'Structures tailored €50 Fractional Bond allocations and automated reinvestment rules mapped to investor risk profiles.',
+    tasks: [
+      { agent: 'credit_analyst', task: 'Review underlying corporate bond ISIN yield curves, duration, and coupon payment frequency.', deps: [] },
+      { agent: 'yield_modeler', task: 'Model expected net annualized returns (target 9.5%), reinvestment compounding, and tax drag.', deps: [0] },
+      { agent: 'portfolio_planner', task: 'Configure auto-invest diversification across 15+ loan originators and fractional bond ISINs.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Assemble formal Custom Fractional Bond & Portfolio Proposal.', deps: [2] }
+    ]
+  },
+  tender: {
+    name: 'Institutional Wealth & Family Office RFP Response',
+    title: 'AI Wealth Solution Specialist',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Institutional Wealth RFP Response Package',
+    desc: 'Audits MiFID II licensing, Latvijas Banka supervision, investor compensation scheme (€20k), and asset segregation controls.',
+    tasks: [
+      { agent: 'researcher', task: 'Parse institutional mandate specs, ESG scoring rules, and liquidity redemption SLAs.', deps: [] },
+      { agent: 'mifid_auditor', task: 'Verify MiFID II investment firm license, asset segregation protocols, and Latvian Central Bank reporting.', deps: [0] },
+      { agent: 'yield_modeler', task: 'Structure tiered fee schedules and secondary market liquidity parameters.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce formal Institutional Wealth RFP response package.', deps: [2] }
+    ]
+  },
+  intel: {
+    name: 'Eurobond Yield & Secondary Market Radar',
+    title: 'AI Fixed Income Intelligence',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Eurobond Yield & Secondary Market Risk Brief',
+    desc: 'Tracks European high-yield corporate bond spreads, ECB interest rate decisions, and secondary market discount liquidity.',
+    tasks: [
+      { agent: 'researcher', task: 'Monitor ECB rate benchmarks, European corporate default rates, and sovereign bond yields.', deps: [] },
+      { agent: 'secondary_trader', task: 'Benchmark Mintos secondary market order book depth and average discount-to-par clearing time.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile strategic Eurobond intelligence brief.', deps: [0, 1] }
+    ]
+  },
+  bond_scrub: {
+    name: 'Fractional Bond ISIN & Credit Risk Scrub',
+    title: 'AI Fixed Income & Risk Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'Fractional Bond ISIN & Credit Risk Review Package',
+    desc: 'Audits ISIN-backed corporate bond prospectuses, evaluates issuer debt-to-EBITDA (3.2x target), and scrubs Mintos Risk Scores.',
+    tasks: [
+      { agent: 'credit_analyst', task: 'Analyze issuer financial statements, interest coverage ratio (4.5x), and senior secured collateral.', deps: [] },
+      { agent: 'bond_structurer', task: 'Verify SPV legal structure, fractional unit ISIN registration, and coupon cash flow mechanics.', deps: [0] },
+      { agent: 'risk_scrubber', task: 'Audit underlying loan originator buyback obligation health and Mintos Risk Score (Score: 8.4/10).', deps: [1] },
+      { agent: 'mifid_auditor', task: 'Audit Key Information Document (KID) compliance under MiFID II regulations.', deps: [2] },
+      { agent: 'reviewer', task: 'QA credit risk findings and compile investment committee package.', deps: [3] },
+      { agent: 'proposal_writer', task: 'Produce final Fractional Bond ISIN & Credit Risk Review Package.', deps: [4] }
+    ]
+  },
+  lender_audit: {
+    name: 'Loan Originator Credit Scoring & Buyback Audit',
+    title: 'AI Originator Credit Auditor',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'Loan Originator Risk & Buyback Capacity Audit',
+    desc: 'Audits European lending companies on portfolio NPL ratios, skin-in-the-game retention, and buyback guarantee solvency.',
+    tasks: [
+      { agent: 'risk_scrubber', task: 'Evaluate loan originator balance sheet liquidity, non-performing loan (NPL) ratio (<4.5%), and equity buffer.', deps: [] },
+      { agent: 'credit_analyst', task: 'Verify 10% skin-in-the-game retention per loan Note series.', deps: [0] },
+      { agent: 'reviewer', task: 'Assign updated Mintos Risk Score rating (Country, Portfolio, Buyback & Cooperation scores).', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce Loan Originator Risk & Buyback Capacity Audit.', deps: [2] }
+    ]
+  },
+  quality: {
+    name: 'MiFID II & Latvijas Banka Compliance Audit',
+    title: 'AI Regulatory Compliance Auditor',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'MiFID II & Investor Protection Compliance Release',
+    desc: 'Audits suitability & appropriateness assessments, investor compensation scheme (€20k limit) mapping, and AML/KYC logs.',
+    tasks: [
+      { agent: 'mifid_auditor', task: 'Audit client asset segregation bank accounts and investor compensation scheme reporting.', deps: [] },
+      { agent: 'reviewer', task: 'Verify MiFID II target market suitability rules and automated KYC/AML verification logs.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile MiFID II & Investor Protection Compliance Release Brief.', deps: [0, 1] }
+    ]
+  },
+  cash_rebalance: {
+    name: 'Smart Cash & ETF Automated Rebalancing',
+    title: 'AI Portfolio Allocation Planner',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'Smart Cash & ETF Portfolio Rebalancing Plan',
+    desc: 'Optimizes daily cash sweeps into money market funds (3.75% yield target) and rebalances ETF fractional portfolios.',
+    tasks: [
+      { agent: 'cash_manager', task: 'Monitor BlackRock / Pimco money market fund yields and overnight bank deposit rates.', deps: [] },
+      { agent: 'portfolio_planner', task: 'Calculate automated rebalancing triggers for 12,000 active Mintos Core portfolios.', deps: [] },
+      { agent: 'yield_modeler', task: 'Model tax-efficient dividend reinvestment strategies.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce Smart Cash & ETF Portfolio Rebalancing Plan.', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'European Investor Prospect Dossier',
+  quote: 'Custom Fractional Bond & Portfolio Proposal',
+  tender: 'Institutional Wealth RFP Response Package',
+  intel: 'Eurobond Yield & Secondary Market Risk Brief',
+  bond_scrub: 'Fractional Bond ISIN & Credit Risk Review Package',
+  lender_audit: 'Loan Originator Risk & Buyback Capacity Audit',
+  quality: 'MiFID II & Investor Protection Compliance Release',
+  cash_rebalance: 'Smart Cash & ETF Portfolio Rebalancing Plan'
+};
+
+const TOOLS = {
+  research_market: () => 'Scanned ECB interest rate benchmark tables, European high-yield bond spreads, and MiFID regulatory updates.',
+  source_investors: () => 'Sourced verified European wealth managers, family offices, and tech investors; deduped CRM records.',
+  analyze_credit_risk: () => 'Analyzed ISIN bond prospectus; verified 3.2x Net Debt/EBITDA ratio and 4.5x interest coverage.',
+  scrub_lender_risk: () => 'Scrubbed loan originator balance sheet; confirmed 10% skin-in-the-game and 3.8% NPL ratio.',
+  calc_bond_yield: () => 'Calculated 9.85% net annualized yield, compounding reinvestment frequency, and secondary market spreads.',
+  audit_mifid_rules: () => 'Audited asset segregation accounts and MiFID II suitability logs against Latvijas Banka regulations.',
+  plan_asset_allocation: () => 'Configured auto-invest algorithm across 18 loan originators and 6 Fractional Bond ISINs.',
+  analyze_liquidity: () => 'Analyzed secondary market order book; average discount-to-par execution speed: 4.2 hours.',
+  structure_isin_bond: () => 'Verified SPV legal structure and fractional unit ISIN registration with central securities depository.',
+  manage_smart_cash: () => 'Swept uninvested investor cash into BlackRock Money Market Fund; secured 3.75% overnight yield.',
+  compose_doc: () => 'Compiled investment metrics into clear, review-ready engineering documentation.',
+  qa_review: () => 'Audited report completeness and checked standards alignment; ready for Mintos IC sign-off.',
+  save: () => 'Saved deliverable artifact to shared project repository.'
+};
+
+function toolOut(t) { return (TOOLS[t] || (() => 'Executed successfully.'))(); }
+
+const FINAL = {
+  scout: `EUROPEAN INVESTOR PROSPECT DOSSIER (illustrative)
+Target Sector: High-Net-Worth Individuals, Family Offices & Digital Wealth Advisors
+Target Location: European Union (Germany, France, Spain, Baltic States)
+
+A-Tier Qualified Investor Prospects:
+1. Nordix Private Wealth — Baltic Family Office Mandate — Fit Score: 98/100
+   • Key Contacts: Chief Investment Officer, Head of Fixed Income Sourcing
+   • Requirement: €5M Allocation in ISIN-backed Fractional Bonds & Loan Notes
+2. Rhine Digital Capital — German Wealth Advisory Platform — Fit Score: 94/100
+   • Key Contacts: Managing Partner, Head of Product
+   • Requirement: MiFID II Regulated Partner, API Auto-Invest Integration
+3. Iberian Yield Partners — Madrid Wealth Manager — Fit Score: 91/100
+   • Key Contacts: Senior Portfolio Manager
+
+Strategic Positioning:
+Highlight Mintos MiFID II investment firm license, Latvijas Banka supervision, €20,000 investor compensation scheme protection, and high-yield Fractional Bond options (€50 min).
+
+NOTE: Illustrative simulation prepared for Mintos (mintos.com).`,
+
+  quote: `CUSTOM FRACTIONAL BOND & PORTFOLIO PROPOSAL (illustrative)
+Customer: Nordix Private Wealth
+Strategy: High-Yield Fixed Income & Loan Notes Diversified Portfolio
+Target Allocation: €500,000 Initial Investment
+
+Asset Allocation Breakdown:
+• Fractional Corporate Bonds (ISIN-backed 8.5%-11.0% Coupon): 45% (€225,000)
+• Diversified Loan Notes (15+ Originators, 10% Skin-in-the-game): 40% (€200,000)
+• Smart Cash (Money Market Fund 3.75% Overnight Liquidity): 15% (€75,000)
+
+Expected Performance:
+• Weighted Net Annualized Yield: 9.85%
+• Compound Reinvestment Target: 10.34% APY
+• Secondary Market Liquidity Option: Active (Avg 4.2 hr exit time)
+
+NOTE: Illustrative simulation; yield and performance figures are placeholders.`,
+
+  tender: `INSTITUTIONAL WEALTH RFP RESPONSE PACKAGE (illustrative)
+Tender ID: EU-WEALTH-MNT-2026-03
+Scope: Multi-Asset European Fixed Income & Fractional Bond Platform
+
+Regulatory Verification:
+• MiFID II Investment Firm License: Authorised & Regulated
+• Supervisory Authority: Latvijas Banka (Central Bank of Latvia)
+• Investor Protection Scheme: Covered up to €20,000 per investor
+• Asset Segregation: 100% Client Funds Held in Segregated Tier-1 Bank Accounts
+
+Technical Offer:
+• Full API access for automated portfolio rebalancing and real-time ISIN reporting
+
+NOTE: Illustrative simulation; confirm against RFP specifications.`,
+
+  intel: `EUROBOND YIELD & SECONDARY MARKET RISK BRIEF (illustrative)
+Focus: European Corporate Bond Markets & Platform Liquidity
+
+Key Insights:
+1. ECB Rate Environment: Central bank rate cuts driving retail demand toward 9%+ high-yield Fractional Bonds.
+2. Secondary Market Depth: Mintos secondary market transaction volume up 28%; average discount-to-par spread tightened to 0.4%.
+3. Mintos Platform Advantage:
+   - MiFID II regulated status offers superior institutional trust over unregulated P2P platforms.
+   - €50 minimum Fractional Bond entry democratizes access to institutional corporate bond markets.
+
+NOTE: Illustrative simulation.`,
+
+  bond_scrub: `FRACTIONAL BOND ISIN & CREDIT RISK REVIEW PACKAGE (illustrative · flagship)
+Program: European Energy Solutions 9.5% Senior Secured Fractional Bond
+ISIN Code: LV0000102488
+Target Volume: €10,000,000 Fractional Bond Issue
+
+Credit Risk Engineering Findings:
+1. Leverage Analysis: Issuer Net Debt / EBITDA measured at 3.1x (Well below 4.0x covenant threshold — PASS).
+2. Interest Coverage Ratio: EBITDA / Interest Expense measured at 4.8x (Exceeds 3.0x requirement — PASS).
+3. Collateral Verification: Senior pledge over €18M operational solar asset portfolio; 180% LTV coverage.
+
+Mintos Risk Score Rating:
+• Overall Mintos Risk Score: 8.6 / 10 (Low to Moderate Risk)
+• Asset Performance: 8.8 / 10 | Buyback & Solvency: 8.4 / 10 | Cooperation: 8.6 / 10
+
+Summary:
+ Fractional Bond issue approved for platform listing; MiFID II KID document published.
+
+NOTE: Illustrative simulation; review with Mintos investment committee.`,
+
+  lender_audit: `LOAN ORIGINATOR RISK & BUYBACK CAPACITY AUDIT (illustrative)
+Originator: Eleving Group (European Consumer & Automotive Financier)
+Portfolio Exposure: €45,000,000
+
+Audit Checklist Results:
+• Skin-in-the-Game Retention: 10.0% maintained across all Note series
+• Portfolio NPL Ratio: 3.4% (>90 days past due — well below 5.0% threshold)
+• Buyback Obligation Solvency: Audited net equity buffer of €85M guarantees buyback capacity
+
+Outcome: Originator status re-confirmed; Risk Score maintained at 8.8 / 10.
+
+NOTE: Illustrative simulation.`,
+
+  quality: `MiFID II & INVESTOR PROTECTION COMPLIANCE RELEASE (illustrative)
+Audit Period: Q3 2026
+Regulatory Framework: MiFID II Directive / Latvijas Banka Guidelines
+
+Compliance Checklist Results:
+• Client Asset Segregation: 100% verified; zero commingling with corporate accounts
+• Suitability & Appropriateness Test: 100% of new investor onboarding passes automated MiFID questionnaire
+• Investor Compensation Scheme Log: Quarterly return filed with Latvijas Banka
+
+Outcome: Compliance Release Approved. Regulatory filing complete.
+
+NOTE: Illustrative simulation.`,
+
+  cash_rebalance: `SMART CASH & ETF PORTFOLIO REBALANCING PLAN (illustrative)
+Scope: 12,000 Active Mintos Core & Custom Investor Accounts
+
+Rebalancing Execution:
+• Smart Cash Sweep: €18.4M uninvested cash swept to BlackRock Euro Liquidity Fund (3.75% yield).
+• ETF Auto-Invest Rebalance: Rebalanced 4,200 fractional ETF portfolios to target asset weights (60% Equity / 40% Bond).
+
+Outcome: Automated rebalancing completed with zero cash drag.
+
+NOTE: Illustrative simulation.`
+};
+
+let EMPLOYEES = [
+  { id: 'scout', name: 'Scout', title: 'AI Investor Growth Scout', wf: 'scout', handled: 180, hrs: 55, win: 32, status: 'idle' },
+  { id: 'quote', name: 'Quote', title: 'AI Yield Structurer', wf: 'quote', handled: 270, hrs: 115, win: 55, status: 'idle' },
+  { id: 'tender', name: 'Tender', title: 'AI Wealth Solution Specialist', wf: 'tender', handled: 115, hrs: 92, win: 44, status: 'idle' },
+  { id: 'intel', name: 'Radar', title: 'AI Fixed Income Intelligence', wf: 'intel', handled: 140, hrs: 42, win: 24, status: 'idle' },
+  { id: 'bond_scrub', name: 'BondScrub', title: 'AI Fixed Income & Risk Specialist', wf: 'bond_scrub', handled: 390, hrs: 235, win: 72, status: 'idle' },
+  { id: 'lender_audit', name: 'LenderAudit', title: 'AI Originator Credit Auditor', wf: 'lender_audit', handled: 210, hrs: 102, win: 50, status: 'idle' },
+  { id: 'quality', name: 'MiFIDAudit', title: 'AI Regulatory Compliance Auditor', wf: 'quality', handled: 340, hrs: 132, win: 62, status: 'idle' },
+  { id: 'cash_rebalance', name: 'CashPlanner', title: 'AI Portfolio Allocation Planner', wf: 'cash_rebalance', handled: 185, hrs: 75, win: 0, status: 'idle' }
+];
+
+/* Render Functions */
+function drawWaferGrid() {
+  const grid = document.getElementById("dieGrid");
+  let rects = '';
+  for (let x = -8; x <= 8; x++) {
+    for (let y = -8; y <= 8; y++) {
+      if (x*x + y*y <= 60) {
+        const px = 110 + x * 10 - 4;
+        const py = 105 + y * 10 - 4;
+        const pass = (Math.abs(x*y) % 8 !== 3);
+        const fill = pass ? 'rgba(0, 212, 148, 0.45)' : 'rgba(239, 68, 68, 0.6)';
+        rects += `<rect x="${px}" y="${py}" width="8" height="8" rx="1.5" fill="${fill}"></rect>`;
+      }
+    }
+  }
+  grid.innerHTML = rects;
+}
+
+function renderRoster() {
+  const container = document.getElementById("rosterContainer");
+  let html = '';
+  TRACKS.forEach(tr => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === tr.key);
+    if (!list.length) return;
+    html += `<div class="track-label">${tr.title}</div><div class="roster">`;
+    html += list.map(empCard).join('');
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+}
+
+function empCard(e) {
+  const wf = WORKFLOWS[e.wf] || {};
+  const isFlag = wf.tag === 'flagship';
+  const team = (wf.tasks || []).map(t => t.agent).filter((v, i, a) => a.indexOf(v) === i).map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  return `
+    <div class="op-card ${isFlag ? 'flagship' : ''}" id="emp-${e.id}">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${e.name}</div>
+          <div class="op-role">${e.title}</div>
+        </div>
+        ${isFlag ? '<span class="flag-chip">★ FLAGSHIP OPERATOR</span>' : ''}
+      </div>
+      <div class="op-desc">${wf.desc || ''}</div>
+      <div class="op-agents">${team}</div>
+      <div class="op-stats">
+        <div class="op-stat"><b>${e.handled.toLocaleString()}</b> runs</div>
+        <div class="op-stat"><b>~${e.hrs} hrs</b> saved/mo</div>
+        <div class="op-stat"><b>+${e.win}%</b> speedup</div>
+      </div>
+      <div class="op-actions">
+        <button class="run-btn" onclick="runOperator('${e.wf}')">▶ Run ${e.name}</button>
+      </div>
+    </div>
+  `;
+}
+
+function setView(v) {
+  document.getElementById('view-ops').classList.toggle('hidden', v !== 'ops');
+  document.getElementById('view-hire').classList.toggle('hidden', v !== 'hire');
+  document.getElementById('tabA').classList.toggle('active', v === 'ops');
+  document.getElementById('tabB').classList.toggle('active', v === 'hire');
+  if (v === 'hire') initBuilder();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+let isRunning = false;
+async function runOperator(wfKey) {
+  if (isRunning) return;
+  isRunning = true;
+  const wf = WORKFLOWS[wfKey];
+  if (!wf) return;
+
+  const panel = document.getElementById("runPanel");
+  const title = document.getElementById("runTitle");
+  const sub = document.getElementById("runSub");
+  const progress = document.getElementById("progressRow");
+  const feed = document.getElementById("feedArea");
+  const deliv = document.getElementById("deliverableBox");
+
+  panel.classList.add("active");
+  deliv.classList.remove("show");
+  title.innerText = `Executing Operator: ${wf.name}`;
+  sub.innerText = `Mode: ${wf.mode.toUpperCase()} · ${wf.tasks.length} Specialist Agents`;
+
+  progress.innerHTML = wf.tasks.map((_, i) => `<div class="pstep" id="ps_${i}"></div>`).join('');
+  feed.innerHTML = '';
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  function addFeedLine(agentKey, txt, isDone = false) {
+    const role = AGENT_ROLES[agentKey] || { emoji: '🤖', label: agentKey };
+    const div = document.createElement('div');
+    div.className = `feed-line ${isDone ? 'done' : ''}`;
+    div.innerHTML = `<span class="tag">[${role.emoji} ${role.label}]</span><span class="txt">${txt}</span>`;
+    feed.appendChild(div);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  addFeedLine(wf.tasks[0].agent, `Initializing ${wf.name} autonomous workflow loop...`);
+  await new Promise(r => setTimeout(r, 600));
+
+  for (let i = 0; i < wf.tasks.length; i++) {
+    const t = wf.tasks[i];
+    const stepEl = document.getElementById(`ps_${i}`);
+    if (stepEl) stepEl.classList.add("active");
+
+    addFeedLine(t.agent, `Executing Task ${i+1}: ${t.task}`);
+    await new Promise(r => setTimeout(r, 800));
+
+    const role = AGENT_ROLES[t.agent];
+    if (role && role.tools) {
+      for (const tool of role.tools) {
+        addFeedLine(t.agent, `Invoked tool '${tool}( )' -> ${toolOut(tool)}`);
+        await new Promise(r => setTimeout(r, 600));
+      }
+    }
+
+    if (stepEl) {
+      stepEl.classList.remove("active");
+      stepEl.classList.add("complete");
+    }
+    addFeedLine(t.agent, `Task ${i+1} completed. Artifact saved to shared Mintos investment store.`, true);
+  }
+
+  await new Promise(r => setTimeout(r, 400));
+  document.getElementById("delivTitle").innerText = `Review-Ready Output · ${DTITLE[wfKey] || 'Deliverable'}`;
+  document.getElementById("delivCode").innerText = FINAL[wfKey] || "Execution completed successfully.";
+  deliv.classList.add("show");
+
+  isRunning = false;
+}
+
+function closeRun() {
+  document.getElementById("runPanel").classList.remove("active");
+}
+
+/* DYNEX BUILDER FLOW IMPLEMENTATION */
+let draft = {};
+function initBuilder() {
+  draft = { wf: null, mode: 'sequential', assign: [], name: '', title: '', cadence: 'Per project', step: 1 };
+  renderBuilder();
+}
+
+function renderBuilder() {
+  const steps = [['01', 'Pick a workflow'], ['02', 'Assign the agents'], ['03', 'Name & cadence']];
+  document.getElementById('bSteps').innerHTML = steps.map((s, i) => `
+    <div class="step-item ${draft.step === i + 1 ? 'active' : ''}">
+      <div class="step-num">${s[0]}</div>
+      <div class="step-lbl">${s[1]}</div>
+    </div>
+  `).join('');
+
+  if (draft.step === 1) bS1();
+  else if (draft.step === 2) bS2();
+  else bS3();
+  bNav();
+}
+
+function bS1() {
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 1: Choose Baseline Wealth Workflow</label></div>
+    <div class="wf-grid">
+      ${Object.keys(WORKFLOWS).map(k => {
+        const w = WORKFLOWS[k];
+        return `
+          <div class="wf-card ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')">
+            <div class="wf-title">${w.name}</div>
+            <div class="wf-desc">${w.desc}</div>
+            <div class="wf-meta">${w.tasks.length} agents · ${w.mode}</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 2: Assign Each Task to a Specialist Agent</label></div>
+    ${w.tasks.map((t, i) => `
+      <div class="task-row">
+        <div class="tn">${i + 1}</div>
+        <div class="tt">
+          ${t.task}
+          ${t.deps.length ? `<span style="color:var(--muted-2);font-family:var(--font-mono);font-size:11px;"> · waits for step ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}
+        </div>
+        <select onchange="draft.assign[${i}]=this.value">${opts}</select>
+      </div>
+    `).join('')}
+    <div class="field" style="margin-top:16px;">
+      <label>Execution Mode</label>
+      <div class="seg">
+        ${['sequential', 'dag'].map(m => `
+          <button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (Parallel DAG)' : 'Sequential'}</button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 3: Name Operator &amp; Set Cadence</label></div>
+    <div class="field">
+      <label>Operator Name</label>
+      <input type="text" value="${draft.name}" placeholder="e.g. Fractional Bond &amp; Risk Specialist" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Role Title</label>
+      <input type="text" value="${draft.title}" placeholder="e.g. Autonomous Wealth Engineer" oninput="draft.title=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Cadence</label>
+      <div class="seg">
+        ${['Per project', 'Per bond', 'Weekly', 'On-demand'].map(c => `
+          <button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>
+        `).join('')}
+      </div>
+    </div>
+    <div class="field" style="margin-top:20px;">
+      <label>Live Operator Card Preview</label>
+      <div id="previewCardArea"></div>
+    </div>
+  `;
+  renderPreview();
+}
+
+function renderPreview() {
+  const w = WORKFLOWS[draft.wf];
+  const area = document.getElementById('previewCardArea');
+  if (!area) return;
+  
+  const team = draft.assign.map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  area.innerHTML = `
+    <div class="op-card" style="max-width:440px;">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${draft.name || 'New Operator'}</div>
+          <div class="op-role">${draft.title || 'AI Operator'}</div>
+        </div>
+      </div>
+      <div class="op-desc">Owns <b>${w.name}</b> · ${draft.cadence} · ${draft.mode.toUpperCase()}</div>
+      <div class="op-agents">${team}</div>
+    </div>
+  `;
+}
+
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn btn-ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right = '';
+  if (draft.step === 1) right = `<button class="btn btn-primary" ${draft.wf ? '' : 'disabled'} onclick="draft.step=2;renderBuilder()">Next: Assign Agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn btn-primary" onclick="draft.step=3;renderBuilder()">Next: Name &amp; Cadence →</button>`;
+  else right = `<button class="btn btn-primary" onclick="hire()">✓ Add this AI Operator</button>`;
+
+  document.getElementById('bNav').innerHTML = left + right;
+}
+
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  
+  WORKFLOWS[wfId] = {
+    name: w.name,
+    title: draft.title || w.title,
+    mode: draft.mode || w.mode,
+    track: w.track,
+    deliverable: w.deliverable,
+    desc: w.desc,
+    tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps }))
+  };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({
+    id, name,
+    title: draft.title || w.title,
+    wf: wfId,
+    handled: 0,
+    hrs: Math.floor(Math.random() * 60) + 40,
+    win: 0,
+    status: 'idle'
+  });
+
+  renderRoster();
+  setView('ops');
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  drawWaferGrid();
+  renderRoster();
+});
+</script>
+</body>
+</html>
