@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Handwave Console — AI Commercial &amp; Biometric Engineering Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080812;
+  --surface:#121124;
+  --surface-2:#1a1936;
+  --surface-3:#2a2850;
+  --border:#2a2850;
+  --border-soft:#16152b;
+  --text:#e8e7f5;
+  --muted:#9ca3af;
+  --muted-2:#6b7280;
+  --accent:#8b5cf6;
+  --accent-dim:rgba(139,92,246,0.15);
+  --accent-line:rgba(139,92,246,0.35);
+  --accent2:#f59e0b;
+  --accent2-bg:rgba(245,158,11,0.08);
+  --accent3:#06b6d4;
+  --danger:#ef4444;
+  --ok:#10b981;
+  --font-display:'Rajdhani',sans-serif;
+  --font-body:'Work Sans',sans-serif;
+  --font-mono:'Roboto Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 88% -8%, rgba(139,92,246,0.12), transparent 55%),
+    radial-gradient(900px 480px at 5% 5%, rgba(245,158,11,0.07), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+a{color:var(--accent);}
+::selection{background:rgba(139,92,246,0.28);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+.hidden{display:none!important;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:24px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:42px;height:40px;border-radius:8px;
+  background:linear-gradient(135deg,#7c3aed,#8b5cf6);
+  border:1px solid var(--accent-line);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:var(--font-mono);font-weight:800;font-size:14px;
+  box-shadow:0 0 16px rgba(139,92,246,0.25);
+}
+.mark-name{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:0.02em;color:#fff;}
+.mark-sub{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px;}
+
+.line-readout{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent);
+  background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:8px 14px;display:flex;align-items:center;gap:10px;
+}
+.line-readout .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.tabs{display:flex;gap:8px;margin-top:20px;border-bottom:1px solid var(--border-soft);}
+.tab-btn{
+  background:transparent;border:none;color:var(--muted);padding:10px 18px;font-family:var(--font-body);
+  font-size:13.5px;font-weight:600;cursor:pointer;border-radius:8px 8px 0 0;transition:all 0.15s ease;
+}
+.tab-btn:hover{color:var(--text);background:var(--surface-2);}
+.tab-btn.active{color:var(--accent);background:var(--surface);border:1px solid var(--border);border-bottom-color:var(--surface);}
+
+.hero{padding:36px 0 28px;display:grid;grid-template-columns:1.15fr 0.85fr;gap:40px;align-items:center;}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:24px 0 18px;}}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent);}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(30px,4vw,42px);line-height:1.08;letter-spacing:-0.005em;margin:0 0 14px;color:#fff;}
+h1 span{color:var(--accent);background:linear-gradient(90deg,#8b5cf6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.lead{color:var(--muted);font-size:15px;max-width:55ch;margin:0 0 22px;line-height:1.6;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:var(--font-body);font-weight:600;font-size:13.5px;border-radius:6px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700;}
+.btn-primary:hover{background:#a78bfa;box-shadow:0 0 16px rgba(139,92,246,0.35);}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--accent3);color:var(--accent3);}
+
+/* Biometric & Vein Diagnostics Graphic Card */
+.wafer{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:18px 18px 14px;box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+.wafer-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+.wafer-title{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em;}
+.wafer-val{font-family:var(--font-mono);font-size:12px;color:var(--accent);font-weight:600;}
+svg.wafermap{width:100%;height:210px;display:block;}
+.wafer-outline{fill:none;stroke:var(--border);stroke-width:1.5;}
+.wafer-grid-line{stroke:var(--border-soft);stroke-width:0.5;stroke-dasharray:2 2;}
+.wafer-foot{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+
+.econ{border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:760px){.econ{grid-template-columns:repeat(2,1fr);}}
+.econ-item{padding:6px 18px;border-left:1px solid var(--border-soft);}
+.econ-item:first-child{border-left:none;padding-left:0;}
+@media(max-width:760px){.econ-item:nth-child(2n+1){border-left:none;padding-left:0;}}
+.econ-num{font-family:var(--font-display);font-weight:700;font-size:28px;color:#fff;}
+.econ-num small{font-size:14px;color:var(--accent);font-weight:700;}
+.econ-label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+section{padding:36px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.section-title{font-family:var(--font-display);font-weight:700;font-size:24px;color:#fff;}
+.section-sub{color:var(--muted);font-size:13.5px;max-width:62ch;margin-top:4px;}
+.track-label{font-family:var(--font-mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin:28px 0 14px;padding-top:10px;border-top:1px dashed var(--border-soft);}
+.track-label:first-of-type{border-top:none;padding-top:0;margin-top:6px;}
+
+.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+@media(max-width:760px){.roster{grid-template-columns:1fr;}}
+.op-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;transition:all .15s ease;}
+.op-card:hover{border-color:var(--accent-line);transform:translateY(-2px);}
+.op-card.flagship{border-color:var(--accent2);background:linear-gradient(180deg,rgba(245,158,11,0.08),var(--surface));}
+.op-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.op-name{font-family:var(--font-display);font-weight:700;font-size:18px;color:#fff;}
+.op-role{font-size:12.5px;color:var(--muted);margin-top:2px;}
+.flag-chip{font-family:var(--font-mono);font-size:10px;color:var(--accent2);border:1px solid var(--accent2);background:var(--accent2-bg);border-radius:20px;padding:2px 8px;white-space:nowrap;}
+.op-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+.op-stats{display:flex;gap:18px;margin-top:2px;}
+.op-stat{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.op-stat b{color:var(--accent);font-size:14px;display:block;font-family:var(--font-body);font-weight:600;}
+.op-agents{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.chip{font-size:11px;background:var(--surface-3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;color:var(--text);}
+.op-actions{display:flex;gap:10px;margin-top:6px;}
+.run-btn{flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:600;font-size:13px;border-radius:6px;padding:10px;cursor:pointer;transition:all 0.15s ease;}
+.run-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+
+.run-panel{background:var(--surface);border:1px solid var(--accent-line);border-radius:12px;padding:24px;margin-top:24px;display:none;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+.run-panel.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.run-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.run-head h3{font-family:var(--font-display);font-size:20px;margin:0;color:#fff;}
+.run-head .meta{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.close-run{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:6px 12px;cursor:pointer;font-size:12px;}
+.close-run:hover{color:var(--text);border-color:var(--accent3);}
+
+.feed{background:var(--bg);border:1px solid var(--border-soft);border-radius:8px;padding:16px;height:260px;overflow-y:auto;font-family:var(--font-mono);font-size:12px;display:flex;flex-direction:column;gap:8px;}
+.feed-line{display:flex;gap:10px;align-items:flex-start;opacity:0;animation:appear .3s ease forwards;}
+@keyframes appear{to{opacity:1;}}
+.feed-line .tag{color:var(--accent2);white-space:nowrap;}
+.feed-line .txt{color:var(--muted);}
+.feed-line.done .tag{color:var(--accent);}
+.feed-line.done .txt{color:var(--text);}
+
+.progress-row{display:flex;gap:6px;margin:16px 0 8px;flex-wrap:wrap;}
+.pstep{flex:1;min-width:64px;height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;position:relative;}
+.pstep.active{background:var(--accent-dim);}
+.pstep.complete{background:var(--accent);box-shadow:0 0 8px var(--accent);}
+
+.deliverable{margin-top:20px;background:var(--surface-2);border:1px solid var(--accent-line);border-radius:8px;padding:18px 20px;display:none;}
+.deliverable.show{display:block;animation:fadein .3s ease;}
+.deliverable h4{font-family:var(--font-display);font-size:17px;margin:0 0 12px;color:var(--accent);}
+.deliverable pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:12.5px;color:var(--text);margin:0;line-height:1.65;}
+.note{font-size:11px;color:var(--muted-2);margin-top:12px;font-style:italic;}
+
+/* BUILDER STYLING (DYNEX FUNCTIONAL FLOW) */
+.steps-bar{display:flex;gap:10px;margin-bottom:24px;}
+.step-item{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);}
+.step-item.active{border-color:var(--accent);background:var(--surface-3);}
+.step-item .step-num{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--muted-2);}
+.step-item.active .step-num{color:var(--accent);}
+.step-item .step-lbl{font-size:13.5px;font-weight:600;color:var(--text);margin-top:2px;}
+
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.wf-card{border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;background:var(--surface-2);transition:all 0.15s ease;}
+.wf-card:hover{border-color:var(--accent3);}
+.wf-card.sel{border-color:var(--accent);background:rgba(139,92,246,0.08);}
+.wf-title{font-family:var(--font-display);font-weight:700;font-size:16px;color:#fff;}
+.wf-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45;}
+.wf-meta{font-family:var(--font-mono);font-size:10.5px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase;}
+
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);margin-bottom:10px;}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--accent);flex-shrink:0;}
+.task-row .tt{flex:1;font-size:13px;color:var(--text);}
+.task-row select{font-family:var(--font-body);font-size:12.5px;border:1px solid var(--border);border-radius:6px;padding:8px 10px;background:var(--surface);color:var(--text);outline:none;min-width:210px;}
+.task-row select:focus{border-color:var(--accent);}
+
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.field input{width:100%;font-family:var(--font-body);font-size:13.5px;border:1px solid var(--border);border-radius:8px;padding:11px 13px;background:var(--surface-2);color:var(--text);outline:none;}
+.field input:focus{border-color:var(--accent);}
+
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.seg button{font-family:var(--font-body);font-size:12.5px;padding:9px 16px;border:none;background:var(--surface-2);color:var(--muted);cursor:pointer;border-right:1px solid var(--border);}
+.seg button:last-child{border-right:none;}
+.seg button.on{background:var(--accent);color:#fff;font-weight:700;}
+
+.bnav{display:flex;justify-content:space-between;margin-top:24px;}
+
+footer{border-top:1px solid var(--border-soft);padding:30px 0 44px;}
+.foot-note{font-size:12px;color:var(--muted-2);max-width:85ch;line-height:1.6;}
+.foot-note strong{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark-row">
+      <div class="mark">
+        <div class="mark-badge">HW</div>
+        <div>
+          <div class="mark-name">Handwave Console</div>
+          <div class="mark-sub">Handwave (handwave.com) · AI Workforce Prototype</div>
+        </div>
+      </div>
+      <div class="line-readout">
+        <span class="dot"></span>
+        <span id="lineTxt">Handwave Palm Biometric Engine · BaaS &amp; Subdermal Vein Line Active</span>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tabA" onclick="setView('ops')">The AI Workforce Roster</button>
+      <button class="tab-btn" id="tabB" onclick="setView('hire')">+ Add an AI Operator</button>
+    </div>
+  </header>
+
+  <div id="view-ops">
+    <section class="hero" style="padding-bottom:10px;">
+      <div>
+        <div class="eyebrow">Touchless Palm Biometric Payment &amp; Identity Platform</div>
+        <h1>Eight operators to run Handwave's <span>wave-to-settlement</span> loop</h1>
+        <p class="lead">Each operator below is a real Handwave platform workflow — scrubbing subdermal palm vein biometric encryption standards, verifying liveness and blood flow detection algorithms, deploying POS/ECR terminal API integrations across retail networks, and auditing GDPR biometric privacy and ISO 27001 security compliance — handed to a team of specialist AI agents that works it end-to-end.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('roster-section').scrollIntoView({behavior:'smooth'})">View the Roster</button>
+          <button class="btn btn-ghost" onclick="runOperator('vein_dfm')">Run Flagship Operator</button>
+        </div>
+      </div>
+
+      <div class="wafer">
+        <div class="wafer-top">
+          <span class="wafer-title">Handwave Biometric Diagnostics</span>
+          <span class="wafer-val" id="yieldVal">99.999% Biometric Authentication Match</span>
+        </div>
+        <svg class="wafermap" viewBox="0 0 220 210" preserveAspectRatio="xMidYMid meet">
+          <circle class="wafer-outline" cx="110" cy="105" r="92"></circle>
+          <line class="wafer-grid-line" x1="20" y1="105" x2="200" y2="105"></line>
+          <line class="wafer-grid-line" x1="110" y1="15" x2="110" y2="195"></line>
+          <g id="dieGrid"></g>
+        </svg>
+        <div class="wafer-foot">
+          <span>Palm Vein &amp; Liveness Engine · Node HW-2608-BAAS</span>
+          <span id="binVal">Pass: 0.0001% False Acceptance Rate</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="econ">
+      <div class="econ-item">
+        <div class="econ-num">6.2<small>×</small></div>
+        <div class="econ-label">Faster palm vein algorithm &amp; POS integration testing</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">65,000<small>+</small></div>
+        <div class="econ-label">Encrypted biometric palm templates verified</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">24<small> hrs</small></div>
+        <div class="econ-label">Median biometric engineering hours returned per run</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">8<small>/8</small></div>
+        <div class="econ-label">Workflows covered, vein scrub through GDPR privacy audit</div>
+      </div>
+    </div>
+
+    <section id="roster-section">
+      <div class="section-head">
+        <div>
+          <div class="section-title">The AI Workforce Roster</div>
+          <div class="section-sub">Grouped into Commercial Growth and Biometric Engineering Operations tracks. Click run on any operator to watch its agent team execute in real time.</div>
+        </div>
+      </div>
+
+      <div id="rosterContainer"></div>
+    </section>
+
+    <!-- Run Panel -->
+    <div class="run-panel" id="runPanel">
+      <div class="run-head">
+        <div>
+          <h3 id="runTitle">Running Operator...</h3>
+          <div class="meta" id="runSub">Simulated multi-agent execution feed</div>
+        </div>
+        <button class="close-run" onclick="closeRun()">✕ Close View</button>
+      </div>
+      <div class="progress-row" id="progressRow"></div>
+      <div class="feed" id="feedArea"></div>
+      <div class="deliverable" id="deliverableBox">
+        <h4 id="delivTitle">Review-Ready Output</h4>
+        <pre id="delivCode"></pre>
+        <div class="note">Human-in-the-loop oversight active. Outputs verified by Handwave lead biometric engineer. Illustrative simulation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="section-title">Add an AI Operator</div>
+          <div class="section-sub">Stand up a new AI operator in three steps: pick the workflow, assign each task to an agent via dropdown, then name it and set cadence.</div>
+        </div>
+      </div>
+
+      <div class="steps-bar" id="bSteps"></div>
+      <div id="bBody"></div>
+      <div class="bnav" id="bNav"></div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="foot-note">
+      <strong>Independent Concept Prototype</strong> prepared for a conversation with <strong>Handwave (handwave.com)</strong>. It is not affiliated with, endorsed by, or built on Handwave systems or data. All operators, matching rates, transaction speeds, and compliance reviews are illustrative simulations. A lead biometric engineer, security officer, or privacy manager reviews and approves every algorithm update, encryption scheme, and GDPR release.
+    </div>
+  </footer>
+</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'Global Retail & Biometric Payment Market Intelligence', tools: ['research_retail', 'save'] },
+  biometric_eng: { emoji: '🔬', label: 'Palm Vein & Subdermal Liveness Algorithm Engineer', tools: ['analyze_vein_pattern', 'save'] },
+  pos_spec: { emoji: '💳', label: 'POS / ECR Terminal & Hardware API Integration Specialist', tools: ['integrate_pos_api', 'save'] },
+  encryption_scrubber: { emoji: '📑', label: 'Biometric Template & Zero-Knowledge Encryption Specialist', tools: ['scrub_encryption_template', 'save'] },
+  cost_eng: { emoji: '🧮', label: 'BaaS Subscription & Terminal Hardware Costing Specialist', tools: ['calc_baas_cost', 'save'] },
+  test_spec: { emoji: '⚡', label: 'Liveness Detection & False Acceptance Rate (FAR) Test Specialist', tools: ['test_far_liveness', 'save'] },
+  privacy_auditor: { emoji: '🛡️', label: 'GDPR Biometric & ISO 27001 Security Auditor', tools: ['audit_gdpr_compliance', 'save'] },
+  fleet_planner: { emoji: '📦', label: 'Edge Terminal Fleet & Merchant Supply Chain Planner', tools: ['plan_fleet_rollout', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'Enterprise Retail & Stadium RFP Solution Writer', tools: ['compose_doc', 'save'] },
+  qa_reviewer: { emoji: '✅', label: 'Senior Biometric Systems Engineering Reviewer', tools: ['qa_review', 'save'] },
+  prospector: { emoji: '🧲', label: 'Enterprise Retail & Venue VP Operations Prospector', tools: ['source_merchants', 'save'] },
+  edge_architect: { emoji: '🌐', label: 'Edge Biometric Processing & Zero-Trust Architect', tools: ['design_edge_crypto', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+const TRACKS = [
+  { key: 'commercial', title: 'Commercial & Merchant Growth' },
+  { key: 'operations', title: 'Biometric Engineering & Hardware Operations' }
+];
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Global Retail, Transit & Venue Merchant Scouting',
+    title: 'AI Merchant Growth Scout',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Enterprise Merchant Prospect Dossier',
+    desc: 'Maps retail grocery chains, stadium venues, transit hubs, and QSR franchises requiring touchless palm biometric payment and loyalty integration.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan European & US retail POS upgrades, stadium concession technology, and transit ticketing NPIs.', deps: [] },
+      { agent: 'prospector', task: 'Source VP Operations, Head of Store Technology, and Payments Innovation Directors.', deps: [] },
+      { agent: 'pos_spec', task: 'Score fit on NCR Voyager, Toast, and Verifone POS integration compatibility.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce target enterprise merchant prospect dossier.', deps: [2] }
+    ]
+  },
+  quote: {
+    name: 'Biometrics-as-a-Service (BaaS) & Terminal Quoting',
+    title: 'AI BaaS Commercial Structurer',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Custom BaaS Merchant Subscription Proposal',
+    desc: 'Models Handwave palm scanner terminal hardware costs, monthly BaaS SaaS tier fees, and interchange fee reduction savings.',
+    tasks: [
+      { agent: 'cost_eng', task: 'Model Handwave palm vein optical sensor manufacturing cost, terminal enclosure NRE, and replacement SLA.', deps: [] },
+      { agent: 'pos_spec', task: 'Review merchant checkout lane volume (target <300ms verification) and ECR software API hooks.', deps: [0] },
+      { agent: 'fleet_planner', task: 'Structure tiered BaaS pricing (€29/month per checkout lane) plus volume transaction rebates.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Assemble formal Custom BaaS Merchant Subscription Proposal.', deps: [2] }
+    ]
+  },
+  tender: {
+    name: 'Enterprise Retail & Stadium RFP Response',
+    title: 'AI Enterprise Solution Specialist',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Enterprise Retail & Stadium RFP Response Package',
+    desc: 'Audits GDPR Article 9 explicit consent frameworks, ISO 27001 certification, sub-second checkout SLAs, and age verification rules.',
+    tasks: [
+      { agent: 'researcher', task: 'Parse stadium RFP throughput specs (target 1,200 fans/hr), age verification for alcohol, and offline fallback SLAs.', deps: [] },
+      { agent: 'privacy_auditor', task: 'Verify GDPR Article 9 biometric data compliance, zero-knowledge encryption, and ISO 27001 audit controls.', deps: [0] },
+      { agent: 'cost_eng', task: 'Structure multi-venue volume hardware lease and BaaS platform agreement.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce formal Enterprise Retail & Stadium RFP response package.', deps: [2] }
+    ]
+  },
+  intel: {
+    name: 'Global Contactless Payment & Competitor Radar',
+    title: 'AI Biometric Market Intelligence',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Contactless Payment & Biometric Competitor Brief',
+    desc: 'Tracks Amazon One deployment metrics, facial recognition regulatory bans, and highlights Handwave palm vein privacy advantages.',
+    tasks: [
+      { agent: 'researcher', task: 'Monitor global contactless payment adoption, Amazon One venue expansions, and NFC card fee surcharges.', deps: [] },
+      { agent: 'biometric_eng', task: 'Benchmark Handwave subdermal vein + liveness detection against camera-only palm and facial biometrics.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile strategic biometric market intelligence brief.', deps: [0, 1] }
+    ]
+  },
+  vein_dfm: {
+    name: 'Palm Vein Biometric & Subdermal Liveness Scrub',
+    title: 'AI Biometric & Liveness Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'Palm Vein Biometric & Liveness Review Package',
+    desc: 'Audits dual infrared (IR) sensor imaging, extracts 1,024-point subdermal vein pattern vectors, and verifies blood flow liveness algorithms.',
+    tasks: [
+      { agent: 'biometric_eng', task: 'Analyze 850nm near-infrared (NIR) absorption datasets for hemoglobin vein pattern clarity and ambient light noise.', deps: [] },
+      { agent: 'test_spec', task: 'Verify pulse-wave Doppler blood flow liveness detection to prevent 3D silicone mask or spoof attacks.', deps: [0] },
+      { agent: 'encryption_scrubber', task: 'Convert raw vein images into irreversible, one-way AES-256 encrypted biometric template vectors.', deps: [1] },
+      { agent: 'privacy_auditor', task: 'Audit zero-knowledge template matching protocols against GDPR biometric data minimization guidelines.', deps: [2] },
+      { agent: 'reviewer', task: 'QA biometric engine matching performance (FAR: 0.0001%, FRR: 0.01%).', deps: [3] },
+      { agent: 'proposal_writer', task: 'Produce final Palm Vein Biometric & Liveness Review Package.', deps: [4] }
+    ]
+  },
+  pos_test: {
+    name: 'POS / ECR Terminal Hardware & API Testing Setup',
+    title: 'AI POS Integration & Test Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'POS Terminal API & Hardware Validation Package',
+    desc: 'Generates SDK test harnesses for Linux/Android POS terminals, validates webhook payment settlement latency (<250ms), and tests offline mode.',
+    tasks: [
+      { agent: 'pos_spec', task: 'Configure Handwave REST & WebSockets SDK on Android-based POS terminal hardware.', deps: [] },
+      { agent: 'test_spec', task: 'Execute stress test simulating 5,000 continuous palm scans and payment tokenization callbacks.', deps: [0] },
+      { agent: 'reviewer', task: 'Verify payment gateway token exchange (Stripe / Adyen / Worldpay) and transaction receipt print trigger.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce POS Terminal API & Hardware Validation Package.', deps: [2] }
+    ]
+  },
+  quality: {
+    name: 'GDPR Biometric Privacy & ISO 27001 Release Audit',
+    title: 'AI Privacy & Security Auditor',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'GDPR Biometric Privacy & ISO 27001 Compliance Release',
+    desc: 'Audits Data Protection Impact Assessments (DPIA), user right-to-be-forgotten deletion hooks, and SOC 2 Type II controls.',
+    tasks: [
+      { agent: 'privacy_auditor', task: 'Audit DPIA documentation, user instant unenrollment API endpoints, and HSM key rotation logs.', deps: [] },
+      { agent: 'edge_architect', task: 'Verify Hardware Security Module (HSM) enclave isolation on Handwave edge scanner units.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile GDPR Biometric Privacy & ISO 27001 Compliance Release Brief.', deps: [0, 1] }
+    ]
+  },
+  terminal_deploy: {
+    name: 'BaaS Terminal Fleet & Edge Encryption Rollout Plan',
+    title: 'AI Fleet Deployment Planner',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'BaaS Terminal Fleet & Edge Encryption Rollout Plan',
+    desc: 'Coordinates OTA firmware updates for 5,000 Handwave palm terminals across Europe, optimizing edge AI model weight updates.',
+    tasks: [
+      { agent: 'fleet_planner', task: 'Schedule staged over-the-air (OTA) firmware deployment for Handwave HW-V2 terminals.', deps: [] },
+      { agent: 'edge_architect', task: 'Deploy updated lightweight TensorFlow Lite palm detection neural net weights to edge units.', deps: [] },
+      { agent: 'test_spec', task: 'Monitor post-update verification latency across 50 test store lanes.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce BaaS Terminal Fleet & Edge Encryption Rollout Plan.', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'Enterprise Merchant Prospect Dossier',
+  quote: 'Custom BaaS Merchant Subscription Proposal',
+  tender: 'Enterprise Retail & Stadium RFP Response Package',
+  intel: 'Contactless Payment & Biometric Competitor Brief',
+  vein_dfm: 'Palm Vein Biometric & Liveness Review Package',
+  pos_test: 'POS Terminal API & Hardware Validation Package',
+  quality: 'GDPR Biometric Privacy & ISO 27001 Compliance Release',
+  terminal_deploy: 'BaaS Terminal Fleet & Edge Encryption Rollout Plan'
+};
+
+const TOOLS = {
+  research_retail: () => 'Scanned global retail POS upgrade schedules, stadium concession throughput metrics, and NPI filings.',
+  source_merchants: () => 'Sourced verified VP Operations and Store Technology Directors across European retail chains.',
+  analyze_vein_pattern: () => 'Analyzed 850nm NIR image feed; extracted 1,024-point subdermal vein vector with 99.999% match confidence.',
+  test_far_liveness: () => 'Tested pulse-wave Doppler blood flow liveness detection; 0 false acceptances across 10,000 spoof attempts.',
+  scrub_encryption_template: () => 'Converted raw palm scan to one-way encrypted AES-256 template vector; verified zero raw image storage.',
+  calc_baas_cost: () => 'Modeled optical scanner BOM ($85), enclosure assembly, and $29/mo BaaS subscription margin.',
+  integrate_pos_api: () => 'Configured Handwave REST SDK on Android POS; achieved 180ms total authorization latency.',
+  audit_gdpr_compliance: () => 'Audited DPIA and explicit consent flow against GDPR Article 9 and ISO 27001 controls.',
+  plan_fleet_rollout: () => 'Scheduled OTA firmware update across 5,000 active retail terminals with zero checkout downtime.',
+  design_edge_crypto: () => 'Verified ARM TrustZone enclave isolation for local edge biometric vector extraction.',
+  compose_doc: () => 'Compiled biometric engineering metrics into clear, review-ready technical documentation.',
+  qa_review: () => 'Audited report completeness and checked security standards; ready for Handwave VP Eng sign-off.',
+  save: () => 'Saved deliverable artifact to shared project repository.'
+};
+
+function toolOut(t) { return (TOOLS[t] || (() => 'Executed successfully.'))(); }
+
+const FINAL = {
+  scout: `ENTERPRISE MERCHANT PROSPECT DOSSIER (illustrative)
+Target Sector: High-Volume Retail Grocery, Stadium Venues & Transit Hubs
+Target Location: European Union & United States Expansion Market
+
+A-Tier Qualified Merchant Prospects:
+1. Nordics Retail Supermarket Group — 450 Store Checkout Lanes — Fit Score: 98/100
+   • Key Contacts: Chief Operating Officer, VP POS Technology & Payments
+   • Requirement: <300ms Touchless Palm Payment + Automated Loyalty Program Integration
+2. Baltic Express Transit Authority — 120 Metro Turnstiles — Fit Score: 95/100
+   • Key Contacts: Director of Fare Collection, Head of Innovation
+   • Requirement: IP65 Ruggedized Outdoor Handwave Scanner Units + Offline Fallback
+3. Arena Events Group — 4 Major Sports Stadiums — Fit Score: 92/100
+   • Key Contacts: Head of Venue Operations, Concessions Technology Lead
+
+Strategic Positioning:
+Highlight Handwave "Biometrics-as-a-Service" model, subdermal vein liveness security (higher security than facial or fingerprint biometrics), and GDPR Article 9 privacy compliance.
+
+NOTE: Illustrative simulation prepared for Handwave (handwave.com).`,
+
+  quote: `CUSTOM BAAS MERCHANT SUBSCRIPTION PROPOSAL (illustrative)
+Customer: Nordics Retail Supermarket Group
+Scope: 450 Checkout Lanes across 85 Grocery Locations
+Integration: Android POS Terminal Webhook SDK + Subdermal Palm Scanner Hardware
+
+Commercial Breakdown:
+• Handwave Palm Scanner Hardware Unit (HW-V2 Optical Scanner): $120.00 / lane (One-time)
+• Monthly BaaS SaaS License (Unlimited Scan & Tokenization): $29.00 / lane / month
+• POS Integration & On-Site Installation Engineering NRE: $4,500 (One-time)
+
+ROI & Operational Impact:
+• Average Checkout Acceleration: 4.2 seconds saved per transaction (vs credit card tap/chip)
+• Annual Labor Hours Saved: ~18,500 hours across 450 lanes
+• Interchange Fee Savings: 12 bps reduction via direct tokenized bank settlement option
+
+NOTE: Illustrative simulation; pricing and labor figures are placeholders.`,
+
+  tender: `ENTERPRISE RETAIL & STADIUM RFP RESPONSE PACKAGE (illustrative)
+Tender ID: US-EU-PAY-HW-2026-08
+Scope: Touchless Palm Biometric Payment, Age Verification & Loyalty Infrastructure
+
+Compliance & Security Verification:
+• GDPR Article 9 Biometric Compliance: Explicit consent workflow & instant unenrollment API
+• ISO 27001 / SOC 2 Type II Security: Certified & Active
+• Liveness Detection: Pulse-wave Doppler blood flow verification (Anti-spoofing certified)
+• Biometric Template Security: One-way AES-256 encrypted vector (Zero raw image storage)
+
+Technical Offer:
+• Sub-300ms verification latency with 99.999% accuracy rate across 100,000+ enrolled users
+
+NOTE: Illustrative simulation; confirm against RFP specifications.`,
+
+  intel: `CONTACTLESS PAYMENT & BIOMETRIC COMPETITOR BRIEF (illustrative)
+Focus: Palm Vein Biometrics vs Facial Recognition & Card Tap
+
+Key Insights:
+1. Regulatory Trends: EU biometric regulation favoring privacy-first palm vein systems over intrusive public facial recognition.
+2. Market Speed Demand: QSR and stadium operators experiencing 20%+ higher throughput when switching from phone NFC to single-wave palm checkout.
+3. Handwave Platform Advantage:
+   - Subdermal vein pattern + blood flow liveness detection prevents spoofing (surpasses 2D/3D palm image scanners).
+   - Biometrics-as-a-Service model eliminates high upfront hardware barriers for mid-market merchants.
+
+NOTE: Illustrative simulation.`,
+
+  vein_dfm: `PALM VEIN BIOMETRIC & LIVENESS REVIEW PACKAGE (illustrative · flagship)
+Program: Handwave HW-V2 Palm Scanner & Engine Subsystem
+Sensors: Dual 850nm Near-Infrared (NIR) CMOS Sensors + Pulse-Wave Doppler Liveness Module
+
+Biometric Engineering Findings:
+1. Subdermal Vein Vector Extraction: Successfully mapped 1,024-point vein pattern vectors; 99.999% matching score against reference database.
+2. Anti-Spoof Liveness Test: Doppler blood flow analysis detected active hemoglobin movement; 100% rejection rate against synthetic 3D latex and high-res print spoofs.
+3. Optical Filtering: Added 850nm bandpass optical filter to eliminate 50Hz/60Hz ambient store lighting interference.
+
+Security & Encryption Verification:
+• Raw Image Handling: Raw IR image erased from RAM immediately post-feature extraction (<15ms).
+• Template Encryption: One-way hashing creates non-reversible 512-bit vector stored in ARM TrustZone enclave.
+
+Summary:
+ Biometric engine performance validated and cleared for mass POS terminal deployment.
+
+NOTE: Illustrative simulation; review with Handwave lead biometric engineer.`,
+
+  pos_test: `POS TERMINAL API & HARDWARE VALIDATION PACKAGE (illustrative)
+Hardware Platform: Android 13 Enterprise POS Terminal + Handwave HW-V2 Optical Scanner
+
+Test Results:
+• Scan-to-Tokenization Latency: 185ms average (Target <250ms — PASS)
+• POS Webhook Payment Callback: 42ms transaction authorization response
+• Stress Testing: Completed 5,000 continuous automated palm scans with 0 system memory leaks or crashes
+
+Outcome: Software Development Kit (SDK v2.4) released to merchant integration portal.
+
+NOTE: Illustrative simulation.`,
+
+  quality: `GDPR BIOMETRIC PRIVACY & ISO 27001 COMPLIANCE RELEASE (illustrative)
+Audit Period: Q3 2026
+Framework: EU General Data Protection Regulation (GDPR Article 9) / ISO 27001:2022
+
+Audit Checklist Results:
+• User Right-to-be-Forgotten API: Verified <1.0s instant deletion of encrypted biometric templates upon user request
+• Hardware Security Module (HSM): Enclave isolation active; zero unauthorized key export vectors
+• Data Minimization Audit: Confirmed no raw biometric images, names, or unencrypted PII stored on edge scanners
+
+Outcome: Privacy & Security Release Approved. Compliance Certificate issued.
+
+NOTE: Illustrative simulation.`,
+
+  terminal_deploy: `BAAS TERMINAL FLEET & EDGE ENCRYPTION ROLLOUT PLAN (illustrative)
+Scope: 5,000 Active Handwave Palm Scanners in European Retail Lanes
+
+Fleet Operations Update:
+• OTA Firmware Deployment: Version 2.4.1 pushed to 5,000 edge units over 4-hour maintenance window
+• Edge AI Model Acceleration: Deployed updated 1.2MB TensorFlow Lite palm alignment weights to ARM NPU
+• Field Monitoring: Zero transaction disruptions reported across 50 pilot retail stores
+
+Outcome: Fleet update successfully executed across all active merchant lanes.
+
+NOTE: Illustrative simulation.`
+};
+
+let EMPLOYEES = [
+  { id: 'scout', name: 'Scout', title: 'AI Merchant Growth Scout', wf: 'scout', handled: 195, hrs: 58, win: 35, status: 'idle' },
+  { id: 'quote', name: 'Quote', title: 'AI BaaS Commercial Structurer', wf: 'quote', handled: 285, hrs: 120, win: 58, status: 'idle' },
+  { id: 'tender', name: 'Tender', title: 'AI Enterprise Solution Specialist', wf: 'tender', handled: 122, hrs: 95, win: 48, status: 'idle' },
+  { id: 'intel', name: 'Radar', title: 'AI Biometric Market Intelligence', wf: 'intel', handled: 150, hrs: 45, win: 26, status: 'idle' },
+  { id: 'vein_dfm', name: 'VeinDFM', title: 'AI Biometric & Liveness Specialist', wf: 'vein_dfm', handled: 410, hrs: 245, win: 76, status: 'idle' },
+  { id: 'pos_test', name: 'POSTest', title: 'AI POS Integration & Test Specialist', wf: 'pos_test', handled: 225, hrs: 108, win: 52, status: 'idle' },
+  { id: 'quality', name: 'PrivacyAudit', title: 'AI Privacy & Security Auditor', wf: 'quality', handled: 355, hrs: 138, win: 65, status: 'idle' },
+  { id: 'terminal_deploy', name: 'FleetPlanner', title: 'AI Fleet Deployment Planner', wf: 'terminal_deploy', handled: 198, hrs: 80, win: 0, status: 'idle' }
+];
+
+/* Render Functions */
+function drawWaferGrid() {
+  const grid = document.getElementById("dieGrid");
+  let rects = '';
+  for (let x = -8; x <= 8; x++) {
+    for (let y = -8; y <= 8; y++) {
+      if (x*x + y*y <= 60) {
+        const px = 110 + x * 10 - 4;
+        const py = 105 + y * 10 - 4;
+        const pass = (Math.abs(x*y) % 8 !== 3);
+        const fill = pass ? 'rgba(139, 92, 246, 0.45)' : 'rgba(239, 68, 68, 0.6)';
+        rects += `<rect x="${px}" y="${py}" width="8" height="8" rx="1.5" fill="${fill}"></rect>`;
+      }
+    }
+  }
+  grid.innerHTML = rects;
+}
+
+function renderRoster() {
+  const container = document.getElementById("rosterContainer");
+  let html = '';
+  TRACKS.forEach(tr => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === tr.key);
+    if (!list.length) return;
+    html += `<div class="track-label">${tr.title}</div><div class="roster">`;
+    html += list.map(empCard).join('');
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+}
+
+function empCard(e) {
+  const wf = WORKFLOWS[e.wf] || {};
+  const isFlag = wf.tag === 'flagship';
+  const team = (wf.tasks || []).map(t => t.agent).filter((v, i, a) => a.indexOf(v) === i).map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  return `
+    <div class="op-card ${isFlag ? 'flagship' : ''}" id="emp-${e.id}">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${e.name}</div>
+          <div class="op-role">${e.title}</div>
+        </div>
+        ${isFlag ? '<span class="flag-chip">★ FLAGSHIP OPERATOR</span>' : ''}
+      </div>
+      <div class="op-desc">${wf.desc || ''}</div>
+      <div class="op-agents">${team}</div>
+      <div class="op-stats">
+        <div class="op-stat"><b>${e.handled.toLocaleString()}</b> runs</div>
+        <div class="op-stat"><b>~${e.hrs} hrs</b> saved/mo</div>
+        <div class="op-stat"><b>+${e.win}%</b> speedup</div>
+      </div>
+      <div class="op-actions">
+        <button class="run-btn" onclick="runOperator('${e.wf}')">▶ Run ${e.name}</button>
+      </div>
+    </div>
+  `;
+}
+
+function setView(v) {
+  document.getElementById('view-ops').classList.toggle('hidden', v !== 'ops');
+  document.getElementById('view-hire').classList.toggle('hidden', v !== 'hire');
+  document.getElementById('tabA').classList.toggle('active', v === 'ops');
+  document.getElementById('tabB').classList.toggle('active', v === 'hire');
+  if (v === 'hire') initBuilder();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+let isRunning = false;
+async function runOperator(wfKey) {
+  if (isRunning) return;
+  isRunning = true;
+  const wf = WORKFLOWS[wfKey];
+  if (!wf) return;
+
+  const panel = document.getElementById("runPanel");
+  const title = document.getElementById("runTitle");
+  const sub = document.getElementById("runSub");
+  const progress = document.getElementById("progressRow");
+  const feed = document.getElementById("feedArea");
+  const deliv = document.getElementById("deliverableBox");
+
+  panel.classList.add("active");
+  deliv.classList.remove("show");
+  title.innerText = `Executing Operator: ${wf.name}`;
+  sub.innerText = `Mode: ${wf.mode.toUpperCase()} · ${wf.tasks.length} Specialist Agents`;
+
+  progress.innerHTML = wf.tasks.map((_, i) => `<div class="pstep" id="ps_${i}"></div>`).join('');
+  feed.innerHTML = '';
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  function addFeedLine(agentKey, txt, isDone = false) {
+    const role = AGENT_ROLES[agentKey] || { emoji: '🤖', label: agentKey };
+    const div = document.createElement('div');
+    div.className = `feed-line ${isDone ? 'done' : ''}`;
+    div.innerHTML = `<span class="tag">[${role.emoji} ${role.label}]</span><span class="txt">${txt}</span>`;
+    feed.appendChild(div);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  addFeedLine(wf.tasks[0].agent, `Initializing ${wf.name} autonomous workflow loop...`);
+  await new Promise(r => setTimeout(r, 600));
+
+  for (let i = 0; i < wf.tasks.length; i++) {
+    const t = wf.tasks[i];
+    const stepEl = document.getElementById(`ps_${i}`);
+    if (stepEl) stepEl.classList.add("active");
+
+    addFeedLine(t.agent, `Executing Task ${i+1}: ${t.task}`);
+    await new Promise(r => setTimeout(r, 800));
+
+    const role = AGENT_ROLES[t.agent];
+    if (role && role.tools) {
+      for (const tool of role.tools) {
+        addFeedLine(t.agent, `Invoked tool '${tool}( )' -> ${toolOut(tool)}`);
+        await new Promise(r => setTimeout(r, 600));
+      }
+    }
+
+    if (stepEl) {
+      stepEl.classList.remove("active");
+      stepEl.classList.add("complete");
+    }
+    addFeedLine(t.agent, `Task ${i+1} completed. Artifact saved to shared Handwave biometric store.`, true);
+  }
+
+  await new Promise(r => setTimeout(r, 400));
+  document.getElementById("delivTitle").innerText = `Review-Ready Output · ${DTITLE[wfKey] || 'Deliverable'}`;
+  document.getElementById("delivCode").innerText = FINAL[wfKey] || "Execution completed successfully.";
+  deliv.classList.add("show");
+
+  isRunning = false;
+}
+
+function closeRun() {
+  document.getElementById("runPanel").classList.remove("active");
+}
+
+/* DYNEX BUILDER FLOW IMPLEMENTATION */
+let draft = {};
+function initBuilder() {
+  draft = { wf: null, mode: 'sequential', assign: [], name: '', title: '', cadence: 'Per project', step: 1 };
+  renderBuilder();
+}
+
+function renderBuilder() {
+  const steps = [['01', 'Pick a workflow'], ['02', 'Assign the agents'], ['03', 'Name & cadence']];
+  document.getElementById('bSteps').innerHTML = steps.map((s, i) => `
+    <div class="step-item ${draft.step === i + 1 ? 'active' : ''}">
+      <div class="step-num">${s[0]}</div>
+      <div class="step-lbl">${s[1]}</div>
+    </div>
+  `).join('');
+
+  if (draft.step === 1) bS1();
+  else if (draft.step === 2) bS2();
+  else bS3();
+  bNav();
+}
+
+function bS1() {
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 1: Choose Baseline Biometric Workflow</label></div>
+    <div class="wf-grid">
+      ${Object.keys(WORKFLOWS).map(k => {
+        const w = WORKFLOWS[k];
+        return `
+          <div class="wf-card ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')">
+            <div class="wf-title">${w.name}</div>
+            <div class="wf-desc">${w.desc}</div>
+            <div class="wf-meta">${w.tasks.length} agents · ${w.mode}</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 2: Assign Each Task to a Specialist Agent</label></div>
+    ${w.tasks.map((t, i) => `
+      <div class="task-row">
+        <div class="tn">${i + 1}</div>
+        <div class="tt">
+          ${t.task}
+          ${t.deps.length ? `<span style="color:var(--muted-2);font-family:var(--font-mono);font-size:11px;"> · waits for step ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}
+        </div>
+        <select onchange="draft.assign[${i}]=this.value">${opts}</select>
+      </div>
+    `).join('')}
+    <div class="field" style="margin-top:16px;">
+      <label>Execution Mode</label>
+      <div class="seg">
+        ${['sequential', 'dag'].map(m => `
+          <button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (Parallel DAG)' : 'Sequential'}</button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 3: Name Operator &amp; Set Cadence</label></div>
+    <div class="field">
+      <label>Operator Name</label>
+      <input type="text" value="${draft.name}" placeholder="e.g. Palm Vein &amp; Liveness Specialist" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Role Title</label>
+      <input type="text" value="${draft.title}" placeholder="e.g. Autonomous Biometric Engineer" oninput="draft.title=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Cadence</label>
+      <div class="seg">
+        ${['Per project', 'Per scan', 'Weekly', 'On-demand'].map(c => `
+          <button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>
+        `).join('')}
+      </div>
+    </div>
+    <div class="field" style="margin-top:20px;">
+      <label>Live Operator Card Preview</label>
+      <div id="previewCardArea"></div>
+    </div>
+  `;
+  renderPreview();
+}
+
+function renderPreview() {
+  const w = WORKFLOWS[draft.wf];
+  const area = document.getElementById('previewCardArea');
+  if (!area) return;
+  
+  const team = draft.assign.map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  area.innerHTML = `
+    <div class="op-card" style="max-width:440px;">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${draft.name || 'New Operator'}</div>
+          <div class="op-role">${draft.title || 'AI Operator'}</div>
+        </div>
+      </div>
+      <div class="op-desc">Owns <b>${w.name}</b> · ${draft.cadence} · ${draft.mode.toUpperCase()}</div>
+      <div class="op-agents">${team}</div>
+    </div>
+  `;
+}
+
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn btn-ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right = '';
+  if (draft.step === 1) right = `<button class="btn btn-primary" ${draft.wf ? '' : 'disabled'} onclick="draft.step=2;renderBuilder()">Next: Assign Agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn btn-primary" onclick="draft.step=3;renderBuilder()">Next: Name &amp; Cadence →</button>`;
+  else right = `<button class="btn btn-primary" onclick="hire()">✓ Add this AI Operator</button>`;
+
+  document.getElementById('bNav').innerHTML = left + right;
+}
+
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  
+  WORKFLOWS[wfId] = {
+    name: w.name,
+    title: draft.title || w.title,
+    mode: draft.mode || w.mode,
+    track: w.track,
+    deliverable: w.deliverable,
+    desc: w.desc,
+    tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps }))
+  };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({
+    id, name,
+    title: draft.title || w.title,
+    wf: wfId,
+    handled: 0,
+    hrs: Math.floor(Math.random() * 60) + 40,
+    win: 0,
+    status: 'idle'
+  });
+
+  renderRoster();
+  setView('ops');
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  drawWaferGrid();
+  renderRoster();
+});
+</script>
+</body>
+</html>
