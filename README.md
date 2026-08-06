@@ -143,3 +143,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/micross-components
 https://innvonix-tech-solutions.github.io/ai-workforce/ltd-material
 
 https://innvonix-tech-solutions.github.io/ai-workforce/hillman-group
+
+https://innvonix-tech-solutions.github.io/ai-workforce/kyocera-sld
