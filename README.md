@@ -78,3 +78,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/aeluma
 https://innvonix-tech-solutions.github.io/ai-workforce/ipazia
 https://innvonix-tech-solutions.github.io/ai-workforce/xcures
 https://innvonix-tech-solutions.github.io/ai-workforce/fabarc
+https://innvonix-tech-solutions.github.io/ai-workforce/kb-industries
