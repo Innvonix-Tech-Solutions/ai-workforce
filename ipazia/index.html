@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ipazia Cell Console — AI Workforce Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Mulish:wght@400;500;600&family=Red+Hat+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B1211;
+  --surface:#121A19;
+  --surface-2:#182120;
+  --surface-3:#1F2A28;
+  --border:#2B3937;
+  --border-soft:#1C2624;
+  --text:#EAF2F0;
+  --muted:#93A6A2;
+  --muted-2:#5A6B67;
+  --accent:#2DD4BF;
+  --accent-dim:#166D62;
+  --accent2:#FF6B35;
+  --accent3:#7FA8FF;
+  --danger:#FF5C5C;
+  --font-display:'Outfit',sans-serif;
+  --font-body:'Mulish',sans-serif;
+  --font-mono:'Red Hat Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 88% -8%, rgba(45,212,191,0.08), transparent 55%),
+    radial-gradient(900px 480px at 5% 6%, rgba(255,107,53,0.05), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent);}
+::selection{background:rgba(45,212,191,0.28);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:26px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:38px;height:38px;border-radius:8px;
+  background:linear-gradient(155deg,var(--surface-3),var(--surface-2));
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--accent);font-family:var(--font-mono);font-weight:600;font-size:11px;
+}
+.mark-name{font-family:var(--font-display);font-weight:700;font-size:19px;letter-spacing:0.005em;}
+.mark-sub{font-family:var(--font-mono);font-size:10.5px;color:var(--muted-2);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px;}
+
+.cell-readout{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent2);
+  background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:8px 14px;display:flex;align-items:center;gap:10px;
+}
+.cell-readout .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.hero{padding:44px 0 30px;display:grid;grid-template-columns:1.1fr 0.9fr;gap:40px;align-items:center;}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:30px 0 18px;}}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent);}
+h1{font-family:var(--font-display);font-weight:800;font-size:clamp(28px,4vw,42px);line-height:1.08;letter-spacing:-0.01em;margin:0 0 16px;}
+h1 span{color:var(--accent);}
+.lead{color:var(--muted);font-size:15.5px;max-width:53ch;margin:0 0 22px;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:var(--font-body);font-weight:700;font-size:13.5px;border-radius:8px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--accent);color:#04211C;border-color:var(--accent);}
+.btn-primary:hover{background:#5be3d1;}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--accent3);color:var(--accent3);}
+
+/* robotic arm cell signature */
+.scope{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:18px 18px 14px;}
+.scope-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
+.scope-title{font-family:var(--font-mono);font-size:10.5px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em;}
+.scope-val{font-family:var(--font-mono);font-size:12px;color:var(--accent2);}
+svg.trace{width:100%;height:200px;display:block;}
+.scope-foot{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--font-mono);font-size:10.5px;color:var(--muted-2);}
+
+.econ{border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:760px){.econ{grid-template-columns:repeat(2,1fr);}}
+.econ-item{padding:6px 18px;border-left:1px solid var(--border-soft);}
+.econ-item:first-child{border-left:none;padding-left:0;}
+@media(max-width:760px){.econ-item:nth-child(2n+1){border-left:none;padding-left:0;}}
+.econ-num{font-family:var(--font-display);font-weight:800;font-size:26px;color:var(--text);}
+.econ-num small{font-size:14px;color:var(--accent);font-weight:700;}
+.econ-label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+section{padding:46px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.section-title{font-family:var(--font-display);font-weight:800;font-size:22px;}
+.section-sub{color:var(--muted);font-size:13.5px;max-width:60ch;margin-top:4px;}
+.track-label{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.1em;margin:28px 0 14px;padding-top:6px;border-top:1px dashed var(--border-soft);}
+.track-label:first-of-type{border-top:none;padding-top:0;margin-top:6px;}
+
+.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+@media(max-width:760px){.roster{grid-template-columns:1fr;}}
+.op-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:10px;transition:border-color .15s ease;}
+.op-card:hover{border-color:var(--accent-dim);}
+.op-card.flagship{border-color:var(--accent2);background:linear-gradient(180deg,rgba(255,107,53,0.07),var(--surface));}
+.op-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.op-name{font-family:var(--font-display);font-weight:700;font-size:15.5px;}
+.op-role{font-size:12px;color:var(--muted);margin-top:2px;}
+.flag-chip{font-family:var(--font-mono);font-size:10px;color:var(--accent2);border:1px solid var(--accent2);border-radius:20px;padding:2px 8px;white-space:nowrap;}
+.op-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+.op-stats{display:flex;gap:16px;margin-top:2px;}
+.op-stat{font-family:var(--font-mono);font-size:11.5px;color:var(--muted-2);}
+.op-stat b{color:var(--accent);font-size:13px;display:block;font-family:var(--font-body);font-weight:700;}
+.op-agents{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.chip{font-size:11px;background:var(--surface-3);border:1px solid var(--border);border-radius:20px;padding:3px 9px;color:var(--muted);}
+.op-actions{display:flex;gap:10px;margin-top:6px;}
+.run-btn{flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:700;font-size:13px;border-radius:8px;padding:9px;cursor:pointer;}
+.run-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+.run-panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;margin-top:22px;display:none;}
+.run-panel.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.run-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.run-head h3{font-family:var(--font-display);font-size:17px;margin:0;}
+.run-head .meta{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.close-run{background:none;border:1px solid var(--border);color:var(--muted);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:12px;}
+.close-run:hover{color:var(--text);border-color:var(--accent3);}
+
+.feed{background:var(--bg);border:1px solid var(--border-soft);border-radius:10px;padding:14px 16px;height:260px;overflow-y:auto;font-family:var(--font-mono);font-size:12.5px;display:flex;flex-direction:column;gap:7px;}
+.feed-line{display:flex;gap:10px;align-items:flex-start;opacity:0;animation:appear .3s ease forwards;}
+@keyframes appear{to{opacity:1;}}
+.feed-line .tag{color:var(--accent2);white-space:nowrap;}
+.feed-line .txt{color:var(--muted);}
+.feed-line.done .tag{color:var(--accent);}
+.feed-line.done .txt{color:var(--text);}
+
+.progress-row{display:flex;gap:6px;margin:14px 0 6px;flex-wrap:wrap;}
+.pstep{flex:1;min-width:64px;height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;position:relative;}
+.pstep.active{background:var(--accent-dim);}
+.pstep.complete{background:var(--accent);}
+
+.deliverable{margin-top:18px;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:16px 18px;display:none;}
+.deliverable.show{display:block;animation:fadein .3s ease;}
+.deliverable h4{font-family:var(--font-display);font-size:14px;margin:0 0 10px;color:var(--accent);}
+.deliverable pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:12.5px;color:var(--text);margin:0;line-height:1.6;}
+.note{font-size:11px;color:var(--muted-2);margin-top:10px;font-style:italic;}
+
+.builder{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;}
+.build-steps{display:flex;gap:8px;margin-bottom:20px;}
+.build-step-dot{flex:1;height:3px;border-radius:2px;background:var(--surface-3);}
+.build-step-dot.on{background:var(--accent);}
+.build-body{min-height:200px;}
+.pick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+@media(max-width:700px){.pick-grid{grid-template-columns:1fr;}}
+.pick-card{border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;background:var(--surface-2);}
+.pick-card:hover{border-color:var(--accent3);}
+.pick-card.selected{border-color:var(--accent);background:rgba(45,212,191,0.07);}
+.pick-title{font-weight:600;font-size:13.5px;}
+.pick-desc{font-size:12px;color:var(--muted);margin-top:4px;}
+.field-row{margin-bottom:14px;}
+.field-row label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;}
+.field-row input,.field-row select{width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:10px 12px;font-family:var(--font-body);font-size:13.5px;}
+.build-nav{display:flex;justify-content:space-between;margin-top:20px;}
+.summary-box{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:16px;}
+.summary-box b{color:var(--accent);}
+
+footer{border-top:1px solid var(--border-soft);padding:28px 0 40px;}
+.foot-note{font-size:12px;color:var(--muted-2);max-width:80ch;line-height:1.6;}
+.foot-note strong{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark-row">
+      <div class="mark">
+        <div class="mark-badge">IP</div>
+        <div>
+          <div class="mark-name">Cell Console</div>
+          <div class="mark-sub">Ipazia S.r.l. · AI Workforce Prototype</div>
+        </div>
+      </div>
+      <div class="cell-readout">
+        <span class="dot"></span>
+        <span id="cellTxt">Isola standard · asservimento CNC</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero" style="padding-bottom:0;">
+    <div>
+      <div class="eyebrow">Robotic cells · HAMACA software · KUKA & SCHUNK partner</div>
+      <h1>Eight operators to run Ipazia's <span>feasibility-to-commissioning</span> loop</h1>
+      <p class="lead">Each operator below is a real Ipazia workflow — running a feasibility study for a custom cell, configuring a standard machine-tending island, building a HAMACA software feature — handed to a small team of specialist agents that works it end to end and hands back a reviewable deliverable.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="document.getElementById('roster-section').scrollIntoView({behavior:'smooth'})">View the roster</button>
+        <button class="btn btn-ghost" onclick="runOperator('feasibility')">Run the flagship operator</button>
+      </div>
+    </div>
+    <div class="scope">
+      <div class="scope-top">
+        <span class="scope-title">KUKA cell — live pick &amp; place cycle</span>
+        <span class="scope-val" id="cycleVal">3.8s cycle</span>
+      </div>
+      <svg class="trace" viewBox="0 0 300 200" preserveAspectRatio="xMidYMid meet">
+        <rect x="10" y="150" width="280" height="10" rx="2" fill="var(--surface-3)"></rect>
+        <circle cx="60" cy="150" r="10" fill="none" stroke="var(--border)" stroke-width="1.5"></circle>
+        <circle cx="240" cy="150" r="10" fill="none" stroke="var(--border)" stroke-width="1.5"></circle>
+        <g id="armGroup"></g>
+      </svg>
+      <div class="scope-foot">
+        <span>KUKA + SCHUNK end-effector</span>
+        <span id="cycleCountVal">142 cicli completati</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="econ wrap" style="padding-left:0;padding-right:0;">
+    <div class="econ-item">
+      <div class="econ-num">5.4<small>×</small></div>
+      <div class="econ-label">Faster feasibility-to-proposal turnaround on new project briefs</div>
+    </div>
+    <div class="econ-item">
+      <div class="econ-num">3<small></small></div>
+      <div class="econ-label">Standard cell families (machine tending, pallet dismantling, packaging)</div>
+    </div>
+    <div class="econ-item">
+      <div class="econ-num">17<small> hrs</small></div>
+      <div class="econ-label">Median engineering hours returned per run</div>
+    </div>
+    <div class="econ-item">
+      <div class="econ-num">8<small>/8</small></div>
+      <div class="econ-label">Workflows covered, feasibility through commissioning</div>
+    </div>
+  </div>
+
+  <section id="roster-section">
+    <div class="section-head">
+      <div>
+        <div class="section-title">The roster</div>
+        <div class="section-sub">Grouped by track. Run any operator to watch its agent team work a real Ipazia-style task and produce a deliverable.</div>
+      </div>
+    </div>
+    <div id="rosterMount"></div>
+
+    <div class="run-panel" id="runPanel">
+      <div class="run-head">
+        <div>
+          <h3 id="runTitle">—</h3>
+          <div class="meta" id="runMeta">—</div>
+        </div>
+        <button class="close-run" onclick="closeRun()">Close</button>
+      </div>
+      <div class="progress-row" id="progressRow"></div>
+      <div class="feed" id="feed"></div>
+      <div class="deliverable" id="deliverable">
+        <h4 id="delivTitle">Deliverable</h4>
+        <pre id="delivBody"></pre>
+        <div class="note">NOTE: illustrative simulation for demonstration purposes — all figures are placeholders and every output is reviewed by an Ipazia engineer or partner before use.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-title">Build a new operator</div>
+        <div class="section-sub">Compose a ninth operator in three steps: pick the base workflow, assign its cadence, name it.</div>
+      </div>
+    </div>
+    <div class="builder">
+      <div class="build-steps">
+        <div class="build-step-dot on" id="dot1"></div>
+        <div class="build-step-dot" id="dot2"></div>
+        <div class="build-step-dot" id="dot3"></div>
+      </div>
+      <div class="build-body" id="buildBody"></div>
+      <div class="build-nav">
+        <button class="btn btn-ghost" id="backBtn" onclick="builderBack()" style="visibility:hidden;">Back</button>
+        <button class="btn btn-primary" id="nextBtn" onclick="builderNext()">Next</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="foot-note">
+      <strong>This is a sales/stakeholder prototype, not a live system.</strong> No Ipazia systems, customer data, or proprietary cell designs were used to build it — every deliverable, metric, and number above is an illustrative placeholder written to sound domain-authentic. Nothing here is submitted, filed, or transmitted anywhere; every run stays in this browser tab. References to real Ipazia products and partners (HAMACA, KUKA, SCHUNK) are used for realism only — no confidential project details are represented. In production, every deliverable in this loop — feasibility studies, quotes, prototype reports, service dispatches — would be reviewed and signed off by a qualified Ipazia engineer before it leaves the building.
+    </p>
+  </footer>
+</div>
+
+<script>
+/* =========================================================
+   DATA
+   ========================================================= */
+const AGENT_ROLES = {
+  pm:          {emoji:'📋', label:'Project Manager', tools:['briefIntake','packageAssemble','save']},
+  feasibility: {emoji:'🔍', label:'Feasibility Study Engineer', tools:['feasibilityAnalysis','efficiencyModel','save']},
+  robotic:     {emoji:'🦾', label:'Robotic Cell Design Engineer', tools:['cellLayoutDesign','gripperSpec','save']},
+  partner:     {emoji:'🤝', label:'Partner & Technical Consulting Manager', tools:['kukaSchunkScope','engagementAssess','save']},
+  quote:       {emoji:'💰', label:'Commercial & Quote Analyst', tools:['costRangeModel','quoteBuild','save']},
+  service:     {emoji:'🔧', label:'Field Service & Assistance Engineer', tools:['serviceIntake','partnerDocSync','save']},
+  controls:    {emoji:'🔌', label:'Controls & PLC Integration Engineer', tools:['faultDiagnose','plcValidate','save']},
+  lineint:     {emoji:'🏗️', label:'Machine/Line Integration Engineer', tools:['lineBuilderCoord','buildPlanDraft','save']},
+  hamaca:      {emoji:'💻', label:'HAMACA Software Engineer', tools:['hmiDesign','featureBuildTest','save']},
+  prototype:   {emoji:'🛠️', label:'Prototype Development Engineer', tools:['prototypeBuild','cycleTimeTest','save']},
+};
+
+const WORKFLOWS = {
+  feasibility: {
+    name:'Custom Automation Project Feasibility Study', title:'Feasibility Study',
+    mode:'sequential', tag:'flagship', track:'trackA',
+    deliverable:'Feasibility proposal package',
+    sample:'Metalworking client requesting automation of a press-brake bending cell with mixed-lot handling',
+    desc:'From a client brief to a go/no-go proposal: feasibility analysis on the project\u2019s critical points, KUKA/SCHUNK concept scoping, and a preliminary cost range.',
+    tasks:[
+      {agent:'pm', task:'Log the client\u2019s project brief and critical operational constraints', deps:[]},
+      {agent:'feasibility', task:'Run the feasibility analysis on the project\u2019s critical points and expected efficiency gain', deps:[0]},
+      {agent:'partner', task:'Scope the required KUKA robot and SCHUNK gripper configuration for the concept', deps:[1]},
+      {agent:'quote', task:'Draft a preliminary cost range for the feasibility-approved concept', deps:[2]},
+      {agent:'pm', task:'Assemble the feasibility proposal package with a go/no-go recommendation', deps:[3]},
+    ],
+  },
+  standardquote: {
+    name:'Standard Robotic Cell Quote & Configuration', title:'Standard Cell Quote',
+    mode:'sequential', track:'trackA',
+    deliverable:'Proposal package',
+    sample:'Machine shop requesting a standard machine-tending cell for a CNC lathe production run',
+    desc:'Matches a customer requirement against the standard cell product line (machine tending, pallet dismantling, packaging) and builds a configured commercial quote.',
+    tasks:[
+      {agent:'pm', task:'Log the customer requirement: machine tending, pallet dismantling, or packaging', deps:[]},
+      {agent:'robotic', task:'Match the requirement against the standard robotic cell product line', deps:[0]},
+      {agent:'partner', task:'Confirm KUKA robot and SCHUNK end-effector configuration for the matched cell', deps:[1]},
+      {agent:'quote', task:'Build the commercial quote for the configured standard cell', deps:[2]},
+      {agent:'pm', task:'Issue the proposal package and flag open items for sign-off', deps:[3]},
+    ],
+  },
+  consulting: {
+    name:'Technical Consulting Engagement', title:'Technical Consulting',
+    mode:'sequential', track:'trackA',
+    deliverable:'Consulting deliverable',
+    sample:'Technical consulting request from an industry partner evaluating a robotic palletizing retrofit',
+    desc:'Scopes a consulting engagement for a client, partner, or competitor and drafts a solution recommendation grounded in prior Ipazia project experience.',
+    tasks:[
+      {agent:'pm', task:'Log the consulting request and confirm engagement scope with the client or partner', deps:[]},
+      {agent:'partner', task:'Assess the technical challenge and relevant prior Ipazia project experience', deps:[0]},
+      {agent:'robotic', task:'Draft a solution recommendation with supporting technical rationale', deps:[1]},
+      {agent:'pm', task:'Issue the consulting deliverable for client review', deps:[2]},
+    ],
+  },
+  serviceassist: {
+    name:'Partner & Service Coordination (Assistenza)', title:'Service Coordination',
+    mode:'sequential', track:'trackA',
+    deliverable:'Service resolution report',
+    sample:'Service request on a deployed robotic cell reporting a gripper calibration fault',
+    desc:'Takes a service request from intake through triangulated partner documentation to a diagnosed fault and dispatch plan.',
+    tasks:[
+      {agent:'service', task:'Log the service request and current machine fault status', deps:[]},
+      {agent:'service', task:'Triangulate documentation with the SCHUNK/KUKA partner service records', deps:[0]},
+      {agent:'controls', task:'Diagnose whether the fault is mechanical, electrical, or software-related', deps:[1]},
+      {agent:'pm', task:'Issue the service resolution report and dispatch plan', deps:[2]},
+    ],
+  },
+  prototypedev: {
+    name:'Custom Robotic Cell Prototype Development', title:'Prototype Development',
+    mode:'dag', track:'trackB',
+    deliverable:'Prototype test report',
+    sample:'Prototyping a custom pallet-dismantling cell with a non-standard pallet geometry',
+    desc:'Robotic design and prototype-build agents work the cell\u2019s critical handling point in parallel and converge on a validated prototype test report.',
+    tasks:[
+      {agent:'robotic', task:'Design the robotic cell layout and end-effector concept for the non-standard geometry', deps:[]},
+      {agent:'prototype', task:'Build and test a functional prototype of the cell\u2019s critical handling point', deps:[]},
+      {agent:'controls', task:'Validate the prototype\u2019s control logic against the target cycle time', deps:[0,1]},
+      {agent:'pm', task:'Issue the prototype test report ahead of full development', deps:[2]},
+    ],
+  },
+  linecommission: {
+    name:'Machine/Line Development & Commissioning', title:'Line Commissioning',
+    mode:'sequential', track:'trackB',
+    deliverable:'Customer handover package',
+    sample:'Developing and commissioning a full packaging line with an external line-builder partner',
+    desc:'Coordinates with Ipazia\u2019s line-builder partner from scope through build to a commissioned line ready for customer handover.',
+    tasks:[
+      {agent:'lineint', task:'Coordinate scope and interface requirements with the line-builder partner', deps:[]},
+      {agent:'lineint', task:'Draft the machine/line development and integration build plan', deps:[0]},
+      {agent:'controls', task:'Commission the line and validate performance against the target cycle time', deps:[1]},
+      {agent:'pm', task:'Issue the customer handover package following commissioning', deps:[2]},
+    ],
+  },
+  hamacafeature: {
+    name:'HAMACA Software Feature Development', title:'HAMACA Feature Development',
+    mode:'dag', track:'trackB',
+    deliverable:'HAMACA release notes',
+    sample:'Extending HAMACA\u2019s HMI to support unified monitoring across a customer\u2019s multi-cell installation',
+    desc:'HAMACA and controls agents work interface design and fieldbus integration in parallel, converging on a tested feature ready for release.',
+    tasks:[
+      {agent:'hamaca', task:'Design the unified multi-machine monitoring interface within HAMACA', deps:[]},
+      {agent:'controls', task:'Assess PLC and fieldbus integration requirements for the new monitoring feature', deps:[]},
+      {agent:'hamaca', task:'Build and test the monitoring feature against a representative multi-cell setup', deps:[0,1]},
+      {agent:'pm', task:'Issue the HAMACA release notes for the new feature', deps:[2]},
+    ],
+  },
+  customsoftware: {
+    name:'Custom Machine Software Integration', title:'Custom Software Integration',
+    mode:'sequential', track:'trackB',
+    deliverable:'Deployment package',
+    sample:'Developing a Wheel Tattoo-style custom milling software application for a tire-repair customer',
+    desc:'Takes a custom software requirement from client intake through application design and machine integration to a deployment package.',
+    tasks:[
+      {agent:'pm', task:'Log the client\u2019s custom software requirement and target machine integration', deps:[]},
+      {agent:'hamaca', task:'Design the custom software application logic for the target process', deps:[0]},
+      {agent:'controls', task:'Integrate the software with the target machine\u2019s control system', deps:[1]},
+      {agent:'pm', task:'Issue the deployment package following integration testing', deps:[2]},
+    ],
+  },
+};
+
+const DTITLE = {
+  feasibility:'Feasibility Proposal Package',
+  standardquote:'Standard Cell Proposal Package',
+  consulting:'Technical Consulting Deliverable',
+  serviceassist:'Service Resolution Report',
+  prototypedev:'Prototype Test Report',
+  linecommission:'Customer Handover Package',
+  hamacafeature:'HAMACA Release Notes',
+  customsoftware:'Deployment Package Summary',
+};
+
+const TOOLS = {
+  briefIntake:()=>'Client brief logged with critical constraints and target outcomes captured',
+  packageAssemble:()=>'Package assembled and routed for review',
+  feasibilityAnalysis:()=>'Feasibility analysis complete, 3 critical points identified and scored',
+  efficiencyModel:()=>'Efficiency model projects a 32% cycle-time improvement over the manual process',
+  cellLayoutDesign:()=>'Robotic cell layout drafted, reach and payload envelope confirmed',
+  gripperSpec:()=>'SCHUNK end-effector spec matched to the target part geometry',
+  kukaSchunkScope:()=>'KUKA robot model and SCHUNK gripper configuration confirmed for the concept',
+  engagementAssess:()=>'Engagement scope confirmed against 2 comparable prior Ipazia projects',
+  costRangeModel:()=>'Preliminary cost range modeled against comparable standard and custom builds',
+  quoteBuild:()=>'Commercial quote built for the configured cell, including install and commissioning',
+  serviceIntake:()=>'Service request logged with current fault status and machine identifier',
+  partnerDocSync:()=>'Documentation triangulated with SCHUNK/KUKA partner service records',
+  faultDiagnose:()=>'Fault diagnosed as a gripper calibration drift, not a controller-level fault',
+  plcValidate:()=>'PLC logic validated against the target cycle time with no timing violations',
+  lineBuilderCoord:()=>'Scope and interface requirements confirmed with the line-builder partner',
+  buildPlanDraft:()=>'Machine/line development and integration build plan drafted',
+  hmiDesign:()=>'HAMACA HMI interface designed for the unified multi-cell monitoring view',
+  featureBuildTest:()=>'Feature built and tested against a representative multi-cell setup, 0 defects',
+  prototypeBuild:()=>'Functional prototype built for the cell\u2019s critical handling point',
+  cycleTimeTest:()=>'Prototype cycle time tested at 4.1s, within the target envelope',
+  save:()=>'Saved to program record',
+};
+
+const FINAL = {
+  feasibility:
+`FEASIBILITY PROPOSAL PACKAGE — Press-Brake Bending Cell
+Mixed-Lot Handling, Metalworking Client
+
+PROJECT BRIEF: Client requirement logged; critical constraint
+identified as mixed-lot part handling requiring flexible gripper
+changeover.
+
+FEASIBILITY ANALYSIS: 3 critical points identified — part
+recognition, gripper changeover time, and press-brake interface
+timing. Efficiency model projects a 32% cycle-time improvement over
+the current manual process.
+
+CONCEPT SCOPE: KUKA robot model and SCHUNK gripper configuration
+confirmed for the concept, consistent with Ipazia\u2019s standard
+machine-tending cell architecture adapted for mixed-lot handling.
+
+COST RANGE (preliminary): Modeled against comparable standard and
+custom builds; final pricing pending detailed engineering.
+
+RECOMMENDATION: GO — proceed to prototype development for the part
+recognition and gripper changeover critical points before committing
+to full machine development.
+
+NOTE: illustrative proposal — placeholder figures, not an actual
+customer project.`,
+
+  standardquote:
+`STANDARD CELL PROPOSAL PACKAGE — CNC Lathe Machine Tending
+
+REQUIREMENT: Customer requirement logged as machine tending for a
+CNC lathe production run, matching Ipazia\u2019s standard "asservimento
+macchine utensili" cell family.
+
+PRODUCT MATCH: Requirement matched against the standard robotic cell
+product line; no custom engineering required for the core cell
+architecture.
+
+CONFIGURATION: KUKA robot and SCHUNK end-effector configuration
+confirmed for the target part range and cycle time.
+
+COMMERCIAL QUOTE (draft): Built for the configured standard cell,
+including installation and commissioning.
+
+OPEN ITEMS FOR HUMAN REVIEW: (1) confirm final pricing with the
+commercial team, (2) validate part-range compatibility with the
+customer\u2019s full production mix, (3) confirm installation timeline
+against the customer\u2019s production schedule.
+
+NOTE: illustrative proposal — placeholder figures, not an actual
+customer quote.`,
+
+  consulting:
+`TECHNICAL CONSULTING DELIVERABLE — Robotic Palletizing Retrofit
+
+ENGAGEMENT SCOPE: Consulting request logged and scope confirmed with
+the requesting partner ahead of technical assessment.
+
+TECHNICAL ASSESSMENT: Challenge assessed against 2 comparable prior
+Ipazia palletizing projects; key constraint identified as mixed-case
+geometry handling within the existing conveyor footprint.
+
+SOLUTION RECOMMENDATION: Recommend a modular robotic palletizing
+retrofit using Ipazia\u2019s standard "isola robotizzata" architecture,
+adapted for the partner\u2019s existing conveyor interface.
+
+STATUS: Deliverable ready for client review; follow-up engineering
+scoping available if the partner proceeds.
+
+NOTE: illustrative consulting deliverable — placeholder content for
+demonstration, not an actual Ipazia engagement.`,
+
+  serviceassist:
+`SERVICE RESOLUTION REPORT — Gripper Calibration Fault
+
+INTAKE: Service request logged; machine reporting intermittent
+gripper positioning error during the pick cycle.
+
+DOCUMENTATION TRIANGULATION: Fault history cross-checked against
+SCHUNK/KUKA partner service records; no prior open service tickets
+for this unit.
+
+DIAGNOSIS: Fault diagnosed as a gripper calibration drift, not a
+controller-level fault; consistent with routine recalibration
+following extended production hours.
+
+DISPATCH PLAN: Field recalibration scheduled; no parts replacement
+anticipated.
+
+NOTE: illustrative service report — placeholder figures for
+demonstration.`,
+
+  prototypedev:
+`PROTOTYPE TEST REPORT — Custom Pallet-Dismantling Cell
+
+CELL LAYOUT: Robotic cell layout and end-effector concept designed
+for the non-standard pallet geometry, within the target reach
+envelope.
+
+PROTOTYPE BUILD: Functional prototype built and tested for the
+cell\u2019s critical handling point — the non-standard pallet edge
+detection and grip sequence.
+
+CONTROL VALIDATION: Prototype cycle time tested at 4.1s, within the
+target envelope; control logic validated with no timing violations.
+
+RECOMMENDATION: Proceed to full machine development using the
+validated prototype logic as the baseline.
+
+NOTE: illustrative test report — placeholder figures for
+demonstration, not an actual Ipazia project.`,
+
+  linecommission:
+`CUSTOMER HANDOVER PACKAGE — Packaging Line Commissioning
+
+PARTNER COORDINATION: Scope and interface requirements confirmed
+with Ipazia\u2019s line-builder partner, consistent with the long-standing
+partnership referenced since the company\u2019s founding.
+
+BUILD PLAN: Machine/line development and integration build plan
+drafted, sequencing Ipazia\u2019s robotic cell scope against the partner\u2019s
+line-builder scope.
+
+COMMISSIONING: Line commissioned and performance validated against
+the target cycle time; no open punch-list items at handover.
+
+STATUS: Ready for customer handover and operator training.
+
+NOTE: illustrative handover package — placeholder figures for
+demonstration, not an actual Ipazia project.`,
+
+  hamacafeature:
+`HAMACA RELEASE NOTES — Unified Multi-Cell Monitoring
+
+INTERFACE DESIGN: Unified monitoring interface designed within
+HAMACA, allowing a single HMI view across a customer\u2019s full
+multi-cell installation.
+
+INTEGRATION REQUIREMENTS: PLC and fieldbus integration requirements
+assessed; no changes required to existing cell-level controllers.
+
+FEATURE VALIDATION: Feature built and tested against a representative
+multi-cell setup with 0 defects logged.
+
+RELEASE: Ready for rollout to customers with multi-cell installations
+on the current HAMACA platform version.
+
+NOTE: illustrative release notes — placeholder figures for
+demonstration, not an actual HAMACA release.`,
+
+  customsoftware:
+`DEPLOYMENT PACKAGE — Custom Milling Software Application
+Tire-Repair Tread Milling, "Wheel Tattoo"-Style Integration
+
+REQUIREMENT: Client\u2019s custom software requirement logged, targeting
+integration with the customer\u2019s milling machine control system.
+
+APPLICATION DESIGN: Custom software application logic designed for
+the tread-milling process, following the pattern established by
+Ipazia\u2019s Wheel Tattoo application.
+
+INTEGRATION: Software integrated with the target machine\u2019s control
+system; integration testing completed with no open defects.
+
+STATUS: Ready for deployment; operator training materials to be
+provided alongside the deployment package.
+
+NOTE: illustrative deployment package — placeholder figures for
+demonstration, not an actual Ipazia customer project.`,
+};
+
+const EMPLOYEES = [
+  {id:'op1', name:'Feasibility Study', title:'Custom Automation Project Feasibility Study', wf:'feasibility', handled:'New custom project briefs', hrs:17, win:'5.4x faster proposal'},
+  {id:'op2', name:'Standard Cell Quote', title:'Standard Robotic Cell Quote & Configuration', wf:'standardquote', handled:'Standard cell RFQs', hrs:9, win:'Proposal in 1 run'},
+  {id:'op3', name:'Technical Consulting', title:'Technical Consulting Engagement', wf:'consulting', handled:'Client & partner consulting requests', hrs:8, win:'Deliverable in 1 run'},
+  {id:'op4', name:'Service Coordination', title:'Partner & Service Coordination (Assistenza)', wf:'serviceassist', handled:'Field service & fault diagnosis', hrs:6, win:'Report same-day'},
+  {id:'op5', name:'Prototype Development', title:'Custom Robotic Cell Prototype Development', wf:'prototypedev', handled:'Custom cell critical-point prototyping', hrs:15, win:'Converges in 1 pass'},
+  {id:'op6', name:'Line Commissioning', title:'Machine/Line Development & Commissioning', wf:'linecommission', handled:'Full line builds with partner', hrs:19, win:'Handover in 1 run'},
+  {id:'op7', name:'HAMACA Feature Dev', title:'HAMACA Software Feature Development', wf:'hamacafeature', handled:'HAMACA platform feature releases', hrs:14, win:'Release notes in 1 run'},
+  {id:'op8', name:'Custom Software Integration', title:'Custom Machine Software Integration', wf:'customsoftware', handled:'Bespoke machine software projects', hrs:12, win:'Deployment in 1 run'},
+];
+
+const CONFIG = {
+  trackLabels:{trackA:'Commercial, Consulting & Partner Relations', trackB:'Robotics Engineering, Software & Integration'},
+};
+
+/* =========================================================
+   RENDER ROSTER
+   ========================================================= */
+function agentChips(wfKey){
+  const wf = WORKFLOWS[wfKey];
+  const used = [...new Set(wf.tasks.map(t=>t.agent))];
+  return used.map(a=>`<span class="chip">${AGENT_ROLES[a].emoji} ${AGENT_ROLES[a].label}</span>`).join('');
+}
+
+function renderRoster(){
+  const mount = document.getElementById('rosterMount');
+  const tracks = ['trackA','trackB'];
+  let html = '';
+  tracks.forEach(tr=>{
+    html += `<div class="track-label">${CONFIG.trackLabels[tr]}</div><div class="roster">`;
+    EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tr).forEach(e=>{
+      const wf = WORKFLOWS[e.wf];
+      const isFlag = wf.tag==='flagship';
+      html += `
+      <div class="op-card ${isFlag?'flagship':''}">
+        <div class="op-top">
+          <div>
+            <div class="op-name">${e.name}</div>
+            <div class="op-role">${e.title}</div>
+          </div>
+          ${isFlag?'<span class="flag-chip">FLAGSHIP</span>':''}
+        </div>
+        <div class="op-desc">${wf.desc}</div>
+        <div class="op-stats">
+          <div class="op-stat">Handles<b>${e.handled}</b></div>
+          <div class="op-stat">Hrs saved/run<b>${e.hrs}</b></div>
+          <div class="op-stat">Signal<b>${e.win}</b></div>
+        </div>
+        <div class="op-agents">${agentChips(e.wf)}</div>
+        <div class="op-actions">
+          <button class="run-btn" onclick="runOperator('${e.wf}')">▶ Run this operator</button>
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  });
+  mount.innerHTML = html;
+}
+renderRoster();
+
+/* =========================================================
+   RUN ENGINE
+   ========================================================= */
+let runToken = 0;
+
+function closeRun(){
+  document.getElementById('runPanel').classList.remove('active');
+}
+
+async function runOperator(wfKey){
+  const wf = WORKFLOWS[wfKey];
+  const myToken = ++runToken;
+  const panel = document.getElementById('runPanel');
+  const feed = document.getElementById('feed');
+  const progressRow = document.getElementById('progressRow');
+  const deliverable = document.getElementById('deliverable');
+
+  panel.classList.add('active');
+  document.getElementById('runTitle').textContent = wf.name;
+  document.getElementById('runMeta').textContent = `${wf.mode==='dag'?'Parallel DAG':'Sequential'} · ${wf.tasks.length} tasks · sample: ${wf.sample}`;
+  feed.innerHTML = '';
+  deliverable.classList.remove('show');
+  progressRow.innerHTML = wf.tasks.map(()=>`<div class="pstep"></div>`).join('');
+  panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+
+  const steps = document.querySelectorAll('#progressRow .pstep');
+
+  function log(text, done){
+    const line = document.createElement('div');
+    line.className = 'feed-line' + (done?' done':'');
+    line.innerHTML = `<span class="tag">[${done?'done':'run'}]</span><span class="txt">${text}</span>`;
+    feed.appendChild(line);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  const wait = ms => new Promise(r=>setTimeout(r,ms));
+
+  if(wf.mode==='sequential'){
+    for(let i=0;i<wf.tasks.length;i++){
+      if(myToken!==runToken) return;
+      const t = wf.tasks[i];
+      steps[i].classList.add('active');
+      log(`${AGENT_ROLES[t.agent].emoji} ${AGENT_ROLES[t.agent].label} — ${t.task}`);
+      await wait(600 + Math.random()*400);
+      if(myToken!==runToken) return;
+      const toolKey = AGENT_ROLES[t.agent].tools[0];
+      log(`↳ ${TOOLS[toolKey] ? TOOLS[toolKey]() : 'Task complete'}`, true);
+      steps[i].classList.remove('active');
+      steps[i].classList.add('complete');
+      await wait(150);
+    }
+  } else {
+    const done = new Set();
+    const remaining = wf.tasks.map((t,i)=>i);
+    while(remaining.length){
+      const wave = remaining.filter(i=>wf.tasks[i].deps.every(d=>done.has(d)));
+      if(!wave.length) break;
+      wave.forEach(i=>steps[i].classList.add('active'));
+      wave.forEach(i=>{
+        const t = wf.tasks[i];
+        log(`${AGENT_ROLES[t.agent].emoji} ${AGENT_ROLES[t.agent].label} — ${t.task}`);
+      });
+      await wait(650 + Math.random()*400);
+      if(myToken!==runToken) return;
+      wave.forEach(i=>{
+        const t = wf.tasks[i];
+        const toolKey = AGENT_ROLES[t.agent].tools[0];
+        log(`↳ ${TOOLS[toolKey] ? TOOLS[toolKey]() : 'Task complete'}`, true);
+        steps[i].classList.remove('active');
+        steps[i].classList.add('complete');
+        done.add(i);
+      });
+      wave.forEach(i=>remaining.splice(remaining.indexOf(i),1));
+      await wait(150);
+    }
+  }
+
+  if(myToken!==runToken) return;
+  log(`💾 Saved to program record`, true);
+  await wait(300);
+  document.getElementById('delivTitle').textContent = DTITLE[wfKey];
+  document.getElementById('delivBody').textContent = FINAL[wfKey];
+  deliverable.classList.add('show');
+}
+
+/* =========================================================
+   BUILDER
+   ========================================================= */
+let buildStep = 1;
+let buildState = {baseWf:null, cadence:'Weekly', name:''};
+
+function builderRenderStep(){
+  document.getElementById('dot1').classList.toggle('on', buildStep>=1);
+  document.getElementById('dot2').classList.toggle('on', buildStep>=2);
+  document.getElementById('dot3').classList.toggle('on', buildStep>=3);
+  document.getElementById('backBtn').style.visibility = buildStep===1?'hidden':'visible';
+  document.getElementById('nextBtn').textContent = buildStep===3?'Create operator':'Next';
+
+  const body = document.getElementById('buildBody');
+  if(buildStep===1){
+    body.innerHTML = `<div class="pick-grid">` + Object.entries(WORKFLOWS).map(([k,w])=>`
+      <div class="pick-card ${buildState.baseWf===k?'selected':''}" onclick="pickWf('${k}')">
+        <div class="pick-title">${w.name}</div>
+        <div class="pick-desc">${w.desc}</div>
+      </div>`).join('') + `</div>`;
+  } else if(buildStep===2){
+    body.innerHTML = `
+      <div class="field-row">
+        <label>Run cadence</label>
+        <select id="cadenceSel" onchange="buildState.cadence=this.value">
+          <option ${buildState.cadence==='Continuous'?'selected':''}>Continuous</option>
+          <option ${buildState.cadence==='Daily'?'selected':''}>Daily</option>
+          <option ${buildState.cadence==='Weekly'?'selected':''}>Weekly</option>
+          <option ${buildState.cadence==='On new brief'?'selected':''}>On new brief</option>
+          <option ${buildState.cadence==='On service ticket'?'selected':''}>On service ticket</option>
+        </select>
+      </div>
+      <div class="field-row">
+        <label>Operator name</label>
+        <input id="nameInput" type="text" placeholder="e.g. Second Line-Builder Desk" value="${buildState.name}" oninput="buildState.name=this.value">
+      </div>`;
+  } else {
+    const wf = WORKFLOWS[buildState.baseWf];
+    body.innerHTML = `
+      <div class="summary-box">
+        <p><b>${buildState.name || 'Untitled operator'}</b> — built on <b>${wf ? wf.name : '—'}</b></p>
+        <p>Cadence: <b>${buildState.cadence}</b></p>
+        <p>Agent team: ${wf ? [...new Set(wf.tasks.map(t=>t.agent))].map(a=>AGENT_ROLES[a].emoji+' '+AGENT_ROLES[a].label).join(', ') : '—'}</p>
+        <p style="color:var(--muted);font-size:12.5px;margin-top:10px;">This adds a ninth operator to the roster below, cloned from the workflow above with your cadence and name.</p>
+      </div>`;
+  }
+}
+
+function pickWf(k){
+  buildState.baseWf = k;
+  builderRenderStep();
+}
+
+function builderNext(){
+  if(buildStep===1 && !buildState.baseWf){ alert('Pick a base workflow first.'); return; }
+  if(buildStep===3){
+    const wf = WORKFLOWS[buildState.baseWf];
+    const newKey = 'custom_'+Date.now();
+    WORKFLOWS[newKey] = {...wf, name: buildState.name || (wf.name+' (custom)'), tag:undefined};
+    DTITLE[newKey] = DTITLE[buildState.baseWf];
+    FINAL[newKey] = FINAL[buildState.baseWf];
+    EMPLOYEES.push({
+      id:'custom_'+Date.now(), name: buildState.name || 'Custom Operator',
+      title: WORKFLOWS[newKey].name, wf:newKey,
+      handled: buildState.cadence+' cadence', hrs: 10, win:'New',
+    });
+    renderRoster();
+    buildStep = 1; buildState = {baseWf:null, cadence:'Weekly', name:''};
+    builderRenderStep();
+    document.getElementById('roster-section').scrollIntoView({behavior:'smooth'});
+    return;
+  }
+  buildStep++;
+  builderRenderStep();
+}
+function builderBack(){
+  buildStep--;
+  builderRenderStep();
+}
+builderRenderStep();
+
+/* =========================================================
+   HEADER CELL READOUT + ROBOTIC ARM PICK & PLACE ANIMATION
+   ========================================================= */
+const CELLS = ['Isola standard \u00b7 asservimento CNC','Isola standard \u00b7 pallet dismantling','Isola standard \u00b7 packaging e pallettizzazione','Isola custom \u00b7 prototipo in sviluppo'];
+let cellIdx = 0;
+setInterval(()=>{
+  cellIdx = (cellIdx+1)%CELLS.length;
+  document.getElementById('cellTxt').textContent = CELLS[cellIdx];
+}, 3000);
+
+const NS = 'http://www.w3.org/2000/svg';
+const armGroup = document.getElementById('armGroup');
+const base = document.createElementNS(NS,'circle');
+base.setAttribute('cx','150'); base.setAttribute('cy','150'); base.setAttribute('r','8');
+base.setAttribute('fill','var(--surface-3)'); base.setAttribute('stroke','var(--border)'); base.setAttribute('stroke-width','1.5');
+armGroup.appendChild(base);
+
+const link1 = document.createElementNS(NS,'line');
+link1.setAttribute('stroke','var(--accent2)'); link1.setAttribute('stroke-width','6'); link1.setAttribute('stroke-linecap','round');
+armGroup.appendChild(link1);
+
+const joint1 = document.createElementNS(NS,'circle');
+joint1.setAttribute('r','6'); joint1.setAttribute('fill','var(--surface-2)'); joint1.setAttribute('stroke','var(--accent2)'); joint1.setAttribute('stroke-width','2');
+armGroup.appendChild(joint1);
+
+const link2 = document.createElementNS(NS,'line');
+link2.setAttribute('stroke','var(--accent)'); link2.setAttribute('stroke-width','5'); link2.setAttribute('stroke-linecap','round');
+armGroup.appendChild(link2);
+
+const gripper = document.createElementNS(NS,'circle');
+gripper.setAttribute('r','5'); gripper.setAttribute('fill','var(--accent)');
+armGroup.appendChild(gripper);
+
+let cycleCount = 142;
+let cycleT = 0;
+function armIK(targetX, targetY){
+  const baseX = 150, baseY = 150;
+  const L1 = 55, L2 = 50;
+  const dx = targetX - baseX, dy = targetY - baseY;
+  let dist = Math.sqrt(dx*dx + dy*dy);
+  dist = Math.min(dist, L1+L2-1);
+  const a1 = Math.atan2(dy, dx);
+  const cosA2 = (dist*dist - L1*L1 - L2*L2) / (2*L1*L2);
+  const a2 = Math.acos(Math.max(-1, Math.min(1, cosA2)));
+  const angA = Math.atan2(L2*Math.sin(a2), L1 + L2*Math.cos(a2));
+  const elbowAngle = a1 - angA;
+  const jointX = baseX + L1*Math.cos(elbowAngle);
+  const jointY = baseY + L1*Math.sin(elbowAngle);
+  return {jointX, jointY};
+}
+function drawArm(){
+  cycleT += 0.04;
+  const phase = (cycleT % (Math.PI*2)) / (Math.PI*2);
+  let targetX, targetY;
+  if(phase < 0.4){
+    const t = phase/0.4;
+    targetX = 60 + t*0; targetY = 150 - Math.sin(t*Math.PI)*60;
+    targetX = 60;
+  } else if(phase < 0.5){
+    targetX = 60; targetY = 150 - Math.sin(((phase-0.4)/0.1)*Math.PI/2)*60;
+  } else if(phase < 0.9){
+    const t = (phase-0.5)/0.4;
+    targetX = 60 + t*180;
+    targetY = 90 - Math.sin(t*Math.PI)*30;
+  } else {
+    const t = (phase-0.9)/0.1;
+    targetX = 240; targetY = 90 + t*60;
+  }
+  const {jointX, jointY} = armIK(targetX, targetY);
+  link1.setAttribute('x1','150'); link1.setAttribute('y1','150');
+  link1.setAttribute('x2', jointX.toFixed(1)); link1.setAttribute('y2', jointY.toFixed(1));
+  joint1.setAttribute('cx', jointX.toFixed(1)); joint1.setAttribute('cy', jointY.toFixed(1));
+  link2.setAttribute('x1', jointX.toFixed(1)); link2.setAttribute('y1', jointY.toFixed(1));
+  link2.setAttribute('x2', targetX.toFixed(1)); link2.setAttribute('y2', targetY.toFixed(1));
+  gripper.setAttribute('cx', targetX.toFixed(1)); gripper.setAttribute('cy', targetY.toFixed(1));
+
+  if(phase < 0.001){
+    cycleCount++;
+    document.getElementById('cycleCountVal').textContent = `${cycleCount} cicli completati`;
+  }
+  const cycleSec = (3.6 + Math.sin(cycleT*0.2)*0.3).toFixed(1);
+  document.getElementById('cycleVal').textContent = `${cycleSec}s cycle`;
+  requestAnimationFrame(drawArm);
+}
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  requestAnimationFrame(drawArm);
+} else {
+  const {jointX, jointY} = armIK(150, 90);
+  link1.setAttribute('x1','150'); link1.setAttribute('y1','150');
+  link1.setAttribute('x2', jointX.toFixed(1)); link1.setAttribute('y2', jointY.toFixed(1));
+  joint1.setAttribute('cx', jointX.toFixed(1)); joint1.setAttribute('cy', jointY.toFixed(1));
+  link2.setAttribute('x1', jointX.toFixed(1)); link2.setAttribute('y1', jointY.toFixed(1));
+  link2.setAttribute('x2','150'); link2.setAttribute('y2','90');
+  gripper.setAttribute('cx','150'); gripper.setAttribute('cy','90');
+}
+</script>
+</body>
+</html>
