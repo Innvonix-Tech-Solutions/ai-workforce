@@ -149,3 +149,5 @@ https://innvonix-tech-solutions.github.io/ai-workforce/kyocera-sld
 https://innvonix-tech-solutions.github.io/ai-workforce/rainbird
 
 https://innvonix-tech-solutions.github.io/ai-workforce/aeluma
+
+https://innvonix-tech-solutions.github.io/ai-workforce/ipazia
