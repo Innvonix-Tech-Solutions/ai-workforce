@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FabArc Steel Console — AI Commercial &amp; Heavy Structural Steel Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070b12;
+  --surface:#0f1726;
+  --surface-2:#192438;
+  --surface-3:#283754;
+  --border:#283754;
+  --border-soft:#111a2b;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --muted-2:#64748b;
+  --accent:#f59e0b;
+  --accent-dim:rgba(245,158,11,0.15);
+  --accent-line:rgba(245,158,11,0.38);
+  --accent2:#2563eb;
+  --accent2-bg:rgba(37,99,235,0.08);
+  --accent3:#06b6d4;
+  --danger:#ef4444;
+  --ok:#10b981;
+  --font-display:'Rajdhani',sans-serif;
+  --font-body:'Work Sans',sans-serif;
+  --font-mono:'Roboto Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 88% -8%, rgba(245,158,11,0.12), transparent 55%),
+    radial-gradient(900px 480px at 5% 5%, rgba(37,99,235,0.08), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+a{color:var(--accent);}
+::selection{background:rgba(245,158,11,0.28);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+.hidden{display:none!important;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:24px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:44px;height:42px;border-radius:8px;
+  background:linear-gradient(135deg,#d97706,#f59e0b);
+  border:1px solid var(--accent-line);
+  display:flex;align-items:center;justify-content:center;
+  color:#070b12;font-family:var(--font-mono);font-weight:800;font-size:14px;
+  box-shadow:0 0 18px rgba(245,158,11,0.3);
+}
+.mark-name{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:0.02em;color:#fff;}
+.mark-sub{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px;}
+
+.line-readout{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent);
+  background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:8px 14px;display:flex;align-items:center;gap:10px;
+}
+.line-readout .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.tabs{display:flex;gap:8px;margin-top:20px;border-bottom:1px solid var(--border-soft);}
+.tab-btn{
+  background:transparent;border:none;color:var(--muted);padding:10px 18px;font-family:var(--font-body);
+  font-size:13.5px;font-weight:600;cursor:pointer;border-radius:8px 8px 0 0;transition:all 0.15s ease;
+}
+.tab-btn:hover{color:var(--text);background:var(--surface-2);}
+.tab-btn.active{color:var(--accent);background:var(--surface);border:1px solid var(--border);border-bottom-color:var(--surface);}
+
+.hero{padding:36px 0 28px;display:grid;grid-template-columns:1.15fr 0.85fr;gap:40px;align-items:center;}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:24px 0 18px;}}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent);}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(30px,4vw,42px);line-height:1.08;letter-spacing:-0.005em;margin:0 0 14px;color:#fff;}
+h1 span{color:var(--accent);background:linear-gradient(90deg,#f59e0b,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.lead{color:var(--muted);font-size:15px;max-width:55ch;margin:0 0 22px;line-height:1.6;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:var(--font-body);font-weight:600;font-size:13.5px;border-radius:6px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--accent);color:#070b12;border-color:var(--accent);font-weight:700;}
+.btn-primary:hover{background:#fbbf24;box-shadow:0 0 16px rgba(245,158,11,0.35);}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--accent3);color:var(--accent3);}
+
+/* Heavy Steel Frame & AISC Diagnostics Graphic Card */
+.wafer{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:18px 18px 14px;box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+.wafer-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+.wafer-title{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em;}
+.wafer-val{font-family:var(--font-mono);font-size:12px;color:var(--accent);font-weight:600;}
+svg.wafermap{width:100%;height:210px;display:block;}
+.wafer-outline{fill:none;stroke:var(--border);stroke-width:1.5;}
+.wafer-grid-line{stroke:var(--border-soft);stroke-width:0.5;stroke-dasharray:2 2;}
+.wafer-foot{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+
+.econ{border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:760px){.econ{grid-template-columns:repeat(2,1fr);}}
+.econ-item{padding:6px 18px;border-left:1px solid var(--border-soft);}
+.econ-item:first-child{border-left:none;padding-left:0;}
+@media(max-width:760px){.econ-item:nth-child(2n+1){border-left:none;padding-left:0;}}
+.econ-num{font-family:var(--font-display);font-weight:700;font-size:28px;color:#fff;}
+.econ-num small{font-size:14px;color:var(--accent);font-weight:700;}
+.econ-label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+section{padding:36px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.section-title{font-family:var(--font-display);font-weight:700;font-size:24px;color:#fff;}
+.section-sub{color:var(--muted);font-size:13.5px;max-width:62ch;margin-top:4px;}
+.track-label{font-family:var(--font-mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin:28px 0 14px;padding-top:10px;border-top:1px dashed var(--border-soft);}
+.track-label:first-of-type{border-top:none;padding-top:0;margin-top:6px;}
+
+.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+@media(max-width:760px){.roster{grid-template-columns:1fr;}}
+.op-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;transition:all .15s ease;}
+.op-card:hover{border-color:var(--accent-line);transform:translateY(-2px);}
+.op-card.flagship{border-color:var(--accent2);background:linear-gradient(180deg,rgba(37,99,235,0.08),var(--surface));}
+.op-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.op-name{font-family:var(--font-display);font-weight:700;font-size:18px;color:#fff;}
+.op-role{font-size:12.5px;color:var(--muted);margin-top:2px;}
+.flag-chip{font-family:var(--font-mono);font-size:10px;color:var(--accent2);border:1px solid var(--accent2);background:var(--accent2-bg);border-radius:20px;padding:2px 8px;white-space:nowrap;}
+.op-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+.op-stats{display:flex;gap:18px;margin-top:2px;}
+.op-stat{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.op-stat b{color:var(--accent);font-size:14px;display:block;font-family:var(--font-body);font-weight:600;}
+.op-agents{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.chip{font-size:11px;background:var(--surface-3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;color:var(--text);}
+.op-actions{display:flex;gap:10px;margin-top:6px;}
+.run-btn{flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:600;font-size:13px;border-radius:6px;padding:10px;cursor:pointer;transition:all 0.15s ease;}
+.run-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+
+.run-panel{background:var(--surface);border:1px solid var(--accent-line);border-radius:12px;padding:24px;margin-top:24px;display:none;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+.run-panel.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.run-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.run-head h3{font-family:var(--font-display);font-size:20px;margin:0;color:#fff;}
+.run-head .meta{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.close-run{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:6px 12px;cursor:pointer;font-size:12px;}
+.close-run:hover{color:var(--text);border-color:var(--accent3);}
+
+.feed{background:var(--bg);border:1px solid var(--border-soft);border-radius:8px;padding:16px;height:260px;overflow-y:auto;font-family:var(--font-mono);font-size:12px;display:flex;flex-direction:column;gap:8px;}
+.feed-line{display:flex;gap:10px;align-items:flex-start;opacity:0;animation:appear .3s ease forwards;}
+@keyframes appear{to{opacity:1;}}
+.feed-line .tag{color:var(--accent2);white-space:nowrap;}
+.feed-line .txt{color:var(--muted);}
+.feed-line.done .tag{color:var(--accent);}
+.feed-line.done .txt{color:var(--text);}
+
+.progress-row{display:flex;gap:6px;margin:16px 0 8px;flex-wrap:wrap;}
+.pstep{flex:1;min-width:64px;height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;position:relative;}
+.pstep.active{background:var(--accent-dim);}
+.pstep.complete{background:var(--accent);box-shadow:0 0 8px var(--accent);}
+
+.deliverable{margin-top:20px;background:var(--surface-2);border:1px solid var(--accent-line);border-radius:8px;padding:18px 20px;display:none;}
+.deliverable.show{display:block;animation:fadein .3s ease;}
+.deliverable h4{font-family:var(--font-display);font-size:17px;margin:0 0 12px;color:var(--accent);}
+.deliverable pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:12.5px;color:var(--text);margin:0;line-height:1.65;}
+.note{font-size:11px;color:var(--muted-2);margin-top:12px;font-style:italic;}
+
+/* BUILDER STYLING (DYNEX FUNCTIONAL FLOW) */
+.steps-bar{display:flex;gap:10px;margin-bottom:24px;}
+.step-item{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);}
+.step-item.active{border-color:var(--accent);background:var(--surface-3);}
+.step-item .step-num{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--muted-2);}
+.step-item.active .step-num{color:var(--accent);}
+.step-item .step-lbl{font-size:13.5px;font-weight:600;color:var(--text);margin-top:2px;}
+
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.wf-card{border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;background:var(--surface-2);transition:all 0.15s ease;}
+.wf-card:hover{border-color:var(--accent3);}
+.wf-card.sel{border-color:var(--accent);background:rgba(245,158,11,0.08);}
+.wf-title{font-family:var(--font-display);font-weight:700;font-size:16px;color:#fff;}
+.wf-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45;}
+.wf-meta{font-family:var(--font-mono);font-size:10.5px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase;}
+
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);margin-bottom:10px;}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--accent);flex-shrink:0;}
+.task-row .tt{flex:1;font-size:13px;color:var(--text);}
+.task-row select{font-family:var(--font-body);font-size:12.5px;border:1px solid var(--border);border-radius:6px;padding:8px 10px;background:var(--surface);color:var(--text);outline:none;min-width:210px;}
+.task-row select:focus{border-color:var(--accent);}
+
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.field input{width:100%;font-family:var(--font-body);font-size:13.5px;border:1px solid var(--border);border-radius:8px;padding:11px 13px;background:var(--surface-2);color:var(--text);outline:none;}
+.field input:focus{border-color:var(--accent);}
+
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.seg button{font-family:var(--font-body);font-size:12.5px;padding:9px 16px;border:none;background:var(--surface-2);color:var(--muted);cursor:pointer;border-right:1px solid var(--border);}
+.seg button:last-child{border-right:none;}
+.seg button.on{background:var(--accent);color:#070b12;font-weight:700;}
+
+.bnav{display:flex;justify-content:space-between;margin-top:24px;}
+
+footer{border-top:1px solid var(--border-soft);padding:30px 0 44px;}
+.foot-note{font-size:12px;color:var(--muted-2);max-width:85ch;line-height:1.6;}
+.foot-note strong{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark-row">
+      <div class="mark">
+        <div class="mark-badge">FA</div>
+        <div>
+          <div class="mark-name">FabArc Steel Console</div>
+          <div class="mark-sub">FabArc Steel Supply, Inc. (fabarc.com) · AISC Certified Structural Steel Workforce</div>
+        </div>
+      </div>
+      <div class="line-readout">
+        <span class="dot"></span>
+        <span id="lineTxt">FabArc Oxford, AL 300,000 Sq Ft Plant · AISC Fracture Critical &amp; Coating Active</span>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tabA" onclick="setView('ops')">The AI Workforce Roster</button>
+      <button class="tab-btn" id="tabB" onclick="setView('hire')">+ Add an AI Operator</button>
+    </div>
+  </header>
+
+  <div id="view-ops">
+    <section class="hero" style="padding-bottom:10px;">
+      <div>
+        <div class="eyebrow">Heavy Structural Steel Fabrication &amp; Erection</div>
+        <h1>Eight operators to run FabArc's <span>tekla-bim-to-erection</span> loop</h1>
+        <p class="lead">Each operator below is a real FabArc Steel workflow — analyzing 3D Tekla BIM structural steel framing models, scrubbing 500-line W-shape beam and plate BOMs for Fracture Critical material traceability, configuring robotic CNC beam drilling and automated SAW welding lines, and auditing AISC Fracture Critical and Sophisticated Paint Coating quality compliance — handed to a team of specialist AI agents that works it end-to-end.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('roster-section').scrollIntoView({behavior:'smooth'})">View the Roster</button>
+          <button class="btn btn-ghost" onclick="runOperator('steel_dfm')">Run Flagship Operator</button>
+        </div>
+      </div>
+
+      <div class="wafer">
+        <div class="wafer-top">
+          <span class="wafer-title">FabArc Steel Plant Diagnostics</span>
+          <span class="wafer-val" id="yieldVal">40,000+ Tons Annual Production Capacity</span>
+        </div>
+        <svg class="wafermap" viewBox="0 0 220 210" preserveAspectRatio="xMidYMid meet">
+          <circle class="wafer-outline" cx="110" cy="105" r="92"></circle>
+          <line class="wafer-grid-line" x1="20" y1="105" x2="200" y2="105"></line>
+          <line class="wafer-grid-line" x1="110" y1="15" x2="110" y2="195"></line>
+          <g id="dieGrid"></g>
+        </svg>
+        <div class="wafer-foot">
+          <span>Oxford, AL 300k sq ft Plant · Lot FA-2608-STEEL</span>
+          <span id="binVal">Pass: AISC Sophisticated Paint</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="econ">
+      <div class="econ-item">
+        <div class="econ-num">5.6<small>×</small></div>
+        <div class="econ-label">Faster DFM &amp; tonnage estimating turnaround for heavy structural steel</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">300,000<small> sq ft</small></div>
+        <div class="econ-label">AISC-certified fabrication plant capacity monitored</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">26<small> hrs</small></div>
+        <div class="econ-label">Median structural detailing hours returned per run</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">8<small>/8</small></div>
+        <div class="econ-label">Workflows covered, Tekla DFM through AISC Fracture Critical release</div>
+      </div>
+    </div>
+
+    <section id="roster-section">
+      <div class="section-head">
+        <div>
+          <div class="section-title">The AI Workforce Roster</div>
+          <div class="section-sub">Grouped into Commercial Growth and Structural Steel Operations tracks. Click run on any operator to watch its agent team execute in real time.</div>
+        </div>
+      </div>
+
+      <div id="rosterContainer"></div>
+    </section>
+
+    <!-- Run Panel -->
+    <div class="run-panel" id="runPanel">
+      <div class="run-head">
+        <div>
+          <h3 id="runTitle">Running Operator...</h3>
+          <div class="meta" id="runSub">Simulated multi-agent execution feed</div>
+        </div>
+        <button class="close-run" onclick="closeRun()">✕ Close View</button>
+      </div>
+      <div class="progress-row" id="progressRow"></div>
+      <div class="feed" id="feedArea"></div>
+      <div class="deliverable" id="deliverableBox">
+        <h4 id="delivTitle">Review-Ready Output</h4>
+        <pre id="delivCode"></pre>
+        <div class="note">Human-in-the-loop oversight active. Outputs verified by FabArc senior structural engineering team. Illustrative simulation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="section-title">Add an AI Operator</div>
+          <div class="section-sub">Stand up a new AI operator in three steps: pick the workflow, assign each task to an agent via dropdown, then name it and set cadence.</div>
+        </div>
+      </div>
+
+      <div class="steps-bar" id="bSteps"></div>
+      <div id="bBody"></div>
+      <div class="bnav" id="bNav"></div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="foot-note">
+      <strong>Independent Concept Prototype</strong> prepared for a conversation with <strong>FabArc Steel Supply, Inc. (fabarc.com)</strong>. It is not affiliated with, endorsed by, or built on FabArc systems or data. All operators, tonnage estimates, weld testing logs, and AISC audits are illustrative simulations. A licensed structural engineer, AWS Certified Welding Inspector (CWI), or NACE coating inspector reviews and approves every Tekla model, connection design, weld procedure, and AISC release.
+    </div>
+  </footer>
+</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'Industrial Construction & General Contractor Intelligence', tools: ['research_gc', 'save'] },
+  structural_eng: { emoji: '🔬', label: '3D Tekla BIM & Structural Steel Detailing Engineer', tools: ['analyze_tekla_bim', 'save'] },
+  weld_spec: { emoji: '⚡', label: 'AWS Certified Welding & Automated SAW Specialist', tools: ['configure_saw_welding', 'save'] },
+  bom_scrubber: { emoji: '📑', label: 'Mill Test Report (MTR) & Fracture Critical BOM Specialist', tools: ['scrub_mtr_pedigree', 'save'] },
+  cost_eng: { emoji: '🧮', label: 'Structural Steel Fabrication & Tonnage Estimating Specialist', tools: ['calc_steel_tonnage', 'save'] },
+  coating_spec: { emoji: '🎨', label: 'AISC Sophisticated Paint & Blast Coating Specialist', tools: ['audit_coating_mils', 'save'] },
+  quality_auditor: { emoji: '🛡️', label: 'AISC Fracture Critical & AWS NDT Quality Auditor', tools: ['audit_aisc_quality', 'save'] },
+  supply_planner: { emoji: '📦', label: 'Structural Steel Mill Roll & Heavy Plate Planner', tools: ['plan_plate_stock', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'Industrial & Infrastructure RFP Solution Writer', tools: ['compose_doc', 'save'] },
+  qa_reviewer: { emoji: '✅', label: 'Senior Structural Engineering Reviewer', tools: ['qa_review', 'save'] },
+  prospector: { emoji: '🧲', label: 'Industrial EPC & General Contractor VP Procurement Prospector', tools: ['source_epc_accounts', 'save'] },
+  connection_architect: { emoji: '🏗️', label: 'Heavy Steel Connection & Erection Architect', tools: ['design_steel_connections', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+const TRACKS = [
+  { key: 'commercial', title: 'Commercial & Industrial Tenders' },
+  { key: 'operations', title: 'Structural Steel Engineering & Fabrication Operations' }
+];
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Heavy Industrial, Power & Stadium GC Scouting',
+    title: 'AI Industrial Growth Scout',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Industrial General Contractor Prospect Dossier',
+    desc: 'Maps industrial EPC contractors, power plant builders, stadium developers, and bridge authorities requiring 40,000+ ton AISC structural steel capacity.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan Southeastern industrial construction awards, power plant NPIs, and stadium expansion RFPs.', deps: [] },
+      { agent: 'prospector', task: 'Source Lead Structural Engineers, VP Operations, and Structural Procurement Directors.', deps: [] },
+      { agent: 'structural_eng', task: 'Score fit on heavy W-shapes, built-up plate girders, and Fracture Critical AISC endorsements.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce target industrial general contractor prospect dossier.', deps: [2] }
+    ]
+  },
+  quote: {
+    name: 'Structural Steel Fabrication & Erection Quoting',
+    title: 'AI Steel Estimating Specialist',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Heavy Structural Steel Tonnage & Fabrication Quote',
+    desc: 'Models steel tonnage pricing (W36x300 beams, plate girders), CNC drilling hours, automated SAW welding, and 3-coat paint system application.',
+    tasks: [
+      { agent: 'structural_eng', task: 'Review 3D Tekla model framing plans, member tonnage, and moment connection details.', deps: [] },
+      { agent: 'cost_eng', task: 'Model CNC beam line drilling hours, SAW welding labor, blast cleaning, and freight to job site.', deps: [0] },
+      { agent: 'supply_planner', task: 'Verify domestic steel mill roll schedules for heavy wide-flange shapes and A572 Gr 50 plate.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Assemble formal Heavy Structural Steel Tonnage & Fabrication Quote.', deps: [2] }
+    ]
+  },
+  tender: {
+    name: 'AISC Fracture Critical & Bridge RFP Response',
+    title: 'AI Heavy Structural Solution Specialist',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'AISC Fracture Critical & Bridge RFP Response Package',
+    desc: 'Audits AISC Fracture Critical Plan endorsements, AWS D1.5 bridge welding codes, Charpy V-Notch (CVN) impact toughness, and NDT rules.',
+    tasks: [
+      { agent: 'researcher', task: 'Parse DOT bridge and industrial RFP specs, fracture-critical tension member rules, and paint thickness SLAs.', deps: [] },
+      { agent: 'quality_auditor', task: 'Verify AISC Fracture Critical certification, AWS D1.1/D1.5 quality manual, and NACE coating inspectors.', deps: [0] },
+      { agent: 'cost_eng', task: 'Structure phased fabrication delivery schedule for Oxford, AL 300,000 sq ft plant.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce formal AISC Fracture Critical & Bridge RFP response package.', deps: [2] }
+    ]
+  },
+  intel: {
+    name: 'Global Plate, Mill Roll & Structural Steel Radar',
+    title: 'AI Steel Supply Chain Intelligence',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Structural Steel Mill & Material Price Risk Brief',
+    desc: 'Tracks Nucor / Steel Dynamics mill roll schedules, scrap surcharges, plate lead times, and highlights FabArc employee-owned reliability.',
+    tasks: [
+      { agent: 'researcher', task: 'Monitor domestic wide-flange steel prices, plate mill lead times, and alloy surcharges.', deps: [] },
+      { agent: 'structural_eng', task: 'Benchmark FabArc 40,000-ton annual capacity and Oxford plant automation against competitors.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile strategic steel supply chain intelligence brief.', deps: [0, 1] }
+    ]
+  },
+  steel_dfm: {
+    name: '3D Tekla BIM & AISC Fracture Critical DFM Scrub',
+    title: 'AI Structural Steel DFM Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: '3D Tekla BIM & AISC Structural DFM Review Package',
+    desc: 'Audits 3D Tekla structural model for W-shape beam copes, moment connection bolt clearance, plate thickness tolerances, and weld access holes.',
+    tasks: [
+      { agent: 'structural_eng', task: 'Analyze 3D Tekla model member connections, bolt edge distances, and column splice plate clearances.', deps: [] },
+      { agent: 'weld_spec', task: 'Verify complete joint penetration (CJP) groove weld details and submerged arc welding (SAW) torch access.', deps: [0] },
+      { agent: 'bom_scrubber', task: 'Scrub 500-line member bill of materials; cross-reference Mill Test Reports (MTRs) for Charpy V-notch (CVN) toughness.', deps: [1] },
+      { agent: 'quality_auditor', task: 'Audit AISC Fracture Critical Plan compliance and AWS D1.1/D1.5 Non-Destructive Testing (NDT) rules.', deps: [2] },
+      { agent: 'reviewer', task: 'QA structural engineering findings and compile customer DFM detailing package.', deps: [3] },
+      { agent: 'proposal_writer', task: 'Produce final 3D Tekla BIM & AISC Structural DFM Review Package.', deps: [4] }
+    ]
+  },
+  cnc_weld: {
+    name: 'Robotic CNC Beam Drilling & SAW Welding Setup',
+    title: 'AI Machining & Welding Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'Robotic CNC Beam Line & SAW Welding Package',
+    desc: 'Generates DSTV files for Peddinghaus/Ficep 3-spindle CNC drill lines, programs Lincoln Submerged Arc Welders (SAW), and schedules plate burning.',
+    tasks: [
+      { agent: 'structural_eng', task: 'Generate DSTV CNC drill files and plasma plate cutting nested layouts.', deps: [] },
+      { agent: 'weld_spec', task: 'Configure multi-pass SAW voltage, amperage, and flux recovery parameters for built-up box columns.', deps: [0] },
+      { agent: 'reviewer', task: 'Verify ultrasonic testing (UT) and magnetic particle testing (MT) weld inspection routine.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce Robotic CNC Beam Line & SAW Welding Package.', deps: [2] }
+    ]
+  },
+  quality: {
+    name: 'AISC Sophisticated Paint & AWS NDT Release Audit',
+    title: 'AI Quality & Coating Auditor',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'AISC Fracture Critical & Coating Quality Release',
+    desc: 'Audits SSPC-SP10 near-white blast cleaning logs, dry film thickness (DFT) coating gauge readings (6-10 mils), and AWS NDT inspection reports.',
+    tasks: [
+      { agent: 'coating_spec', task: 'Audit automated shot blast profile (2.5-3.5 mil anchor profile) and 3-coat zinc/epoxy/urethane DFT readings.', deps: [] },
+      { agent: 'quality_auditor', task: 'Verify 100% UT/MT NDT weld inspection records and MTR heat number traceability back to mill roll.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile AISC Fracture Critical & Coating Quality Release Brief.', deps: [0, 1] }
+    ]
+  },
+  plate_plan: {
+    name: 'Structural Steel Plate & Mill Roll Safety Stock Plan',
+    title: 'AI Mill Material Supply Planner',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'Structural Steel Mill Roll & Plate Safety Stock Plan',
+    desc: 'Secures A992 wide-flange beams, A572 Gr 50 plates, and A588 weathering steel stocks for Oxford, AL fabrication facility.',
+    tasks: [
+      { agent: 'supply_planner', task: 'Evaluate domestic steel mill roll dates (Nucor / SDI) and heavy plate safety buffer in Oxford yard.', deps: [] },
+      { agent: 'bom_scrubber', task: 'Execute MTR chemical heat analysis audit (Carbon Equivalent <0.45% for high weldability).', deps: [] },
+      { agent: 'cost_eng', task: 'Structure strategic steel plate inventory buffer to support fast-track industrial project starts.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce Structural Steel Mill Roll & Plate Safety Stock Plan.', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'Industrial General Contractor Prospect Dossier',
+  quote: 'Heavy Structural Steel Tonnage & Fabrication Quote',
+  tender: 'AISC Fracture Critical & Bridge RFP Response Package',
+  intel: 'Structural Steel Mill & Material Price Risk Brief',
+  steel_dfm: '3D Tekla BIM & AISC Structural DFM Review Package',
+  cnc_weld: 'Robotic CNC Beam Line & SAW Welding Package',
+  quality: 'AISC Fracture Critical & Coating Quality Release',
+  plate_plan: 'Structural Steel Mill Roll & Plate Safety Stock Plan'
+};
+
+const TOOLS = {
+  research_gc: () => 'Scanned Southeastern industrial EPC contracts, power plant construction awards, and AISC registry filings.',
+  source_epc_accounts: () => 'Sourced verified Lead Structural Engineers and EPC VP Procurement Directors; deduped CRM.',
+  analyze_tekla_bim: () => 'Analyzed 3D Tekla model; identified 3 beam cope clearance conflicts and optimized moment connection plate thickness.',
+  configure_saw_welding: () => 'Generated DSTV CNC drill files and Lincoln SAW welding procedure specification (WPS) for 2" flange plate.',
+  scrub_mtr_pedigree: () => 'Scrubbed 500 MTR certificates; verified 100% domestic mill melt/manufacture and Charpy V-notch (25 ft-lbs at -20°F).',
+  calc_steel_tonnage: () => 'Calculated 4,200 tons structural steel fabrication, blast cleaning, 3-coat paint system, and 45-truck freight schedule.',
+  audit_coating_mils: () => 'Audited SSPC-SP10 shot blast anchor profile (3.0 mil) and dry film thickness (DFT 8.5 mils total — PASS).',
+  audit_aisc_quality: () => 'Audited 100% Ultrasonic Testing (UT) weld inspection logs against AWS D1.1/D1.5 Fracture Critical standards.',
+  plan_plate_stock: () => 'Cross-referenced domestic mill roll schedules; secured 2,000-ton A992 wide-flange steel buffer in Oxford yard.',
+  design_steel_connections: () => 'Designed heavy moment connection gusset plates and shop-welded/field-bolted column splice details.',
+  compose_doc: () => 'Compiled structural steel engineering metrics into clear, review-ready technical documentation.',
+  qa_review: () => 'Audited report completeness and checked AISC standards; ready for FabArc VP Engineering sign-off.',
+  save: () => 'Saved deliverable artifact to shared project repository.'
+};
+
+function toolOut(t) { return (TOOLS[t] || (() => 'Executed successfully.'))(); }
+
+const FINAL = {
+  scout: `INDUSTRIAL GENERAL CONTRACTOR PROSPECT DOSSIER (illustrative)
+Target Sector: Heavy Industrial Power Plants, Chemical Refineries, Sports Arenas & Bridges
+Target Location: United States (Southeastern Hubs & National Infrastructure Projects)
+
+A-Tier Qualified EPC Prospects:
+1. Southern Energy Constructors — 800MW Combined Cycle Power Plant — Fit Score: 98/100
+   • Key Contacts: VP Procurement, Lead Structural Detailing Manager
+   • Requirement: AISC Certified 5,500-Ton Heavy Structural Steel Frame + Fracture Critical Girders
+2. Gulf Coast Chemical Expansion — Polyethylene Unit Structure — Fit Score: 95/100
+   • Key Contacts: Director of EPC Sourcing, Principal Heavy Structural Engineer
+   • Requirement: Sophisticated 3-Coat Paint Coating System (SSPC-SP10 + Inorganic Zinc)
+3. National Arena Developers — 18,000-Seat Multi-Purpose Arena Roof Truss — Fit Score: 92/100
+   • Key Contacts: Lead Steel Erection Superintendent
+
+Strategic Positioning:
+Highlight FabArc 300,000 sq ft Oxford, AL plant, 40,000+ tons/year capacity, 100% employee ownership, AISC Fracture Critical & Sophisticated Paint endorsements.
+
+NOTE: Illustrative simulation prepared for FabArc Steel Supply, Inc. (fabarc.com).`,
+
+  quote: `HEAVY STRUCTURAL STEEL TONNAGE & FABRICATION QUOTE (illustrative)
+Customer: Southern Energy Constructors
+Program: 800MW Combined Cycle Power Plant Boiler Building & Turbine Hall Steel (4,200 Tons)
+Steel Specifications: ASTM A992 W36x300 Wide-Flange Beams & ASTM A572 Gr 50 Built-Up Box Columns
+
+Commercial Breakdown:
+• Structural Steel Fabrication (4,200 Tons @ $2,450/ton): $10,290,000.00
+• AISC Sophisticated Paint Coating System (SSPC-SP10 Near-White Blast + 3-Coat Zinc/Epoxy): $1,260,000.00
+• Structural Steel Detailing & Tekla 3D BIM Model Generation: $185,000.00
+
+Tooling & Freight:
+• Shop Milling Fixtures & Heavy Burner NRE: Included
+• Freight to Job Site (Oxford, AL to Project Site, 110 Truckloads): $330,000.00
+
+Turnaround Time:
+• Detailing & Anchor Bolt Plan Release: 3 Weeks
+• Phased Fabricated Steel Delivery: 12 Weeks (450 tons/week batch delivery)
+
+NOTE: Illustrative simulation; pricing and tonnage figures are placeholders.`,
+
+  tender: `AISC FRACTURE CRITICAL & BRIDGE RFP RESPONSE PACKAGE (illustrative)
+Tender ID: US-AL-STEEL-FA-2026-10
+Scope: AISC Certified Heavy Structural Steel Fabrication & Fracture Critical Plate Girders
+
+AISC & AWS Quality Verification:
+• AISC Steel Building Structures Certification: Certified & Active
+• AISC Fracture Critical Endorsement: Certified & Active
+• AISC Sophisticated Paint Coating Endorsement: Certified & Active
+• AWS D1.1 / AWS D1.5 Certified Welding Inspectors (CWI): On-Site 100% Quality Oversight
+• Material Pedigree: 100% Melted & Manufactured in USA (Buy America Compliant)
+
+Technical Offer:
+• 300,000 sq ft Oxford, AL plant with automated 3-spindle CNC drill lines & submerged arc welding (SAW)
+
+NOTE: Illustrative simulation; confirm against RFP specifications.`,
+
+  intel: `STRUCTURAL STEEL MILL & MATERIAL PRICE RISK BRIEF (illustrative)
+Focus: Domestic Steel Mill Roll Schedules & Scrap Surcharge Trends
+
+Key Insights:
+1. Wide-Flange Mill Lead Times: Domestic Nucor and SDI mill roll schedules running 8-10 weeks out for heavy W-shapes (>200 lbs/ft).
+2. Scrap Surcharge Volatility: Shredded scrap prices fluctuating +/-$25/ton; index-linked mill buffer contracts recommended.
+3. FabArc Steel Advantage:
+   - 2,000-ton structural steel plate & beam inventory in Oxford yard mitigates mill delay risks.
+   - 100% employee-owned workforce ensures superior craftsmanship and zero-defect fabrication delivery.
+
+NOTE: Illustrative simulation.`,
+
+  steel_dfm: `3D TEKLA BIM & AISC STRUCTURAL DFM REVIEW PACKAGE (illustrative · flagship)
+Program: Power Plant Turbine Hall 4,200-Ton Structural Steel Framing
+Model Software: 3D Tekla Structures (BIM Level 3 Model)
+
+DFM Detailing Engineering Findings:
+1. Moment Connection Clearance: W36x300 beam-to-column flange connection exhibits 0.375" bolt clearance conflict; relocated stiffener plates to permit 1-1/4" A490 high-strength bolt torqueing.
+2. Submerged Arc Weld Access: Increased web cope radius on built-up plate girders from 1.5" to 2.5" to ensure automated SAW torch clearance.
+3. Charpy V-Notch (CVN) MTR Audit: Verified 100% of Fracture Critical flange plates meet 25 ft-lbs at -20°F toughness test requirement.
+
+Quality & Paint Coating Audit:
+• Surface Prep Target: SSPC-SP10 Near-White Blast (3.0 mil anchor profile)
+• Coating Inspection: 3-coat system dry film thickness (DFT) measured at 8.5 mils average.
+
+Summary:
+ 3D Tekla model released to Oxford plant CNC drill lines and SAW welding bays.
+
+NOTE: Illustrative simulation; review with FabArc structural engineering team.`,
+
+  cnc_weld: `ROBOTIC CNC BEAM LINE & SAW WELDING PACKAGE (illustrative)
+Program: Turbine Hall Built-Up Box Columns & Heavy Girders
+
+Fabrication Setup Configuration:
+• Peddinghaus 3-Spindle CNC Drill Line: DSTV toolpaths generated for 1,840 bolt hole patterns
+• Lincoln Submerged Arc Welder (SAW): Multi-pass 1/8" wire welding configured for 2" flange CJP welds
+• Ultrasonic NDT Inspection: 100% CJP weld scan scheduled post-cool-down (24-hour delay)
+
+Outcome: CNC G-code and SAW WPS validated for Oxford plant execution.
+
+NOTE: Illustrative simulation.`,
+
+  quality: `AISC FRACTURE CRITICAL & COATING QUALITY RELEASE (illustrative)
+Production Lot: FA-STEEL-2026-08
+Quality Standard: AISC Quality Standard / AWS D1.1 / AWS D1.5 / SSPC-PA2
+
+Audit Checklist Results:
+• Shot Blast & Coating Inspection Log: SSPC-SP10 blast profile (3.0 mils) and zinc primer DFT (3.5 mils) verified
+• Ultrasonic NDT Weld Logs: 100% CJP groove welds pass UT inspection with zero slag inclusions
+• Mill Test Report (MTR) Traceability: Heat numbers stamped on every beam and cross-referenced to MTR log
+
+Outcome: AISC Quality Release Approved. Certificate of Conformance (CoC) issued.
+
+NOTE: Illustrative simulation.`,
+
+  plate_plan: `STRUCTURAL STEEL MILL ROLL & PLATE SAFETY STOCK PLAN (illustrative)
+Scope: Oxford, AL 300,000 Sq Ft Fabrication Facility
+
+Supply Strategy Breakdown:
+• Structural Beam Stock: 1,500 tons A992 wide-flange shapes (W14x90 through W36x300) maintained in Oxford yard
+• Heavy Plate Stock: 800 tons A572 Gr 50 and A588 weathering steel plate in stock
+• Mill Pedigree: 100% domestic melt & manufacture Certificate of Analysis (CoA) verified per heat
+
+Outcome: Material supply clear for continuous heavy industrial fabrication support.
+
+NOTE: Illustrative simulation.`
+};
+
+let EMPLOYEES = [
+  { id: 'scout', name: 'Scout', title: 'AI Industrial Growth Scout', wf: 'scout', handled: 215, hrs: 64, win: 40, status: 'idle' },
+  { id: 'quote', name: 'Quote', title: 'AI Steel Estimating Specialist', wf: 'quote', handled: 305, hrs: 128, win: 62, status: 'idle' },
+  { id: 'tender', name: 'Tender', title: 'AI Heavy Structural Solution Specialist', wf: 'tender', handled: 132, hrs: 102, win: 52, status: 'idle' },
+  { id: 'intel', name: 'Radar', title: 'AI Steel Supply Chain Intelligence', wf: 'intel', handled: 162, hrs: 50, win: 30, status: 'idle' },
+  { id: 'steel_dfm', name: 'SteelDFM', title: 'AI Structural Steel DFM Specialist', wf: 'steel_dfm', handled: 438, hrs: 260, win: 80, status: 'idle' },
+  { id: 'cnc_weld', name: 'CNCWeld', title: 'AI Machining & Welding Specialist', wf: 'cnc_weld', handled: 245, hrs: 115, win: 56, status: 'idle' },
+  { id: 'quality', name: 'AISCAudit', title: 'AI Quality & Coating Auditor', wf: 'quality', handled: 375, hrs: 145, win: 70, status: 'idle' },
+  { id: 'plate_plan', name: 'PlatePlanner', title: 'AI Mill Material Supply Planner', wf: 'plate_plan', handled: 210, hrs: 86, win: 0, status: 'idle' }
+];
+
+/* Render Functions */
+function drawWaferGrid() {
+  const grid = document.getElementById("dieGrid");
+  let rects = '';
+  for (let x = -8; x <= 8; x++) {
+    for (let y = -8; y <= 8; y++) {
+      if (x*x + y*y <= 60) {
+        const px = 110 + x * 10 - 4;
+        const py = 105 + y * 10 - 4;
+        const pass = (Math.abs(x*y) % 8 !== 3);
+        const fill = pass ? 'rgba(245, 158, 11, 0.45)' : 'rgba(239, 68, 68, 0.6)';
+        rects += `<rect x="${px}" y="${py}" width="8" height="8" rx="1.5" fill="${fill}"></rect>`;
+      }
+    }
+  }
+  grid.innerHTML = rects;
+}
+
+function renderRoster() {
+  const container = document.getElementById("rosterContainer");
+  let html = '';
+  TRACKS.forEach(tr => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === tr.key);
+    if (!list.length) return;
+    html += `<div class="track-label">${tr.title}</div><div class="roster">`;
+    html += list.map(empCard).join('');
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+}
+
+function empCard(e) {
+  const wf = WORKFLOWS[e.wf] || {};
+  const isFlag = wf.tag === 'flagship';
+  const team = (wf.tasks || []).map(t => t.agent).filter((v, i, a) => a.indexOf(v) === i).map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  return `
+    <div class="op-card ${isFlag ? 'flagship' : ''}" id="emp-${e.id}">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${e.name}</div>
+          <div class="op-role">${e.title}</div>
+        </div>
+        ${isFlag ? '<span class="flag-chip">★ FLAGSHIP OPERATOR</span>' : ''}
+      </div>
+      <div class="op-desc">${wf.desc || ''}</div>
+      <div class="op-agents">${team}</div>
+      <div class="op-stats">
+        <div class="op-stat"><b>${e.handled.toLocaleString()}</b> runs</div>
+        <div class="op-stat"><b>~${e.hrs} hrs</b> saved/mo</div>
+        <div class="op-stat"><b>+${e.win}%</b> speedup</div>
+      </div>
+      <div class="op-actions">
+        <button class="run-btn" onclick="runOperator('${e.wf}')">▶ Run ${e.name}</button>
+      </div>
+    </div>
+  `;
+}
+
+function setView(v) {
+  document.getElementById('view-ops').classList.toggle('hidden', v !== 'ops');
+  document.getElementById('view-hire').classList.toggle('hidden', v !== 'hire');
+  document.getElementById('tabA').classList.toggle('active', v === 'ops');
+  document.getElementById('tabB').classList.toggle('active', v === 'hire');
+  if (v === 'hire') initBuilder();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+let isRunning = false;
+async function runOperator(wfKey) {
+  if (isRunning) return;
+  isRunning = true;
+  const wf = WORKFLOWS[wfKey];
+  if (!wf) return;
+
+  const panel = document.getElementById("runPanel");
+  const title = document.getElementById("runTitle");
+  const sub = document.getElementById("runSub");
+  const progress = document.getElementById("progressRow");
+  const feed = document.getElementById("feedArea");
+  const deliv = document.getElementById("deliverableBox");
+
+  panel.classList.add("active");
+  deliv.classList.remove("show");
+  title.innerText = `Executing Operator: ${wf.name}`;
+  sub.innerText = `Mode: ${wf.mode.toUpperCase()} · ${wf.tasks.length} Specialist Agents`;
+
+  progress.innerHTML = wf.tasks.map((_, i) => `<div class="pstep" id="ps_${i}"></div>`).join('');
+  feed.innerHTML = '';
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  function addFeedLine(agentKey, txt, isDone = false) {
+    const role = AGENT_ROLES[agentKey] || { emoji: '🤖', label: agentKey };
+    const div = document.createElement('div');
+    div.className = `feed-line ${isDone ? 'done' : ''}`;
+    div.innerHTML = `<span class="tag">[${role.emoji} ${role.label}]</span><span class="txt">${txt}</span>`;
+    feed.appendChild(div);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  addFeedLine(wf.tasks[0].agent, `Initializing ${wf.name} autonomous workflow loop...`);
+  await new Promise(r => setTimeout(r, 600));
+
+  for (let i = 0; i < wf.tasks.length; i++) {
+    const t = wf.tasks[i];
+    const stepEl = document.getElementById(`ps_${i}`);
+    if (stepEl) stepEl.classList.add("active");
+
+    addFeedLine(t.agent, `Executing Task ${i+1}: ${t.task}`);
+    await new Promise(r => setTimeout(r, 800));
+
+    const role = AGENT_ROLES[t.agent];
+    if (role && role.tools) {
+      for (const tool of role.tools) {
+        addFeedLine(t.agent, `Invoked tool '${tool}( )' -> ${toolOut(tool)}`);
+        await new Promise(r => setTimeout(r, 600));
+      }
+    }
+
+    if (stepEl) {
+      stepEl.classList.remove("active");
+      stepEl.classList.add("complete");
+    }
+    addFeedLine(t.agent, `Task ${i+1} completed. Artifact saved to shared FabArc project store.`, true);
+  }
+
+  await new Promise(r => setTimeout(r, 400));
+  document.getElementById("delivTitle").innerText = `Review-Ready Output · ${DTITLE[wfKey] || 'Deliverable'}`;
+  document.getElementById("delivCode").innerText = FINAL[wfKey] || "Execution completed successfully.";
+  deliv.classList.add("show");
+
+  isRunning = false;
+}
+
+function closeRun() {
+  document.getElementById("runPanel").classList.remove("active");
+}
+
+/* DYNEX BUILDER FLOW IMPLEMENTATION */
+let draft = {};
+function initBuilder() {
+  draft = { wf: null, mode: 'sequential', assign: [], name: '', title: '', cadence: 'Per project', step: 1 };
+  renderBuilder();
+}
+
+function renderBuilder() {
+  const steps = [['01', 'Pick a workflow'], ['02', 'Assign the agents'], ['03', 'Name & cadence']];
+  document.getElementById('bSteps').innerHTML = steps.map((s, i) => `
+    <div class="step-item ${draft.step === i + 1 ? 'active' : ''}">
+      <div class="step-num">${s[0]}</div>
+      <div class="step-lbl">${s[1]}</div>
+    </div>
+  `).join('');
+
+  if (draft.step === 1) bS1();
+  else if (draft.step === 2) bS2();
+  else bS3();
+  bNav();
+}
+
+function bS1() {
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 1: Choose Baseline Structural Steel Workflow</label></div>
+    <div class="wf-grid">
+      ${Object.keys(WORKFLOWS).map(k => {
+        const w = WORKFLOWS[k];
+        return `
+          <div class="wf-card ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')">
+            <div class="wf-title">${w.name}</div>
+            <div class="wf-desc">${w.desc}</div>
+            <div class="wf-meta">${w.tasks.length} agents · ${w.mode}</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 2: Assign Each Task to a Specialist Agent</label></div>
+    ${w.tasks.map((t, i) => `
+      <div class="task-row">
+        <div class="tn">${i + 1}</div>
+        <div class="tt">
+          ${t.task}
+          ${t.deps.length ? `<span style="color:var(--muted-2);font-family:var(--font-mono);font-size:11px;"> · waits for step ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}
+        </div>
+        <select onchange="draft.assign[${i}]=this.value">${opts}</select>
+      </div>
+    `).join('')}
+    <div class="field" style="margin-top:16px;">
+      <label>Execution Mode</label>
+      <div class="seg">
+        ${['sequential', 'dag'].map(m => `
+          <button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (Parallel DAG)' : 'Sequential'}</button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 3: Name Operator &amp; Set Cadence</label></div>
+    <div class="field">
+      <label>Operator Name</label>
+      <input type="text" value="${draft.name}" placeholder="e.g. Structural Steel &amp; AISC Specialist" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Role Title</label>
+      <input type="text" value="${draft.title}" placeholder="e.g. Autonomous Structural Engineer" oninput="draft.title=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Cadence</label>
+      <div class="seg">
+        ${['Per project', 'Per structure', 'Weekly', 'On-demand'].map(c => `
+          <button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>
+        `).join('')}
+      </div>
+    </div>
+    <div class="field" style="margin-top:20px;">
+      <label>Live Operator Card Preview</label>
+      <div id="previewCardArea"></div>
+    </div>
+  `;
+  renderPreview();
+}
+
+function renderPreview() {
+  const w = WORKFLOWS[draft.wf];
+  const area = document.getElementById('previewCardArea');
+  if (!area) return;
+  
+  const team = draft.assign.map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  area.innerHTML = `
+    <div class="op-card" style="max-width:440px;">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${draft.name || 'New Operator'}</div>
+          <div class="op-role">${draft.title || 'AI Operator'}</div>
+        </div>
+      </div>
+      <div class="op-desc">Owns <b>${w.name}</b> · ${draft.cadence} · ${draft.mode.toUpperCase()}</div>
+      <div class="op-agents">${team}</div>
+    </div>
+  `;
+}
+
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn btn-ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right = '';
+  if (draft.step === 1) right = `<button class="btn btn-primary" ${draft.wf ? '' : 'disabled'} onclick="draft.step=2;renderBuilder()">Next: Assign Agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn btn-primary" onclick="draft.step=3;renderBuilder()">Next: Name &amp; Cadence →</button>`;
+  else right = `<button class="btn btn-primary" onclick="hire()">✓ Add this AI Operator</button>`;
+
+  document.getElementById('bNav').innerHTML = left + right;
+}
+
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  
+  WORKFLOWS[wfId] = {
+    name: w.name,
+    title: draft.title || w.title,
+    mode: draft.mode || w.mode,
+    track: w.track,
+    deliverable: w.deliverable,
+    desc: w.desc,
+    tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps }))
+  };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({
+    id, name,
+    title: draft.title || w.title,
+    wf: wfId,
+    handled: 0,
+    hrs: Math.floor(Math.random() * 60) + 40,
+    win: 0,
+    status: 'idle'
+  });
+
+  renderRoster();
+  setView('ops');
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  drawWaferGrid();
+  renderRoster();
+});
+</script>
+</body>
+</html>
