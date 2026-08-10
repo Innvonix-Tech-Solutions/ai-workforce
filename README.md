@@ -85,3 +85,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/acmr
 https://innvonix-tech-solutions.github.io/ai-workforce/advanced-energy
 https://innvonix-tech-solutions.github.io/ai-workforce/atomera
 https://innvonix-tech-solutions.github.io/ai-workforce/everspin-technologies
+https://innvonix-tech-solutions.github.io/ai-workforce/intest
