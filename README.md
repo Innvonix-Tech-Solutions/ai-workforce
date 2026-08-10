@@ -80,3 +80,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/xcures
 https://innvonix-tech-solutions.github.io/ai-workforce/fabarc
 https://innvonix-tech-solutions.github.io/ai-workforce/kb-industries
 https://innvonix-tech-solutions.github.io/ai-workforce/midland
+https://innvonix-tech-solutions.github.io/ai-workforce/span
