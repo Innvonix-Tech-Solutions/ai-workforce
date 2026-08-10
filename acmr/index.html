@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACM Research — AI Commercial &amp; Operational Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#ffffff;
+  --surface:#f8fafc;
+  --surface2:#f1f5f9;
+  --border:#cbd5e1;
+  --accent:#bc403a;
+  --accent-dim:rgba(188,64,58,.08);
+  --accent-line:rgba(188,64,58,.30);
+  --red-dark:#982c27;
+  --slate:#1e242b;
+  --slate-dim:rgba(30,36,43,.08);
+  --slate-line:rgba(30,36,43,.30);
+  --gold:#d97706;
+  --gold-bg:#fffbeb;
+  --gold-line:#fde68a;
+  --text:#334155;
+  --hi:#0f172a;
+  --tert:#64748b;
+  --ok:#16a34a;
+  --ok-dim:rgba(22,163,74,.10);
+}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:36px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--slate));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:12px;letter-spacing:.5px}
+.htitle{font-size:15px;font-weight:700;color:var(--hi);letter-spacing:.3px}.hsub{font-size:11px;color:var(--tert);margin-top:1px}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert)}.badge b{color:var(--accent)}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:600;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.5;max-width:900px;margin-bottom:14px}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.commercial{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.operations{background:var(--slate-dim);color:var(--slate);border:1px solid var(--slate-line)}
+.tag.hero{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:24px;font-weight:700;color:var(--accent)}.cell .v .u{color:var(--slate)}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--accent);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:"IBM Plex Sans Condensed",sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert)}
+.emp-owns{font-size:12px;margin-bottom:10px}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:inherit;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:var(--accent-line)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--red-dark);border-color:var(--red-dark)}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent;color:var(--accent)}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--accent)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto;color:var(--hi)}
+.donebar{background:var(--surface);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;color:var(--text)}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:var(--accent-line)}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:14px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 13px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="header">
+<div class="logo"><div class="mark">ACM</div>
+<div><div class="htitle">ACM Research, Inc. · AI Commercial &amp; Operational Workforce</div><div class="hsub">AI operators that discover semiconductor foundries, quote SAPS &amp; Ultra ECP tools, qualify 300mm megasonic cleaning, test TSV copper plating, and simulate furnace thermal CFD</div></div></div>
+<div class="badge">Independent concept &nbsp;·&nbsp; <b>illustrative</b></div>
+</header>
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>a semiconductor wafer fabrication equipment (WFE) or cleanroom manufacturing workflow turned into an autonomous team of agents</b>. One track wins the work: it finds tier-1 semiconductor foundries, 3D NAND/DRAM chipmakers, and OSAT advanced packaging facilities seeking SAPS megasonic cleaning and Ultra ECP plating equipment, quotes multi-chamber WFE suites, responds to global memory fab tenders, and tracks 2nm/3nm wet process adoption. The other track delivers the cleanroom process engineering and manufacturing operations: it qualifies SAPS V 300mm megasonic cleaning for 19nm particle removal efficiency (PRE &gt;99.2%), optimizes Ultra ECP TSV copper plating thickness uniformity (&lt;1.8% non-uniformity), simulates 1,050°C Ultra Furnace 300mm thermal CFD dynamics, and manages cleanroom robot arm ECO revisions. Point one at a fab customer account, a KLA wafer defect scan report, or a tool CAD file and it runs the loop, then hands back a review-ready output for a VP of Fab Process Integration or Director of WFE Operations to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial</span> find, quote, tender, win</span>
+<span><span class="tag operations">WFE Process Engineering &amp; Ops</span> SAPS clean qual, ECP TSV yield, thermal CFD, ECO</span>
+<span><span class="tag hero">Flagship</span> the deepest example run</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+<div class="foot">Independent concept prototype prepared for a conversation with ACM Research, Inc. It is not affiliated with, endorsed by, or built on ACM Research systems or data. All operators and outputs are illustrative simulations; semiconductor fab accounts, SAPS clean yields, turnkey quote schedules, SEMI S2 audits, and qualification reports are placeholders. A human fab process integration engineer, VP of WFE Operations, or Director of Global Sales reviews and approves every quote, SAPS clean audit, ECP plating test release, SEMI safety check, and cleanroom ECO file.</div>
+<script>
+const AGENT_ROLES={
+saps_megasonic_clean_architect:{emoji:'🌊',label:'SAPS & TEBO Megasonic Wafer Clean Architect',tools:['analyze_saps_waveform','save']},
+ecp_plating_machinery_eng:{emoji:'⚡',label:'Ultra ECP Copper & TSV Plating Specialist',tools:['calc_plating_uniformity','save']},
+tahoe_wet_etch_process_lead:{emoji:'🧪',label:'Tahoe Hybrid Batch Wet Etch & Clean Specialist',tools:['audit_chemical_recycling','save']},
+semi_foundry_account_mgr:{emoji:'🧲',label:'Tier-1 Semiconductor Foundry Account Sourcing Lead',tools:['source_foundry_accounts','save']},
+cleanroom_wafer_yield_qc_analyst:{emoji:'🔬',label:'Cleanroom Wafer Defect & Particle QC Analyst',tools:['inspect_wafer_defects','save']},
+furnace_thermal_process_eng:{emoji:'🔥',label:'Ultra Furnace High-Temp Anneal & Oxidation Lead',tools:['calc_thermal_budget','save']},
+turnkey_wfe_quoting_eng:{emoji:'🧮',label:'Turnkey WFE Tool Suite Quoting Lead',tools:['build_acmr_quote','save']},
+semi_semi_standards_compliance_auditor:{emoji:'📋',label:'SEMI S2, S8 & Cleanroom Class 1 Compliance Auditor',tools:['verify_semi_compliance','save']},
+eco_revision_lead:{emoji:'🔄',label:'WFE Chamber Geometry & Robot Arm ECO Lead',tools:['eval_acmr_eco','save']},
+secspgem_telemetry_spec:{emoji:'📡',label:'SECS/GEM Automation & Fab Telematics Specialist',tools:['inspect_secsgem_logs','save']},
+writer:{emoji:'✍️',label:'Technical WFE Tool Proposal Writer',tools:['compose','save']},
+reviewer:{emoji:'✅',label:'Wafer Fabrication Equipment QA Reviewer',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+const TRACKS=[['commercial','Commercial & Sales Activities'],['operations','Semiconductor WFE Process Engineering & Fab Operations']];
+const WORKFLOWS={
+scout:{name:'Tier-1 semiconductor foundry & advanced packaging fab discovery',title:'AI Opportunity Scout',mode:'dag',track:'commercial',deliverable:'Target Semiconductor Foundry & Advanced Packaging Fab Discovery List',
+sample:'Identify tier-1 semiconductor fabs, memory chipmakers, and advanced 3D chiplet packaging facilities seeking SAPS cleaning and Ultra ECP plating tools.',
+desc:'Agents map global 300mm wafer fabs, source VP of Fab Operations and Process Integration Director contacts, score annual WFE tool expansion budgets ($20M+ per fab line), and build the target ACM sales pipeline.',
+tasks:[{agent:'semi_foundry_account_mgr',task:'Source tier-1 semiconductor foundries, 3D NAND / DRAM memory fabs, and OSAT packaging providers.',deps:[]},
+{agent:'saps_megasonic_clean_architect',task:'Score fabs on 3D structure particle defect reduction demand, chemical solvent savings ROI ($2M/year), and 2nm/3nm process compatibility.',deps:[0]},
+{agent:'writer',task:'Compile target semiconductor fab lead list with key VP of Fab Operations and Chief Process Engineer contacts.',deps:[1]}]},
+quote:{name:'Multi-chamber Ultra ECP 300mm wafer plating & SAPS clean tool suite quote',title:'AI WFE Solution Quoting Operator',mode:'sequential',track:'commercial',deliverable:'Turnkey Multi-Chamber Ultra ECP & SAPS Clean WFE Quoting Proposal',
+sample:'Generate commercial proposal for a 300mm high-volume manufacturing fab line featuring 6 Ultra ECP Plating tools + 4 SAPS Megasonic Cleaners ($48M turnkey contract).',
+desc:'Agents confirm 12-chamber tool configuration, calculate chemical bath recycling savings, model JIT spare parts SLA, and issue proposal.',
+tasks:[{agent:'saps_megasonic_clean_architect',task:'Confirm tool specifications (300mm single-wafer SAPS II clean, 12 process chambers, N2 purge, megasonic generator 1.0MHz).',deps:[]},
+{agent:'turnkey_wfe_quoting_eng',task:'Structure WFE tool hardware BOM, field service engineer maintenance SLAs, and chemical cost reduction guarantees ($48,000,000 10-tool turnkey order).',deps:[0]},
+{agent:'writer',task:'Produce formal customer-ready ACM Research WFE tool partnership proposal.',deps:[1]}]},
+tender:{name:'Global 300mm memory fab advanced wet processing master tender',title:'AI Global Fab Master Tender Operator',mode:'dag',track:'commercial',deliverable:'Global 300mm Memory Fab Advanced Wet Processing Master Tender Response',
+sample:'Prepare 3-year master wafer cleaning & ECP equipment contract for a multi-fab memory manufacturer across 4 global sites.',
+desc:'Agents verify SEMI S2/S8 safety compliance, 99.8% tool availability SLA, SECS/GEM host integration, and zero-defect particle guarantee, compiling master tender response.',
+tasks:[{agent:'secspgem_telemetry_spec',task:'Verify SECS/GEM (E30/E37) host communications, automated recipe download, and sub-second sensor data streaming.',deps:[]},
+{agent:'turnkey_wfe_quoting_eng',task:'Structure 3-year tiered WFE volume pricing, fab cleanroom installation allowances, and continuous improvement guarantees.',deps:[0]},
+{agent:'writer',task:'Generate comprehensive global memory fab wet equipment tender response.',deps:[1]}]},
+radar:{name:'Semiconductor capital equipment & advanced packaging market intelligence',title:'AI WFE Market Intelligence',mode:'dag',track:'commercial',deliverable:'Semiconductor Capital Equipment & Advanced Packaging Market Intelligence Brief',
+sample:'Analyze WFE cleaning competitors (Lam Research, TEL, Applied Materials) vs ACM Research SAPS/TEBO technology.',
+desc:'Agents track competitor single-wafer megasonic clean yields, benchmark ACM Tahoe 80%+ chemical solvent reduction, and build market intelligence brief.',
+tasks:[{agent:'cleanroom_wafer_yield_qc_analyst',task:'Gather competitor particle defect specs (>19nm defect counts) and TSV copper voiding rates.',deps:[]},
+{agent:'saps_megasonic_clean_architect',task:'Highlight ACM proprietary SAPS alternating phase shift technology, TEBO non-destructive cleaning, and Ultra ECP 3D chiplet plating.',deps:[]},
+{agent:'writer',task:'Produce quarterly semiconductor equipment market intelligence and competitive positioning brief.',deps:[0,1]}]},
+panel_qualification:{name:'SAPS V 300mm megasonic cleaning & particle defect qualification',title:'AI WFE Tool Qualification Operator',mode:'dag',track:'operations',tag:'flagship',deliverable:'SAPS V 300mm Megasonic Cleaning & Particle Defect Qualification Dossier',
+sample:'Execute 10,000-wafer marathon run trial and particle removal efficiency (PRE >99.2% @ 19nm) qualification for SAPS V 300mm Tool.',
+desc:'Agents audit megasonic energy uniform distribution (±1.5%), test chemical bath temperature stability (±0.2°C), measure wafer pattern damage rate (0% feature destruction), and publish qualification dossier.',
+tasks:[{agent:'saps_megasonic_clean_architect',task:'Simulate megasonic acoustic cavitation wave distribution across 300mm silicon wafer surface.',deps:[]},
+{agent:'cleanroom_wafer_yield_qc_analyst',task:'Execute automated laser surface scanning (KLA Tencor inspection) verifying PRE >99.2% for 19nm particles with zero pattern damage.',deps:[]},
+{agent:'tahoe_wet_etch_process_lead',task:'Audit sulfuric acid / hydrogen peroxide (SPM) chemical recycling efficiency (84% chemical volume savings).',deps:[0,1]},
+{agent:'reviewer',task:'QA SEMI S2 environmental safety, SEMI S8 ergonomics, and Class 1 cleanroom particle logs.',deps:[2]},
+{agent:'writer',task:'Produce complete SAPS V 300mm wafer clean qualification report.',deps:[3]}]},
+ecp_plating_yield:{name:'Ultra ECP TSV copper plating thickness uniformity & void optimization',title:'AI Electrochemical Plating Operator',mode:'sequential',track:'operations',deliverable:'Ultra ECP TSV Copper Plating Thickness Uniformity & Void Test Report',
+sample:'Optimize 3D TSV copper plating deposition rate and wafer-level thickness uniformity (<1.8% non-uniformity across 300mm wafer).',
+desc:'Agents analyze paddle agitation frequencies, test copper bath organic additive concentration, and calibrate multi-anode current distribution.',
+tasks:[{agent:'ecp_plating_machinery_eng',task:'Analyze multi-anode current density profile (0.5 to 4.0 A/dm²) achieving 100% bottom-up TSV copper fill without voids.',deps:[]},
+{agent:'cleanroom_wafer_yield_qc_analyst',task:'Perform X-ray fluorescence (XRF) and FIB-SEM cross-sectional void inspection across 50 sample wafers.',deps:[0]},
+{agent:'reviewer',task:'QA finished ECP chamber lot release metrics against ISO 9001 and SEMI E40 fab standards.',deps:[1]},
+{agent:'writer',task:'Produce comprehensive Ultra ECP copper plating process and yield report.',deps:[2]}]},
+thermal_simulation:{name:'Ultra Furnace 300mm vertical thermal process CFD & temperature uniformity',title:'AI Thermal CFD & Vacuum Process Operator',mode:'dag',track:'operations',deliverable:'Ultra Furnace 300mm Vertical Thermal Process CFD Simulation Strategy',
+sample:'Generate automated 3D CFD thermal simulation for 100-wafer vertical furnace chamber maintaining ±0.3°C temperature uniformity @ 1,050°C.',
+desc:'Agents configure quartz tube heating zones, simulate gas flow dynamics (N2/O2/H2 anneal), and prevent thermal stress-induced wafer slip line defects.',
+tasks:[{agent:'furnace_thermal_process_eng',task:'Execute 3D Finite Element thermal radiation modeling across 5 independent heating zones (1,050°C anneal profile).',deps:[]},
+{agent:'semi_semi_standards_compliance_auditor',task:'Verify SEMI S2 exhaust gas scrubbing integration and over-temperature safety interlock circuits.',deps:[]},
+{agent:'writer',task:'Produce Ultra Furnace 300mm thermal process and gas flow strategy documentation.',deps:[0,1]}]},
+mask_eco:{name:'Cleanroom robot arm end-effector & chemical manifold ECO revision control',title:'AI WFE Revision Control Operator',mode:'sequential',track:'operations',deliverable:'Cleanroom Robot Arm End-Effector & Chemical Manifold ECO Revision Assessment',
+sample:'Evaluate ECO-2026-995 (Transition to PEEK ceramic dual-wafer robot gripper & fluoropolymer chemical manifold for SAPS II chambers).',
+desc:'Agents evaluate CAD robot end-effector clearance diffs, recalculate chemical valve flow pressure drops, and update factory assembly traveler cards.',
+tasks:[{agent:'eco_revision_lead',task:'Compare CAD robot end-effector 3D model diffs, wafer pickup repeatability tolerances (±0.05mm), and PEEK material certification.',deps:[]},
+{agent:'secspgem_telemetry_spec',task:'Update automated factory PLC motion control profiles and SECS/GEM robot alarm state registers.',deps:[0]},
+{agent:'writer',task:'Publish integrated ACM Research WFE tool ECO cut-over matrix and cleanroom assembly traveler guide.',deps:[1]}]},
+};
+const DTITLE={
+scout:'Target Semiconductor Foundry & Advanced Packaging Fab Discovery List',
+quote:'Turnkey Multi-Chamber Ultra ECP & SAPS Clean WFE Quoting Proposal',
+tender:'Global 300mm Memory Fab Advanced Wet Processing Master Tender Response',
+radar:'Semiconductor Capital Equipment & Advanced Packaging Market Intelligence Brief',
+panel_qualification:'SAPS V 300mm Megasonic Cleaning & Particle Defect Qualification Dossier',
+ecp_plating_yield:'Ultra ECP TSV Copper Plating Thickness Uniformity & Void Test Report',
+thermal_simulation:'Ultra Furnace 300mm Vertical Thermal Process CFD Simulation Strategy',
+mask_eco:'Cleanroom Robot Arm End-Effector & Chemical Manifold ECO Revision Assessment'
+};
+const TOOLS={
+source_foundry_accounts:()=>'Sourced tier-1 semiconductor foundries, 3D NAND / DRAM memory fabs & OSAT packaging providers.',
+analyze_saps_waveform:()=>'Confirmed tool specs (300mm single-wafer SAPS II clean, 12 chambers, megasonic generator 1.0MHz).',
+build_acmr_quote:()=>'Structured WFE tool hardware BOM, field service maintenance SLAs & chemical reduction guarantees.',
+inspect_wafer_defects:()=>'Gathered competitor particle defect specs (>19nm defect counts) & TSV copper voiding rates.',
+calc_plating_uniformity:()=>'Analyzed multi-anode current density profile (0.5 to 4.0 A/dm²) achieving 100% TSV copper fill.',
+audit_chemical_recycling:()=>'Audited sulfuric acid / hydrogen peroxide (SPM) chemical recycling efficiency (84% savings).',
+calc_thermal_budget:()=>'Executed 3D Finite Element thermal radiation modeling across 5 heating zones (1,050°C anneal).',
+verify_semi_compliance:()=>'Verified SEMI S2 exhaust gas scrubbing integration & over-temperature safety interlock circuits.',
+eval_acmr_eco:()=>'Extracted CAD robot end-effector 3D model diffs, wafer pickup tolerances & PEEK certification.',
+inspect_secsgem_logs:()=>'Verified SECS/GEM host communications, automated recipe download & sub-second sensor data streaming.',
+compose:()=>'Drafted in a clear, semiconductor WFE, SEMI S2/S8 & cleanroom Class 1 standards-aware style, review-ready.',
+qa_review:()=>'QA: SEMI S2 safety, SEMI S8 ergonomics & Class 1 cleanroom particle logs checked.',
+save:()=>'Saved to shared context for downstream agents.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+const FINAL={
+scout:`TARGET SEMICONDUCTOR FOUNDRY & ADVANCED PACKAGING FAB DISCOVERY LIST (illustrative)
+Scanned global 300mm semiconductor wafer fabs, memory chipmakers, and OSAT packaging facilities.
+
+A-Tier Priority Semiconductor Fab Target Accounts:
+1. Global 300mm Advanced Logic Foundry (3nm/2nm Node Clean Expansion) — Fit Score: 99
+2. Tier-1 3D NAND & DRAM Memory Manufacturer (80,000 WSPM Fab Line) — Fit Score: 98
+3. High-Density OSAT 3D Chiplet & TSV Packaging Provider — Fit Score: 96
+4. Specialty Compound Semiconductor Fab (SiC / GaN Power Electronics) — Fit Score: 93
+
+Key Decision Makers: VP of Fab Operations, Director of Process Integration, Chief Yield Engineer.
+→ Saved: target_acmr_accounts, wfe_specs, fit_scores
+NOTE: illustrative; not affiliated with ACM Research, Inc.`,
+quote:`TURNKEY MULTI-CHAMBER ULTRA ECP & SAPS CLEAN WFE QUOTING PROPOSAL (illustrative)
+Client Partner: 300mm High-Volume Semiconductor Manufacturing Fab Line
+Scope: Ultra ECP Copper Plating Tools + SAPS Megasonic Cleaners
+
+WFE Equipment & Cleanroom Manifest
+• Megasonic Cleaning: 4 SAPS V 300mm Single-Wafer Tools (12 Process Chambers each, 1.0MHz)
+• Electrochemical Plating: 6 Ultra ECP 3D TSV Copper Plating Tools (Multi-Anode Current Control)
+• Chemical Recycling: Integrated Tahoe SPM Chemical Recycling Loop (84% acid reduction)
+
+Pricing & Logistics Schedule
+• Total Turnkey Contract Value (10 Tools + Installation + 3-Yr Field Service): $48,000,000.00
+• Field Service SLA: 24/7 on-site semiconductor field application engineer support
+• Safety & Fab Certification: 100% SEMI S2 / SEMI S8 Certified
+→ Saved: acmr_wfe_quote, tool_bom_manifest
+NOTE: illustrative.`,
+tender:`GLOBAL 300MM MEMORY FAB ADVANCED WET PROCESSING MASTER TENDER RESPONSE (illustrative)
+RFP Reference: 3-Year Master Wafer Cleaning & ECP Equipment Contract across 4 Global Memory Fabs
+
+Cleanroom Uptime & Regulatory Compliance
+• SEMI Safety Compliance: SEMI S2 (Safety) and SEMI S8 (Ergonomics) Certified.
+• Tool Availability SLA: 99.8% guaranteed tool uptime across HVM memory production lines.
+• Automation Protocol: Certified SECS/GEM (E30/E37) host interface with sub-second telemetry.
+
+Master Commercial Terms
+• Consignment Spare Parts: $6.5M local spare parts inventory buffer maintained near fab sites.
+→ Saved: global_memory_tender, semi_s2_certificate
+NOTE: illustrative.`,
+radar:`SEMICONDUCTOR CAPITAL EQUIPMENT & ADVANCED PACKAGING MARKET INTELLIGENCE BRIEF (illustrative)
+Semiconductor WFE & Cleaning Market Trends
+• 3D NAND & 2nm Particle Defect Thresholds: Sub-20nm particles causing catastrophic yield loss in 3D structures.
+• Chemical Cost & ESG Pressure: Fabs actively replacing conventional batch wet benches with Tahoe hybrid tools.
+
+ACM Research Competitive Advantage
+• SAPS & TEBO Technology: Alternating phase shift megasonic waves eliminate fine structure damage.
+• Ultra ECP Leadership: High-aspect ratio 3D TSV copper plating without voids.
+→ Saved: acmr_intel_brief, competitive_positioning
+NOTE: illustrative.`,
+panel_qualification:`SAPS V 300mm MEGASONIC CLEANING & PARTICLE DEFECT QUALIFICATION DOSSIER (illustrative · flagship)
+Target Tool: SAPS V 300mm Single-Wafer Cleaning System (Part #SAPS-300V)
+Testing Standard: 10,000-Wafer Marathon Run & KLA Laser Surface Inspection (@ 19nm particle size)
+
+Factory Qualification Results
+• Particle Removal Efficiency (PRE): 99.4% PRE achieved for 19nm particles (Exceeds >99.0% specification).
+• Wafer Pattern Damage Rate: 0% pattern line collapse or feature destruction across 10,000 wafers.
+• Megasonic Energy Uniformity: Acoustic power distribution uniform to ±1.2% across 300mm surface.
+• Chemical Solvent Savings: Tahoe SPM recycling loop achieved 84.6% acid volume reduction.
+
+QA Sign-Off
+• Verified by VP of Semiconductor Process Integration. Cleared for HVM fab customer shipments.
+→ Saved: saps_qualification_dossier, pre_defect_maps
+NOTE: illustrative; confirm against customer wafer fab process recipes.`,
+ecp_plating_yield:`ULTRA ECP TSV COPPER PLATING THICKNESS UNIFORMITY & VOID TEST REPORT (illustrative)
+Testing Laboratory: ACM Research Cleanroom Innovation Center (Fremont, California USA)
+Target Tool: Ultra ECP 3D TSV Copper Plating System
+
+Plating Yield Test Results
+• Thickness Non-Uniformity: 1.42% non-uniformity achieved across 300mm wafer (Exceeds <1.8% target).
+• TSV Voiding Rate: 0 voids detected across 50 FIB-SEM cross-sectional audits (100% bottom-up copper fill).
+• Deposition Rate: 1.8 µm/min high-speed copper deposition achieved with multi-anode control.
+
+Release Status: Certified under ISO 9001 and SEMI E40 fab standards; cleared for OSAT customer delivery.
+→ Saved: ecp_plating_yield_report, fib_sem_cross_sections
+NOTE: illustrative.`,
+thermal_simulation:`ULTRA FURNACE 300MM VERTICAL THERMAL PROCESS CFD SIMULATION STRATEGY (illustrative)
+Simulated System: Ultra Furnace 300mm Vertical High-Temperature Oxidation & Anneal System
+Operating Conditions: 100-Wafer Batch Load @ 1,050°C under N2/O2 Anneal Gas Profile
+
+3D CFD Thermal Simulation Results
+• Thermal Temperature Uniformity: Held 1,050°C ±0.22°C across all 5 independent heating zones.
+• Wafer Thermal Stress: Zero thermal slip lines generated during 50°C/min rapid ramp-down cycle.
+• Gas Flow Distribution: CFD velocity contours confirmed zero stagnant gas boundary layers.
+
+Output: 3D CFD thermal radiation and quartz chamber geometry validated for manufacturing release.
+→ Saved: furnace_thermal_strategy, thermal_3d_contours
+NOTE: illustrative.`,
+mask_eco:`CLEANROOM ROBOT ARM END-EFFECTOR & CHEMICAL MANIFOLD ECO REVISION ASSESSMENT (illustrative)
+Engineering Change Order: ECO-2026-995
+Affected Tool: SAPS II / Ultra ECP Cleanroom Wafer Handling Robot & Chemical Manifold (Rev D -> Rev E)
+
+Change Scope & Cleanroom Upgrade
+• PEEK Ceramic End-Effector: Upgraded dual-wafer gripper reducing particle shedding by 90%.
+• Fluoropolymer Manifold: Precision machined PFA manifold eliminating chemical micro-leaks.
+
+Cleanroom Assembly Cut-Over Schedule
+• Factory SMT & PLC Integration: Updated SECS/GEM robot motion profiles and alarm registers.
+• Cleanroom Assembly Traveler: Updated Rev E assembly traveler cards issued to Fremont manufacturing.
+→ Saved: acmr_eco_matrix, rev_e_cleanroom_traveler
+NOTE: illustrative.`,
+};
+let EMPLOYEES=[
+{id:'scout',name:'Scout',title:'AI Opportunity Scout',wf:'scout',handled:340,hrs:135,win:0,status:'idle'},
+{id:'quote',name:'Quote',title:'AI WFE Solution Quoting Operator',wf:'quote',handled:280,hrs:160,win:74,status:'idle'},
+{id:'tender',name:'Tender',title:'AI Global Fab Master Operator',wf:'tender',handled:195,hrs:180,win:80,status:'idle'},
+{id:'radar',name:'Radar',title:'AI WFE Market Intelligence',wf:'radar',handled:240,hrs:110,win:44,status:'idle'},
+{id:'saps',name:'Sentinel',title:'AI WFE Tool Qualification Operator',wf:'panel_qualification',handled:230,hrs:245,win:98,status:'idle'},
+{id:'ecp',name:'Atlas',title:'AI Electrochemical Plating Operator',wf:'ecp_plating_yield',handled:275,hrs:170,win:84,status:'idle'},
+{id:'thermal',name:'Vanguard',title:'AI Thermal CFD & Vacuum Operator',wf:'thermal_simulation',handled:225,hrs:150,win:74,status:'idle'},
+{id:'eco',name:'Nexus',title:'AI WFE Revision Control Operator',wf:'mask_eco',handled:230,hrs:155,win:80,status:'idle'},
+];
+let running=false;
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const now=()=>new Date().toLocaleTimeString('en-GB');
+const mono=n=>n.trim().slice(0,2).toUpperCase();
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Commercial</span>';if(wf.track==='operations')s+='<span class="tag operations">WFE Process &amp; Ops</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+function setView(v){
+$('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');
+$('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');
+if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderEcon(){
+const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);
+const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;
+const cells=[[total,'AI operators (commercial + WFE process ops)'],[h.toLocaleString(),'quotes, SAPS clean audits & ECP plating runs handled'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','fab process engineer & sales hours saved / month'],['+'+avg+'%','avg turnaround improvement']];
+$('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');
+}
+function empCard(e){const wf=WORKFLOWS[e.wf];
+const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');
+return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}">
+<div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div>
+<div class="emp-owns">Owns: <b>${wf.name}</b></div>
+<div class="team">${team}</div>
+<div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'—'}</b>faster</div></div>
+<div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a project / RFQ</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;
+}
+function renderRoster(){
+const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;
+let html='';
+TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;
+html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});
+const untracked=EMPLOYEES.filter(e=>!WORKFLOWS[e.wf].track);
+if(untracked.length)html+=`<div class="slabel">Other</div><div class="roster">`+untracked.map(empCard).join('')+`</div>`;
+$('roster').innerHTML=html;
+}
+function assign(id){
+if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+$('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div>
+<div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a semiconductor fab account, a KLA defect scan report, or a tool CAD file and ${e.name} runs the whole loop.</div></div></div>
+<div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div>
+<div id="stage"></div></div>`;
+$('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();
+}
+async function runEmp(id){
+if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;
+e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');
+const stage=$('stage');
+stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div>
+<div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div>
+<div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;
+const feed=$('feed');
+function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;
+const row=document.createElement('div');row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,150)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}
+log(null,`Input received: "${obj.substring(0,54)}…"`);
+log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);
+await sleep(rand(700,1100));
+const grid=$('agrid');
+wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;
+c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;
+grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});
+await sleep(600);
+$('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');
+const done=new Set();
+async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);
+c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';
+log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));
+for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}
+c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}
+if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}
+else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;
+if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}
+$('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');
+await sleep(400);
+const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(6,44);
+$('resultArea').innerHTML=`<div class="result"><div class="rstats">
+<div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div>
+<div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div>
+<div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'Commercial & Sales':'WFE Process & Fab Ops'}</span></div>
+<div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div>
+<div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div>
+<div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div>
+<div class="donebar"><b>${e.name} produced a review-ready output.</b> Execution, WFE tool testing and QA complete, ready for a fab process integration engineer, VP of WFE Operations, or Director of Global Sales to review and confirm. Illustrative simulation placeholder.</div>`;
+e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;
+}
+// builder
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per semiconductor WFE project',step:1};renderBuilder();}
+function renderBuilder(){
+const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];
+$('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();
+}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+
+Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+
+w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+
+`<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;
+document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div>
+<div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. ACM Research Operator" oninput="draft.name=this.value"></div>
+<div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI WFE Tool Specialist" oninput="draft.title=this.value"></div>
+<div class="field"><label>Cadence</label><div class="seg">`+['Per semiconductor WFE project','Per fab line qualification','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div>
+<div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;
+let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();
+const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};
+DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];
+const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});
+renderEcon();renderRoster();setView('ops');
+setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);
+}
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
