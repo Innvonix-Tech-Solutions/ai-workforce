@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trion Technology — AI Commercial &amp; Operational Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#ffffff;
+  --surface:#f0f4f8;
+  --surface2:#d0dfef;
+  --border:#cbd5e1;
+  --accent:#004b87;
+  --accent-light:#0072ce;
+  --accent-cyan:#00a3e0;
+  --accent-dim:rgba(0,75,135,.08);
+  --accent-line:rgba(0,75,135,.30);
+  --navy-dark:#002952;
+  --gold:#c38317;
+  --gold-bg:#fffbeb;
+  --gold-line:#fde68a;
+  --text:#334155;
+  --hi:#0f172a;
+  --tert:#64748b;
+  --ok:#16a34a;
+  --ok-dim:rgba(22,163,74,.10);
+}
+body{background:var(--canvas);color:var(--text);font-family:Roboto,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:36px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--navy-dark));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:12px;letter-spacing:.5px}
+.htitle{font-size:15px;font-weight:700;color:var(--hi);letter-spacing:.3px}.hsub{font-size:11px;color:var(--tert);margin-top:1px}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert)}.badge b{color:var(--accent)}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:600;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.5;max-width:900px;margin-bottom:14px}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.commercial{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.operations{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:24px;font-weight:700;color:var(--accent)}.cell .v .u{color:var(--accent-light)}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--accent);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:"IBM Plex Sans Condensed",sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert)}
+.emp-owns{font-size:12px;margin-bottom:10px}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:inherit;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:var(--accent-line)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--navy-dark);border-color:var(--navy-dark)}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent;color:var(--accent)}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--accent)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto;color:var(--hi)}
+.donebar{background:var(--surface);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;color:var(--text)}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:var(--accent-line)}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:14px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 13px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="header">
+<div class="logo"><div class="mark">TRION</div>
+<div><div class="htitle">Trion Technology · AI Commercial &amp; Operational Workforce</div><div class="hsub">AI operators that discover compound fabs, quote Phantom RIE systems, qualify GaN etch profiles, test Apollo ashing rates, and simulate vacuum loadlocks</div></div></div>
+<div class="badge">Independent concept &nbsp;·&nbsp; <b>illustrative</b></div>
+</header>
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>a plasma etching, PECVD thin film deposition, or photoresist stripping workflow turned into an autonomous team of agents</b>. One track wins the work: it finds compound semiconductor fabs (GaAs, GaN, InP), university nanotechnology centers, and MEMS foundries seeking Phantom RIE ICP, Orion PECVD, and Apollo resist strippers, quotes turnkey plasma processing tools, responds to global university cluster tenders, and tracks cleanroom expansion. The other track delivers the plasma process engineering and fab operations: it qualifies Phantom RIE ICP GaN etch rates &amp; anisotropic sidewall profiles (&gt;88° angle @ 4,500 Å/min), optimizes Apollo plasma stripper photoresist ash rates (&gt;3.0 µm/min with zero oxide damage), simulates vacuum loadlock pump-down CFD dynamics (atmosphere to 10^-3 Torr in &lt;38 sec), and manages gas box manifold ECO revisions. Point one at a fab customer account, an ellipsometry test report, or a PLC recipe file and it runs the loop, then hands back a review-ready output for a VP of R&amp;D or Cleanroom Fab Director to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial</span> find, quote, tender, win</span>
+<span><span class="tag operations">Plasma Systems &amp; Process Ops</span> Phantom GaN qual, Apollo ash yield, loadlock CFD, ECO</span>
+<span><span class="tag hero">Flagship</span> the deepest example run</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+<div class="foot">Independent concept prototype prepared for a conversation with Trion Technology. It is not affiliated with, endorsed by, or built on Trion systems or data. All operators and outputs are illustrative simulations; fab customer accounts, Phantom etch yields, turnkey quote schedules, SEMI S2 audits, and qualification reports are placeholders. A human process engineer, VP of R&amp;D, or Director of Quality Assurance reviews and approves every quote, GaN etch audit, asher test release, SEMI check, and hardware ECO file.</div>
+<script>
+const AGENT_ROLES={
+plasma_etch_process_architect:{emoji:'⚡',label:'Phantom RIE & ICP Plasma Etch Architect',tools:['analyze_plasma_etch_profile','save']},
+pecvd_thin_film_chem_lead:{emoji:'🔮',label:'Orion PECVD & HDCVD Thin Film Deposition Specialist',tools:['calc_dielectric_film_stress','save']},
+compound_semicon_gaas_gan_spec:{emoji:'💎',label:'Compound Semiconductor (GaAs, GaN, InP) Etch Specialist',tools:['test_compound_etch_selectivity','save']},
+photoresist_ashing_qc_analyst:{emoji:'🔥',label:'Apollo & Gemini Photoresist Plasma Ashing QC Analyst',tools:['inspect_resist_strip_rate','save']},
+ald_pvd_thin_film_eng:{emoji:'🔬',label:'Minilock ALD & PVD Atomic Layer Deposition Specialist',tools:['calc_ald_conformal_step_coverage','save']},
+semi_cleanroom_safety_auditor:{emoji:'📋',label:'SEMI S2 & ISO 9001 Plasma System Safety Auditor',tools:['verify_plasma_safety_interlocks','save']},
+turnkey_plasma_tool_quoting_eng:{emoji:'🧮',label:'Turnkey Plasma Etch & Deposition System Quoting Lead',tools:['build_trion_quote','save']},
+vacuum_rf_telemetry_spec:{emoji:'🚚',label:'High-Vacuum Pump & RF Generator Telemetry Lead',tools:['optimize_rf_matching_network','save']},
+eco_chamber_geometry_revision_lead:{emoji:'🔄',label:'Plasma Chamber & Vacuum Loadlock ECO Revision Lead',tools:['eval_trion_eco','save']},
+plc_secs_gem_telemetry_spec:{emoji:'📡',label:'PLC Controller & SECS/GEM Automation Specialist',tools:['inspect_plc_recipe_logs','save']},
+writer:{emoji:'✍️',label:'Technical Plasma Equipment Proposal Writer',tools:['compose','save']},
+reviewer:{emoji:'✅',label:'Semiconductor Quality & SEMI Compliance Reviewer',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+const TRACKS=[['commercial','Commercial & Sales Activities'],['operations','Plasma Process Engineering, Thin Films & Fab Operations']];
+const WORKFLOWS={
+scout:{name:'Global compound fab, university research & MEMS foundry discovery',title:'AI Opportunity Scout',mode:'dag',track:'commercial',deliverable:'Target Global Compound Fab, University Research & MEMS Foundry Discovery List',
+sample:'Identify compound semiconductor fabs (GaAs, GaN, InP), university nanotechnology centers, and MEMS foundries seeking compact RIE, ICP, PECVD, and plasma stripping tools.',
+desc:'Agents map global microelectronics fabs, source VP of R&D and Cleanroom Fab Managers, score annual capital equipment budget ($5M+ per account), and build the target Trion sales pipeline.',
+tasks:[{agent:'compound_semicon_gaas_gan_spec',task:'Source tier-1 compound semiconductor fabs (RF GaN, GaAs MMICs), MEMS foundries, and university nanofabrication centers.',deps:[]},
+{agent:'plasma_etch_process_architect',task:'Score accounts on Phantom RIE ICP etch demand, Orion PECVD oxide/nitride deposition requirements, and Apollo resist stripper tool availability.',deps:[0]},
+{agent:'writer',task:'Compile target semiconductor lead list with key Cleanroom Fab Director and Equipment Operations Manager contacts.',deps:[1]}]},
+quote:{name:'Phantom RIE ICP + Orion PECVD cluster tool package quote',title:'AI Plasma System Solution Quoting Operator',mode:'sequential',track:'commercial',deliverable:'Turnkey Plasma Etch & Deposition System Quoting Proposal',
+sample:'Generate commercial proposal for a loadlocked Phantom RIE ICP etch system + Orion PECVD deposition tool + 3-year spare parts kit ($1.45M turnkey contract).',
+desc:'Agents confirm wafer size flexibility (up to 200mm / 8-inch), model RF generator power matching efficiency (13.56 MHz @ 1,000W), structure multi-year warranty SLAs, and issue proposal.',
+tasks:[{agent:'plasma_etch_process_architect',task:'Confirm tool specifications (Phantom RIE ICP, vacuum loadlock, 13.56 MHz RF generator, turbo pump high vacuum, mass flow controllers).',deps:[]},
+{agent:'turnkey_plasma_tool_quoting_eng',task:'Structure equipment hardware BOM, vacuum pumps, chillers, spare parts kit, field installation, and warranty options ($1,450,000 turnkey order).',deps:[0]},
+{agent:'writer',task:'Produce formal customer-ready Trion Technology plasma system proposal.',deps:[1]}]},
+tender:{name:'Global university nanofabrication & MEMS cluster tool master tender',title:'AI Global Cluster Tool Master Tender Operator',mode:'dag',track:'commercial',deliverable:'Global University Nanofabrication & MEMS Cluster Tool Master Tender Response',
+sample:'Prepare 3-year master plasma etching and PECVD deposition tool supply contract for a major university nanotechnology research center.',
+desc:'Agents verify SEMI S2 safety compliance, 99.0% tool availability guarantee, automated PLC recipe management, and 24-hour technical support SLA, compiling master tender response.',
+tasks:[{agent:'plc_secs_gem_telemetry_spec',task:'Verify PLC touchscreen controller interface, SECS/GEM fab host communications, and multi-user recipe access security.',deps:[]},
+{agent:'vacuum_rf_telemetry_spec',task:'Structure high-vacuum turbomolecular pump backing schedules, process gas delivery cabinets, and RF matching network telemetry.',deps:[0]},
+{agent:'turnkey_plasma_tool_quoting_eng',task:'Structure 3-year tiered research tool pricing and emergency field service SLAs.',deps:[1]},
+{agent:'writer',task:'Generate comprehensive global research fab cluster tool master tender response.',deps:[2]}]},
+radar:{name:'Plasma etch, PECVD & resist stripping tool market intelligence',title:'AI Plasma Equipment Market Intelligence',mode:'dag',track:'commercial',deliverable:'Plasma Etch, PECVD & Resist Stripping Tool Market Intelligence Brief',
+sample:'Analyze plasma equipment competitors (Oxford Instruments, Plasma-Therm, Samco, SUSS MicroTec) vs Trion Technology.',
+desc:'Agents track competitor etch rate selectivity, benchmark Trion 30+ years of compact footprint engineering, and build market intelligence brief.',
+tasks:[{agent:'photoresist_ashing_qc_analyst',task:'Gather competitor photoresist stripping rates (>2.5 µm/min clean ash rate) and substrate thermal budget protection data.',deps:[]},
+{agent:'pecvd_thin_film_chem_lead',task:'Highlight Trion proprietary Orion PECVD low-stress SiO2/Si3N4 deposition, Minilock ALD step coverage, and affordable cost of ownership.',deps:[]},
+{agent:'writer',task:'Produce quarterly plasma capital equipment market intelligence and competitive positioning brief.',deps:[0,1]}]},
+panel_qualification:{name:'Phantom RIE ICP GaN etch rate & anisotropic profile qualification',title:'AI Plasma Tool Safety Qualification Operator',mode:'dag',track:'operations',tag:'flagship',deliverable:'Phantom RIE ICP GaN Etch Rate & Anisotropic Profile Qualification Dossier',
+sample:'Execute 100-wafer GaN power device etch qualification (Cl2/BCl3 chemistry, etch rate @ 4,500 Å/min, >88° sidewall angle) for Phantom RIE ICP System.',
+desc:'Agents audit RF power stability (±0.5% @ 600W ICP), test helium backside cooling wafer temp retention (<65°C), measure SiO2 mask selectivity (>15:1), and publish qualification dossier.',
+tasks:[{agent:'plasma_etch_process_architect',task:'Simulate Cl2/BCl3 inductively coupled plasma ion density and radical recombination kinetics across GaN/AlGaN heterostructures.',deps:[]},
+{agent:'pecvd_thin_film_chem_lead',task:'Audit Orion PECVD silicon nitride passivation film stress (<50 MPa compressive) and breakdown voltage (>8 MV/cm).',deps:[]},
+{agent:'semi_cleanroom_safety_auditor',task:'Audit SEMI S2 environmental safety, gas box toxic gas sensors, and ISO 9001 manufacturing quality logs.',deps:[0,1]},
+{agent:'reviewer',task:'QA CE mark compliance, NFPA 79 electrical safety, and SEMI S8 ergonomic hazard evaluations.',deps:[2]},
+{agent:'writer',task:'Produce complete Phantom RIE ICP GaN etch qualification report.',deps:[3]}]},
+ash_line_yield:{name:'Apollo plasma stripper photoresist ash rate & substrate damage test',title:'AI Plasma Ashing Operations Operator',mode:'sequential',track:'operations',deliverable:'Apollo Plasma Stripper Photoresist Ash Rate & Substrate Damage Test Report',
+sample:'Optimize 200mm wafer downstream oxygen plasma photoresist stripping rate (>3.0 µm/min) with zero gate oxide damage.',
+desc:'Agents analyze RF bias power suppression, measure C-V oxide charge buildup (<0.1V shift), and calibrate optical emission spectroscopy (OES) end-point detection.',
+tasks:[{agent:'photoresist_ashing_qc_analyst',task:'Analyze O2/CF4 plasma ash rate kinetics and residual organic contamination levels on post-ash wafers.',deps:[]},
+{agent:'ald_pvd_thin_film_eng',task:'Perform 100% surface roughness ellipsometry and CV charge measurement across 50 test wafer runs.',deps:[0]},
+{agent:'reviewer',task:'QA finished plasma stripper factory acceptance test (FAT) metrics against customer specs.',deps:[1]},
+{agent:'writer',task:'Produce comprehensive Apollo plasma stripper yield report.',deps:[2]}]},
+thermal_simulation:{name:'Vacuum loadlock & plasma chamber vacuum purge CFD simulation',title:'AI Vacuum Chamber CFD Operator',mode:'dag',track:'operations',deliverable:'Vacuum Loadlock & Plasma Chamber Vacuum Purge CFD Simulation Strategy',
+sample:'Generate automated 3D CFD rarefied gas simulation for Minilock vacuum loadlock pump-down cycles (atmosphere to 10^-3 Torr in <45 seconds).',
+desc:'Agents configure molecular flow gas velocity vectors, simulate N2 purge gas laminar flow, and prevent particle turbulence during rapid pump-down.',
+tasks:[{agent:'vacuum_rf_telemetry_spec',task:'Execute 3D Finite Element CFD rarefied gas dynamics modeling across vacuum loadlock chamber (pump-down time reduced to 38 seconds).',deps:[]},
+{agent:'semi_cleanroom_safety_auditor',task:'Verify cleanroom toxic gas cabinet exhaust and vacuum pump abatement scrubbers.',deps:[]},
+{agent:'writer',task:'Produce vacuum loadlock CFD flow management strategy documentation.',deps:[0,1]}]},
+mask_eco:{name:'Plasma chamber gas box manifold ECO & PLC controller firmware revision control',title:'AI Equipment Hardware Revision Control Operator',mode:'sequential',track:'operations',deliverable:'Plasma Chamber Gas Box Manifold ECO & PLC Controller Firmware Revision Assessment',
+sample:'Evaluate ECO-2026-1030 (Upgrade to orbital-welded VCR gas lines & PLC Firmware Rev H recipe engine for Phantom RIE tools).',
+desc:'Agents evaluate CAD gas box manifold assembly diffs, recalculate helium leak rate (<10^-9 atm·cc/sec), and update automated factory assembly travelers.',
+tasks:[{agent:'eco_chamber_geometry_revision_lead',task:'Compare CAD 3D gas manifold geometry diffs, VCR fitting tolerances, and mass flow controller (MFC) calibration curves.',deps:[]},
+{agent:'plc_secs_gem_telemetry_spec',task:'Update PLC controller firmware and SECS/GEM E30 variable dictionary files.',deps:[0]},
+{agent:'writer',task:'Publish integrated Trion Technology equipment ECO cut-over matrix and factory assembly traveler guide.',deps:[1]}]},
+};
+const DTITLE={
+scout:'Target Global Compound Fab, University Research & MEMS Foundry Discovery List',
+quote:'Turnkey Plasma Etch & Deposition System Quoting Proposal',
+tender:'Global University Nanofabrication & MEMS Cluster Tool Master Tender Response',
+radar:'Plasma Etch, PECVD & Resist Stripping Tool Market Intelligence Brief',
+panel_qualification:'Phantom RIE ICP GaN Etch Rate & Anisotropic Profile Qualification Dossier',
+ash_line_yield:'Apollo Plasma Stripper Photoresist Ash Rate & Substrate Damage Test Report',
+thermal_simulation:'Vacuum Loadlock & Plasma Chamber Vacuum Purge CFD Simulation Strategy',
+mask_eco:'Plasma Chamber Gas Box Manifold ECO & PLC Controller Firmware Revision Assessment'
+};
+const TOOLS={
+source_compound_fabs:()=>'Sourced tier-1 compound semiconductor fabs (RF GaN, GaAs MMICs), MEMS foundries & university centers.',
+analyze_plasma_etch_profile:()=>'Confirmed tool specs (Phantom RIE ICP, vacuum loadlock, 13.56 MHz RF generator, turbo pump).',
+build_trion_quote:()=>'Structured equipment hardware BOM, vacuum pumps, chillers, spare parts kit & field installation.',
+inspect_resist_strip_rate:()=>'Gathered competitor photoresist stripping rates (>2.5 µm/min) & substrate thermal budget data.',
+calc_ald_conformal_step_coverage:()=>'Performed 100% surface roughness ellipsometry & CV charge measurement across 50 test wafer runs.',
+calc_dielectric_film_stress:()=>'Scored accounts on Orion PECVD low-stress SiO2/Si3N4 deposition & Minilock ALD step coverage.',
+verify_plasma_safety_interlocks:()=>'Audited SEMI S2 environmental safety, gas box toxic gas sensors & ISO 9001 quality logs.',
+optimize_rf_matching_network:()=>'Structured high-vacuum turbomolecular pump backing schedules, gas cabinets & RF matching telemetry.',
+eval_trion_eco:()=>'Extracted CAD 3D gas manifold geometry diffs, VCR fitting tolerances & MFC calibration curves.',
+inspect_plc_recipe_logs:()=>'Verified PLC touchscreen controller interface, SECS/GEM fab host communications & recipe security.',
+test_compound_etch_selectivity:()=>'Simulated Cl2/BCl3 inductively coupled plasma ion density & radical recombination across GaN/AlGaN.',
+compose:()=>'Drafted in a clear, plasma capital equipment, SEMI S2 & ISO cleanroom standards-aware style, review-ready.',
+qa_review:()=>'QA: CE mark compliance, NFPA 79 electrical safety & SEMI S8 ergonomic hazard logs checked.',
+save:()=>'Saved to shared context for downstream agents.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+const FINAL={
+scout:`TARGET GLOBAL COMPOUND FAB, UNIVERSITY RESEARCH & MEMS FOUNDRY DISCOVERY LIST (illustrative)
+Scanned global GaAs/GaN compound semiconductor fabs, university nanotechnology research centers, and MEMS foundries.
+
+A-Tier Priority Plasma Equipment Target Accounts:
+1. Premier GaN-on-SiC Power & RF Semiconductor Fab (Phantom RIE ICP & Minilock DRIE Systems) — Fit Score: 99
+2. Leading University Nanofabrication Facility (Orion PECVD & Minilock ALD Deposition Tools) — Fit Score: 97
+3. Specialty MEMS Sensor & Microfluidics Foundry (Apollo Photoresist Ashing & Etch Systems) — Fit Score: 95
+4. Failure Analysis & IC De-Capsulation R&D Laboratory — Fit Score: 93
+
+Key Decision Makers: VP of R&D, Cleanroom Fab Manager, Director of Nanofabrication, Equipment Operations Lead.
+→ Saved: target_trion_fabs, plasma_specs, fit_scores
+NOTE: illustrative; not affiliated with Trion Technology.`,
+quote:`TURNKEY PLASMA ETCH & DEPOSITION SYSTEM QUOTING PROPOSAL (illustrative)
+Client Partner: Major University Nanotechnology Research Center
+Scope: Phantom RIE ICP Etch Tool + Orion PECVD Deposition System + Vacuum Loadlock
+
+Equipment Hardware & Service Manifest
+• Etch System: Phantom RIE ICP System (Inductively Coupled Plasma, 13.56 MHz 1,000W RF, Turbomolecular Pump)
+• Deposition System: Orion PECVD System (Showerhead Gas Injection, Heated Substrate to 400°C, Low Stress SiO2/Si3N4)
+• Vacuum & Gas Delivery: Minilock Vacuum Loadlock + Dual-Cabinet Mass Flow Controller (MFC) Gas Box
+
+Pricing & Logistics Schedule
+• Total Turnkey Contract Value (Etch + PECVD + Chillers + Spare Parts + Field Installation): $1,450,000.00
+• Fab Uptime SLA: Guaranteed 99.0% tool availability with 24/7 technical hotline support
+• Cleanroom Safety Certifications: SEMI S2, CE Mark, NFPA 79 & ISO 9001 Certified Manufacturing
+→ Saved: trion_plasma_quote, system_bom_manifest
+NOTE: illustrative.`,
+tender:`GLOBAL UNIVERSITY NANOFABRICATION & MEMS CLUSTER TOOL MASTER TENDER RESPONSE (illustrative)
+RFP Reference: 3-Year Master Plasma Etching & PECVD Deposition Tool Supply Contract for Research Fabs
+
+Plasma Tool Performance & Multi-User Reliability
+• GaN Etch Anisotropy: Phantom RIE ICP sidewall angle verified @ >88.5° with Cl2/BCl3 chemistry.
+• Deposition Film Uniformity: Orion PECVD SiO2 thickness uniformity held @ <±1.5% 3-sigma across 200mm wafers.
+• PLC Touchscreen Interface: Automated recipe management with multi-level password security for academic multi-users.
+
+Master Commercial Terms
+• Technical Support SLA: Guaranteed <24-hour engineer response for remote diagnostic or spare parts dispatch.
+→ Saved: global_research_tender, semi_s2_certificate
+NOTE: illustrative.`,
+radar:`PLASMA ETCH, PECVD & RESIST STRIPPING TOOL MARKET INTELLIGENCE BRIEF (illustrative)
+Plasma Equipment Industry Trends
+• Compound Semiconductor Growth: Rising GaN power & RF device production driving ICP dry etch demand (+28% YoY).
+• Research Fab Cost Demands: Universities and R&D foundries seeking compact, full-featured plasma tools with low cost of ownership.
+
+Trion Technology Market Leadership
+• 30+ Years Plasma Engineering: Renowned for compact, high-performance RIE, ICP, PECVD, and plasma stripping systems.
+• Modular Product Flexibility: Phantom, Orion, Minilock, and Titan platforms enabling seamless scalability.
+→ Saved: trion_intel_brief, competitive_positioning
+NOTE: illustrative.`,
+panel_qualification:`PHANTOM RIE ICP GAN ETCH RATE & ANISOTROPIC PROFILE QUALIFICATION DOSSIER (illustrative · flagship)
+Target Tool: Phantom RIE ICP Plasma Etch System (Part #TRI-PHANTOM-ICP)
+Testing Standard: 100-Wafer GaN Power Device Etch Trial & Ellipsometry/SEM Sidewall Profile Inspection
+
+Factory Qualification Results
+• GaN Etch Rate Efficacy: Achieved 4,520 Å/min GaN etch rate with Cl2/BCl3 chemistry (Exceeds >4,000 Å/min target).
+• Sidewall Anisotropy: SEM inspection confirmed vertical sidewall angle @ 88.6° with zero micro-trenching.
+• SiO2 Mask Selectivity: Selectivity to SiO2 hard mask measured @ 16.4:1.
+• Substrate Temperature Control: Backside helium cooling maintained wafer temp @ <62°C under 600W ICP power.
+
+QA Sign-Off
+• Verified by VP of Plasma Process Engineering. Cleared for cleanroom installation.
+→ Saved: phantom_qualification_dossier, gan_etch_sem_micrographs
+NOTE: illustrative; confirm against customer gas box delivery pressure.`,
+ash_line_yield:`APOLLO PLASMA STRIPPER PHOTOREIST ASH RATE & SUBSTRATE DAMAGE TEST REPORT (illustrative)
+Testing Laboratory: Trion Technology Process Applications Facility (Clearwater, Florida USA)
+Target Equipment: Apollo Downstream Plasma Photoresist Stripper (Part #TRI-APOLLO-ASH)
+
+Plasma Ashing & Yield Test Results
+• Photoresist Ashing Rate: Achieved 3.25 µm/min downstream oxygen plasma ash rate across 200mm wafers.
+• Gate Oxide Integrity: High-frequency C-V measurement confirmed zero gate oxide charge damage (<0.04V flatband shift).
+• End-Point Detection Precision: Optical Emission Spectroscopy (OES) end-point system triggered <1.2 seconds post ash.
+
+Release Status: Certified under SEMI S2/S8 standards and ISO 9001 factory specs; cleared for customer shipment.
+→ Saved: apollo_yield_report, oes_endpoint_curves
+NOTE: illustrative.`,
+thermal_simulation:`VACUUM LOADLOCK & PLASMA CHAMBER VACUUM PURGE CFD SIMULATION STRATEGY (illustrative)
+Simulated System: Minilock Vacuum Loadlock & Dual N2 Vent/Purge Gas Distribution Assembly
+Operating Environment: Atmosphere to 10^-3 Torr High-Vacuum Pump-Down Cycle
+
+3D CFD Vacuum Fluid Simulation Results
+• Loadlock Pump-Down Time: Reduced vacuum loadlock pump-down time from 45s to 37.8s (Exceeds <45s target).
+• Particle Turbulence Elimination: Laminar purge flow distribution eliminated fluid turbulence and wafer particle pick-up.
+• Vacuum Seal Thermal Stability: Viton O-ring seal temperature held stable @ 32°C during continuous cycling.
+
+Output: 3D CFD rarefied gas dynamics model and N2 purge vent valve timing validated for production release.
+→ Saved: vacuum_cfd_strategy, rarefied_gas_velocity_vectors
+NOTE: illustrative.`,
+mask_eco:`PLASMA CHAMBER GAS BOX MANIFOLD ECO & PLC CONTROLLER FIRMWARE REVISION ASSESSMENT (illustrative)
+Engineering Change Order: ECO-2026-1030
+Affected System: Phantom RIE Gas Delivery Box & Touchscreen PLC Firmware (Rev G -> Rev H)
+
+Change Scope & Hardware Upgrade
+• Orbital-Welded VCR Manifold: Replaced compression fittings with 100% orbital-welded 316L VCR gas tubing.
+• PLC Recipe Engine Upgrade: Updated Rev H PLC firmware introducing automated multi-step gradient gas ramp controls.
+
+Factory Assembly Cut-Over Schedule
+• Equipment Assembly Line: Calibrated automated helium mass spectrometer leak detector (<10^-9 atm·cc/sec limit).
+• Manufacturing Traveler: Updated Rev H system manufacturing traveler cards issued to Trion plant operations.
+→ Saved: trion_eco_matrix, rev_h_system_traveler
+NOTE: illustrative.`,
+};
+let EMPLOYEES=[
+{id:'scout',name:'Scout',title:'AI Opportunity Scout',wf:'scout',handled:382,hrs:158,win:0,status:'idle'},
+{id:'quote',name:'Quote',title:'AI Plasma System Quoting Operator',wf:'quote',handled:322,hrs:182,win:82,status:'idle'},
+{id:'tender',name:'Tender',title:'AI Global Cluster Tool Operator',wf:'tender',handled:216,hrs:202,win:88,status:'idle'},
+{id:'radar',name:'Radar',title:'AI Plasma Equipment Market Intel',wf:'radar',handled:260,hrs:132,win:52,status:'idle'},
+{id:'safety',name:'Sentinel',title:'AI Plasma Tool Safety Qualification Operator',wf:'panel_qualification',handled:250,hrs:266,win:98,status:'idle'},
+{id:'ash',name:'Atlas',title:'AI Plasma Ashing Operations Operator',wf:'ash_line_yield',handled:296,hrs:190,win:92,status:'idle'},
+{id:'vacuum',name:'Vanguard',title:'AI Vacuum Chamber CFD Operator',wf:'thermal_simulation',handled:246,hrs:170,win:82,status:'idle'},
+{id:'eco',name:'Nexus',title:'AI Equipment Hardware Revision Operator',wf:'mask_eco',handled:250,hrs:176,win:88,status:'idle'},
+];
+let running=false;
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const now=()=>new Date().toLocaleTimeString('en-GB');
+const mono=n=>n.trim().slice(0,2).toUpperCase();
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Commercial</span>';if(wf.track==='operations')s+='<span class="tag operations">Plasma Systems &amp; Process Ops</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+function setView(v){
+$('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');
+$('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');
+if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderEcon(){
+const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);
+const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;
+const cells=[[total,'AI operators (commercial + plasma systems & ops)'],[h.toLocaleString(),'quotes, Phantom GaN etch audits & PECVD runs handled'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','process engineer & cleanroom fab director hours saved / month'],['+'+avg+'%','avg turnaround improvement']];
+$('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');
+}
+function empCard(e){const wf=WORKFLOWS[e.wf];
+const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');
+return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}">
+<div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div>
+<div class="emp-owns">Owns: <b>${wf.name}</b></div>
+<div class="team">${team}</div>
+<div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'—'}</b>faster</div></div>
+<div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a project / RFQ</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;
+}
+function renderRoster(){
+const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;
+let html='';
+TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;
+html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});
+const untracked=EMPLOYEES.filter(e=>!WORKFLOWS[e.wf].track);
+if(untracked.length)html+=`<div class="slabel">Other</div><div class="roster">`+untracked.map(empCard).join('')+`</div>`;
+$('roster').innerHTML=html;
+}
+function assign(id){
+if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+$('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div>
+<div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a fab customer account, an ellipsometry test report, or a PLC recipe file and ${e.name} runs the whole loop.</div></div></div>
+<div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div>
+<div id="stage"></div></div>`;
+$('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();
+}
+async function runEmp(id){
+if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;
+e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');
+const stage=$('stage');
+stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div>
+<div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div>
+<div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;
+const feed=$('feed');
+function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;
+const row=document.createElement('div');row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,150)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}
+log(null,`Input received: "${obj.substring(0,54)}…"`);
+log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);
+await sleep(rand(700,1100));
+const grid=$('agrid');
+wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;
+c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;
+grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});
+await sleep(600);
+$('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');
+const done=new Set();
+async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);
+c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';
+log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));
+for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}
+c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}
+if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}
+else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;
+if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}
+$('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');
+await sleep(400);
+const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(6,44);
+$('resultArea').innerHTML=`<div class="result"><div class="rstats">
+<div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div>
+<div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div>
+<div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'Commercial & Sales':'Plasma Systems & Process Ops'}</span></div>
+<div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div>
+<div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div>
+<div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div>
+<div class="donebar"><b>${e.name} produced a review-ready output.</b> Execution, plasma system testing and QA complete, ready for a process engineer, VP of R&D, or Director of Quality Assurance to review and confirm. Illustrative simulation placeholder.</div>`;
+e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;
+}
+// builder
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per plasma system project',step:1};renderBuilder();}
+function renderBuilder(){
+const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];
+$('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();
+}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+
+Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+
+w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+
+`<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;
+document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div>
+<div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. Trion Plasma Tool Operator" oninput="draft.name=this.value"></div>
+<div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Plasma Equipment Specialist" oninput="draft.title=this.value"></div>
+<div class="field"><label>Cadence</label><div class="seg">`+['Per plasma system project','Per fab batch run','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div>
+<div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;
+let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();
+const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};
+DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];
+const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});
+renderEcon();renderRoster();setView('ops');
+setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);
+}
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
