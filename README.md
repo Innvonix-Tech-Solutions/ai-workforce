@@ -92,3 +92,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/azenta
 https://innvonix-tech-solutions.github.io/ai-workforce/innospec
 https://innvonix-tech-solutions.github.io/ai-workforce/dawson-wells/Home
 https://innvonix-tech-solutions.github.io/ai-workforce/dawson-wells/art-work
+https://innvonix-tech-solutions.github.io/ai-workforce/shellback
