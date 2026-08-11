@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dawson Wells Gallery — Modern &amp; Contemporary Art</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1a1a;
+    --paper:#f5f3ee;
+    --paper-2:#efece4;
+    --muted:#7a746b;
+    --line:#d9d4c8;
+    --accent:#8a6d4b;
+    --white:#fbfaf7;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .serif{font-family:'Cormorant Garamond',serif;}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{max-width:1320px;margin:0 auto;padding:0 40px}
+  .eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);font-weight:500}
+
+  /* Header */
+  header{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .4s ease,border-color .4s ease,padding .4s ease;padding:26px 0;border-bottom:1px solid transparent}
+  header.scrolled{background:rgba(245,243,238,.9);backdrop-filter:blur(12px);border-color:var(--line);padding:16px 0}
+  .navbar{display:flex;align-items:center;justify-content:space-between}
+  .brand{font-family:'Cormorant Garamond',serif;font-size:24px;letter-spacing:.18em;font-weight:600;text-transform:uppercase}
+  .brand small{display:block;font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.34em;color:var(--muted);font-weight:400;margin-top:2px}
+  nav ul{display:flex;gap:38px;list-style:none;align-items:center}
+  nav a{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);position:relative;padding:4px 0}
+  nav a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--accent);transition:width .3s ease}
+  nav a:hover::after{width:100%}
+  .has-sub{position:relative}
+  .sub{position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(8px);background:var(--white);border:1px solid var(--line);padding:14px 6px;min-width:190px;opacity:0;visibility:hidden;transition:.28s ease;box-shadow:0 24px 50px -30px rgba(0,0,0,.4)}
+  .has-sub:hover .sub{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+  .sub a{display:block;padding:9px 22px;font-size:11.5px;letter-spacing:.14em}
+  .sub a:hover{background:var(--paper-2);color:var(--accent)}
+  .sub a::after{display:none}
+  .lang{font-size:11px;letter-spacing:.14em;color:var(--muted);border:1px solid var(--line);padding:6px 12px;border-radius:2px}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none}
+  .burger span{width:24px;height:1.5px;background:var(--ink);transition:.3s}
+
+  /* Hero */
+  .hero{min-height:100vh;display:flex;align-items:flex-end;position:relative;padding-bottom:70px;overflow:hidden}
+  .hero-art{position:absolute;inset:0;z-index:0}
+  .hero-art .field{position:absolute;inset:0;
+    background:
+      radial-gradient(120% 90% at 72% 30%, #cdb79a 0%, #b79b78 22%, #8f7a63 48%, #5c5248 74%, #2e2a26 100%);
+  }
+  .hero-art .veil{position:absolute;inset:0;background:linear-gradient(180deg, rgba(245,243,238,.15) 0%, rgba(26,26,26,.15) 60%, rgba(26,26,26,.55) 100%)}
+  .hero-art .grain{position:absolute;inset:0;opacity:.10;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+  .hero-inner{position:relative;z-index:2;color:var(--white)}
+  .hero h1{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(46px,8vw,104px);line-height:.98;letter-spacing:.005em;max-width:14ch}
+  .hero h1 em{font-style:italic;color:#e9dcc6}
+  .hero p{max-width:46ch;margin-top:26px;font-weight:300;font-size:16px;color:rgba(251,250,247,.82)}
+  .hero .cta-row{margin-top:38px;display:flex;gap:18px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;padding:15px 30px;border:1px solid rgba(251,250,247,.55);color:var(--white);transition:.32s ease}
+  .btn:hover{background:var(--white);color:var(--ink);border-color:var(--white)}
+  .btn.dark{border-color:var(--ink);color:var(--ink)}
+  .btn.dark:hover{background:var(--ink);color:var(--white)}
+  .btn.solid{background:var(--white);color:var(--ink);border-color:var(--white)}
+  .btn.solid:hover{background:transparent;color:var(--white)}
+  .hero-eyebrow{position:absolute;top:132px;left:0;z-index:2;color:rgba(251,250,247,.75)}
+
+  /* Section shell */
+  section{position:relative}
+  .band{padding:120px 0}
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;margin-bottom:52px}
+  .sec-head h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(32px,4.4vw,54px);line-height:1.02;max-width:16ch}
+  .sec-head .link{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);white-space:nowrap;border-bottom:1px solid var(--line);padding-bottom:4px;transition:.3s}
+  .sec-head .link:hover{color:var(--accent);border-color:var(--accent)}
+
+  /* Featured grid */
+  .feature-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:26px}
+  .piece{position:relative;overflow:hidden;cursor:pointer;background:#ddd}
+  .piece .canvas{position:relative;width:100%;height:100%;transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+  .piece:hover .canvas{transform:scale(1.04)}
+  .piece .meta{position:absolute;left:0;right:0;bottom:0;padding:22px 24px;color:#fff;
+    background:linear-gradient(0deg, rgba(20,18,15,.78) 0%, rgba(20,18,15,0) 100%);
+    transform:translateY(8px);opacity:0;transition:.4s ease}
+  .piece:hover .meta{transform:translateY(0);opacity:1}
+  .piece .meta .t{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;line-height:1.1}
+  .piece .meta .d{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-top:6px}
+  .piece .tag{position:absolute;top:18px;left:18px;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;background:rgba(251,250,247,.92);color:var(--ink);padding:6px 11px}
+  .c-tall{grid-column:span 4;aspect-ratio:3/4.2}
+  .c-wide{grid-column:span 8;aspect-ratio:16/10}
+  .c-half{grid-column:span 6;aspect-ratio:4/3.1}
+  .c-third{grid-column:span 4;aspect-ratio:3/3.6}
+
+  /* generated artwork surfaces */
+  .art1{background:radial-gradient(90% 120% at 30% 20%,#e3d4bd,#b9a07e 45%,#6f5f4c 80%,#38312a)}
+  .art2{background:linear-gradient(135deg,#2b2f36 0%,#4a5560 40%,#8a97a1 100%)}
+  .art3{background:radial-gradient(80% 80% at 70% 30%,#d8b48f,#a9764f 55%,#5e3d29)}
+  .art4{background:linear-gradient(160deg,#efe9dd,#c9bfa9 45%,#8b8271)}
+  .art5{background:radial-gradient(70% 90% at 40% 60%,#c46a52,#8a3f33 55%,#3a1f1c)}
+  .art6{background:linear-gradient(135deg,#1f2a24,#3f5a4c 50%,#9db8a6)}
+  .art7{background:radial-gradient(90% 90% at 60% 40%,#e7ddcb,#b7ab8f 50%,#6d6350)}
+  .art-stroke{position:absolute;inset:0;opacity:.5;mix-blend-mode:soft-light;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.14' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .placeholder-note{margin-top:14px;font-size:11px;color:var(--muted);letter-spacing:.04em}
+
+  /* Categories */
+  .cats{background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .cat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0}
+  .cat{padding:64px 26px;border-right:1px solid var(--line);text-align:center;transition:.4s ease;cursor:pointer}
+  .cat:last-child{border-right:none}
+  .cat:hover{background:var(--white)}
+  .cat .n{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+  .cat h3{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:500;margin-top:14px;transition:.3s}
+  .cat:hover h3{color:var(--accent)}
+  .cat .cnt{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:10px}
+
+  /* About split */
+  .split{display:grid;grid-template-columns:1.05fr .95fr;gap:70px;align-items:center}
+  .about-art{aspect-ratio:4/4.6;position:relative;overflow:hidden}
+  .split h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(30px,4vw,50px);line-height:1.06;margin:22px 0 22px}
+  .split p{color:#514c44;margin-bottom:18px;font-weight:300;font-size:16px}
+  .pillars{display:flex;gap:34px;margin-top:30px}
+  .pillars div span{display:block;font-family:'Cormorant Garamond',serif;font-size:38px;color:var(--accent)}
+  .pillars div small{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+  /* News */
+  .news{background:var(--ink);color:var(--white)}
+  .news .eyebrow,.news .sec-head .link{color:rgba(251,250,247,.6)}
+  .news .sec-head h2{color:var(--white)}
+  .news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:34px}
+  .post .thumb{aspect-ratio:16/11;overflow:hidden;position:relative}
+  .post .thumb .canvas{width:100%;height:100%;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+  .post:hover .thumb .canvas{transform:scale(1.05)}
+  .post .date{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(251,250,247,.55);margin:20px 0 10px}
+  .post h3{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:25px;line-height:1.18}
+  .post:hover h3{color:#e9dcc6}
+  .post p{font-size:14px;color:rgba(251,250,247,.6);margin-top:10px;font-weight:300}
+
+  /* Visit CTA */
+  .visit{text-align:center;padding:130px 0}
+  .visit h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(38px,6vw,76px);line-height:1.02;max-width:18ch;margin:20px auto 30px}
+  .visit p{max-width:52ch;margin:0 auto 40px;color:#514c44;font-weight:300}
+
+  /* Footer */
+  footer{background:var(--paper-2);border-top:1px solid var(--line);padding:80px 0 40px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:40px;padding-bottom:60px;border-bottom:1px solid var(--line)}
+  .foot-grid h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+  .foot-grid ul{list-style:none}
+  .foot-grid li{margin-bottom:12px;font-size:14px;color:#514c44}
+  .foot-grid a:hover{color:var(--accent)}
+  .foot-brand .serif{font-size:30px;letter-spacing:.14em}
+  .foot-brand p{font-size:14px;color:#514c44;margin-top:16px;font-weight:300;max-width:34ch}
+  .foot-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:26px;font-size:12px;color:var(--muted);letter-spacing:.06em}
+  .proto-badge{position:fixed;bottom:18px;right:18px;z-index:60;background:var(--ink);color:#fff;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;padding:9px 15px;border-radius:2px;opacity:.86}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:1024px){
+    .wrap{padding:0 26px}
+    .split{grid-template-columns:1fr;gap:40px}
+    .news-grid{grid-template-columns:1fr 1fr}
+    .cat-grid{grid-template-columns:repeat(2,1fr)}
+    .cat{border-bottom:1px solid var(--line)}
+    .foot-grid{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:760px){
+    nav ul{display:none}
+    .burger{display:flex}
+    header{padding:18px 0}
+    .band{padding:78px 0}
+    .feature-grid{grid-template-columns:1fr;gap:18px}
+    .c-tall,.c-wide,.c-half,.c-third{grid-column:span 1;aspect-ratio:4/3.3}
+    .news-grid{grid-template-columns:1fr}
+    .cat-grid{grid-template-columns:1fr}
+    .sec-head{flex-direction:column;align-items:flex-start}
+    .pillars{flex-wrap:wrap;gap:24px}
+    .mobile-menu.open{display:block}
+  }
+  .mobile-menu{display:none;position:fixed;inset:0;z-index:45;background:var(--paper);padding:100px 30px}
+  .mobile-menu a{display:block;font-family:'Cormorant Garamond',serif;font-size:32px;padding:12px 0;border-bottom:1px solid var(--line)}
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <div class="wrap navbar">
+    <a href="#" class="brand">Dawson Wells<small>Modern &amp; Contemporary Art</small></a>
+    <nav>
+      <ul>
+        <li><a href="#featured">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li class="has-sub"><a href="#featured">Artworks</a>
+          <div class="sub">
+            <a href="#featured">Photography</a>
+            <a href="#featured">Paintings</a>
+            <a href="#featured">Drawings</a>
+            <a href="#featured">Ceramics</a>
+            <a href="#featured">Prints</a>
+          </div>
+        </li>
+        <li><a href="#news">News &amp; Updates</a></li>
+        <li><a href="#visit">Contact</a></li>
+        <li><span class="lang">EN</span></li>
+      </ul>
+    </nav>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mm">
+  <a href="#featured">Home</a>
+  <a href="#about">About</a>
+  <a href="#featured">Artworks</a>
+  <a href="#news">News &amp; Updates</a>
+  <a href="#visit">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-art">
+    <div class="field"></div>
+    <div class="grain"></div>
+    <div class="veil"></div>
+  </div>
+  <div class="wrap hero-eyebrow eyebrow reveal">Est. 2024 — A Global Gallery</div>
+  <div class="wrap hero-inner">
+    <h1 class="reveal">Where modern <em>vision</em><br>meets the<br>contemporary eye.</h1>
+    <p class="reveal">Dawson Wells Gallery presents a curated collection of modern and contemporary works — painting, photography, drawing, ceramics and prints — assembled for those who look closely.</p>
+    <div class="cta-row reveal">
+      <a href="#featured" class="btn solid">Explore the Collection</a>
+      <a href="#visit" class="btn">Visit the Gallery</a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED -->
+<section class="band" id="featured">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="eyebrow">Selected Works</div>
+        <h2 class="serif">A collection assembled with intent, presented with care.</h2>
+      </div>
+      <a href="#" class="link">View all 100 works →</a>
+    </div>
+
+    <div class="feature-grid">
+      <div class="piece c-tall reveal">
+        <div class="canvas art1"><div class="art-stroke"></div></div>
+        <span class="tag">Painting</span>
+        <div class="meta"><div class="t">Umber Field, No. 4</div><div class="d">Oil on linen · 2023 · 160 × 120 cm</div></div>
+      </div>
+      <div class="piece c-wide reveal">
+        <div class="canvas art2"><div class="art-stroke"></div></div>
+        <span class="tag">Photography</span>
+        <div class="meta"><div class="t">Coastline at Dusk</div><div class="d">Archival pigment print · 2024 · 90 × 140 cm</div></div>
+      </div>
+      <div class="piece c-half reveal">
+        <div class="canvas art5"><div class="art-stroke"></div></div>
+        <span class="tag">Painting</span>
+        <div class="meta"><div class="t">Vermillion Study</div><div class="d">Acrylic on panel · 2022 · 100 × 100 cm</div></div>
+      </div>
+      <div class="piece c-third reveal">
+        <div class="canvas art3"><div class="art-stroke"></div></div>
+        <span class="tag">Ceramics</span>
+        <div class="meta"><div class="t">Vessel III</div><div class="d">Stoneware, glaze · 2023 · 42 cm h</div></div>
+      </div>
+      <div class="piece c-third reveal">
+        <div class="canvas art7"><div class="art-stroke"></div></div>
+        <span class="tag">Drawing</span>
+        <div class="meta"><div class="t">Figure, Reclining</div><div class="d">Charcoal on paper · 2021 · 70 × 50 cm</div></div>
+      </div>
+      <div class="piece c-third reveal">
+        <div class="canvas art6"><div class="art-stroke"></div></div>
+        <span class="tag">Print</span>
+        <div class="meta"><div class="t">Green Interval</div><div class="d">Screenprint, ed. 12 · 2024 · 60 × 45 cm</div></div>
+      </div>
+    </div>
+    <p class="placeholder-note reveal">Artwork panels shown are representative placeholders. Your 100 works, images and details populate here through the CMS.</p>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="cats">
+  <div class="cat-grid">
+    <div class="cat reveal"><div class="n">01</div><h3 class="serif">Photography</h3><div class="cnt">22 works</div></div>
+    <div class="cat reveal"><div class="n">02</div><h3 class="serif">Paintings</h3><div class="cnt">31 works</div></div>
+    <div class="cat reveal"><div class="n">03</div><h3 class="serif">Drawings</h3><div class="cnt">18 works</div></div>
+    <div class="cat reveal"><div class="n">04</div><h3 class="serif">Ceramics</h3><div class="cnt">14 works</div></div>
+    <div class="cat reveal"><div class="n">05</div><h3 class="serif">Prints</h3><div class="cnt">15 works</div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="band" id="about">
+  <div class="wrap split">
+    <div class="about-art reveal">
+      <div class="canvas art3" style="position:absolute;inset:0"><div class="art-stroke"></div></div>
+    </div>
+    <div class="reveal">
+      <div class="eyebrow">Mission &amp; Vision</div>
+      <h2 class="serif">A gallery built on presentation, storytelling and the close encounter.</h2>
+      <p>Dawson Wells Gallery exists to give modern and contemporary work the setting it deserves. We are not a marketplace. We are a place to see, to consider, and to return to — online first, and then in person.</p>
+      <p>Every work in the collection is chosen for the conversation it starts. Our purpose is to make that conversation reach a global audience, and to bring that audience through our doors.</p>
+      <div class="pillars">
+        <div><span>100</span><small>Works at launch</small></div>
+        <div><span>05</span><small>Disciplines</small></div>
+        <div><span>1</span><small>Singular collection</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="band news" id="news">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="eyebrow">News &amp; Updates</div>
+        <h2 class="serif">From the gallery floor.</h2>
+      </div>
+      <a href="#" class="link">All updates →</a>
+    </div>
+    <div class="news-grid">
+      <a class="post reveal">
+        <div class="thumb"><div class="canvas art2"><div class="art-stroke"></div></div></div>
+        <div class="date">March 2026 · Exhibition</div>
+        <h3 class="serif">New acquisitions: five ceramic works enter the collection</h3>
+        <p>A short introduction to the vessels joining our permanent presentation this spring.</p>
+      </a>
+      <a class="post reveal">
+        <div class="thumb"><div class="canvas art5"><div class="art-stroke"></div></div></div>
+        <div class="date">February 2026 · Event</div>
+        <h3 class="serif">An evening with the collection — invitation only</h3>
+        <p>Notes from our first curated viewing and what the season ahead holds.</p>
+      </a>
+      <a class="post reveal">
+        <div class="thumb"><div class="canvas art7"><div class="art-stroke"></div></div></div>
+        <div class="date">January 2026 · Journal</div>
+        <h3 class="serif">On drawing: why the line still matters</h3>
+        <p>A reflection on the works on paper that anchor the modern half of our collection.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- VISIT -->
+<section class="visit" id="visit">
+  <div class="wrap reveal">
+    <div class="eyebrow">Contact &amp; Visit</div>
+    <h2 class="serif">See the collection in person.</h2>
+    <p>The website is the beginning of the encounter. The gallery is where it completes. Send an inquiry, and our team will be in touch to arrange your visit.</p>
+    <a href="#" class="btn dark">Make an Inquiry</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="serif brand" style="color:var(--ink)">Dawson Wells</div>
+        <p>A gallery of modern and contemporary art, presenting a single, considered collection to a global audience.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#featured">Photography</a></li>
+          <li><a href="#featured">Paintings</a></li>
+          <li><a href="#featured">Drawings</a></li>
+          <li><a href="#featured">Ceramics</a></li>
+          <li><a href="#featured">Prints</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Gallery</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#about">Mission &amp; Vision</a></li>
+          <li><a href="#news">News &amp; Updates</a></li>
+          <li><a href="#visit">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Inquiries</h4>
+        <ul>
+          <li>hello@dawsonwells.gallery</li>
+          <li>By appointment</li>
+          <li>Instagram · Facebook</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Dawson Wells Gallery. All rights reserved.</span>
+      <span>Concept prototype</span>
+    </div>
+  </div>
+</footer>
+
+<div class="proto-badge">Concept prototype · Innvonix</div>
+
+<script>
+  const hdr=document.getElementById('hdr');
+  window.addEventListener('scroll',()=>{hdr.classList.toggle('scrolled',window.scrollY>40)});
+  const burger=document.getElementById('burger'),mm=document.getElementById('mm');
+  burger.addEventListener('click',()=>{mm.classList.toggle('open')});
+  mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mm.classList.remove('open')));
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4*0.06)+'s';io.observe(el)});
+</script>
+</body>
+</html>
