@@ -89,3 +89,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/intest
 https://innvonix-tech-solutions.github.io/ai-workforce/exo-imaging
 https://innvonix-tech-solutions.github.io/ai-workforce/brfoods
 https://innvonix-tech-solutions.github.io/ai-workforce/azenta
+https://innvonix-tech-solutions.github.io/ai-workforce/innospec
