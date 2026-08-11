@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Umber Field, No. 4 — Dawson Wells Gallery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1a1a;--paper:#f5f3ee;--paper-2:#efece4;--muted:#7a746b;
+    --line:#d9d4c8;--accent:#8a6d4b;--white:#fbfaf7;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .serif{font-family:'Cormorant Garamond',serif}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1320px;margin:0 auto;padding:0 40px}
+  .eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);font-weight:500}
+
+  /* header */
+  header{position:sticky;top:0;z-index:50;background:rgba(245,243,238,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .navbar{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+  .brand{font-family:'Cormorant Garamond',serif;font-size:22px;letter-spacing:.18em;font-weight:600;text-transform:uppercase}
+  .brand small{display:block;font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.34em;color:var(--muted);font-weight:400;margin-top:2px}
+  nav ul{display:flex;gap:34px;list-style:none;align-items:center}
+  nav a{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;position:relative;padding:4px 0}
+  nav a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--accent);transition:width .3s}
+  nav a:hover::after{width:100%}
+  .lang{font-size:11px;letter-spacing:.14em;color:var(--muted);border:1px solid var(--line);padding:6px 12px}
+  @media(max-width:760px){nav ul{display:none}}
+
+  /* breadcrumb */
+  .crumb{padding:26px 0 0;font-size:12px;letter-spacing:.1em;color:var(--muted)}
+  .crumb a:hover{color:var(--accent)}
+  .crumb span{margin:0 8px}
+
+  /* detail layout */
+  .detail{display:grid;grid-template-columns:1.55fr 1fr;gap:64px;padding:34px 0 100px;align-items:start}
+
+  /* gallery viewer */
+  .viewer{position:sticky;top:100px}
+  .stage{position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;background:#ddd;box-shadow:0 40px 80px -50px rgba(0,0,0,.55)}
+  .stage .canvas{position:absolute;inset:0;transition:opacity .5s ease}
+  .art-stroke{position:absolute;inset:0;opacity:.5;mix-blend-mode:soft-light;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.14' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .art1{background:radial-gradient(90% 120% at 30% 20%,#e3d4bd,#b9a07e 45%,#6f5f4c 80%,#38312a)}
+  .art2{background:linear-gradient(135deg,#2b2f36 0%,#4a5560 40%,#8a97a1 100%)}
+  .art3{background:radial-gradient(80% 80% at 70% 30%,#d8b48f,#a9764f 55%,#5e3d29)}
+  .art5{background:radial-gradient(70% 90% at 40% 60%,#c46a52,#8a3f33 55%,#3a1f1c)}
+  .zoom-hint{position:absolute;bottom:16px;right:16px;background:rgba(251,250,247,.9);color:var(--ink);font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:7px 12px}
+  .thumbs{display:flex;gap:14px;margin-top:18px}
+  .thumb{width:82px;aspect-ratio:1;overflow:hidden;cursor:pointer;position:relative;border:1px solid var(--line);opacity:.6;transition:.3s}
+  .thumb.active,.thumb:hover{opacity:1;border-color:var(--accent)}
+  .thumb .canvas{position:absolute;inset:0}
+
+  /* info column */
+  .info .cat-label{color:var(--accent);font-weight:500}
+  .info h1{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(38px,5vw,60px);line-height:1.02;margin:14px 0 8px}
+  .info .subtitle{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;color:var(--muted);margin-bottom:30px}
+  .spec{border-top:1px solid var(--line)}
+  .spec .row{display:flex;justify-content:space-between;gap:20px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .spec .row dt{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding-top:2px}
+  .spec .row dd{font-size:15.5px;text-align:right;max-width:60%}
+  .info .desc{margin:34px 0;font-weight:300;font-size:16px;color:#514c44}
+  .info .desc p{margin-bottom:16px}
+  .actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
+  .btn{display:inline-flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;padding:15px 28px;transition:.32s ease;cursor:pointer;border:1px solid var(--ink)}
+  .btn.solid{background:var(--ink);color:var(--white)}
+  .btn.solid:hover{background:transparent;color:var(--ink)}
+  .btn.ghost{background:transparent;color:var(--ink)}
+  .btn.ghost:hover{background:var(--ink);color:var(--white)}
+  .enquiry-note{font-size:12.5px;color:var(--muted);margin-top:18px;line-height:1.5}
+
+  /* related */
+  .related{background:var(--paper-2);border-top:1px solid var(--line);padding:90px 0}
+  .related h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(28px,3.4vw,42px);margin-bottom:40px}
+  .rel-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+  .rel{cursor:pointer}
+  .rel .box{aspect-ratio:3/3.6;overflow:hidden;position:relative}
+  .rel .box .canvas{position:absolute;inset:0;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+  .rel:hover .box .canvas{transform:scale(1.05)}
+  .rel .t{font-family:'Cormorant Garamond',serif;font-size:20px;margin-top:14px}
+  .rel .d{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+  .art6{background:linear-gradient(135deg,#1f2a24,#3f5a4c 50%,#9db8a6)}
+  .art7{background:radial-gradient(90% 90% at 60% 40%,#e7ddcb,#b7ab8f 50%,#6d6350)}
+  .art4{background:linear-gradient(160deg,#efe9dd,#c9bfa9 45%,#8b8271)}
+
+  footer{background:var(--ink);color:var(--white);padding:50px 0}
+  .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+  .foot .serif{font-size:26px;letter-spacing:.14em}
+  .foot span{font-size:12px;color:rgba(251,250,247,.55);letter-spacing:.06em}
+
+  .proto-badge{position:fixed;bottom:18px;right:18px;z-index:60;background:var(--ink);color:#fff;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;padding:9px 15px;opacity:.86}
+  .placeholder-note{font-size:11px;color:var(--muted);margin-top:16px;letter-spacing:.04em}
+
+  @media(max-width:900px){
+    .detail{grid-template-columns:1fr;gap:34px}
+    .viewer{position:static}
+    .rel-grid{grid-template-columns:1fr 1fr}
+    .wrap{padding:0 24px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap navbar">
+    <a href="dawson-wells-home.html" class="brand">Dawson Wells<small>Modern &amp; Contemporary Art</small></a>
+    <nav>
+      <ul>
+        <li><a href="dawson-wells-home.html">Home</a></li>
+        <li><a href="dawson-wells-home.html#about">About</a></li>
+        <li><a href="dawson-wells-home.html#featured">Artworks</a></li>
+        <li><a href="dawson-wells-home.html#news">News</a></li>
+        <li><a href="dawson-wells-home.html#visit">Contact</a></li>
+        <li><span class="lang">EN</span></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap crumb">
+  <a href="dawson-wells-home.html">Home</a><span>/</span>
+  <a href="dawson-wells-home.html#featured">Artworks</a><span>/</span>
+  <a href="#">Paintings</a><span>/</span>
+  <span style="color:var(--ink)">Umber Field, No. 4</span>
+</div>
+
+<div class="wrap detail">
+  <!-- viewer -->
+  <div class="viewer">
+    <div class="stage">
+      <div class="canvas art1" id="mainArt"><div class="art-stroke"></div></div>
+      <div class="zoom-hint">Hover to zoom</div>
+    </div>
+    <div class="thumbs" id="thumbs">
+      <div class="thumb active" data-art="art1"><div class="canvas art1"></div></div>
+      <div class="thumb" data-art="art3"><div class="canvas art3"></div></div>
+      <div class="thumb" data-art="art5"><div class="canvas art5"></div></div>
+      <div class="thumb" data-art="art2"><div class="canvas art2"></div></div>
+    </div>
+    <p class="placeholder-note">Placeholder surfaces. In production, each work carries multiple high-resolution images with deep-zoom.</p>
+  </div>
+
+  <!-- info -->
+  <div class="info">
+    <div class="eyebrow cat-label">Paintings</div>
+    <h1>Umber Field, No. 4</h1>
+    <div class="subtitle">from the Earth Series</div>
+
+    <dl class="spec">
+      <div class="row"><dt>Medium</dt><dd>Oil on linen</dd></div>
+      <div class="row"><dt>Dimensions</dt><dd>160 × 120 cm (63 × 47 in)</dd></div>
+      <div class="row"><dt>Year</dt><dd>2023</dd></div>
+      <div class="row"><dt>Category</dt><dd>Painting</dd></div>
+      <div class="row"><dt>Signature</dt><dd>Signed and dated, verso</dd></div>
+      <div class="row"><dt>Provenance</dt><dd>Dawson Wells Gallery collection</dd></div>
+    </dl>
+
+    <div class="desc">
+      <p>A layered study in earth pigment, <em>Umber Field, No. 4</em> holds its weight quietly. Built from successive washes of oil on linen, the surface shifts between warmth and shadow depending on where the light falls and where the viewer stands.</p>
+      <p>It is a work made to be seen slowly, and to reward the second look. Additional notes, exhibition history and condition details appear here where applicable.</p>
+    </div>
+
+    <div class="actions">
+      <a href="#" class="btn solid">Inquire about this work</a>
+      <a href="#" class="btn ghost">Request a viewing</a>
+    </div>
+    <p class="enquiry-note">This work is part of the gallery's presentation and is not sold through the website. An inquiry connects you directly with our team.</p>
+  </div>
+</div>
+
+<!-- related -->
+<section class="related">
+  <div class="wrap">
+    <h2 class="serif">More from the collection</h2>
+    <div class="rel-grid">
+      <a class="rel" href="#"><div class="box"><div class="canvas art5"><div class="art-stroke"></div></div></div><div class="t">Vermillion Study</div><div class="d">Acrylic · 2022</div></a>
+      <a class="rel" href="#"><div class="box"><div class="canvas art3"><div class="art-stroke"></div></div></div><div class="t">Vessel III</div><div class="d">Stoneware · 2023</div></a>
+      <a class="rel" href="#"><div class="box"><div class="canvas art7"><div class="art-stroke"></div></div></div><div class="t">Figure, Reclining</div><div class="d">Charcoal · 2021</div></a>
+      <a class="rel" href="#"><div class="box"><div class="canvas art6"><div class="art-stroke"></div></div></div><div class="t">Green Interval</div><div class="d">Screenprint · 2024</div></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div class="serif">Dawson Wells</div>
+    <span>© 2026 Dawson Wells Gallery · Concept prototype by Innvonix</span>
+  </div>
+</footer>
+
+<div class="proto-badge">Concept prototype · Innvonix</div>
+
+<script>
+  const main=document.getElementById('mainArt');
+  const thumbs=document.querySelectorAll('#thumbs .thumb');
+  thumbs.forEach(t=>{
+    t.addEventListener('click',()=>{
+      thumbs.forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+      main.className='canvas '+t.dataset.art;
+      main.innerHTML='<div class="art-stroke"></div>';
+    });
+  });
+  const stage=document.querySelector('.stage');
+  stage.addEventListener('mousemove',e=>{
+    const r=stage.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width*100, y=(e.clientY-r.top)/r.height*100;
+    main.style.transformOrigin=x+'% '+y+'%';
+    main.style.transform='scale(1.6)';
+  });
+  stage.addEventListener('mouseleave',()=>{main.style.transform='scale(1)'});
+</script>
+</body>
+</html>
