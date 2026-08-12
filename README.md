@@ -81,6 +81,7 @@ https://innvonix-tech-solutions.github.io/ai-workforce/fabarc
 https://innvonix-tech-solutions.github.io/ai-workforce/kb-industries
 https://innvonix-tech-solutions.github.io/ai-workforce/midland
 https://innvonix-tech-solutions.github.io/ai-workforce/span
+https://innvonix-tech-solutions.github.io/ai-workforce/span/supplychain
 https://innvonix-tech-solutions.github.io/ai-workforce/acmr
 https://innvonix-tech-solutions.github.io/ai-workforce/advanced-energy
 https://innvonix-tech-solutions.github.io/ai-workforce/atomera
