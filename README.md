@@ -105,3 +105,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/ftc-solar
 https://innvonix-tech-solutions.github.io/ai-workforce/solid-power-workforce
 https://innvonix-tech-solutions.github.io/ai-workforce/streamlight-workforce
 https://innvonix-tech-solutions.github.io/ai-workforce/stentech
+https://innvonix-tech-solutions.github.io/ai-workforce/illesfoods
