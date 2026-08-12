@@ -97,3 +97,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/triontech
 https://innvonix-tech-solutions.github.io/ai-workforce/uct
 https://innvonix-tech-solutions.github.io/ai-workforce/one-stop-systems
 https://innvonix-tech-solutions.github.io/ai-workforce/ultralife
+https://innvonix-tech-solutions.github.io/ai-workforce/napco
