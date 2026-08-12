@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Stop Systems Console — AI Transportable Edge &amp; PCIe Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #060a12;
+  --surface: #0e1626;
+  --surface-2: #142036;
+  --surface-3: #1c2c4a;
+  --border: #24385a;
+  --border-soft: #182842;
+  --text: #e8f0fe;
+  --muted: #90a4ca;
+  --muted-2: #587098;
+  --accent: #00e5ff;
+  --accent-dim: rgba(0,229,255,0.12);
+  --accent-line: rgba(0,229,255,0.35);
+  --accent2: #ffb703;
+  --accent2-bg: rgba(255,183,3,0.08);
+  --accent3: #38bdf8;
+  --danger: #ef4444;
+  --ok: #10b981;
+  --font-display: 'Rajdhani', sans-serif;
+  --font-body: 'Work Sans', sans-serif;
+  --font-mono: 'Roboto Mono', monospace;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background:
+    radial-gradient(1200px 600px at 85% -10%, rgba(0,229,255,0.11), transparent 60%),
+    radial-gradient(900px 500px at 5% 10%, rgba(255,183,3,0.07), transparent 55%),
+    var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+a { color: var(--accent); text-decoration: none; }
+::selection { background: rgba(0,229,255,0.25); }
+.wrap { max-width: 1220px; margin: 0 auto; padding: 0 24px; }
+.hidden { display: none !important; }
+
+/* MASTHEAD */
+.masthead { border-bottom: 1px solid var(--border-soft); padding: 22px 0 18px; }
+.mark-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.mark { display: flex; align-items: center; gap: 14px; }
+.mark-badge {
+  width: 44px; height: 42px; border-radius: 8px;
+  background: linear-gradient(135deg, #005288, #00e5ff);
+  border: 1px solid var(--accent-line);
+  display: flex; align-items: center; justify-content: center;
+  color: #041220; font-family: var(--font-display); font-weight: 700; font-size: 16px;
+  box-shadow: 0 0 18px rgba(0,229,255,0.3);
+  letter-spacing: 0.05em;
+}
+.mark-name { font-family: var(--font-display); font-weight: 700; font-size: 23px; letter-spacing: 0.03em; color: #fff; text-transform: uppercase; }
+.mark-sub { font-family: var(--font-mono); font-size: 11px; color: var(--muted-2); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 1px; }
+
+.line-readout {
+  font-family: var(--font-mono); font-size: 12px; color: var(--accent);
+  background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+  padding: 8px 14px; display: flex; align-items: center; gap: 10px;
+}
+.line-readout .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); animation: pulse 1.5s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.35;} }
+
+.tabs { display: flex; gap: 8px; margin-top: 20px; border-bottom: 1px solid var(--border-soft); }
+.tab-btn {
+  background: transparent; border: none; color: var(--muted); padding: 10px 18px; font-family: var(--font-body);
+  font-size: 13.5px; font-weight: 600; cursor: pointer; border-radius: 8px 8px 0 0; transition: all 0.15s ease;
+}
+.tab-btn:hover { color: var(--text); background: var(--surface-2); }
+.tab-btn.active { color: var(--accent); background: var(--surface); border: 1px solid var(--border); border-bottom-color: var(--surface); }
+
+/* HERO */
+.hero { padding: 34px 0 28px; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 36px; align-items: center; }
+@media(max-width: 900px) { .hero { grid-template-columns: 1fr; padding: 22px 0; } }
+.eyebrow { font-family: var(--font-mono); font-size: 11.5px; color: var(--accent); text-transform: uppercase; letter-spacing: .12em; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.eyebrow::before { content:''; width: 22px; height: 1.5px; background: var(--accent); }
+h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(30px, 3.8vw, 44px); line-height: 1.08; letter-spacing: -0.01em; margin: 0 0 14px; color: #fff; text-transform: uppercase; }
+h1 span { color: var(--accent); background: linear-gradient(90deg, #00e5ff, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.lead { color: var(--muted); font-size: 14.5px; max-width: 56ch; margin: 0 0 22px; line-height: 1.6; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { font-family: var(--font-body); font-weight: 600; font-size: 13.5px; border-radius: 6px; padding: 11px 18px; cursor: pointer; border: 1px solid transparent; transition: transform .12s ease, border-color .12s ease, background .12s ease, box-shadow .12s ease; }
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: var(--accent); color: #041220; border-color: var(--accent); font-weight: 700; }
+.btn-primary:hover { background: #38bdf8; box-shadow: 0 0 18px rgba(0,229,255,0.35); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-ghost { background: transparent; color: var(--text); border-color: var(--border); }
+.btn-ghost:hover { border-color: var(--accent3); color: var(--accent3); }
+
+/* TOPOLOGY GRAPHIC CARD */
+.wafer { border: 1px solid var(--border); border-radius: 12px; background: var(--surface); padding: 18px 18px 14px; box-shadow: 0 12px 32px rgba(0,0,0,0.4); }
+.wafer-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+.wafer-title { font-family: var(--font-mono); font-size: 11px; color: var(--muted-2); text-transform: uppercase; letter-spacing: .08em; }
+.wafer-val { font-family: var(--font-mono); font-size: 12px; color: var(--accent); font-weight: 600; }
+svg.wafermap { width: 100%; height: 215px; display: block; }
+.node-box { fill: var(--surface-2); stroke: var(--border); stroke-width: 1.5; cursor: pointer; transition: all 0.2s ease; }
+.node-box:hover { stroke: var(--accent); fill: var(--surface-3); }
+.node-box.active-node { stroke: var(--accent2); fill: rgba(255,183,3,0.12); }
+.node-txt { fill: var(--text); font-family: var(--font-mono); font-size: 10px; font-weight: 600; pointer-events: none; }
+.node-sub { fill: var(--muted); font-family: var(--font-mono); font-size: 8.5px; pointer-events: none; }
+.link-line { stroke: var(--border-soft); stroke-width: 1.5; stroke-dasharray: 4 3; }
+.link-line.active-link { stroke: var(--accent); stroke-dasharray: none; stroke-width: 2; animation: flow 2s linear infinite; }
+@keyframes flow { from { stroke-dashoffset: 20; } to { stroke-dashoffset: 0; } }
+.wafer-foot { display: flex; justify-content: space-between; margin-top: 10px; font-family: var(--font-mono); font-size: 11px; color: var(--muted-2); border-top: 1px dashed var(--border-soft); padding-top: 8px; }
+
+/* ECON METRICS BAR */
+.econ { border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft); padding: 22px 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+@media(max-width: 760px) { .econ { grid-template-columns: repeat(2, 1fr); } }
+.econ-item { padding: 6px 18px; border-left: 1px solid var(--border-soft); }
+.econ-item:first-child { border-left: none; padding-left: 0; }
+@media(max-width: 760px) { .econ-item:nth-child(2n+1) { border-left: none; padding-left: 0; } }
+.econ-num { font-family: var(--font-display); font-weight: 700; font-size: 28px; color: #fff; }
+.econ-num small { font-size: 14px; color: var(--accent); font-weight: 700; }
+.econ-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+/* SECTION & ROSTER */
+section { padding: 34px 0; }
+.section-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 22px; flex-wrap: wrap; }
+.section-title { font-family: var(--font-display); font-weight: 700; font-size: 25px; color: #fff; text-transform: uppercase; letter-spacing: 0.02em; }
+.section-sub { color: var(--muted); font-size: 13.5px; max-width: 65ch; margin-top: 4px; }
+.track-label { font-family: var(--font-mono); font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: .1em; margin: 28px 0 14px; padding-top: 12px; border-top: 1px dashed var(--border-soft); display: flex; align-items: center; gap: 8px; }
+.track-label:first-of-type { border-top: none; padding-top: 0; margin-top: 6px; }
+
+.roster { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+@media(max-width: 780px) { .roster { grid-template-columns: 1fr; } }
+.op-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 12px; transition: all .15s ease; }
+.op-card:hover { border-color: var(--accent-line); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+.op-card.flagship { border-color: var(--accent2); background: linear-gradient(180deg, rgba(255,183,3,0.07), var(--surface)); }
+.op-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.op-name { font-family: var(--font-display); font-weight: 700; font-size: 18.5px; color: #fff; }
+.op-role { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+.flag-chip { font-family: var(--font-mono); font-size: 10px; color: var(--accent2); border: 1px solid var(--accent2); background: var(--accent2-bg); border-radius: 20px; padding: 2px 8px; white-space: nowrap; font-weight: 600; letter-spacing: 0.05em; }
+.op-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
+.op-stats { display: flex; gap: 18px; margin-top: 2px; }
+.op-stat { font-family: var(--font-mono); font-size: 11px; color: var(--muted-2); }
+.op-stat b { color: var(--accent); font-size: 14px; display: block; font-family: var(--font-body); font-weight: 600; }
+.op-agents { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+.chip { font-size: 11px; background: var(--surface-3); border: 1px solid var(--border); border-radius: 20px; padding: 3px 10px; color: var(--text); font-weight: 500; }
+.op-actions { display: flex; gap: 10px; margin-top: 6px; }
+.run-btn { flex: 1; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); font-family: var(--font-body); font-weight: 600; font-size: 13px; border-radius: 6px; padding: 10px; cursor: pointer; transition: all 0.15s ease; }
+.run-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+
+/* RUN PANEL */
+.run-panel { background: var(--surface); border: 1px solid var(--accent-line); border-radius: 12px; padding: 24px; margin-top: 24px; display: none; box-shadow: 0 12px 36px rgba(0,0,0,0.55); }
+.run-panel.active { display: block; animation: fadein .25s ease; }
+@keyframes fadein { from { opacity:0; transform: translateY(4px); } to { opacity:1; transform:none; } }
+.run-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
+.run-head h3 { font-family: var(--font-display); font-size: 21px; margin: 0; color: #fff; text-transform: uppercase; }
+.run-head .meta { font-family: var(--font-mono); font-size: 11px; color: var(--muted-2); }
+.close-run { background: none; border: 1px solid var(--border); color: var(--muted); border-radius: 6px; padding: 6px 12px; cursor: pointer; font-size: 12px; font-weight: 600; }
+.close-run:hover { color: var(--text); border-color: var(--accent3); }
+
+.feed { background: var(--bg); border: 1px solid var(--border-soft); border-radius: 8px; padding: 16px; height: 270px; overflow-y: auto; font-family: var(--font-mono); font-size: 12px; display: flex; flex-direction: column; gap: 8px; }
+.feed-line { display: flex; gap: 10px; align-items: flex-start; opacity: 0; animation: appear .3s ease forwards; }
+@keyframes appear { to { opacity:1; } }
+.feed-line .tag { color: var(--accent2); white-space: nowrap; font-weight: 600; }
+.feed-line .txt { color: var(--muted); }
+.feed-line.done .tag { color: var(--accent); }
+.feed-line.done .txt { color: var(--text); }
+
+.progress-row { display: flex; gap: 6px; margin: 16px 0 8px; flex-wrap: wrap; }
+.pstep { flex: 1; min-width: 64px; height: 6px; border-radius: 4px; background: var(--surface-3); overflow: hidden; position: relative; }
+.pstep.active { background: var(--accent-dim); }
+.pstep.complete { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+
+.deliverable { margin-top: 20px; background: var(--surface-2); border: 1px solid var(--accent-line); border-radius: 8px; padding: 18px 20px; display: none; }
+.deliverable.show { display: block; animation: fadein .3s ease; }
+.deliverable h4 { font-family: var(--font-display); font-size: 18px; margin: 0 0 12px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.03em; }
+.deliverable pre { white-space: pre-wrap; font-family: var(--font-mono); font-size: 12.5px; color: var(--text); margin: 0; line-height: 1.65; max-height: 380px; overflow-y: auto; background: var(--bg); padding: 14px; border-radius: 6px; border: 1px solid var(--border-soft); }
+.note { font-size: 11px; color: var(--muted-2); margin-top: 12px; font-style: italic; }
+
+/* BUILDER STYLING */
+.steps-bar { display: flex; gap: 10px; margin-bottom: 24px; }
+.step-item { flex: 1; padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-2); }
+.step-item.active { border-color: var(--accent); background: var(--surface-3); }
+.step-item .step-num { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--muted-2); }
+.step-item.active .step-num { color: var(--accent); }
+.step-item .step-lbl { font-size: 13.5px; font-weight: 600; color: var(--text); margin-top: 2px; }
+
+.wf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.wf-card { border: 1px solid var(--border); border-radius: 10px; padding: 16px; cursor: pointer; background: var(--surface-2); transition: all 0.15s ease; }
+.wf-card:hover { border-color: var(--accent3); }
+.wf-card.sel { border-color: var(--accent); background: rgba(0,229,255,0.08); }
+.wf-title { font-family: var(--font-display); font-weight: 700; font-size: 16.5px; color: #fff; }
+.wf-desc { font-size: 12px; color: var(--muted); margin-top: 4px; line-height: 1.45; }
+.wf-meta { font-family: var(--font-mono); font-size: 10.5px; color: var(--accent); margin-top: 8px; font-weight: 600; text-transform: uppercase; }
+
+.task-row { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-2); margin-bottom: 10px; }
+.task-row .tn { width: 24px; height: 24px; border-radius: 50%; background: var(--surface-3); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--accent); flex-shrink: 0; }
+.task-row .tt { flex: 1; font-size: 13px; color: var(--text); }
+.task-row select { font-family: var(--font-body); font-size: 12.5px; border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; background: var(--surface); color: var(--text); outline: none; min-width: 220px; }
+.task-row select:focus { border-color: var(--accent); }
+
+.field { margin-bottom: 18px; }
+.field label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; }
+.field input { width: 100%; font-family: var(--font-body); font-size: 13.5px; border: 1px solid var(--border); border-radius: 8px; padding: 11px 13px; background: var(--surface-2); color: var(--text); outline: none; }
+.field input:focus { border-color: var(--accent); }
+
+.seg { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.seg button { font-family: var(--font-body); font-size: 12.5px; padding: 9px 16px; border: none; background: var(--surface-2); color: var(--muted); cursor: pointer; border-right: 1px solid var(--border); }
+.seg button:last-child { border-right: none; }
+.seg button.on { background: var(--accent); color: #041220; font-weight: 700; }
+
+.bnav { display: flex; justify-content: space-between; margin-top: 24px; }
+
+footer { border-top: 1px solid var(--border-soft); padding: 30px 0 44px; margin-top: 20px; }
+.foot-note { font-size: 12px; color: var(--muted-2); max-width: 88ch; line-height: 1.65; }
+.foot-note strong { color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark-row">
+      <div class="mark">
+        <div class="mark-badge">OSS</div>
+        <div>
+          <div class="mark-name">One Stop Systems Console</div>
+          <div class="mark-sub">One Stop Systems Inc. (NASDAQ: OSS) · Transportable Edge &amp; AI Workforce Prototype</div>
+        </div>
+      </div>
+      <div class="line-readout">
+        <span class="dot"></span>
+        <span id="lineTxt">OSS AI on the Fly® &amp; PCIe Gen 6 Expansion Hub · Active</span>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tabA" onclick="setView('ops')">The AI Workforce Roster</button>
+      <button class="tab-btn" id="tabB" onclick="setView('hire')">+ Add an AI Operator</button>
+    </div>
+  </header>
+
+  <div id="view-ops">
+    <section class="hero" style="padding-bottom:10px;">
+      <div>
+        <div class="eyebrow">Rugged High-Performance Edge Computing &amp; PCIe Expansion</div>
+        <h1>Eight operators to power OSS's <span>AI on the Fly®</span> loop</h1>
+        <p class="lead">Each AI operator below automates mission-critical One Stop Systems engineering and defense commercial operations — from high-density 16-GPU PCIe Gen 5/6 DFM, Ion Accelerator™ storage tuning, and U-BMC remote telemetry analysis to MIL-STD-810H defense proposal generation.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('roster-section').scrollIntoView({behavior:'smooth'})">Explore Roster</button>
+          <button class="btn btn-ghost" onclick="runOperator('edge_dfm')">Run Flagship DFM Operator</button>
+        </div>
+      </div>
+
+      <div class="wafer">
+        <div class="wafer-top">
+          <span class="wafer-title">Transportable Edge Node Topology</span>
+          <span class="wafer-val" id="yieldVal">PCIe Gen 5/6 CopprLink™ · 512 GB/s Bandwidth</span>
+        </div>
+        <svg class="wafermap" viewBox="0 0 320 200" preserveAspectRatio="xMidYMid meet">
+          <!-- Connection Lines -->
+          <line class="link-line active-link" x1="160" y1="35" x2="60" y2="105"></line>
+          <line class="link-line active-link" x1="160" y1="35" x2="160" y2="105"></line>
+          <line class="link-line active-link" x1="160" y1="35" x2="260" y2="105"></line>
+          <line class="link-line active-link" x1="60" y1="105" x2="60" y2="165"></line>
+          <line class="link-line active-link" x1="160" y1="105" x2="160" y2="165"></line>
+          <line class="link-line active-link" x1="260" y1="105" x2="260" y2="165"></line>
+
+          <!-- System Controller -->
+          <g onclick="selectNode('host')" class="node-grp">
+            <rect class="node-box active-node" id="nd-host" x="100" y="10" width="120" height="36" rx="6"></rect>
+            <text class="node-txt" x="160" y="26" text-anchor="middle">Rigel Edge Server Host</text>
+            <text class="node-sub" x="160" y="38" text-anchor="middle">Xeon-6 / Dual PCIe x16</text>
+          </g>
+
+          <!-- Expansion Chassis 1 -->
+          <g onclick="selectNode('gpu1')" class="node-grp">
+            <rect class="node-box" id="nd-gpu1" x="15" y="88" width="90" height="34" rx="5"></rect>
+            <text class="node-txt" x="60" y="103" text-anchor="middle">16x GPU Array A</text>
+            <text class="node-sub" x="60" y="115" text-anchor="middle">NVIDIA H100 SXM5</text>
+          </g>
+
+          <!-- Storage Array -->
+          <g onclick="selectNode('storage')" class="node-grp">
+            <rect class="node-box" id="nd-storage" x="115" y="88" width="90" height="34" rx="5"></rect>
+            <text class="node-txt" x="160" y="103" text-anchor="middle">Ion Accelerator™</text>
+            <text class="node-sub" x="160" y="115" text-anchor="middle">1PB NVMe Gen5 RAID</text>
+          </g>
+
+          <!-- U-BMC Manager -->
+          <g onclick="selectNode('ubmc')" class="node-grp">
+            <rect class="node-box" id="nd-ubmc" x="215" y="88" width="90" height="34" rx="5"></rect>
+            <text class="node-txt" x="260" y="103" text-anchor="middle">U-BMC Controller</text>
+            <text class="node-sub" x="260" y="115" text-anchor="middle">Real-time Telemetry</text>
+          </g>
+
+          <!-- Bottom Nodes -->
+          <g onclick="selectNode('sensor')" class="node-grp">
+            <rect class="node-box" id="nd-sensor" x="15" y="150" width="90" height="32" rx="4"></rect>
+            <text class="node-txt" x="60" y="165" text-anchor="middle">Airborne Radar Ingest</text>
+            <text class="node-sub" x="60" y="176" text-anchor="middle">CopprLink™ PCIe 6.0</text>
+          </g>
+
+          <g onclick="selectNode('thermal')" class="node-grp">
+            <rect class="node-box" id="nd-thermal" x="115" y="150" width="90" height="32" rx="4"></rect>
+            <text class="node-txt" x="160" y="165" text-anchor="middle">Liquid Cooling Loop</text>
+            <text class="node-sub" x="160" y="176" text-anchor="middle">MIL-STD-810H Thermal</text>
+          </g>
+
+          <g onclick="selectNode('crypto')" class="node-grp">
+            <rect class="node-box" id="nd-crypto" x="215" y="150" width="90" height="32" rx="4"></rect>
+            <text class="node-txt" x="260" y="165" text-anchor="middle">Zero-Trust Crypto</text>
+            <text class="node-sub" x="260" y="176" text-anchor="middle">Hardware Security</text>
+          </g>
+        </svg>
+        <div class="wafer-foot">
+          <span>Deployment: Tactical Edge / Airborne P-8A Fleet</span>
+          <span id="binVal">Status: All 16 PCIe Gen5/6 Links Nominal</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="econ">
+      <div class="econ-item">
+        <div class="econ-num">6.4<small>×</small></div>
+        <div class="econ-label">Faster PCIe Gen 5/6 chassis DFM &amp; thermal engineering</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">512<small> GB/s</small></div>
+        <div class="econ-label">Ultra-low latency CopprLink™ cabled interconnect bandwidth</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">36<small> hrs</small></div>
+        <div class="econ-label">Engineering &amp; defense quote turnaround time saved per bid</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">8<small>/8</small></div>
+        <div class="econ-label">Workflows automated, DFM through MIL-STD quality audit</div>
+      </div>
+    </div>
+
+    <section id="roster-section">
+      <div class="section-head">
+        <div>
+          <div class="section-title">The AI Workforce Roster</div>
+          <div class="section-sub">Divided into Commercial Defense Tenders and Edge Hardware Operations tracks. Click run on any operator to watch its specialist AI agents execute in real time.</div>
+        </div>
+      </div>
+
+      <div id="rosterContainer"></div>
+    </section>
+
+    <!-- Run Panel -->
+    <div class="run-panel" id="runPanel">
+      <div class="run-head">
+        <div>
+          <h3 id="runTitle">Running Operator...</h3>
+          <div class="meta" id="runSub">Simulated multi-agent execution feed</div>
+        </div>
+        <button class="close-run" onclick="closeRun()">✕ Close View</button>
+      </div>
+      <div class="progress-row" id="progressRow"></div>
+      <div class="feed" id="feedArea"></div>
+      <div class="deliverable" id="deliverableBox">
+        <h4 id="delivTitle">Review-Ready Output</h4>
+        <pre id="delivCode"></pre>
+        <div class="note">Human-in-the-loop oversight active. Outputs verified by One Stop Systems senior edge compute &amp; systems engineering team. Illustrative simulation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="section-title">Add an AI Operator</div>
+          <div class="section-sub">Stand up a new AI operator in three steps: select the workflow pattern, assign each specialized agent via dropdown, name it and set cadence.</div>
+        </div>
+      </div>
+
+      <div class="steps-bar" id="bSteps"></div>
+      <div id="bBody"></div>
+      <div class="bnav" id="bNav"></div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="foot-note">
+      <strong>Independent Concept Prototype</strong> prepared for a conversation with <strong>One Stop Systems (NASDAQ: OSS)</strong>. It is not affiliated with, endorsed by, or built on proprietary One Stop Systems data. All edge server topologies, PCIe Gen 5/6 bandwidth metrics, thermal simulations, labor estimates, and quotes are illustrative prototypes. A senior systems engineer, defense program director, or quality director reviews and approves every chassis DFM, RFP proposal, and compliance package.
+    </div>
+  </footer>
+</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'Defense & Autonomous Market Analyst', tools: ['scan_dod_rfp', 'save'] },
+  pcie_dfm: { emoji: '⚡', label: 'PCIe Gen 5/6 Signal & Chassis Engineer', tools: ['calc_pcie_margin', 'save'] },
+  gpu_architect: { emoji: '🖥️', label: 'High-Density GPU & Edge System Architect', tools: ['model_gpu_array', 'save'] },
+  thermal_eng: { emoji: '🌡️', label: 'MIL-STD Liquid Cooling & Thermal Analyst', tools: ['sim_liquid_thermal', 'save'] },
+  storage_spec: { emoji: '💾', label: 'Ion Accelerator™ NVMe Storage Specialist', tools: ['tune_ion_nvme', 'save'] },
+  ubmc_expert: { emoji: '📡', label: 'U-BMC Telemetry & Remote Firmware Planner', tools: ['audit_ubmc_logs', 'save'] },
+  cost_eng: { emoji: '🧮', label: 'Rugged Chassis & CopprLink™ Cost Estimator', tools: ['calc_bom_nre', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'Defense MIL-STD RFP Proposal Writer', tools: ['compose_rfp_doc', 'save'] },
+  quality_auditor: { emoji: '🛡️', label: 'AS9100D & MIL-STD-810H Quality Auditor', tools: ['audit_mil_std', 'save'] },
+  procurement: { emoji: '📦', label: 'Mil-Spec & CopprLink Cable Sourcing Manager', tools: ['plan_cable_supply', 'save'] },
+  reviewer: { emoji: '✅', label: 'Chief Systems Engineering Reviewer', tools: ['qa_approval', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+const TRACKS = [
+  { key: 'commercial', title: 'Defense & Edge Commercial Tenders' },
+  { key: 'operations', title: 'Transportable Edge Hardware, PCIe DFM & Quality Operations' }
+];
+
+const WORKFLOWS = {
+  scout: {
+    name: 'AI Defense & Autonomous Systems Scout',
+    title: 'AI Opportunity Scout',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'DoD & Tactical Edge OEM Opportunity Intelligence',
+    desc: 'Scans US DoD prime contractor awards, Navy airborne radar specs, and autonomous mining/vehicle expansions for high-density edge compute demands.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan US Defense SAM.gov awards, P-8A Poseidon radar upgrades, and autonomous vehicle OEM tenders.', deps: [] },
+      { agent: 'gpu_architect', task: 'Evaluate fit for OSS 16-GPU PCIe expansion chassis vs standard 1U/2U server limits.', deps: [0] },
+      { agent: 'proposal_writer', task: 'Compile DoD & Tactical Edge OEM Prospect Dossier with initial target architecture.', deps: [1] }
+    ]
+  },
+  quote: {
+    name: 'PCIe Expansion & Edge Server Quoting Engine',
+    title: 'AI Interconnect & Chassis Quoter',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Rigged Edge System & CopprLink™ Cable Commercial Quote',
+    desc: 'Calculates high-density PCIe Gen 5/6 chassis material, custom CopprLink™ cabling, liquid cooling manifold, and NRE engineering hours.',
+    tasks: [
+      { agent: 'pcie_dfm', task: 'Verify PCIe Gen 6 retimer chips, CopprLink cabled backplane pins, and cable assembly lengths.', deps: [] },
+      { agent: 'cost_eng', task: 'Model CNC machining, chassis sheet metal, liquid cold plate BOM, and NRE assembly hours.', deps: [0] },
+      { agent: 'procurement', task: 'Confirm lead times for PCIe 6.0 CopprLink cabled adapters and Amphenol/Molex high-speed connectors.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Assemble formal Rigged Edge System Commercial Quote.', deps: [2] }
+    ]
+  },
+  tender: {
+    name: 'MIL-STD & Rugged RFP Response Specialist',
+    title: 'AI Tender Specialist',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'MIL-STD-810H & Defense RFP Compliance Package',
+    desc: 'Audits ITAR, AS9100D, MIL-STD-810H shock/vibration, and MIL-STD-461 EMI specs to generate winning defense bids.',
+    tasks: [
+      { agent: 'researcher', task: 'Parse RFP environmental requirements (operating temp -40°C to +70°C, 20g shock).', deps: [] },
+      { agent: 'quality_auditor', task: 'Cross-reference AS9100D compliance and military-grade isolation testing protocols.', deps: [0] },
+      { agent: 'cost_eng', task: 'Price environmental qualification testing, shock tray isolation, and volume tier pricing.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce complete MIL-STD Defense RFP Technical & Commercial Proposal.', deps: [2] }
+    ]
+  },
+  intel: {
+    name: 'AI Edge & High-Density Compute Market Radar',
+    title: 'AI Market Intelligence',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'PCIe 6.0 & Edge GPU Ecosystem Intelligence Brief',
+    desc: 'Monitors NVIDIA H100/B200 GPU allocation trends, PCIe Gen 6 CopprLink adoption rates, and competitor edge server benchmarks.',
+    tasks: [
+      { agent: 'researcher', task: 'Track GPU lead times, PCIe 6.0 switch availability, and rugged server announcements.', deps: [] },
+      { agent: 'gpu_architect', task: 'Benchmark OSS Rigel & PCIe expansion throughput against competitive 4U server footprints.', deps: [] },
+      { agent: 'proposal_writer', task: 'Synthesize PCIe 6.0 & Edge GPU Ecosystem Intelligence Brief.', deps: [0, 1] }
+    ]
+  },
+  edge_dfm: {
+    name: 'Transportable Edge & PCIe Gen 5/6 DFM Architect',
+    title: 'AI Edge DFM Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: '16-Way PCIe Gen 5/6 System DFM & Signal Integrity Package',
+    desc: 'Analyzes high-speed PCIe Gen 5/6 signal integrity, CopprLink™ insertion loss, 16-GPU thermal dissipation, and MIL-SPEC power supplies.',
+    tasks: [
+      { agent: 'pcie_dfm', task: 'Simulate PCIe Gen 6 cable insertion loss, signal eye diagrams, and CopprLink connector crosstalk.', deps: [] },
+      { agent: 'thermal_eng', task: 'Model 3D CFD liquid cooling loop for 16 SXM5 GPUs under 50°C ambient tactical vehicle conditions.', deps: [0] },
+      { agent: 'gpu_architect', task: 'Verify PCIe retimer layout, power distribution plane design, and zero-trust crypto hardware.', deps: [1] },
+      { agent: 'quality_auditor', task: 'Audit vibration isolation tray and MIL-STD-810H environmental enclosure clearance.', deps: [2] },
+      { agent: 'reviewer', task: 'QA system DFM parameters and approve thermal/electrical margins.', deps: [3] },
+      { agent: 'proposal_writer', task: 'Generate final 16-Way PCIe Gen 5/6 System DFM & Signal Integrity Release Package.', deps: [4] }
+    ]
+  },
+  ion_storage: {
+    name: 'Ion Accelerator™ & High-Throughput NVMe Engine',
+    title: 'AI Storage & NVMe Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'Ion Accelerator™ SAN/NAS Configuration & Recording Profile',
+    desc: 'Configures high-speed NVMe flash arrays, RAID 0/5/6 striping, and ultra-high bandwidth data recording profiles for sensor processing.',
+    tasks: [
+      { agent: 'storage_spec', task: 'Configure 1PB NVMe Gen5 Flash Array for 100+ GB/s sustained airborne radar stream ingest.', deps: [] },
+      { agent: 'ubmc_expert', task: 'Set up automated NVMe health monitoring, wear levelling telemetry, and hot-swap alerts.', deps: [0] },
+      { agent: 'reviewer', task: 'Validate SAN/NAS throughput, data encryption at rest, and zero-drop recording guarantees.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce Ion Accelerator™ SAN/NAS Technical Configuration Package.', deps: [2] }
+    ]
+  },
+  ubmc_telemetry: {
+    name: 'U-BMC System Telemetry & Remote Operations Auditor',
+    title: 'AI U-BMC Telemetry Specialist',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'U-BMC Telemetry Diagnostic & Remote Health Report',
+    desc: 'Monitors real-time U-BMC sensor data, fan speed curves, voltage rails, thermal headroom, and OTA firmware status.',
+    tasks: [
+      { agent: 'ubmc_expert', task: 'Ingest live telemetry from deployed Rigel units across mobile military ground stations.', deps: [] },
+      { agent: 'thermal_eng', task: 'Detect thermal anomalies or pump flow rate degradation in liquid cooling loops.', deps: [0] },
+      { agent: 'proposal_writer', task: 'Generate U-BMC Telemetry Diagnostic & Preventive Maintenance Dispatch.', deps: [1] }
+    ]
+  },
+  quality: {
+    name: 'AS9100D & MIL-SPEC Qualification Auditor',
+    title: 'AI Defense Quality Auditor',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'AS9100D Quality & Environmental Qualification Certificate',
+    desc: 'Audits shock, vibration, thermal burn-in, and ITAR traceability logs for defense customer delivery.',
+    tasks: [
+      { agent: 'quality_auditor', task: 'Review 72-hour thermal chamber burn-in logs and 20g 11ms shock pulse test charts.', deps: [] },
+      { agent: 'pcie_dfm', task: 'Verify zero bit error rates (BER < 1e-15) across all 16 PCIe Gen5 lanes under full thermal load.', deps: [] },
+      { agent: 'proposal_writer', task: 'Publish AS9100D Quality & Environmental Qualification Certificate.', deps: [0, 1] }
+    ]
+  }
+};
+
+const DELIVERABLES = {
+  edge_dfm: `================================================================================
+ONE STOP SYSTEMS — 16-WAY PCIe GEN 5/6 EDGE DFM & SIGNAL INTEGRITY PACKAGE
+System ID: OSS-RIGEL-16GPU-GEN6-DFM | Target Deployment: Tactical Edge / Airborne Radar
+================================================================================
+
+1. PCIe GEN 6 COPPRLINK™ SIGNAL INTEGRITY ANALYSIS
+--------------------------------------------------------------------------------
+• Interconnect Cable Standard: PCIe 6.0 CopprLink™ Cabled Adapter System (PAM4 64 GT/s)
+• Total System Bandwidth: 512 GB/s bidirectional across dual host links
+• Insertion Loss: -18.2 dB at 16 GHz (Spec limit: -24.0 dB) — PASS (+5.8 dB Margin)
+• Eye Height / Width: 18.5 mV / 0.42 UI (PAM4 Eye Margin: +24% above spec)
+• Crosstalk (FEXT / NEXT): -46.5 dB (Optimized backplane shielding active)
+
+2. THERMAL DISSIPATION & LIQUID COOLING DFM (16x SXM5 H100 GPUs)
+--------------------------------------------------------------------------------
+• Total System Heat Load: 11.2 kW (GPUs: 10.5 kW, Host CPU/Retimers: 700 W)
+• Fluid Loop Architecture: Dual Quick-Disconnect Liquid-to-Air Heat Exchanger (L2A)
+• Flow Rate: 14.5 GPM (Propylene Glycol / Water 50/50 mixture)
+• Max Ambient Operating Temp: +50°C (MIL-STD-810H Method 501.7 Procedure II)
+• Max GPU Junction Temperature: 71.4°C (Safe limit: 83.0°C — Thermal Headroom: 11.6°C)
+
+3. MIL-STD-810H & RUGGEDIZATION CLEARANCE
+--------------------------------------------------------------------------------
+• Mechanical Shock: Passed 20g, 11ms terminal peak sawtooth (Procedure IV)
+• Random Vibration: Passed 5.4 gRMS MIL-STD-810H Category 24 Airborne Jet spectrum
+• Chassis Strain Relief: CopprLink cable retention brackets validated for 50g retention
+• Enclosure Sealing: IP65 Sealing with EMI Gasket Mesh (MIL-STD-461G Compliant)
+
+4. APPROVAL & SIGN-OFF
+--------------------------------------------------------------------------------
+[APPROVED] Chief PCIe Architect: Dr. Marcus Vance, PE
+[APPROVED] Director of Systems Engineering: Elena Rostova
+[APPROVED] Lead Quality Director: James T. Thorne (AS9100D Certified)`;
+
+  quote: `================================================================================
+ONE STOP SYSTEMS — COMMERCIAL & TECHNICAL QUOTE
+Quote Ref: OSS-QT-2026-8842 | Customer: Defense Tactical Edge Integration Prime
+================================================================================
+
+1. SYSTEM CONFIGURATION & BILL OF MATERIALS
+--------------------------------------------------------------------------------
+Item  Qty  Part Number            Description                              Unit Price ($)
+----  ---  --------------------  ---------------------------------------  --------------
+ 01    04  OSS-RIGEL-4U-GEN6     Rigel 4U Ruggedized Edge Chassis Base       $18,500.00
+ 02    16  OSS-GPU-SXM5-100      NVIDIA H100 SXM5 80GB Accelerated Module    $32,000.00
+ 03    32  OSS-CBL-COPPR-GEN6    CopprLink™ PCIe 6.0 1m Cable Assembly           $650.00
+ 04    04  OSS-ION-NVME-512TB    Ion Accelerator™ 512TB NVMe Gen5 Array      $45,000.00
+ 05    04  OSS-UBMC-ADV-MOD      U-BMC Remote Telemetry Controller Card       $1,250.00
+ 06    01  OSS-NRE-ENG-MIL       Custom MIL-STD-810H Shock Isolation Kit    $24,000.00
+
+2. FINANCIAL & COMMERCIAL TERMS
+--------------------------------------------------------------------------------
+• Hardware Subtotal:                     $788,800.00
+• Engineering & NRE Fee:                  $24,000.00
+• Volume Tier Discount (15%):           -$118,320.00
+• TOTAL ESTIMATED BID PRICE:             $694,480.00
+• Estimated Delivery Lead Time:           8 Weeks ARO
+• Warranty & Support:                     3-Year Defense On-Site & Remote U-BMC Tier 3`;
+
+  tender: `================================================================================
+ONE STOP SYSTEMS — MIL-STD-810H & DEFENSE RFP COMPLIANCE SUMMARY
+RFP Target: Airborne Tactical Sensor Processing & High-Density GPU System
+================================================================================
+
+COMPLIANCE MATRIX:
+--------------------------------------------------------------------------------
+Spec ID        Standard / Specification       Status    OSS Technical Solution
+-------------  ----------------------------  --------  ----------------------------------
+REQ-ENV-001    MIL-STD-810H Temp (-40..+70C) COMPLIANT Liquid cold plate + heaters
+REQ-VIB-002    MIL-STD-810H Jet Vibration     COMPLIANT Isolated floating tray chassis
+REQ-EMI-003    MIL-STD-461G EMI/EMC           COMPLIANT Honeycomb EMI filters & gaskets
+REQ-SEC-004    ITAR & Zero-Trust Hardware     COMPLIANT FIPS 140-3 Cryptographic Root
+REQ-SW-005     U-BMC Automated Telemetry      COMPLIANT Proprietary Out-of-Band BMC
+
+SUMMARY STATEMENT:
+OSS Rigel edge architecture completely complies with all 48 mandatory MIL-STD specs.
+ITAR Facility CAGE Code: 3X9A2 | AS9100D Certified Manufacturing Facility.`;
+
+  scout: `================================================================================
+ONE STOP SYSTEMS — DOD & TACTICAL EDGE OEM OPPORTUNITY DOSSIER
+================================================================================
+Top Qualified Defense & Commercial Targets:
+
+1. NAVAIR P-8A Poseidon Increment 3 Capability Upgrade
+   • Opportunity Size: 24 Systems ($14.2M Estimated Hardware Value)
+   • Requirements: 100+ GB/s real-time radar ingest, zero frame drops, liquid cooling.
+   • OSS Advantage: CopprLink™ PCIe 6.0 cable adapters + Ion Accelerator NVMe Array.
+
+2. Autonomous Mining Heavy Equipment OEM (Project Terra Compute)
+   • Opportunity Size: 120 Systems ($18.6M Estimated Hardware Value)
+   • Requirements: High-vibration tolerance (MIL-STD-810H), -30°C start, 4x GPU inference.
+   • OSS Advantage: Ruggedized chassis + U-BMC remote telemetry & OTA management.`;
+
+  ion_storage: `================================================================================
+ONE STOP SYSTEMS — ION ACCELERATOR™ NVMe CONFIGURATION PROFILE
+Profile: High-Speed Airborne Radar Stream Ingest (Zero-Frame-Drop Protocol)
+================================================================================
+• Storage Topology: 32x Enterprise PCIe Gen 5 NVMe SSDs in Dual RAID 0/5 Config
+• Total Usable Capacity: 1.024 Petabytes
+• Sustained Sequential Write Speed: 114.8 GB/sec
+• IOPS (4K Random Write): 14,200,000 IOPS
+• Data Recording Protocol: Direct PCIe DMA from Sensor FPGA to Flash Array
+• Wear Leveling & Endurance Monitoring: Integrated into U-BMC telemetry bus`;
+
+  ubmc_telemetry: `================================================================================
+ONE STOP SYSTEMS — U-BMC TELEMETRY & SYSTEM HEALTH REPORT
+Chassis Serial: RIGEL-2026-9912 | Location: Mobile Airborne Test Unit 4
+================================================================================
+• Health Index: 99.4% (All Systems Nominal)
+• Host CPU Temp: 48.2°C | GPU Array Avg Temp: 62.1°C (Fan Speed: 58% PWM)
+• Liquid Cooling Pump 1 / 2 Flow Rate: 14.8 GPM / 14.7 GPM (Balanced)
+• Power Rail Voltages: 12.02V (Rail 1), 12.01V (Rail 2), 3.30V (Aux) — Ripple < 12mV
+• PCIe Link Status: 16x PCIe Gen 5 links at x16 speed (Retimer BER: 0.00e0)
+• Advisory: Scheduled preventative coolant flush in 2,400 operating hours.`;
+
+  intel: `================================================================================
+ONE STOP SYSTEMS — PCIe 6.0 & HIGH-DENSITY GPU MARKET RADAR
+================================================================================
+Key Industry Highlights:
+1. PCIe 6.0 CopprLink™ Transition: Enterprise adoption accelerating in transportable edge due to 64 GT/s PAM4 signaling benefits over copper vs costly optical transceivers.
+2. GPU Supply Dynamics: NVIDIA H100 SXM5 allocation stabilizing; OSS 16-GPU expansion unit provides 2.4x compute density compared to standard 4U chassis offerings.
+3. Competitive Positioning: OSS maintains exclusive lead in ruggedized liquid-cooled multi-GPU expansion chassis for military airborne and mobile ground deployments.`;
+
+  quality: `================================================================================
+ONE STOP SYSTEMS — AS9100D & MIL-STD QUALIFICATION CERTIFICATE
+Certificate ID: OSS-CERT-2026-9041 | System: Rigel 16-GPU PCIe Expansion Array
+================================================================================
+• AS9100D Quality Management Audit: PASSED (Zero Defect / Zero Discrepancy)
+• Environmental Qualification: PASSED MIL-STD-810H (Methods 501.7, 502.7, 514.8)
+• Electromagnetic Compatibility: PASSED MIL-STD-461G (RE102, RS103, CS114)
+• 72-Hour Full-Load Thermal Chamber Burn-In: Completed with 0 bit errors on PCIe Gen 5/6 bus.
+• ITAR Compliance Verification: Cleared for Defense Program Delivery.`
+};
+
+let currentView = 'ops';
+let currentSimInterval = null;
+
+function setView(view) {
+  currentView = view;
+  document.getElementById('view-ops').classList.toggle('hidden', view !== 'ops');
+  document.getElementById('view-hire').classList.toggle('hidden', view !== 'hire');
+  document.getElementById('tabA').classList.toggle('active', view === 'ops');
+  document.getElementById('tabB').classList.toggle('active', view === 'hire');
+  if (view === 'hire') initBuilder();
+}
+
+function renderRoster() {
+  const container = document.getElementById('rosterContainer');
+  let html = '';
+
+  TRACKS.forEach(tr => {
+    html += `<div class="track-label"><span>►</span> ${tr.title}</div><div class="roster">`;
+    Object.keys(WORKFLOWS).forEach(key => {
+      const wf = WORKFLOWS[key];
+      if (wf.track !== tr.key) return;
+      const isFlag = wf.tag === 'flagship';
+      
+      const agentChips = wf.tasks.map(t => {
+        const role = AGENT_ROLES[t.agent] || { label: t.agent };
+        return `<span class="chip">${role.emoji || '🤖'} ${role.label.split(' ')[0]}</span>`;
+      }).join('');
+
+      html += `
+        <div class="op-card ${isFlag ? 'flagship' : ''}">
+          <div class="op-top">
+            <div>
+              <div class="op-name">${wf.title}</div>
+              <div class="op-role">${wf.name}</div>
+            </div>
+            ${isFlag ? '<span class="flag-chip">★ FLAGSHIP OPERATOR</span>' : ''}
+          </div>
+          <div class="op-desc">${wf.desc}</div>
+          <div class="op-stats">
+            <div class="op-stat">TASKS<b>${wf.tasks.length} Step Workflow</b></div>
+            <div class="op-stat">OUTPUT<b>${wf.deliverable}</b></div>
+          </div>
+          <div class="op-agents">${agentChips}</div>
+          <div class="op-actions">
+            <button class="run-btn" onclick="runOperator('${key}')">▶ Execute Operator</button>
+          </div>
+        </div>
+      `;
+    });
+    html += `</div>`;
+  });
+
+  container.innerHTML = html;
+}
+
+function selectNode(id) {
+  document.querySelectorAll('.node-box').forEach(el => el.classList.remove('active-node'));
+  const target = document.getElementById('nd-' + id);
+  if (target) target.classList.add('active-node');
+  
+  const readouts = {
+    host: 'Host: Rigel Edge Server · Dual Xeon-6 · 512GB DDR5 · PCIe Gen 6 Host Link Active',
+    gpu1: 'GPU Array: 16x NVIDIA H100 SXM5 · 1.2TB VRAM · 10.5kW Thermal Load Nominal',
+    storage: 'Storage: Ion Accelerator™ · 1PB NVMe Gen 5 Flash · 114.8 GB/s Sustained Write',
+    ubmc: 'U-BMC Controller: Remote Out-of-Band Telemetry · 0.1s Metric Refresh Rate',
+    sensor: 'Sensor Ingest: Direct Airborne Radar DMA Ingest · CopprLink™ PCIe 6.0 Cabled Adapter',
+    thermal: 'Thermal System: Liquid-to-Air Heat Exchanger · 14.8 GPM · Ambient Max +50°C',
+    crypto: 'Security: Hardware FIPS 140-3 Root of Trust · ITAR Zero-Trust Active'
+  };
+  
+  if (readouts[id]) {
+    document.getElementById('yieldVal').innerText = readouts[id];
+  }
+}
+
+function runOperator(key) {
+  const wf = WORKFLOWS[key];
+  if (!wf) return;
+
+  if (currentSimInterval) clearInterval(currentSimInterval);
+
+  const panel = document.getElementById('runPanel');
+  panel.classList.add('active');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  document.getElementById('runTitle').innerText = 'Executing: ' + wf.title;
+  document.getElementById('runSub').innerText = wf.name + ' · Multi-Agent Autonomous Execution';
+  
+  const progressRow = document.getElementById('progressRow');
+  progressRow.innerHTML = wf.tasks.map((_, i) => `<div class="pstep" id="ps-${i}"></div>`).join('');
+  
+  const feedArea = document.getElementById('feedArea');
+  feedArea.innerHTML = '';
+
+  const delivBox = document.getElementById('deliverableBox');
+  delivBox.classList.remove('show');
+
+  let stepIdx = 0;
+
+  function step() {
+    if (stepIdx >= wf.tasks.length) {
+      clearInterval(currentSimInterval);
+      setTimeout(() => {
+        document.getElementById('delivTitle').innerText = wf.deliverable;
+        document.getElementById('delivCode').innerText = DELIVERABLES[key] || `================================================================================\nONE STOP SYSTEMS — AUTOMATED OPERATOR EXECUTION COMPLETE\nOperator: ${wf.title}\nStatus: PASS (All Tasks Verified)\n================================================================================\n\nTask execution completed cleanly. Outputs verified by senior engineering control.`;
+        delivBox.classList.add('show');
+        delivBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 400);
+      return;
+    }
+
+    const t = wf.tasks[stepIdx];
+    const role = AGENT_ROLES[t.agent] || { label: t.agent, emoji: '🤖' };
+    const pstep = document.getElementById(`ps-${stepIdx}`);
+    if (pstep) {
+      pstep.classList.add('complete');
+    }
+
+    const timestamp = new Date().toISOString().substring(11, 19);
+    const line = document.createElement('div');
+    line.className = 'feed-line done';
+    line.innerHTML = `<span class="tag">[${timestamp}] ${role.emoji} ${role.label.split(' ')[0]}:</span> <span class="txt">${t.task}</span>`;
+    feedArea.appendChild(line);
+    feedArea.scrollTop = feedArea.scrollHeight;
+
+    stepIdx++;
+  }
+
+  step();
+  currentSimInterval = setInterval(step, 900);
+}
+
+function closeRun() {
+  if (currentSimInterval) clearInterval(currentSimInterval);
+  document.getElementById('runPanel').classList.remove('active');
+}
+
+/* BUILDER WIZARD LOGIC */
+let builderStep = 1;
+let selectedWfKey = 'edge_dfm';
+let customTasks = [];
+let customName = '';
+let customTrack = 'operations';
+
+function initBuilder() {
+  builderStep = 1;
+  renderBuilder();
+}
+
+function renderBuilder() {
+  const bSteps = document.getElementById('bSteps');
+  const bBody = document.getElementById('bBody');
+  const bNav = document.getElementById('bNav');
+
+  bSteps.innerHTML = `
+    <div class="step-item ${builderStep === 1 ? 'active' : ''}"><div class="step-num">STEP 1</div><div class="step-lbl">Select Workflow Base</div></div>
+    <div class="step-item ${builderStep === 2 ? 'active' : ''}"><div class="step-num">STEP 2</div><div class="step-lbl">Configure Task Agents</div></div>
+    <div class="step-item ${builderStep === 3 ? 'active' : ''}"><div class="step-num">STEP 3</div><div class="step-lbl">Name &amp; Deploy Operator</div></div>
+  `;
+
+  if (builderStep === 1) {
+    let cards = Object.keys(WORKFLOWS).map(k => {
+      const wf = WORKFLOWS[k];
+      const sel = k === selectedWfKey ? 'sel' : '';
+      return `
+        <div class="wf-card ${sel}" onclick="selectWfTemplate('${k}')">
+          <div class="wf-title">${wf.title}</div>
+          <div class="wf-desc">${wf.desc}</div>
+          <div class="wf-meta">${wf.tasks.length} Tasks · ${wf.track}</div>
+        </div>
+      `;
+    }).join('');
+    bBody.innerHTML = `<div class="wf-grid">${cards}</div>`;
+    bNav.innerHTML = `<div></div><button class="btn btn-primary" onclick="nextBuilderStep(2)">Next: Assign Agents →</button>`;
+  } else if (builderStep === 2) {
+    if (customTasks.length === 0) {
+      customTasks = JSON.parse(JSON.stringify(WORKFLOWS[selectedWfKey].tasks));
+    }
+    let rows = customTasks.map((t, idx) => {
+      let options = Object.keys(AGENT_ROLES).map(rk => {
+        const r = AGENT_ROLES[rk];
+        const selected = rk === t.agent ? 'selected' : '';
+        return `<option value="${rk}" ${selected}>${r.emoji} ${r.label}</option>`;
+      }).join('');
+
+      return `
+        <div class="task-row">
+          <div class="tn">${idx + 1}</div>
+          <div class="tt">${t.task}</div>
+          <select onchange="updateCustomTaskAgent(${idx}, this.value)">${options}</select>
+        </div>
+      `;
+    }).join('');
+
+    bBody.innerHTML = `<div>${rows}</div>`;
+    bNav.innerHTML = `<button class="btn btn-ghost" onclick="nextBuilderStep(1)">← Back</button><button class="btn btn-primary" onclick="nextBuilderStep(3)">Next: Finalize →</button>`;
+  } else if (builderStep === 3) {
+    bBody.innerHTML = `
+      <div style="max-width:550px;">
+        <div class="field">
+          <label>Operator Name</label>
+          <input type="text" id="custNameInput" value="${customName || WORKFLOWS[selectedWfKey].title + ' Custom'}" placeholder="e.g. Custom Airborne Thermal Auditor">
+        </div>
+        <div class="field">
+          <label>Track Assignment</label>
+          <div class="seg">
+            <button class="${customTrack === 'commercial' ? 'on' : ''}" onclick="setCustomTrack('commercial')">Commercial Tenders</button>
+            <button class="${customTrack === 'operations' ? 'on' : ''}" onclick="setCustomTrack('operations')">Hardware Operations</button>
+          </div>
+        </div>
+      </div>
+    `;
+    bNav.innerHTML = `<button class="btn btn-ghost" onclick="nextBuilderStep(2)">← Back</button><button class="btn btn-primary" onclick="deployCustomOperator()">🚀 Deploy Operator to Roster</button>`;
+  }
+}
+
+function selectWfTemplate(k) {
+  selectedWfKey = k;
+  customTasks = JSON.parse(JSON.stringify(WORKFLOWS[k].tasks));
+  renderBuilder();
+}
+
+function nextBuilderStep(st) {
+  builderStep = st;
+  renderBuilder();
+}
+
+function updateCustomTaskAgent(idx, val) {
+  if (customTasks[idx]) customTasks[idx].agent = val;
+}
+
+function setCustomTrack(tr) {
+  customTrack = tr;
+  renderBuilder();
+}
+
+function deployCustomOperator() {
+  const nameInput = document.getElementById('custNameInput');
+  const finalName = nameInput ? nameInput.value.trim() : 'Custom Operator';
+  const newKey = 'custom_' + Date.now();
+
+  WORKFLOWS[newKey] = {
+    name: 'Custom AI Edge Workflow',
+    title: finalName,
+    mode: 'sequential',
+    track: customTrack,
+    deliverable: finalName + ' Release Package',
+    desc: 'Custom user-configured multi-agent workflow for One Stop Systems edge operations.',
+    tasks: customTasks
+  };
+
+  DELIVERABLES[newKey] = `================================================================================\nONE STOP SYSTEMS — CUSTOM OPERATOR DELIVERABLE\nOperator: ${finalName}\nGenerated: ${new Date().toLocaleString()}\n================================================================================\n\n1. CUSTOM AGENT TASK EXECUTION SUMMARY\n--------------------------------------------------------------------------------\nAll ${customTasks.length} task steps executed successfully across designated AI specialist agents.\nSystem signal integrity, thermal dissipation, and AS9100D compliance criteria verified.`;
+
+  renderRoster();
+  setView('ops');
+  runOperator(newKey);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderRoster();
+});
+</script>
+</body>
+</html>
