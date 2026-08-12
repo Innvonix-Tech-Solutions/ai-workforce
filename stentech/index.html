@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StenTech &mdash; AI Commercial &amp; SMT Stencil Engineering Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f0f4f9;--surface2:#d6e4f0;--border:#bdcde0;--accent:#0b4d8c;
+--accent-dim:rgba(11,77,140,.07);--accent-line:rgba(11,77,140,.28);--slate:#4a5563;--slate-line:rgba(74,85,99,.32);--text:#1c2530;--hi:#0f1a26;--tert:#69737f;--ok:#16a34a;--ok-dim:rgba(22,163,74,.10);--gold:#e86c00;--gold-bg:#fff7ed;--gold-line:#fdba74}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:36px;height:34px;border-radius:8px;background:linear-gradient(135deg,#003366,#0b4d8c);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;letter-spacing:.5px}
+.htitle{font-size:15px;font-weight:600;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert)}.badge b{color:var(--accent)}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:600;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.5;max-width:900px;margin-bottom:14px}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.commercial{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(74,85,99,.08);color:var(--slate);border:1px solid var(--slate-line)}
+.tag.hero{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:24px;font-weight:700;color:var(--hi)}.cell .v .u{color:var(--accent)}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px}
+.slabel{font-size:11px;font-weight:600;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert)}
+.emp-owns{font-size:12px;margin-bottom:10px}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:inherit;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#5c9bd6}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#5c9bd6}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:14px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 13px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="header">
+<div class="logo"><div class="mark">ST</div>
+<div><div class="htitle">StenTech &middot; AI Commercial &amp; SMT Stencil Engineering Workforce</div><div class="hsub">AI operators that capture EMS accounts, optimize Gerber CAD DFM, program Fiber Laser cutting, apply BluPrint&trade; PVD coatings, and fabricate wave solder tooling</div></div></div>
+<div class="badge">Independent concept &nbsp;&middot;&nbsp; <b>illustrative</b></div>
+</header>
+
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>an EMS commercial or SMT stencil engineering workflow turned into an autonomous team of agents</b>. One track captures the business: it finds EMS contract manufacturers, automotive/aerospace PCBA providers, and prototype shops needing high-precision SMT stencils and tooling, processes online Gerber quotes, structures multi-facility EMS supply agreements across 30+ North American locations, and highlights StenTech nano-coating advantages. The other track delivers manufacturing precision: it processes CAD Gerber packages in StenCAD, calculates Area Ratios (AR > 0.66), optimizes fine-pitch micro-BGA apertures, generates Fiber Laser G-code, applies BluPrint&trade; PVD &amp; Advanced Nano&trade; hydrophobic coatings, designs wave solder pallets, and verifies Solder Paste Inspection (SPI) transfer efficiency. Point one at a Gerber file, an RFQ or a tooling design and it runs the loop, then hands back a review-ready output for a person to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">EMS Commercial Capture</span> find, Gerber quote, multi-facility deal</span>
+<span><span class="tag operations">SMT Stencil &amp; Tooling Eng</span> StenCAD DFM, Fiber Laser, BluPrint PVD, Pallets</span>
+<span><span class="tag hero">Flagship</span> the deepest example run</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+
+<div class="foot">Independent concept prototype prepared by Innvonix Tech Solutions for a conversation with StenTech Inc. It is not affiliated with, endorsed by, or built on StenTech systems or data. All operators and outputs are illustrative simulations; Gerber files, aperture geometries, laser cutting speeds, coating parameters and pricing are placeholders. A human CAD engineer, CAM specialist, VP of manufacturing or sales lead reviews and approves every StenCAD modification, laser program, nano-coating release and quote. This is not a production system and produces no deliverable for a real customer PCBA.</div>
+
+<script>
+const AGENT_ROLES={
+researcher:{emoji:'🔎',label:'EMS & PCBA Market Research',tools:['research','save']},
+prospector:{emoji:'🧲',label:'EMS & OEM Account Sourcing',tools:['source_accounts','save']},
+qualifier:{emoji:'🎯',label:'Gerber & Assembly Qualification',tools:['score_fit','save']},
+cadcam:{emoji:'💻',label:'StenCAD & Gerber DFM Engineering',tools:['parse_gerber','optimize_apertures','save']},
+lasereng:{emoji:'⚡',label:'Fiber Laser & Stencil Cutting',tools:['generate_laser_code','simulate_cut','save']},
+coating:{emoji:'🧪',label:'Advanced Nano & PVD Coating Process',tools:['apply_nano_coating','inspect_surface','save']},
+tooling:{emoji:'🛠️',label:'Pallet & Fixture Tooling Design',tools:['design_wave_pallet','save']},
+spi:{emoji:'🔍',label:'Solder Paste Inspection & Metrology',tools:['measure_pte','inspect_aperture','save']},
+quality:{emoji:'📋',label:'IPC & ISO 9001 Compliance',tools:['check_compliance','save']},
+pricing:{emoji:'🧮',label:'Quoting & Turnaround Estimating',tools:['build_quote','save']},
+writer:{emoji:'✍️',label:'DFM & Technical Report Writer',tools:['compose','save']},
+reviewer:{emoji:'✅',label:'QA & Final Inspection Review',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+
+const TRACKS=[['commercial','EMS Commercial Capture'],['operations','SMT Stencil & Tooling Eng']];
+
+const WORKFLOWS={
+scout:{name:'EMS & OEM account discovery',title:'AI Stencil Scout',mode:'dag',track:'commercial',deliverable:'Target EMS & OEM Account List',
+sample:'Find tier-1 EMS contract manufacturers, automotive PCBA providers, medical device assemblers, and quick-turn prototype shops in North America needing laser-cut SMT stencils, BluPrint™ PVD nano-coating, and wave solder pallets.',
+desc:'Agents scan North American electronics manufacturing clusters, map Process Engineers, SMT Managers, and Procurement Leads, score stencil demand volume, and compile the target list.',
+tasks:[{agent:'researcher',task:'Map EMS contract manufacturers, aerospace/automotive PCBA facilities, and quick-turn SMT lines across US, Canada, and Mexico.',deps:[]},
+{agent:'prospector',task:'Source SMT Process Engineering Managers, Manufacturing Engineers, Purchasing Directors, and General Managers.',deps:[]},
+{agent:'qualifier',task:'Score fit against StenTech capabilities: 30+ local facilities for same-day delivery, StenCAD automated DFM, BluPrint™ PVD nano-coating, custom tooling.',deps:[0,1]},
+{agent:'writer',task:'Compile the ranked target EMS account list with stencil volume estimates and facility routing strategy.',deps:[2]}]},
+
+quote:{name:'Gerber online quoting & quick-turn ordering',title:'AI Gerber Estimator',mode:'sequential',track:'commercial',deliverable:'Stencil & Tooling Quote Package',
+sample:'A contract manufacturer uploaded a 10-layer automotive ECU Gerber package: 5-mil stainless foil, 29"x29" VectorGuard frame, BluPrint™ PVD nano-coating, 24-hour delivery to Dallas facility. Quote the job.',
+desc:'Agents parse Gerber CAD layer count and aperture total, recommend foil thickness and nano-coating, estimate laser cut time, and generate the instant quote.',
+tasks:[{agent:'qualifier',task:'Parse customer RFQ and Gerber upload: 10-layer PCB, 1,420 apertures, 0.4mm pitch BGA, 0201 passives, VectorGuard frame format.',deps:[]},
+{agent:'cadcam',task:'Perform rapid aperture count & area ratio check: flag fine-pitch BGA pads needing BluPrint™ PVD nano-coating for optimal paste release.',deps:[0]},
+{agent:'pricing',task:'Structure the quote: base stencil cut fee, BluPrint™ PVD coating addon, VectorGuard foil adapter, same-day local courier delivery.',deps:[1]},
+{agent:'writer',task:'Produce the instant stencil & tooling quote package with DFM advisories and facility production schedule.',deps:[2]}]},
+
+contract:{name:'Tier-1 EMS tooling & stencil program agreement',title:'AI Enterprise Program Structurer',mode:'sequential',track:'commercial',deliverable:'EMS Master Tooling Agreement Package',
+sample:'Structure a multi-facility master stencil and tooling agreement for a tier-1 EMS provider operating 8 PCBA facilities across Texas, California, and Mexico.',
+desc:'Agents analyze multi-plant stencil consumption, structure volume rebate tiers, set up automated Gerber ordering workflows, and produce the master agreement package.',
+tasks:[{agent:'qualifier',task:'Analyze customer multi-plant usage: 450 stencils/month across 8 plants, 120 wave pallets/year, 24-hour turnaround SLA.',deps:[]},
+{agent:'pricing',task:'Structure commercial pricing: tiered volume discount on laser stencils, free BluPrint™ PVD upgrades on high-density runs, centralized invoicing.',deps:[0]},
+{agent:'reviewer',task:'Review agreement terms against StenTech local plant capacities, consignment frame stocking, and ISO 9001 quality SLAs.',deps:[1]},
+{agent:'writer',task:'Produce the EMS Master Tooling Agreement package with SLA commitments, plant assignment matrix, and digital order protocol.',deps:[2]}]},
+
+radar:{name:'SMT stencil & assembly tech intelligence',title:'AI Market Intel',mode:'dag',track:'commercial',deliverable:'Competitive Intelligence Brief',
+sample:'How do local job-shop stencil cutters compare to StenTech (30+ North American locations, StenCAD AI DFM, BluPrint™ PVD coating, electroforming, custom wave pallets)?',
+desc:'Agents profile competing stencil manufacturers, analyze nano-coating technology performance, map StenTech key differentiators, and produce the brief.',
+tasks:[{agent:'researcher',task:'Scan SMT stencil market developments: fiber laser speed, nano-coating durability, fine-pitch 01005 printing, 3D printing vs CNC pallets.',deps:[]},
+{agent:'prospector',task:'Profile competing regional stencil suppliers (MicroScreen, Photo Stencil, Utz, Fictiv, local laser shops).',deps:[]},
+{agent:'cadcam',task:'Compare performance metrics: StenTech BluPrint™ PVD vs spray-on nano coatings (paste transfer efficiency >90%, 50,000 prints without wipe, PVD hardness).',deps:[0,1]},
+{agent:'writer',task:'Produce the competitive intelligence brief highlighting StenTech speed, proximity, and nano-coating superiority.',deps:[2]}]},
+
+gerberdfm:{name:'Gerber DFM & aperture optimization',title:'AI StenCAD Engineer',mode:'sequential',track:'operations',tag:'flagship',deliverable:'StenCAD DFM & Aperture Package',
+sample:'Process a high-density 12-layer server motherboard Gerber package in StenCAD: run DFM check for 0201 passives and 0.35mm pitch micro-BGA, calculate Area Ratios (AR > 0.66), apply C-shaped and home-plate aperture reductions, specify 4.5-mil foil with StenTech BluPrint™ PVD coating, QA-review, and produce the stencil cut file.',
+desc:'Agents import Gerber RS-274X / ODB++ data into StenCAD, run automated DFM rules, optimize fine-pitch aperture geometries, QA-review, and produce the stencil package.',
+tasks:[{agent:'cadcam',task:'Import Gerber RS-274X / ODB++ files: extract top/bottom paste layers, copper layers, silkscreen, and board outline.',deps:[]},
+{agent:'cadcam',task:'Run StenCAD DFM check: scan 2,840 apertures; identify 0201 passives, 0.35mm micro-BGA, QFN thermal pads, and fine-pitch connectors.',deps:[0]},
+{agent:'cadcam',task:'Calculate Area Ratio (AR = Area of Aperture / Area of Walls): flag 48 apertures where AR < 0.66 baseline threshold.',deps:[1]},
+{agent:'cadcam',task:'Apply aperture geometry optimizations: 10% home-plate reduction on 0805/0603 to eliminate solder beads, C-shape split on QFN ground pads, corner radius 0.001" on micro-BGA.',deps:[2]},
+{agent:'coating',task:'Specify StenTech BluPrint™ PVD nano-coating: apply 1.5µm PVD polymer layer to aperture walls to boost paste transfer efficiency (PTE) to >92%.',deps:[3]},
+{agent:'quality',task:'Verify IPC-7525 stencil design compliance, Area Ratio rules (>0.66), and ISO 9001 quality standards.',deps:[4]},
+{agent:'reviewer',task:'QA-review DFM package: verify zero DRC shorts, correct foil thickness (4.5-mil fine-grain SS), and frame tension (>35 N/cm).',deps:[5]},
+{agent:'writer',task:'Produce the StenCAD DFM & aperture package with before/after aperture comparison, AR table, and laser-ready CAM file.',deps:[6]}]},
+
+lasercut:{name:'Fiber laser cutting & post-process finish',title:'AI Laser Engineer',mode:'sequential',track:'operations',deliverable:'Laser Cutting & Finishing Report',
+sample:'Generate G-code for a Fiber Diode Laser cutting machine to fabricate a 2,840-aperture 4.5-mil stainless steel stencil, electropolish aperture walls, and mount in a 29"x29" cast aluminum frame.',
+desc:'Agents convert optimized CAD apertures into laser control paths, simulate cut sequence to prevent foil warping, execute laser cutting, run electropolishing, and produce the report.',
+tasks:[{agent:'lasereng',task:'Generate laser G-code: set cutting speed (120 mm/s), assist gas pressure (N2 at 12 bar), beam frequency, and cut sequence optimization to minimize thermal stress.',deps:[]},
+{agent:'lasereng',task:'Simulate laser cutting path: verify zero beam overlap errors, corner acceleration smoothing, and aperture wall taper angle (<1°).',deps:[0]},
+{agent:'lasereng',task:'Post-cut finishing: micro-deburring, electropolishing (reduce wall roughness Ra < 0.4µm), and tension mounting into 29"x29" aluminum frame (38 N/cm).',deps:[1]},
+{agent:'spi',task:'Inspect cut stencil: 100% optical inspection of aperture dimensions, positional accuracy (±5µm target), and wall cleanliness.',deps:[2]},
+{agent:'writer',task:'Produce the laser cutting & finishing report with optical metrology data and tension certificate.',deps:[3]}]},
+
+nanocoating:{name:'BluPrint™ PVD & Advanced Nano™ coating process',title:'AI Nano-Coating Specialist',mode:'sequential',track:'operations',deliverable:'Nano-Coating Process Certificate',
+sample:'Apply StenTech BluPrint™ PVD (Physical Vapor Deposition) hydrophobic coating to a high-density SMT stencil, measure water contact angle (>115°), and verify paste release performance.',
+desc:'Agents prepare the stainless steel stencil foil, execute PVD vacuum chamber deposition, measure surface energy and contact angle, QA-review, and produce the certificate.',
+tasks:[{agent:'coating',task:'Pre-coating surface preparation: plasma clean and ultrasonic degrease stencil foil to ensure 100% molecular adhesion.',deps:[]},
+{agent:'coating',task:'Execute BluPrint™ PVD process: deposit 1.5µm fluoropolymer coating inside aperture walls via physical vapor deposition under vacuum (1E-4 Torr).',deps:[0]},
+{agent:'coating',task:'Measure coating metrics: water contact angle (>115° target), oleophobic oil contact angle (>75°), scratch hardness (9H pencil test).',deps:[1]},
+{agent:'spi',task:'Verify paste release enhancement: simulate 500 consecutive print strokes without underside wipe; verify 0 bridging errors and >92% paste transfer efficiency.',deps:[2]},
+{agent:'writer',task:'Produce the BluPrint™ PVD nano-coating process certificate with contact angle test results and wipe-frequency recommendation.',deps:[3]}]},
+
+palletdesign:{name:'Wave solder & conformal coating pallet fabrication',title:'AI Tooling Designer',mode:'sequential',track:'operations',deliverable:'Wave Solder Pallet Design Package',
+sample:'Design an ESD-safe Durostone wave solder pallet for a double-sided PCBA: mask SMT components on bottom side, add titanium hold-down clips, generate CNC 3-axis milling paths.',
+desc:'Agents import PCB CAD step file, design selective wave soldering pocket depths and component clearance, generate CNC milling toolpaths, and produce the design package.',
+tasks:[{agent:'tooling',task:'Import PCB CAD 3D model: identify SMT components on bottom side requiring wave solder masking and PTH pins requiring solder exposure.',deps:[]},
+{agent:'tooling',task:'Design Durostone pallet fixture: 0.500" ESD-safe composite material, 1.5mm wall clearance around SMT parts, chamfered solder wave flow channels.',deps:[0]},
+{agent:'tooling',task:'Design mechanical features: quick-release titanium hold-down latches, edge-push spring pins, and stiffener bars to prevent board warping.',deps:[1]},
+{agent:'tooling',task:'Generate CNC toolpaths: 3-axis milling paths, pocket roughing, chamfering, and pin-hole drilling; calculate machine cycle time.',deps:[2]},
+{agent:'writer',task:'Produce the wave solder pallet design package with 3D PDF assembly model, bill of materials, and CNC fabrication traveler.',deps:[3]}]},
+};
+
+const DTITLE={scout:'Target EMS & OEM Account List',quote:'Stencil & Tooling Quote Package',contract:'EMS Master Tooling Agreement Package',radar:'Competitive Intelligence Brief',gerberdfm:'StenCAD DFM & Aperture Package',lasercut:'Laser Cutting & Finishing Report',nanocoating:'Nano-Coating Process Certificate',palletdesign:'Wave Solder Pallet Design Package'};
+
+const TOOLS={
+research:()=>'Gathered North American EMS contract manufacturing, automotive PCBA and SMT market intel; targets ranked.',
+source_accounts:()=>'Sourced SMT Process Engineering Managers, Manufacturing Engineers, and Purchasing Leads; deduped against CRM.',
+score_fit:()=>'Scored against StenTech capabilities: 30+ local facilities, StenCAD DFM, BluPrint PVD, quick-turn delivery.',
+parse_gerber:()=>'Parsed Gerber RS-274X / ODB++ package: extracted layers, aperture counts, board outline, and pitch data.',
+optimize_apertures:()=>'Optimized aperture geometries in StenCAD: applied home-plate reductions, C-shapes, and corner radii.',
+generate_laser_code:()=>'Generated Fiber Laser G-code: cut speed, assist gas N2 pressure, and thermal stress paths optimized.',
+simulate_cut:()=>'Simulated laser cutting sequence: zero beam overlap errors, taper angle <1° verified.',
+apply_nano_coating:()=>'Applied StenTech BluPrint PVD coating in vacuum chamber; hydrophobic layer bonded.',
+inspect_surface:()=>'Measured contact angle (>115°), surface energy, and PVD film thickness.',
+design_wave_pallet:()=>'Designed ESD-safe Durostone wave solder pallet: pockets, chamfers, and titanium clips modeled.',
+measure_pte:()=>'Measured Solder Paste Inspection (SPI) transfer efficiency: >92% volume transfer achieved.',
+inspect_aperture:()=>'Inspected aperture dimensions and wall smoothness: Ra < 0.4µm verified.',
+check_compliance:()=>'Checked IPC-7525 stencil design guidelines, IPC-A-610, and ISO 9001 quality compliance.',
+build_quote:()=>'Structured instant quote: stencil foil, BluPrint PVD addon, frame type, and local courier delivery.',
+qa_review:()=>'QA: StenCAD DFM rules, laser code, coating adhesion, and IPC compliance verified.',
+compose:()=>'Drafted in a clear, shop-floor-ready, IPC-7525-aware technical style.',
+save:()=>'Saved to shared context for downstream agents.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+
+const FINAL={
+scout:`TARGET EMS & OEM ACCOUNT LIST (illustrative)
+
+Scanned North American electronics manufacturing clusters (US, Canada, Mexico).
+
+A-tier (pursue now)
+1. Tier-1 Automotive EMS (Dallas/Guadalajara) — ECU & radar PCBA — 80 stencils/mo — fit 97
+2. Aerospace & Defense Contractor (Huntsville) — High-reliability AS9100 line — BluPrint PVD — fit 95
+3. Medical Device OEM (Minneapolis) — Micro-BGA & 0201 fine-pitch assembly — fit 93
+4. Quick-Turn Prototype House (Silicon Valley) — 24-hour turnaround — 120 stencils/mo — fit 91
+5. Industrial Controls EMS (Toronto/Markham) — Wave solder pallets + stencils — fit 88
+
+Contacts: VP Manufacturing, SMT Process Engineering Manager, Director of Purchasing.
+Facility routing: Dallas, Markham, Guadalajara, San Jose, Huntsville local StenTech plants.
+
+→ Saved: ems_target_list, executive_contacts, facility_routing_matrix
+
+NOTE: illustrative; not affiliated with StenTech Inc.`,
+
+quote:`STENCIL & TOOLING QUOTE PACKAGE (illustrative)
+
+Customer: Tier-1 Automotive PCBA Contract Manufacturer.
+Job: 10-Layer ECU Board Assembly (Gerber ID: #AUT-2026-881).
+
+Quote summary
+• Stencil Type: Laser-cut 4.5-mil fine-grain Stainless Steel (VectorGuard 29"x29" format)
+• Aperture Count: 1,420 apertures (includes 0.35mm pitch BGA & 0201 passives)
+• Surface Coating: StenTech BluPrint™ PVD Hydrophobic Coating (wall Ra < 0.4µm)
+• Facility Routing: StenTech Dallas Facility (same-day local delivery)
+
+Price breakdown
+• Laser Cut Stencil (VectorGuard foil): $[REDACTED]
+• StenTech BluPrint™ PVD Coating: $[REDACTED]
+• Local Courier Delivery (Same Day): $[REDACTED]
+• Total Job Price: $[REDACTED] (Lead time: 8 hours ARO)
+
+→ Saved: stencil_quote.pdf, gerber_dfm_advisory, delivery_schedule
+
+NOTE: illustrative; all pricing redacted.`,
+
+contract:`EMS MASTER TOOLING AGREEMENT PACKAGE (illustrative)
+
+Customer: Global EMS Provider (8 North American SMT Manufacturing Sites).
+Scope: Enterprise Stencil, Nano-Coating & Wave Pallet Supply Agreement.
+
+Commercial terms & SLA
+• Stencil Volume: estimated 5,000 stencils / year across 8 facilities
+• SLA Turnaround: 24-hour standard delivery; 6-hour emergency turnaround guarantee
+• Local Facility Mapping: Markham ON, Dallas TX, Guadalajara MX, Fremont CA, Nashua NH
+• BluPrint™ PVD Incentive: 15% discount on all BluPrint PVD nano-coating upgrades
+• Centralized Digital Ordering: API integration between customer MRP and StenTech portal
+
+Financial incentive
+• Tier-1 Volume Rebate: 8% annual credit upon exceeding 4,000 unit milestone
+• Consolidated Monthly Invoicing with plant-by-plant cost tracking
+
+→ Saved: master_agreement_draft, sla_matrix, plant_routing_directory
+
+NOTE: illustrative; all pricing redacted.`,
+
+radar:`COMPETITIVE INTELLIGENCE BRIEF (illustrative)
+
+Landscape
+• Local Job-Shop Laser Cutters: low cost, but slow 3-day turnaround, 1 plant, no PVD coating capability
+• Regional Stencil Suppliers: 1-2 locations, rely on spray-on coatings (wears off after 2,000 prints)
+• Photo Stencil / Chemical Etch Vendors: chemical process losing ground to fiber laser precision
+
+Where StenTech wins
+• 30+ North American Facilities: local footprint ensures same-day or 24-hour delivery everywhere
+• BluPrint™ PVD Nano-Coating: Physical Vapor Deposition lasts 50,000+ prints (vs 2,000 for spray-on)
+• StenCAD Automated DFM: AI-driven aperture geometry optimization reduces defects by >60%
+• Complete SMT Tooling Line: stencils + wave solder pallets + SMT fixtures under one roof
+• VectorGuard & Multi-Frame Expertise: master distributor for leading frame systems
+
+Talk tracks
+1. "Never wait 3 days for a stencil — local delivery in 8 hours from your nearest StenTech plant"
+2. "BluPrint PVD coating lasts 50,000 prints without underside wipe degradation"
+3. "StenCAD automatically catches fine-pitch Area Ratio errors before the laser cuts"
+
+→ Saved: competitive_matrix, technology_benchmarks, sales_talk_tracks
+
+NOTE: illustrative; not affiliated with StenTech Inc.`,
+
+gerberdfm:`StenCAD DFM & APERTURE PACKAGE (illustrative · flagship)
+
+Job: High-Density 12-Layer Server Motherboard (Gerber Package #SRV-2026-904).
+
+Gerber DFM analysis
+• Total Apertures: 2,840 (Top Paste Layer)
+• Fine-Pitch Components: 2x 1,156-ball BGA (0.35mm pitch), 48x 0201 passives, 4x QFN64 thermal pads
+
+Area Ratio (AR) evaluation
+• Baseline AR Check: 48 apertures flagged with AR < 0.66 (risk of solder paste clogging)
+• Fine-pitch micro-BGA pads: original 8-mil square → AR = 0.44 (FAIL)
+
+StenCAD aperture optimizations
+1. Micro-BGA (0.35mm pitch): reduced pad to 7.5-mil rounded square (0.001" corner radius), reduced foil thickness from 5.0-mil to 4.5-mil fine-grain SS → AR = 0.68 (PASS)
+2. 0201 Passives: applied 10% home-plate reduction to eliminate solder bead mid-chip balling
+3. QFN Ground Pads: split 10mm x 10mm pad into 4x4 matrix array with 15-mil web bridges (prevents component floating)
+4. Coating Selection: specified StenTech BluPrint™ PVD (1.5µm PVD polymer, contact angle >115°)
+
+QA review
+• All 2,840 apertures: AR > 0.66 — PASS
+• Zero DRC clearance violations
+• Expected Paste Transfer Efficiency (PTE): 94.2%
+• Laser CAM G-code generated for Fiber Diode Laser station
+
+→ Saved: stencad_package, aperture_ar_table, dfl_cam_file, dnd_report
+
+NOTE: illustrative; confirm against customer assembly drawing specifications.`,
+
+lasercut:`LASER CUTTING & FINISHING REPORT (illustrative)
+
+Job: 2,840-Aperture Server Motherboard Stencil (Foil: 4.5-mil Stainless Steel).
+
+Laser cutting execution
+• Machine: LPKF / Custom Fiber Diode Laser Station #DALLAS-L3
+• Cut Parameters: cutting speed 120 mm/s, assist gas N2 (99.999% purity) at 12 bar
+• Total Cut Time: 14 minutes 22 seconds
+• Positional Accuracy: ±3.8µm across 24" x 24" image area (spec ±5µm) — PASS
+• Aperture Taper Angle: 0.6° trapezoidal wall taper (facilitates paste release) — PASS
+
+Finishing & framing
+• Micro-deburring & electropolishing: 45 seconds in chemical bath (wall roughness Ra = 0.28µm)
+• Mounting: VectorGuard 29"x29" aluminum frame, pneumatic tension = 38.5 N/cm — PASS
+
+Optical inspection
+• 100% automated optical inspection (AOI): 2,840/2,840 apertures conforming — PASS
+
+→ Saved: laser_cut_report, aoi_inspection_data, tension_certificate
+
+NOTE: illustrative; verify against Dallas plant laser log.`,
+
+nanocoating:`NANO-COATING PROCESS CERTIFICATE (illustrative)
+
+Stencil: 4.5-mil Server Motherboard Stencil (#SRV-2026-904).
+Coating: StenTech BluPrint™ PVD (Physical Vapor Deposition).
+
+Process parameters
+• Chamber Vacuum: 1.2E-4 Torr
+• Deposition Temp: 120°C
+• Coating Thickness: 1.5 µm uniform PVD fluoropolymer film
+• Adhesion Test: ASTM D3359 cross-hatch tape test 5B — PASS
+
+Quality inspection metrics
+• Water Contact Angle: 118.4° (spec >110°) — PASS
+• Oleophobic Oil Contact Angle: 78.2° (spec >70°) — PASS
+• Surface Hardness: 9H pencil hardness — PASS
+• Simulated Print Performance: 50,000 print cycles without coating wear; zero solder bridging
+
+Recommendation: Set printer underside wipe frequency to every 20 prints (vs 3 prints for uncoated).
+
+→ Saved: bluprint_certificate, contact_angle_photos, print_performance_data
+
+NOTE: illustrative; verify against laboratory test lot.`,
+
+palletdesign:`WAVE SOLDER PALLET DESIGN PACKAGE (illustrative)
+
+PCB: Industrial Control Board (Double-Sided Assembly, 8" x 10").
+
+Pallet design specifications
+• Material: Durostone® CAS761 (ESD-Safe Composite, 0.500" thickness)
+• SMT Protection: 1.5mm pocket clearance for 42 bottom-side SMT passives and ICs
+• Wave Flow Channels: 45° chamfered solder wave relief channels around 18 PTH connectors
+• Hardware: 6 quick-turn titanium rotating latches, 2 spring edge-pushers, aluminum stiffener bar
+
+CNC machining toolpath
+• 3-Axis CNC Router (#DAL-CNC-2)
+• Machining Time: 22 minutes (roughing, pocketing, chamfering, drilling)
+• ESD Surface Resistivity: 10^6 to 10^9 ohms/sq — PASS
+
+→ Saved: pallet_design_package, 3d_pdf_model, cnc_gcode, bom_hardware
+
+NOTE: illustrative; verify against customer board 3D STEP file.`,
+};
+
+let EMPLOYEES=[
+{id:'scout',name:'Scout',title:'AI Stencil Scout',wf:'scout',handled:240,hrs:48,win:0,status:'idle'},
+{id:'estimator',name:'Estimator',title:'AI Gerber Estimator',wf:'quote',handled:310,hrs:76,win:44,status:'idle'},
+{id:'structurer',name:'Structurer',title:'AI Enterprise Program Structurer',wf:'contract',handled:75,hrs:84,win:48,status:'idle'},
+{id:'radar',name:'Radar',title:'AI Market Intel',wf:'radar',handled:130,hrs:28,win:0,status:'idle'},
+{id:'stencad',name:'StenCAD-Eng',title:'AI StenCAD Engineer',wf:'gerberdfm',handled:420,hrs:210,win:66,status:'idle'},
+{id:'lasereng',name:'LaserEng',title:'AI Laser Engineer',wf:'lasercut',handled:380,hrs:160,win:58,status:'idle'},
+{id:'nanospec',name:'NanoSpec',title:'AI Nano-Coating Specialist',wf:'nanocoating',handled:260,hrs:130,win:54,status:'idle'},
+{id:'tooling',name:'Tooling-Eng',title:'AI Tooling Designer',wf:'palletdesign',handled:180,hrs:110,win:50,status:'idle'},
+];
+
+let running=false;
+const $=id=>document.getElementById(id);const sleep=ms=>new Promise(r=>setTimeout(r,ms));const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;const now=()=>new Date().toLocaleTimeString('en-GB');const mono=n=>n.trim().slice(0,2).toUpperCase();
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">EMS Commercial</span>';if(wf.track==='operations')s+='<span class="tag operations">SMT Stencil Eng</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+function setView(v){$('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');$('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});}
+function renderEcon(){const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;const cells=[[total,'AI operators (commercial + engineering)'],[h.toLocaleString(),'Gerbers, laser cuts & pallets handled'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','engineer & CAM hours saved / month'],['+'+avg+'%','avg turnaround improvement']];$('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');}
+function empCard(e){const wf=WORKFLOWS[e.wf];const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}"><div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div><div class="emp-owns">Owns: <b>${wf.name}</b></div><div class="team">${team}</div><div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'—'}</b>faster</div></div><div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a job / Gerber</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;}
+function renderRoster(){const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;let html='';TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});$('roster').innerHTML=html;}
+function assign(id){if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];$('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a Gerber file, an RFQ or a tooling design and ${e.name} runs the whole loop.</div></div></div><div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div><div id="stage"></div></div>`;$('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();}
+async function runEmp(id){if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');const stage=$('stage');stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div><div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div><div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;const feed=$('feed');function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;const row=document.createElement('div');row.className='frow';row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,150)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}log(null,`Input received: "${obj.substring(0,54)}…"`);log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);await sleep(rand(700,1100));const grid=$('agrid');wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});await sleep(600);$('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');const done=new Set();async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}$('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');await sleep(400);const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(6,44);$('resultArea').innerHTML=`<div class="result"><div class="rstats"><div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div><div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div><div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'EMS Commercial Capture':'SMT Stencil & Tooling Eng'}</span></div><div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div><div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div><div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div><div class="donebar"><b>${e.name} produced a review-ready output.</b> Read, adapt and QA complete, ready for a CAD engineer, CAM specialist, VP of manufacturing or sales lead to confirm against IPC-7525 and StenTech plant specs. Illustrative simulation, not a production deliverable.</div>`;e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;}
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per job',step:1};renderBuilder();}
+function renderBuilder(){const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];$('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+`<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div><div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. StenCAD" oninput="draft.name=this.value"></div><div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI CAD Engineer" oninput="draft.title=this.value"></div><div class="field"><label>Cadence</label><div class="seg">`+['Per job','Per order lot','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div><div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});renderEcon();renderRoster();setView('ops');setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);}
+
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
