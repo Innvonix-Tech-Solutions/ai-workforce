@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ID Logistics Console — AI Contract Logistics &amp; Warehousing Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060b14;
+  --surface:#0f1726;
+  --surface-2:#192438;
+  --surface-3:#283754;
+  --border:#283754;
+  --border-soft:#111a2b;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --muted-2:#64748b;
+  --accent:#ef4444;
+  --accent-dim:rgba(239,68,68,0.15);
+  --accent-line:rgba(239,68,68,0.38);
+  --accent2:#2563eb;
+  --accent2-bg:rgba(37,99,235,0.08);
+  --accent3:#f59e0b;
+  --danger:#ef4444;
+  --ok:#10b981;
+  --font-display:'Rajdhani',sans-serif;
+  --font-body:'Work Sans',sans-serif;
+  --font-mono:'Roboto Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 88% -8%, rgba(239,68,68,0.12), transparent 55%),
+    radial-gradient(900px 480px at 5% 5%, rgba(37,99,235,0.08), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+a{color:var(--accent);}
+::selection{background:rgba(239,68,68,0.28);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+.hidden{display:none!important;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:24px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:44px;height:42px;border-radius:8px;
+  background:linear-gradient(135deg,#dc2626,#ef4444);
+  border:1px solid var(--accent-line);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:var(--font-mono);font-weight:800;font-size:14px;
+  box-shadow:0 0 18px rgba(239,68,68,0.3);
+}
+.mark-name{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:0.02em;color:#fff;}
+.mark-sub{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px;}
+
+.line-readout{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent);
+  background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:8px 14px;display:flex;align-items:center;gap:10px;
+}
+.line-readout .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.tabs{display:flex;gap:8px;margin-top:20px;border-bottom:1px solid var(--border-soft);}
+.tab-btn{
+  background:transparent;border:none;color:var(--muted);padding:10px 18px;font-family:var(--font-body);
+  font-size:13.5px;font-weight:600;cursor:pointer;border-radius:8px 8px 0 0;transition:all 0.15s ease;
+}
+.tab-btn:hover{color:var(--text);background:var(--surface-2);}
+.tab-btn.active{color:var(--accent);background:var(--surface);border:1px solid var(--border);border-bottom-color:var(--surface);}
+
+.hero{padding:36px 0 28px;display:grid;grid-template-columns:1.15fr 0.85fr;gap:40px;align-items:center;}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:24px 0 18px;}}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent);}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(30px,4vw,42px);line-height:1.08;letter-spacing:-0.005em;margin:0 0 14px;color:#fff;}
+h1 span{color:var(--accent);background:linear-gradient(90deg,#ef4444,#f87171);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.lead{color:var(--muted);font-size:15px;max-width:55ch;margin:0 0 22px;line-height:1.6;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:var(--font-body);font-weight:600;font-size:13.5px;border-radius:6px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700;}
+.btn-primary:hover{background:#f87171;box-shadow:0 0 16px rgba(239,68,68,0.35);}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--accent3);color:var(--accent3);}
+
+/* Automated Warehouse & AMR Grid Graphic Card */
+.wafer{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:18px 18px 14px;box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+.wafer-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+.wafer-title{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em;}
+.wafer-val{font-family:var(--font-mono);font-size:12px;color:var(--accent);font-weight:600;}
+svg.wafermap{width:100%;height:210px;display:block;}
+.wafer-outline{fill:none;stroke:var(--border);stroke-width:1.5;}
+.wafer-grid-line{stroke:var(--border-soft);stroke-width:0.5;stroke-dasharray:2 2;}
+.wafer-foot{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+
+.econ{border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:760px){.econ{grid-template-columns:repeat(2,1fr);}}
+.econ-item{padding:6px 18px;border-left:1px solid var(--border-soft);}
+.econ-item:first-child{border-left:none;padding-left:0;}
+@media(max-width:760px){.econ-item:nth-child(2n+1){border-left:none;padding-left:0;}}
+.econ-num{font-family:var(--font-display);font-weight:700;font-size:28px;color:#fff;}
+.econ-num small{font-size:14px;color:var(--accent);font-weight:700;}
+.econ-label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+section{padding:36px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.section-title{font-family:var(--font-display);font-weight:700;font-size:24px;color:#fff;}
+.section-sub{color:var(--muted);font-size:13.5px;max-width:62ch;margin-top:4px;}
+.track-label{font-family:var(--font-mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin:28px 0 14px;padding-top:10px;border-top:1px dashed var(--border-soft);}
+.track-label:first-of-type{border-top:none;padding-top:0;margin-top:6px;}
+
+.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+@media(max-width:760px){.roster{grid-template-columns:1fr;}}
+.op-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;transition:all .15s ease;}
+.op-card:hover{border-color:var(--accent-line);transform:translateY(-2px);}
+.op-card.flagship{border-color:var(--accent2);background:linear-gradient(180deg,rgba(37,99,235,0.08),var(--surface));}
+.op-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.op-name{font-family:var(--font-display);font-weight:700;font-size:18px;color:#fff;}
+.op-role{font-size:12.5px;color:var(--muted);margin-top:2px;}
+.flag-chip{font-family:var(--font-mono);font-size:10px;color:var(--accent2);border:1px solid var(--accent2);background:var(--accent2-bg);border-radius:20px;padding:2px 8px;white-space:nowrap;}
+.op-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+.op-stats{display:flex;gap:18px;margin-top:2px;}
+.op-stat{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.op-stat b{color:var(--accent);font-size:14px;display:block;font-family:var(--font-body);font-weight:600;}
+.op-agents{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.chip{font-size:11px;background:var(--surface-3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;color:var(--text);}
+.op-actions{display:flex;gap:10px;margin-top:6px;}
+.run-btn{flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:600;font-size:13px;border-radius:6px;padding:10px;cursor:pointer;transition:all 0.15s ease;}
+.run-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+
+.run-panel{background:var(--surface);border:1px solid var(--accent-line);border-radius:12px;padding:24px;margin-top:24px;display:none;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+.run-panel.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.run-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.run-head h3{font-family:var(--font-display);font-size:20px;margin:0;color:#fff;}
+.run-head .meta{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.close-run{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:6px 12px;cursor:pointer;font-size:12px;}
+.close-run:hover{color:var(--text);border-color:var(--accent3);}
+
+.feed{background:var(--bg);border:1px solid var(--border-soft);border-radius:8px;padding:16px;height:260px;overflow-y:auto;font-family:var(--font-mono);font-size:12px;display:flex;flex-direction:column;gap:8px;}
+.feed-line{display:flex;gap:10px;align-items:flex-start;opacity:0;animation:appear .3s ease forwards;}
+@keyframes appear{to{opacity:1;}}
+.feed-line .tag{color:var(--accent2);white-space:nowrap;}
+.feed-line .txt{color:var(--muted);}
+.feed-line.done .tag{color:var(--accent);}
+.feed-line.done .txt{color:var(--text);}
+
+.progress-row{display:flex;gap:6px;margin:16px 0 8px;flex-wrap:wrap;}
+.pstep{flex:1;min-width:64px;height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;position:relative;}
+.pstep.active{background:var(--accent-dim);}
+.pstep.complete{background:var(--accent);box-shadow:0 0 8px var(--accent);}
+
+.deliverable{margin-top:20px;background:var(--surface-2);border:1px solid var(--accent-line);border-radius:8px;padding:18px 20px;display:none;}
+.deliverable.show{display:block;animation:fadein .3s ease;}
+.deliverable h4{font-family:var(--font-display);font-size:17px;margin:0 0 12px;color:var(--accent);}
+.deliverable pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:12.5px;color:var(--text);margin:0;line-height:1.65;}
+.note{font-size:11px;color:var(--muted-2);margin-top:12px;font-style:italic;}
+
+/* BUILDER STYLING (DYNEX FUNCTIONAL FLOW) */
+.steps-bar{display:flex;gap:10px;margin-bottom:24px;}
+.step-item{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);}
+.step-item.active{border-color:var(--accent);background:var(--surface-3);}
+.step-item .step-num{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--muted-2);}
+.step-item.active .step-num{color:var(--accent);}
+.step-item .step-lbl{font-size:13.5px;font-weight:600;color:var(--text);margin-top:2px;}
+
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.wf-card{border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;background:var(--surface-2);transition:all 0.15s ease;}
+.wf-card:hover{border-color:var(--accent3);}
+.wf-card.sel{border-color:var(--accent);background:rgba(239,68,68,0.08);}
+.wf-title{font-family:var(--font-display);font-weight:700;font-size:16px;color:#fff;}
+.wf-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45;}
+.wf-meta{font-family:var(--font-mono);font-size:10.5px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase;}
+
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);margin-bottom:10px;}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--accent);flex-shrink:0;}
+.task-row .tt{flex:1;font-size:13px;color:var(--text);}
+.task-row select{font-family:var(--font-body);font-size:12.5px;border:1px solid var(--border);border-radius:6px;padding:8px 10px;background:var(--surface);color:var(--text);outline:none;min-width:210px;}
+.task-row select:focus{border-color:var(--accent);}
+
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.field input{width:100%;font-family:var(--font-body);font-size:13.5px;border:1px solid var(--border);border-radius:8px;padding:11px 13px;background:var(--surface-2);color:var(--text);outline:none;}
+.field input:focus{border-color:var(--accent);}
+
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.seg button{font-family:var(--font-body);font-size:12.5px;padding:9px 16px;border:none;background:var(--surface-2);color:var(--muted);cursor:pointer;border-right:1px solid var(--border);}
+.seg button:last-child{border-right:none;}
+.seg button.on{background:var(--accent);color:#fff;font-weight:700;}
+
+.bnav{display:flex;justify-content:space-between;margin-top:24px;}
+
+footer{border-top:1px solid var(--border-soft);padding:30px 0 44px;}
+.foot-note{font-size:12px;color:var(--muted-2);max-width:85ch;line-height:1.6;}
+.foot-note strong{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark-row">
+      <div class="mark">
+        <div class="mark-badge">IDL</div>
+        <div>
+          <div class="mark-name">ID Logistics Console</div>
+          <div class="mark-sub">ID Logistics (id-logistics.com) · Contract Logistics &amp; Automation AI Workforce</div>
+        </div>
+      </div>
+      <div class="line-readout">
+        <span class="dot"></span>
+        <span id="lineTxt">ID Logistics Global Network · 400+ Automated Sites &amp; Omnichannel Lines Active</span>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tabA" onclick="setView('ops')">The AI Workforce Roster</button>
+      <button class="tab-btn" id="tabB" onclick="setView('hire')">+ Add an AI Operator</button>
+    </div>
+  </header>
+
+  <div id="view-ops">
+    <section class="hero" style="padding-bottom:10px;">
+      <div>
+        <div class="eyebrow">Pure-Play Contract Logistics &amp; Automated Warehousing</div>
+        <h1>Eight operators to run ID Logistics' <span>gtp-shuttle-to-cold-chain</span> loop</h1>
+        <p class="lead">Each operator below is a real ID Logistics workflow — analyzing 3D CAD automated warehouse layouts for Goods-to-Person (GTP) picking shuttles and AMR fleets across 400+ global logistics hubs, scrubbing 500-line IFS &amp; ISO 14001 contract logistics BOMs for temperature-controlled cold chain and fashion fulfillment, configuring WMS/WCS robot fleet routing algorithms, and auditing BREEAM green warehouse and ISO 45001 safety compliance — handed to a team of specialist AI agents that works it end-to-end.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('roster-section').scrollIntoView({behavior:'smooth'})">View the Roster</button>
+          <button class="btn btn-ghost" onclick="runOperator('warehouse_dfm')">Run Flagship Operator</button>
+        </div>
+      </div>
+
+      <div class="wafer">
+        <div class="wafer-top">
+          <span class="wafer-title">ID Logistics Grid Diagnostics</span>
+          <span class="wafer-val" id="yieldVal">99.9% GTP Shuttle Picking Precision</span>
+        </div>
+        <svg class="wafermap" viewBox="0 0 220 210" preserveAspectRatio="xMidYMid meet">
+          <circle class="wafer-outline" cx="110" cy="105" r="92"></circle>
+          <line class="wafer-grid-line" x1="20" y1="105" x2="200" y2="105"></line>
+          <line class="wafer-grid-line" x1="110" y1="15" x2="110" y2="195"></line>
+          <g id="dieGrid"></g>
+        </svg>
+        <div class="wafer-foot">
+          <span>Global Network · 400+ Warehouses</span>
+          <span id="binVal">Pass: IFS Food &amp; BREEAM Green</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="econ">
+      <div class="econ-item">
+        <div class="econ-num">5.2<small>×</small></div>
+        <div class="econ-label">Faster warehouse design &amp; contract fulfillment setup</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">18<small> Countries</small></div>
+        <div class="econ-label">Monitored across FMCG, Retail, Fashion &amp; Cold Chain</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">32<small> hrs</small></div>
+        <div class="econ-label">Median industrial engineering hours returned per run</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">8<small>/8</small></div>
+        <div class="econ-label">Workflows covered, GTP DFM through IFS cold chain release</div>
+      </div>
+    </div>
+
+    <section id="roster-section">
+      <div class="section-head">
+        <div>
+          <div class="section-title">The AI Workforce Roster</div>
+          <div class="section-sub">Grouped into Commercial Growth and Warehouse Operations tracks. Click run on any operator to watch its agent team execute in real time.</div>
+        </div>
+      </div>
+
+      <div id="rosterContainer"></div>
+    </section>
+
+    <!-- Run Panel -->
+    <div class="run-panel" id="runPanel">
+      <div class="run-head">
+        <div>
+          <h3 id="runTitle">Running Operator...</h3>
+          <div class="meta" id="runSub">Simulated multi-agent execution feed</div>
+        </div>
+        <button class="close-run" onclick="closeRun()">✕ Close View</button>
+      </div>
+      <div class="progress-row" id="progressRow"></div>
+      <div class="feed" id="feedArea"></div>
+      <div class="deliverable" id="deliverableBox">
+        <h4 id="delivTitle">Review-Ready Output</h4>
+        <pre id="delivCode"></pre>
+        <div class="note">Human-in-the-loop oversight active. Outputs verified by ID Logistics senior industrial engineering team. Illustrative simulation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="section-title">Add an AI Operator</div>
+          <div class="section-sub">Stand up a new AI operator in three steps: pick the workflow, assign each task to an agent via dropdown, then name it and set cadence.</div>
+        </div>
+      </div>
+
+      <div class="steps-bar" id="bSteps"></div>
+      <div id="bBody"></div>
+      <div class="bnav" id="bNav"></div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="foot-note">
+      <strong>Independent Concept Prototype</strong> prepared for a conversation with <strong>ID Logistics (id-logistics.com)</strong>. It is not affiliated with, endorsed by, or built on ID Logistics systems or data. All operators, shuttle picking rates, WMS logs, and IFS cold chain audits are illustrative simulations. A licensed warehouse industrial engineer, safety manager, or quality auditor reviews and approves every GTP shuttle layout, robot routing algorithm, and IFS cold chain release.
+    </div>
+  </footer>
+</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'Omnichannel Retail & Global FMCG Market Intelligence', tools: ['research_fmcg_tenders', 'save'] },
+  warehouse_eng: { emoji: '🔬', label: 'Goods-to-Person (GTP) Shuttle & AMR Layout Engineer', tools: ['analyze_gtp_layout', 'save'] },
+  wms_architect: { emoji: '⚡', label: 'WMS / WCS Warehouse Control Systems & Fleet Specialist', tools: ['program_wcs_routing', 'save'] },
+  bom_scrubber: { emoji: '📑', label: 'IFS Food, BRCGS & ISO 14001 Logistics BOM Specialist', tools: ['scrub_ifs_bom', 'save'] },
+  cost_eng: { emoji: '🧮', label: 'Automated Storage & Fulfillment Facility Costing Specialist', tools: ['calc_facility_cost', 'save'] },
+  cloud_architect: { emoji: '☁️', label: 'Enterprise Supply Chain Portal & WMS Integration Architect', tools: ['configure_wms_cloud', 'save'] },
+  quality_auditor: { emoji: '🛡️', label: 'ISO 9001, ISO 14001, ISO 45001 & IFS Logistics Auditor', tools: ['audit_ifs_compliance', 'save'] },
+  supply_planner: { emoji: '📦', label: 'AMR Battery, Conveyor & Spare Automation Planner', tools: ['plan_amr_spares_stock', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'Omnichannel Retail & E-Commerce Contract RFP Writer', tools: ['compose_doc', 'save'] },
+  qa_reviewer: { emoji: '✅', label: 'Senior Contract Logistics Operations Reviewer', tools: ['qa_review', 'save'] },
+  prospector: { emoji: '🧲', label: 'Global FMCG VP Supply Chain & Retail Director Prospector', tools: ['source_retail_accounts', 'save'] },
+  coldchain_spec: { emoji: '❄️', label: 'Temperature-Controlled Cold Chain & Food Logistics Specialist', tools: ['design_coldchain_mon', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+const TRACKS = [
+  { key: 'commercial', title: 'Commercial & Global Enterprise Tenders' },
+  { key: 'operations', title: 'Automated Warehousing & Contract Logistics Operations' }
+];
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Global FMCG, Retail & E-Commerce Scouting',
+    title: 'AI Contract Logistics Growth Scout',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Global FMCG & Omnichannel Retail Prospect Dossier',
+    desc: 'Maps European food retailers, global cosmetics brands, luxury fashion groups (ID4Fashion), and e-commerce giants outsourcing logistics operations.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan European FMCG distribution outsourcing bids, luxury e-commerce fulfillment RFPs, and cold chain expansions.', deps: [] },
+      { agent: 'prospector', task: 'Source VP Global Supply Chain, Logistics Directors, and Omnichannel Operations Executives.', deps: [] },
+      { agent: 'warehouse_eng', task: 'Score fit on ID Logistics GTP miniload shuttles, multi-temperature cold chain, and automated sorting centers.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce target FMCG & retail prospect dossier.', deps: [2] }
+    ]
+  },
+  quote: {
+    name: 'Automated Warehouse & Omnichannel Hub Quoting',
+    title: 'AI Logistics Cost Estimating Specialist',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Automated Warehouse & Contract Logistics Quote',
+    desc: 'Models GTP picking shuttle rack CAPEX, AMR robot fleet size, WMS/WCS software integration, and per-pick operational cost per unit.',
+    tasks: [
+      { agent: 'warehouse_eng', task: 'Review customer SKU count (80,000 SKUs), peak throughput (15,000 picks/hour), and storage footprint (45,000 m²).', deps: [] },
+      { agent: 'cost_eng', task: 'Model conveyor automation investment, mezzanine picking levels, labor savings, and 5-year contract margin.', deps: [0] },
+      { agent: 'supply_planner', task: 'Verify AMR battery charging station availability, high-speed sorter belts, and WMS server hardware.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Assemble formal Automated Warehouse & Contract Logistics Quote.', deps: [2] }
+    ]
+  },
+  tender: {
+    name: 'Global Retail & Cold Chain Contract RFP Response',
+    title: 'AI Enterprise Logistics Solution Specialist',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Global Retail & Cold Chain Contract RFP Response Package',
+    desc: 'Audits IFS Logistics food safety compliance, BREEAM green warehouse certification, ISO 45001 safety, and 99.8% order accuracy SLAs.',
+    tasks: [
+      { agent: 'researcher', task: 'Parse customer omnichannel SLAs, multi-temperature (-25°C to +15°C) cold chain rules, and RFID tagging requirements.', deps: [] },
+      { agent: 'quality_auditor', task: 'Verify ISO 9001, ISO 14001, ISO 45001, IFS Food Logistics, and BREEAM Excellent green building certificates.', deps: [0] },
+      { agent: 'cost_eng', task: 'Structure multi-site 5-year contract logistics SLA and ramp-up schedule.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce formal Global Retail & Cold Chain Contract RFP response package.', deps: [2] }
+    ]
+  },
+  intel: {
+    name: 'Global Freight & Autonomous Warehouse Robotics Radar',
+    title: 'AI Supply Chain Intelligence',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Autonomous Warehousing & Logistics Supply Chain Brief',
+    desc: 'Tracks AMR/AGV robotics technology advancements, Goods-to-Person (GTP) picking throughput benchmarks, and warehouse energy efficiency metrics.',
+    tasks: [
+      { agent: 'researcher', task: 'Monitor global industrial real estate warehouse rents, AMR robot fleet lease rates, and energy price volatility.', deps: [] },
+      { agent: 'warehouse_eng', task: 'Benchmark ID Logistics GTP picking shuttle throughput (600 lines/hour/operator) against legacy voice picking.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile strategic autonomous warehousing intelligence brief.', deps: [0, 1] }
+    ]
+  },
+  warehouse_dfm: {
+    name: 'GTP Picking & AMR Fleet Warehouse DFM Scrub',
+    title: 'AI Warehouse Automation DFM Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'GTP Picking & AMR Fleet Warehouse DFM Review Package',
+    desc: 'Audits 3D CAD automated warehouse layouts for Goods-to-Person (GTP) shuttle aisles, AMR traffic flow, and 15,000 item/hour high-speed sorters.',
+    tasks: [
+      { agent: 'warehouse_eng', task: 'Analyze GTP shuttle rack height (12m), aisle clearance for maintenance, and AMR travel corridor width (2.2m).', deps: [] },
+      { agent: 'wms_architect', task: 'Verify WCS real-time robot fleet dispatching algorithms, dynamic tote slotting, and congestion-free routing.', deps: [0] },
+      { agent: 'coldchain_spec', task: 'Check multi-temperature zone thermal barrier curtains, HVAC ducting, and -20°C freezer picking ergonomics.', deps: [1] },
+      { agent: 'quality_auditor', task: 'Audit ISO 45001 safety zone laser scanners, emergency stop circuits, and BREEAM green warehouse lighting.', deps: [2] },
+      { agent: 'reviewer', task: 'QA industrial engineering findings and compile customer warehouse automation DFM package.', deps: [3] },
+      { agent: 'proposal_writer', task: 'Produce final GTP Picking & AMR Fleet Warehouse DFM Review Package.', deps: [4] }
+    ]
+  },
+  wms_setup: {
+    name: 'WMS / WCS Robot Fleet Routing & Inventory Setup',
+    title: 'AI WMS & Robotics Systems Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'WMS / WCS Robot Fleet Setup Package',
+    desc: 'Programs WMS / WCS middleware for 150 AMRs, configures RFID tunnel scanner reader nodes, and sets ERP API integration triggers.',
+    tasks: [
+      { agent: 'wms_architect', task: 'Flash WCS middleware with dynamic task allocation algorithms for AMR tote carriers.', deps: [] },
+      { agent: 'cloud_architect', task: 'Configure cloud WMS API endpoints for real-time inventory visibility across 400+ ID Logistics sites.', deps: [0] },
+      { agent: 'reviewer', task: 'Verify sub-100ms RFID tag scan validation at outbound shipping dock doors.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce WMS / WCS Robot Fleet Setup Package.', deps: [2] }
+    ]
+  },
+  quality_audit: {
+    name: 'IFS Cold Chain & ISO 14001 Green Warehouse Audit',
+    title: 'AI Quality & ESG Auditor',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'IFS Cold Chain & ISO 14001 Compliance Release',
+    desc: 'Audits IFS Logistics cold chain temperature logs, BREEAM green warehouse solar generation, ISO 14001 waste sorting, and ISO 45001 safety.',
+    tasks: [
+      { agent: 'quality_auditor', task: 'Audit continuous temperature sensor telemetry logs (-22°C ±0.5°C), IFS food audit checklists, and solar panel yield.', deps: [] },
+      { agent: 'bom_scrubber', task: 'Verify 100% recyclable packaging materials and FSC certified corrugated shipping box pedigree.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile IFS Cold Chain & ISO 14001 Compliance Release Brief.', deps: [0, 1] }
+    ]
+  },
+  safety_plan: {
+    name: 'High-Density Storage & AMR Battery Safety Stock Plan',
+    title: 'AI Warehouse Inventory Planner',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'AMR Battery & Automation Spare Parts Safety Stock Plan',
+    desc: 'Secures lithium AMR replacement batteries, conveyor rollers, shuttle motor drives, and barcode scanners for ID Logistics fulfillment centers.',
+    tasks: [
+      { agent: 'supply_planner', task: 'Evaluate automation OEM spare part lead times and 90-day critical component buffer in regional hub warehouses.', deps: [] },
+      { agent: 'bom_scrubber', task: 'Execute spare parts lot Certificate of Analysis (CoA) audit for conveyor motor bearings and scanner optics.', deps: [] },
+      { agent: 'cost_eng', task: 'Structure strategic spare automation inventory buffer to prevent warehouse downtime during peak holiday rushes.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce AMR Battery & Automation Spare Parts Safety Stock Plan.', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'Global FMCG & Omnichannel Retail Prospect Dossier',
+  quote: 'Automated Warehouse & Contract Logistics Quote',
+  tender: 'Global Retail & Cold Chain Contract RFP Response Package',
+  intel: 'Autonomous Warehousing & Logistics Supply Chain Brief',
+  warehouse_dfm: 'GTP Picking & AMR Fleet Warehouse DFM Review Package',
+  wms_setup: 'WMS / WCS Robot Fleet Setup Package',
+  quality_audit: 'IFS Cold Chain & ISO 14001 Compliance Release',
+  safety_plan: 'AMR Battery & Automation Spare Parts Safety Stock Plan'
+};
+
+const TOOLS = {
+  research_fmcg_tenders: () => 'Scanned European FMCG logistics tenders, e-commerce fulfillment RFPs, and retail cold chain expansions.',
+  source_retail_accounts: () => 'Sourced verified Global VP Supply Chain and Retail Logistics Directors; deduped CRM.',
+  analyze_gtp_layout: () => 'Analyzed 3D CAD layout; optimized GTP shuttle rack height (12m) and AMR corridor widths for zero-collision travel.',
+  program_wcs_routing: () => 'Programmed WCS fleet management engine for 150 AMRs; achieved 15,000 picks/hour throughput.',
+  scrub_ifs_bom: () => 'Scrubbed 500-line facility BOM; verified 100% IFS Food Logistics compliance and BREEAM Excellent green building specs.',
+  calc_facility_cost: () => 'Calculated GTP shuttle CAPEX, conveyor automation ROI, labor reduction savings, and 5-year contract margin.',
+  configure_wms_cloud: () => 'Configured ID Logistics cloud WMS portal API for real-time inventory tracking across 400+ sites.',
+  audit_ifs_compliance: () => 'Audited IFS cold chain temperature sensor logs (-22°C ±0.5°C) and ISO 45001 safety checklists - PASS.',
+  plan_amr_spares_stock: () => 'Cross-referenced AMR battery lead times; secured 200 replacement lithium battery packs in regional hub.',
+  design_coldchain_mon: () => 'Structured multi-temperature monitoring telemetry with automated instant SMS/email alert triggers.',
+  compose_doc: () => 'Compiled contract logistics and warehouse engineering metrics into clear, review-ready technical documentation.',
+  qa_review: () => 'Audited report completeness and checked IFS / ISO / BREEAM standards; ready for ID Logistics VP Operations sign-off.',
+  save: () => 'Saved deliverable artifact to shared project repository.'
+};
+
+function toolOut(t) { return (TOOLS[t] || (() => 'Executed successfully.'))(); }
+
+const FINAL = {
+  scout: `GLOBAL FMCG & OMNICHANNEL RETAIL PROSPECT DOSSIER (illustrative)
+Target Sector: Fast-Moving Consumer Goods (FMCG), E-Commerce, Fashion (ID4Fashion) & Cold Chain Food
+Target Location: Global (Europe, Americas, Asia-Pacific · 18 Countries)
+
+A-Tier Qualified Enterprise Prospects:
+1. Carrefour Group — European Omnichannel Retail Distribution — Fit Score: 99/100
+   • Key Contacts: VP Global Logistics, Director of Hypermarket Distribution
+   • Requirement: 60,000 m² Automated Logistics Hub with GTP Picking Shuttles
+2. L'Oréal Group — Cosmetics & Beauty E-Commerce Fulfillment — Fit Score: 97/100
+   • Key Contacts: Head of Supply Chain Excellence, Global Fulfillment Lead
+   • Requirement: High-Speed Automated Sorter & Customized Kitting Facility
+3. Danone SA — Fresh Dairy & Cold Chain Logistics — Fit Score: 95/100
+   • Key Contacts: Director of Cold Chain Operations
+
+Strategic Positioning:
+Highlight ID Logistics pure-play contract logistics expertise, 400+ operational sites, proprietary WMS/WCS robot integration, and IFS / BREEAM certified green warehouses.
+
+NOTE: Illustrative simulation prepared for ID Logistics (id-logistics.com).`,
+
+  quote: `AUTOMATED WAREHOUSE & CONTRACT LOGISTICS QUOTE (illustrative)
+Customer: Carrefour Group
+Program: 50,000 m² Omnichannel Retail Fulfillment Hub (5-Year Contract)
+Specifications: Goods-to-Person (GTP) Shuttle System, 120 AMRs, 18,000 Picks/Hour Capacity
+
+Commercial Breakdown:
+• GTP Miniload Shuttle & Conveyor System Automation: €14,500,000.00
+• 120 Autonomous Mobile Robots (AMRs) & Charging Stations: €2,400,000.00
+• WMS / WCS Software Integration & RFID Dock Scanners: €850,000.00
+• Facility Operations & Warehousing Labor Management (€/pick unit rate): €0.42 / item picked
+
+Financial Return:
+• Estimated Customer Labor Cost Savings: 35% Year-over-Year
+• Contract Ramp-Up Time: 6 Months to Full Operational Capacity
+
+NOTE: Illustrative simulation; pricing and rate figures are placeholders.`,
+
+  tender: `GLOBAL RETAIL & COLD CHAIN CONTRACT RFP RESPONSE PACKAGE (illustrative)
+Tender ID: EU-FR-LOGISTICS-ID-2026-15
+Scope: Automated Warehousing, Cold Chain Storage & Omnichannel E-Commerce Distribution
+
+Quality, Safety & Environmental Verification:
+• Quality Management System: ISO 9001:2015 Certified across all 400+ sites
+• Environmental Standard: ISO 14001:2015 & BREEAM / LEED Certified Green Warehouses
+• Occupational Health & Safety: ISO 45001:2018 Certified Worksite Safety
+• Food Safety & Cold Chain Standard: IFS Logistics & BRCGS Storage Certificate
+
+Technical Offer:
+• 100% contract logistics focus with proven GTP shuttle and AMR fleet deployment.
+
+NOTE: Illustrative simulation; confirm against RFP specifications.`,
+
+  intel: `AUTONOMOUS WAREHOUSING & LOGISTICS SUPPLY CHAIN BRIEF (illustrative)
+Focus: Warehouse Robotics Automation & Sustainable Contract Logistics
+
+Key Insights:
+1. Goods-to-Person (GTP) Productivity: GTP shuttle picking increases operator productivity from 120 lines/hour (manual) to 650 lines/hour, solving labor shortages.
+2. Cold Chain Telemetry: Real-time IoT temperature logging required by FMCG brands to prevent spoilage claims; automated alerts mitigate 99.5% of excursions.
+3. ID Logistics Platform Advantage:
+   - Pure-play contract logistics focus avoids carrier conflicts and delivers tailored automated solutions.
+   - WMS / WCS multi-site engine allows rapid onboarding of new client SKUs within 3 weeks.
+
+NOTE: Illustrative simulation.`,
+
+  warehouse_dfm: `GTP PICKING & AMR FLEET WAREHOUSE DFM REVIEW PACKAGE (illustrative · flagship)
+Program: 50,000 m² Automated Omnichannel Fulfillment Center
+Automation System: 12-Meter GTP Shuttle Rack / 150 AMRs / High-Speed Sorter
+
+Engineering & Layout Findings:
+1. Shuttle Rack Structural Integrity: Verified 12-meter GTP rack aisle clearances; optimized maintenance elevator access and tote drop locations.
+2. AMR Traffic Management: Designed 2.2-meter two-way AMR charging and travel highways; simulation confirmed zero deadlock congestion at 15,000 picks/hour.
+3. Cold Chain Insulation: Installed dual-stage high-speed air curtains at freezer entrances (-22°C zone); reduced refrigeration power draw by 18%.
+
+Quality & Regulatory Audit:
+• Safety Audit: ISO 45001 laser scanner safety zones around AMR travel corridors cleared.
+• Environmental Audit: BREEAM Excellent rating criteria and rooftop solar yield verified.
+
+Summary:
+ Warehouse layout and WCS automation algorithms approved for site construction.
+
+NOTE: Illustrative simulation; review with ID Logistics industrial engineering team.`,
+
+  wms_setup: `WMS / WCS ROBOT FLEET SETUP PACKAGE (illustrative)
+Program: Automated AMR & High-Speed Sorter Operations
+
+System Setup Configuration:
+• WCS Fleet Engine: Flashed middleware for 150 AMRs with dynamic tote slotting and task dispatching
+• RFID Portal Validation: Configured RFID dock door readers; verified sub-100ms pallet scan confirmation
+• WMS Cloud Synchronization: Connected site WMS to central ID Logistics global portal for customer tracking
+
+Outcome: WMS / WCS robotics software platform validated for site live deployment.
+
+NOTE: Illustrative simulation.`,
+
+  quality_audit: `IFS COLD CHAIN & ISO 14001 COMPLIANCE RELEASE (illustrative)
+Production Site: ID Logistics Hub #214
+Compliance Standard: IFS Logistics v2.3 / ISO 14001:2015 / ISO 45001:2018 / BREEAM
+
+Audit Checklist Results:
+• Temperature Telemetry: 100% continuous data logging (-22°C ±0.5°C) verified with zero excursions over 90 days
+• BREEAM Green Audit: 1.2 MW rooftop solar array operational; 100% LED smart sensor lighting verified
+• Safety Check: Zero lost-time injuries (LTI) recorded over 500,000 operational hours
+
+Outcome: IFS Cold Chain & ISO 14001 Quality Release Approved. Certificate of Conformance issued.
+
+NOTE: Illustrative simulation.`,
+
+  safety_plan: `AMR BATTERY & AUTOMATION SPARE PARTS SAFETY STOCK PLAN (illustrative)
+Scope: Regional Hub Warehouse Spare Parts Depot
+
+Supply Strategy Breakdown:
+• AMR Batteries: 200 replacement lithium battery packs maintained for instant hot-swap charging
+• Conveyor & Shuttle Parts: 500 spare motorized rollers, drive belts, and optical sensor modules in stock
+• Material Pedigree: 100% Certificate of Analysis (CoA) verified for incoming automation spares
+
+Outcome: Spare parts supply clear for 24/7 continuous automated warehouse operation.
+
+NOTE: Illustrative simulation.`
+};
+
+let EMPLOYEES = [
+  { id: 'scout', name: 'Scout', title: 'AI Contract Logistics Growth Scout', wf: 'scout', handled: 240, hrs: 72, win: 42, status: 'idle' },
+  { id: 'quote', name: 'Quote', title: 'AI Logistics Cost Estimating Specialist', wf: 'quote', handled: 330, hrs: 142, win: 64, status: 'idle' },
+  { id: 'tender', name: 'Tender', title: 'AI Enterprise Logistics Specialist', wf: 'tender', handled: 150, hrs: 112, win: 54, status: 'idle' },
+  { id: 'intel', name: 'Radar', title: 'AI Supply Chain Intelligence', wf: 'intel', handled: 180, hrs: 58, win: 32, status: 'idle' },
+  { id: 'warehouse_dfm', name: 'WarehouseDFM', title: 'AI Warehouse Automation DFM Specialist', wf: 'warehouse_dfm', handled: 475, hrs: 285, win: 86, status: 'idle' },
+  { id: 'wms_setup', name: 'WMSSetup', title: 'AI WMS & Robotics Systems Specialist', wf: 'wms_setup', handled: 275, hrs: 128, win: 62, status: 'idle' },
+  { id: 'quality_audit', name: 'IFSAudit', title: 'AI Quality & ESG Auditor', wf: 'quality_audit', handled: 410, hrs: 160, win: 76, status: 'idle' },
+  { id: 'safety_plan', name: 'SupplyPlanner', title: 'AI Warehouse Inventory Planner', wf: 'safety_plan', handled: 230, hrs: 96, win: 0, status: 'idle' }
+];
+
+/* Render Functions */
+function drawWaferGrid() {
+  const grid = document.getElementById("dieGrid");
+  let rects = '';
+  for (let x = -8; x <= 8; x++) {
+    for (let y = -8; y <= 8; y++) {
+      if (x*x + y*y <= 60) {
+        const px = 110 + x * 10 - 4;
+        const py = 105 + y * 10 - 4;
+        const pass = (Math.abs(x*y) % 8 !== 3);
+        const fill = pass ? 'rgba(239, 68, 68, 0.45)' : 'rgba(37, 99, 235, 0.6)';
+        rects += `<rect x="${px}" y="${py}" width="8" height="8" rx="1.5" fill="${fill}"></rect>`;
+      }
+    }
+  }
+  grid.innerHTML = rects;
+}
+
+function renderRoster() {
+  const container = document.getElementById("rosterContainer");
+  let html = '';
+  TRACKS.forEach(tr => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === tr.key);
+    if (!list.length) return;
+    html += `<div class="track-label">${tr.title}</div><div class="roster">`;
+    html += list.map(empCard).join('');
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+}
+
+function empCard(e) {
+  const wf = WORKFLOWS[e.wf] || {};
+  const isFlag = wf.tag === 'flagship';
+  const team = (wf.tasks || []).map(t => t.agent).filter((v, i, a) => a.indexOf(v) === i).map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  return `
+    <div class="op-card ${isFlag ? 'flagship' : ''}" id="emp-${e.id}">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${e.name}</div>
+          <div class="op-role">${e.title}</div>
+        </div>
+        ${isFlag ? '<span class="flag-chip">★ FLAGSHIP OPERATOR</span>' : ''}
+      </div>
+      <div class="op-desc">${wf.desc || ''}</div>
+      <div class="op-agents">${team}</div>
+      <div class="op-stats">
+        <div class="op-stat"><b>${e.handled.toLocaleString()}</b> runs</div>
+        <div class="op-stat"><b>~${e.hrs} hrs</b> saved/mo</div>
+        <div class="op-stat"><b>+${e.win}%</b> speedup</div>
+      </div>
+      <div class="op-actions">
+        <button class="run-btn" onclick="runOperator('${e.wf}')">▶ Run ${e.name}</button>
+      </div>
+    </div>
+  `;
+}
+
+function setView(v) {
+  document.getElementById('view-ops').classList.toggle('hidden', v !== 'ops');
+  document.getElementById('view-hire').classList.toggle('hidden', v !== 'hire');
+  document.getElementById('tabA').classList.toggle('active', v === 'ops');
+  document.getElementById('tabB').classList.toggle('active', v === 'hire');
+  if (v === 'hire') initBuilder();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+let isRunning = false;
+async function runOperator(wfKey) {
+  if (isRunning) return;
+  isRunning = true;
+  const wf = WORKFLOWS[wfKey];
+  if (!wf) return;
+
+  const panel = document.getElementById("runPanel");
+  const title = document.getElementById("runTitle");
+  const sub = document.getElementById("runSub");
+  const progress = document.getElementById("progressRow");
+  const feed = document.getElementById("feedArea");
+  const deliv = document.getElementById("deliverableBox");
+
+  panel.classList.add("active");
+  deliv.classList.remove("show");
+  title.innerText = `Executing Operator: ${wf.name}`;
+  sub.innerText = `Mode: ${wf.mode.toUpperCase()} · ${wf.tasks.length} Specialist Agents`;
+
+  progress.innerHTML = wf.tasks.map((_, i) => `<div class="pstep" id="ps_${i}"></div>`).join('');
+  feed.innerHTML = '';
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  function addFeedLine(agentKey, txt, isDone = false) {
+    const role = AGENT_ROLES[agentKey] || { emoji: '🤖', label: agentKey };
+    const div = document.createElement('div');
+    div.className = `feed-line ${isDone ? 'done' : ''}`;
+    div.innerHTML = `<span class="tag">[${role.emoji} ${role.label}]</span><span class="txt">${txt}</span>`;
+    feed.appendChild(div);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  addFeedLine(wf.tasks[0].agent, `Initializing ${wf.name} autonomous workflow loop...`);
+  await new Promise(r => setTimeout(r, 600));
+
+  for (let i = 0; i < wf.tasks.length; i++) {
+    const t = wf.tasks[i];
+    const stepEl = document.getElementById(`ps_${i}`);
+    if (stepEl) stepEl.classList.add("active");
+
+    addFeedLine(t.agent, `Executing Task ${i+1}: ${t.task}`);
+    await new Promise(r => setTimeout(r, 800));
+
+    const role = AGENT_ROLES[t.agent];
+    if (role && role.tools) {
+      for (const tool of role.tools) {
+        addFeedLine(t.agent, `Invoked tool '${tool}( )' -> ${toolOut(tool)}`);
+        await new Promise(r => setTimeout(r, 600));
+      }
+    }
+
+    if (stepEl) {
+      stepEl.classList.remove("active");
+      stepEl.classList.add("complete");
+    }
+    addFeedLine(t.agent, `Task ${i+1} completed. Artifact saved to shared ID Logistics project store.`, true);
+  }
+
+  await new Promise(r => setTimeout(r, 400));
+  document.getElementById("delivTitle").innerText = `Review-Ready Output · ${DTITLE[wfKey] || 'Deliverable'}`;
+  document.getElementById("delivCode").innerText = FINAL[wfKey] || "Execution completed successfully.";
+  deliv.classList.add("show");
+
+  isRunning = false;
+}
+
+function closeRun() {
+  document.getElementById("runPanel").classList.remove("active");
+}
+
+/* DYNEX BUILDER FLOW IMPLEMENTATION */
+let draft = {};
+function initBuilder() {
+  draft = { wf: null, mode: 'sequential', assign: [], name: '', title: '', cadence: 'Per project', step: 1 };
+  renderBuilder();
+}
+
+function renderBuilder() {
+  const steps = [['01', 'Pick a workflow'], ['02', 'Assign the agents'], ['03', 'Name & cadence']];
+  document.getElementById('bSteps').innerHTML = steps.map((s, i) => `
+    <div class="step-item ${draft.step === i + 1 ? 'active' : ''}">
+      <div class="step-num">${s[0]}</div>
+      <div class="step-lbl">${s[1]}</div>
+    </div>
+  `).join('');
+
+  if (draft.step === 1) bS1();
+  else if (draft.step === 2) bS2();
+  else bS3();
+  bNav();
+}
+
+function bS1() {
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 1: Choose Baseline Logistics Workflow</label></div>
+    <div class="wf-grid">
+      ${Object.keys(WORKFLOWS).map(k => {
+        const w = WORKFLOWS[k];
+        return `
+          <div class="wf-card ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')">
+            <div class="wf-title">${w.name}</div>
+            <div class="wf-desc">${w.desc}</div>
+            <div class="wf-meta">${w.tasks.length} agents · ${w.mode}</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 2: Assign Each Task to a Specialist Agent</label></div>
+    ${w.tasks.map((t, i) => `
+      <div class="task-row">
+        <div class="tn">${i + 1}</div>
+        <div class="tt">
+          ${t.task}
+          ${t.deps.length ? `<span style="color:var(--muted-2);font-family:var(--font-mono);font-size:11px;"> · waits for step ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}
+        </div>
+        <select onchange="draft.assign[${i}]=this.value">${opts}</select>
+      </div>
+    `).join('')}
+    <div class="field" style="margin-top:16px;">
+      <label>Execution Mode</label>
+      <div class="seg">
+        ${['sequential', 'dag'].map(m => `
+          <button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (Parallel DAG)' : 'Sequential'}</button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 3: Name Operator &amp; Set Cadence</label></div>
+    <div class="field">
+      <label>Operator Name</label>
+      <input type="text" value="${draft.name}" placeholder="e.g. Automated Warehouse &amp; GTP Specialist" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Role Title</label>
+      <input type="text" value="${draft.title}" placeholder="e.g. Autonomous Logistics Engineer" oninput="draft.title=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Cadence</label>
+      <div class="seg">
+        ${['Per project', 'Per shift', 'Weekly', 'On-demand'].map(c => `
+          <button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>
+        `).join('')}
+      </div>
+    </div>
+    <div class="field" style="margin-top:20px;">
+      <label>Live Operator Card Preview</label>
+      <div id="previewCardArea"></div>
+    </div>
+  `;
+  renderPreview();
+}
+
+function renderPreview() {
+  const w = WORKFLOWS[draft.wf];
+  const area = document.getElementById('previewCardArea');
+  if (!area) return;
+  
+  const team = draft.assign.map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  area.innerHTML = `
+    <div class="op-card" style="max-width:440px;">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${draft.name || 'New Operator'}</div>
+          <div class="op-role">${draft.title || 'AI Operator'}</div>
+        </div>
+      </div>
+      <div class="op-desc">Owns <b>${w.name}</b> · ${draft.cadence} · ${draft.mode.toUpperCase()}</div>
+      <div class="op-agents">${team}</div>
+    </div>
+  `;
+}
+
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn btn-ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right = '';
+  if (draft.step === 1) right = `<button class="btn btn-primary" ${draft.wf ? '' : 'disabled'} onclick="draft.step=2;renderBuilder()">Next: Assign Agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn btn-primary" onclick="draft.step=3;renderBuilder()">Next: Name &amp; Cadence →</button>`;
+  else right = `<button class="btn btn-primary" onclick="hire()">✓ Add this AI Operator</button>`;
+
+  document.getElementById('bNav').innerHTML = left + right;
+}
+
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  
+  WORKFLOWS[wfId] = {
+    name: w.name,
+    title: draft.title || w.title,
+    mode: draft.mode || w.mode,
+    track: w.track,
+    deliverable: w.deliverable,
+    desc: w.desc,
+    tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps }))
+  };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({
+    id, name,
+    title: draft.title || w.title,
+    wf: wfId,
+    handled: 0,
+    hrs: Math.floor(Math.random() * 60) + 40,
+    win: 0,
+    status: 'idle'
+  });
+
+  renderRoster();
+  setView('ops');
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  drawWaferGrid();
+  renderRoster();
+});
+</script>
+</body>
+</html>
