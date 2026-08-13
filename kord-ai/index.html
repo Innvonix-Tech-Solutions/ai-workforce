@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kord Console — AI Directed Energy &amp; Counter-UAS Systems Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060b14;
+  --surface:#0f1726;
+  --surface-2:#192438;
+  --surface-3:#283754;
+  --border:#283754;
+  --border-soft:#111a2b;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --muted-2:#64748b;
+  --accent:#06b6d4;
+  --accent-dim:rgba(6,182,212,0.15);
+  --accent-line:rgba(6,182,212,0.38);
+  --accent2:#f59e0b;
+  --accent2-bg:rgba(245,158,11,0.08);
+  --accent3:#10b981;
+  --danger:#ef4444;
+  --ok:#10b981;
+  --font-display:'Rajdhani',sans-serif;
+  --font-body:'Work Sans',sans-serif;
+  --font-mono:'Roboto Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 88% -8%, rgba(6,182,212,0.12), transparent 55%),
+    radial-gradient(900px 480px at 5% 5%, rgba(245,158,11,0.07), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+a{color:var(--accent);}
+::selection{background:rgba(6,182,212,0.28);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+.hidden{display:none!important;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:24px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:44px;height:42px;border-radius:8px;
+  background:linear-gradient(135deg,#0891b2,#06b6d4);
+  border:1px solid var(--accent-line);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:var(--font-mono);font-weight:800;font-size:14px;
+  box-shadow:0 0 18px rgba(6,182,212,0.3);
+}
+.mark-name{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:0.02em;color:#fff;}
+.mark-sub{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px;}
+
+.line-readout{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent);
+  background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:8px 14px;display:flex;align-items:center;gap:10px;
+}
+.line-readout .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.tabs{display:flex;gap:8px;margin-top:20px;border-bottom:1px solid var(--border-soft);}
+.tab-btn{
+  background:transparent;border:none;color:var(--muted);padding:10px 18px;font-family:var(--font-body);
+  font-size:13.5px;font-weight:600;cursor:pointer;border-radius:8px 8px 0 0;transition:all 0.15s ease;
+}
+.tab-btn:hover{color:var(--text);background:var(--surface-2);}
+.tab-btn.active{color:var(--accent);background:var(--surface);border:1px solid var(--border);border-bottom-color:var(--surface);}
+
+.hero{padding:36px 0 28px;display:grid;grid-template-columns:1.15fr 0.85fr;gap:40px;align-items:center;}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:24px 0 18px;}}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent);}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(30px,4vw,42px);line-height:1.08;letter-spacing:-0.005em;margin:0 0 14px;color:#fff;}
+h1 span{color:var(--accent);background:linear-gradient(90deg,#06b6d4,#22d3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.lead{color:var(--muted);font-size:15px;max-width:55ch;margin:0 0 22px;line-height:1.6;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:var(--font-body);font-weight:600;font-size:13.5px;border-radius:6px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--accent);color:#060b14;border-color:var(--accent);font-weight:700;}
+.btn-primary:hover{background:#22d3ee;box-shadow:0 0 16px rgba(6,182,212,0.35);}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--accent3);color:var(--accent3);}
+
+/* Laser Beam & Sensor Diagnostics Graphic Card */
+.wafer{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:18px 18px 14px;box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+.wafer-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+.wafer-title{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em;}
+.wafer-val{font-family:var(--font-mono);font-size:12px;color:var(--accent);font-weight:600;}
+svg.wafermap{width:100%;height:210px;display:block;}
+.wafer-outline{fill:none;stroke:var(--border);stroke-width:1.5;}
+.wafer-grid-line{stroke:var(--border-soft);stroke-width:0.5;stroke-dasharray:2 2;}
+.wafer-foot{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+
+.econ{border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:760px){.econ{grid-template-columns:repeat(2,1fr);}}
+.econ-item{padding:6px 18px;border-left:1px solid var(--border-soft);}
+.econ-item:first-child{border-left:none;padding-left:0;}
+@media(max-width:760px){.econ-item:nth-child(2n+1){border-left:none;padding-left:0;}}
+.econ-num{font-family:var(--font-display);font-weight:700;font-size:28px;color:#fff;}
+.econ-num small{font-size:14px;color:var(--accent);font-weight:700;}
+.econ-label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+section{padding:36px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.section-title{font-family:var(--font-display);font-weight:700;font-size:24px;color:#fff;}
+.section-sub{color:var(--muted);font-size:13.5px;max-width:62ch;margin-top:4px;}
+.track-label{font-family:var(--font-mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin:28px 0 14px;padding-top:10px;border-top:1px dashed var(--border-soft);}
+.track-label:first-of-type{border-top:none;padding-top:0;margin-top:6px;}
+
+.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+@media(max-width:760px){.roster{grid-template-columns:1fr;}}
+.op-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;transition:all .15s ease;}
+.op-card:hover{border-color:var(--accent-line);transform:translateY(-2px);}
+.op-card.flagship{border-color:var(--accent2);background:linear-gradient(180deg,rgba(245,158,11,0.08),var(--surface));}
+.op-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.op-name{font-family:var(--font-display);font-weight:700;font-size:18px;color:#fff;}
+.op-role{font-size:12.5px;color:var(--muted);margin-top:2px;}
+.flag-chip{font-family:var(--font-mono);font-size:10px;color:var(--accent2);border:1px solid var(--accent2);background:var(--accent2-bg);border-radius:20px;padding:2px 8px;white-space:nowrap;}
+.op-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+.op-stats{display:flex;gap:18px;margin-top:2px;}
+.op-stat{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.op-stat b{color:var(--accent);font-size:14px;display:block;font-family:var(--font-body);font-weight:600;}
+.op-agents{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.chip{font-size:11px;background:var(--surface-3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;color:var(--text);}
+.op-actions{display:flex;gap:10px;margin-top:6px;}
+.run-btn{flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:600;font-size:13px;border-radius:6px;padding:10px;cursor:pointer;transition:all 0.15s ease;}
+.run-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+
+.run-panel{background:var(--surface);border:1px solid var(--accent-line);border-radius:12px;padding:24px;margin-top:24px;display:none;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+.run-panel.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.run-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.run-head h3{font-family:var(--font-display);font-size:20px;margin:0;color:#fff;}
+.run-head .meta{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.close-run{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:6px 12px;cursor:pointer;font-size:12px;}
+.close-run:hover{color:var(--text);border-color:var(--accent3);}
+
+.feed{background:var(--bg);border:1px solid var(--border-soft);border-radius:8px;padding:16px;height:260px;overflow-y:auto;font-family:var(--font-mono);font-size:12px;display:flex;flex-direction:column;gap:8px;}
+.feed-line{display:flex;gap:10px;align-items:flex-start;opacity:0;animation:appear .3s ease forwards;}
+@keyframes appear{to{opacity:1;}}
+.feed-line .tag{color:var(--accent2);white-space:nowrap;}
+.feed-line .txt{color:var(--muted);}
+.feed-line.done .tag{color:var(--accent);}
+.feed-line.done .txt{color:var(--text);}
+
+.progress-row{display:flex;gap:6px;margin:16px 0 8px;flex-wrap:wrap;}
+.pstep{flex:1;min-width:64px;height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;position:relative;}
+.pstep.active{background:var(--accent-dim);}
+.pstep.complete{background:var(--accent);box-shadow:0 0 8px var(--accent);}
+
+.deliverable{margin-top:20px;background:var(--surface-2);border:1px solid var(--accent-line);border-radius:8px;padding:18px 20px;display:none;}
+.deliverable.show{display:block;animation:fadein .3s ease;}
+.deliverable h4{font-family:var(--font-display);font-size:17px;margin:0 0 12px;color:var(--accent);}
+.deliverable pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:12.5px;color:var(--text);margin:0;line-height:1.65;}
+.note{font-size:11px;color:var(--muted-2);margin-top:12px;font-style:italic;}
+
+/* BUILDER STYLING (DYNEX FUNCTIONAL FLOW) */
+.steps-bar{display:flex;gap:10px;margin-bottom:24px;}
+.step-item{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);}
+.step-item.active{border-color:var(--accent);background:var(--surface-3);}
+.step-item .step-num{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--muted-2);}
+.step-item.active .step-num{color:var(--accent);}
+.step-item .step-lbl{font-size:13.5px;font-weight:600;color:var(--text);margin-top:2px;}
+
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.wf-card{border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;background:var(--surface-2);transition:all 0.15s ease;}
+.wf-card:hover{border-color:var(--accent3);}
+.wf-card.sel{border-color:var(--accent);background:rgba(6,182,212,0.08);}
+.wf-title{font-family:var(--font-display);font-weight:700;font-size:16px;color:#fff;}
+.wf-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45;}
+.wf-meta{font-family:var(--font-mono);font-size:10.5px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase;}
+
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);margin-bottom:10px;}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--accent);flex-shrink:0;}
+.task-row .tt{flex:1;font-size:13px;color:var(--text);}
+.task-row select{font-family:var(--font-body);font-size:12.5px;border:1px solid var(--border);border-radius:6px;padding:8px 10px;background:var(--surface);color:var(--text);outline:none;min-width:210px;}
+.task-row select:focus{border-color:var(--accent);}
+
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.field input{width:100%;font-family:var(--font-body);font-size:13.5px;border:1px solid var(--border);border-radius:8px;padding:11px 13px;background:var(--surface-2);color:var(--text);outline:none;}
+.field input:focus{border-color:var(--accent);}
+
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.seg button{font-family:var(--font-body);font-size:12.5px;padding:9px 16px;border:none;background:var(--surface-2);color:var(--muted);cursor:pointer;border-right:1px solid var(--border);}
+.seg button:last-child{border-right:none;}
+.seg button.on{background:var(--accent);color:#060b14;font-weight:700;}
+
+.bnav{display:flex;justify-content:space-between;margin-top:24px;}
+
+footer{border-top:1px solid var(--border-soft);padding:30px 0 44px;}
+.foot-note{font-size:12px;color:var(--muted-2);max-width:85ch;line-height:1.6;}
+.foot-note strong{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark-row">
+      <div class="mark">
+        <div class="mark-badge">KORD</div>
+        <div>
+          <div class="mark-name">Kord Technologies Console</div>
+          <div class="mark-sub">Kord Technologies / KBR (kord.com) · Directed Energy &amp; Counter-UAS AI Workforce</div>
+        </div>
+      </div>
+      <div class="line-readout">
+        <span class="dot"></span>
+        <span id="lineTxt">Kord Huntsville, AL Plant · 50kW DE M-SHORAD &amp; FIREFLY C-UAS Active</span>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tabA" onclick="setView('ops')">The AI Workforce Roster</button>
+      <button class="tab-btn" id="tabB" onclick="setView('hire')">+ Add an AI Operator</button>
+    </div>
+  </header>
+
+  <div id="view-ops">
+    <section class="hero" style="padding-bottom:10px;">
+      <div>
+        <div class="eyebrow">High-Energy Laser Weapon Systems &amp; C-UAS Integration</div>
+        <h1>Eight operators to run Kord's <span>laser-weapon-to-stryker</span> loop</h1>
+        <p class="lead">Each operator below is a real Kord Technologies workflow — analyzing 3D CAD 50kW high-energy laser beam directors and Stryker vehicle chassis integration, scrubbing 500-line MIL-STD-810H &amp; ITAR laser weapon system BOMs for thermal chiller loop tolerances, configuring FIREFLY counter-UAS fast-steering mirror tracking software, and auditing AS9100D Rev D aerospace quality release — handed to a team of specialist AI agents that works it end-to-end.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('roster-section').scrollIntoView({behavior:'smooth'})">View the Roster</button>
+          <button class="btn btn-ghost" onclick="runOperator('dedfm')">Run Flagship Operator</button>
+        </div>
+      </div>
+
+      <div class="wafer">
+        <div class="wafer-top">
+          <span class="wafer-title">Kord High-Energy Laser Diagnostics</span>
+          <span class="wafer-val" id="yieldVal">50kW Laser Jitter: 1.8 µrad PASS</span>
+        </div>
+        <svg class="wafermap" viewBox="0 0 220 210" preserveAspectRatio="xMidYMid meet">
+          <circle class="wafer-outline" cx="110" cy="105" r="92"></circle>
+          <line class="wafer-grid-line" x1="20" y1="105" x2="200" y2="105"></line>
+          <line class="wafer-grid-line" x1="110" y1="15" x2="110" y2="195"></line>
+          <g id="dieGrid"></g>
+        </svg>
+        <div class="wafer-foot">
+          <span>Huntsville, AL Facility · Lot KORD-2608-DE</span>
+          <span id="binVal">Pass: AS9100D Rev D &amp; ITAR</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="econ">
+      <div class="econ-item">
+        <div class="econ-num">6.2<small>×</small></div>
+        <div class="econ-label">Faster laser weapon DFM &amp; combat vehicle integration</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">50<small> kW</small></div>
+        <div class="econ-label">DE M-SHORAD high-energy laser power integration</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">36<small> hrs</small></div>
+        <div class="econ-label">Median defense engineering hours returned per run</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">8<small>/8</small></div>
+        <div class="econ-label">Workflows covered, CAD laser DFM through AS9100D release</div>
+      </div>
+    </div>
+
+    <section id="roster-section">
+      <div class="section-head">
+        <div>
+          <div class="section-title">The AI Workforce Roster</div>
+          <div class="section-sub">Grouped into Defense Prime Tenders and Directed Energy Operations tracks. Click run on any operator to watch its agent team execute in real time.</div>
+        </div>
+      </div>
+
+      <div id="rosterContainer"></div>
+    </section>
+
+    <!-- Run Panel -->
+    <div class="run-panel" id="runPanel">
+      <div class="run-head">
+        <div>
+          <h3 id="runTitle">Running Operator...</h3>
+          <div class="meta" id="runSub">Simulated multi-agent execution feed</div>
+        </div>
+        <button class="close-run" onclick="closeRun()">✕ Close View</button>
+      </div>
+      <div class="progress-row" id="progressRow"></div>
+      <div class="feed" id="feedArea"></div>
+      <div class="deliverable" id="deliverableBox">
+        <h4 id="delivTitle">Review-Ready Output</h4>
+        <pre id="delivCode"></pre>
+        <div class="note">Human-in-the-loop oversight active. Outputs verified by Kord Technologies senior directed energy team. Illustrative simulation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="section-title">Add an AI Operator</div>
+          <div class="section-sub">Stand up a new AI operator in three steps: pick the workflow, assign each task to an agent via dropdown, then name it and set cadence.</div>
+        </div>
+      </div>
+
+      <div class="steps-bar" id="bSteps"></div>
+      <div id="bBody"></div>
+      <div class="bnav" id="bNav"></div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="foot-note">
+      <strong>Independent Concept Prototype</strong> prepared for a conversation with <strong>Kord Technologies (kord.com)</strong>. It is not affiliated with, endorsed by, or built on Kord or KBR systems or data. All operators, laser beam jitter specs, Ku720 radar telemetry, and AS9100D audits are illustrative simulations. A licensed defense systems engineer, optical physicist, or quality manager reviews and approves every laser weapon CAD model, beam director setup, and ITAR compliance release.
+    </div>
+  </footer>
+</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'DoD Joint Services & Defense Prime Scouting Specialist', tools: ['research_solicitations', 'save'] },
+  laser_eng: { emoji: '🔬', label: '50kW Directed Energy & Optical Beam Director Engineer', tools: ['analyze_laser_dfm', 'save'] },
+  radar_spec: { emoji: '📡', label: 'Ku720 Radar Sensor Fusion & C2 Tracking Specialist', tools: ['program_laser_tracker', 'save'] },
+  bom_scrubber: { emoji: '📑', label: 'MIL-STD-810H & ITAR Defense Component Specialist', tools: ['scrub_itar_bom', 'save'] },
+  cost_eng: { emoji: '🧮', label: 'Directed Energy & Stryker Vehicle Integration Costing Specialist', tools: ['calc_system_cost', 'save'] },
+  software_architect: { emoji: '💻', label: 'FIREFLY C-UAS & Fast-Steering Mirror Software Architect', tools: ['configure_firefly_c2', 'save'] },
+  quality_auditor: { emoji: '🛡️', label: 'AS9100D Rev D & ITAR Compliance Quality Auditor', tools: ['audit_as9100d_quality', 'save'] },
+  supply_planner: { emoji: '📦', label: 'Tactical Laser Optics & Stryker Spare Parts Planner', tools: ['plan_optics_stock', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'US Army DE M-SHORAD & C-RAM RFP Solution Writer', tools: ['compose_doc', 'save'] },
+  qa_reviewer: { emoji: '✅', label: 'Senior Directed Energy Defense Engineering Reviewer', tools: ['qa_review', 'save'] },
+  prospector: { emoji: '🧲', label: 'PEO Missiles & Space & Defense Prime Director Prospector', tools: ['source_defense_accounts', 'save'] },
+  thermal_eng: { emoji: '❄️', label: 'High-Power Chiller & Vehicle Heat Dissipation Specialist', tools: ['analyze_chiller_loop', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+const TRACKS = [
+  { key: 'commercial', title: 'Commercial & Defense Prime Tenders' },
+  { key: 'operations', title: 'Directed Energy & Defense Systems Operations' }
+];
+
+const WORKFLOWS = {
+  scout: {
+    name: 'DoD Joint Services & Defense Prime Scouting',
+    title: 'AI Defense Systems Growth Scout',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'DoD Directed Energy & Counter-UAS Opportunity Dossier',
+    desc: 'Maps US Army PEO Missiles & Space, Rapid Capabilities Office (RCCTO), and defense primes expanding directed energy laser integration.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan US Army DE M-SHORAD 50kW laser solicitations and USAF base defense C-UAS procurements.', deps: [] },
+      { agent: 'prospector', task: 'Source PEO Program Managers, Lead Weapons Systems Integrators, and Defense Procurement Directors.', deps: [] },
+      { agent: 'laser_eng', task: 'Score fit on Kord FIREFLY 5kW to 40kW laser systems, Ku720 radar sensor fusion, and Stryker A1 integration.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce target defense prime & DoD prospect dossier.', deps: [2] }
+    ]
+  },
+  quote: {
+    name: 'Directed Energy & C-UAS Platform Integration Quoting',
+    title: 'AI Directed Energy Cost Estimating Specialist',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Directed Energy Laser Weapon System Integration Quote',
+    desc: 'Models 50kW high-energy laser beam director hardware, active cooling chiller loops, fast-steering mirrors, and AS9100D labor hours.',
+    tasks: [
+      { agent: 'laser_eng', task: 'Review customer 3D CAD Stryker vehicle roof space, weight margin (under 7,500 lbs), and 60kW generator power draw.', deps: [] },
+      { agent: 'cost_eng', task: 'Model optical mirror coating costs, laser diode module assembly labor, and ITAR compliance overhead.', deps: [0] },
+      { agent: 'supply_planner', task: 'Verify high-purity quartz lenses, closed-loop ethylene glycol chillers, and Ku720 radar modules.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Assemble formal Directed Energy Laser Weapon System Integration Quote.', deps: [2] }
+    ]
+  },
+  tender: {
+    name: 'US Army DE M-SHORAD & C-RAM RFP Response',
+    title: 'AI Counter-UAS Solution Specialist',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'US Army DE M-SHORAD & C-RAM RFP Response Package',
+    desc: 'Audits MIL-STD-810H environmental shock/vibration, AS9100D Rev D aerospace quality, ITAR compliance, and sub-second laser engagement SLAs.',
+    tasks: [
+      { agent: 'researcher', task: 'Parse US Army SHORT RANGE AIR DEFENSE requirements, Class 1-3 drone threat profiles, and laser safety specs.', deps: [] },
+      { agent: 'quality_auditor', task: 'Verify AS9100D Rev D certificate, NIST SP 800-171 cybersecurity rating, and Huntsville plant credentials.', deps: [0] },
+      { agent: 'cost_eng', task: 'Structure phased 50kW laser vehicle delivery schedule for Huntsville, AL integration facility.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce formal US Army DE M-SHORAD & C-RAM RFP response package.', deps: [2] }
+    ]
+  },
+  intel: {
+    name: 'Global Counter-UAS & High-Energy Laser Threat Radar',
+    title: 'AI Laser Threat & Defense Intelligence',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Global Counter-UAS & Directed Energy Technology Brief',
+    desc: 'Tracks enemy drone swarm tactics, fiber laser diode efficiency breakthroughs, and highlights Kord modular FIREFLY system superiority.',
+    tasks: [
+      { agent: 'researcher', task: 'Monitor Class 1-3 UAV swarm attack reports, fiber laser wall-plug efficiency upgrades, and adaptive optics patents.', deps: [] },
+      { agent: 'laser_eng', task: 'Benchmark Kord 50kW DE M-SHORAD beam director jitter reduction (1.8 µrad) against legacy mechanical mounts.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile strategic directed energy technology intelligence brief.', deps: [0, 1] }
+    ]
+  },
+  dedfm: {
+    name: '50kW High-Energy Laser & Stryker Integration Scrub',
+    title: 'AI Directed Energy DFM Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: '50kW High-Energy Laser & Stryker Integration Review Package',
+    desc: 'Audits 3D CAD models for 50kW high-energy laser beam directors on Stryker combat vehicle chassis, checking beam optical jitter and thermal dissipation.',
+    tasks: [
+      { agent: 'laser_eng', task: 'Analyze optical beam director fast-steering mirror mount; reduces jitter from 14.5 µrad to 1.8 µrad during vehicle motion.', deps: [] },
+      { agent: 'thermal_eng', task: 'Verify 48kW waste heat rejection in 120°F desert ambient condition using closed-loop ethylene glycol chiller.', deps: [0] },
+      { agent: 'radar_spec', task: 'Check Ku720 radar target handoff latency (<12ms) and optical fine-track camera alignment.', deps: [1] },
+      { agent: 'quality_auditor', task: 'Audit AS9100D Rev D quality checkpoints, ITAR handling compliance, and MIL-STD-810H vibration specs.', deps: [2] },
+      { agent: 'reviewer', task: 'QA directed energy defense engineering findings and compile customer technical package.', deps: [3] },
+      { agent: 'proposal_writer', task: 'Produce final 50kW High-Energy Laser & Stryker Integration Review Package.', deps: [4] }
+    ]
+  },
+  laser_track: {
+    name: 'Beam Director Calibration & Sensor Fusion Setup',
+    title: 'AI Optical Calibration Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'Beam Director Calibration & Sensor Fusion Package',
+    desc: 'Calibrates fast-steering mirror galvos, sets thermal imaging camera boresight alignment, and flashes Ku720 radar target tracking algorithms.',
+    tasks: [
+      { agent: 'laser_eng', task: 'Calibrate galvo mirrors for 100Hz closed-loop target tracking and atmospheric turbulence compensation.', deps: [] },
+      { agent: 'software_architect', task: 'Flash FIREFLY C2 software with automated threat classification and laser firing interlocks.', deps: [0] },
+      { agent: 'reviewer', task: 'Verify 100% target kill chain validation routine prior to field live-fire tests.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce Beam Director Calibration & Sensor Fusion Package.', deps: [2] }
+    ]
+  },
+  quality: {
+    name: 'AS9100D, ITAR & MIL-STD-810H Compliance Release Audit',
+    title: 'AI Quality & Regulatory Auditor',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'AS9100D & ITAR Directed Energy Quality Release',
+    desc: 'Audits AS9100D Rev D aerospace quality manuals, ITAR technical data export controls, and MIL-STD-810H ballistics/vibration test records.',
+    tasks: [
+      { agent: 'quality_auditor', task: 'Audit AS9100D Rev D inspection routes, MIL-STD-810H environmental chamber logs, and ITAR badge access records.', deps: [] },
+      { agent: 'bom_scrubber', task: 'Verify 100% DFARS compliant titanium alloy fasteners and American-made fiber laser diodes.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile AS9100D & ITAR Directed Energy Quality Release Brief.', deps: [0, 1] }
+    ]
+  },
+  spare_plan: {
+    name: 'Tactical Laser Optics & Stryker Spare Parts Plan',
+    title: 'AI Tactical Laser Supply Planner',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'Tactical Laser Optics & Stryker Spare Parts Plan',
+    desc: 'Secures high-power fiber laser diodes, quartz beam splitter optics, and Stryker A1 mounting hardware for Huntsville, AL facility.',
+    tasks: [
+      { agent: 'supply_planner', task: 'Evaluate tier-1 defense optics lead times and 6-month critical spare buffer in Huntsville warehouse.', deps: [] },
+      { agent: 'bom_scrubber', task: 'Execute laser lens Certificate of Analysis (CoA) audit for surface flatness (λ/10) and anti-reflective coating.', deps: [] },
+      { agent: 'cost_eng', task: 'Structure strategic laser spare parts buffer to support urgent forward-deployed US Army units.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce Tactical Laser Optics & Stryker Spare Parts Plan.', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'DoD Directed Energy & Counter-UAS Opportunity Dossier',
+  quote: 'Directed Energy Laser Weapon System Integration Quote',
+  tender: 'US Army DE M-SHORAD & C-RAM RFP Response Package',
+  intel: 'Global Counter-UAS & Directed Energy Technology Brief',
+  dedfm: '50kW High-Energy Laser & Stryker Integration Review Package',
+  laser_track: 'Beam Director Calibration & Sensor Fusion Package',
+  quality: 'AS9100D & ITAR Directed Energy Quality Release',
+  spare_plan: 'Tactical Laser Optics & Stryker Spare Parts Plan'
+};
+
+const TOOLS = {
+  research_solicitations: () => 'Scanned US Army DE M-SHORAD solicitations, PEO Missiles & Space RFPs, and C-UAS threat intelligence.',
+  source_defense_accounts: () => 'Sourced verified Lead Systems Engineers and Defense Procurement Directors; deduped CRM.',
+  analyze_laser_dfm: () => 'Analyzed 3D CAD model; reduced beam director optical jitter from 14.5 µrad to 1.8 µrad via active vibration mounts.',
+  program_laser_tracker: () => 'Programmed Ku720 radar sensor fusion engine for sub-12ms target track handoff to fine-track camera.',
+  scrub_itar_bom: () => 'Scrubbed 500-line defense BOM; verified 100% ITAR compliance, DFARS specialty metals, and AS9100D traceability.',
+  calc_system_cost: () => 'Calculated 50kW laser beam director assembly, thermal chiller loop SMT, and AS9100D engineering hours.',
+  configure_firefly_c2: () => 'Configured Kord FIREFLY command and control software with automated target threat priority scoring.',
+  audit_as9100d_quality: () => 'Audited AS9100D Rev D aerospace quality manuals and MIL-STD-810H environmental test logs.',
+  plan_optics_stock: () => 'Cross-referenced quartz lens lead times; secured 100 laser diode spare modules in Huntsville warehouse.',
+  analyze_chiller_loop: () => 'Verified closed-loop chiller rejecting 48kW heat load in 120°F ambient ambient temperature test.',
+  compose_doc: () => 'Compiled directed energy defense engineering metrics into clear, review-ready technical documentation.',
+  qa_review: () => 'Audited report completeness and checked AS9100D / ITAR standards; ready for Kord VP Engineering sign-off.',
+  save: () => 'Saved deliverable artifact to shared project repository.'
+};
+
+function toolOut(t) { return (TOOLS[t] || (() => 'Executed successfully.'))(); }
+
+const FINAL = {
+  scout: `DOD DIRECTED ENERGY & COUNTER-UAS OPPORTUNITY DOSSIER (illustrative)
+Target Sector: US Army Short Range Air Defense (SHORAD), Counter-UAS (C-UAS) & Directed Energy Primes
+Target Location: Huntsville, AL & DoD Testing Grounds
+
+A-Tier Qualified Defense Opportunities:
+1. US Army RCCTO — DE M-SHORAD 50kW Laser Stryker Fleet — Fit Score: 99/100
+   • Key Contacts: Product Manager Directed Energy, Lead System Integrator
+   • Requirement: Ruggedized 50kW High-Energy Laser Beam Director on Stryker A1 Chassis
+2. US Air Force Base Defense — FIREFLY Counter-UAS Laser System — Fit Score: 96/100
+   • Key Contacts: Chief Technology Officer, Base Security Director
+   • Requirement: Modular 5kW to 40kW Transportable C-UAS Laser Weapon Unit
+3. Major Defense Prime — Joint C-RAM Laser Integration — Fit Score: 94/100
+   • Key Contacts: VP Directed Energy Systems
+
+Strategic Positioning:
+Highlight Kord Huntsville, AL integration facility, proven DE M-SHORAD prime contractor heritage, AS9100D Rev D certification, and FIREFLY C-UAS track record.
+
+NOTE: Illustrative simulation prepared for Kord Technologies (kord.com).`,
+
+  quote: `DIRECTED ENERGY LASER WEAPON SYSTEM INTEGRATION QUOTE (illustrative)
+Customer: US Army PEO Missiles & Space / RCCTO
+Program: 50kW High-Energy Laser Integration on Stryker Combat Vehicles (4 Vehicles)
+Specifications: 50kW Fiber Laser, Beam Director with Fast-Steering Mirrors & Ku720 Radar Fusion
+
+Commercial Breakdown:
+• 50kW Optical Beam Director & Fast-Steering Mirror Assembly (4 Units @ $3,850,000): $15,400,000.00
+• High-Capacity Closed-Loop Chiller & Power Management Integration: $4,200,000.00
+• Ku720 Radar Integration & FIREFLY C2 Software License: $2,100,000.00
+• AS9100D Systems Engineering, Field Testing & ITAR Clearance Package: $1,450,000.00
+
+Turnaround Time:
+• System Integration & Live-Fire Test Release: 24 Weeks at Huntsville, AL Facility
+
+NOTE: Illustrative simulation; pricing and timelines are placeholders.`,
+
+  tender: `US ARMY DE M-SHORAD & C-RAM RFP RESPONSE PACKAGE (illustrative)
+Tender ID: US-AL-DEFENSE-KORD-2026-15
+Scope: 50kW Directed Energy Maneuver-Short Range Air Defense & Counter-UAS Weapon Systems
+
+Quality & Defense Verification:
+• Quality Management System: AS9100D Rev D & ISO 9001:2015 Certified (Huntsville, AL)
+• Security & Regulatory Standard: 100% ITAR Compliant & NIST SP 800-171 Cybersecurity Certified
+• Environmental Standards: MIL-STD-810H Shock, Vibration & Temperature Tested
+• Laser Beam Performance: Sub-2.0 µrad Optical Jitter during Stryker Vehicle Motion
+
+Technical Offer:
+• Prime contractor for US Army DE M-SHORAD with dedicated Huntsville, AL integration facility.
+
+NOTE: Illustrative simulation; confirm against RFP specifications.`,
+
+  intel: `GLOBAL COUNTER-UAS & DIRECTED ENERGY TECHNOLOGY BRIEF (illustrative)
+Focus: Class 1-3 UAV Drone Swarm Threat Mitigation & Fiber Laser Upgrades
+
+Key Insights:
+1. Unlimited Magazine Capacity: High-energy laser (HEL) systems reduce cost-per-shot to under $10 compared to $100k+ kinetic missiles against cheap drone swarms.
+2. Jitter Reduction Breakthrough: Active vibration isolation mounts hold optical beam jitter below 1.8 µrad, keeping laser spot focused on drone motor housing.
+3. Kord Platform Advantage:
+   - Lead integrator status on US Army DE M-SHORAD 50kW laser vehicle program.
+   - Modular FIREFLY architecture scales from 5kW point defense to 50kW maneuver air defense.
+
+NOTE: Illustrative simulation.`,
+
+  dedfm: `50kW HIGH-ENERGY LASER & STRYKER INTEGRATION REVIEW PACKAGE (illustrative · flagship)
+Program: DE M-SHORAD 50kW High-Energy Laser Combat Vehicle
+Chassis: Stryker A1 8x8 Armored Vehicle Platform
+
+Optical & Mechanical Findings:
+1. Beam Jitter Reduction: Active fast-steering mirror mount dampens vehicle diesel vibration, maintaining 1.8 µrad beam pointing accuracy.
+2. Heat Dissipation: Ethylene glycol chiller rejects 48kW waste heat continuous load in 120°F desert environment without thermal throttling.
+3. Radar Sensor Fusion: Sub-12ms target handoff from Ku720 radar to fine-track IR camera verified.
+
+Quality & Regulatory Audit:
+• Defense Clearance: ITAR technical data controls verified.
+• Aerospace Standard: AS9100D Rev D DHR & MIL-STD-810H vibration route approved.
+
+Summary:
+ Directed energy laser system released for Huntsville combat vehicle integration.
+
+NOTE: Illustrative simulation; review with Kord engineering team.`,
+
+  laser_track: `BEAM DIRECTOR CALIBRATION & SENSOR FUSION PACKAGE (illustrative)
+Program: FIREFLY C-UAS Laser Weapon System
+
+System Setup Configuration:
+• Galvo Mirror Calibration: Programmed 100Hz closed-loop fast-steering mirror galvos for beam stabilization
+• Radar Boresight Alignment: Calibrated Ku720 radar target tracking with thermal IR camera alignment
+• FIREFLY C2 Firmware: Configured automated threat priority scoring and safety interlocks
+
+Outcome: Optical beam director and sensor fusion engine validated for live-fire testing.
+
+NOTE: Illustrative simulation.`,
+
+  quality: `AS9100D & ITAR DIRECTED ENERGY QUALITY RELEASE (illustrative)
+Production Unit: KORD-DE-2026-08
+Compliance Standard: AS9100D Rev D / ITAR / MIL-STD-810H / NIST SP 800-171
+
+Audit Checklist Results:
+• AS9100D Aerospace Audit: Passed Huntsville, AL plant audit with zero non-conformances
+• Environmental Testing: Passed MIL-STD-810H vibration and temperature shock tests
+• ITAR Export Control: 100% US citizen access and encrypted technical data handling cleared
+
+Outcome: AS9100D & ITAR Directed Energy Quality Release Approved. Certificate of Conformance issued.
+
+NOTE: Illustrative simulation.`,
+
+  spare_plan: `TACTICAL LASER OPTICS & STRYKER SPARE PARTS PLAN (illustrative)
+Scope: Huntsville, AL Directed Energy Manufacturing & Integration Facility
+
+Supply Strategy Breakdown:
+• Fiber Laser Diode Modules: 100 spare diode units maintained in Huntsville climate-controlled vault
+• Optical Mirrors & Lenses: 50 high-purity quartz beam splitters (λ/10 surface accuracy) in stock
+• Material Pedigree: 100% DFARS specialty metals and ITAR compliant component pedigree
+
+Outcome: Spare parts supply clear for continuous DE M-SHORAD vehicle support.
+
+NOTE: Illustrative simulation.`
+};
+
+let EMPLOYEES = [
+  { id: 'scout', name: 'Scout', title: 'AI Defense Systems Growth Scout', wf: 'scout', handled: 210, hrs: 62, win: 38, status: 'idle' },
+  { id: 'quote', name: 'Quote', title: 'AI Directed Energy Cost Specialist', wf: 'quote', handled: 295, hrs: 124, win: 58, status: 'idle' },
+  { id: 'tender', name: 'Tender', title: 'AI Counter-UAS Solution Specialist', wf: 'tender', handled: 128, hrs: 98, win: 48, status: 'idle' },
+  { id: 'intel', name: 'Radar', title: 'AI Laser Threat & Defense Intelligence', wf: 'intel', handled: 155, hrs: 48, win: 26, status: 'idle' },
+  { id: 'dedfm', name: 'DirectedEnergyDFM', title: 'AI Directed Energy DFM Specialist', wf: 'dedfm', handled: 420, hrs: 245, win: 76, status: 'idle' },
+  { id: 'laser_track', name: 'BeamTrack', title: 'AI Optical Calibration Specialist', wf: 'laser_track', handled: 238, hrs: 110, win: 52, status: 'idle' },
+  { id: 'quality', name: 'AS9100Audit', title: 'AI Quality & Regulatory Auditor', wf: 'quality', handled: 365, hrs: 140, win: 66, status: 'idle' },
+  { id: 'spare_plan', name: 'SupplyPlanner', title: 'AI Tactical Laser Supply Planner', wf: 'spare_plan', handled: 200, hrs: 82, win: 0, status: 'idle' }
+];
+
+/* Render Functions */
+function drawWaferGrid() {
+  const grid = document.getElementById("dieGrid");
+  let rects = '';
+  for (let x = -8; x <= 8; x++) {
+    for (let y = -8; y <= 8; y++) {
+      if (x*x + y*y <= 60) {
+        const px = 110 + x * 10 - 4;
+        const py = 105 + y * 10 - 4;
+        const pass = (Math.abs(x*y) % 8 !== 3);
+        const fill = pass ? 'rgba(6, 182, 212, 0.45)' : 'rgba(245, 158, 11, 0.6)';
+        rects += `<rect x="${px}" y="${py}" width="8" height="8" rx="1.5" fill="${fill}"></rect>`;
+      }
+    }
+  }
+  grid.innerHTML = rects;
+}
+
+function renderRoster() {
+  const container = document.getElementById("rosterContainer");
+  let html = '';
+  TRACKS.forEach(tr => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === tr.key);
+    if (!list.length) return;
+    html += `<div class="track-label">${tr.title}</div><div class="roster">`;
+    html += list.map(empCard).join('');
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+}
+
+function empCard(e) {
+  const wf = WORKFLOWS[e.wf] || {};
+  const isFlag = wf.tag === 'flagship';
+  const team = (wf.tasks || []).map(t => t.agent).filter((v, i, a) => a.indexOf(v) === i).map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  return `
+    <div class="op-card ${isFlag ? 'flagship' : ''}" id="emp-${e.id}">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${e.name}</div>
+          <div class="op-role">${e.title}</div>
+        </div>
+        ${isFlag ? '<span class="flag-chip">★ FLAGSHIP OPERATOR</span>' : ''}
+      </div>
+      <div class="op-desc">${wf.desc || ''}</div>
+      <div class="op-agents">${team}</div>
+      <div class="op-stats">
+        <div class="op-stat"><b>${e.handled.toLocaleString()}</b> runs</div>
+        <div class="op-stat"><b>~${e.hrs} hrs</b> saved/mo</div>
+        <div class="op-stat"><b>+${e.win}%</b> speedup</div>
+      </div>
+      <div class="op-actions">
+        <button class="run-btn" onclick="runOperator('${e.wf}')">▶ Run ${e.name}</button>
+      </div>
+    </div>
+  `;
+}
+
+function setView(v) {
+  document.getElementById('view-ops').classList.toggle('hidden', v !== 'ops');
+  document.getElementById('view-hire').classList.toggle('hidden', v !== 'hire');
+  document.getElementById('tabA').classList.toggle('active', v === 'ops');
+  document.getElementById('tabB').classList.toggle('active', v === 'hire');
+  if (v === 'hire') initBuilder();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+let isRunning = false;
+async function runOperator(wfKey) {
+  if (isRunning) return;
+  isRunning = true;
+  const wf = WORKFLOWS[wfKey];
+  if (!wf) return;
+
+  const panel = document.getElementById("runPanel");
+  const title = document.getElementById("runTitle");
+  const sub = document.getElementById("runSub");
+  const progress = document.getElementById("progressRow");
+  const feed = document.getElementById("feedArea");
+  const deliv = document.getElementById("deliverableBox");
+
+  panel.classList.add("active");
+  deliv.classList.remove("show");
+  title.innerText = `Executing Operator: ${wf.name}`;
+  sub.innerText = `Mode: ${wf.mode.toUpperCase()} · ${wf.tasks.length} Specialist Agents`;
+
+  progress.innerHTML = wf.tasks.map((_, i) => `<div class="pstep" id="ps_${i}"></div>`).join('');
+  feed.innerHTML = '';
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  function addFeedLine(agentKey, txt, isDone = false) {
+    const role = AGENT_ROLES[agentKey] || { emoji: '🤖', label: agentKey };
+    const div = document.createElement('div');
+    div.className = `feed-line ${isDone ? 'done' : ''}`;
+    div.innerHTML = `<span class="tag">[${role.emoji} ${role.label}]</span><span class="txt">${txt}</span>`;
+    feed.appendChild(div);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  addFeedLine(wf.tasks[0].agent, `Initializing ${wf.name} autonomous workflow loop...`);
+  await new Promise(r => setTimeout(r, 600));
+
+  for (let i = 0; i < wf.tasks.length; i++) {
+    const t = wf.tasks[i];
+    const stepEl = document.getElementById(`ps_${i}`);
+    if (stepEl) stepEl.classList.add("active");
+
+    addFeedLine(t.agent, `Executing Task ${i+1}: ${t.task}`);
+    await new Promise(r => setTimeout(r, 800));
+
+    const role = AGENT_ROLES[t.agent];
+    if (role && role.tools) {
+      for (const tool of role.tools) {
+        addFeedLine(t.agent, `Invoked tool '${tool}( )' -> ${toolOut(tool)}`);
+        await new Promise(r => setTimeout(r, 600));
+      }
+    }
+
+    if (stepEl) {
+      stepEl.classList.remove("active");
+      stepEl.classList.add("complete");
+    }
+    addFeedLine(t.agent, `Task ${i+1} completed. Artifact saved to shared Kord project store.`, true);
+  }
+
+  await new Promise(r => setTimeout(r, 400));
+  document.getElementById("delivTitle").innerText = `Review-Ready Output · ${DTITLE[wfKey] || 'Deliverable'}`;
+  document.getElementById("delivCode").innerText = FINAL[wfKey] || "Execution completed successfully.";
+  deliv.classList.add("show");
+
+  isRunning = false;
+}
+
+function closeRun() {
+  document.getElementById("runPanel").classList.remove("active");
+}
+
+/* DYNEX BUILDER FLOW IMPLEMENTATION */
+let draft = {};
+function initBuilder() {
+  draft = { wf: null, mode: 'sequential', assign: [], name: '', title: '', cadence: 'Per project', step: 1 };
+  renderBuilder();
+}
+
+function renderBuilder() {
+  const steps = [['01', 'Pick a workflow'], ['02', 'Assign the agents'], ['03', 'Name & cadence']];
+  document.getElementById('bSteps').innerHTML = steps.map((s, i) => `
+    <div class="step-item ${draft.step === i + 1 ? 'active' : ''}">
+      <div class="step-num">${s[0]}</div>
+      <div class="step-lbl">${s[1]}</div>
+    </div>
+  `).join('');
+
+  if (draft.step === 1) bS1();
+  else if (draft.step === 2) bS2();
+  else bS3();
+  bNav();
+}
+
+function bS1() {
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 1: Choose Baseline Defense Workflow</label></div>
+    <div class="wf-grid">
+      ${Object.keys(WORKFLOWS).map(k => {
+        const w = WORKFLOWS[k];
+        return `
+          <div class="wf-card ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')">
+            <div class="wf-title">${w.name}</div>
+            <div class="wf-desc">${w.desc}</div>
+            <div class="wf-meta">${w.tasks.length} agents · ${w.mode}</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 2: Assign Each Task to a Specialist Agent</label></div>
+    ${w.tasks.map((t, i) => `
+      <div class="task-row">
+        <div class="tn">${i + 1}</div>
+        <div class="tt">
+          ${t.task}
+          ${t.deps.length ? `<span style="color:var(--muted-2);font-family:var(--font-mono);font-size:11px;"> · waits for step ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}
+        </div>
+        <select onchange="draft.assign[${i}]=this.value">${opts}</select>
+      </div>
+    `).join('')}
+    <div class="field" style="margin-top:16px;">
+      <label>Execution Mode</label>
+      <div class="seg">
+        ${['sequential', 'dag'].map(m => `
+          <button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (Parallel DAG)' : 'Sequential'}</button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 3: Name Operator &amp; Set Cadence</label></div>
+    <div class="field">
+      <label>Operator Name</label>
+      <input type="text" value="${draft.name}" placeholder="e.g. Directed Energy &amp; Laser Specialist" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Role Title</label>
+      <input type="text" value="${draft.title}" placeholder="e.g. Autonomous Defense Engineer" oninput="draft.title=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Cadence</label>
+      <div class="seg">
+        ${['Per project', 'Per batch', 'Weekly', 'On-demand'].map(c => `
+          <button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>
+        `).join('')}
+      </div>
+    </div>
+    <div class="field" style="margin-top:20px;">
+      <label>Live Operator Card Preview</label>
+      <div id="previewCardArea"></div>
+    </div>
+  `;
+  renderPreview();
+}
+
+function renderPreview() {
+  const w = WORKFLOWS[draft.wf];
+  const area = document.getElementById('previewCardArea');
+  if (!area) return;
+  
+  const team = draft.assign.map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  area.innerHTML = `
+    <div class="op-card" style="max-width:440px;">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${draft.name || 'New Operator'}</div>
+          <div class="op-role">${draft.title || 'AI Operator'}</div>
+        </div>
+      </div>
+      <div class="op-desc">Owns <b>${w.name}</b> · ${draft.cadence} · ${draft.mode.toUpperCase()}</div>
+      <div class="op-agents">${team}</div>
+    </div>
+  `;
+}
+
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn btn-ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right = '';
+  if (draft.step === 1) right = `<button class="btn btn-primary" ${draft.wf ? '' : 'disabled'} onclick="draft.step=2;renderBuilder()">Next: Assign Agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn btn-primary" onclick="draft.step=3;renderBuilder()">Next: Name &amp; Cadence →</button>`;
+  else right = `<button class="btn btn-primary" onclick="hire()">✓ Add this AI Operator</button>`;
+
+  document.getElementById('bNav').innerHTML = left + right;
+}
+
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  
+  WORKFLOWS[wfId] = {
+    name: w.name,
+    title: draft.title || w.title,
+    mode: draft.mode || w.mode,
+    track: w.track,
+    deliverable: w.deliverable,
+    desc: w.desc,
+    tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps }))
+  };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({
+    id, name,
+    title: draft.title || w.title,
+    wf: wfId,
+    handled: 0,
+    hrs: Math.floor(Math.random() * 60) + 40,
+    win: 0,
+    status: 'idle'
+  });
+
+  renderRoster();
+  setView('ops');
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  drawWaferGrid();
+  renderRoster();
+});
+</script>
+</body>
+</html>
