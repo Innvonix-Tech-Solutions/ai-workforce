@@ -114,3 +114,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/carrier-logistics
 https://innvonix-tech-solutions.github.io/ai-workforce/kord-ai
 https://innvonix-tech-solutions.github.io/ai-workforce/id-logistics
 https://innvonix-tech-solutions.github.io/ai-workforce/smart-water
+https://innvonix-tech-solutions.github.io/ai-workforce/silesia
