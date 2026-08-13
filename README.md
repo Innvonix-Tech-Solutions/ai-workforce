@@ -109,6 +109,7 @@ https://innvonix-tech-solutions.github.io/ai-workforce/stentech
 https://innvonix-tech-solutions.github.io/ai-workforce/illesfoods
 https://innvonix-tech-solutions.github.io/ai-workforce/trusted-semiconductor
 https://innvonix-tech-solutions.github.io/ai-workforce/saras-micro
+https://innvonix-tech-solutions.github.io/ai-workforce/jetzero
 https://innvonix-tech-solutions.github.io/ai-workforce/hartzell
 https://innvonix-tech-solutions.github.io/ai-workforce/carrier-logistics
 https://innvonix-tech-solutions.github.io/ai-workforce/kord-ai
