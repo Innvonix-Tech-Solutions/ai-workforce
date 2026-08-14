@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HALO Industries &mdash; AI Commercial &amp; Laser Wafering Engineering Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f0f4f8;--surface2:#d4e2f0;--border:#bccee0;--accent:#0073aa;
+--accent-dim:rgba(0,115,170,.07);--accent-line:rgba(0,115,170,.28);--slate:#475569;--slate-line:rgba(71,85,105,.32);--text:#0f172a;--hi:#020617;--tert:#64748b;--ok:#16a34a;--ok-dim:rgba(22,163,74,.10);--gold:#0284c7;--gold-bg:#f0f9ff;--gold-line:#bae6fd}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:36px;height:34px;border-radius:8px;background:linear-gradient(135deg,#003b5c,#0073aa);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;letter-spacing:.5px}
+.htitle{font-size:15px;font-weight:600;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert)}.badge b{color:var(--accent)}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:600;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.5;max-width:900px;margin-bottom:14px}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.commercial{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(71,85,105,.08);color:var(--slate);border:1px solid var(--slate-line)}
+.tag.hero{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:24px;font-weight:700;color:var(--hi)}.cell .v .u{color:var(--accent)}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px}
+.slabel{font-size:11px;font-weight:600;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert)}
+.emp-owns{font-size:12px;margin-bottom:10px}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:inherit;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#38bdf8}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#38bdf8}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:14px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 13px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="header">
+<div class="logo"><div class="mark">HALO</div>
+<div><div class="htitle">HALO Industries &middot; AI Commercial &amp; Laser Wafering Workforce</div><div class="hsub">AI operators that capture SiC crystal growers, optimize Enlightened Engineering&trade; laser cleavage optics, eliminate kerf-loss, and automate 150mm/200mm wafering travelers</div></div></div>
+<div class="badge">Independent concept &nbsp;&middot;&nbsp; <b>illustrative</b></div>
+</header>
+
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>a Silicon Carbide (SiC) wafering commercial or laser cleavage engineering workflow turned into an autonomous team of agents</b>. One track captures semiconductor business: it finds SiC crystal growers (Wolfspeed, Coherent, Resonac), power IDMs (STMicro, Infineon, Onsemi), and EV power module builders needing kerf-free laser slicing, quotes laser tool systems, structures 30-day proof-of-concept ingot slicing agreements, and quantifies ESG material savings. The other track delivers photonics engineering precision: it tunes sub-surface laser focal plane optics, executes controlled laser micro-cleavage without mechanical sawing (zero kerf loss, +50% more wafers per ingot), measures sub-surface damage (SSD < 0.8µm), optimizes CMP polishing time, and signs off wafer travelers. Point one at an ingot specification, a laser pulse recipe or a CMP metrology log and it runs the loop, then hands back a review-ready output for a person to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial &amp; Substrate Capture</span> find, tool quote, ingot trial</span>
+<span><span class="tag operations">Laser Wafering &amp; Photonics Eng</span> laser cleavage, 200mm SiC, diamond, ESG audit</span>
+<span><span class="tag hero">Flagship</span> the deepest example run</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+
+<div class="foot">Independent concept prototype prepared by Innvonix Tech Solutions for a conversation with Halo Industries Inc. It is not affiliated with, endorsed by, or built on Halo Industries systems or data. All operators and outputs are illustrative simulations; Enlightened Engineering™ tool specs, laser cleavage pulse parameters, kerf-loss reduction metrics, tool pricing and CMP polish logs are placeholders. A chief technology officer, VP of photonics engineering, principal laser scientist or wafer fab director reviews and approves every laser pulse recipe, cleavage plane alignment, surface metrology sign-off and commercial proposal. This is not a production system and produces no deliverable for a real semiconductor customer.</div>
+
+<script>
+const AGENT_ROLES={
+researcher:{emoji:'🔎',label:'SiC & Semiconductor Material Research',tools:['research','save']},
+prospector:{emoji:'🧲',label:'Substrate Foundry & EV OEM Sourcing',tools:['source_accounts','save']},
+qualifier:{emoji:'🎯',label:'Laser Wafering & Kerf Qualification',tools:['score_fit','save']},
+laseroptics:{emoji:'⚡',label:'Laser Sub-Surface Focal Alignment',tools:['tune_focal_plane','modulate_pulse','save']},
+cleavage:{emoji:'💎',label:'Kerf-Free Laser Cleavage Engine',tools:['execute_cleavage','measure_kerf_loss','save']},
+metrology:{emoji:'📐',label:'Surface Roughness & SSD Metrology',tools:['measure_ssd','inspect_surface_roughness','save']},
+cmp_finish:{emoji:'🧪',label:'Chemical-Mechanical Polishing (CMP) Opt',tools:['optimize_cmp','save']},
+throughput:{emoji:'🤖',label:'High-Volume Wafering Automation',tools:['verify_wafer_yield','calculate_takt_time','save']},
+compliance:{emoji:'📋',label:'SEMI & ESG Sustainability Compliance',tools:['check_compliance','save']},
+pricing:{emoji:'🧮',label:'Laser System Tool & Wafering Quoting',tools:['build_quote','save']},
+writer:{emoji:'✍️',label:'Technical Proposal & Yield Report Writer',tools:['compose','save']},
+reviewer:{emoji:'✅',label:'QA & Final Ingot Traveler Review',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+
+const TRACKS=[['commercial','Commercial & Substrate Capture'],['operations','Laser Wafering & Photonics Eng']];
+
+const WORKFLOWS={
+scout:{name:'SiC boule manufacturer & power foundry discovery',title:'AI Substrate Scout',mode:'dag',track:'commercial',deliverable:'Target SiC Ingot & Foundry Account List',
+sample:'Find leading SiC crystal growers (Wolfspeed, Coherent, Resonac, SK Siltron), power semiconductor IDMs (STMicroelectronics, Infineon, Onsemi), and EV power module OEMs needing kerf-free laser wafering for 150mm and 200mm SiC boules.',
+desc:'Agents scan power electronics manufacturing announcements and SiC expansion roadmaps, map VP of Substrate Manufacturing, Chief Laser Process Engineers, and Procurement Leads, score fit, and compile the target list.',
+tasks:[{agent:'researcher',task:'Map SiC ingot production capacity: 200mm 4H-SiC boule expansions, EV 800V inverter demand, diamond/sapphire substrates.',deps:[]},
+{agent:'prospector',task:'Source VP of Substrate Manufacturing, Director of Wafer Processing, and Purchasing Heads at top SiC crystal growers & IDMs.',deps:[]},
+{agent:'qualifier',task:'Score fit against Halo Industries capabilities: Enlightened Engineering™ kerf-free laser cleavage, +50% wafer yield boost, sub-micron SSD, ESG waste reduction.',deps:[0,1]},
+{agent:'writer',task:'Compile the ranked target SiC manufacturer list with kerf-loss reduction profiles and executive engagement strategy.',deps:[2]}]},
+
+slicingquote:{name:'Laser slicing system & tool NRE quoting',title:'AI Tool Quoting Estimator',mode:'sequential',track:'commercial',deliverable:'Halo Laser Wafering Tool Proposal Package',
+sample:'A tier-1 SiC substrate maker uploaded a 200mm 4H-SiC ingot spec: 20mm boule length, 350µm target wafer thickness, 10,000 boules/year target volume. Quote a Halo commercial laser wafering tool system.',
+desc:'Agents parse customer ingot geometry and volume targets, calculate wafer yield increase (+48% more wafers per boule), model laser tool throughput, and generate the system proposal.',
+tasks:[{agent:'qualifier',task:'Parse customer ingot specs: 200mm diameter 4H-SiC crystal, 20mm length, 350µm target wafer thickness, zero mechanical sawing requirement.',deps:[]},
+{agent:'laseroptics',task:'Configure laser optics engine: ultra-short pulse multi-focal laser head, high-speed optical beam steering, automated wafer separation module.',deps:[0]},
+{agent:'pricing',task:'Structure system pricing: Halo commercial laser wafering platform, proprietary pulse license, 3-year optical SLA, and per-wafer cost savings ROI model.',deps:[1]},
+{agent:'writer',task:'Produce the Halo Laser Wafering Tool proposal package with wafer yield boost analysis (+48% wafers/ingot) and payback schedule.',deps:[2]}]},
+
+bouletrial:{name:'Ingot cleavage proof-of-concept agreement',title:'AI Ingot Trial Structurer',mode:'sequential',track:'commercial',deliverable:'Ingot Cleavage Trial Agreement Package',
+sample:'Structure a 30-day proof-of-concept ingot slicing evaluation agreement: slice 5 customer 150mm 4H-SiC boules at Halo Santa Clara facility to demonstrate zero kerf loss and TTV < 2.5µm.',
+desc:'Agents define evaluation success metrics, establish non-destructive laser slicing protocols, structure sample shipment and analytical metrology, and produce the agreement.',
+tasks:[{agent:'qualifier',task:'Define trial success metrics: zero kerf loss (saving 200µm material per slice), TTV < 2.5µm, sub-surface damage (SSD) < 0.8µm, CMP time reduction > 50%.',deps:[]},
+{agent:'compliance',task:'Verify cleanroom safety & handling: SEMI S2/S8 laser safety compliance, ISO Class 100 cleanroom handling, non-destructive ingot return protocol.',deps:[0]},
+{agent:'pricing',task:'Structure trial terms: 30-day evaluation run at Halo Santa Clara facility, 100% trial fee credited toward tool purchase or volume slicing contract.',deps:[1]},
+{agent:'writer',task:'Produce the Ingot Cleavage Trial agreement package with technical KPI matrix and ingot handling traveler.',deps:[2]}]},
+
+radar:{name:'Semiconductor wafering & slicing tech intel',title:'AI Market Intel',mode:'dag',track:'commercial',deliverable:'Competitive Intelligence Brief',
+sample:'How do traditional diamond wire saws (Takatori, Meyer Burger), multi-wire saws, and competing cold-split technologies compare to Halo Industries Enlightened Engineering™ laser cleavage?',
+desc:'Agents profile competing wafer slicing tools, analyze kerf loss, mechanical stress, CMP polishing overhead, and ESG environmental footprint, then produce the brief.',
+tasks:[{agent:'researcher',task:'Scan wafer slicing technologies: diamond wire sawing, multi-wire slurry saws, thermal shock splitting, cold split laser methods.',deps:[]},
+{agent:'prospector',task:'Profile competing tool vendors and wafering equipment manufacturers (Takatori, Meyer Burger, DISCO Corp, Siltectra/Infineon).',deps:[]},
+{agent:'cleavage',task:'Compare technology metrics: Halo kerf-free laser cleavage (zero kerf loss, 1.8x wafer recovery per ingot) vs diamond wire sawing (200µm kerf loss per slice).',deps:[0,1]},
+{agent:'writer',task:'Produce the competitive intelligence brief highlighting Halo zero-kerf advantage, sub-micron SSD, and 60% CMP cost reduction.',deps:[2]}]},
+
+laserslicing:{name:'Kerf-free laser cleavage & wafering execution',title:'AI Laser Cleavage Architect',mode:'sequential',track:'operations',tag:'flagship',deliverable:'Laser Wafering & Metrology Package',
+sample:'Slice a 200mm 4H-SiC crystal ingot into 350µm prime wafers using Halo\'s laser cleavage engine: tune sub-surface focal plane optics, induce controlled laser micro-cleavage plane, separate wafer without mechanical sawing (zero kerf loss), measure sub-surface damage (SSD < 0.8µm), run CMP polishing pass, QA-review, and produce the wafering traveler.',
+desc:'Agents tune ultra-short pulse laser optics to SiC bandgap, scan sub-surface focal plane, execute controlled laser cleavage separation, measure SSD and surface roughness, optimize CMP, QA-review, and produce traveler.',
+tasks:[{agent:'laseroptics',task:'Tune laser optics engine: set ultra-short pulse energy, pulse duration (picosecond domain), repetition rate, and focal depth 350µm inside 200mm SiC ingot.',deps:[]},
+{agent:'laseroptics',task:'Execute 3D sub-surface laser modification: scan laser focus across 200mm ingot plane; create uniform internal modification layer without surface damage.',deps:[0]},
+{agent:'cleavage',task:'Execute laser micro-cleavage separation: trigger controlled stress-guided cleavage separation; achieve zero kerf loss (0µm kerf loss vs 200µm wire saw loss).',deps:[1]},
+{agent:'metrology',task:'Measure wafer metrology: 100% surface scan of 200mm SiC wafer; verify Total Thickness Variation (TTV = 2.1µm), warp (<18µm), and SSD depth (0.65µm).',deps:[2]},
+{agent:'cmp_finish',task:'Optimize CMP finishing pass: run short chemical-mechanical polishing (CMP) to remove 1.2µm damage layer; achieve Ra < 0.2nm surface roughness in 25 min (vs 90 min baseline).',deps:[3]},
+{agent:'reviewer',task:'QA-review wafering traveler: verify zero micro-cracks under optical microscope, 100% edge-exclusion compliance, and 48-wafer ingot yield recovery.',deps:[4]},
+{agent:'writer',task:'Produce the Laser Wafering & Metrology package with laser pulse logs, TTV maps, surface roughness plots, and ingot yield certificate.',deps:[5]}]},
+
+sic200mm:{name:'200mm SiC ingot yield optimization',title:'AI 200mm SiC Specialist',mode:'sequential',track:'operations',deliverable:'200mm SiC Ingot Yield Optimization Report',
+sample:'Optimize laser cleavage optical parameters for 200mm 4H-SiC boules, increasing wafer recovery count from 30 wafers (wire saw) to 48 wafers per 20mm ingot.',
+desc:'Agents tune optical beam shaping for 200mm crystal orientation (4° off-axis), optimize cleavage speed, track wafer recovery per ingot, and produce the report.',
+tasks:[{agent:'laseroptics',task:'Configure beam shaping optics for 4° off-axis 4H-SiC crystal structure: compensate for birefringent optical walk-off in 200mm ingot.',deps:[]},
+{agent:'cleavage',task:'Execute high-yield 200mm wafering run: slice 20mm ingot into 48 prime 350µm wafers with zero kerf loss; verify 60% higher wafer yield per boule.',deps:[0]},
+{agent:'metrology',task:'Measure bow, warp, and TTV across 48 sliced wafers: confirm TTV < 2.3µm and bow < 15µm across all 48 wafers in the lot.',deps:[1]},
+{agent:'reviewer',task:'QA-review 200mm ingot traveler: verify zero edge chipping or lattice slip planes.',deps:[2]},
+{agent:'writer',task:'Produce the 200mm SiC Ingot Yield Optimization report with wafer count comparison, TTV statistical distribution, and cost per wafer analysis.',deps:[3]}]},
+
+diamond_sapphire:{name:'Ultra-hard diamond & sapphire substrate cleavage',title:'AI Advanced Material Specialist',mode:'sequential',track:'operations',deliverable:'Diamond & Sapphire Wafering Package',
+sample:'Execute precision laser cleavage on ultra-hard single-crystal synthetic diamond thermal heat spreaders and 6-inch sapphire LED/RF substrates.',
+desc:'Agents adjust laser wavelength for wide-bandgap diamond/sapphire, run sub-surface modification, cleave ultra-thin thermal substrates, and produce the package.',
+tasks:[{agent:'laseroptics',task:'Configure UV laser excitation for synthetic diamond (5.5 eV bandgap) and 6-inch sapphire (9.9 eV bandgap) optical absorption.',deps:[]},
+{agent:'cleavage',task:'Execute precision laser cleavage: slice 100µm ultra-thin synthetic diamond thermal heat spreaders with zero micro-cracking.',deps:[0]},
+{agent:'metrology',task:'Measure thermal conductivity and surface roughness: confirm diamond thermal conductivity > 2,000 W/m·K and surface Ra < 0.3nm after CMP.',deps:[1]},
+{agent:'writer',task:'Produce the Diamond & Sapphire Wafering package with laser modification recipes, surface metrology data, and thermal performance validation.',deps:[2]}]},
+
+esgmetrology:{name:'ESG sustainability & material waste audit',title:'AI ESG & Sustainability Auditor',mode:'sequential',track:'operations',deliverable:'ESG Material & Energy Waste Audit Report',
+sample:'Quantify SiC kerf dust waste elimination, energy savings (75% lower kWh per wafer), and water reduction across high-volume laser wafering operations.',
+desc:'Agents measure raw SiC material savings, audit electrical power and deionized water consumption versus wire sawing, and produce the ESG audit report.',
+tasks:[{agent:'compliance',task:'Audit SiC material waste: calculate 18.5 kg of SiC crystal saved per 1,000 wafers by eliminating diamond wire saw kerf dust.',deps:[]},
+{agent:'throughput',task:'Audit energy & water footprint: measure 74.2% reduction in kWh per sliced wafer and 88% reduction in DI water and slurry consumption.',deps:[0]},
+{agent:'compliance',task:'Generate ESG compliance metrics: map carbon footprint reduction to Scope 1 & Scope 2 greenhouse gas accounting standards.',deps:[1]},
+{agent:'writer',task:'Produce the ESG Material & Energy Waste Audit report with carbon offset certificates and green manufacturing ROI metrics.',deps:[2]}]},
+};
+
+const DTITLE={scout:'Target SiC Ingot & Foundry Account List',slicingquote:'Halo Laser Wafering Tool Proposal Package',bouletrial:'Ingot Cleavage Trial Agreement Package',radar:'Competitive Intelligence Brief',laserslicing:'Laser Wafering & Metrology Package',sic200mm:'200mm SiC Ingot Yield Optimization Report',diamond_sapphire:'Diamond & Sapphire Wafering Package',esgmetrology:'ESG Material & Energy Waste Audit Report'};
+
+const TOOLS={
+research:()=>'Gathered SiC crystal growth, 200mm power semiconductor, and EV inverter market intel; targets ranked.',
+source_accounts:()=>'Sourced VP of Substrate Manufacturing, Director of Wafer Processing, and Purchasing Heads.',
+score_fit:()=>'Scored against Halo capabilities: Enlightened Engineering kerf-free laser cleavage, +50% yield boost.',
+tune_focal_plane:()=>'Tuned sub-surface laser focal plane: 350µm depth inside SiC ingot, picosecond pulse duration set.',
+modulate_pulse:()=>'Modulated laser pulse energy and rep rate for uniform internal modification plane.',
+execute_cleavage:()=>'Executed controlled laser micro-cleavage separation: zero kerf loss (0µm loss vs 200µm wire saw).',
+measure_kerf_loss:()=>'Measured kerf loss: 0µm kerf loss verified; wafer recovery count increased by 60%.',
+measure_ssd:()=>'Measured sub-surface damage (SSD): depth = 0.65µm (spec < 0.80µm) confirmed.',
+inspect_surface_roughness:()=>'Inspected surface roughness: Total Thickness Variation TTV = 2.1µm, warp < 18µm.',
+optimize_cmp:()=>'Optimized CMP polishing pass: surface Ra < 0.2nm achieved in 25 min (60% time reduction).',
+verify_wafer_yield:()=>'Verified ingot wafer recovery: 48 prime wafers sliced from 20mm 200mm SiC boule.',
+calculate_takt_time:()=>'Calculated takt time: 4.5 minutes per 200mm wafer cleavage separation.',
+check_compliance:()=>'Checked SEMI S2/S8 laser safety, ISO Class 100 cleanroom, and ESG carbon standards.',
+build_quote:()=>'Structured commercial quote: Halo laser tool platform, pulse license, 3-year optical SLA, ROI model.',
+qa_review:()=>'QA: laser cleavage optics, SSD metrology, TTV, CMP surface finish, and wafer traveler verified.',
+compose:()=>'Drafted in a clear, cleanroom-ready, SEMI/laser-photonics-aware technical style.',
+save:()=>'Saved to shared context for downstream agents.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+
+const FINAL={
+scout:`TARGET SIC INGOT & FOUNDRY ACCOUNT LIST (illustrative)
+
+Scanned SiC crystal growers, power semiconductor IDMs, and EV power module builders.
+
+A-tier (pursue now)
+1. Global SiC Crystal Manufacturer (Durham / Building 1) — 200mm 4H-SiC boules — Halo fit 98
+2. Power Semiconductor IDM (Catania / Singapore) — EV 800V inverter SiC substrate — Halo fit 96
+3. Compound Semiconductor Foundry (Germany) — 150mm & 200mm SiC wafering — Halo fit 94
+4. Advanced Materials Supplier (Japan) — Synthetic diamond & sapphire substrates — fit 91
+5. EV Power Electronics OEM (Detroit / California) — Vertical supply chain SiC — fit 89
+
+Contacts: VP of Substrate Manufacturing, Director of Wafer Processing, Chief Photonics Architect.
+Wafering bottleneck: traditional diamond wire saws waste up to 50% of expensive SiC ingots into kerf dust.
+
+→ Saved: substrate_target_list, executive_contacts, kerf_loss_bottleneck_matrix
+
+NOTE: illustrative; not affiliated with Halo Industries Inc.`,
+
+slicingquote:`HALO LASER WAFERING TOOL PROPOSAL PACKAGE (illustrative)
+
+Customer: Tier-1 SiC Substrate Manufacturer.
+Equipment: Halo Commercial Enlightened Engineering™ Laser Wafering Platform.
+
+Tool specifications & slicing performance
+• Process Technology: Proprietary Kerf-Free Laser Sub-Surface Micro-Cleavage
+• Substrate Compatibility: 150mm & 200mm 4H-SiC single crystal ingots (also GaN, Sapphire, Diamond)
+• Wafer Recovery Boost: 48 prime wafers per 20mm ingot (vs 30 wafers with diamond wire saw) → +60% yield
+• Kerf Loss Elimination: 0 µm kerf loss per slice (saves 200µm SiC material per wafer)
+• Sub-Surface Damage (SSD): < 0.8 µm (reduces CMP polishing time from 90 min to 25 min)
+
+Commercial investment
+• Halo Laser Wafering Tool System: $[REDACTED]
+• Proprietary Laser Pulse & Cleavage License: $[REDACTED]
+• 3-Year Optical System Maintenance & Field Service SLA: $[REDACTED]
+• Estimated Payback: 5.8 months (via $3.2M annual SiC material savings per tool)
+
+→ Saved: halo_tool_proposal, sic_yield_roi_model, tool_delivery_schedule
+
+NOTE: illustrative; all financial figures redacted.`,
+
+bouletrial:`INGOT CLEAVAGE TRIAL AGREEMENT PACKAGE (illustrative)
+
+Customer: Leading SiC Crystal Grower (200mm 4H-SiC Expansion Program).
+Scope: 30-Day Proof-of-Concept Ingot Slicing Evaluation at Halo Santa Clara Facility.
+
+Trial KPIs & success milestones
+1. Kerf Loss Reduction: 0 µm kerf loss demonstrated across 5 customer 200mm SiC boules
+2. Wafer Geometry: Total Thickness Variation (TTV) < 2.5 µm, Warp < 20 µm across all sliced wafers
+3. Surface Integrity: Sub-surface damage depth < 0.8 µm with ZERO micro-cracking or edge chipping
+4. CMP Polish Time: demonstrate >50% reduction in CMP removal time to reach Ra < 0.2nm prime finish
+
+Commercial terms
+• 30-Day Evaluation Run at Halo Santa Clara Cleanroom Facility
+• 100% of trial fee credited toward tool purchase or commercial wafering contract
+
+→ Saved: ingot_trial_agreement, kpi_matrix, cleanroom_traveler
+
+NOTE: illustrative; not affiliated with Halo Industries Inc.`,
+
+radar:`COMPETITIVE INTELLIGENCE BRIEF (illustrative)
+
+Landscape
+• Diamond Wire Sawing (Takatori, Meyer Burger): standard industry method, but VERY WASTEFUL — grinds 200µm of expensive SiC crystal into kerf dust per slice (wastes 40-50% of ingot)
+• Multi-Wire Slurry Saws: slow, high water/slurry consumption, leaves deep sub-surface damage (SSD > 10µm) requiring long CMP polish cycles
+• Thermal Shock Splitting / Cold Split Laser: high thermal stress, risk of crystal cracking, limited to specific crystal orientations
+
+Where Halo Industries wins
+• Enlightened Engineering™ Laser Cleavage: 100% kerf-free slicing → recovers +50% to +60% more wafers per ingot
+• Sub-Micron Sub-Surface Damage (SSD < 0.8µm): 60% faster CMP polishing time, lower CMP consumable cost
+• Superior Geometry Control: TTV < 2.5µm, Warp < 18µm on 200mm SiC wafers
+• ESG & Sustainability: 75% lower energy consumption and zero slurry waste vs mechanical sawing
+
+Talk tracks
+1. "Get +50% more wafers from every single SiC ingot by eliminating wire saw kerf dust"
+2. "Sub-micron sub-surface damage cuts CMP polishing time from 90 minutes down to 25"
+3. "Cleaner, smarter, more scalable photon-based wafer manufacturing"
+
+→ Saved: competitive_matrix, technology_benchmarks, sales_talk_tracks
+
+NOTE: illustrative; not affiliated with Halo Industries Inc.`,
+
+laserslicing:`LASER WAFERING & METROLOGY PACKAGE (illustrative · flagship)
+
+Ingot ID: 200mm 4H-SiC Crystal Boule (#SIC-200MM-2026-08).
+
+Laser cleavage optical configuration
+• Laser Subsystem: Ultra-short pulse laser engine (picosecond domain, automated beam steering)
+• Focal Alignment: 3D sub-surface focus set 350µm beneath ingot surface; off-axis compensation active
+• Laser Modification: uniform sub-surface optical breakdown layer created across 200mm plane
+
+Cleavage separation & kerf-loss measurement
+• Cleavage Separation: controlled micro-cleavage plane triggered; 100% clean wafer separation
+• Kerf Loss: 0 µm kerf loss recorded (saved 200µm SiC material per wafer) — PASS
+• Ingot Yield: 48 prime 350µm wafers sliced from 20mm ingot (vs 30 wire-saw baseline) — PASS
+
+Wafer metrology & CMP finish
+• Total Thickness Variation (TTV): 2.1 µm (spec limit < 3.0µm) — PASS
+• Wafer Warp: 14.8 µm (spec limit < 25µm) — PASS
+• Sub-Surface Damage (SSD): 0.65 µm depth (spec limit < 0.80µm) — PASS
+• CMP Polishing Pass: 25 minutes short CMP pass → surface roughness Ra = 0.18 nm (spec < 0.20nm) — PASS
+
+QA review & traveler sign-off
+• 100% optical inspection clean; zero micro-cracks; 48/48 prime wafers conforming
+• Recommendation: Release 48-wafer lot for epitaxial layer growth
+
+→ Saved: laser_wafering_package, ttv_geometry_maps, ssd_metrology_report, ingot_traveler
+
+NOTE: illustrative; confirm against customer ingot specs.`,
+
+sic200mm:`200MM SIC INGOT YIELD OPTIMIZATION REPORT (illustrative)
+
+Ingot: 200mm 4H-SiC Boule (20mm length, 4° off-axis orientation).
+
+Yield optimization results
+• Wire Saw Baseline: 30 wafers per 20mm ingot (200µm kerf loss per slice)
+• Halo Laser Cleavage: 48 wafers per 20mm ingot (0µm kerf loss) → +60% wafer recovery
+• Cost Per Wafer: 36% reduction in substrate manufacturing cost
+• Geometry Uniformity: TTV < 2.3µm across all 48 wafers in the lot — PASS
+
+Conclusion: Certified for high-volume 200mm EV power inverter substrate production.
+
+→ Saved: sic_200mm_yield_report, wafer_count_analysis, ttv_distribution_plots
+
+NOTE: illustrative; verify against customer 200mm boule lot data.`,
+
+diamond_sapphire:`DIAMOND & SAPPHIRE WAFERING PACKAGE (illustrative)
+
+Materials: Single-Crystal Synthetic Diamond & 6-Inch Sapphire Substrates.
+
+Laser cleavage performance
+1. Synthetic Diamond (5.5 eV bandgap): sliced 100µm ultra-thin heat spreaders with zero cracking
+2. Diamond Thermal Conductivity: > 2,150 W/m·K post-cleavage — PASS
+3. 6-Inch Sapphire Substrate: kerf-free slicing of LED/RF substrates with 50% lower CMP time
+
+Package status: Completed and verified for high-power RF and thermal management applications.
+
+→ Saved: diamond_sapphire_package, thermal_conductivity_plots, surface_metrology
+
+NOTE: illustrative; confirm against material supplier specifications.`,
+
+esgmetrology:`ESG MATERIAL & ENERGY WASTE AUDIT REPORT (illustrative)
+
+Scope: High-Volume 200mm SiC Laser Wafering Facility (100,000 Wafers / Year).
+
+Sustainability audit results
+• SiC Material Saved: 18.5 tons of raw SiC crystal saved annually by eliminating kerf dust
+• Energy Reduction: 74.2% lower kWh per wafer compared to multi-wire mechanical sawing
+• Water & Slurry Reduction: 88% reduction in DI water and zero toxic slurry waste
+• Carbon Footprint Impact: 1,420 metric tons CO2e avoided annually
+
+Certification: Fully compliant with ISO 14040 Life Cycle Assessment & ESG reporting standards.
+
+→ Saved: esg_waste_audit_report, carbon_offset_certificate, green_mfg_summary
+
+NOTE: illustrative; verify against facility utility metering logs.`,
+};
+
+let EMPLOYEES=[
+{id:'scout',name:'Scout',title:'AI Substrate Scout',wf:'scout',handled:230,hrs:50,win:0,status:'idle'},
+{id:'slicingestimator',name:'Slicing-Estimator',title:'AI Tool Quoting Estimator',wf:'slicingquote',handled:90,hrs:82,win:46,status:'idle'},
+{id:'trialstructurer',name:'Trial-Structurer',title:'AI Ingot Trial Structurer',wf:'bouletrial',handled:70,hrs:88,win:52,status:'idle'},
+{id:'radar',name:'Radar',title:'AI Market Intel',wf:'radar',handled:110,hrs:26,win:0,status:'idle'},
+{id:'cleavagearch',name:'Cleavage-Arch',title:'AI Laser Cleavage Architect',wf:'laserslicing',handled:350,hrs:230,win:70,status:'idle'},
+{id:'sic200spec',name:'SiC200-Spec',title:'AI 200mm SiC Specialist',wf:'sic200mm',handled:170,hrs:120,win:56,status:'idle'},
+{id:'mat-spec',name:'Mat-Spec',title:'AI Advanced Material Specialist',wf:'diamond_sapphire',handled:125,hrs:98,win:48,status:'idle'},
+{id:'esgauditor',name:'ESG-Auditor',title:'AI ESG & Sustainability Auditor',wf:'esgmetrology',handled:155,hrs:105,win:54,status:'idle'},
+];
+
+let running=false;
+const $=id=>document.getElementById(id);const sleep=ms=>new Promise(r=>setTimeout(r,ms));const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;const now=()=>new Date().toLocaleTimeString('en-GB');const mono=n=>n.trim().slice(0,2).toUpperCase();
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Substrate Capture</span>';if(wf.track==='operations')s+='<span class="tag operations">Laser Wafering Eng</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+function setView(v){$('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');$('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});}
+function renderEcon(){const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;const cells=[[total,'AI operators (commercial + engineering)'],[h.toLocaleString(),'laser cleavages, TTV maps & tool quotes handled'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','laser & wafering engineer hours saved / month'],['+'+avg+'%','avg turnaround improvement']];$('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');}
+function empCard(e){const wf=WORKFLOWS[e.wf];const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}"><div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div><div class="emp-owns">Owns: <b>${wf.name}</b></div><div class="team">${team}</div><div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'—'}</b>faster</div></div><div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on an ingot / recipe</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;}
+function renderRoster(){const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;let html='';TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});$('roster').innerHTML=html;}
+function assign(id){if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];$('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at an ingot specification, a laser pulse recipe or a CMP metrology log and ${e.name} runs the whole loop.</div></div></div><div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div><div id="stage"></div></div>`;$('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();}
+async function runEmp(id){if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');const stage=$('stage');stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div><div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div><div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;const feed=$('feed');function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;const row=document.createElement('div');row.className='frow';row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,150)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}log(null,`Input received: "${obj.substring(0,54)}…"`);log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);await sleep(rand(700,1100));const grid=$('agrid');wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});await sleep(600);$('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');const done=new Set();async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}$('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');await sleep(400);const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(6,44);$('resultArea').innerHTML=`<div class="result"><div class="rstats"><div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div><div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div><div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'Commercial & Substrate Capture':'Laser Wafering & Photonics Eng'}</span></div><div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div><div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div><div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div><div class="donebar"><b>${e.name} produced a review-ready output.</b> Read, adapt and QA complete, ready for a CTO, VP of photonics engineering, principal laser scientist or wafer fab director to confirm against SEMI and Halo tool specs. Illustrative simulation, not a production deliverable.</div>`;e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;}
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per ingot lot',step:1};renderBuilder();}
+function renderBuilder(){const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];$('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+`<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div><div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. Cleavage-Opt" oninput="draft.name=this.value"></div><div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Laser Wafering Engineer" oninput="draft.title=this.value"></div><div class="field"><label>Cadence</label><div class="seg">`+['Per ingot lot','Per recipe','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div><div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});renderEcon();renderRoster();setView('ops');setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);}
+
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
