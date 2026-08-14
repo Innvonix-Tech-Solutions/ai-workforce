@@ -119,3 +119,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/silesia
 https://innvonix-tech-solutions.github.io/ai-workforce/femtometrix
 https://innvonix-tech-solutions.github.io/ai-workforce/paragonid
 https://innvonix-tech-solutions.github.io/ai-workforce/sunopta
+https://innvonix-tech-solutions.github.io/ai-workforce/halo-industries
