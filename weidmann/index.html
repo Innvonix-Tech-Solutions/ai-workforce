@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weidmann Console — AI Transformer Insulation &amp; Diagnostic Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060b14;
+  --surface:#0f1726;
+  --surface-2:#192438;
+  --surface-3:#283754;
+  --border:#283754;
+  --border-soft:#111a2b;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --muted-2:#64748b;
+  --accent:#0055a5;
+  --accent-dim:rgba(0,85,165,0.15);
+  --accent-line:rgba(0,85,165,0.38);
+  --accent2:#f59e0b;
+  --accent2-bg:rgba(245,158,11,0.08);
+  --accent3:#10b981;
+  --danger:#ef4444;
+  --ok:#10b981;
+  --font-display:'Rajdhani',sans-serif;
+  --font-body:'Work Sans',sans-serif;
+  --font-mono:'Roboto Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 88% -8%, rgba(0,85,165,0.14), transparent 55%),
+    radial-gradient(900px 480px at 5% 5%, rgba(245,158,11,0.07), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+a{color:var(--accent);}
+::selection{background:rgba(0,85,165,0.28);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+.hidden{display:none!important;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:24px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:44px;height:42px;border-radius:8px;
+  background:linear-gradient(135deg,#003b73,#0055a5);
+  border:1px solid var(--accent-line);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:var(--font-mono);font-weight:800;font-size:12px;
+  box-shadow:0 0 18px rgba(0,85,165,0.35);
+}
+.mark-name{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:0.02em;color:#fff;}
+.mark-sub{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px;}
+
+.line-readout{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent);
+  background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:8px 14px;display:flex;align-items:center;gap:10px;
+}
+.line-readout .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.tabs{display:flex;gap:8px;margin-top:20px;border-bottom:1px solid var(--border-soft);}
+.tab-btn{
+  background:transparent;border:none;color:var(--muted);padding:10px 18px;font-family:var(--font-body);
+  font-size:13.5px;font-weight:600;cursor:pointer;border-radius:8px 8px 0 0;transition:all 0.15s ease;
+}
+.tab-btn:hover{color:var(--text);background:var(--surface-2);}
+.tab-btn.active{color:var(--accent);background:var(--surface);border:1px solid var(--border);border-bottom-color:var(--surface);}
+
+.hero{padding:36px 0 28px;display:grid;grid-template-columns:1.15fr 0.85fr;gap:40px;align-items:center;}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:24px 0 18px;}}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent);}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(30px,4vw,42px);line-height:1.08;letter-spacing:-0.005em;margin:0 0 14px;color:#fff;}
+h1 span{color:var(--accent);background:linear-gradient(90deg,#0055a5,#2563eb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.lead{color:var(--muted);font-size:15px;max-width:55ch;margin:0 0 22px;line-height:1.6;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:var(--font-body);font-weight:600;font-size:13.5px;border-radius:6px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700;}
+.btn-primary:hover{background:#2563eb;box-shadow:0 0 16px rgba(0,85,165,0.35);}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--accent2);color:var(--accent2);}
+
+/* High Voltage Insulation Diagnostics Graphic Card */
+.wafer{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:18px 18px 14px;box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+.wafer-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+.wafer-title{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em;}
+.wafer-val{font-family:var(--font-mono);font-size:12px;color:var(--accent);font-weight:600;}
+svg.wafermap{width:100%;height:210px;display:block;}
+.wafer-outline{fill:none;stroke:var(--border);stroke-width:1.5;}
+.wafer-grid-line{stroke:var(--border-soft);stroke-width:0.5;stroke-dasharray:2 2;}
+.wafer-foot{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+
+.econ{border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:760px){.econ{grid-template-columns:repeat(2,1fr);}}
+.econ-item{padding:6px 18px;border-left:1px solid var(--border-soft);}
+.econ-item:first-child{border-left:none;padding-left:0;}
+@media(max-width:760px){.econ-item:nth-child(2n+1){border-left:none;padding-left:0;}}
+.econ-num{font-family:var(--font-display);font-weight:700;font-size:28px;color:#fff;}
+.econ-num small{font-size:14px;color:var(--accent);font-weight:700;}
+.econ-label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+section{padding:36px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.section-title{font-family:var(--font-display);font-weight:700;font-size:24px;color:#fff;}
+.section-sub{color:var(--muted);font-size:13.5px;max-width:62ch;margin-top:4px;}
+.track-label{font-family:var(--font-mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin:28px 0 14px;padding-top:10px;border-top:1px dashed var(--border-soft);}
+.track-label:first-of-type{border-top:none;padding-top:0;margin-top:6px;}
+
+.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+@media(max-width:760px){.roster{grid-template-columns:1fr;}}
+.op-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;transition:all .15s ease;}
+.op-card:hover{border-color:var(--accent-line);transform:translateY(-2px);}
+.op-card.flagship{border-color:var(--accent2);background:linear-gradient(180deg,rgba(245,158,11,0.08),var(--surface));}
+.op-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.op-name{font-family:var(--font-display);font-weight:700;font-size:18px;color:#fff;}
+.op-role{font-size:12.5px;color:var(--muted);margin-top:2px;}
+.flag-chip{font-family:var(--font-mono);font-size:10px;color:var(--accent2);border:1px solid var(--accent2);background:var(--accent2-bg);border-radius:20px;padding:2px 8px;white-space:nowrap;}
+.op-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+.op-stats{display:flex;gap:18px;margin-top:2px;}
+.op-stat{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.op-stat b{color:var(--accent);font-size:14px;display:block;font-family:var(--font-body);font-weight:600;}
+.op-agents{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.chip{font-size:11px;background:var(--surface-3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;color:var(--text);}
+.op-actions{display:flex;gap:10px;margin-top:6px;}
+.run-btn{flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:600;font-size:13px;border-radius:6px;padding:10px;cursor:pointer;transition:all 0.15s ease;}
+.run-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+
+.run-panel{background:var(--surface);border:1px solid var(--accent-line);border-radius:12px;padding:24px;margin-top:24px;display:none;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+.run-panel.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.run-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.run-head h3{font-family:var(--font-display);font-size:20px;margin:0;color:#fff;}
+.run-head .meta{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.close-run{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:6px 12px;cursor:pointer;font-size:12px;}
+.close-run:hover{color:var(--text);border-color:var(--accent2);}
+
+.feed{background:var(--bg);border:1px solid var(--border-soft);border-radius:8px;padding:16px;height:260px;overflow-y:auto;font-family:var(--font-mono);font-size:12px;display:flex;flex-direction:column;gap:8px;}
+.feed-line{display:flex;gap:10px;align-items:flex-start;opacity:0;animation:appear .3s ease forwards;}
+@keyframes appear{to{opacity:1;}}
+.feed-line .tag{color:var(--accent2);white-space:nowrap;}
+.feed-line .txt{color:var(--muted);}
+.feed-line.done .tag{color:var(--accent);}
+.feed-line.done .txt{color:var(--text);}
+
+.progress-row{display:flex;gap:6px;margin:16px 0 8px;flex-wrap:wrap;}
+.pstep{flex:1;min-width:64px;height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;position:relative;}
+.pstep.active{background:var(--accent-dim);}
+.pstep.complete{background:var(--accent);box-shadow:0 0 8px var(--accent);}
+
+.deliverable{margin-top:20px;background:var(--surface-2);border:1px solid var(--accent-line);border-radius:8px;padding:18px 20px;display:none;}
+.deliverable.show{display:block;animation:fadein .3s ease;}
+.deliverable h4{font-family:var(--font-display);font-size:17px;margin:0 0 12px;color:var(--accent);}
+.deliverable pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:12.5px;color:var(--text);margin:0;line-height:1.65;}
+.note{font-size:11px;color:var(--muted-2);margin-top:12px;font-style:italic;}
+
+/* BUILDER STYLING (DYNEX FUNCTIONAL FLOW) */
+.steps-bar{display:flex;gap:10px;margin-bottom:24px;}
+.step-item{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);}
+.step-item.active{border-color:var(--accent);background:var(--surface-3);}
+.step-item .step-num{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--muted-2);}
+.step-item.active .step-num{color:var(--accent);}
+.step-item .step-lbl{font-size:13.5px;font-weight:600;color:var(--text);margin-top:2px;}
+
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.wf-card{border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;background:var(--surface-2);transition:all 0.15s ease;}
+.wf-card:hover{border-color:var(--accent2);}
+.wf-card.sel{border-color:var(--accent);background:rgba(0,85,165,0.08);}
+.wf-title{font-family:var(--font-display);font-weight:700;font-size:16px;color:#fff;}
+.wf-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45;}
+.wf-meta{font-family:var(--font-mono);font-size:10.5px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase;}
+
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);margin-bottom:10px;}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--accent);flex-shrink:0;}
+.task-row .tt{flex:1;font-size:13px;color:var(--text);}
+.task-row select{font-family:var(--font-body);font-size:12.5px;border:1px solid var(--border);border-radius:6px;padding:8px 10px;background:var(--surface);color:var(--text);outline:none;min-width:210px;}
+.task-row select:focus{border-color:var(--accent);}
+
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.field input{width:100%;font-family:var(--font-body);font-size:13.5px;border:1px solid var(--border);border-radius:8px;padding:11px 13px;background:var(--surface-2);color:var(--text);outline:none;}
+.field input:focus{border-color:var(--accent);}
+
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.seg button{font-family:var(--font-body);font-size:12.5px;padding:9px 16px;border:none;background:var(--surface-2);color:var(--muted);cursor:pointer;border-right:1px solid var(--border);}
+.seg button:last-child{border-right:none;}
+.seg button.on{background:var(--accent);color:#fff;font-weight:700;}
+
+.bnav{display:flex;justify-content:space-between;margin-top:24px;}
+
+footer{border-top:1px solid var(--border-soft);padding:30px 0 44px;}
+.foot-note{font-size:12px;color:var(--muted-2);max-width:85ch;line-height:1.6;}
+.foot-note strong{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark-row">
+      <div class="mark">
+        <div class="mark-badge">WEIDMANN</div>
+        <div>
+          <div class="mark-name">Weidmann Console</div>
+          <div class="mark-sub">Weidmann Electrical Technology (weidmann-electrical.com) · High-Voltage AI Workforce</div>
+        </div>
+      </div>
+      <div class="line-readout">
+        <span class="dot"></span>
+        <span id="lineTxt">Rapperswil, Switzerland Plant · Transformerboard T4 &amp; InsuLogix® DGA Active</span>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tabA" onclick="setView('ops')">The AI Workforce Roster</button>
+      <button class="tab-btn" id="tabB" onclick="setView('hire')">+ Add an AI Operator</button>
+    </div>
+  </header>
+
+  <div id="view-ops">
+    <section class="hero" style="padding-bottom:10px;">
+      <div>
+        <div class="eyebrow">Pioneer of Transformerboard &amp; High-Voltage Insulation</div>
+        <h1>Eight operators to run Weidmann's <span>transformerboard-to-dga-sensor</span> loop</h1>
+        <p class="lead">Each operator below is a real Weidmann Electrical Technology workflow — analyzing 3D CAD high-voltage power transformer insulation layouts for 800kV UHVDC barriers and 150mm laminated Transformerboard T4 clamping rings, scrubbing 500-line IEC 60641-3-1 &amp; IEEE C57 insulation material BOMs for dielectric margin, configuring InsuLogix® online Dissolved Gas Analysis (DGA) sensors and ester fluid compatibility telemetry, and auditing ISO 9001 &amp; degree of polymerization (DP) paper aging certificates — handed to a team of specialist AI agents that works it end-to-end.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('roster-section').scrollIntoView({behavior:'smooth'})">View the Roster</button>
+          <button class="btn btn-ghost" onclick="runOperator('insulation_dfm')">Run Flagship Operator</button>
+        </div>
+      </div>
+
+      <div class="wafer">
+        <div class="wafer-top">
+          <span class="wafer-title">Weidmann Dielectric Diagnostics</span>
+          <span class="wafer-val" id="yieldVal">800kV Impulse Strength: PASS</span>
+        </div>
+        <svg class="wafermap" viewBox="0 0 220 210" preserveAspectRatio="xMidYMid meet">
+          <circle class="wafer-outline" cx="110" cy="105" r="92"></circle>
+          <line class="wafer-grid-line" x1="20" y1="105" x2="200" y2="105"></line>
+          <line class="wafer-grid-line" x1="110" y1="15" x2="110" y2="195"></line>
+          <g id="dieGrid"></g>
+        </svg>
+        <div class="wafer-foot">
+          <span>Rapperswil Facility · Lot WEID-2608-T4</span>
+          <span id="binVal">Pass: IEC 60641-3-1 &amp; ISO 9001</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="econ">
+      <div class="econ-item">
+        <div class="econ-num">5.6<small>×</small></div>
+        <div class="econ-label">Faster transformer insulation DFM &amp; DGA audit release</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">1937<small> Pioneer</small></div>
+        <div class="econ-label">Invented Transformerboard; global leader in EHV insulation</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">30<small> hrs</small></div>
+        <div class="econ-label">Median dielectric engineering hours returned per run</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">8<small>/8</small></div>
+        <div class="econ-label">Workflows covered, CAD barrier DFM through ISO 9001 release</div>
+      </div>
+    </div>
+
+    <section id="roster-section">
+      <div class="section-head">
+        <div>
+          <div class="section-title">The AI Workforce Roster</div>
+          <div class="section-sub">Grouped into Commercial &amp; Transformer OEM Tenders and Transformer Insulation Operations tracks. Click run on any operator to watch its agent team execute in real time.</div>
+        </div>
+      </div>
+
+      <div id="rosterContainer"></div>
+    </section>
+
+    <!-- Run Panel -->
+    <div class="run-panel" id="runPanel">
+      <div class="run-head">
+        <div>
+          <h3 id="runTitle">Running Operator...</h3>
+          <div class="meta" id="runSub">Simulated multi-agent execution feed</div>
+        </div>
+        <button class="close-run" onclick="closeRun()">✕ Close View</button>
+      </div>
+      <div class="progress-row" id="progressRow"></div>
+      <div class="feed" id="feedArea"></div>
+      <div class="deliverable" id="deliverableBox">
+        <h4 id="delivTitle">Review-Ready Output</h4>
+        <pre id="delivCode"></pre>
+        <div class="note">Human-in-the-loop oversight active. Outputs verified by Weidmann Electrical Technology senior insulation engineering team. Illustrative simulation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="section-title">Add an AI Operator</div>
+          <div class="section-sub">Stand up a new AI operator in three steps: pick the workflow, assign each task to an agent via dropdown, then name it and set cadence.</div>
+        </div>
+      </div>
+
+      <div class="steps-bar" id="bSteps"></div>
+      <div id="bBody"></div>
+      <div class="bnav" id="bNav"></div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="foot-note">
+      <strong>Independent Concept Prototype</strong> prepared for a conversation with <strong>Weidmann Electrical Technology (weidmann-electrical.com)</strong>. It is not affiliated with, endorsed by, or built on Weidmann systems or data. All operators, dielectric breakdown voltages, DGA gas ppm levels, and IEC audits are illustrative simulations. A licensed high-voltage electrical engineer, transformer designer, or quality manager reviews and approves every insulation CAD model, InsuLogix® sensor setup, and ISO 9001 compliance release.
+    </div>
+  </footer>
+</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'Power Transformer OEM & EHV Grid Expansion Intelligence', tools: ['research_oem_projects', 'save'] },
+  insulation_eng: { emoji: '🔬', label: 'High-Voltage Dielectric Barrier & Transformerboard T4 Layout Engineer', tools: ['analyze_dielectric_barriers', 'save'] },
+  pressboard_spec: { emoji: '⚡', label: 'Laminated Pressboard, Angle Ring & Snout Molding Specialist', tools: ['program_pressboard_molding', 'save'] },
+  iec_scrubber: { emoji: '📑', label: 'IEC 60641-3-1 & IEEE C57 Insulation Material Specialist', tools: ['scrub_insulation_bom', 'save'] },
+  cost_eng: { emoji: '🧮', label: 'Transformerboard, Nomex® & InsuLogix® Sensor Costing Specialist', tools: ['calc_insulation_cost', 'save'] },
+  cloud_architect: { emoji: '☁️', label: 'InsuLogix® VAULT Cloud Portal & DGA Telemetry Architect', tools: ['configure_insulogix_cloud', 'save'] },
+  quality_auditor: { emoji: '🛡️', label: 'ISO 9001:2015, IEC 60641 & Degree of Polymerization (DP) Auditor', tools: ['audit_dielectric_quality', 'save'] },
+  supply_planner: { emoji: '📦', label: 'Unbleached Softwood Pulp & Nomex® Synthetic Fiber Supply Planner', tools: ['plan_pulp_spares', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'Transformer OEM Enterprise Insulation RFP Solution Writer', tools: ['compose_doc', 'save'] },
+  qa_reviewer: { emoji: '✅', label: 'Senior High-Voltage Dielectric Systems Reviewer', tools: ['qa_review', 'save'] },
+  prospector: { emoji: '🧲', label: 'Transformer OEM VP Engineering & Grid Utility Director Prospector', tools: ['source_transformer_accounts', 'save'] },
+  dga_spec: { emoji: '⚙️', label: 'InsuLogix® Online DGA & Transformer Oil Laboratory Specialist', tools: ['design_dga_monitoring', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+const TRACKS = [
+  { key: 'commercial', title: 'Commercial & Transformer OEM Tenders' },
+  { key: 'operations', title: 'Transformer Insulation & Diagnostic Operations' }
+];
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Transformer OEM & EHV/UHVDC Grid Project Scouting',
+    title: 'AI High-Voltage Growth Scout',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Transformer OEM & UHVDC Grid Insulation Opportunity Dossier',
+    desc: 'Maps global transformer OEMs (Hitachi Energy, Siemens Energy, GE Vernova, Hyundai Electric) expanding 400kV to 1100kV UHVDC grid projects.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan global HVDC grid interconnections, 800kV transformer procurements, and bio-ester fluid adoption bids.', deps: [] },
+      { agent: 'prospector', task: 'Source VP Transformer Engineering, Lead Insulation Designers, and Utility Asset Management Directors.', deps: [] },
+      { agent: 'insulation_eng', task: 'Score fit on Weidmann Transformerboard T4 high-density pressboard, 150mm laminated clamping rings, and InsuLogix® DGA.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce target transformer OEM & utility prospect dossier.', deps: [2] }
+    ]
+  },
+  quote: {
+    name: 'Custom Transformerboard & Molded Component Quoting',
+    title: 'AI Insulation Cost Estimating Specialist',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Weidmann Transformerboard & Molded Component Quote Package',
+    desc: 'Models high-density Transformerboard T4 sheet tonnage, CNC milled duct strip labor, molded angle rings, and InsuLogix® sensor hardware.',
+    tasks: [
+      { agent: 'insulation_eng', task: 'Review transformer power rating (500 MVA, 400kV / 230kV), BIL impulse requirement (1,425 kV), and oil/ester fluid type.', deps: [] },
+      { agent: 'cost_eng', task: 'Model pure softwood pulp pressboard drying cycles, custom snout cap molding tooling, and Nomex® hybrid insulation margin.', deps: [0] },
+      { agent: 'supply_planner', task: 'Verify unbleached wood pulp inventory, high-density pressboard sheet reserves, and optical fiber temperature probes.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Assemble formal Weidmann Transformerboard & Molded Component Quote Package.', deps: [2] }
+    ]
+  },
+  tender: {
+    name: 'Global Power Grid Utility & Transformer OEM RFP Response',
+    title: 'AI High-Voltage Tech Solution Specialist',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Global Power Grid Utility & Transformer OEM RFP Response Package',
+    desc: 'Audits IEC 60641-3-1 Type B.3.1A pressboard standards, IEEE C57 dielectric clearances, ISO 9001 quality, and zero partial discharge SLAs.',
+    tasks: [
+      { agent: 'researcher', task: 'Parse OEM transformer winding specs, short-circuit mechanical strength requirements, and oil impregnation rules.', deps: [] },
+      { agent: 'quality_auditor', task: 'Verify ISO 9001:2015, ISO 14001, ISO 45001 certificates, and Rapperswil, Switzerland test lab credentials.', deps: [0] },
+      { agent: 'cost_eng', task: 'Structure phased multi-plant insulation delivery schedule for OEM transformer manufacturing lines.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce formal Global Power Grid Utility & Transformer OEM RFP response package.', deps: [2] }
+    ]
+  },
+  intel: {
+    name: 'Global Power Transformer Market & Bio-Ester Fluid Radar',
+    title: 'AI Power Grid Market Intelligence',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Global Power Transformer & Insulation Market Intelligence Brief',
+    desc: 'Tracks synthetic and natural ester fluid adoption, high-temperature Nomex® hybrid insulation trends, and highlights Weidmann T4 purity.',
+    tasks: [
+      { agent: 'researcher', task: 'Monitor global copper and transformer oil price indices, EHV grid investments, and ester fluid dielectric standards.', deps: [] },
+      { agent: 'insulation_eng', task: 'Benchmark Weidmann Transformerboard T4 compressive strength (450 MPa) and low moisture absorption vs competitors.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile strategic power transformer insulation market intelligence brief.', deps: [0, 1] }
+    ]
+  },
+  insulation_dfm: {
+    name: '800kV UHVDC Transformerboard & Molded Component DFM Scrub',
+    title: 'AI Transformer Insulation DFM Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: '800kV UHVDC Transformerboard & Molded Component DFM Review Package',
+    desc: 'Audits 3D CAD models for 800kV UHVDC converter transformer insulation systems, checking Transformerboard T4 angle rings, snout caps, and oil duct barriers.',
+    tasks: [
+      { agent: 'insulation_eng', task: 'Analyze high-voltage winding electric field stress; optimizes oil duct barrier spacing for 1,850 kV lightning impulse withstand.', deps: [] },
+      { agent: 'pressboard_spec', task: 'Verify 150mm laminated Transformerboard T4 clamping rings and molded snout cap radius tolerances for zero partial discharge.', deps: [0] },
+      { agent: 'dga_spec', task: 'Check InsuLogix® H hydrogen sensor sample port mounting and fiber optic hot-spot temperature sensor placement.', deps: [1] },
+      { agent: 'quality_auditor', task: 'Audit IEC 60641-3-1 P.4.1A purity requirements, moisture content (<0.5%), and degree of polymerization (DP > 1100).', deps: [2] },
+      { agent: 'reviewer', task: 'QA high-voltage dielectric engineering findings and compile customer technical package.', deps: [3] },
+      { agent: 'proposal_writer', task: 'Produce final 800kV UHVDC Transformerboard & Molded Component DFM Review Package.', deps: [4] }
+    ]
+  },
+  insulogix_setup: {
+    name: 'InsuLogix® DGA & Online Moisture Monitoring Sensor Setup',
+    title: 'AI Diagnostic Sensor Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'InsuLogix® DGA & Moisture Monitoring Setup Package',
+    desc: 'Configures InsuLogix® G2 / H online Dissolved Gas Analysis (DGA) monitors, sets DGA threshold alarms (H2, C2H2, CO), and programs cloud portal feeds.',
+    tasks: [
+      { agent: 'dga_spec', task: 'Calibrate InsuLogix® H photoacoustic spectroscopy sensor for sub-1 ppm hydrogen and acetylene fault gas detection.', deps: [] },
+      { agent: 'cloud_architect', task: 'Connect InsuLogix® VAULT cloud platform API for real-time fleet health dashboard and DGA Duval Triangle diagnostics.', deps: [0] },
+      { agent: 'reviewer', task: 'Verify 100% sensor self-test and Modbus RTU / IEC 61850 substation communications protocol.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce InsuLogix® DGA & Moisture Monitoring Setup Package.', deps: [2] }
+    ]
+  },
+  iso_audit: {
+    name: 'ISO 9001, IEC 60641-3-1 & Oil-Paper Aging Audit',
+    title: 'AI Quality & Diagnostic Auditor',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'ISO 9001 & IEC 60641 Insulation Quality Release',
+    desc: 'Audits ISO 9001:2015 quality inspection logs, IEC 60641-3-1 pressboard electrical breakdown voltage, and Weidmann Diagnostic Solutions (WDS) paper DP aging.',
+    tasks: [
+      { agent: 'quality_auditor', task: 'Audit Rapperswil plant pressboard conductivity, ash content (<0.3%), and oil impregnation rate measurements.', deps: [] },
+      { agent: 'iec_scrubber', task: 'Verify 100% Certificate of Analysis (CoA) for thermally upgraded paper (TUP) and bio-ester fluid compatibility.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile ISO 9001 & IEC 60641 Insulation Quality Release Brief.', deps: [0, 1] }
+    ]
+  },
+  cellulose_plan: {
+    name: 'Unbleached Wood Pulp & High-Density Pressboard Safety Stock Plan',
+    title: 'AI Insulation Material Planner',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'Unbleached Wood Pulp & Transformerboard Safety Stock Plan',
+    desc: 'Secures high-purity unbleached softwood kraft pulp, Nomex® synthetic aramid fibers, and InsuLogix® sensor components for global plants.',
+    tasks: [
+      { agent: 'supply_planner', task: 'Evaluate Scandinavian unbleached kraft pulp supply lead times and 90-day pressboard sheet buffer in Rapperswil plant.', deps: [] },
+      { agent: 'iec_scrubber', task: 'Execute raw material Certificate of Analysis (CoA) audit for pulp alpha-cellulose content (>90%) and ionic purity.', deps: [] },
+      { agent: 'cost_eng', task: 'Structure strategic insulation raw material inventory buffer to support OEM transformer delivery schedules.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce Unbleached Wood Pulp & Transformerboard Safety Stock Plan.', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'Transformer OEM & UHVDC Grid Insulation Opportunity Dossier',
+  quote: 'Weidmann Transformerboard & Molded Component Quote Package',
+  tender: 'Global Power Grid Utility & Transformer OEM RFP Response Package',
+  intel: 'Global Power Transformer & Insulation Market Intelligence Brief',
+  insulation_dfm: '800kV UHVDC Transformerboard & Molded Component DFM Review Package',
+  insulogix_setup: 'InsuLogix® DGA & Moisture Monitoring Setup Package',
+  iso_audit: 'ISO 9001 & IEC 60641 Insulation Quality Release',
+  cellulose_plan: 'Unbleached Wood Pulp & Transformerboard Safety Stock Plan'
+};
+
+const TOOLS = {
+  research_oem_projects: () => 'Scanned global HVDC grid projects, 800kV transformer procurements, and bio-ester insulation adoption bids.',
+  source_transformer_accounts: () => 'Sourced verified Transformer OEM VP Engineering and Lead Insulation Designers; deduped CRM.',
+  analyze_dielectric_barriers: () => 'Analyzed 3D CAD insulation model; optimized Transformerboard T4 oil duct barrier spacing for 1,850 kV impulse margin.',
+  program_pressboard_molding: () => 'Programmed CNC pressboard milling and 150mm laminated clamping ring molding pressure profiles.',
+  scrub_insulation_bom: () => 'Scrubbed 500-line insulation BOM; verified 100% IEC 60641-3-1 P.4.1A compliance, IEEE C57 specs, and DP aging limits.',
+  calc_insulation_cost: () => 'Calculated high-density Transformerboard T4 sheet tonnage, molded snout cap labor, and InsuLogix® sensor margins.',
+  configure_insulogix_cloud: () => 'Configured InsuLogix® VAULT cloud portal API for real-time transformer fleet DGA Duval Triangle analytics.',
+  audit_dielectric_quality: () => 'Audited ISO 9001 quality logs, pressboard breakdown voltage (70 kV/mm), and degree of polymerization (DP 1150 - PASS).',
+  plan_pulp_spares: () => 'Cross-referenced unbleached softwood kraft pulp lead times; secured 90-day raw material buffer in Rapperswil vault.',
+  design_dga_monitoring: () => 'Structured InsuLogix® H photoacoustic spectroscopy sensor for sub-1 ppm hydrogen and acetylene fault gas detection.',
+  compose_doc: () => 'Compiled high-voltage insulation engineering metrics into clear, review-ready technical documentation.',
+  qa_review: () => 'Audited report completeness and checked IEC / ISO standards; ready for Weidmann VP Engineering sign-off.',
+  save: () => 'Saved deliverable artifact to shared project repository.'
+};
+
+function toolOut(t) { return (TOOLS[t] || (() => 'Executed successfully.'))(); }
+
+const FINAL = {
+  scout: `TRANSFORMER OEM & UHVDC GRID INSULATION OPPORTUNITY DOSSIER (illustrative)
+Target Sector: Power Transformer OEMs, EHV/UHVDC Transmission Grids & Renewable Energy Sub-Stations
+Target Location: Global (Europe, Americas, Asia-Pacific Power Grid Operators)
+
+A-Tier Qualified Enterprise Opportunities:
+1. Hitachi Energy — 800kV UHVDC Converter Transformer Program — Fit Score: 99/100
+   • Key Contacts: VP Transformer Engineering, Lead Insulation Specialist
+   • Requirement: High-Density Transformerboard T4, 150mm Laminated Clamping Rings & Snout Caps
+2. Siemens Energy — 500 MVA Offshore Wind Substation Transformers — Fit Score: 97/100
+   • Key Contacts: Chief Insulation Engineer, Head of Supply Chain
+   • Requirement: Synthetic Ester Fluid Compatible Pressboard & InsuLogix® DGA Sensors
+3. GE Vernova — National Grid EHV Substation Retrofit — Fit Score: 95/100
+   • Key Contacts: Director of Substation Equipment
+
+Strategic Positioning:
+Highlight Weidmann Electrical Technology 1937 invention of Transformerboard, 100% Swiss engineering precision, InsuLogix® diagnostic sensors, and global manufacturing footprint.
+
+NOTE: Illustrative simulation prepared for Weidmann Electrical Technology (weidmann-electrical.com).`,
+
+  quote: `WEIDMANN TRANSFORMERBOARD & MOLDED COMPONENT QUOTE PACKAGE (illustrative)
+Customer: Hitachi Energy / 800kV UHVDC Transformer Project
+Program: High-Voltage Transformer Insulation & Diagnostic Sensor Package (4 Transformers)
+Specifications: Transformerboard T4, Laminated Rings, Angle Rings, Snouts & InsuLogix® H DGA
+
+Commercial Breakdown:
+• High-Density Transformerboard T4 Sheets & Duct Strips (40 Metric Tons @ $8,500/ton): $340,000.00
+• 150mm Laminated Clamping Rings & Molded Snout Cap Sets: $128,000.00
+• Nomex® Hybrid High-Temperature Winding Isolation & Angle Rings: $84,000.00
+• InsuLogix® H Online Hydrogen DGA Monitors & InsuLogix® VAULT License: $56,000.00
+
+Dielectric & Performance Return:
+• Dielectric Breakdown Voltage: > 70 kV/mm in Transformer Oil
+• Mechanical Compressive Strength: 450 MPa (Zero Winding Movement under Short Circuit)
+• Partial Discharge Margin: 100% Zero PD at 1.5x Nominal Operating Voltage
+
+Turnaround Time: 10 Weeks to OEM Delivery
+
+NOTE: Illustrative simulation; pricing figures are placeholders.`,
+
+  tender: `GLOBAL POWER GRID UTILITY & TRANSFORMER OEM RFP RESPONSE PACKAGE (illustrative)
+Tender ID: CH-ZH-ELEC-WEIDMANN-2026-19
+Scope: High-Voltage Power Transformer Insulation Systems & InsuLogix® DGA Diagnostics
+
+Quality & Standards Verification:
+• Quality Management System: ISO 9001:2015, ISO 14001:2015 & ISO 45001:2018 Certified
+• Pressboard Standard: 100% IEC 60641-3-1 Type B.3.1A & IEEE C57.121 Compliant
+• Purity Rating: Unbleached Softwood Kraft Pulp (>90% Alpha-Cellulose, <0.3% Ash Content)
+• Environmental Standard: 100% Compatible with Bio-Ester Fluids (Natural & Synthetic)
+
+Technical Offer:
+• Pioneer of Transformerboard with global manufacturing and Weidmann Diagnostic Solutions (WDS) labs.
+
+NOTE: Illustrative simulation; confirm against RFP specifications.`,
+
+  intel: `GLOBAL POWER TRANSFORMER & INSULATION MARKET INTELLIGENCE BRIEF (illustrative)
+Focus: EHV Grid Expansion, Bio-Ester Fluid Compatibility & Online DGA Sensors
+
+Key Insights:
+1. Bio-Ester Fluid Adoption: Increasing use of biodegradable ester fluids requires high-purity pressboard like Weidmann T4 to maintain moisture equilibrium and thermal resistance.
+2. Online DGA Preventative ROI: Continuous Dissolved Gas Analysis (InsuLogix® H) prevents 92% of catastrophic transformer failures by flagging early H2 and C2H2 fault spikes.
+3. Weidmann Platform Advantage:
+   - Complete end-to-end ecosystem: Transformerboard raw material, CNC engineered components, and InsuLogix® real-time sensors.
+   - Proven track record in 1100kV UHVDC transmission projects worldwide.
+
+NOTE: Illustrative simulation.`,
+
+  insulation_dfm: `800kV UHVDC TRANSFORMERBOARD & MOLDED COMPONENT DFM REVIEW PACKAGE (illustrative · flagship)
+Program: 800kV UHVDC Converter Transformer Insulation System
+Factory: Rapperswil-Jona, Switzerland Plant
+
+Dielectric Engineering Findings:
+1. Electric Field Stress Simulation: Optimized oil duct barrier geometry; achieved 1,850 kV lightning impulse withstand with zero partial discharge.
+2. Laminated Clamping Ring Precision: CNC milled 150mm Transformerboard T4 rings passed 450 MPa short-circuit compressive stress load testing.
+3. Snout Cap Mold Tolerances: Molded cellulose snout caps verified for seamless creepage path coverage over high-voltage lead exits.
+
+Quality & Regulatory Audit:
+• IEC Audit: IEC 60641-3-1 P.4.1A purity requirements and moisture content (<0.5%) cleared.
+• Quality Rating: ISO 9001:2015 inspection route approved.
+
+Summary:
+ High-voltage insulation barrier design approved for OEM transformer winding assembly.
+
+NOTE: Illustrative simulation; review with Weidmann insulation engineering team.`,
+
+  insulogix_setup: `INSULOGIX® DGA & MOISTURE MONITORING SETUP PACKAGE (illustrative)
+Program: InsuLogix® Online DGA & Transformer Health Diagnostics
+
+System Setup Configuration:
+• InsuLogix® H Sensor: Calibrated photoacoustic gas sensor for sub-1 ppm hydrogen (H2) and acetylene (C2H2) fault gas detection
+• InsuLogix® VAULT Portal: Connected Modbus RTU / IEC 61850 substation telemetry to cloud health monitoring dashboard
+• Alarm Thresholds: Configured automated SMS/email alerts for Duval Triangle fault classification
+
+Outcome: Online DGA monitor and InsuLogix® VAULT portal validated for substation deployment.
+
+NOTE: Illustrative simulation.`,
+
+  iso_audit: `ISO 9001 & IEC 60641 INSULATION QUALITY RELEASE (illustrative)
+Production Assembly: Weidmann Transformerboard T4 (#WEID-T4-2026-10)
+Compliance Standard: ISO 9001:2015 / IEC 60641-3-1 / IEEE C57 / WDS DP Test
+
+Audit Checklist Results:
+• Dielectric Breakdown Test: Measured > 72 kV/mm breakdown voltage in transformer oil - PASS
+• Chemical Purity Test: Ash content 0.18% (<0.3% limit), pH value 7.1, conductivity < 5 µS/cm - PASS
+• Paper Aging Audit: Degree of Polymerization (DP) test confirmed 1,180 DP value (>1100 initial standard)
+
+Outcome: ISO 9001 & IEC 60641 Insulation Quality Release Approved. Certificate of Analysis (CoA) issued.
+
+NOTE: Illustrative simulation.`,
+
+  cellulose_plan: `UNBLEACHED WOOD PULP & TRANSFORMERBOARD SAFETY STOCK PLAN (illustrative)
+Scope: Rapperswil, Switzerland Raw Material Depot
+
+Supply Strategy Breakdown:
+• Unbleached Softwood Kraft Pulp: 90-day supply of Scandinavian high-alpha cellulose pulp in Rapperswil vault
+• Nomex® Synthetic Fiber: 30-day reserve of high-temperature aramid papers for hybrid insulation lines
+• Material Pedigree: 100% Certificate of Analysis (CoA) verified for pulp ionic purity and fiber length
+
+Outcome: High-voltage insulation raw material supply clear for continuous global OEM production.
+
+NOTE: Illustrative simulation.`
+};
+
+let EMPLOYEES = [
+  { id: 'scout', name: 'Scout', title: 'AI High-Voltage Growth Scout', wf: 'scout', handled: 220, hrs: 66, win: 40, status: 'idle' },
+  { id: 'quote', name: 'Quote', title: 'AI Insulation Cost Specialist', wf: 'quote', handled: 310, hrs: 130, win: 62, status: 'idle' },
+  { id: 'tender', name: 'Tender', title: 'AI High-Voltage Solution Specialist', wf: 'tender', handled: 140, hrs: 102, win: 52, status: 'idle' },
+  { id: 'intel', name: 'Radar', title: 'AI Power Grid Market Intelligence', wf: 'intel', handled: 165, hrs: 52, win: 30, status: 'idle' },
+  { id: 'insulation_dfm', name: 'TransformerboardDFM', title: 'AI Insulation DFM Specialist', wf: 'insulation_dfm', handled: 445, hrs: 265, win: 80, status: 'idle' },
+  { id: 'insulogix_setup', name: 'InsuLogixSetup', title: 'AI Diagnostic Sensor Specialist', wf: 'insulogix_setup', handled: 255, hrs: 118, win: 56, status: 'idle' },
+  { id: 'iso_audit', name: 'ISOAudit', title: 'AI Quality & Diagnostic Auditor', wf: 'iso_audit', handled: 380, hrs: 148, win: 72, status: 'idle' },
+  { id: 'cellulose_plan', name: 'SupplyPlanner', title: 'AI Insulation Material Planner', wf: 'cellulose_plan', handled: 215, hrs: 88, win: 0, status: 'idle' }
+];
+
+/* Render Functions */
+function drawWaferGrid() {
+  const grid = document.getElementById("dieGrid");
+  let rects = '';
+  for (let x = -8; x <= 8; x++) {
+    for (let y = -8; y <= 8; y++) {
+      if (x*x + y*y <= 60) {
+        const px = 110 + x * 10 - 4;
+        const py = 105 + y * 10 - 4;
+        const pass = (Math.abs(x*y) % 8 !== 3);
+        const fill = pass ? 'rgba(0, 85, 165, 0.45)' : 'rgba(245, 158, 11, 0.6)';
+        rects += `<rect x="${px}" y="${py}" width="8" height="8" rx="1.5" fill="${fill}"></rect>`;
+      }
+    }
+  }
+  grid.innerHTML = rects;
+}
+
+function renderRoster() {
+  const container = document.getElementById("rosterContainer");
+  let html = '';
+  TRACKS.forEach(tr => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === tr.key);
+    if (!list.length) return;
+    html += `<div class="track-label">${tr.title}</div><div class="roster">`;
+    html += list.map(empCard).join('');
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+}
+
+function empCard(e) {
+  const wf = WORKFLOWS[e.wf] || {};
+  const isFlag = wf.tag === 'flagship';
+  const team = (wf.tasks || []).map(t => t.agent).filter((v, i, a) => a.indexOf(v) === i).map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  return `
+    <div class="op-card ${isFlag ? 'flagship' : ''}" id="emp-${e.id}">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${e.name}</div>
+          <div class="op-role">${e.title}</div>
+        </div>
+        ${isFlag ? '<span class="flag-chip">★ FLAGSHIP OPERATOR</span>' : ''}
+      </div>
+      <div class="op-desc">${wf.desc || ''}</div>
+      <div class="op-agents">${team}</div>
+      <div class="op-stats">
+        <div class="op-stat"><b>${e.handled.toLocaleString()}</b> runs</div>
+        <div class="op-stat"><b>~${e.hrs} hrs</b> saved/mo</div>
+        <div class="op-stat"><b>+${e.win}%</b> speedup</div>
+      </div>
+      <div class="op-actions">
+        <button class="run-btn" onclick="runOperator('${e.wf}')">▶ Run ${e.name}</button>
+      </div>
+    </div>
+  `;
+}
+
+function setView(v) {
+  document.getElementById('view-ops').classList.toggle('hidden', v !== 'ops');
+  document.getElementById('view-hire').classList.toggle('hidden', v !== 'hire');
+  document.getElementById('tabA').classList.toggle('active', v === 'ops');
+  document.getElementById('tabB').classList.toggle('active', v === 'hire');
+  if (v === 'hire') initBuilder();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+let isRunning = false;
+async function runOperator(wfKey) {
+  if (isRunning) return;
+  isRunning = true;
+  const wf = WORKFLOWS[wfKey];
+  if (!wf) return;
+
+  const panel = document.getElementById("runPanel");
+  const title = document.getElementById("runTitle");
+  const sub = document.getElementById("runSub");
+  const progress = document.getElementById("progressRow");
+  const feed = document.getElementById("feedArea");
+  const deliv = document.getElementById("deliverableBox");
+
+  panel.classList.add("active");
+  deliv.classList.remove("show");
+  title.innerText = `Executing Operator: ${wf.name}`;
+  sub.innerText = `Mode: ${wf.mode.toUpperCase()} · ${wf.tasks.length} Specialist Agents`;
+
+  progress.innerHTML = wf.tasks.map((_, i) => `<div class="pstep" id="ps_${i}"></div>`).join('');
+  feed.innerHTML = '';
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  function addFeedLine(agentKey, txt, isDone = false) {
+    const role = AGENT_ROLES[agentKey] || { emoji: '🤖', label: agentKey };
+    const div = document.createElement('div');
+    div.className = `feed-line ${isDone ? 'done' : ''}`;
+    div.innerHTML = `<span class="tag">[${role.emoji} ${role.label}]</span><span class="txt">${txt}</span>`;
+    feed.appendChild(div);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  addFeedLine(wf.tasks[0].agent, `Initializing ${wf.name} autonomous workflow loop...`);
+  await new Promise(r => setTimeout(r, 600));
+
+  for (let i = 0; i < wf.tasks.length; i++) {
+    const t = wf.tasks[i];
+    const stepEl = document.getElementById(`ps_${i}`);
+    if (stepEl) stepEl.classList.add("active");
+
+    addFeedLine(t.agent, `Executing Task ${i+1}: ${t.task}`);
+    await new Promise(r => setTimeout(r, 800));
+
+    const role = AGENT_ROLES[t.agent];
+    if (role && role.tools) {
+      for (const tool of role.tools) {
+        addFeedLine(t.agent, `Invoked tool '${tool}( )' -> ${toolOut(tool)}`);
+        await new Promise(r => setTimeout(r, 600));
+      }
+    }
+
+    if (stepEl) {
+      stepEl.classList.remove("active");
+      stepEl.classList.add("complete");
+    }
+    addFeedLine(t.agent, `Task ${i+1} completed. Artifact saved to shared Weidmann project store.`, true);
+  }
+
+  await new Promise(r => setTimeout(r, 400));
+  document.getElementById("delivTitle").innerText = `Review-Ready Output · ${DTITLE[wfKey] || 'Deliverable'}`;
+  document.getElementById("delivCode").innerText = FINAL[wfKey] || "Execution completed successfully.";
+  deliv.classList.add("show");
+
+  isRunning = false;
+}
+
+function closeRun() {
+  document.getElementById("runPanel").classList.remove("active");
+}
+
+/* DYNEX BUILDER FLOW IMPLEMENTATION */
+let draft = {};
+function initBuilder() {
+  draft = { wf: null, mode: 'sequential', assign: [], name: '', title: '', cadence: 'Per project', step: 1 };
+  renderBuilder();
+}
+
+function renderBuilder() {
+  const steps = [['01', 'Pick a workflow'], ['02', 'Assign the agents'], ['03', 'Name & cadence']];
+  document.getElementById('bSteps').innerHTML = steps.map((s, i) => `
+    <div class="step-item ${draft.step === i + 1 ? 'active' : ''}">
+      <div class="step-num">${s[0]}</div>
+      <div class="step-lbl">${s[1]}</div>
+    </div>
+  `).join('');
+
+  if (draft.step === 1) bS1();
+  else if (draft.step === 2) bS2();
+  else bS3();
+  bNav();
+}
+
+function bS1() {
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 1: Choose Baseline High-Voltage Workflow</label></div>
+    <div class="wf-grid">
+      ${Object.keys(WORKFLOWS).map(k => {
+        const w = WORKFLOWS[k];
+        return `
+          <div class="wf-card ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')">
+            <div class="wf-title">${w.name}</div>
+            <div class="wf-desc">${w.desc}</div>
+            <div class="wf-meta">${w.tasks.length} agents · ${w.mode}</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 2: Assign Each Task to a Specialist Agent</label></div>
+    ${w.tasks.map((t, i) => `
+      <div class="task-row">
+        <div class="tn">${i + 1}</div>
+        <div class="tt">
+          ${t.task}
+          ${t.deps.length ? `<span style="color:var(--muted-2);font-family:var(--font-mono);font-size:11px;"> · waits for step ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}
+        </div>
+        <select onchange="draft.assign[${i}]=this.value">${opts}</select>
+      </div>
+    `).join('')}
+    <div class="field" style="margin-top:16px;">
+      <label>Execution Mode</label>
+      <div class="seg">
+        ${['sequential', 'dag'].map(m => `
+          <button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (Parallel DAG)' : 'Sequential'}</button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 3: Name Operator &amp; Set Cadence</label></div>
+    <div class="field">
+      <label>Operator Name</label>
+      <input type="text" value="${draft.name}" placeholder="e.g. 800kV Insulation &amp; Dielectric Specialist" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Role Title</label>
+      <input type="text" value="${draft.title}" placeholder="e.g. Autonomous High-Voltage Insulation Engineer" oninput="draft.title=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Cadence</label>
+      <div class="seg">
+        ${['Per project', 'Per batch', 'Weekly', 'On-demand'].map(c => `
+          <button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>
+        `).join('')}
+      </div>
+    </div>
+    <div class="field" style="margin-top:20px;">
+      <label>Live Operator Card Preview</label>
+      <div id="previewCardArea"></div>
+    </div>
+  `;
+  renderPreview();
+}
+
+function renderPreview() {
+  const w = WORKFLOWS[draft.wf];
+  const area = document.getElementById('previewCardArea');
+  if (!area) return;
+  
+  const team = draft.assign.map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  area.innerHTML = `
+    <div class="op-card" style="max-width:440px;">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${draft.name || 'New Operator'}</div>
+          <div class="op-role">${draft.title || 'AI Operator'}</div>
+        </div>
+      </div>
+      <div class="op-desc">Owns <b>${w.name}</b> · ${draft.cadence} · ${draft.mode.toUpperCase()}</div>
+      <div class="op-agents">${team}</div>
+    </div>
+  `;
+}
+
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn btn-ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right = '';
+  if (draft.step === 1) right = `<button class="btn btn-primary" ${draft.wf ? '' : 'disabled'} onclick="draft.step=2;renderBuilder()">Next: Assign Agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn btn-primary" onclick="draft.step=3;renderBuilder()">Next: Name &amp; Cadence →</button>`;
+  else right = `<button class="btn btn-primary" onclick="hire()">✓ Add this AI Operator</button>`;
+
+  document.getElementById('bNav').innerHTML = left + right;
+}
+
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  
+  WORKFLOWS[wfId] = {
+    name: w.name,
+    title: draft.title || w.title,
+    mode: draft.mode || w.mode,
+    track: w.track,
+    deliverable: w.deliverable,
+    desc: w.desc,
+    tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps }))
+  };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({
+    id, name,
+    title: draft.title || w.title,
+    wf: wfId,
+    handled: 0,
+    hrs: Math.floor(Math.random() * 60) + 40,
+    win: 0,
+    status: 'idle'
+  });
+
+  renderRoster();
+  setView('ops');
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  drawWaferGrid();
+  renderRoster();
+});
+</script>
+</body>
+</html>
