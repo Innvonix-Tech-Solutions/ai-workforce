@@ -126,3 +126,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/weidmann
 https://innvonix-tech-solutions.github.io/ai-workforce/corefx
 https://innvonix-tech-solutions.github.io/ai-workforce/cvd-equipment
 https://innvonix-tech-solutions.github.io/ai-workforce/power-integrations
+https://innvonix-tech-solutions.github.io/ai-workforce/intevac
