@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rogers Corporation &mdash; AI Commercial &amp; Advanced Materials Engineering Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f3f6fa;--surface2:#d9e2ec;--border:#bccbde;--accent:#004b87;
+--accent-dim:rgba(0,75,135,.07);--accent-line:rgba(0,75,135,.28);--slate:#475569;--slate-line:rgba(71,85,105,.32);--text:#0f172a;--hi:#020617;--tert:#64748b;--ok:#16a34a;--ok-dim:rgba(22,163,74,.10);--gold:#c8102e;--gold-bg:#fdf2f4;--gold-line:#f5b0bb}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Montserrat,Inter,sans-serif}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:36px;height:34px;border-radius:8px;background:linear-gradient(135deg,#002a4d,#004b87);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px;letter-spacing:.5px}
+.htitle{font-size:15px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert)}.badge b{color:var(--gold)}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:600;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.5;max-width:900px;margin-bottom:14px}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.commercial{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(71,85,105,.08);color:var(--slate);border:1px solid var(--slate-line)}
+.tag.hero{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:24px;font-weight:700;color:var(--hi)}.cell .v .u{color:var(--accent)}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px}
+.slabel{font-size:11px;font-weight:600;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert)}
+.emp-owns{font-size:12px;margin-bottom:10px}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:inherit;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#004b87}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#004b87}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:14px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 13px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="header">
+<div class="logo"><div class="mark">ROG</div>
+<div><div class="htitle">Rogers Corporation &middot; AI Commercial &amp; Advanced Materials Engineering Workforce</div><div class="hsub">AI operators that capture Tier-1 EV &amp; 5G OEMs, optimize RO4000&reg;/RO3000&reg; RF laminates, design curamik&reg; ceramic power substrates, and certify PORON&reg;/BISCO&reg; foam firewalls</div></div></div>
+<div class="badge">Independent concept &nbsp;&middot;&nbsp; <b>illustrative</b></div>
+</header>
+
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>an advanced electronics or elastomeric materials engineering workflow turned into an autonomous team of agents</b>. One track captures advanced technology business: it finds EV traction inverter OEMs (BorgWarner, Vitesco, Aptiv), 5G telecom base station builders (Ericsson, Nokia), and defense radar contractors requiring RO4000&reg; RF laminates, curamik&reg; ceramic substrates, and PORON&reg;/BISCO&reg; foams, quotes material roll &amp; panel specs, structures AMB qualification proposals, and highlights Rogers Corp market leadership. The other track delivers material engineering precision: it models 77 GHz ADAS radar RF stackups ($D_k / D_f$), designs curamik&reg; Active Metal Brazed (AMB) $Si_3N_4$ power substrates ($R_{th} < 0.15 \text{ K/W}$), simulates PORON&reg; battery cell compression set (&lt;5%), audits ROLINX&reg; busbar partial discharge ($PDIV > 1,500\text{V}$), and signs off IATF/ISO quality travelers. Point one at a PCB stackup drawing, a power module thermal spec or a battery foam test log and it runs the loop, then hands back a review-ready output for a person to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial &amp; Design-Win</span> find, RF quote, curamik proposal</span>
+<span><span class="tag operations">Advanced Materials &amp; Power Eng</span> RO4000 DFM, curamik AMB, PORON foam, ROLINX busbar</span>
+<span><span class="tag hero">Flagship</span> the deepest example run</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+
+<div class="foot">Independent concept prototype prepared by Innvonix Tech Solutions for a conversation with Rogers Corporation (NYSE: ROG). It is not affiliated with, endorsed by, or built on Rogers Corporation systems or data. All operators and outputs are illustrative simulations; RO4000&reg; Dk/Df dielectric properties, curamik&reg; AMB thermal stress values, PORON&reg; compression set percentages, tool pricing and IATF travelers are placeholders. A chief technology officer, VP of advanced electronics engineering, principal materials scientist or quality director reviews and approves every laminate DFM recipe, ceramic substrate design, foam compression cert and commercial proposal. This is not a production system and produces no deliverable for a real customer.</div>
+
+<script>
+const AGENT_ROLES={
+researcher:{emoji:'🔎',label:'Advanced Materials & Market Research',tools:['research','save']},
+prospector:{emoji:'🧲',label:'Tier-1 EV, 5G & Defense Account Sourcing',tools:['source_accounts','save']},
+qualifier:{emoji:'🎯',label:'High-Frequency & Power Electronics Qual',tools:['score_fit','save']},
+rflaminates:{emoji:'📡',label:'RO4000/RO3000 RF Laminate DFM & Dk/Df',tools:['analyze_dk_df','recommend_laminate','save']},
+ceramicsubstrates:{emoji:'⚡',label:'curamik DBC & AMB Ceramic Substrate Eng',tools:['design_amb_substrate','simulate_thermal_stress','save']},
+busbar_eng:{emoji:'🔌',label:'ROLINX Power Busbar & Interconnect Eng',tools:['design_busbar','test_partial_discharge','save']},
+elastomers:{emoji:'🛡️',label:'PORON & BISCO EV Battery Foam Specialist',tools:['simulate_compression_set','test_flammability','save']},
+throughput:{emoji:'🤖',label:'High-Volume Substrate & Roll Manufacturing',tools:['verify_yield','calculate_takt_time','save']},
+compliance:{emoji:'📋',label:'IATF 16949, ISO 9001 & UL94 V-0 Compliance',tools:['check_compliance','save']},
+pricing:{emoji:'🧮',label:'Material Roll & Custom Substrate Quoting',tools:['build_quote','save']},
+writer:{emoji:'✍️',label:'Technical Proposal & Material Traveler Writer',tools:['compose','save']},
+reviewer:{emoji:'✅',label:'QA & Final Material Certification Review',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+
+const TRACKS=[['commercial','Commercial & Design-Win'],['operations','Advanced Materials & Power Eng']];
+
+const WORKFLOWS={
+scout:{name:'EV traction inverter & 5G infrastructure OEM discovery',title:'AI Material Scout',mode:'dag',track:'commercial',deliverable:'Target OEM & Tier-1 Account List',
+sample:'Find automotive power inverter OEMs (BorgWarner, Vitesco, Aptiv, Bosch), 5G telecom base station builders (Ericsson, Nokia, Samsung), and defense radar prime contractors needing curamik® AMB substrates, RO4000® laminates, and PORON® foams.',
+desc:'Agents scan EV power electronics expansion announcements and 5G RF design wins, map VP of Power Systems Engineering, Chief PCB Designer, and Materials Procurement Heads, score fit, and compile the target list.',
+tasks:[{agent:'researcher',task:'Map 800V SiC EV inverter expansions, 77 GHz ADAS radar rollouts, and 5G mmWave antenna deployment roadmaps.',deps:[]},
+{agent:'prospector',task:'Source VP of Power Systems Engineering, Director of RF/Microwave Design, and Global Procurement Heads at OEMs.',deps:[]},
+{agent:'qualifier',task:'Score fit against Rogers Corp capabilities: RO4000® RF laminate Dk stability, curamik® AMB Si3N4 thermal shock resistance, PORON® compression set.',deps:[0,1]},
+{agent:'writer',task:'Compile the ranked target OEM list with material volume projections and design-win engagement strategy.',deps:[2]}]},
+
+rfquote:{name:'High-frequency RF laminate & material quoting',title:'AI Laminate Quoting Estimator',mode:'sequential',track:'commercial',deliverable:'Rogers RF Laminate Proposal Package',
+sample:'A 5G antenna manufacturer uploaded a high-frequency PCB stackup RFQ: 500 panels of RO4350B™ laminate (0.020" thickness, 1 oz LoPro® copper foil, 18"x24" panel size). Generate an instant quote.',
+desc:'Agents parse customer PCB stackup specifications, calculate panel yields, select copper foil options (reverse treated / LoPro®), model lead times, and generate the quote package.',
+tasks:[{agent:'qualifier',task:'Parse customer PCB stackup RFQ: 500 panels RO4350B™ laminate, 0.020" dielectric thickness, 1 oz LoPro® copper, 18"x24" panel size.',deps:[]},
+{agent:'rflaminates',task:'Verify electrical performance: verify Dk = 3.48 ± 0.05 at 10 GHz, Df = 0.0037, and coefficient of thermal expansion (CTE = 14 ppm/°C Z-axis).',deps:[0]},
+{agent:'pricing',task:'Structure pricing model: panel list pricing, volume tier discounts (12% for 500+ panels), copper surcharge, and Chandler AZ facility dispatch lead time.',deps:[1]},
+{agent:'writer',task:'Produce the Rogers RF Laminate proposal package with Dk/Df frequency curves, panel utilization report, and delivery SLA.',deps:[2]}]},
+
+ambproposal:{name:'curamik® AMB ceramic substrate qualification proposal',title:'AI Substrate Proposal Architect',mode:'sequential',track:'commercial',deliverable:'curamik® AMB Qualification Proposal',
+sample:'Structure a qualification proposal for an 800V SiC EV traction inverter power module: specify Si3N4 Active Metal Brazed (AMB) substrate thickness, thermal resistance (Rth < 0.15 K/W), and 1,000-cycle thermal shock SLA.',
+desc:'Agents scope ceramic substrate geometry, calculate thermal resistance and copper thickness, establish thermal shock qualification milestones, and produce the proposal.',
+tasks:[{agent:'qualifier',task:'Parse customer power module spec: 800V SiC MOSFET inverter, 0.32mm Si3N4 ceramic core, 0.5mm etched copper circuit layer, baseplate-less assembly.',deps:[]},
+{agent:'ceramicsubstrates',task:'Model thermal & mechanical performance: verify flexural strength > 650 MPa, thermal conductivity = 90 W/m·K, and thermal resistance Rth < 0.14 K/W.',deps:[0]},
+{agent:'pricing',task:'Structure qualification program fee: 50 sample AMB master cards, thermal shock testing (1,000 cycles -40°C to +150°C), and volume production pricing curve.',deps:[1]},
+{agent:'writer',task:'Produce the curamik® AMB qualification proposal with thermal simulation plots, reliability SLA, and manufacturing roadmap.',deps:[2]}]},
+
+radar:{name:'Advanced engineered materials tech intel',title:'AI Market Intel',mode:'dag',track:'commercial',deliverable:'Competitive Intelligence Brief',
+sample:'How do competing substrate and foam manufacturers (Denka, Kyocera, Ferrotec, Saint-Gobain) compare to Rogers Corporation in RF dielectric consistency, ceramic thermal shock lifetime, and EV foam compression set?',
+desc:'Agents profile competing material suppliers, analyze RF loss tangents, ceramic substrate flexural strength, EV battery gasket compression set, and produce the brief.',
+tasks:[{agent:'researcher',task:'Scan engineered materials market: 5G mmWave laminates, Si3N4 AMB substrates, EV battery cell compression pads, thermal insulation firewalls.',deps:[]},
+{agent:'prospector',task:'Profile competing vendors: Kyocera, Denka, Ferrotec, Saint-Gobain Performance Plastics, AGC Taconic.',deps:[]},
+{agent:'rflaminates',task:'Compare performance metrics: RO4000® series (tight Dk tolerance ±0.05, low loss) vs standard FR-4/PTFE; curamik® AMB (10x thermal cycle life vs DBC).',deps:[0,1]},
+{agent:'writer',task:'Produce the competitive intelligence brief highlighting Rogers Corp 180-year material innovation heritage, global tech hubs, and market leadership.',deps:[2]}]},
+
+rflaminate_dfm:{name:'RO4000® / RO3000® RF laminate DFM & Dk optimization',title:'AI RF Laminate Specialist',mode:'sequential',track:'operations',tag:'flagship',deliverable:'RF Laminate DFM & Specification Package',
+sample:'Evaluate a 77 GHz automotive ADAS radar sensor PCB design: select RO3003™ ceramic-filled PTFE laminate (Dk = 3.00 ± 0.04, Df = 0.0010), model insertion loss across 76-81 GHz, optimize copper surface roughness (LoPro® foil), verify thermal coefficient of dielectric constant (TC Dk), QA-review, and issue laminate specification traveler.',
+desc:'Agents model high-frequency Dk/Df stability over temperature, optimize conductor loss with ultra-smooth copper foil, verify PCB fabricator processing rules, QA-review, and issue traveler.',
+tasks:[{agent:'rflaminates',task:'Select optimal dielectric: RO3003™ ceramic-filled PTFE laminate; dielectric thickness = 0.127mm (5 mil); Dk = 3.00 ± 0.04 at 77 GHz, Df = 0.0010.',deps:[]},
+{agent:'rflaminates',task:'Model total insertion loss across 76-81 GHz: calculate dielectric loss (0.08 dB/cm) vs conductor loss using 0.5 oz LoPro® reverse-treated copper foil.',deps:[0]},
+{agent:'rflaminates',task:'Verify thermal coefficient of Dk (TC Dk = -3 ppm/°C): ensure radar range calibration stability across -40°C to +125°C automotive temperature range.',deps:[1]},
+{agent:'throughput',task:'Verify PCB fabrication DFM: panel registration, microvia aspect ratio compliance, and chemical desmear compatibility for PTFE laminate.',deps:[2]},
+{agent:'compliance',task:'Verify automotive ISO/PAS 21448 SOTIF, IPC-4103 high-frequency laminate standards, and RoHS/REACH compliance.',deps:[3]},
+{agent:'reviewer',task:'QA-review laminate specification traveler: verify Dk/Df lot certification tolerances, copper peel strength (>5.0 lb/in), and panel flatness.',deps:[4]},
+{agent:'writer',task:'Produce the RF Laminate DFM & Specification package with S-parameter insertion loss plots, Dk stability curves, and PCB fab traveler.',deps:[5]}]},
+
+curamik_amb_design:{name:'curamik® AMB Si3N4 ceramic substrate thermal stress analysis',title:'AI Power Ceramic Engineer',mode:'sequential',track:'operations',deliverable:'curamik® AMB Substrate Design Package',
+sample:'Design an Active Metal Brazed Silicon Nitride (Si3N4) substrate for 800V SiC MOSFET power modules, run finite element thermal stress simulation (flexural strength > 650 MPa), optimize copper etching profile, and issue production traveler.',
+desc:'Agents model ceramic-to-copper brazing thermal stress, optimize copper dimple and step etching for stress relief, run 1,000-cycle thermal shock simulation, and produce traveler.',
+tasks:[{agent:'ceramicsubstrates',task:'Specify AMB substrate construction: 0.32mm Si3N4 ceramic core brazed with 0.50mm top/bottom oxygen-free copper (OFC) layers using Ag-Cu-Ti active brazing alloy.',deps:[]},
+{agent:'ceramicsubstrates',task:'Run FEA thermal stress simulation: verify max von Mises stress in Si3N4 ceramic core < 380 MPa (well below 650 MPa flexural strength limit).',deps:[0]},
+{agent:'ceramicsubstrates',task:'Optimize copper isolation etching: design 45° step-etched copper edge profile to eliminate shear stress concentration during -40°C to +150°C thermal cycling.',deps:[1]},
+{agent:'reviewer',task:'QA-review substrate production traveler: verify 100% ultrasonic scanning (C-SAM) for void-free brazing interface and electrical isolation (>5 kV DC).',deps:[2]},
+{agent:'writer',task:'Produce the curamik® AMB Substrate Design package with FEA stress maps, C-SAM void inspection report, and master card traveler.',deps:[3]}]},
+
+ev_battery_gasket:{name:'PORON® / BISCO® EV battery cell compression set simulation',title:'AI Elastomer Applications Specialist',mode:'sequential',track:'operations',deliverable:'EV Battery Protection Material Package',
+sample:'Model PORON® EV Protect polyurethane foam and BISCO® silicone sealing gaskets under 10-year battery pack compression & thermal runaway fire conditions (UL94 V-0, ProCell™ firewall barrier), verify <5% compression set, and issue material spec traveler.',
+desc:'Agents model long-term compression set resilience under battery swelling pressure, evaluate flammability and flame-barrier performance, and produce the material package.',
+tasks:[{agent:'elastomers',task:'Select compression pad material: PORON® EV Protect 4701-30 polyurethane foam (0.75mm to 3.0mm thickness); initial compression force deflection (CFD) = 25 kPa.',deps:[]},
+{agent:'elastomers',task:'Simulate 10-year compression set: model strain retention under 30% battery cell expansion over 3,000 charge cycles; verify compression set < 4.2% at 70°C.',deps:[0]},
+{agent:'elastomers',task:'Evaluate thermal runaway protection: integrate ProCell™ EV firewall silicone barrier; verify zero burn-through at 1,000°C flame exposure for 5 minutes.',deps:[1]},
+{agent:'writer',task:'Produce the EV Battery Protection Material package with stress-strain compression curves, UL94 V-0 flammability certificates, and die-cutting guidelines.',deps:[2]}]},
+
+rolinx_busbar_design:{name:'ROLINX® laminated busbar partial discharge & HV audit',title:'AI Power Interconnect Engineer',mode:'sequential',track:'operations',deliverable:'ROLINX® Busbar Engineering & Test Package',
+sample:'Design a multi-layer ROLINX® custom laminated busbar for a 1,000V DC fast-charging station; simulate partial discharge inception voltage (PDIV > 1,500V), calculate ampacity and temperature rise, and issue test traveler.',
+desc:'Agents design conductor geometry, select PET/PI insulation films, run partial discharge finite element electrostatic simulation, and produce test traveler.',
+tasks:[{agent:'busbar_eng',task:'Design laminated conductor stackup: 3-layer 2.0mm ETP copper conductors interleaved with 0.25mm Kapton® polyimide insulation film.',deps:[]},
+{agent:'busbar_eng',task:'Simulate partial discharge inception voltage (PDIV): verify PDIV > 1,650V RMS at 50 pC threshold (well above 1,000V DC working voltage requirement).',deps:[0]},
+{agent:'busbar_eng',task:'Calculate ampacity & temperature rise: model 450A continuous current flow; verify max temperature rise ΔT < 30°C under forced air cooling.',deps:[1]},
+{agent:'writer',task:'Produce the ROLINX® Busbar Engineering package with 3D CAD models, partial discharge test reports, and high-voltage hipot clearance certificate.',deps:[2]}]},
+};
+
+const DTITLE={scout:'Target OEM & Tier-1 Account List',rfquote:'Rogers RF Laminate Proposal Package',ambproposal:'curamik® AMB Qualification Proposal',radar:'Competitive Intelligence Brief',rflaminate_dfm:'RF Laminate DFM & Specification Package',curamik_amb_design:'curamik® AMB Substrate Design Package',ev_battery_gasket:'EV Battery Protection Material Package',rolinx_busbar_design:'ROLINX® Busbar Engineering & Test Package'};
+
+const TOOLS={
+research:()=>'Gathered 800V SiC EV inverter, 77 GHz ADAS radar, and 5G mmWave material intel; targets ranked.',
+source_accounts:()=>'Sourced VP of Power Systems Engineering, Director of RF Design, and Materials Procurement Heads.',
+score_fit:()=>'Scored against Rogers Corp capabilities: RO4000 Dk stability, curamik AMB thermal shock, PORON compression.',
+analyze_dk_df:()=>'Analyzed Dk/Df dielectric properties: RO3003 Dk=3.00±0.04 at 77 GHz, Df=0.0010, TC Dk=-3 ppm/°C.',
+recommend_laminate:()=>'Recommended RO4350B / RO3003 laminate with 0.5 oz LoPro reverse-treated copper foil.',
+design_amb_substrate:()=>'Designed curamik AMB Si3N4 substrate: 0.32mm Si3N4 core, 0.50mm OFC copper, 45° step-etched edges.',
+simulate_thermal_stress:()=>'Simulated FEA thermal stress: max von Mises stress < 380 MPa (below 650 MPa flexural limit).',
+design_busbar:()=>'Designed ROLINX laminated busbar: 3-layer 2.0mm ETP copper, 0.25mm polyimide film.',
+test_partial_discharge:()=>'Simulated partial discharge: PDIV > 1,650V RMS verified at 50 pC threshold.',
+simulate_compression_set:()=>'Simulated PORON 10-year compression set: < 4.2% set at 70°C under 30% cell swelling.',
+test_flammability:()=>'Evaluated ProCell EV firewall: zero burn-through at 1,000°C flame exposure for 5 min.',
+verify_yield:()=>'Verified master card panel yield: 96% material utilization on 18"x24" manufacturing panels.',
+calculate_takt_time:()=>'Calculated takt time: 1.2 minutes per ceramic substrate master card.',
+check_compliance:()=>'Checked IATF 16949, ISO 9001, UL94 V-0 flammability, and IPC-4103 laminate standards.',
+build_quote:()=>'Structured commercial quote: laminate rolls/panels, AMB ceramic master cards, volume discount curve.',
+qa_review:()=>'QA: Dk/Df tolerance, C-SAM void-free brazing, PDIV test, compression set, and IATF traveler verified.',
+compose:()=>'Drafted in a clear, factory-ready, IATF/IPC-aware technical style.',
+save:()=>'Saved to shared context for downstream agents.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+
+const FINAL={
+scout:`TARGET OEM & TIER-1 ACCOUNT LIST (illustrative)
+
+Scanned EV traction inverter OEMs, 5G telecom base station builders, and defense radar prime contractors.
+
+A-tier (pursue now)
+1. Automotive Power Electronics Tier-1 (Troy MI / Munich) — 800V SiC inverters — curamik AMB fit 98
+2. 5G Telecom Infrastructure OEM (Stockholm / Plano TX) — mmWave massive MIMO — RO4000 fit 96
+3. Defense Radar Prime Contractor (El Segundo CA) — 77 GHz AESA radar — RT/duroid fit 95
+4. EV Battery Module Manufacturer (Fremont CA) — Cell swelling & firewall — PORON/ProCell fit 93
+5. Industrial Power Drive Systems (Milwaukee WI) — 1,000V DC busbars — ROLINX fit 90
+
+Contacts: VP of Power Systems Engineering, Chief RF Architect, Director of Materials Procurement.
+Material requirement: High-frequency RF laminates (RO4000/RO3000), curamik AMB substrates, PORON foams.
+
+→ Saved: rogers_target_list, executive_contacts, material_application_matrix
+
+NOTE: illustrative; not affiliated with Rogers Corporation.`,
+
+rfquote:`ROGERS RF LAMINATE PROPOSAL PACKAGE (illustrative)
+
+Customer: 5G Antenna Equipment Manufacturer.
+Order: RO4350B™ High-Frequency Laminate Panels (#RFQ-ROG-2026-08).
+
+Laminate specifications & electrical performance
+• Material: RO4350B™ Hydrocarbon / Ceramic Laminate (0.020" / 0.508mm dielectric)
+• Copper Foil: 1 oz (35µm) LoPro® Reverse-Treated Copper Foil (both sides)
+• Electrical Specs: Dielectric Constant Dk = 3.48 ± 0.05 at 10 GHz, Dissipation Factor Df = 0.0037
+• Thermal Performance: Tg > 280°C, Z-axis CTE = 31 ppm/°C, Thermal Conductivity = 0.69 W/m·K
+• Panel Dimensions: 18" x 24" (457mm x 610mm) master manufacturing panels
+
+Commercial summary
+• Quantity: 500 Master Panels
+• Unit Price per Panel: $[REDACTED]
+• Volume Tier Discount (12% for 500+ panels): -$[REDACTED]
+• Net Order Value: $[REDACTED] (FOB Chandler, AZ facility — Ships in 5 business days)
+
+→ Saved: rogers_laminate_proposal, dk_df_test_curves, panel_utilization_report
+
+NOTE: illustrative; all financial figures redacted.`,
+
+ambproposal:`CURAMIK® AMB QUALIFICATION PROPOSAL (illustrative)
+
+Customer: Automotive Tier-1 Traction Inverter Manufacturer.
+Project: 800V SiC Power Module Substrate (#CURAMIK-AMB-2026).
+
+Substrate specifications & thermal performance
+• Ceramic Core: 0.32mm Active Metal Brazed Silicon Nitride (Si3N4) — flexural strength > 650 MPa
+• Copper Cladding: 0.50mm Oxygen-Free Copper (OFC) on top & bottom surfaces
+• Thermal Resistance (Rth): < 0.14 K/W (enables >250 kW power density in SiC inverters)
+• Thermal Shock Life: Guaranteed > 1,000 cycles (-40°C to +150°C) without delamination
+
+Qualification roadmap & commercial terms
+• Phase 1: 50 Prototype AMB Master Cards for DVT build (4 weeks ARO)
+• Phase 2: Reliability qualification testing (1,000 hrs HTRB, thermal shock)
+• Volume Production Target: 500,000 master cards / year (curamik Germany / US production)
+
+→ Saved: curamik_amb_proposal, thermal_simulation_data, qualification_milestones
+
+NOTE: illustrative; all financial figures redacted.`,
+
+radar:`COMPETITIVE INTELLIGENCE BRIEF (illustrative)
+
+Landscape
+• Denka / Kyocera (Ceramics): strong in standard DBC alumina substrates, but lower thermal shock life vs curamik Si3N4 AMB
+• AGC Taconic / Isola (Laminates): competitive in standard PTFE, but lack RO4000 series ease of processing (standard FR-4 fab process)
+• Saint-Gobain (Elastomers): offer industrial silicone foams, but lack PORON brand automotive compression set resilience
+
+Where Rogers Corporation wins
+• RO4000® Series Market Standard: industry benchmark for 5G & automotive radar; processes like standard FR-4 without special PTFE prep
+• curamik® AMB Technology: Silicon Nitride (Si3N4) active metal brazing offers 10x thermal cycle lifetime vs traditional alumina DBC
+• PORON® / BISCO® Resilience: <5% compression set over 10-year EV battery pack life; ProCell™ thermal runaway fire barrier
+• Global Tech Support: Dedicated Design & Technology Support Hubs in Chandler AZ, Germany, and China
+
+Talk tracks
+1. "RO4000 series delivers PTFE-grade RF performance with standard FR-4 fabrication cost and yield"
+2. "curamik AMB Si3N4 substrates handle the extreme thermal stress of 800V SiC MOSFET power modules"
+3. "PORON EV Protect foams maintain constant seal pressure over 10 years of battery swelling"
+
+→ Saved: competitive_matrix, technology_benchmarks, sales_talk_tracks
+
+NOTE: illustrative; not affiliated with Rogers Corporation.`,
+
+rflaminate_dfm:`RF LAMINATE DFM & SPECIFICATION PACKAGE (illustrative · flagship)
+
+Design: 77 GHz Automotive ADAS Radar Sensor PCB (#RADAR-77GHZ-2026).
+
+Material selection & dielectric properties
+• Dielectric: RO3003™ Ceramic-Filled PTFE Laminate (0.127mm / 5 mil core)
+• Dielectric Constant (Dk): 3.00 ± 0.04 at 77 GHz — PASS
+• Dissipation Factor (Df): 0.0010 at 77 GHz — PASS
+• Thermal Coefficient of Dk (TC Dk): -3 ppm/°C (-40°C to +125°C) — PASS
+• Conductor Foil: 0.5 oz (18µm) LoPro® reverse-treated electrodeposited copper foil (Ra = 0.4µm)
+
+Insertion loss & DFM evaluation
+• Conductor Loss at 77 GHz: 0.14 dB/cm (attenuation minimized via LoPro smooth copper)
+• Total Insertion Loss at 77 GHz: 0.22 dB/cm (vs 0.65 dB/cm on standard FR-4) — PASS
+• PCB Fabrication DFM: chemical desmear compatible, microvia aspect ratio 0.8:1 verified
+
+QA review & traveler sign-off
+• 100% lot Dk/Df resonant cavity certified; copper peel strength = 5.8 lb/in — PASS
+• Recommendation: Release RO3003 material traveler for automotive radar PCB fabrication
+
+→ Saved: rf_laminate_package, insertion_loss_plots, tc_dk_stability_report, laminate_traveler
+
+NOTE: illustrative; confirm against customer radar PCB stackup drawing.`,
+
+curamik_amb_design:`CURAMIK® AMB SUBSTRATE DESIGN PACKAGE (illustrative)
+
+Module: 800V SiC MOSFET EV Traction Inverter Power Substrate (#AMB-SIC-800V).
+
+Ceramic & copper construction
+• Ceramic Core: 0.32mm Si3N4 (Silicon Nitride) — flexural strength = 680 MPa — PASS
+• Copper Cladding: 0.50mm OFC copper brazed with Ag-Cu-Ti active metal alloy
+• Edge Profile: 45° 2-step etched copper edge profile to relieve interphase thermal shear stress
+
+Thermal stress FEA simulation
+• Max von Mises Stress: 345 MPa in Si3N4 core (safety factor = 1.97 vs 680 MPa limit) — PASS
+• Thermal Resistance (Rth): 0.138 K/W — PASS
+• C-SAM Inspection: 100% void-free brazing interface (<0.1% total void area) — PASS
+
+Status: Approved for master card laser scribing and nickel/gold plating.
+
+→ Saved: curamik_amb_package, fea_stress_maps, csam_inspection_report, master_card_traveler
+
+NOTE: illustrative; confirm against customer power module specification.`,
+
+ev_battery_gasket:`EV BATTERY PROTECTION MATERIAL PACKAGE (illustrative)
+
+Application: 400V/800V EV Battery Pack Inter-Cell Compression Pad & Firewall (#EV-BATTERY-PACK).
+
+Elastomeric & thermal firewall performance
+• Compression Pad: PORON® EV Protect 4701-30 polyurethane foam (1.5mm nominal thickness)
+• 10-Year Compression Set: 3.8% permanent set after 3,000 cycles at 70°C (spec < 5.0%) — PASS
+• Initial CFD: 25.4 kPa at 25% deflection (maintains uniform pressure on pouch cells) — PASS
+• Thermal Runaway Barrier: ProCell™ EV firewall integrated; ZERO burn-through at 1,000°C for 5 min — PASS
+• Flammability Rating: UL94 V-0 certified — PASS
+
+Status: Released for precision rotary die-cutting and cleanroom packaging.
+
+→ Saved: ev_battery_package, compression_set_curves, ul94_v0_certificate, die_cutting_spec
+
+NOTE: illustrative; verify against battery pack OEM specification.`,
+
+rolinx_busbar_design:`ROLINX® BUSBAR ENGINEERING & TEST PACKAGE (illustrative)
+
+System: 1,000V DC 450A Ultra-Fast EV Charging Station Busbar (#ROLINX-1000V-450A).
+
+Electrical & thermal simulation
+• Conductor Architecture: 3-layer 2.0mm ETP copper busbar with 0.25mm Kapton® polyimide film
+• Partial Discharge Inception Voltage (PDIV): 1,720V RMS at 50 pC threshold (spec > 1,500V) — PASS
+• Ampacity & Temperature Rise: 450A continuous load → ΔT = 24.5°C (spec < 30°C) — PASS
+• High-Voltage Hipot Test: 5,000V DC for 60 seconds → leakage current < 0.2 mA — PASS
+
+Status: Certified for high-power distribution assembly.
+
+→ Saved: rolinx_busbar_package, pdiv_test_report, hipot_clearance_cert, assembly_drawing
+
+NOTE: illustrative; confirm against customer charging station requirement.`,
+};
+
+let EMPLOYEES=[
+{id:'scout',name:'Scout',title:'AI Material Scout',wf:'scout',handled:250,hrs:54,win:0,status:'idle'},
+{id:'rfestimator',name:'RF-Estimator',title:'AI Laminate Quoting Estimator',wf:'rfquote',handled:320,hrs:80,win:46,status:'idle'},
+{id:'ambarchitect',name:'AMB-Architect',title:'AI Substrate Proposal Architect',wf:'ambproposal',handled:90,hrs:88,win:52,status:'idle'},
+{id:'radar',name:'Radar',title:'AI Market Intel',wf:'radar',handled:120,hrs:26,win:0,status:'idle'},
+{id:'rflaminate_spec',name:'RF-Spec',title:'AI RF Laminate Specialist',wf:'rflaminate_dfm',handled:390,hrs:220,win:70,status:'idle'},
+{id:'curamike-eng',name:'curamik-Eng',title:'AI Power Ceramic Engineer',wf:'curamik_amb_design',handled:290,hrs:150,win:58,status:'idle'},
+{id:'elastomer-spec',name:'Elastomer-Spec',title:'AI Elastomer Applications Specialist',wf:'ev_battery_gasket',handled:310,hrs:165,win:62,status:'idle'},
+{id:'rolinx-eng',name:'ROLINX-Eng',title:'AI Power Interconnect Engineer',wf:'rolinx_busbar_design',handled:210,hrs:125,win:54,status:'idle'},
+];
+
+let running=false;
+const $=id=>document.getElementById(id);const sleep=ms=>new Promise(r=>setTimeout(r,ms));const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;const now=()=>new Date().toLocaleTimeString('en-GB');const mono=n=>n.trim().slice(0,2).toUpperCase();
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Commercial &amp; Design-Win</span>';if(wf.track==='operations')s+='<span class="tag operations">Materials &amp; Power Eng</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+function setView(v){$('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');$('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});}
+function renderEcon(){const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;const cells=[[total,'AI operators (commercial + engineering)'],[h.toLocaleString(),'RF DFM runs, AMB designs & foam tests handled'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','materials & power engineer hours saved / mo'],['+'+avg+'%','avg turnaround improvement']];$('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');}
+function empCard(e){const wf=WORKFLOWS[e.wf];const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}"><div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div><div class="emp-owns">Owns: <b>${wf.name}</b></div><div class="team">${team}</div><div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'—'}</b>faster</div></div><div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a material / RFQ</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;}
+function renderRoster(){const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;let html='';TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});$('roster').innerHTML=html;}
+function assign(id){if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];$('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a PCB stackup drawing, a power module thermal spec or a battery foam test log and ${e.name} runs the whole loop.</div></div></div><div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div><div id="stage"></div></div>`;$('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();}
+async function runEmp(id){if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');const stage=$('stage');stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div><div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div><div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;const feed=$('feed');function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;const row=document.createElement('div');row.className='frow';row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,150)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}log(null,`Input received: "${obj.substring(0,54)}…"`);log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);await sleep(rand(700,1100));const grid=$('agrid');wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});await sleep(600);$('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');const done=new Set();async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}$('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');await sleep(400);const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(6,44);$('resultArea').innerHTML=`<div class="result"><div class="rstats"><div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div><div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div><div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'Commercial & Design-Win':'Advanced Materials & Power Eng'}</span></div><div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div><div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div><div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div><div class="donebar"><b>${e.name} produced a review-ready output.</b> Read, adapt and QA complete, ready for a CTO, VP of advanced electronics engineering, principal materials scientist or quality director to confirm against IATF and Rogers Corp product specs. Illustrative simulation, not a production deliverable.</div>`;e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;}
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per lot',step:1};renderBuilder();}
+function renderBuilder(){const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];$('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+`<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div><div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. RF-Spec" oninput="draft.name=this.value"></div><div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Advanced Materials Engineer" oninput="draft.title=this.value"></div><div class="field"><label>Cadence</label><div class="seg">`+['Per lot','Per batch','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div><div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});renderEcon();renderRoster();setView('ops');setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);}
+
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
