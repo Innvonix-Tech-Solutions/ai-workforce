@@ -122,3 +122,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/sunopta
 https://innvonix-tech-solutions.github.io/ai-workforce/halo-industries
 https://innvonix-tech-solutions.github.io/ai-workforce/ancorp
 https://innvonix-tech-solutions.github.io/ai-workforce/rogerscorp
+https://innvonix-tech-solutions.github.io/ai-workforce/weidmann
