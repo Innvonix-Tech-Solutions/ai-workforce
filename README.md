@@ -134,3 +134,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/promex
 https://innvonix-tech-solutions.github.io/ai-workforce/cellink-corporation
 https://innvonix-tech-solutions.github.io/ai-workforce/onto-innovation
 https://innvonix-tech-solutions.github.io/ai-workforce/master-fluid-solutions
+https://innvonix-tech-solutions.github.io/ai-workforce/enercon-technologies
