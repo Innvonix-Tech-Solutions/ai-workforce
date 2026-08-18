@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sumitomo Chemical Advanced Technologies &mdash; AI Commercial &amp; Advanced Polymer Engineering Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Slab:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f4f7fc;--surface2:#dce5f0;--border:#b8cbe0;--accent:#cf2e2e;
+--accent-dim:rgba(207,46,46,.07);--accent-line:rgba(207,46,46,.28);--slate:#475569;--slate-line:rgba(71,85,105,.32);--text:#0f172a;--hi:#020617;--tert:#64748b;--ok:#00a9cc;--ok-dim:rgba(0,169,204,.10);--gold:#d97706;--gold-bg:#fffbeb;--gold-line:#fde68a}
+body{background:var(--canvas);color:var(--text);font-family:Roboto,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:'Roboto Slab',Roboto,sans-serif}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:36px;height:34px;border-radius:8px;background:linear-gradient(135deg,#0f172a,#cf2e2e);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:13px;letter-spacing:.5px}
+.htitle{font-size:15px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert)}.badge b{color:var(--accent)}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:600;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.5;max-width:900px;margin-bottom:14px}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.commercial{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(0,169,204,.08);color:var(--ok);border:1px solid rgba(0,169,204,.3)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:24px;font-weight:700;color:var(--hi)}.cell .v .u{color:var(--accent)}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px}
+.slabel{font-size:11px;font-weight:600;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert)}
+.emp-owns{font-size:12px;margin-bottom:10px}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:inherit;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#cf2e2e}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(0,169,204,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Roboto,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(0,169,204,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#cf2e2e}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:14px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 13px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="header">
+<div class="logo"><div class="mark">SC</div>
+<div><div class="htitle">Sumitomo Chemical Advanced Technologies &middot; AI Commercial &amp; Polymer Eng Workforce</div><div class="hsub">AI operators that capture semiconductor packaging &amp; 5G/6G OEMs, engineer SUMIKASUPER&trade; LCP resins, optimize Phoenix AZ GaAs/GaN epi-wafers, and certify JEDEC MSL-1 reliability</div></div></div>
+<div class="badge">Independent concept &nbsp;&middot;&nbsp; <b>illustrative</b></div>
+</header>
+
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>an advanced engineering polymer or semiconductor packaging materials workflow turned into an autonomous team of agents</b>. One track captures semiconductor fab &amp; 5G/6G OEM business: it finds OSAT packaging houses (ASE, Amkor, JCET), semiconductor fabs (Intel, TSMC, Samsung), and 5G mmWave antenna OEMs needing SUMIKASUPER&trade; Liquid Crystal Polymer (LCP), SUMIKAEXCEL&trade; PES, and epitaxial wafers, quotes resin compounding runs, structures high-frequency LCP substrate trial proposals (-65% dielectric loss), and highlights SumiChem's high-flow polymer advantages. The other track delivers material synthesis precision: it formulates 28 GHz / 39 GHz 5G mmWave LCP films ($D_k = 2.85$, $\tan \delta = 0.0008$), optimizes 0.2mm fine-pitch BGA socket injection molding (350&deg;C melt, zero flash), tunes GaAs/GaN MOCVD epitaxial growth at the Phoenix AZ facility (&lt;100/cm&sup2; defect density), and signs off JEDEC MSL-1 reflow certificates. Point one at a resin spec, a connector molding drawing or a wafer defect log and it runs the loop, then hands back a review-ready output for a person to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial &amp; Materials Qual</span> find, resin quote, substrate trial</span>
+<span><span class="tag operations">Polymer &amp; Semiconductor Eng</span> LCP 5G substrate, BGA molding, epi-wafer, JEDEC MSL-1</span>
+<span><span class="tag hero">Flagship</span> the deepest example run</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+
+<div class="foot">Independent concept prototype prepared by Innvonix Tech Solutions for a conversation with Sumitomo Chemical Advanced Technologies (Sumitomo Chemical Co., Ltd.). It is not affiliated with, endorsed by, or built on Sumitomo Chemical systems or data. All operators and outputs are illustrative simulations; SUMIKASUPER&trade; LCP dielectric constant, BGA socket mold flow pressures, Phoenix AZ epi-wafer defect densities, resin compounding prices and JEDEC reflow specs are placeholders. A chief technology officer, VP of materials engineering, principal polymer scientist or quality director reviews and approves every resin formulation, injection mold spec, epi-wafer certificate and commercial proposal. This is not a production system and produces no deliverable for a real customer.</div>
+
+<script>
+const AGENT_ROLES={
+researcher:{emoji:'🔎',label:'Semiconductor Materials & Polymer Research',tools:['research','save']},
+prospector:{emoji:'🧲',label:'Semiconductor Fab, OSAT & 5G OEM Sourcing',tools:['source_accounts','save']},
+qualifier:{emoji:'🎯',label:'Resin & Dielectric Property Qualification',tools:['score_fit','save']},
+lcp_polymer_eng:{emoji:'🧪',label:'SUMIKASUPER LCP & Polymer Specialist',tools:['synthesize_lcp_compound','calculate_dielectric_constant','save']},
+packaging_eng:{emoji:'📦',label:'Semiconductor Packaging & BGA Socket Eng',tools:['design_bga_package','simulate_molding_flow','save']},
+epi_wafer_spec:{emoji:'🔬',label:'GaAs/GaN Epitaxial Wafer Specialist (Phoenix)',tools:['optimize_epi_growth','inspect_defect_density','save']},
+thermal_analyst:{emoji:'🌡️',label:'Thermal & Outgassing Reliability Analyst',tools:['simulate_thermal_expansion','measure_outgassing','save']},
+throughput:{emoji:'🤖',label:'Compounding & Resin Grinding Opt',tools:['verify_compounding_yield','calculate_takt_time','save']},
+compliance:{emoji:'📋',label:'JEDEC MSL-1, RoHS & UL94 V-0 Compliance',tools:['check_compliance','save']},
+pricing:{emoji:'🧮',label:'Specialty Chemical & LCP Resins Quoting',tools:['build_quote','save']},
+writer:{emoji:'✍️',label:'Technical Datasheet & Mold Processing Writer',tools:['compose','save']},
+reviewer:{emoji:'✅',label:'QA & Final Resin Batch Certification Review',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+
+const TRACKS=[['commercial','Commercial &amp; Materials Qual'],['operations','Polymer &amp; Semiconductor Eng']];
+
+const WORKFLOWS={
+scout:{name:'Semiconductor packaging, 5G/6G & automotive OEM discovery',title:'AI Materials Scout',mode:'dag',track:'commercial',deliverable:'Target Semiconductor & Polymer Account List',
+sample:'Find OSAT semiconductor packaging houses (ASE, Amkor, JCET), semiconductor fabs (Intel, TSMC, Samsung), 5G mmWave antenna makers, and 77 GHz ADAS automotive radar OEMs needing SUMIKASUPER™ LCP, PES resins, and epi-wafers.',
+desc:'Agents scan semiconductor advanced packaging roadmaps and 5G mmWave device announcements, map VP of Packaging R&D, Chief Polymer Scientist, and Materials Procurement Heads, score fit, and compile target list.',
+tasks:[{agent:'researcher',task:'Map 2.5D/3D glass-core package substrate roadmaps, 0.2mm pitch BGA connectors, and 28 GHz / 39 GHz 5G mmWave antenna designs.',deps:[]},
+{agent:'prospector',task:'Source VP of Advanced Packaging, Director of Materials Engineering, and Sourcing Heads at semiconductor firms.',deps:[]},
+{agent:'qualifier',task:'Score fit against SumiChem capabilities: SUMIKASUPER™ LCP (ultra-high heat resistance >340°C, Dk=2.85, tan δ=0.0008), Phoenix AZ epi-wafers.',deps:[0,1]},
+{agent:'writer',task:'Compile the ranked target semiconductor account list with annual LCP resin tonnage projections and engagement strategy.',deps:[2]}]},
+
+lcp_resin_quote:{name:'SUMIKASUPER™ LCP & fine-pitch resin quoting',title:'AI Polymer Quoting Estimator',mode:'sequential',track:'commercial',deliverable:'Specialty Resin Volume Quote Package',
+sample:'A semiconductor packaging OEM uploaded a connector resin RFQ: 5,000,000 units/year of glass-fiber reinforced SUMIKASUPER™ LCP grade E4008 (0.2mm fine pitch, 350°C heat resistance). Generate an instant quote.',
+desc:'Agents parse customer connector mold RFQ, calculate resin compounding volume, model extrusion yield, and generate the quote package.',
+tasks:[{agent:'qualifier',task:'Parse customer connector RFQ: 5M units/year, SUMIKASUPER™ LCP grade E4008 (30% glass-fiber reinforced), UL94 V-0 flame rating, 0.2mm wall thickness.',deps:[]},
+{agent:'lcp_polymer_eng',task:'Verify resin melt flow index (MFI = 45 g/10min at 360°C) and thin-wall spiral flow length (85mm at 0.2mm thickness).',deps:[0]},
+{agent:'throughput',task:'Model twin-screw extrusion compounding yield: 99.1% resin yield and 1,200 kg/hr compounding throughput at Phoenix AZ facility.',deps:[1]},
+{agent:'pricing',task:'Structure volume pricing model: resin list price ($/kg), volume tier discount (18% for 50+ metric tons), packaging in 25kg foil bags, and dispatch SLA.',deps:[2]},
+{agent:'writer',task:'Produce the Specialty Resin Volume Quote package with mold shrinkage charts, processing guidelines, and delivery schedule.',deps:[3]}]},
+
+substrate_trial_proposal:{name:'High-frequency LCP substrate trial proposal',title:'AI Substrate Trial Architect',mode:'sequential',track:'commercial',deliverable:'LCP Film Substrate Prototype Proposal',
+sample:'Structure a 90-day evaluation agreement replacing PTFE/polyimide with SUMIPLY™ LCP film in a 77 GHz ADAS radar PCB (-65% dielectric loss, zero moisture absorption).',
+desc:'Agents scope substrate trial geometry, calculate signal loss reduction (-0.4 dB/inch gain at 77 GHz), establish evaluation milestones, and produce proposal.',
+tasks:[{agent:'qualifier',task:'Parse customer radar PCB spec: 77 GHz ADAS radar, 6-layer hybrid stackup, baseline PTFE substrate (high cost, poor multi-layer lamination).',deps:[]},
+{agent:'lcp_polymer_eng',task:'Calculate dielectric & signal loss performance: SUMIPLY™ LCP film Dk = 2.90, tan δ = 0.0012 at 77 GHz (-65% loss reduction vs PTFE/FR4).',deps:[0]},
+{agent:'pricing',task:'Structure prototype evaluation fee: 100 LCP film laminate sheets (25µm thickness), copper foil clad integration support, and 90-day RF testing SLA.',deps:[1]},
+{agent:'writer',task:'Produce the LCP Film Substrate Prototype proposal with RF loss comparison curves, lamination press profile, and commercial rollout SLA.',deps:[2]}]},
+
+radar:{name:'Specialty engineering plastics & materials intel',title:'AI Market Intel',mode:'dag',track:'commercial',deliverable:'Competitive Intelligence Brief',
+sample:'How do competing engineering polymer suppliers (Celanese Vectra LCP, Solvay Xydar LCP, SABIC, Toray) compare to SumiChem in heat resistance (>350°C), thin-wall melt flow, and Phoenix AZ epi-wafer manufacturing?',
+desc:'Agents profile competing specialty polymer vendors, compare LCP melt flow & outgassing performance, analyze semiconductor packaging trends, and produce brief.',
+tasks:[{agent:'researcher',task:'Scan engineering plastics market: LCP, PEEK, PES, polyimide films, epoxy molding compounds, GaAs/GaN epi-wafers.',deps:[]},
+{agent:'prospector',task:'Profile competing vendors: Celanese (Vectra LCP), Solvay (Xydar LCP), SABIC (ULTEM PEI), Toray Industries.',deps:[]},
+{agent:'lcp_polymer_eng',task:'Compare technology metrics: SUMIKASUPER™ LCP (ultra-high heat resistance >350°C, zero flash in 0.15mm walls, ultra-low outgassing) vs competing LCPs.',deps:[0,1]},
+{agent:'writer',task:'Produce competitive intelligence brief highlighting SumiChem Phoenix AZ manufacturing, custom resin grinding, and glass-core substrate leadership.',deps:[2]}]},
+
+lcp_5g_substrate_design:{name:'5G/6G mmWave LCP substrate & dielectric optimization',title:'AI LCP Substrate Architect',mode:'sequential',track:'operations',tag:'flagship',deliverable:'5G mmWave LCP Substrate Datasheet & Processing Package',
+sample:'Process a 28 GHz / 39 GHz 5G mmWave antenna substrate requirement: synthesize ultra-low loss SUMIKASUPER™ LCP resin (Dk = 2.85, tan δ = 0.0008), simulate fine-pitch copper adhesion (peel strength > 1.1 N/mm), audit thermal expansion matching (CTE < 12 ppm/°C), QA-review, and produce mold processing & substrate datasheet package.',
+desc:'Agents synthesize low-loss SUMIKASUPER™ LCP grade, simulate fine-line copper foil adhesion, optimize CTE matching to copper/silicon, QA-review, and produce datasheet.',
+tasks:[{agent:'lcp_polymer_eng',task:'Formulate SUMIKASUPER™ LCP low-dielectric compound: optimize liquid crystal mesogen alignment for Dk = 2.85 & tan δ = 0.0008 at 28 GHz / 39 GHz.',deps:[]},
+{agent:'lcp_polymer_eng',task:'Simulate copper clad adhesion & surface roughness: optimize physical surface treatment for 9µm ultra-flat copper foil (peel strength = 1.18 N/mm).',deps:[0]},
+{agent:'thermal_analyst',task:'Analyze thermal expansion & warpage: align in-plane CTE = 11.5 ppm/°C with copper (16.5 ppm/°C) to prevent PCB bowing after 260°C reflow.',deps:[1]},
+{agent:'throughput',task:'Configure extrusion film casting line: 50µm uniform film thickness across 1,000mm web width; verify zero pinholes or dielectric inclusions.',deps:[2]},
+{agent:'compliance',task:'Verify UL94 V-0 flame rating, RoHS/REACH compliance, and IPC-4101 flexible circuit substrate standards.',deps:[3]},
+{agent:'reviewer',task:'QA-review LCP substrate datasheet: verify 100% S-parameter dielectric loss test, moisture absorption < 0.02%, and lot certificate.',deps:[4]},
+{agent:'writer',task:'Produce the 5G mmWave LCP Substrate Datasheet & Processing package with dielectric frequency sweeps, molding parameters, and lot cert.',deps:[5]}]},
+
+bga_socket_molding:{name:'0.2mm fine-pitch semiconductor socket injection molding',title:'AI Semiconductor Molding Specialist',mode:'sequential',track:'operations',deliverable:'Fine-Pitch BGA Socket Mold Processing Package',
+sample:'Model thin-wall injection molding of SUMIKASUPER™ LCP for 2,500-pin BGA sockets; optimize melt temperature (350°C), verify flash-free flow into 0.15mm wall sections, and issue mold traveler.',
+desc:'Agents optimize injection molding temperature/pressure profile for SUMIKASUPER™ LCP, eliminate mold flash in 0.15mm pin walls, and produce mold traveler.',
+tasks:[{agent:'packaging_eng',task:'Design 2,500-pin BGA socket mold in Moldflow: 0.2mm pin pitch, 0.15mm wall thickness, 4-cavity high-precision tool steel mold.',deps:[]},
+{agent:'packaging_eng',task:'Set injection molding parameters: melt temp = 350°C, mold temp = 140°C, injection speed = 220 mm/s, holding pressure = 85 MPa.',deps:[0]},
+{agent:'lcp_polymer_eng',task:'Verify flash-free shear viscosity: confirm zero mold flash at pin core pins (< 5µm flash limit) and uniform fiber orientation.',deps:[1]},
+{agent:'reviewer',task:'QA-review mold processing traveler: verify dimensional tolerance ±0.01mm across 50mm socket body and zero pin ejection distortion.',deps:[2]},
+{agent:'writer',task:'Produce the Fine-Pitch BGA Socket Mold Processing package with Moldflow filling plots, injection speed profiles, and cleanroom traveler.',deps:[3]}]},
+
+epi_wafer_growth_opt:{name:'GaAs/GaN epitaxial wafer yield optimization (Phoenix plant)',title:'AI Epi-Wafer Process Lead',mode:'sequential',track:'operations',deliverable:'GaAs/GaN Epitaxial Wafer Release Package',
+sample:'Configure MOCVD epitaxial reactor growth at Phoenix AZ facility; optimize lattice strain, achieve defect density < 100/cm², verify sheet resistance uniformity (<1.5%), and issue wafer release traveler.',
+desc:'Agents tune MOCVD gas flow and precursor temperatures at the Phoenix AZ plant, measure lattice strain & defect density, and produce wafer release traveler.',
+tasks:[{agent:'epi_wafer_spec',task:'Configure MOCVD epitaxial growth recipe: 150mm GaAs substrate, AlGaAs/InGaAs HEMT layer stack, triethylgallium precursor flow.',deps:[]},
+{agent:'epi_wafer_spec',task:'Optimize lattice strain & defect density: tune growth temperature to 680°C; measure etch pit defect density = 78 / cm² (spec < 100/cm²).',deps:[0]},
+{agent:'epi_wafer_spec',task:'Verify electrical sheet resistance: 4-point probe mapping across 150mm wafer; confirm sheet resistance uniformity = 1.2% (spec < 1.5%).',deps:[1]},
+{agent:'reviewer',task:'QA-review epitaxial wafer lot certificate: verify X-ray diffraction (XRD) rocking curve FWHM < 20 arcsec and atomic force microscopy roughness.',deps:[2]},
+{agent:'writer',task:'Produce the GaAs/GaN Epitaxial Wafer Release package with XRD spectra, 2D sheet resistance maps, and Phoenix AZ fab certificate.',deps:[3]}]},
+
+jedec_thermal_cert:{name:'JEDEC MSL-1 & high-temperature reflow outgassing audit',title:'AI Reliability & Quality Director',mode:'sequential',track:'operations',deliverable:'JEDEC MSL-1 & Reflow Reliability Certificate',
+sample:'Audit LCP semiconductor package for JEDEC Moisture Sensitivity Level 1 (MSL-1, 85°C / 85% RH for 168h), test 260°C lead-free solder reflow endurance, measure outgassing (TML < 0.05%), and issue reliability certificate.',
+desc:'Agents subject LCP semiconductor packages to 85°C / 85% RH moisture soak, 260°C lead-free reflow cycles, measure total mass loss outgassing, and produce certificate.',
+tasks:[{agent:'thermal_analyst',task:'Execute JEDEC MSL-1 moisture soak test: 85°C / 85% RH for 168 hours; measure total moisture absorption = 0.018% (spec < 0.05%).',deps:[]},
+{agent:'thermal_analyst',task:'Subject package to 3x 260°C lead-free solder reflow cycles: inspect for delamination via C-Mode Scanning Acoustic Microscopy (C-SAM).',deps:[0]},
+{agent:'compliance',task:'Test NASA outgassing limits: Total Mass Loss (TML) = 0.032% (spec < 1.0%), Collected Volatile Condensable Material (CVCM) = 0.002% (spec < 0.1%).',deps:[1]},
+{agent:'reviewer',task:'QA-review reliability sign-off: verify zero C-SAM delamination, zero blistering, and 100% mechanical retention after reflow.',deps:[2]},
+{agent:'writer',task:'Produce the JEDEC MSL-1 & Reflow Reliability Certificate with C-SAM acoustic scans, outgassing data sheets, and QA release stamp.',deps:[3]}]},
+};
+
+const DTITLE={scout:'Target Semiconductor & Polymer Account List',lcp_resin_quote:'Specialty Resin Volume Quote Package',substrate_trial_proposal:'LCP Film Substrate Prototype Proposal',radar:'Competitive Intelligence Brief',lcp_5g_substrate_design:'5G mmWave LCP Substrate Datasheet & Processing Package',bga_socket_molding:'Fine-Pitch BGA Socket Mold Processing Package',epi_wafer_growth_opt:'GaAs/GaN Epitaxial Wafer Release Package',jedec_thermal_cert:'JEDEC MSL-1 & Reflow Reliability Certificate'};
+
+const TOOLS={
+research:()=>'Gathered 2.5D/3D semiconductor packaging, 5G mmWave LCP substrate, and Phoenix GaAs/GaN epi-wafer market intel; targets ranked.',
+source_accounts:()=>'Sourced VP of Advanced Packaging, Director of Materials Engineering, and Sourcing Heads.',
+score_fit:()=>'Scored against SumiChem capabilities: SUMIKASUPER LCP (>340°C heat resistance, Dk=2.85), Phoenix AZ epi-wafers.',
+synthesize_lcp_compound:()=>'Synthesized SUMIKASUPER LCP compound: Dk=2.85, tan δ=0.0008 at 28/39 GHz, MFI=45 g/10min.',
+calculate_dielectric_constant:()=>'Calculated dielectric constant: Dk=2.85, tan δ=0.0008 across 10-80 GHz sweep.',
+design_bga_package:()=>'Designed 2,500-pin BGA socket mold: 0.2mm pin pitch, 0.15mm wall thickness laid out.',
+simulate_molding_flow:()=>'Simulated Moldflow filling: 350°C melt temp, zero flash (<5µm), 85 MPa holding pressure.',
+optimize_epi_growth:()=>'Optimized MOCVD epi-growth at Phoenix AZ plant: 680°C growth temp, AlGaAs/InGaAs stack.',
+inspect_defect_density:()=>'Inspected etch pit defect density: 78 / cm² (spec < 100/cm²), sheet resistance uniformity 1.2%.',
+simulate_thermal_expansion:()=>'Simulated thermal expansion: in-plane CTE=11.5 ppm/°C matched to copper (16.5 ppm/°C).',
+measure_outgassing:()=>'Measured outgassing: TML=0.032% (spec < 1.0%), CVCM=0.002% (spec < 0.1%).',
+verify_compounding_yield:()=>'Verified twin-screw compounding yield: 99.1% resin yield across 50 metric ton run.',
+calculate_takt_time:()=>'Calculated takt time: 2.2 minutes per finished 25kg foil bag lot.',
+check_compliance:()=>'Checked JEDEC MSL-1, UL94 V-0 flame rating, RoHS/REACH, and IPC-4101 flexible substrate rules.',
+build_quote:()=>'Structured resin quote: compounding list price, volume tier discount (50+ tons), Phoenix AZ dispatch SLA.',
+qa_review:()=>'QA: Moldflow analysis, S-parameter Dk curves, C-SAM acoustic scans, XRD rocking curve, and lot cert verified.',
+compose:()=>'Drafted in a clear, cleanroom-ready, JEDEC/ISO-aware technical style.',
+save:()=>'Saved to shared context for downstream agents.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+
+const FINAL={
+scout:`TARGET SEMICONDUCTOR & POLYMER ACCOUNT LIST (illustrative)
+
+Scanned OSAT semiconductor packaging houses, semiconductor fabs, and 5G/6G mmWave antenna OEMs.
+
+A-tier (pursue now)
+1. OSAT Advanced Packaging House (Taiwan / Chandler AZ) — 2.5D/3D BGA package sockets — SumiChem fit 98
+2. Semiconductor Foundry Leader (Phoenix AZ / Hsinchu) — Glass-core package substrates & LCP — fit 97
+3. 5G/6G mmWave Antenna Module OEM (San Diego / Seoul) — Low-loss LCP substrate films — fit 95
+4. Automotive Tier-1 Radar Vendor (Farmington Hills MI / Munich) — 77 GHz ADAS radar PCB laminates — fit 93
+5. RF Power Amplifier Fab (Phoenix AZ / Greensboro NC) — GaAs/GaN epitaxial wafers — fit 91
+
+Contacts: VP of Advanced Packaging R&D, Chief Polymer Scientist, Director of Materials Procurement.
+Materials requirement: SUMIKASUPER™ LCP resin/film, SUMIKAEXCEL™ PES, GaAs/GaN epi-wafers.
+
+→ Saved: sumichem_target_list, executive_contacts, polymer_materials_matrix
+
+NOTE: illustrative; not affiliated with Sumitomo Chemical Advanced Technologies.`,
+
+lcp_resin_quote:`SPECIALTY RESIN VOLUME QUOTE PACKAGE (illustrative)
+
+Customer: Semiconductor Connector & Packaging OEM.
+Order: SUMIKASUPER™ LCP Resin Grade E4008 (#RFQ-SUMICHEM-2026-08).
+
+Resin specifications & thermal properties
+• Polymer Grade: SUMIKASUPER™ LCP E4008 (30% Glass-Fiber Reinforced, High-Flow Grade)
+• Heat Deflection Temperature (HDT): 345°C (under 1.82 MPa load) — PASS
+• Melt Flow Index (MFI): 45 g/10min at 360°C — PASS
+• Thin-Wall Flowability: 85mm spiral flow length at 0.2mm wall thickness — PASS
+• Flame Retardancy: UL94 V-0 at 0.15mm thickness without halogenated additives — PASS
+
+Commercial summary
+• Quantity: 50 Metric Tons (50,000 kg) in 25kg vacuum-sealed moisture-proof bags
+• Unit Price per kg: $[REDACTED]
+• Volume Tier Discount (18% for 50+ metric tons): -$[REDACTED]
+• Net Order Value: $[REDACTED] (FOB Phoenix, AZ facility — Production dispatch in 3 weeks ARO)
+
+→ Saved: sumichem_lcp_volume_quote, mold_processing_guide, HDT_thermal_plots
+
+NOTE: illustrative; all financial figures redacted.`,
+
+substrate_trial_proposal:`LCP FILM SUBSTRATE PROTOTYPE PROPOSAL (illustrative)
+
+Customer: Automotive ADAS Radar Manufacturer.
+Project: 77 GHz Radar PCB Substrate Material Evaluation (#TRIAL-SUMIPLY-2026).
+
+Benchmarking & RF loss reduction goals
+• Legacy Substrate: PTFE / FR4 hybrid stackup (high cost, poor multi-layer lamination yield)
+• SumiChem Solution: SUMIPLY™ LCP flexible copper clad laminate (25µm film thickness)
+• Dielectric Performance: Dk = 2.90, tan δ = 0.0012 at 77 GHz (-65% RF signal attenuation vs PTFE)
+• Moisture Resistance: Water absorption < 0.02% (zero frequency drift under 85°C / 85% RH humidity)
+
+Trial terms & milestone roadmap
+• Phase 1: Delivery of 100 LCP film laminate sheets for multi-layer PCB lamination (4 weeks ARO)
+• Phase 2: 77 GHz radar antenna pattern gain, CTE thermal cycling, and automotive road test SLA
+• Commercial Rollout: 250,000 vehicle sets / year (SumiChem NAFTA material distribution)
+
+→ Saved: lcp_substrate_trial_proposal, rf_loss_comparison_curves, lamination_press_profile
+
+NOTE: illustrative; all financial figures redacted.`,
+
+radar:`COMPETITIVE INTELLIGENCE BRIEF (illustrative)
+
+Landscape
+• Celanese (Vectra LCP): market leader in standard electronic LCPs, but higher melt viscosity in ultra-thin walls (<0.2mm)
+• Solvay (Xydar LCP): good thermal resistance, but higher outgassing during 260°C lead-free reflow
+• SABIC (ULTEM PEI) / Toray: strong in general engineering plastics, but higher dielectric loss at 28 GHz+ mmWave
+
+Where Sumitomo Chemical Advanced Technologies (SumiChem) wins
+• SUMIKASUPER™ LCP Ultra-Flow: 85mm spiral flow at 0.2mm wall thickness enables zero-flash 2,500-pin BGA sockets
+• Superior Dielectric Loss: Dk = 2.85, tan δ = 0.0008 at 28/39 GHz for 5G/6G antenna substrates
+• Phoenix, AZ Plant Operations: U.S.-based GaAs/GaN epitaxial wafer manufacturing & custom PES resin grinding
+• Glass-Core Substrate Innovation: next-generation glass-core package substrate resin development with Tier-1 fabs
+
+Talk tracks
+1. "SUMIKASUPER LCP delivers zero-flash injection molding in 0.15mm walls for fine-pitch BGA sockets"
+2. "SUMIPLY LCP film cuts 77 GHz radar signal loss by 65% while maintaining zero moisture absorption"
+3. "U.S. manufacturing & technical support from our Phoenix, Arizona facility"
+
+→ Saved: competitive_matrix, technology_benchmarks, sales_talk_tracks
+
+NOTE: illustrative; not affiliated with Sumitomo Chemical Advanced Technologies.`,
+
+lcp_5g_substrate_design:`5G MMWAVE LCP SUBSTRATE DATASHEET & PROCESSING PACKAGE (illustrative · flagship)
+
+Application: 28 GHz / 39 GHz 5G mmWave Antenna Substrate (#LCP-5G-SUBSTRATE).
+
+Dielectric & material performance
+• Dielectric Constant (Dk): 2.85 at 28 GHz / 2.86 at 39 GHz (spec < 2.90) — PASS
+• Dissipation Factor (tan δ): 0.0008 at 28 GHz / 0.0009 at 39 GHz (spec < 0.0010) — PASS
+• Copper Clad Peel Strength: 1.18 N/mm on 9µm ultra-flat copper foil — PASS
+• In-Plane CTE: 11.5 ppm/°C (matched to copper 16.5 ppm/°C → zero PCB bowing) — PASS
+• Water Absorption: 0.018% after 24-hour immersion (spec < 0.04%) — PASS
+
+Thermal & regulatory compliance
+• Melting Temperature: 335°C / Heat Deflection Temperature = 310°C — PASS
+• Flame Rating: UL94 V-0 clean without halogenated additives — PASS
+
+QA review & lot sign-off
+• 100% S-parameter dielectric loss test verified; zero pinholes across 1,000mm film web
+• Recommendation: Release LCP substrate grade for high-volume 5G antenna production
+
+→ Saved: lcp_5g_substrate_package, dielectric_sweeps_2d, mold_processing_params, lot_certificate
+
+NOTE: illustrative; confirm against customer antenna substrate drawing.`,
+
+bga_socket_molding:`FINE-PITCH BGA SOCKET MOLD PROCESSING PACKAGE (illustrative)
+
+Mold Tool: 2,500-Pin Fine-Pitch BGA Socket Mold (0.2mm Pitch, #BGA-SOCKET-2500).
+
+Molding parameters & quality audit
+• Resin Grade: SUMIKASUPER™ LCP Grade E4008 (30% Glass-Fiber Reinforced)
+• Melt Temperature: 350°C / Mold Temperature = 140°C — PASS
+• Injection Speed: 220 mm/s / Holding Pressure = 85 MPa — PASS
+• Thin-Wall Flow: 100% complete cavity filling in 0.15mm wall sections — PASS
+• Mold Flash: Zero flash (< 3µm) at pin core pins — PASS
+• Dimensional Tolerance: ±0.008mm across 50mm socket body — PASS
+
+Status: Approved for mass production cleanroom molding.
+
+→ Saved: bga_socket_molding_package, moldflow_filling_plots, injection_profiles, cleanroom_traveler
+
+NOTE: illustrative; confirm against SumiChem mold processing manual.`,
+
+epi_wafer_growth_opt:`GAAS/GAN EPITAXIAL WAFER RELEASE PACKAGE (illustrative)
+
+Fab Facility: Sumitomo Chemical Advanced Technologies (Phoenix, AZ Plant, #EPI-PHX-2026).
+
+MOCVD growth & defect density results
+• Substrate: 150mm Semi-Insulating GaAs Substrate
+• Epitaxial Layer Stack: AlGaAs/InGaAs Pseudomorphic HEMT Structure
+• Growth Temperature: 680°C MOCVD reactor control — PASS
+• Etch Pit Defect Density: 78 / cm² (spec < 100 / cm²) — PASS
+• Sheet Resistance Uniformity: 1.2% across 150mm wafer (spec < 1.5%) — PASS
+• X-Ray Diffraction (XRD) Rocking Curve FWHM: 18.4 arcsec — PASS
+
+Sign-off: Certified for RF power amplifier chip fabrication.
+
+→ Saved: epi_wafer_release_package, xrd_spectra_plots, 2d_sheet_resistance_map, phx_fab_certificate
+
+NOTE: illustrative; confirm against Phoenix AZ fab quality records.`,
+
+jedec_thermal_cert:`JEDEC MSL-1 & REFLOW RELIABILITY CERTIFICATE (illustrative)
+
+Test Package: SUMIKASUPER™ LCP Semiconductor Package (#JEDEC-MSL1-SAFETY).
+
+Reliability audit & test results
+• JEDEC MSL-1 Moisture Soak: 85°C / 85% RH for 168 hours → Moisture Gain = 0.018% — PASS
+• Solder Reflow Resistance: 3x 260°C lead-free reflow profile → Zero delamination via C-SAM — PASS
+• Outgassing (NASA SP-R-0022A): Total Mass Loss (TML) = 0.032% (spec < 1.0%) — PASS
+• Volatile Condensable Material: CVCM = 0.002% (spec < 0.1%) — PASS
+• Flame Retardancy: UL94 V-0 verified after thermal aging — PASS
+
+Quality Certification: Certified for automotive & aerospace semiconductor packaging release.
+
+→ Saved: jedec_msl1_certificate, csam_acoustic_scans, outgassing_reports, qa_release_stamp
+
+NOTE: illustrative; confirm against SumiChem QA lab test records.`,
+};
+
+let EMPLOYEES=[
+{id:'scout',name:'Scout',title:'AI Materials Scout',wf:'scout',handled:290,hrs:62,win:0,status:'idle'},
+{id:'resinestimator',name:'Resin-Estimator',title:'AI Polymer Quoting Estimator',wf:'lcp_resin_quote',handled:370,hrs:88,win:54,status:'idle'},
+{id:'substratearchitect',name:'Substrate-Architect',title:'AI Substrate Trial Architect',wf:'substrate_trial_proposal',handled:110,hrs:96,win:60,status:'idle'},
+{id:'radar',name:'Radar',title:'AI Market Intel',wf:'radar',handled:140,hrs:34,win:0,status:'idle'},
+{id:'lcp_architect',name:'LCP-Architect',title:'AI LCP Substrate Architect',wf:'lcp_5g_substrate_design',handled:450,hrs:255,win:78,status:'idle'},
+{id:'molding_spec',name:'Molding-Spec',title:'AI Semiconductor Molding Specialist',wf:'bga_socket_molding',handled:320,hrs:165,win:62,status:'idle'},
+{id:'epi_lead',name:'Epi-Fab-Lead',title:'AI Epi-Wafer Process Lead',wf:'epi_wafer_growth_opt',handled:340,hrs:180,win:68,status:'idle'},
+{id:'jedec_dir',name:'JEDEC-QC-Dir',title:'AI Reliability & Quality Director',wf:'jedec_thermal_cert',handled:260,hrs:150,win:60,status:'idle'},
+];
+
+let running=false;
+const $=id=>document.getElementById(id);const sleep=ms=>new Promise(r=>setTimeout(r,ms));const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;const now=()=>new Date().toLocaleTimeString('en-GB');const mono=n=>n.trim().slice(0,2).toUpperCase();
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Commercial &amp; Materials Qual</span>';if(wf.track==='operations')s+='<span class="tag operations">Polymer &amp; Semiconductor</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+function setView(v){$('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');$('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});}
+function renderEcon(){const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;const cells=[[total,'AI operators (commercial + engineering)'],[h.toLocaleString(),'LCP formulations, mold runs & wafer lots handled'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','polymer & semiconductor engineer hours saved / mo'],['+'+avg+'%','avg turnaround improvement']];$('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');}
+function empCard(e){const wf=WORKFLOWS[e.wf];const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}"><div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div><div class="emp-owns">Owns: <b>${wf.name}</b></div><div class="team">${team}</div><div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'—'}</b>faster</div></div><div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a resin grade / RFQ</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;}
+function renderRoster(){const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;let html='';TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});$('roster').innerHTML=html;}
+function assign(id){if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];$('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a resin spec, a connector molding drawing or a wafer defect log and ${e.name} runs the whole loop.</div></div></div><div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div><div id="stage"></div></div>`;$('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();}
+async function runEmp(id){if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');const stage=$('stage');stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div><div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div><div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;const feed=$('feed');function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;const row=document.createElement('div');row.className='frow';row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,150)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}log(null,`Input received: "${obj.substring(0,54)}…"`);log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);await sleep(rand(700,1100));const grid=$('agrid');wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});await sleep(600);$('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');const done=new Set();async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}$('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');await sleep(400);const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(6,44);$('resultArea').innerHTML=`<div class="result"><div class="rstats"><div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div><div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div><div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'Commercial & Materials Qual':'Polymer & Semiconductor Eng'}</span></div><div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div><div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div><div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div><div class="donebar"><b>${e.name} produced a review-ready output.</b> Read, adapt and QA complete, ready for a CTO, VP of materials engineering, principal polymer scientist or quality director to confirm against JEDEC/UL94 and SumiChem product specs. Illustrative simulation, not a production deliverable.</div>`;e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;}
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per resin batch',step:1};renderBuilder();}
+function renderBuilder(){const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];$('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+`<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div><div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. LCP-Architect" oninput="draft.name=this.value"></div><div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI LCP Substrate Architect" oninput="draft.title=this.value"></div><div class="field"><label>Cadence</label><div class="seg">`+['Per resin batch','Per mold run','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div><div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});renderEcon();renderRoster();setView('ops');setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);}
+
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
