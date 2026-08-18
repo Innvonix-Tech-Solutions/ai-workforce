@@ -136,3 +136,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/onto-innovation
 https://innvonix-tech-solutions.github.io/ai-workforce/master-fluid-solutions
 https://innvonix-tech-solutions.github.io/ai-workforce/enercon-technologies
 https://innvonix-tech-solutions.github.io/ai-workforce/etopus
+https://innvonix-tech-solutions.github.io/ai-workforce/crypton
