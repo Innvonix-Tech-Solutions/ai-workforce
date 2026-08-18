@@ -138,3 +138,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/enercon-technologies
 https://innvonix-tech-solutions.github.io/ai-workforce/etopus
 https://innvonix-tech-solutions.github.io/ai-workforce/crypton
 https://innvonix-tech-solutions.github.io/ai-workforce/sumitomo
+https://innvonix-tech-solutions.github.io/ai-workforce/semtech
