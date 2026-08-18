@@ -131,3 +131,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/aqua-leisure
 https://innvonix-tech-solutions.github.io/ai-workforce/randtech
 https://innvonix-tech-solutions.github.io/ai-workforce/plasmatherm
 https://innvonix-tech-solutions.github.io/ai-workforce/promex
+https://innvonix-tech-solutions.github.io/ai-workforce/cellink-corporation
