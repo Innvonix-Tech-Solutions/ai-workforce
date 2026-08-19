@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Allient Console — AI Motion, Controls &amp; Power Solutions Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060b14;
+  --surface:#0f1726;
+  --surface-2:#192438;
+  --surface-3:#283754;
+  --border:#283754;
+  --border-soft:#111a2b;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --muted-2:#64748b;
+  --accent:#0284c7;
+  --accent-dim:rgba(2,132,199,0.15);
+  --accent-line:rgba(2,132,199,0.38);
+  --accent2:#f97316;
+  --accent2-bg:rgba(249,115,22,0.08);
+  --accent3:#10b981;
+  --danger:#ef4444;
+  --ok:#10b981;
+  --font-display:'Rajdhani',sans-serif;
+  --font-body:'Work Sans',sans-serif;
+  --font-mono:'Roboto Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 88% -8%, rgba(2,132,199,0.14), transparent 55%),
+    radial-gradient(900px 480px at 5% 5%, rgba(249,115,22,0.07), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+a{color:var(--accent);}
+::selection{background:rgba(2,132,199,0.28);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+.hidden{display:none!important;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:24px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:44px;height:42px;border-radius:8px;
+  background:linear-gradient(135deg,#00529b,#0284c7);
+  border:1px solid var(--accent-line);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:var(--font-mono);font-weight:800;font-size:12px;
+  box-shadow:0 0 18px rgba(2,132,199,0.35);
+}
+.mark-name{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:0.02em;color:#fff;}
+.mark-sub{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px;}
+
+.line-readout{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent);
+  background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:8px 14px;display:flex;align-items:center;gap:10px;
+}
+.line-readout .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.tabs{display:flex;gap:8px;margin-top:20px;border-bottom:1px solid var(--border-soft);}
+.tab-btn{
+  background:transparent;border:none;color:var(--muted);padding:10px 18px;font-family:var(--font-body);
+  font-size:13.5px;font-weight:600;cursor:pointer;border-radius:8px 8px 0 0;transition:all 0.15s ease;
+}
+.tab-btn:hover{color:var(--text);background:var(--surface-2);}
+.tab-btn.active{color:var(--accent);background:var(--surface);border:1px solid var(--border);border-bottom-color:var(--surface);}
+
+.hero{padding:36px 0 28px;display:grid;grid-template-columns:1.15fr 0.85fr;gap:40px;align-items:center;}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:24px 0 18px;}}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent);}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(30px,4vw,42px);line-height:1.08;letter-spacing:-0.005em;margin:0 0 14px;color:#fff;}
+h1 span{color:var(--accent);background:linear-gradient(90deg,#0284c7,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.lead{color:var(--muted);font-size:15px;max-width:55ch;margin:0 0 22px;line-height:1.6;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:var(--font-body);font-weight:600;font-size:13.5px;border-radius:6px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700;}
+.btn-primary:hover{background:#38bdf8;box-shadow:0 0 16px rgba(2,132,199,0.35);}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--accent2);color:var(--accent2);}
+
+/* Motion, Controls & Power Solutions Graphic Card */
+.wafer{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:18px 18px 14px;box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+.wafer-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+.wafer-title{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em;}
+.wafer-val{font-family:var(--font-mono);font-size:12px;color:var(--accent);font-weight:600;}
+svg.wafermap{width:100%;height:210px;display:block;}
+.wafer-outline{fill:none;stroke:var(--border);stroke-width:1.5;}
+.wafer-grid-line{stroke:var(--border-soft);stroke-width:0.5;stroke-dasharray:2 2;}
+.wafer-foot{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+
+.econ{border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:760px){.econ{grid-template-columns:repeat(2,1fr);}}
+.econ-item{padding:6px 18px;border-left:1px solid var(--border-soft);}
+.econ-item:first-child{border-left:none;padding-left:0;}
+@media(max-width:760px){.econ-item:nth-child(2n+1){border-left:none;padding-left:0;}}
+.econ-num{font-family:var(--font-display);font-weight:700;font-size:28px;color:#fff;}
+.econ-num small{font-size:14px;color:var(--accent);font-weight:700;}
+.econ-label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+section{padding:36px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.section-title{font-family:var(--font-display);font-weight:700;font-size:24px;color:#fff;}
+.section-sub{color:var(--muted);font-size:13.5px;max-width:62ch;margin-top:4px;}
+.track-label{font-family:var(--font-mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin:28px 0 14px;padding-top:10px;border-top:1px dashed var(--border-soft);}
+.track-label:first-of-type{border-top:none;padding-top:0;margin-top:6px;}
+
+.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+@media(max-width:760px){.roster{grid-template-columns:1fr;}}
+.op-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;transition:all .15s ease;}
+.op-card:hover{border-color:var(--accent-line);transform:translateY(-2px);}
+.op-card.flagship{border-color:var(--accent2);background:linear-gradient(180deg,rgba(249,115,22,0.08),var(--surface));}
+.op-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.op-name{font-family:var(--font-display);font-weight:700;font-size:18px;color:#fff;}
+.op-role{font-size:12.5px;color:var(--muted);margin-top:2px;}
+.flag-chip{font-family:var(--font-mono);font-size:10px;color:var(--accent2);border:1px solid var(--accent2);background:var(--accent2-bg);border-radius:20px;padding:2px 8px;white-space:nowrap;}
+.op-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+.op-stats{display:flex;gap:18px;margin-top:2px;}
+.op-stat{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.op-stat b{color:var(--accent);font-size:14px;display:block;font-family:var(--font-body);font-weight:600;}
+.op-agents{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.chip{font-size:11px;background:var(--surface-3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;color:var(--text);}
+.op-actions{display:flex;gap:10px;margin-top:6px;}
+.run-btn{flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:600;font-size:13px;border-radius:6px;padding:10px;cursor:pointer;transition:all 0.15s ease;}
+.run-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+
+.run-panel{background:var(--surface);border:1px solid var(--accent-line);border-radius:12px;padding:24px;margin-top:24px;display:none;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+.run-panel.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.run-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.run-head h3{font-family:var(--font-display);font-size:20px;margin:0;color:#fff;}
+.run-head .meta{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.close-run{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:6px 12px;cursor:pointer;font-size:12px;}
+.close-run:hover{color:var(--text);border-color:var(--accent2);}
+
+.feed{background:var(--bg);border:1px solid var(--border-soft);border-radius:8px;padding:16px;height:260px;overflow-y:auto;font-family:var(--font-mono);font-size:12px;display:flex;flex-direction:column;gap:8px;}
+.feed-line{display:flex;gap:10px;align-items:flex-start;opacity:0;animation:appear .3s ease forwards;}
+@keyframes appear{to{opacity:1;}}
+.feed-line .tag{color:var(--accent2);white-space:nowrap;}
+.feed-line .txt{color:var(--muted);}
+.feed-line.done .tag{color:var(--accent);}
+.feed-line.done .txt{color:var(--text);}
+
+.progress-row{display:flex;gap:6px;margin:16px 0 8px;flex-wrap:wrap;}
+.pstep{flex:1;min-width:64px;height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;position:relative;}
+.pstep.active{background:var(--accent-dim);}
+.pstep.complete{background:var(--accent);box-shadow:0 0 8px var(--accent);}
+
+.deliverable{margin-top:20px;background:var(--surface-2);border:1px solid var(--accent-line);border-radius:8px;padding:18px 20px;display:none;}
+.deliverable.show{display:block;animation:fadein .3s ease;}
+.deliverable h4{font-family:var(--font-display);font-size:17px;margin:0 0 12px;color:var(--accent);}
+.deliverable pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:12.5px;color:var(--text);margin:0;line-height:1.65;}
+.note{font-size:11px;color:var(--muted-2);margin-top:12px;font-style:italic;}
+
+/* BUILDER STYLING (DYNEX FUNCTIONAL FLOW) */
+.steps-bar{display:flex;gap:10px;margin-bottom:24px;}
+.step-item{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);}
+.step-item.active{border-color:var(--accent);background:var(--surface-3);}
+.step-item .step-num{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--muted-2);}
+.step-item.active .step-num{color:var(--accent);}
+.step-item .step-lbl{font-size:13.5px;font-weight:600;color:var(--text);margin-top:2px;}
+
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.wf-card{border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;background:var(--surface-2);transition:all 0.15s ease;}
+.wf-card:hover{border-color:var(--accent2);}
+.wf-card.sel{border-color:var(--accent);background:rgba(2,132,199,0.08);}
+.wf-title{font-family:var(--font-display);font-weight:700;font-size:16px;color:#fff;}
+.wf-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45;}
+.wf-meta{font-family:var(--font-mono);font-size:10.5px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase;}
+
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);margin-bottom:10px;}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--accent);flex-shrink:0;}
+.task-row .tt{flex:1;font-size:13px;color:var(--text);}
+.task-row select{font-family:var(--font-body);font-size:12.5px;border:1px solid var(--border);border-radius:6px;padding:8px 10px;background:var(--surface);color:var(--text);outline:none;min-width:210px;}
+.task-row select:focus{border-color:var(--accent);}
+
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.field input{width:100%;font-family:var(--font-body);font-size:13.5px;border:1px solid var(--border);border-radius:8px;padding:11px 13px;background:var(--surface-2);color:var(--text);outline:none;}
+.field input:focus{border-color:var(--accent);}
+
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.seg button{font-family:var(--font-body);font-size:12.5px;padding:9px 16px;border:none;background:var(--surface-2);color:var(--muted);cursor:pointer;border-right:1px solid var(--border);}
+.seg button:last-child{border-right:none;}
+.seg button.on{background:var(--accent);color:#fff;font-weight:700;}
+
+.bnav{display:flex;justify-content:space-between;margin-top:24px;}
+
+footer{border-top:1px solid var(--border-soft);padding:30px 0 44px;}
+.foot-note{font-size:12px;color:var(--muted-2);max-width:85ch;line-height:1.6;}
+.foot-note strong{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark-row">
+      <div class="mark">
+        <div class="mark-badge">ALLIENT</div>
+        <div>
+          <div class="mark-name">Allient Console</div>
+          <div class="mark-sub">Allient Inc. (allient.com) · Motion, Controls &amp; Power Solutions · NASDAQ: ALNT</div>
+        </div>
+      </div>
+      <div class="line-readout">
+        <span class="dot"></span>
+        <span id="lineTxt">Amherst, NY HQ &amp; Global Plants · Motion, Controls &amp; Power Lines Active</span>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tabA" onclick="setView('ops')">The AI Workforce Roster</button>
+      <button class="tab-btn" id="tabB" onclick="setView('hire')">+ Add an AI Operator</button>
+    </div>
+  </header>
+
+  <div id="view-ops">
+    <section class="hero" style="padding-bottom:10px;">
+      <div>
+        <div class="eyebrow">Know What's Possible in Integrated Engineering</div>
+        <h1>Eight operators to run Allient's <span>motion-controls-and-power</span> loop</h1>
+        <p class="lead">Each operator below is a real Allient Inc. workflow — analyzing 3D CAD brushless DC motors, frameless torque motor stators, and Allient Power harmonic quality filter assemblies, scrubbing 500-line AS9100D &amp; ISO 13485 motion component BOMs for EMI filter suppression, configuring Infranor servo drive electronics and optical encoder feedback telemetry, and auditing AS9100D quality releases — handed to a team of specialist AI agents that works it end-to-end.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('roster-section').scrollIntoView({behavior:'smooth'})">View the Roster</button>
+          <button class="btn btn-ghost" onclick="runOperator('motion_dfm')">Run Flagship Operator</button>
+        </div>
+      </div>
+
+      <div class="wafer">
+        <div class="wafer-top">
+          <span class="wafer-title">Allient Power &amp; Motion Diagnostics</span>
+          <span class="wafer-val" id="yieldVal">98.8% System Efficiency PASS</span>
+        </div>
+        <svg class="wafermap" viewBox="0 0 220 210" preserveAspectRatio="xMidYMid meet">
+          <circle class="wafer-outline" cx="110" cy="105" r="92"></circle>
+          <line class="wafer-grid-line" x1="20" y1="105" x2="200" y2="105"></line>
+          <line class="wafer-grid-line" x1="110" y1="15" x2="110" y2="195"></line>
+          <g id="dieGrid"></g>
+        </svg>
+        <div class="wafer-foot">
+          <span>Amherst Facility · Lot ALNT-2608-BLDC</span>
+          <span id="binVal">Pass: AS9100D &amp; ISO 13485</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="econ">
+      <div class="econ-item">
+        <div class="econ-num">5.4<small>×</small></div>
+        <div class="econ-label">Faster custom motor &amp; servo drive design release</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">3<small> Pillars</small></div>
+        <div class="econ-label">Integrated Motion, Controls &amp; Power solutions</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">28<small> hrs</small></div>
+        <div class="econ-label">Median electromechanical engineering hours returned per run</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">8<small>/8</small></div>
+        <div class="econ-label">Workflows covered, CAD DFM through AS9100D release</div>
+      </div>
+    </div>
+
+    <section id="roster-section">
+      <div class="section-head">
+        <div>
+          <div class="section-title">The AI Workforce Roster</div>
+          <div class="section-sub">Grouped into Commercial &amp; Motion Solutions Tenders and Motion, Controls &amp; Power Operations tracks. Click run on any operator to watch its agent team execute in real time.</div>
+        </div>
+      </div>
+
+      <div id="rosterContainer"></div>
+    </section>
+
+    <!-- Run Panel -->
+    <div class="run-panel" id="runPanel">
+      <div class="run-head">
+        <div>
+          <h3 id="runTitle">Running Operator...</h3>
+          <div class="meta" id="runSub">Simulated multi-agent execution feed</div>
+        </div>
+        <button class="close-run" onclick="closeRun()">✕ Close View</button>
+      </div>
+      <div class="progress-row" id="progressRow"></div>
+      <div class="feed" id="feedArea"></div>
+      <div class="deliverable" id="deliverableBox">
+        <h4 id="delivTitle">Review-Ready Output</h4>
+        <pre id="delivCode"></pre>
+        <div class="note">Human-in-the-loop oversight active. Outputs verified by Allient Inc. senior engineering team. Illustrative simulation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="section-title">Add an AI Operator</div>
+          <div class="section-sub">Stand up a new AI operator in three steps: pick the workflow, assign each task to an agent via dropdown, then name it and set cadence.</div>
+        </div>
+      </div>
+
+      <div class="steps-bar" id="bSteps"></div>
+      <div id="bBody"></div>
+      <div class="bnav" id="bNav"></div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="foot-note">
+      <strong>Independent Concept Prototype</strong> prepared for a conversation with <strong>Allient Inc. (allient.com)</strong>. It is not affiliated with, endorsed by, or built on Allient systems or data. All operators, BLDC motor torque densities, Infranor servo drive setups, and AS9100D audits are illustrative simulations. A licensed electromechanical engineer, controls specialist, or quality auditor reviews and approves every integrated motion CAD model, servo setup, and defense release.
+    </div>
+  </footer>
+</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'Defense Actuation & Medical Robotics Market Intelligence', tools: ['research_defense_medical', 'save'] },
+  motor_eng: { emoji: '🔬', label: 'Frameless Torque Motor & Brushless DC Electromagnetic Engineer', tools: ['analyze_bldc_motor', 'save'] },
+  power_spec: { emoji: '⚡', label: 'Allient Power Quality, Line Reactor & EMI Filter Specialist', tools: ['design_power_filters', 'save'] },
+  as9100_scrubber: { emoji: '📑', label: 'AS9100D, ISO 13485 & ITAR Defense Component Specialist', tools: ['scrub_allient_bom', 'save'] },
+  cost_eng: { emoji: '🧮', label: 'Motor Winding, Optical Encoder & Servo Drive Costing Specialist', tools: ['calc_integrated_cost', 'save'] },
+  cloud_architect: { emoji: '☁️', label: 'Allient Controls Portal & Servo Telemetry Architect', tools: ['configure_controls_cloud', 'save'] },
+  quality_auditor: { emoji: '🛡️', label: 'AS9100D, ISO 13485 & Thermal Shock Quality Auditor', tools: ['audit_allient_quality', 'save'] },
+  supply_planner: { emoji: '📦', label: 'Neodymium Rare Earth Magnets & Stator Lamination Supply Planner', tools: ['plan_magnets_spares', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'Aerospace & Medical Enterprise Motion RFP Solution Writer', tools: ['compose_doc', 'save'] },
+  qa_reviewer: { emoji: '✅', label: 'Senior Motion, Controls & Power Systems Operations Reviewer', tools: ['qa_review', 'save'] },
+  prospector: { emoji: '🧲', label: 'Surgical Robotics VP Engineering & Defense Actuation Director Prospector', tools: ['source_allient_accounts', 'save'] },
+  drive_spec: { emoji: '⚙️', label: 'Infranor Digital Servo Drive & Optical Encoder Feedback Specialist', tools: ['design_infranor_drives', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+const TRACKS = [
+  { key: 'commercial', title: 'Commercial & Motion Solutions Tenders' },
+  { key: 'operations', title: 'Motion, Controls & Power Manufacturing Operations' }
+];
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Defense Actuation, Medical Robotics & AGV Fleet Scouting',
+    title: 'AI Motion, Controls & Power Scout',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Defense Actuation & Medical Robotics Opportunity Dossier',
+    desc: 'Maps defense missile actuator prime contractors (Lockheed, Raytheon), surgical robotics OEMs (Intuitive, Medtronic), and autonomous AGV/AMR builders.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan military turret drive solicitations, surgical robot joint motor RFPs, and warehouse AMR traction motor tenders.', deps: [] },
+      { agent: 'prospector', task: 'Source VP Engineering, Chief Robotics Architects, and OEM Motion Procurement Directors.', deps: [] },
+      { agent: 'motor_eng', task: 'Score fit on Allient Allied Motion BLDC motors, Infranor servo drives, and Allient Power EMI filters.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce target defense & medical robotics prospect dossier.', deps: [2] }
+    ]
+  },
+  quote: {
+    name: 'Custom Brushless Motor & Servo Drive System Quoting',
+    title: 'AI Motion & Power Cost Estimating Specialist',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Allient Custom Motor, Drive & Power Filter Quote Package',
+    desc: 'Models high-torque frameless BLDC motor laminations, optical encoder feedback rings, Infranor digital servo drives, and harmonic power filters.',
+    tasks: [
+      { agent: 'motor_eng', task: 'Review customer torque density requirement (12 Nm peak), operating voltage (48V DC), and size envelope (outer dia 90 mm).', deps: [] },
+      { agent: 'cost_eng', task: 'Model neodymium magnet grade N45SH costs, precision stator winding labor, and Allient Power filter enclosure margin.', deps: [0] },
+      { agent: 'supply_planner', task: 'Verify rare earth magnet availability, copper magnet wire stocks, and optical encoder glass disks.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Assemble formal Allient Custom Motor, Drive & Power Filter Quote Package.', deps: [2] }
+    ]
+  },
+  tender: {
+    name: 'Aerospace Defense & Surgical Robotics RFP Response',
+    title: 'AI Integrated Motion Solution Specialist',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Aerospace Defense & Surgical Robotics RFP Response Package',
+    desc: 'Audits AS9100D aerospace quality, ISO 13485 medical device compliance, ITAR export controls, and 99.8% servo tracking accuracy SLAs.',
+    tasks: [
+      { agent: 'researcher', task: 'Parse missile fin actuation environmental specs, surgical robot sterilization temperature limits, and MIL-STD-810 shock tests.', deps: [] },
+      { agent: 'quality_auditor', task: 'Verify AS9100D Rev D, ISO 13485:2016 certificates, ITAR registration, and Amherst, NY plant test lab credentials.', deps: [0] },
+      { agent: 'cost_eng', task: 'Structure phased multi-plant delivery schedule across Allient Motion, Controls & Power manufacturing facilities.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce formal Aerospace Defense & Surgical Robotics RFP response package.', deps: [2] }
+    ]
+  },
+  intel: {
+    name: 'Global Robotics, e-Mobility & Power Quality Market Radar',
+    title: 'AI Industrial Automation Market Intelligence',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Global Robotics & Motion Control Market Intelligence Brief',
+    desc: 'Tracks warehouse automation growth, electric power steering adoption, and highlights Allient single-source Motion, Controls & Power integration.',
+    tasks: [
+      { agent: 'researcher', task: 'Monitor global industrial robot shipment trends, harmonic power filter regulations (IEEE 519), and motor raw material indices.', deps: [] },
+      { agent: 'motor_eng', task: 'Benchmark Allient frameless torque motor power density (+25% vs competitors) and low cogging torque (<1%).', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile strategic robotics and motion control market intelligence brief.', deps: [0, 1] }
+    ]
+  },
+  motion_dfm: {
+    name: 'Frameless Torque Motor & Servo Drive DFM Scrub',
+    title: 'AI Integrated Motion Systems DFM Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'Frameless Torque Motor & Servo Drive DFM Review Package',
+    desc: 'Audits 3D CAD models for frameless BLDC torque motor stators, rotor magnet sleeves, Infranor digital servo drives, and Allient Power harmonic filters.',
+    tasks: [
+      { agent: 'motor_eng', task: 'Analyze electromagnetic finite element model; optimizes stator slot fill factor and skewing angle for <0.8% cogging torque.', deps: [] },
+      { agent: 'drive_spec', task: 'Verify Infranor digital servo drive CANopen / EtherCAT communication bandwidth and 20-bit absolute optical encoder feedback.', deps: [0] },
+      { agent: 'power_spec', task: 'Check Allient Power output harmonic filter thermal dissipation under continuous 100A peak current drive.', deps: [1] },
+      { agent: 'quality_auditor', task: 'Audit AS9100D Rev D inspection checkpoints, ISO 13485 bio-compatibility ratings, and MIL-STD-810G shock clearance.', deps: [2] },
+      { agent: 'reviewer', task: 'QA electromechanical & power engineering findings and compile customer technical package.', deps: [3] },
+      { agent: 'proposal_writer', task: 'Produce final Frameless Torque Motor & Servo Drive DFM Review Package.', deps: [4] }
+    ]
+  },
+  servo_setup: {
+    name: 'Infranor Servo Drive & Optical Encoder Feedback Setup',
+    title: 'AI Servo Drive & Control Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'Infranor Servo Drive & Optical Encoder Setup Package',
+    desc: 'Programs Infranor servo drive firmwares, tunes current/velocity/position control loops, and configures optical encoder resolution.',
+    tasks: [
+      { agent: 'drive_spec', task: 'Calibrate Infranor digital servo drive current loop sampling rate to 20 kHz for ultra-smooth motor torque control.', deps: [] },
+      { agent: 'cloud_architect', task: 'Connect Allient Controls portal API for real-time motor temperature, vibration, and drive current telemetry.', deps: [0] },
+      { agent: 'reviewer', task: 'Verify sub-arcsecond positioning resolution under full load dynamic reversing tests.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce Infranor Servo Drive & Optical Encoder Setup Package.', deps: [2] }
+    ]
+  },
+  as9100_audit: {
+    name: 'AS9100D, ISO 13485 & ITAR Defense Release Audit',
+    title: 'AI Aerospace & Medical Quality Auditor',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'AS9100D & ISO 13485 Integrated Quality Release',
+    desc: 'Audits AS9100D aerospace quality manuals, ISO 13485 medical device cleanroom assembly logs, ITAR defense export compliance, and surge proofing.',
+    tasks: [
+      { agent: 'quality_auditor', task: 'Audit Amherst plant stator insulation hi-pot test logs (2,500V AC), rotor balance records (<0.5 g-mm), and DHR files.', deps: [] },
+      { agent: 'as9100_scrubber', task: 'Verify 100% DFARS compliant magnetic materials and Certificate of Conformance (CoC) for optical encoder glass.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile AS9100D & ISO 13485 Integrated Quality Release Brief.', deps: [0, 1] }
+    ]
+  },
+  spares_plan: {
+    name: 'Neodymium Magnets, Stator Laminations & Power Filter Component Safety Stock Plan',
+    title: 'AI Motion Component & Power Planner',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'Neodymium Magnets & Power Component Safety Stock Plan',
+    desc: 'Secures N45SH neodymium magnets, silicon steel stator laminations, optical encoder glass disks, and power filter capacitors for global plants.',
+    tasks: [
+      { agent: 'supply_planner', task: 'Evaluate rare earth magnet supply lead times and 120-day critical material buffer in Amherst depot.', deps: [] },
+      { agent: 'as9100_scrubber', task: 'Execute raw material Certificate of Analysis (CoA) audit for magnetic flux density and coil insulation thermal rating.', deps: [] },
+      { agent: 'cost_eng', task: 'Structure strategic motor and power component inventory buffer to support aerospace & medical OEM delivery schedules.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce Neodymium Magnets & Power Component Safety Stock Plan.', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'Defense Actuation & Medical Robotics Opportunity Dossier',
+  quote: 'Allient Custom Motor, Drive & Power Filter Quote Package',
+  tender: 'Aerospace Defense & Surgical Robotics RFP Response Package',
+  intel: 'Global Robotics & Motion Control Market Intelligence Brief',
+  motion_dfm: 'Frameless Torque Motor & Servo Drive DFM Review Package',
+  servo_setup: 'Infranor Servo Drive & Optical Encoder Setup Package',
+  as9100_audit: 'AS9100D & ISO 13485 Integrated Quality Release',
+  spares_plan: 'Neodymium Magnets & Power Component Safety Stock Plan'
+};
+
+const TOOLS = {
+  research_defense_medical: () => 'Scanned military missile actuator solicitations, surgical robotics motor RFPs, and AMR traction tenders.',
+  source_allient_accounts: () => 'Sourced verified Surgical Robotics VP Engineering and Defense Actuation Directors; deduped CRM.',
+  analyze_bldc_motor: () => 'Analyzed 3D CAD BLDC motor finite element model; achieved 12 Nm peak torque and <0.8% cogging torque.',
+  design_power_filters: () => 'Designed Allient Power output harmonic filter; verified IEEE 519 compliance under 100A drive current.',
+  scrub_allient_bom: () => 'Scrubbed 500-line motion BOM; verified 100% AS9100D Rev D compliance, ISO 13485 medical rating, and ITAR specs.',
+  calc_integrated_cost: () => 'Calculated BLDC motor magnet assembly, Infranor drive rack, optical encoder ring, and power filter margins.',
+  configure_controls_cloud: () => 'Configured Allient Controls cloud portal telemetry API for real-time motor temperature and drive current monitoring.',
+  audit_allient_quality: () => 'Audited AS9100D quality logs, stator hi-pot test (2,500V AC), and rotor dynamic balance (PASS).',
+  plan_magnets_spares: () => 'Cross-referenced N45SH neodymium magnet lead times; secured 120-day material buffer in Amherst vault.',
+  design_infranor_drives: () => 'Structured Infranor digital servo drive 20 kHz current loop and 20-bit optical encoder feedback sync.',
+  compose_doc: () => 'Compiled electromechanical and power engineering metrics into clear, review-ready technical documentation.',
+  qa_review: () => 'Audited report completeness and checked AS9100D / ISO 13485 standards; ready for Allient VP Engineering sign-off.',
+  save: () => 'Saved deliverable artifact to shared project repository.'
+};
+
+function toolOut(t) { return (TOOLS[t] || (() => 'Executed successfully.'))(); }
+
+const FINAL = {
+  scout: `DEFENSE ACTUATION & MEDICAL ROBOTICS OPPORTUNITY DOSSIER (illustrative)
+Target Sector: Aerospace & Defense Actuation, Surgical Robotics & Autonomous Industrial AGVs
+Target Location: Amherst, NY & Global OEM Manufacturing Facilities
+
+A-Tier Qualified Enterprise Opportunities:
+1. Lockheed Martin Missiles & Fire Control — Precision Actuation Motors — Fit Score: 99/100
+   • Key Contacts: Director of Missile Systems, Lead Actuation Engineer
+   • Requirement: High-Torque Frameless BLDC Motors & ITAR AS9100D Electronics
+2. Intuitive Surgical — Next-Gen Surgical Robot Joint Motors — Fit Score: 97/100
+   • Key Contacts: VP Robotics Engineering, Head of Medical Device Sourcing
+   • Requirement: Low-Cogging Torque Motors & Infranor High-Resolution Servo Drives
+3. Teradyne / AMR Mobile Robot — AGV Electric Drive Axle — Fit Score: 95/100
+   • Key Contacts: Director of Vehicle Motion
+
+Strategic Positioning:
+Highlight Allient Inc. complete Motion, Controls & Power solution integration, NASDAQ: ALNT scale, AS9100D & ISO 13485 certified plants, and "Know What's Possible" tagline.
+
+NOTE: Illustrative simulation prepared for Allient Inc. (allient.com).`,
+
+  quote: `ALLIENT CUSTOM MOTOR, DRIVE & POWER FILTER QUOTE PACKAGE (illustrative)
+Customer: Intuitive Surgical / Medical Robotics Program
+Program: Frameless BLDC Torque Motor, Infranor Drive & EMI Power Filter System (50 Sets)
+Specifications: 12 Nm Peak Torque, 48V DC, 20-Bit Optical Encoder, ISO 13485 Medical
+
+Commercial Breakdown:
+• Frameless BLDC Torque Motors (50 Units @ $3,400.00): $170,000.00
+• Infranor Digital Servo Drives & CANopen Interface Cards: $42,000.00
+• Allient Power EMI Filters & Drive Output Reactors: $18,500.00
+• AS9100D / ISO 13485 Engineering Support, Dynamic Balancing & Cleanroom Packaging: $14,500.00
+
+Performance Return:
+• Cogging Torque Reduction: < 0.8% (Smooth Surgical Precision Control)
+• Power Density Gain: +25% Higher Torque per Unit Volume vs Standard Servo Motors
+• EMI Noise Suppression: 100% IEEE 519 Compliant Power Quality
+
+Turnaround Time: 10 Weeks to OEM Tool Integration
+
+NOTE: Illustrative simulation; pricing figures are placeholders.`,
+
+  tender: `AEROSPACE DEFENSE & SURGICAL ROBOTICS RFP RESPONSE PACKAGE (illustrative)
+Tender ID: US-NY-MOTION-ALLIENT-2026-21
+Scope: Frameless Torque Motors, Infranor Servo Drives & Allient Power Quality Filters
+
+Quality & Performance Verification:
+• Quality Management System: AS9100D Rev D, ISO 9001:2015 & ISO 13485:2016 Certified
+• Defense Security Standard: 100% ITAR Registered & DFARS Compliant Materials
+• Environmental Testing: MIL-STD-810G Thermal Shock (-55°C to +125°C) & Vibration
+• Efficiency Benchmark: 98.8% Peak Electromechanical Efficiency
+
+Technical Offer:
+• Integrated Motion, Controls & Power solutions enterprise (NASDAQ: ALNT).
+
+NOTE: Illustrative simulation; confirm against RFP specifications.`,
+
+  intel: `GLOBAL ROBOTICS & MOTION CONTROL MARKET INTELLIGENCE BRIEF (illustrative)
+Focus: Medical Surgical Robotics, Defense Actuation & Integrated Power Quality
+
+Key Insights:
+1. The Single-Source Advantage: Combining Motion (motors), Controls (drives & encoders), and Power (harmonic filters) eliminates third-party component incompatibility and reduces OEM integration risk by 60%.
+2. Surgical Robotics Demand: High-resolution 20-bit optical encoders paired with low-cogging torque motors enable sub-millimeter surgical robot arm dexterity.
+3. Allient Platform Advantage:
+   - Global manufacturing footprint spanning North America, Europe, and Asia.
+   - Proven AS9100D and ISO 13485 quality systems supporting Tier-1 defense and medical OEMs.
+
+NOTE: Illustrative simulation.`,
+
+  motion_dfm: `FRAMELESS TORQUE MOTOR & SERVO DRIVE DFM REVIEW PACKAGE (illustrative · flagship)
+Program: High-Torque BLDC Motor & Infranor Servo Drive Integration
+Factory: Amherst, New York Headquarters & Technology Center
+
+Electromechanical & Power Findings:
+1. Electromagnetic Slot Fill Optimization: Optimized stator copper winding layout; achieved 12 Nm peak torque and reduced cogging torque to 0.75%.
+2. Servo Loop Synchronization: Calibrated Infranor digital drive 20 kHz current loop and EtherCAT bus for sub-millisecond motion response.
+3. Power Quality & Thermal Dissipation: Allient Power harmonic output filter maintained clean sine wave output with zero EMI radiation under 100A surge loading.
+
+Quality & Regulatory Audit:
+• Defense Audit: AS9100D Rev D and ITAR export controls approved.
+• Medical Device Rating: ISO 13485 cleanroom assembly validated.
+
+Summary:
+ Integrated motion, controls, and power assembly approved for customer production.
+
+NOTE: Illustrative simulation; review with Allient engineering team.`,
+
+  servo_setup: `INFRANOR SERVO DRIVE & OPTICAL ENCODER SETUP PACKAGE (illustrative)
+Program: Infranor Digital Servo Drive & Optical Feedback Calibration
+
+System Setup Configuration:
+• Servo Current Loop Tuning: Programmed 20 kHz PWM switching frequency for sub-arcsecond position tracking
+• Optical Encoder Sync: Configured 20-bit absolute optical encoder interface with zero backlash error
+• Telemetry Integration: Connected Allient Controls cloud portal monitoring for motor winding temperature and drive bus voltage
+
+Outcome: Infranor digital servo drive and encoder feedback system validated for high-speed robotic operation.
+
+NOTE: Illustrative simulation.`,
+
+  as9100_audit: `AS9100D & ISO 13485 INTEGRATED QUALITY RELEASE (illustrative)
+Production Assembly: Allient BLDC Servo Motor & Power Assembly (#ALNT-BLDC-2026-12)
+Compliance Standard: AS9100D Rev D / ISO 13485:2016 / ITAR / MIL-STD-810G
+
+Audit Checklist Results:
+• Stator Hi-Pot & Surge Test: Passed 2,500V AC dielectric breakdown test with zero insulation punch-through - PASS
+• Rotor Dynamic Balance: Measured < 0.35 g-mm balance tolerance across 10,000 RPM speed range - PASS
+• Defense & Medical Pedigree: 100% ITAR compliance and bio-compatible materials verified
+
+Outcome: AS9100D & ISO 13485 Quality Release Approved. Certificate of Conformance issued.
+
+NOTE: Illustrative simulation.`,
+
+  spares_plan: `NEODYMIUM MAGNETS & POWER COMPONENT SAFETY STOCK PLAN (illustrative)
+Scope: Amherst, New York High-Performance Material Vault
+
+Supply Strategy Breakdown:
+• Neodymium Magnets: 120-day supply of N45SH rare earth permanent magnets stored in climate-controlled vault
+• Stator Laminations: 60-day stock of high-permeability silicon steel stator stampings
+• Material Pedigree: 100% Certificate of Analysis (CoA) verified for magnetic flux strength and copper wire insulation
+
+Outcome: Motion, controls, and power component supply clear for continuous OEM production.
+
+NOTE: Illustrative simulation.`
+};
+
+let EMPLOYEES = [
+  { id: 'scout', name: 'Scout', title: 'AI Motion, Controls & Power Scout', wf: 'scout', handled: 230, hrs: 68, win: 42, status: 'idle' },
+  { id: 'quote', name: 'Quote', title: 'AI Motion & Power Cost Specialist', wf: 'quote', handled: 320, hrs: 135, win: 64, status: 'idle' },
+  { id: 'tender', name: 'Tender', title: 'AI Integrated Motion Specialist', wf: 'tender', handled: 145, hrs: 105, win: 54, status: 'idle' },
+  { id: 'intel', name: 'Radar', title: 'AI Industrial Automation Intelligence', wf: 'intel', handled: 170, hrs: 54, win: 32, status: 'idle' },
+  { id: 'motion_dfm', name: 'IntegratedMotionDFM', title: 'AI Motion Systems DFM Specialist', wf: 'motion_dfm', handled: 455, hrs: 270, win: 82, status: 'idle' },
+  { id: 'servo_setup', name: 'InfranorServoSetup', title: 'AI Servo Drive & Control Specialist', wf: 'servo_setup', handled: 260, hrs: 120, win: 58, status: 'idle' },
+  { id: 'as9100_audit', name: 'AS9100Audit', title: 'AI Aerospace & Medical Quality Auditor', wf: 'as9100_audit', handled: 390, hrs: 152, win: 74, status: 'idle' },
+  { id: 'spares_plan', name: 'SupplyPlanner', title: 'AI Motion Component & Power Planner', wf: 'spares_plan', handled: 220, hrs: 90, win: 0, status: 'idle' }
+];
+
+/* Render Functions */
+function drawWaferGrid() {
+  const grid = document.getElementById("dieGrid");
+  let rects = '';
+  for (let x = -8; x <= 8; x++) {
+    for (let y = -8; y <= 8; y++) {
+      if (x*x + y*y <= 60) {
+        const px = 110 + x * 10 - 4;
+        const py = 105 + y * 10 - 4;
+        const pass = (Math.abs(x*y) % 8 !== 3);
+        const fill = pass ? 'rgba(2, 132, 199, 0.45)' : 'rgba(249, 115, 22, 0.6)';
+        rects += `<rect x="${px}" y="${py}" width="8" height="8" rx="1.5" fill="${fill}"></rect>`;
+      }
+    }
+  }
+  grid.innerHTML = rects;
+}
+
+function renderRoster() {
+  const container = document.getElementById("rosterContainer");
+  let html = '';
+  TRACKS.forEach(tr => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === tr.key);
+    if (!list.length) return;
+    html += `<div class="track-label">${tr.title}</div><div class="roster">`;
+    html += list.map(empCard).join('');
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+}
+
+function empCard(e) {
+  const wf = WORKFLOWS[e.wf] || {};
+  const isFlag = wf.tag === 'flagship';
+  const team = (wf.tasks || []).map(t => t.agent).filter((v, i, a) => a.indexOf(v) === i).map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  return `
+    <div class="op-card ${isFlag ? 'flagship' : ''}" id="emp-${e.id}">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${e.name}</div>
+          <div class="op-role">${e.title}</div>
+        </div>
+        ${isFlag ? '<span class="flag-chip">★ FLAGSHIP OPERATOR</span>' : ''}
+      </div>
+      <div class="op-desc">${wf.desc || ''}</div>
+      <div class="op-agents">${team}</div>
+      <div class="op-stats">
+        <div class="op-stat"><b>${e.handled.toLocaleString()}</b> runs</div>
+        <div class="op-stat"><b>~${e.hrs} hrs</b> saved/mo</div>
+        <div class="op-stat"><b>+${e.win}%</b> speedup</div>
+      </div>
+      <div class="op-actions">
+        <button class="run-btn" onclick="runOperator('${e.wf}')">▶ Run ${e.name}</button>
+      </div>
+    </div>
+  `;
+}
+
+function setView(v) {
+  document.getElementById('view-ops').classList.toggle('hidden', v !== 'ops');
+  document.getElementById('view-hire').classList.toggle('hidden', v !== 'hire');
+  document.getElementById('tabA').classList.toggle('active', v === 'ops');
+  document.getElementById('tabB').classList.toggle('active', v === 'hire');
+  if (v === 'hire') initBuilder();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+let isRunning = false;
+async function runOperator(wfKey) {
+  if (isRunning) return;
+  isRunning = true;
+  const wf = WORKFLOWS[wfKey];
+  if (!wf) return;
+
+  const panel = document.getElementById("runPanel");
+  const title = document.getElementById("runTitle");
+  const sub = document.getElementById("runSub");
+  const progress = document.getElementById("progressRow");
+  const feed = document.getElementById("feedArea");
+  const deliv = document.getElementById("deliverableBox");
+
+  panel.classList.add("active");
+  deliv.classList.remove("show");
+  title.innerText = `Executing Operator: ${wf.name}`;
+  sub.innerText = `Mode: ${wf.mode.toUpperCase()} · ${wf.tasks.length} Specialist Agents`;
+
+  progress.innerHTML = wf.tasks.map((_, i) => `<div class="pstep" id="ps_${i}"></div>`).join('');
+  feed.innerHTML = '';
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  function addFeedLine(agentKey, txt, isDone = false) {
+    const role = AGENT_ROLES[agentKey] || { emoji: '🤖', label: agentKey };
+    const div = document.createElement('div');
+    div.className = `feed-line ${isDone ? 'done' : ''}`;
+    div.innerHTML = `<span class="tag">[${role.emoji} ${role.label}]</span><span class="txt">${txt}</span>`;
+    feed.appendChild(div);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  addFeedLine(wf.tasks[0].agent, `Initializing ${wf.name} autonomous workflow loop...`);
+  await new Promise(r => setTimeout(r, 600));
+
+  for (let i = 0; i < wf.tasks.length; i++) {
+    const t = wf.tasks[i];
+    const stepEl = document.getElementById(`ps_${i}`);
+    if (stepEl) stepEl.classList.add("active");
+
+    addFeedLine(t.agent, `Executing Task ${i+1}: ${t.task}`);
+    await new Promise(r => setTimeout(r, 800));
+
+    const role = AGENT_ROLES[t.agent];
+    if (role && role.tools) {
+      for (const tool of role.tools) {
+        addFeedLine(t.agent, `Invoked tool '${tool}( )' -> ${toolOut(tool)}`);
+        await new Promise(r => setTimeout(r, 600));
+      }
+    }
+
+    if (stepEl) {
+      stepEl.classList.remove("active");
+      stepEl.classList.add("complete");
+    }
+    addFeedLine(t.agent, `Task ${i+1} completed. Artifact saved to shared Allient project store.`, true);
+  }
+
+  await new Promise(r => setTimeout(r, 400));
+  document.getElementById("delivTitle").innerText = `Review-Ready Output · ${DTITLE[wfKey] || 'Deliverable'}`;
+  document.getElementById("delivCode").innerText = FINAL[wfKey] || "Execution completed successfully.";
+  deliv.classList.add("show");
+
+  isRunning = false;
+}
+
+function closeRun() {
+  document.getElementById("runPanel").classList.remove("active");
+}
+
+/* DYNEX BUILDER FLOW IMPLEMENTATION */
+let draft = {};
+function initBuilder() {
+  draft = { wf: null, mode: 'sequential', assign: [], name: '', title: '', cadence: 'Per project', step: 1 };
+  renderBuilder();
+}
+
+function renderBuilder() {
+  const steps = [['01', 'Pick a workflow'], ['02', 'Assign the agents'], ['03', 'Name & cadence']];
+  document.getElementById('bSteps').innerHTML = steps.map((s, i) => `
+    <div class="step-item ${draft.step === i + 1 ? 'active' : ''}">
+      <div class="step-num">${s[0]}</div>
+      <div class="step-lbl">${s[1]}</div>
+    </div>
+  `).join('');
+
+  if (draft.step === 1) bS1();
+  else if (draft.step === 2) bS2();
+  else bS3();
+  bNav();
+}
+
+function bS1() {
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 1: Choose Baseline Motion, Controls or Power Workflow</label></div>
+    <div class="wf-grid">
+      ${Object.keys(WORKFLOWS).map(k => {
+        const w = WORKFLOWS[k];
+        return `
+          <div class="wf-card ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')">
+            <div class="wf-title">${w.name}</div>
+            <div class="wf-desc">${w.desc}</div>
+            <div class="wf-meta">${w.tasks.length} agents · ${w.mode}</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 2: Assign Each Task to a Specialist Agent</label></div>
+    ${w.tasks.map((t, i) => `
+      <div class="task-row">
+        <div class="tn">${i + 1}</div>
+        <div class="tt">
+          ${t.task}
+          ${t.deps.length ? `<span style="color:var(--muted-2);font-family:var(--font-mono);font-size:11px;"> · waits for step ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}
+        </div>
+        <select onchange="draft.assign[${i}]=this.value">${opts}</select>
+      </div>
+    `).join('')}
+    <div class="field" style="margin-top:16px;">
+      <label>Execution Mode</label>
+      <div class="seg">
+        ${['sequential', 'dag'].map(m => `
+          <button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (Parallel DAG)' : 'Sequential'}</button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 3: Name Operator &amp; Set Cadence</label></div>
+    <div class="field">
+      <label>Operator Name</label>
+      <input type="text" value="${draft.name}" placeholder="e.g. Integrated Motion &amp; Servo Drive Specialist" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Role Title</label>
+      <input type="text" value="${draft.title}" placeholder="e.g. Autonomous Motion &amp; Power Systems Engineer" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Cadence</label>
+      <div class="seg">
+        ${['Per project', 'Per batch', 'Weekly', 'On-demand'].map(c => `
+          <button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>
+        `).join('')}
+      </div>
+    </div>
+    <div class="field" style="margin-top:20px;">
+      <label>Live Operator Card Preview</label>
+      <div id="previewCardArea"></div>
+    </div>
+  `;
+  renderPreview();
+}
+
+function renderPreview() {
+  const w = WORKFLOWS[draft.wf];
+  const area = document.getElementById('previewCardArea');
+  if (!area) return;
+  
+  const team = draft.assign.map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  area.innerHTML = `
+    <div class="op-card" style="max-width:440px;">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${draft.name || 'New Operator'}</div>
+          <div class="op-role">${draft.title || 'AI Operator'}</div>
+        </div>
+      </div>
+      <div class="op-desc">Owns <b>${w.name}</b> · ${draft.cadence} · ${draft.mode.toUpperCase()}</div>
+      <div class="op-agents">${team}</div>
+    </div>
+  `;
+}
+
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn btn-ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right = '';
+  if (draft.step === 1) right = `<button class="btn btn-primary" ${draft.wf ? '' : 'disabled'} onclick="draft.step=2;renderBuilder()">Next: Assign Agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn btn-primary" onclick="draft.step=3;renderBuilder()">Next: Name &amp; Cadence →</button>`;
+  else right = `<button class="btn btn-primary" onclick="hire()">✓ Add this AI Operator</button>`;
+
+  document.getElementById('bNav').innerHTML = left + right;
+}
+
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  
+  WORKFLOWS[wfId] = {
+    name: w.name,
+    title: draft.title || w.title,
+    mode: draft.mode || w.mode,
+    track: w.track,
+    deliverable: w.deliverable,
+    desc: w.desc,
+    tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps }))
+  };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({
+    id, name,
+    title: draft.title || w.title,
+    wf: wfId,
+    handled: 0,
+    hrs: Math.floor(Math.random() * 60) + 40,
+    win: 0,
+    status: 'idle'
+  });
+
+  renderRoster();
+  setView('ops');
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  drawWaferGrid();
+  renderRoster();
+});
+</script>
+</body>
+</html>
