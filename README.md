@@ -145,3 +145,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/photodigm
 https://innvonix-tech-solutions.github.io/ai-workforce/psiquantum
 https://innvonix-tech-solutions.github.io/ai-workforce/peraso
 https://innvonix-tech-solutions.github.io/ai-workforce/aerotech
+https://innvonix-tech-solutions.github.io/ai-workforce/allient
