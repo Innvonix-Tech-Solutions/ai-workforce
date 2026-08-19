@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convergix Console — AI Industrial Automation &amp; Robotics Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060b14;
+  --surface:#0f1726;
+  --surface-2:#192438;
+  --surface-3:#283754;
+  --border:#283754;
+  --border-soft:#111a2b;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --muted-2:#64748b;
+  --accent:#ec2227;
+  --accent-dim:rgba(236,34,39,0.15);
+  --accent-line:rgba(236,34,39,0.38);
+  --accent2:#f59e0b;
+  --accent2-bg:rgba(245,158,11,0.08);
+  --accent3:#0284c7;
+  --danger:#ef4444;
+  --ok:#10b981;
+  --font-display:'Rajdhani',sans-serif;
+  --font-body:'Work Sans',sans-serif;
+  --font-mono:'Roboto Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 88% -8%, rgba(236,34,39,0.14), transparent 55%),
+    radial-gradient(900px 480px at 5% 5%, rgba(245,158,11,0.07), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+a{color:var(--accent);}
+::selection{background:rgba(236,34,39,0.28);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+.hidden{display:none!important;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:24px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:44px;height:42px;border-radius:8px;
+  background:linear-gradient(135deg,#991b1e,#ec2227);
+  border:1px solid var(--accent-line);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:var(--font-mono);font-weight:800;font-size:11px;
+  box-shadow:0 0 18px rgba(236,34,39,0.35);
+}
+.mark-name{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:0.02em;color:#fff;}
+.mark-sub{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px;}
+
+.line-readout{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent);
+  background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:8px 14px;display:flex;align-items:center;gap:10px;
+}
+.line-readout .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.tabs{display:flex;gap:8px;margin-top:20px;border-bottom:1px solid var(--border-soft);}
+.tab-btn{
+  background:transparent;border:none;color:var(--muted);padding:10px 18px;font-family:var(--font-body);
+  font-size:13.5px;font-weight:600;cursor:pointer;border-radius:8px 8px 0 0;transition:all 0.15s ease;
+}
+.tab-btn:hover{color:var(--text);background:var(--surface-2);}
+.tab-btn.active{color:var(--accent);background:var(--surface);border:1px solid var(--border);border-bottom-color:var(--surface);}
+
+.hero{padding:36px 0 28px;display:grid;grid-template-columns:1.15fr 0.85fr;gap:40px;align-items:center;}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:24px 0 18px;}}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent);}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(30px,4vw,42px);line-height:1.08;letter-spacing:-0.005em;margin:0 0 14px;color:#fff;}
+h1 span{color:var(--accent);background:linear-gradient(90deg,#ec2227,#f87171);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.lead{color:var(--muted);font-size:15px;max-width:55ch;margin:0 0 22px;line-height:1.6;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:var(--font-body);font-weight:600;font-size:13.5px;border-radius:6px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700;}
+.btn-primary:hover{background:#f87171;box-shadow:0 0 16px rgba(236,34,39,0.35);}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--accent2);color:var(--accent2);}
+
+/* Global Automation Integration Graphic Card */
+.wafer{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:18px 18px 14px;box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+.wafer-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+.wafer-title{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em;}
+.wafer-val{font-family:var(--font-mono);font-size:12px;color:var(--accent);font-weight:600;}
+svg.wafermap{width:100%;height:210px;display:block;}
+.wafer-outline{fill:none;stroke:var(--border);stroke-width:1.5;}
+.wafer-grid-line{stroke:var(--border-soft);stroke-width:0.5;stroke-dasharray:2 2;}
+.wafer-foot{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+
+.econ{border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:760px){.econ{grid-template-columns:repeat(2,1fr);}}
+.econ-item{padding:6px 18px;border-left:1px solid var(--border-soft);}
+.econ-item:first-child{border-left:none;padding-left:0;}
+@media(max-width:760px){.econ-item:nth-child(2n+1){border-left:none;padding-left:0;}}
+.econ-num{font-family:var(--font-display);font-weight:700;font-size:28px;color:#fff;}
+.econ-num small{font-size:14px;color:var(--accent);font-weight:700;}
+.econ-label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+section{padding:36px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.section-title{font-family:var(--font-display);font-weight:700;font-size:24px;color:#fff;}
+.section-sub{color:var(--muted);font-size:13.5px;max-width:62ch;margin-top:4px;}
+.track-label{font-family:var(--font-mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin:28px 0 14px;padding-top:10px;border-top:1px dashed var(--border-soft);}
+.track-label:first-of-type{border-top:none;padding-top:0;margin-top:6px;}
+
+.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+@media(max-width:760px){.roster{grid-template-columns:1fr;}}
+.op-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;transition:all .15s ease;}
+.op-card:hover{border-color:var(--accent-line);transform:translateY(-2px);}
+.op-card.flagship{border-color:var(--accent2);background:linear-gradient(180deg,rgba(245,158,11,0.08),var(--surface));}
+.op-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.op-name{font-family:var(--font-display);font-weight:700;font-size:18px;color:#fff;}
+.op-role{font-size:12.5px;color:var(--muted);margin-top:2px;}
+.flag-chip{font-family:var(--font-mono);font-size:10px;color:var(--accent2);border:1px solid var(--accent2);background:var(--accent2-bg);border-radius:20px;padding:2px 8px;white-space:nowrap;}
+.op-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+.op-stats{display:flex;gap:18px;margin-top:2px;}
+.op-stat{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.op-stat b{color:var(--accent);font-size:14px;display:block;font-family:var(--font-body);font-weight:600;}
+.op-agents{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.chip{font-size:11px;background:var(--surface-3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;color:var(--text);}
+.op-actions{display:flex;gap:10px;margin-top:6px;}
+.run-btn{flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:600;font-size:13px;border-radius:6px;padding:10px;cursor:pointer;transition:all 0.15s ease;}
+.run-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+
+.run-panel{background:var(--surface);border:1px solid var(--accent-line);border-radius:12px;padding:24px;margin-top:24px;display:none;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+.run-panel.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.run-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.run-head h3{font-family:var(--font-display);font-size:20px;margin:0;color:#fff;}
+.run-head .meta{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.close-run{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:6px 12px;cursor:pointer;font-size:12px;}
+.close-run:hover{color:var(--text);border-color:var(--accent2);}
+
+.feed{background:var(--bg);border:1px solid var(--border-soft);border-radius:8px;padding:16px;height:260px;overflow-y:auto;font-family:var(--font-mono);font-size:12px;display:flex;flex-direction:column;gap:8px;}
+.feed-line{display:flex;gap:10px;align-items:flex-start;opacity:0;animation:appear .3s ease forwards;}
+@keyframes appear{to{opacity:1;}}
+.feed-line .tag{color:var(--accent2);white-space:nowrap;}
+.feed-line .txt{color:var(--muted);}
+.feed-line.done .tag{color:var(--accent);}
+.feed-line.done .txt{color:var(--text);}
+
+.progress-row{display:flex;gap:6px;margin:16px 0 8px;flex-wrap:wrap;}
+.pstep{flex:1;min-width:64px;height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;position:relative;}
+.pstep.active{background:var(--accent-dim);}
+.pstep.complete{background:var(--accent);box-shadow:0 0 8px var(--accent);}
+
+.deliverable{margin-top:20px;background:var(--surface-2);border:1px solid var(--accent-line);border-radius:8px;padding:18px 20px;display:none;}
+.deliverable.show{display:block;animation:fadein .3s ease;}
+.deliverable h4{font-family:var(--font-display);font-size:17px;margin:0 0 12px;color:var(--accent);}
+.deliverable pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:12.5px;color:var(--text);margin:0;line-height:1.65;}
+.note{font-size:11px;color:var(--muted-2);margin-top:12px;font-style:italic;}
+
+/* BUILDER STYLING (DYNEX FUNCTIONAL FLOW) */
+.steps-bar{display:flex;gap:10px;margin-bottom:24px;}
+.step-item{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);}
+.step-item.active{border-color:var(--accent);background:var(--surface-3);}
+.step-item .step-num{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--muted-2);}
+.step-item.active .step-num{color:var(--accent);}
+.step-item .step-lbl{font-size:13.5px;font-weight:600;color:var(--text);margin-top:2px;}
+
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.wf-card{border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;background:var(--surface-2);transition:all 0.15s ease;}
+.wf-card:hover{border-color:var(--accent2);}
+.wf-card.sel{border-color:var(--accent);background:rgba(236,34,39,0.08);}
+.wf-title{font-family:var(--font-display);font-weight:700;font-size:16px;color:#fff;}
+.wf-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45;}
+.wf-meta{font-family:var(--font-mono);font-size:10.5px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase;}
+
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);margin-bottom:10px;}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--accent);flex-shrink:0;}
+.task-row .tt{flex:1;font-size:13px;color:var(--text);}
+.task-row select{font-family:var(--font-body);font-size:12.5px;border:1px solid var(--border);border-radius:6px;padding:8px 10px;background:var(--surface);color:var(--text);outline:none;min-width:210px;}
+.task-row select:focus{border-color:var(--accent);}
+
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.field input{width:100%;font-family:var(--font-body);font-size:13.5px;border:1px solid var(--border);border-radius:8px;padding:11px 13px;background:var(--surface-2);color:var(--text);outline:none;}
+.field input:focus{border-color:var(--accent);}
+
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.seg button{font-family:var(--font-body);font-size:12.5px;padding:9px 16px;border:none;background:var(--surface-2);color:var(--muted);cursor:pointer;border-right:1px solid var(--border);}
+.seg button:last-child{border-right:none;}
+.seg button.on{background:var(--accent);color:#fff;font-weight:700;}
+
+.bnav{display:flex;justify-content:space-between;margin-top:24px;}
+
+footer{border-top:1px solid var(--border-soft);padding:30px 0 44px;}
+.foot-note{font-size:12px;color:var(--muted-2);max-width:85ch;line-height:1.6;}
+.foot-note strong{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark-row">
+      <div class="mark">
+        <div class="mark-badge">CONVERGIX</div>
+        <div>
+          <div class="mark-name">Convergix Console</div>
+          <div class="mark-sub">Convergix Automation Solutions (convergixautomation.com) · Global Systems Integrator</div>
+        </div>
+      </div>
+      <div class="line-readout">
+        <span class="dot"></span>
+        <span id="lineTxt">Troy, MI &amp; Global Integration Plants · FANUC Robotics &amp; Rockwell ControlLogix Active</span>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tabA" onclick="setView('ops')">The AI Workforce Roster</button>
+      <button class="tab-btn" id="tabB" onclick="setView('hire')">+ Add an AI Operator</button>
+    </div>
+  </header>
+
+  <div id="view-ops">
+    <section class="hero" style="padding-bottom:10px;">
+      <div>
+        <div class="eyebrow">Global Industrial Automation &amp; Systems Integration</div>
+        <h1>Eight operators to run Convergix's <span>turnkey-automation-and-robotics</span> loop</h1>
+        <p class="lead">Each operator below is a real Convergix Automation Solutions workflow — analyzing 3D CAD automated assembly lines, FANUC 6-axis robotic cells, and high-speed vision inspection gantries, scrubbing 500-line ISO 9001 &amp; GAMP 5 automation BOMs for Allen-Bradley ControlLogix PLC safety, configuring Rockwell Kinetix servo drive motion profiles and industrial AMR fleet telemetry, and auditing UL 508A control panel releases — handed to a team of specialist AI agents that works it end-to-end.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('roster-section').scrollIntoView({behavior:'smooth'})">View the Roster</button>
+          <button class="btn btn-ghost" onclick="runOperator('robotic_cell_dfm')">Run Flagship Operator</button>
+        </div>
+      </div>
+
+      <div class="wafer">
+        <div class="wafer-top">
+          <span class="wafer-title">Convergix Robotic Assembly Diagnostics</span>
+          <span class="wafer-val" id="yieldVal">99.4% First Pass Yield PASS</span>
+        </div>
+        <svg class="wafermap" viewBox="0 0 220 210" preserveAspectRatio="xMidYMid meet">
+          <circle class="wafer-outline" cx="110" cy="105" r="92"></circle>
+          <line class="wafer-grid-line" x1="20" y1="105" x2="200" y2="105"></line>
+          <line class="wafer-grid-line" x1="110" y1="15" x2="110" y2="195"></line>
+          <g id="dieGrid"></g>
+        </svg>
+        <div class="wafer-foot">
+          <span>Troy, MI Integration Plant · Lot CVRG-2608-LINE</span>
+          <span id="binVal">Pass: ISO 9001 &amp; UL 508A Approved</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="econ">
+      <div class="econ-item">
+        <div class="econ-num">5.2<small>×</small></div>
+        <div class="econ-label">Faster turnkey robotic cell design &amp; PLC commissioning</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">FANUC<small> Authorized</small></div>
+        <div class="econ-label">Authorized System Integrator &amp; Rockwell Certified Partner</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">34<small> hrs</small></div>
+        <div class="econ-label">Median industrial automation engineering hours returned per run</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">8<small>/8</small></div>
+        <div class="econ-label">Workflows covered, cell DFM through UL 508A release</div>
+      </div>
+    </div>
+
+    <section id="roster-section">
+      <div class="section-head">
+        <div>
+          <div class="section-title">The AI Workforce Roster</div>
+          <div class="section-sub">Grouped into Commercial &amp; Turnkey Automation Tenders and Robotic Integration Operations tracks. Click run on any operator to watch its agent team execute in real time.</div>
+        </div>
+      </div>
+
+      <div id="rosterContainer"></div>
+    </section>
+
+    <!-- Run Panel -->
+    <div class="run-panel" id="runPanel">
+      <div class="run-head">
+        <div>
+          <h3 id="runTitle">Running Operator...</h3>
+          <div class="meta" id="runSub">Simulated multi-agent execution feed</div>
+        </div>
+        <button class="close-run" onclick="closeRun()">✕ Close View</button>
+      </div>
+      <div class="progress-row" id="progressRow"></div>
+      <div class="feed" id="feedArea"></div>
+      <div class="deliverable" id="deliverableBox">
+        <h4 id="delivTitle">Review-Ready Output</h4>
+        <pre id="delivCode"></pre>
+        <div class="note">Human-in-the-loop oversight active. Outputs verified by Convergix Automation Solutions senior engineering team. Illustrative simulation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="section-title">Add an AI Operator</div>
+          <div class="section-sub">Stand up a new AI operator in three steps: pick the workflow, assign each task to an agent via dropdown, then name it and set cadence.</div>
+        </div>
+      </div>
+
+      <div class="steps-bar" id="bSteps"></div>
+      <div id="bBody"></div>
+      <div class="bnav" id="bNav"></div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="foot-note">
+      <strong>Independent Concept Prototype</strong> prepared for a conversation with <strong>Convergix Automation Solutions (convergixautomation.com)</strong>. It is not affiliated with, endorsed by, or built on Convergix systems or data. All operators, FANUC robot reach maps, Allen-Bradley ControlLogix PLC routines, and UL 508A audits are illustrative simulations. A licensed automation engineer, robotics specialist, or panel shop quality manager reviews and approves every robotic cell CAD model, PLC program, and machine safety release.
+    </div>
+  </footer>
+</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'EV Battery & Medical Device Automation Market Intelligence', tools: ['research_automation_tenders', 'save'] },
+  robotic_eng: { emoji: '🔬', label: 'FANUC 6-Axis Robot Kinematics & Assembly Cell Layout Engineer', tools: ['analyze_robotic_reach', 'save'] },
+  vision_spec: { emoji: '⚡', label: 'Cognex / Keyence High-Speed Vision & Leak Testing Specialist', tools: ['design_vision_inspection', 'save'] },
+  gamp_scrubber: { emoji: '📑', label: 'ISO 9001:2015, GAMP 5 & UL 508A Component Specialist', tools: ['scrub_convergix_bom', 'save'] },
+  cost_eng: { emoji: '🧮', label: 'Robotic Tooling, PLC Rack & Machine Frame Costing Specialist', tools: ['calc_turnkey_cost', 'save'] },
+  cloud_architect: { emoji: '☁️', label: 'Convergix FactoryTalk SCADA Portal & AMR Telemetry Architect', tools: ['configure_scada_cloud', 'save'] },
+  quality_auditor: { emoji: '🛡️', label: 'ISO 9001, GAMP 5 Validation & Machine Safety Auditor', tools: ['audit_convergix_quality', 'save'] },
+  supply_planner: { emoji: '📦', label: 'FANUC Servo Motors, Precision Linear Indexers & PLC Supply Planner', tools: ['plan_robotic_spares', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'Turnkey Automotive & Life Sciences RFP Solution Writer', tools: ['compose_doc', 'save'] },
+  qa_reviewer: { emoji: '✅', label: 'Senior Systems Integration & Commissioning Operations Reviewer', tools: ['qa_review', 'save'] },
+  prospector: { emoji: '🧲', label: 'EV Battery VP Manufacturing & Medical OEM Engineering Director Prospector', tools: ['source_convergix_accounts', 'save'] },
+  plc_spec: { emoji: '⚙️', label: 'Rockwell ControlLogix PLC & Kinetix Servo Motion Specialist', tools: ['program_controllogix_plc', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+const TRACKS = [
+  { key: 'commercial', title: 'Commercial & Turnkey Automation Tenders' },
+  { key: 'operations', title: 'Robotic Integration & Machine Building Operations' }
+];
+
+const WORKFLOWS = {
+  scout: {
+    name: 'EV Battery, Medical Device & Consumer Packaging Fleet Scouting',
+    title: 'AI Automation & Robotics Growth Scout',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'EV Battery & Medical Device Automation Opportunity Dossier',
+    desc: 'Maps EV battery cell assembly plants (Gigafactories), medical device OEMs (auto-injectors, catheter assembly), and consumer goods packaging integrators.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan EV battery module welding tenders, high-speed medical syringe assembly RFPs, and consumer packaging cell bids.', deps: [] },
+      { agent: 'prospector', task: 'Source VP Automation, Chief Manufacturing Officers, and OEM Engineering Directors.', deps: [] },
+      { agent: 'robotic_eng', task: 'Score fit on Convergix FANUC 6-axis robotic cells, Rockwell ControlLogix PLCs, and Cognex 3D vision systems.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce target industrial automation prospect dossier.', deps: [2] }
+    ]
+  },
+  quote: {
+    name: 'Custom Robotic Cell & Turnkey Assembly Line Quoting',
+    title: 'AI Automation Cost Estimating Specialist',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Convergix Custom Robotic Cell & Turnkey Assembly Line Quote Package',
+    desc: 'Models FANUC R-2000iD 6-axis robots, welded structural steel machine frames, Allen-Bradley GuardLogix safety PLCs, and vision inspection heads.',
+    tasks: [
+      { agent: 'robotic_eng', task: 'Review assembly cycle time (4.2 seconds/part), robot payload (165 kg), reach envelope (2,650 mm), and line footprint.', deps: [] },
+      { agent: 'cost_eng', task: 'Model custom end-of-arm tooling (EOAT), safety fencing, Rockwell Kinetix servo drives, and UL 508A panel shop labor.', deps: [0] },
+      { agent: 'supply_planner', task: 'Verify FANUC robot delivery lead times, precision linear indexer stocks, and Keyence laser sensor availability.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Assemble formal Convergix Custom Robotic Cell & Turnkey Assembly Line Quote Package.', deps: [2] }
+    ]
+  },
+  tender: {
+    name: 'Global OEM Automotive & Life Sciences RFP Response',
+    title: 'AI Turnkey Systems Solution Specialist',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Global OEM Automotive & Life Sciences RFP Response Package',
+    desc: 'Audits ISO 9001:2015 quality standards, GAMP 5 life sciences software validation protocols, UL 508A panel shop compliance, and 99.5% OEE SLAs.',
+    tasks: [
+      { agent: 'researcher', task: 'Parse automotive battery pack assembly specs, GAMP 5 cleanroom validation requirements, and Category 4 safety rules.', deps: [] },
+      { agent: 'quality_auditor', task: 'Verify ISO 9001:2015, UL 508A panel shop certification, and Troy, MI integration facility credentials.', deps: [0] },
+      { agent: 'cost_eng', task: 'Structure phased multi-site installation schedule across North America, Europe, and Asia integration hubs.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce formal Global OEM Automotive & Life Sciences RFP response package.', deps: [2] }
+    ]
+  },
+  intel: {
+    name: 'Global Robotics Integration & Smart Manufacturing Radar',
+    title: 'AI Factory Automation Market Intelligence',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Global Industrial Robotics & Smart Manufacturing Intelligence Brief',
+    desc: 'Tracks cobot payload advancements, AMR fleet orchestration, and highlights Convergix multi-brand integrator heritage (JMP, AGR, Eagle).',
+    tasks: [
+      { agent: 'researcher', task: 'Monitor global industrial robot installation growth, EV battery expansion projects, and vision AI software updates.', deps: [] },
+      { agent: 'robotic_eng', task: 'Benchmark Convergix high-speed indexing line throughput (+35% vs conventional rotary tables) and cell safety margin.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile strategic industrial automation market intelligence brief.', deps: [0, 1] }
+    ]
+  },
+  robotic_cell_dfm: {
+    name: 'Turnkey Robotic Assembly Line & FANUC Cell DFM Scrub',
+    title: 'AI Robotic Systems DFM Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'Turnkey Robotic Assembly Line & FANUC Cell DFM Review Package',
+    desc: 'Audits 3D CAD models for multi-robot assembly cells, FANUC 6-axis robot reach envelopes, laser welding heads, and Cognex 3D vision inspection gantries.',
+    tasks: [
+      { agent: 'robotic_eng', task: 'Analyze FANUC robot joint singularity and reach envelope; optimizes EOAT gripper clearance for zero collision interference.', deps: [] },
+      { agent: 'vision_spec', task: 'Verify Cognex 3D vision guidance camera lighting geometry and 50 µm resolution leak test chamber cycle timing.', deps: [0] },
+      { agent: 'plc_spec', task: 'Check Allen-Bradley ControlLogix 5580 safety PLC I/O map and Kinetix 5700 servo drive EtherNet/IP bus sync.', deps: [1] },
+      { agent: 'quality_auditor', task: 'Audit ISO 9001:2015 inspection route, GAMP 5 validation protocols, and NFPA 79 electrical safety clearance.', deps: [2] },
+      { agent: 'reviewer', task: 'QA robotics & automation engineering findings and compile customer technical package.', deps: [3] },
+      { agent: 'proposal_writer', task: 'Produce final Turnkey Robotic Assembly Line & FANUC Cell DFM Review Package.', deps: [4] }
+    ]
+  },
+  rockwell_setup: {
+    name: 'Rockwell ControlLogix PLC & Kinetix Servo Motion Setup',
+    title: 'AI PLC & Servo Controls Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'Rockwell ControlLogix PLC & Kinetix Motion Setup Package',
+    desc: 'Programs Allen-Bradley ControlLogix ladder logic, configures Kinetix 5700 servo drive electronic camming, and deploys FactoryTalk SCADA dashboards.',
+    tasks: [
+      { agent: 'plc_spec', task: 'Write Studio 5000 ladder logic routines for multi-axis servo camming and safety light curtain E-stop interlocks.', deps: [] },
+      { agent: 'cloud_architect', task: 'Connect FactoryTalk Optix SCADA portal API for real-time overall equipment effectiveness (OEE) and AMR fleet monitoring.', deps: [0] },
+      { agent: 'reviewer', task: 'Verify sub-millisecond motion synchronization across 16 servo axes during high-speed line dry run.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce Rockwell ControlLogix PLC & Kinetix Motion Setup Package.', deps: [2] }
+    ]
+  },
+  gamp_audit: {
+    name: 'ISO 9001, GAMP 5 & UL 508A Control Panel Audit',
+    title: 'AI Automation Quality Auditor',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'ISO 9001 & GAMP 5 Control Panel Quality Release',
+    desc: 'Audits ISO 9001 quality records, GAMP 5 software validation (IQ/OQ/PQ), UL 508A control panel wiring schematics, and CE mark safety shields.',
+    tasks: [
+      { agent: 'quality_auditor', task: 'Audit Troy plant UL 508A panel shop wire color coding, point-to-point continuity tests, and ground bond logs.', deps: [] },
+      { agent: 'gamp_scrubber', task: 'Verify 100% Certificate of Conformance (CoC) for Category 4 safety relays, light curtains, and zero-defect E-stops.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile ISO 9001 & GAMP 5 Control Panel Quality Release Brief.', deps: [0, 1] }
+    ]
+  },
+  spares_plan: {
+    name: 'FANUC Servo Motors, Allen-Bradley PLCs & Vision Sensor Safety Stock Plan',
+    title: 'AI Robotic Component & Spare Parts Planner',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'FANUC Servo Motors & Rockwell PLC Safety Stock Plan',
+    desc: 'Secures FANUC servo motors, Allen-Bradley ControlLogix CPU racks, Cognex cameras, and pneumatic grippers for global integration hubs.',
+    tasks: [
+      { agent: 'supply_planner', task: 'Evaluate FANUC robot gear reducer supply lead times and 90-day critical automation component buffer in Troy plant.', deps: [] },
+      { agent: 'gamp_scrubber', task: 'Execute raw material Certificate of Analysis (CoA) audit for precision linear bearings and structural aluminum extrusions.', deps: [] },
+      { agent: 'cost_eng', task: 'Structure strategic automation inventory buffer to support OEM turnkey assembly line delivery schedules.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce FANUC Servo Motors & Rockwell PLC Safety Stock Plan.', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'EV Battery & Medical Device Automation Opportunity Dossier',
+  quote: 'Convergix Custom Robotic Cell & Turnkey Assembly Line Quote Package',
+  tender: 'Global OEM Automotive & Life Sciences RFP Response Package',
+  intel: 'Global Industrial Robotics & Smart Manufacturing Intelligence Brief',
+  robotic_cell_dfm: 'Turnkey Robotic Assembly Line & FANUC Cell DFM Review Package',
+  rockwell_setup: 'Rockwell ControlLogix PLC & Kinetix Motion Setup Package',
+  gamp_audit: 'ISO 9001 & GAMP 5 Control Panel Quality Release',
+  spares_plan: 'FANUC Servo Motors & Rockwell PLC Safety Stock Plan'
+};
+
+const TOOLS = {
+  research_automation_tenders: () => 'Scanned EV battery welding solicitations, medical syringe assembly RFPs, and consumer packaging bids.',
+  source_convergix_accounts: () => 'Sourced verified EV Battery VP Manufacturing and Medical OEM Engineering Directors; deduped CRM.',
+  analyze_robotic_reach: () => 'Analyzed 3D CAD FANUC 6-axis robot reach model; eliminated singularity points and achieved 4.2s cycle time.',
+  design_vision_inspection: () => 'Designed Cognex 3D vision guidance lighting setup; verified 50 µm defect resolution at full line speed.',
+  scrub_convergix_bom: () => 'Scrubbed 500-line automation BOM; verified 100% ISO 9001 compliance, GAMP 5 validation, and UL 508A panel specs.',
+  calc_turnkey_cost: () => 'Calculated FANUC robot arm, Allen-Bradley PLC rack, custom EOAT gripper, and UL 508A panel shop margins.',
+  configure_scada_cloud: () => 'Configured FactoryTalk Optix SCADA cloud portal telemetry API for real-time OEE tracking and AMR fleet diagnostics.',
+  audit_convergix_quality: () => 'Audited ISO 9001 quality logs, UL 508A panel ground continuity, and GAMP 5 IQ/OQ software validation (PASS).',
+  plan_robotic_spares: () => 'Cross-referenced FANUC servo motor lead times; secured 90-day material buffer in Troy, MI plant.',
+  program_controllogix_plc: () => 'Programmed Studio 5000 ladder logic routines for multi-axis servo camming and safety interlocks.',
+  compose_doc: () => 'Compiled industrial automation and robotics engineering metrics into clear, review-ready technical documentation.',
+  qa_review: () => 'Audited report completeness and checked ISO 9001 / FANUC standards; ready for Convergix VP Engineering sign-off.',
+  save: () => 'Saved deliverable artifact to shared project repository.'
+};
+
+function toolOut(t) { return (TOOLS[t] || (() => 'Executed successfully.'))(); }
+
+const FINAL = {
+  scout: `EV BATTERY & MEDICAL DEVICE AUTOMATION OPPORTUNITY DOSSIER (illustrative)
+Target Sector: EV Battery Manufacturing, Medical Device Assembly & High-Speed Packaging
+Target Location: Troy, MI & Global Integration Plants (North America, Europe, Asia)
+
+A-Tier Qualified Enterprise Opportunities:
+1. Ultium Cells / GM EV Battery Division — Cell Module Welding Line — Fit Score: 99/100
+   • Key Contacts: VP Battery Manufacturing, Lead Automation Engineer
+   • Requirement: High-Speed FANUC Robotic Cell Integration & Allen-Bradley ControlLogix PLCs
+2. Becton Dickinson (BD) — Auto-Injector Syringe Assembly Line — Fit Score: 97/100
+   • Key Contacts: VP Life Sciences Manufacturing, Head of GAMP 5 Validation
+   • Requirement: Cleanroom Assembly System with Cognex 3D Vision & Leak Testing
+3. Procter & Gamble — High-Speed Consumer Packaging Line — Fit Score: 95/100
+   • Key Contacts: Director of Global Packaging Automation
+
+Strategic Positioning:
+Highlight Convergix Automation Solutions global scale (Crestview Partners backed), FANUC Authorized System Integrator status, Rockwell Certified Partner credentials, and Troy, MI headquarters.
+
+NOTE: Illustrative simulation prepared for Convergix Automation Solutions (convergixautomation.com).`,
+
+  quote: `CONVERGIX CUSTOM ROBOTIC CELL & TURNKEY ASSEMBLY LINE QUOTE PACKAGE (illustrative)
+Customer: Ultium Cells / EV Battery Program
+Program: Multi-Robot Battery Cell Module Assembly & Welding System (2 Turnkey Lines)
+Specifications: 4.2 sec/part Cycle Time, FANUC R-2000iD 6-Axis Robots, ControlLogix 5580
+
+Commercial Breakdown:
+• FANUC R-2000iD 6-Axis Articulated Robots & Custom EOAT Grippers (4 Robots @ $165,000.00): $660,000.00
+• Allen-Bradley ControlLogix Safety PLC Racks, Kinetix 5700 Servos & EtherNet/IP Bus: $145,000.00
+• Cognex 3D Laser Weld Inspection & High-Speed Leak Testing Stations: $98,000.00
+• UL 508A Control Panel Fabrication, Safety Enclosures & Troy, MI Assembly Testing: $82,000.00
+
+Performance Return:
+• Assembly Cycle Time: 4.2 seconds/part (35% Throughput Gain vs Legacy Lines)
+• First Pass Yield: 99.4% Verified Quality Rate
+• OEE Guarantee: 99.5% Overall Equipment Effectiveness SLA
+
+Turnaround Time: 16 Weeks to Factory Acceptance Testing (FAT)
+
+NOTE: Illustrative simulation; pricing figures are placeholders.`,
+
+  tender: `GLOBAL OEM AUTOMOTIVE & LIFE SCIENCES RFP RESPONSE PACKAGE (illustrative)
+Tender ID: US-MI-AUTO-CONVERGIX-2026-22
+Scope: Turnkey Robotic Assembly Lines, Vision Inspection & ControlLogix PLC Control
+
+Quality & Performance Verification:
+• Quality Management System: ISO 9001:2015 Certified (Troy, MI & Global Plants)
+• Life Sciences Standard: GAMP 5 Software Validation Protocols (IQ / OQ / PQ Certified)
+• Control Panel Standard: Certified UL 508A Panel Shop & NFPA 79 Electrical Safety
+• Integration Partner Status: FANUC Authorized System Integrator & Rockwell Certified Partner
+
+Technical Offer:
+• Global automation systems integrator backed by Crestview Partners.
+
+NOTE: Illustrative simulation; confirm against RFP specifications.`,
+
+  intel: `GLOBAL INDUSTRIAL ROBOTICS & SMART MANUFACTURING INTELLIGENCE BRIEF (illustrative)
+Focus: EV Battery Assembly Growth, GAMP 5 Medical Validation & SCADA Analytics
+
+Key Insights:
+1. Turnkey Integrator Consolidation: Unifying specialist integrators (JMP, AGR, Eagle, Classic) under Convergix provides OEMs a single global partner capable of executing $50M+ multi-plant automation rollouts.
+2. Vision-Guided Robotics (VGR): Integrating 3D vision directly into FANUC robot controllers eliminates mechanical fixture costs and accelerates product changeovers.
+3. Convergix Platform Advantage:
+   - Deep expertise in both heavy industrial automotive battery lines and ultra-clean GAMP 5 medical device assembly.
+   - Global footprint with local engineering support across North America, Europe, and Asia.
+
+NOTE: Illustrative simulation.`,
+
+  robotic_cell_dfm: `TURNKEY ROBOTIC ASSEMBLY LINE & FANUC CELL DFM REVIEW PACKAGE (illustrative · flagship)
+Program: EV Battery Cell Module Assembly & Welding System
+Factory: Troy, Michigan Integration Facility
+
+Robotics & Automation Findings:
+1. Robot Reach & Singularity Analysis: Modeled FANUC 6-axis robot reach curves; eliminated joint 5 singularity and achieved 4.2 second cycle time.
+2. 3D Vision Inspection Integration: Positioned Cognex 3D laser vision cameras for 100% seam tracking accuracy and 50 µm weld defect detection.
+3. PLC & Safety Architecture: Configured Allen-Bradley ControlLogix 5580 safety PLC logic with Category 4 / SIL 3 E-stop interlocks.
+
+Quality & Regulatory Audit:
+• Panel Shop Audit: UL 508A wiring schematics and ground continuity approved.
+• Quality Rating: ISO 9001:2015 and GAMP 5 validation route cleared.
+
+Summary:
+ Turnkey robotic assembly line design approved for machine build and FAT testing.
+
+NOTE: Illustrative simulation; review with Convergix engineering team.`,
+
+  rockwell_setup: `ROCKWELL CONTROLLOGIX PLC & KINETIX MOTION SETUP PACKAGE (illustrative)
+Program: ControlLogix PLC & Kinetix Servo Motion Integration
+
+System Setup Configuration:
+• Studio 5000 Programming: Flashed ControlLogix 5580 CPU with 16-axis electronic camming routines and safety interlocks
+• SCADA & HMI Deployment: Built FactoryTalk Optix SCADA user interface with live line OEE and AMR fleet tracking
+• Motion Validation: Verified sub-millisecond EtherNet/IP CIP Motion sync across all 16 servo drives
+
+Outcome: Allen-Bradley ControlLogix PLC and Kinetix servo drives validated for turnkey production.
+
+NOTE: Illustrative simulation.`,
+
+  gamp_audit: `ISO 9001 & GAMP 5 CONTROL PANEL QUALITY RELEASE (illustrative)
+Production Assembly: Convergix Robotic Control Panel (#CVRG-PANEL-2026-13)
+Compliance Standard: ISO 9001:2015 / GAMP 5 / UL 508A / NFPA 79 / CE
+
+Audit Checklist Results:
+• UL 508A Continuity & Insulation: Passed 1,500V DC insulation resistance and ground bond test - PASS
+• GAMP 5 Software Validation: Completed IQ/OQ protocol execution for Studio 5000 safety logic - PASS
+• Electrical Safety Inspection: NFPA 79 arc flash labeling and touch-safe IP20 components verified
+
+Outcome: ISO 9001 & GAMP 5 Control Panel Quality Release Approved. Certificate of Conformance issued.
+
+NOTE: Illustrative simulation.`,
+
+  spares_plan: `FANUC SERVO MOTORS & ROCKWELL PLC SAFETY STOCK PLAN (illustrative)
+Scope: Troy, Michigan Automation Components Depot
+
+Supply Strategy Breakdown:
+• FANUC Servo Motors & Drives: 90-day supply of FANUC alpha-series servo motors stored in Troy warehouse
+• ControlLogix Racks & Modules: 50 Allen-Bradley 5580 CPUs and safety I/O cards in stock
+• Material Pedigree: 100% Certificate of Conformance (CoC) verified for precision linear indexers and safety fencing
+
+Outcome: Industrial automation and robotic hardware supply clear for continuous global turnkey project execution.
+
+NOTE: Illustrative simulation.`
+};
+
+let EMPLOYEES = [
+  { id: 'scout', name: 'Scout', title: 'AI Automation & Robotics Scout', wf: 'scout', handled: 245, hrs: 74, win: 46, status: 'idle' },
+  { id: 'quote', name: 'Quote', title: 'AI Automation Cost Specialist', wf: 'quote', handled: 335, hrs: 142, win: 68, status: 'idle' },
+  { id: 'tender', name: 'Tender', title: 'AI Turnkey Systems Specialist', wf: 'tender', handled: 155, hrs: 112, win: 58, status: 'idle' },
+  { id: 'intel', name: 'Radar', title: 'AI Factory Automation Intelligence', wf: 'intel', handled: 185, hrs: 60, win: 36, status: 'idle' },
+  { id: 'robotic_cell_dfm', name: 'RoboticCellDFM', title: 'AI Robotic Systems DFM Specialist', wf: 'robotic_cell_dfm', handled: 485, hrs: 285, win: 88, status: 'idle' },
+  { id: 'rockwell_setup', name: 'RockwellPLCSetup', title: 'AI PLC & Servo Controls Specialist', wf: 'rockwell_setup', handled: 280, hrs: 130, win: 64, status: 'idle' },
+  { id: 'gamp_audit', name: 'GAMPAudit', title: 'AI Automation Quality Auditor', wf: 'gamp_audit', handled: 410, hrs: 162, win: 78, status: 'idle' },
+  { id: 'spares_plan', name: 'SupplyPlanner', title: 'AI Robotic Component & Spare Parts Planner', wf: 'spares_plan', handled: 240, hrs: 98, win: 0, status: 'idle' }
+];
+
+/* Render Functions */
+function drawWaferGrid() {
+  const grid = document.getElementById("dieGrid");
+  let rects = '';
+  for (let x = -8; x <= 8; x++) {
+    for (let y = -8; y <= 8; y++) {
+      if (x*x + y*y <= 60) {
+        const px = 110 + x * 10 - 4;
+        const py = 105 + y * 10 - 4;
+        const pass = (Math.abs(x*y) % 8 !== 3);
+        const fill = pass ? 'rgba(236, 34, 39, 0.45)' : 'rgba(245, 158, 11, 0.6)';
+        rects += `<rect x="${px}" y="${py}" width="8" height="8" rx="1.5" fill="${fill}"></rect>`;
+      }
+    }
+  }
+  grid.innerHTML = rects;
+}
+
+function renderRoster() {
+  const container = document.getElementById("rosterContainer");
+  let html = '';
+  TRACKS.forEach(tr => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === tr.key);
+    if (!list.length) return;
+    html += `<div class="track-label">${tr.title}</div><div class="roster">`;
+    html += list.map(empCard).join('');
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+}
+
+function empCard(e) {
+  const wf = WORKFLOWS[e.wf] || {};
+  const isFlag = wf.tag === 'flagship';
+  const team = (wf.tasks || []).map(t => t.agent).filter((v, i, a) => a.indexOf(v) === i).map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  return `
+    <div class="op-card ${isFlag ? 'flagship' : ''}" id="emp-${e.id}">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${e.name}</div>
+          <div class="op-role">${e.title}</div>
+        </div>
+        ${isFlag ? '<span class="flag-chip">★ FLAGSHIP OPERATOR</span>' : ''}
+      </div>
+      <div class="op-desc">${wf.desc || ''}</div>
+      <div class="op-agents">${team}</div>
+      <div class="op-stats">
+        <div class="op-stat"><b>${e.handled.toLocaleString()}</b> runs</div>
+        <div class="op-stat"><b>~${e.hrs} hrs</b> saved/mo</div>
+        <div class="op-stat"><b>+${e.win}%</b> speedup</div>
+      </div>
+      <div class="op-actions">
+        <button class="run-btn" onclick="runOperator('${e.wf}')">▶ Run ${e.name}</button>
+      </div>
+    </div>
+  `;
+}
+
+function setView(v) {
+  document.getElementById('view-ops').classList.toggle('hidden', v !== 'ops');
+  document.getElementById('view-hire').classList.toggle('hidden', v !== 'hire');
+  document.getElementById('tabA').classList.toggle('active', v === 'ops');
+  document.getElementById('tabB').classList.toggle('active', v === 'hire');
+  if (v === 'hire') initBuilder();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+let isRunning = false;
+async function runOperator(wfKey) {
+  if (isRunning) return;
+  isRunning = true;
+  const wf = WORKFLOWS[wfKey];
+  if (!wf) return;
+
+  const panel = document.getElementById("runPanel");
+  const title = document.getElementById("runTitle");
+  const sub = document.getElementById("runSub");
+  const progress = document.getElementById("progressRow");
+  const feed = document.getElementById("feedArea");
+  const deliv = document.getElementById("deliverableBox");
+
+  panel.classList.add("active");
+  deliv.classList.remove("show");
+  title.innerText = `Executing Operator: ${wf.name}`;
+  sub.innerText = `Mode: ${wf.mode.toUpperCase()} · ${wf.tasks.length} Specialist Agents`;
+
+  progress.innerHTML = wf.tasks.map((_, i) => `<div class="pstep" id="ps_${i}"></div>`).join('');
+  feed.innerHTML = '';
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  function addFeedLine(agentKey, txt, isDone = false) {
+    const role = AGENT_ROLES[agentKey] || { emoji: '🤖', label: agentKey };
+    const div = document.createElement('div');
+    div.className = `feed-line ${isDone ? 'done' : ''}`;
+    div.innerHTML = `<span class="tag">[${role.emoji} ${role.label}]</span><span class="txt">${txt}</span>`;
+    feed.appendChild(div);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  addFeedLine(wf.tasks[0].agent, `Initializing ${wf.name} autonomous workflow loop...`);
+  await new Promise(r => setTimeout(r, 600));
+
+  for (let i = 0; i < wf.tasks.length; i++) {
+    const t = wf.tasks[i];
+    const stepEl = document.getElementById(`ps_${i}`);
+    if (stepEl) stepEl.classList.add("active");
+
+    addFeedLine(t.agent, `Executing Task ${i+1}: ${t.task}`);
+    await new Promise(r => setTimeout(r, 800));
+
+    const role = AGENT_ROLES[t.agent];
+    if (role && role.tools) {
+      for (const tool of role.tools) {
+        addFeedLine(t.agent, `Invoked tool '${tool}( )' -> ${toolOut(tool)}`);
+        await new Promise(r => setTimeout(r, 600));
+      }
+    }
+
+    if (stepEl) {
+      stepEl.classList.remove("active");
+      stepEl.classList.add("complete");
+    }
+    addFeedLine(t.agent, `Task ${i+1} completed. Artifact saved to shared Convergix project store.`, true);
+  }
+
+  await new Promise(r => setTimeout(r, 400));
+  document.getElementById("delivTitle").innerText = `Review-Ready Output · ${DTITLE[wfKey] || 'Deliverable'}`;
+  document.getElementById("delivCode").innerText = FINAL[wfKey] || "Execution completed successfully.";
+  deliv.classList.add("show");
+
+  isRunning = false;
+}
+
+function closeRun() {
+  document.getElementById("runPanel").classList.remove("active");
+}
+
+/* DYNEX BUILDER FLOW IMPLEMENTATION */
+let draft = {};
+function initBuilder() {
+  draft = { wf: null, mode: 'sequential', assign: [], name: '', title: '', cadence: 'Per project', step: 1 };
+  renderBuilder();
+}
+
+function renderBuilder() {
+  const steps = [['01', 'Pick a workflow'], ['02', 'Assign the agents'], ['03', 'Name & cadence']];
+  document.getElementById('bSteps').innerHTML = steps.map((s, i) => `
+    <div class="step-item ${draft.step === i + 1 ? 'active' : ''}">
+      <div class="step-num">${s[0]}</div>
+      <div class="step-lbl">${s[1]}</div>
+    </div>
+  `).join('');
+
+  if (draft.step === 1) bS1();
+  else if (draft.step === 2) bS2();
+  else bS3();
+  bNav();
+}
+
+function bS1() {
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 1: Choose Baseline Industrial Automation Workflow</label></div>
+    <div class="wf-grid">
+      ${Object.keys(WORKFLOWS).map(k => {
+        const w = WORKFLOWS[k];
+        return `
+          <div class="wf-card ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')">
+            <div class="wf-title">${w.name}</div>
+            <div class="wf-desc">${w.desc}</div>
+            <div class="wf-meta">${w.tasks.length} agents · ${w.mode}</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 2: Assign Each Task to a Specialist Agent</label></div>
+    ${w.tasks.map((t, i) => `
+      <div class="task-row">
+        <div class="tn">${i + 1}</div>
+        <div class="tt">
+          ${t.task}
+          ${t.deps.length ? `<span style="color:var(--muted-2);font-family:var(--font-mono);font-size:11px;"> · waits for step ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}
+        </div>
+        <select onchange="draft.assign[${i}]=this.value">${opts}</select>
+      </div>
+    `).join('')}
+    <div class="field" style="margin-top:16px;">
+      <label>Execution Mode</label>
+      <div class="seg">
+        ${['sequential', 'dag'].map(m => `
+          <button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (Parallel DAG)' : 'Sequential'}</button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 3: Name Operator &amp; Set Cadence</label></div>
+    <div class="field">
+      <label>Operator Name</label>
+      <input type="text" value="${draft.name}" placeholder="e.g. Turnkey Robotic Cell Specialist" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Role Title</label>
+      <input type="text" value="${draft.title}" placeholder="e.g. Autonomous Industrial Automation Engineer" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Cadence</label>
+      <div class="seg">
+        ${['Per project', 'Per batch', 'Weekly', 'On-demand'].map(c => `
+          <button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>
+        `).join('')}
+      </div>
+    </div>
+    <div class="field" style="margin-top:20px;">
+      <label>Live Operator Card Preview</label>
+      <div id="previewCardArea"></div>
+    </div>
+  `;
+  renderPreview();
+}
+
+function renderPreview() {
+  const w = WORKFLOWS[draft.wf];
+  const area = document.getElementById('previewCardArea');
+  if (!area) return;
+  
+  const team = draft.assign.map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  area.innerHTML = `
+    <div class="op-card" style="max-width:440px;">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${draft.name || 'New Operator'}</div>
+          <div class="op-role">${draft.title || 'AI Operator'}</div>
+        </div>
+      </div>
+      <div class="op-desc">Owns <b>${w.name}</b> · ${draft.cadence} · ${draft.mode.toUpperCase()}</div>
+      <div class="op-agents">${team}</div>
+    </div>
+  `;
+}
+
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn btn-ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right = '';
+  if (draft.step === 1) right = `<button class="btn btn-primary" ${draft.wf ? '' : 'disabled'} onclick="draft.step=2;renderBuilder()">Next: Assign Agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn btn-primary" onclick="draft.step=3;renderBuilder()">Next: Name &amp; Cadence →</button>`;
+  else right = `<button class="btn btn-primary" onclick="hire()">✓ Add this AI Operator</button>`;
+
+  document.getElementById('bNav').innerHTML = left + right;
+}
+
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  
+  WORKFLOWS[wfId] = {
+    name: w.name,
+    title: draft.title || w.title,
+    mode: draft.mode || w.mode,
+    track: w.track,
+    deliverable: w.deliverable,
+    desc: w.desc,
+    tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps }))
+  };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({
+    id, name,
+    title: draft.title || w.title,
+    wf: wfId,
+    handled: 0,
+    hrs: Math.floor(Math.random() * 60) + 40,
+    win: 0,
+    status: 'idle'
+  });
+
+  renderRoster();
+  setView('ops');
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  drawWaferGrid();
+  renderRoster();
+});
+</script>
+</body>
+</html>
