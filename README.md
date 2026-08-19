@@ -144,3 +144,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/arteris
 https://innvonix-tech-solutions.github.io/ai-workforce/photodigm
 https://innvonix-tech-solutions.github.io/ai-workforce/psiquantum
 https://innvonix-tech-solutions.github.io/ai-workforce/peraso
+https://innvonix-tech-solutions.github.io/ai-workforce/aerotech
