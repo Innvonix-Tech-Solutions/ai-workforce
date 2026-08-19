@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aerotech Console — AI Precision Motion Control &amp; Automation Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060b14;
+  --surface:#0f1726;
+  --surface-2:#192438;
+  --surface-3:#283754;
+  --border:#283754;
+  --border-soft:#111a2b;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --muted-2:#64748b;
+  --accent:#0284c7;
+  --accent-dim:rgba(2,132,199,0.15);
+  --accent-line:rgba(2,132,199,0.38);
+  --accent2:#f59e0b;
+  --accent2-bg:rgba(245,158,11,0.08);
+  --accent3:#10b981;
+  --danger:#ef4444;
+  --ok:#10b981;
+  --font-display:'Rajdhani',sans-serif;
+  --font-body:'Work Sans',sans-serif;
+  --font-mono:'Roboto Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 88% -8%, rgba(2,132,199,0.14), transparent 55%),
+    radial-gradient(900px 480px at 5% 5%, rgba(245,158,11,0.07), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+a{color:var(--accent);}
+::selection{background:rgba(2,132,199,0.28);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+.hidden{display:none!important;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:24px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:44px;height:42px;border-radius:8px;
+  background:linear-gradient(135deg,#0369a1,#0284c7);
+  border:1px solid var(--accent-line);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:var(--font-mono);font-weight:800;font-size:12px;
+  box-shadow:0 0 18px rgba(2,132,199,0.35);
+}
+.mark-name{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:0.02em;color:#fff;}
+.mark-sub{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px;}
+
+.line-readout{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent);
+  background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:8px 14px;display:flex;align-items:center;gap:10px;
+}
+.line-readout .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.tabs{display:flex;gap:8px;margin-top:20px;border-bottom:1px solid var(--border-soft);}
+.tab-btn{
+  background:transparent;border:none;color:var(--muted);padding:10px 18px;font-family:var(--font-body);
+  font-size:13.5px;font-weight:600;cursor:pointer;border-radius:8px 8px 0 0;transition:all 0.15s ease;
+}
+.tab-btn:hover{color:var(--text);background:var(--surface-2);}
+.tab-btn.active{color:var(--accent);background:var(--surface);border:1px solid var(--border);border-bottom-color:var(--surface);}
+
+.hero{padding:36px 0 28px;display:grid;grid-template-columns:1.15fr 0.85fr;gap:40px;align-items:center;}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:24px 0 18px;}}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent);}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(30px,4vw,42px);line-height:1.08;letter-spacing:-0.005em;margin:0 0 14px;color:#fff;}
+h1 span{color:var(--accent);background:linear-gradient(90deg,#0284c7,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.lead{color:var(--muted);font-size:15px;max-width:55ch;margin:0 0 22px;line-height:1.6;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:var(--font-body);font-weight:600;font-size:13.5px;border-radius:6px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700;}
+.btn-primary:hover{background:#38bdf8;box-shadow:0 0 16px rgba(2,132,199,0.35);}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--accent2);color:var(--accent2);}
+
+/* Sub-Nanometer Air-Bearing Precision Stage Graphic Card */
+.wafer{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:18px 18px 14px;box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+.wafer-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+.wafer-title{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em;}
+.wafer-val{font-family:var(--font-mono);font-size:12px;color:var(--accent);font-weight:600;}
+svg.wafermap{width:100%;height:210px;display:block;}
+.wafer-outline{fill:none;stroke:var(--border);stroke-width:1.5;}
+.wafer-grid-line{stroke:var(--border-soft);stroke-width:0.5;stroke-dasharray:2 2;}
+.wafer-foot{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+
+.econ{border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:760px){.econ{grid-template-columns:repeat(2,1fr);}}
+.econ-item{padding:6px 18px;border-left:1px solid var(--border-soft);}
+.econ-item:first-child{border-left:none;padding-left:0;}
+@media(max-width:760px){.econ-item:nth-child(2n+1){border-left:none;padding-left:0;}}
+.econ-num{font-family:var(--font-display);font-weight:700;font-size:28px;color:#fff;}
+.econ-num small{font-size:14px;color:var(--accent);font-weight:700;}
+.econ-label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+section{padding:36px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.section-title{font-family:var(--font-display);font-weight:700;font-size:24px;color:#fff;}
+.section-sub{color:var(--muted);font-size:13.5px;max-width:62ch;margin-top:4px;}
+.track-label{font-family:var(--font-mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin:28px 0 14px;padding-top:10px;border-top:1px dashed var(--border-soft);}
+.track-label:first-of-type{border-top:none;padding-top:0;margin-top:6px;}
+
+.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+@media(max-width:760px){.roster{grid-template-columns:1fr;}}
+.op-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;transition:all .15s ease;}
+.op-card:hover{border-color:var(--accent-line);transform:translateY(-2px);}
+.op-card.flagship{border-color:var(--accent2);background:linear-gradient(180deg,rgba(245,158,11,0.08),var(--surface));}
+.op-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.op-name{font-family:var(--font-display);font-weight:700;font-size:18px;color:#fff;}
+.op-role{font-size:12.5px;color:var(--muted);margin-top:2px;}
+.flag-chip{font-family:var(--font-mono);font-size:10px;color:var(--accent2);border:1px solid var(--accent2);background:var(--accent2-bg);border-radius:20px;padding:2px 8px;white-space:nowrap;}
+.op-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+.op-stats{display:flex;gap:18px;margin-top:2px;}
+.op-stat{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.op-stat b{color:var(--accent);font-size:14px;display:block;font-family:var(--font-body);font-weight:600;}
+.op-agents{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.chip{font-size:11px;background:var(--surface-3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;color:var(--text);}
+.op-actions{display:flex;gap:10px;margin-top:6px;}
+.run-btn{flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:600;font-size:13px;border-radius:6px;padding:10px;cursor:pointer;transition:all 0.15s ease;}
+.run-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+
+.run-panel{background:var(--surface);border:1px solid var(--accent-line);border-radius:12px;padding:24px;margin-top:24px;display:none;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+.run-panel.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.run-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.run-head h3{font-family:var(--font-display);font-size:20px;margin:0;color:#fff;}
+.run-head .meta{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.close-run{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:6px 12px;cursor:pointer;font-size:12px;}
+.close-run:hover{color:var(--text);border-color:var(--accent2);}
+
+.feed{background:var(--bg);border:1px solid var(--border-soft);border-radius:8px;padding:16px;height:260px;overflow-y:auto;font-family:var(--font-mono);font-size:12px;display:flex;flex-direction:column;gap:8px;}
+.feed-line{display:flex;gap:10px;align-items:flex-start;opacity:0;animation:appear .3s ease forwards;}
+@keyframes appear{to{opacity:1;}}
+.feed-line .tag{color:var(--accent2);white-space:nowrap;}
+.feed-line .txt{color:var(--muted);}
+.feed-line.done .tag{color:var(--accent);}
+.feed-line.done .txt{color:var(--text);}
+
+.progress-row{display:flex;gap:6px;margin:16px 0 8px;flex-wrap:wrap;}
+.pstep{flex:1;min-width:64px;height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;position:relative;}
+.pstep.active{background:var(--accent-dim);}
+.pstep.complete{background:var(--accent);box-shadow:0 0 8px var(--accent);}
+
+.deliverable{margin-top:20px;background:var(--surface-2);border:1px solid var(--accent-line);border-radius:8px;padding:18px 20px;display:none;}
+.deliverable.show{display:block;animation:fadein .3s ease;}
+.deliverable h4{font-family:var(--font-display);font-size:17px;margin:0 0 12px;color:var(--accent);}
+.deliverable pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:12.5px;color:var(--text);margin:0;line-height:1.65;}
+.note{font-size:11px;color:var(--muted-2);margin-top:12px;font-style:italic;}
+
+/* BUILDER STYLING (DYNEX FUNCTIONAL FLOW) */
+.steps-bar{display:flex;gap:10px;margin-bottom:24px;}
+.step-item{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);}
+.step-item.active{border-color:var(--accent);background:var(--surface-3);}
+.step-item .step-num{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--muted-2);}
+.step-item.active .step-num{color:var(--accent);}
+.step-item .step-lbl{font-size:13.5px;font-weight:600;color:var(--text);margin-top:2px;}
+
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.wf-card{border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;background:var(--surface-2);transition:all 0.15s ease;}
+.wf-card:hover{border-color:var(--accent2);}
+.wf-card.sel{border-color:var(--accent);background:rgba(2,132,199,0.08);}
+.wf-title{font-family:var(--font-display);font-weight:700;font-size:16px;color:#fff;}
+.wf-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45;}
+.wf-meta{font-family:var(--font-mono);font-size:10.5px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase;}
+
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);margin-bottom:10px;}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--accent);flex-shrink:0;}
+.task-row .tt{flex:1;font-size:13px;color:var(--text);}
+.task-row select{font-family:var(--font-body);font-size:12.5px;border:1px solid var(--border);border-radius:6px;padding:8px 10px;background:var(--surface);color:var(--text);outline:none;min-width:210px;}
+.task-row select:focus{border-color:var(--accent);}
+
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.field input{width:100%;font-family:var(--font-body);font-size:13.5px;border:1px solid var(--border);border-radius:8px;padding:11px 13px;background:var(--surface-2);color:var(--text);outline:none;}
+.field input:focus{border-color:var(--accent);}
+
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.seg button{font-family:var(--font-body);font-size:12.5px;padding:9px 16px;border:none;background:var(--surface-2);color:var(--muted);cursor:pointer;border-right:1px solid var(--border);}
+.seg button:last-child{border-right:none;}
+.seg button.on{background:var(--accent);color:#fff;font-weight:700;}
+
+.bnav{display:flex;justify-content:space-between;margin-top:24px;}
+
+footer{border-top:1px solid var(--border-soft);padding:30px 0 44px;}
+.foot-note{font-size:12px;color:var(--muted-2);max-width:85ch;line-height:1.6;}
+.foot-note strong{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark-row">
+      <div class="mark">
+        <div class="mark-badge">AEROTECH</div>
+        <div>
+          <div class="mark-name">Aerotech Console</div>
+          <div class="mark-sub">Aerotech Inc. (aerotech.com) · Dedicated to the Science of Motion · AI Workforce</div>
+        </div>
+      </div>
+      <div class="line-readout">
+        <span class="dot"></span>
+        <span id="lineTxt">Pittsburgh, PA Plant · Automation1 Controller &amp; Sub-Nanometer Air-Bearing Line Active</span>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tabA" onclick="setView('ops')">The AI Workforce Roster</button>
+      <button class="tab-btn" id="tabB" onclick="setView('hire')">+ Add an AI Operator</button>
+    </div>
+  </header>
+
+  <div id="view-ops">
+    <section class="hero" style="padding-bottom:10px;">
+      <div>
+        <div class="eyebrow">Dedicated to the Science of Motion</div>
+        <h1>Eight operators to run Aerotech's <span>air-bearing-to-automation1</span> loop</h1>
+        <p class="lead">Each operator below is a real Aerotech Inc. workflow — analyzing 3D CAD sub-nanometer air-bearing positioning stage assemblies and Automation1 HyperWire fiber-optic motion control buses, scrubbing 500-line ISO 9001 &amp; Class 10 cleanroom motion component BOMs for laser galvo PSO sync, configuring Nmark AGV laser scanner tracking and multi-axis hexapod kinematics, and auditing Automation1 MachineApps HMI safety releases — handed to a team of specialist AI agents that works it end-to-end.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('roster-section').scrollIntoView({behavior:'smooth'})">View the Roster</button>
+          <button class="btn btn-ghost" onclick="runOperator('motion_dfm')">Run Flagship Operator</button>
+        </div>
+      </div>
+
+      <div class="wafer">
+        <div class="wafer-top">
+          <span class="wafer-title">Aerotech Motion Interferometry</span>
+          <span class="wafer-val" id="yieldVal">0.4 nm In-Position Jitter PASS</span>
+        </div>
+        <svg class="wafermap" viewBox="0 0 220 210" preserveAspectRatio="xMidYMid meet">
+          <circle class="wafer-outline" cx="110" cy="105" r="92"></circle>
+          <line class="wafer-grid-line" x1="20" y1="105" x2="200" y2="105"></line>
+          <line class="wafer-grid-line" x1="110" y1="15" x2="110" y2="195"></line>
+          <g id="dieGrid"></g>
+        </svg>
+        <div class="wafer-foot">
+          <span>Pittsburgh, PA Facility · Lot AERO-2608-ABL</span>
+          <span id="binVal">Pass: ISO 9001 &amp; Class 10 Cleanroom</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="econ">
+      <div class="econ-item">
+        <div class="econ-num">5.8<small>×</small></div>
+        <div class="econ-label">Faster motion stage DFM &amp; Automation1 HMI deployment</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">0.4<small> nm</small></div>
+        <div class="econ-label">Sub-nanometer air-bearing positioning jitter resolution</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">32<small> hrs</small></div>
+        <div class="econ-label">Median precision motion engineering hours returned per run</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">8<small>/8</small></div>
+        <div class="econ-label">Workflows covered, stage DFM through Automation1 HMI release</div>
+      </div>
+    </div>
+
+    <section id="roster-section">
+      <div class="section-head">
+        <div>
+          <div class="section-title">The AI Workforce Roster</div>
+          <div class="section-sub">Grouped into Commercial &amp; Precision Equipment Tenders and Precision Motion Operations tracks. Click run on any operator to watch its agent team execute in real time.</div>
+        </div>
+      </div>
+
+      <div id="rosterContainer"></div>
+    </section>
+
+    <!-- Run Panel -->
+    <div class="run-panel" id="runPanel">
+      <div class="run-head">
+        <div>
+          <h3 id="runTitle">Running Operator...</h3>
+          <div class="meta" id="runSub">Simulated multi-agent execution feed</div>
+        </div>
+        <button class="close-run" onclick="closeRun()">✕ Close View</button>
+      </div>
+      <div class="progress-row" id="progressRow"></div>
+      <div class="feed" id="feedArea"></div>
+      <div class="deliverable" id="deliverableBox">
+        <h4 id="delivTitle">Review-Ready Output</h4>
+        <pre id="delivCode"></pre>
+        <div class="note">Human-in-the-loop oversight active. Outputs verified by Aerotech Inc. senior precision motion engineering team. Illustrative simulation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="section-title">Add an AI Operator</div>
+          <div class="section-sub">Stand up a new AI operator in three steps: pick the workflow, assign each task to an agent via dropdown, then name it and set cadence.</div>
+        </div>
+      </div>
+
+      <div class="steps-bar" id="bSteps"></div>
+      <div id="bBody"></div>
+      <div class="bnav" id="bNav"></div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="foot-note">
+      <strong>Independent Concept Prototype</strong> prepared for a conversation with <strong>Aerotech Inc. (aerotech.com)</strong>. It is not affiliated with, endorsed by, or built on Aerotech systems or data. All operators, nanometer jitter specs, Automation1 HyperWire telemetry, and ISO 9001 audits are illustrative simulations. A licensed motion control engineer, laser systems specialist, or quality auditor reviews and approves every air-bearing stage CAD model, Automation1 setup, and precision clearance release.
+    </div>
+  </footer>
+</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'Semiconductor Wafer Inspection & Laser Processing Market Intelligence', tools: ['research_motion_markets', 'save'] },
+  motion_eng: { emoji: '🔬', label: 'Sub-Nanometer Air-Bearing Stage & Mechanical Kinematics Engineer', tools: ['analyze_stage_kinematics', 'save'] },
+  galvo_spec: { emoji: '⚡', label: 'Nmark AGV Galvo Scanner & Laser Position Synchronized Output (PSO) Specialist', tools: ['program_pso_laser', 'save'] },
+  iso_scrubber: { emoji: '📑', label: 'ISO 9001:2015, CE & Cleanroom Class 10 Component Specialist', tools: ['scrub_motion_bom', 'save'] },
+  cost_eng: { emoji: '🧮', label: 'Air-Bearing Stage, Linear Motor & Automation1 Drive Costing Specialist', tools: ['calc_stage_cost', 'save'] },
+  cloud_architect: { emoji: '☁️', label: 'Automation1 MachineApps Cloud Portal & HyperWire Telemetry Architect', tools: ['configure_automation1_cloud', 'save'] },
+  quality_auditor: { emoji: '🛡️', label: 'ISO 9001, Laser Interferometry & Sub-Nanometer Jitter Auditor', tools: ['audit_interferometry_quality', 'save'] },
+  supply_planner: { emoji: '📦', label: 'Linear Motor Cores, Quartz Scales & Air-Bearing Component Supply Planner', tools: ['plan_motion_spares', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'Semiconductor & Photonics Precision Motion RFP Solution Writer', tools: ['compose_doc', 'save'] },
+  qa_reviewer: { emoji: '✅', label: 'Senior Precision Motion & Servo Tuning Operations Reviewer', tools: ['qa_review', 'save'] },
+  prospector: { emoji: '🧲', label: 'Semiconductor Tool Builder VP Engineering & Laser OEM Director Prospector', tools: ['source_motion_accounts', 'save'] },
+  servo_spec: { emoji: '⚙️', label: 'Automation1 EasyTune Servo Loop & Multi-Axis Hexapod Specialist', tools: ['design_easytune_servos', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+const TRACKS = [
+  { key: 'commercial', title: 'Commercial & Precision Equipment Tenders' },
+  { key: 'operations', title: 'Precision Motion Manufacturing & Calibration Operations' }
+];
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Semiconductor & Laser Micromachining Fleet Scouting',
+    title: 'AI Precision Motion Growth Scout',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Semiconductor & Laser Micromachining Motion Opportunity Dossier',
+    desc: 'Maps semiconductor capital equipment builders (Applied Materials, ASML tier-1s, KLA), photonics packaging OEMs, and laser micromachining integrators.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan semiconductor wafer inspection tool expansions, ultrafast laser micromachining RFPs, and cleanroom motion bids.', deps: [] },
+      { agent: 'prospector', task: 'Source VP Precision Engineering, Lead Motion Systems Architects, and OEM Procurement Directors.', deps: [] },
+      { agent: 'motion_eng', task: 'Score fit on Aerotech ABL air-bearing stages, Nmark AGV laser galvo scanners, and Automation1 HyperWire drives.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce target precision equipment builder prospect dossier.', deps: [2] }
+    ]
+  },
+  quote: {
+    name: 'Custom Air-Bearing Stage & Automation1 System Quoting',
+    title: 'AI Motion Cost Estimating Specialist',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Aerotech Air-Bearing Stage & Automation1 System Quote Package',
+    desc: 'Models ABL1500 sub-nanometer air-bearing stage machining, linear motor ironless core assemblies, Automation1 drive hardware, and cleanroom packaging.',
+    tasks: [
+      { agent: 'motion_eng', task: 'Review customer payload (50 kg), travel range (500 mm x 500 mm), in-position jitter requirement (<0.5 nm), and cleanroom rating (Class 10).', deps: [] },
+      { agent: 'cost_eng', task: 'Model quartz optical glass encoder scales, granite base isolators, Automation1 drive rack, and custom MachineApps HMI labor.', deps: [0] },
+      { agent: 'supply_planner', task: 'Verify air-bearing porous carbon pads, HyperWire fiber-optic cables, and Nmark galvo mirrors.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Assemble formal Aerotech Air-Bearing Stage & Automation1 System Quote Package.', deps: [2] }
+    ]
+  },
+  tender: {
+    name: 'Semiconductor Wafer Inspection & Photonics RFP Response',
+    title: 'AI Precision Motion Solution Specialist',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Semiconductor Wafer Inspection & Photonics RFP Response Package',
+    desc: 'Audits ISO 9001:2015 precision quality, sub-nanometer laser interferometry calibration, CE/RoHS compliance, and sub-1 ms servo sync SLAs.',
+    tasks: [
+      { agent: 'researcher', task: 'Parse semiconductor wafer step-and-scan specs, photonics alignment 6-DOF hexapod degrees of freedom, and vacuum 10^-6 Torr rules.', deps: [] },
+      { agent: 'quality_auditor', task: 'Verify ISO 9001:2015 certificate, laser interferometer calibration artifacts, and Pittsburgh, PA plant credentials.', deps: [0] },
+      { agent: 'cost_eng', task: 'Structure phased air-bearing stage delivery schedule for OEM semiconductor tool assembly lines.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce formal Semiconductor Wafer Inspection & Photonics RFP response package.', deps: [2] }
+    ]
+  },
+  intel: {
+    name: 'Global Laser Micromachining & Nanopositioning Market Radar',
+    title: 'AI Motion Control Market Intelligence',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Global Laser Micromachining & Nanopositioning Market Intelligence Brief',
+    desc: 'Tracks EUV lithography inspection trends, additive manufacturing galvo scanning, and highlights Aerotech Automation1 HyperWire zero-jitter advantage.',
+    tasks: [
+      { agent: 'researcher', task: 'Monitor global semiconductor fab capex, ultrafast femtosecond laser market adoption, and air-bearing patent filings.', deps: [] },
+      { agent: 'motion_eng', task: 'Benchmark Aerotech PlanarHD air-bearing stage velocity ripple (<0.001%) and step-and-settle time vs mechanical ball-screw stages.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile strategic precision motion market intelligence brief.', deps: [0, 1] }
+    ]
+  },
+  motion_dfm: {
+    name: 'Sub-Nanometer Air-Bearing Stage & Automation1 DFM Scrub',
+    title: 'AI Air-Bearing Stage DFM Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'Sub-Nanometer Air-Bearing Stage & Automation1 DFM Review Package',
+    desc: 'Audits 3D CAD models for ABL air-bearing positioning stages and Automation1 HyperWire motion control drives, checking thermal expansion and 0.4 nm jitter.',
+    tasks: [
+      { agent: 'motion_eng', task: 'Analyze air-bearing stage structural finite element model; optimizes porous carbon pad pre-load for sub-nanometer 0.4 nm in-position stability.', deps: [] },
+      { agent: 'galvo_spec', task: 'Verify Nmark AGV galvo scanner laser Position Synchronized Output (PSO) pulse timing at 5 MHz firing frequency.', deps: [0] },
+      { agent: 'servo_spec', task: 'Check Automation1 EasyTune automated servo loop gain margins and notch filter suppression of mechanical resonances.', deps: [1] },
+      { agent: 'quality_auditor', task: 'Audit ISO 9001 calibration route, laser interferometer 2D grid mapping, and Class 10 cleanroom particulate wipedown.', deps: [2] },
+      { agent: 'reviewer', task: 'QA precision motion engineering findings and compile customer technical package.', deps: [3] },
+      { agent: 'proposal_writer', task: 'Produce final Sub-Nanometer Air-Bearing Stage & Automation1 DFM Review Package.', deps: [4] }
+    ]
+  },
+  automation1_setup: {
+    name: 'Automation1 Controller & Nmark AGV Galvo Laser Setup',
+    title: 'AI Automation1 & Laser Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'Automation1 Controller & Nmark AGV Galvo Setup Package',
+    desc: 'Programs Automation1 controller software, builds custom MachineApps HMI dashboard with brand colors, and tunes galvo laser scan head tracking.',
+    tasks: [
+      { agent: 'servo_spec', task: 'Tune Automation1 32-axis motion controller over 100 Mbps HyperWire fiber-optic bus for zero tracking error.', deps: [] },
+      { agent: 'cloud_architect', task: 'Deploy MachineApps custom HMI interface with real-time axis status colors (Green=Enabled, Yellow=Joystick, Orange=MaxSpeed).', deps: [0] },
+      { agent: 'reviewer', task: 'Verify sub-micrometer laser mark placement accuracy on high-speed galvo scan field.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce Automation1 Controller & Nmark AGV Galvo Setup Package.', deps: [2] }
+    ]
+  },
+  iso_audit: {
+    name: 'ISO 9001, Class 10 Cleanroom & Sub-Nanometer Interferometry Audit',
+    title: 'AI Precision Quality Auditor',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'ISO 9001 & Sub-Nanometer Laser Interferometry Release',
+    desc: 'Audits ISO 9001:2015 quality manuals, Renishaw laser interferometer calibration charts, Class 10 cleanroom particle counts, and CE/RoHS tags.',
+    tasks: [
+      { agent: 'quality_auditor', task: 'Audit Pittsburgh plant air-bearing pitch/yaw/roll angular error measurements (<0.5 arcsec) and cleanroom particle logs.', deps: [] },
+      { agent: 'iso_scrubber', task: 'Verify 100% Certificate of Analysis (CoA) for invar thermal compensation beams and low-outgassing vacuum lubricants.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile ISO 9001 & Sub-Nanometer Laser Interferometry Release Brief.', deps: [0, 1] }
+    ]
+  },
+  spares_plan: {
+    name: 'HyperWire Fiber Drives, Linear Motors & Air-Bearing Seal Supply Plan',
+    title: 'AI Precision Motion Component Planner',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'Automation1 Drives & Air-Bearing Hardware Safety Stock Plan',
+    desc: 'Secures Automation1 HyperWire servo drives, ironless linear motor tracks, optical glass encoder scales, and porous carbon air-bearing pads for Pittsburgh plant.',
+    tasks: [
+      { agent: 'supply_planner', task: 'Evaluate optical glass encoder lead times and 90-day critical motion component buffer in Pittsburgh warehouse.', deps: [] },
+      { agent: 'iso_scrubber', task: 'Execute raw material Certificate of Conformance (CoC) audit for precision ground granite bases and nickel-plated air-bearing surfaces.', deps: [] },
+      { agent: 'cost_eng', task: 'Structure strategic motion inventory buffer to support semiconductor OEM tool delivery milestones.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce Automation1 Drives & Air-Bearing Hardware Safety Stock Plan.', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'Semiconductor & Laser Micromachining Motion Opportunity Dossier',
+  quote: 'Aerotech Air-Bearing Stage & Automation1 System Quote Package',
+  tender: 'Semiconductor Wafer Inspection & Photonics RFP Response Package',
+  intel: 'Global Laser Micromachining & Nanopositioning Market Intelligence Brief',
+  motion_dfm: 'Sub-Nanometer Air-Bearing Stage & Automation1 DFM Review Package',
+  automation1_setup: 'Automation1 Controller & Nmark AGV Galvo Setup Package',
+  iso_audit: 'ISO 9001 & Sub-Nanometer Laser Interferometry Release',
+  spares_plan: 'Automation1 Drives & Air-Bearing Hardware Safety Stock Plan'
+};
+
+const TOOLS = {
+  research_motion_markets: () => 'Scanned semiconductor wafer inspection tool build rates, ultrafast laser micromachining solicitations, and cleanroom bids.',
+  source_motion_accounts: () => 'Sourced verified Semiconductor VP Precision Engineering and Lead Motion Systems Architects; deduped CRM.',
+  analyze_stage_kinematics: () => 'Analyzed 3D CAD air-bearing stage finite element model; achieved 0.4 nm in-position jitter and sub-arcsecond pitch/yaw.',
+  program_pso_laser: () => 'Programmed Nmark AGV galvo laser Position Synchronized Output (PSO) for 5 MHz pulse sync during high-speed scanning.',
+  scrub_motion_bom: () => 'Scrubbed 500-line motion stage BOM; verified 100% ISO 9001 compliance, Class 10 cleanroom rating, and CE/RoHS specs.',
+  calc_stage_cost: () => 'Calculated air-bearing stage granite base, linear motor ironless coils, Automation1 drives, and MachineApps HMI margin.',
+  configure_automation1_cloud: () => 'Configured Automation1 MachineApps cloud telemetry API for real-time axis status monitoring and remote diagnostics.',
+  audit_interferometry_quality: () => 'Audited ISO 9001 quality logs, laser interferometer 2D grid accuracy, and Class 10 cleanroom particle counts (PASS).',
+  plan_motion_spares: () => 'Cross-referenced optical glass encoder scale lead times; secured 90-day material buffer in Pittsburgh plant.',
+  design_easytune_servos: () => 'Structured Automation1 EasyTune servo loop gains; eliminated mechanical resonance spikes via digital notch filters.',
+  compose_doc: () => 'Compiled precision motion control engineering metrics into clear, review-ready technical documentation.',
+  qa_review: () => 'Audited report completeness and checked ISO 9001 / Automation1 standards; ready for Aerotech VP Engineering sign-off.',
+  save: () => 'Saved deliverable artifact to shared project repository.'
+};
+
+function toolOut(t) { return (TOOLS[t] || (() => 'Executed successfully.'))(); }
+
+const FINAL = {
+  scout: `SEMICONDUCTOR & LASER MICROMACHINING MOTION OPPORTUNITY DOSSIER (illustrative)
+Target Sector: Semiconductor Wafer Inspection, Photonics Packaging & Ultrafast Laser Micromachining
+Target Location: Pittsburgh, PA & Global Semiconductor Hubs
+
+A-Tier Qualified Enterprise Opportunities:
+1. Applied Materials — EUV Wafer Inspection Tooling — Fit Score: 99/100
+   • Key Contacts: VP Precision Engineering, Lead Motion Systems Architect
+   • Requirement: Sub-Nanometer Air-Bearing Stage (ABL Series) & Automation1 HyperWire Platform
+2. KLA Corporation — High-Throughput Reticle Inspection — Fit Score: 97/100
+   • Key Contacts: Chief Motion Engineer, Director of System Integration
+   • Requirement: PlanarHD Dual-Axis Air-Bearing Stage with Sub-0.5 nm In-Position Stability
+3. Laser OEM Integrator — Medical Stent Micromachining Rig — Fit Score: 95/100
+   • Key Contacts: Director of Laser Systems
+
+Strategic Positioning:
+Highlight Aerotech Inc. 50+ year "Dedicated to the Science of Motion" heritage, Automation1 MachineApps custom HMI, Pittsburgh, PA facility, and sub-nanometer air-bearing leadership.
+
+NOTE: Illustrative simulation prepared for Aerotech Inc. (aerotech.com).`,
+
+  quote: `AEROTECH AIR-BEARING STAGE & AUTOMATION1 SYSTEM QUOTE PACKAGE (illustrative)
+Customer: Applied Materials / Semiconductor Inspection Program
+Program: ABL1500 Sub-Nanometer Air-Bearing Stage & Automation1 HyperWire Controller (2 Systems)
+Specifications: 500 mm x 500 mm Travel, 0.4 nm In-Position Jitter, Class 10 Cleanroom
+
+Commercial Breakdown:
+• ABL1500 Dual-Axis Sub-Nanometer Air-Bearing Positioning Stages (2 Systems @ $185,000.00): $370,000.00
+• Automation1 HyperWire Fiber-Optic Multi-Axis Drive Rack & Servo Amplifiers: $58,000.00
+• Nmark AGV Galvo Laser Scan Head & Position Synchronized Output (PSO) Module: $42,000.00
+• ISO 9001 Laser Interferometry Calibration, MachineApps Custom HMI & Cleanroom Packaging: $28,000.00
+
+Performance Return:
+• In-Position Jitter: 0.4 nm (3x Improvement vs Mechanical Ball-Screw Stages)
+• Velocity Ripple: < 0.001% Constant Speed Smoothness
+• Step-and-Settle Time Reduction: 45% Faster Wafer Inspection Cycle
+
+Turnaround Time: 12 Weeks to OEM Tool Integration
+
+NOTE: Illustrative simulation; pricing figures are placeholders.`,
+
+  tender: `SEMICONDUCTOR WAFER INSPECTION & PHOTONICS RFP RESPONSE PACKAGE (illustrative)
+Tender ID: US-PA-MOTION-AEROTECH-2026-20
+Scope: Sub-Nanometer Air-Bearing Stages, Automation1 Platform & Galvo Laser Scanners
+
+Quality & Performance Verification:
+• Quality Management System: ISO 9001:2015 Certified (Pittsburgh, PA Manufacturing Plant)
+• Cleanroom Rating: Certified Class 10 / Class 100 Cleanroom & Vacuum 10^-6 Torr Compatible
+• Calibration Standard: N.I.S.T. Traceable Renishaw Laser Interferometer 2D Grid Mapping
+• Position Stability: Guaranteed 0.4 nm In-Position Resolution with Zero Air-Bearing Friction
+
+Technical Offer:
+• Global leader in precision motion control dedicated to the science of motion.
+
+NOTE: Illustrative simulation; confirm against RFP specifications.`,
+
+  intel: `GLOBAL LASER MICROMACHINING & NANOPOSITIONING MARKET INTELLIGENCE BRIEF (illustrative)
+Focus: EUV Lithography, Femtosecond Laser Processing & Automation1 HMI Flexibility
+
+Key Insights:
+1. Air-Bearing Superiority: Zero mechanical contact eliminates wear, backlash, and friction hysteresis, delivering sub-nanometer repeatability over billions of cycles.
+2. Automation1 MachineApps HMI Advantage: Machine builders customize HMIs with their own corporate branding, icons, and custom axis status color rules.
+3. Aerotech Platform Advantage:
+   - Synchronized galvo scanner tracking with linear stage motion via Position Synchronized Output (PSO) for seamless large-field laser processing.
+   - 100 Mbps HyperWire fiber-optic bus eliminates electrical noise interference in high-power laser environments.
+
+NOTE: Illustrative simulation.`,
+
+  motion_dfm: `SUB-NANOMETER AIR-BEARING STAGE & AUTOMATION1 DFM REVIEW PACKAGE (illustrative · flagship)
+Program: ABL1500 Air-Bearing Stage & Automation1 Controller Integration
+Factory: Pittsburgh, Pennsylvania Manufacturing Plant
+
+Precision Engineering Findings:
+1. Structural Finite Element Optimization: Optimized porous carbon air-bearing pre-load; achieved 0.4 nm in-position jitter stability under dynamic payload shift.
+2. Laser PSO Sync Verification: Tested Nmark AGV galvo laser Position Synchronized Output (PSO) pulse firing at 5 MHz; verified sub-micrometer spot alignment across 200 mm scan field.
+3. Servo Tuning & Resonance Suppression: Applied Automation1 EasyTune automated loop shaping; suppressed mechanical granite resonance peaks by 28 dB.
+
+Quality & Regulatory Audit:
+• Interferometry Audit: N.I.S.T. traceable laser 2D grid calibration approved.
+• Quality Rating: ISO 9001:2015 and Class 10 cleanroom wipedown cleared.
+
+Summary:
+ Sub-nanometer air-bearing stage assembly approved for customer tool integration.
+
+NOTE: Illustrative simulation; review with Aerotech engineering team.`,
+
+  automation1_setup: `AUTOMATION1 CONTROLLER & NMARK AGV GALVO SETUP PACKAGE (illustrative)
+Program: Automation1 Motion Control & Nmark AGV Galvo Laser Integration
+
+System Setup Configuration:
+• Controller Tuning: Configured 32-axis Automation1 controller with EasyTune automated servo loop gain optimization
+• MachineApps HMI: Deployed custom user interface featuring Aerotech color theme and live axis status color indicators (Green=Enabled, Yellow=Joystick, Orange=MaxSpeed)
+• Galvo Laser Tracking: Calibrated Nmark AGV scan head mirrors for sub-micrometer laser mark placement
+
+Outcome: Automation1 motion controller and galvo laser scanner validated for production operation.
+
+NOTE: Illustrative simulation.`,
+
+  iso_audit: `ISO 9001 & SUB-NANOMETER LASER INTERFEROMETRY RELEASE (illustrative)
+Production Assembly: Aerotech ABL Air-Bearing Stage (#AERO-ABL-2026-11)
+Compliance Standard: ISO 9001:2015 / N.I.S.T. Interferometry / Class 10 Cleanroom / CE
+
+Audit Checklist Results:
+• Interferometer Test: Measured 0.38 nm in-position jitter and < 0.4 arcsec pitch/yaw error - PASS
+• Cleanroom Inspection: Zero particle emission counts recorded under Class 10 laminar flow - PASS
+• Electrical Safety & EMC: CE mark and RoHS environmental compliance verified
+
+Outcome: ISO 9001 & Sub-Nanometer Laser Interferometry Quality Release Approved. Certificate of Conformance issued.
+
+NOTE: Illustrative simulation.`,
+
+  spares_plan: `AUTOMATION1 DRIVES & AIR-BEARING HARDWARE SAFETY STOCK PLAN (illustrative)
+Scope: Pittsburgh, Pennsylvania Precision Motion Components Depot
+
+Supply Strategy Breakdown:
+• Optical Glass Encoder Scales: 90-day supply of sub-nanometer resolution quartz encoder scales stored in cleanroom vault
+• HyperWire Servo Drives: 150 Automation1 HyperWire fiber-optic drive modules in stock
+• Material Pedigree: 100% Certificate of Conformance (CoC) verified for granite bases and porous carbon air bearings
+
+Outcome: Precision motion hardware supply clear for continuous semiconductor OEM tool manufacturing.
+
+NOTE: Illustrative simulation.`
+};
+
+let EMPLOYEES = [
+  { id: 'scout', name: 'Scout', title: 'AI Precision Motion Growth Scout', wf: 'scout', handled: 240, hrs: 72, win: 44, status: 'idle' },
+  { id: 'quote', name: 'Quote', title: 'AI Motion Cost Specialist', wf: 'quote', handled: 330, hrs: 140, win: 66, status: 'idle' },
+  { id: 'tender', name: 'Tender', title: 'AI Precision Motion Solution Specialist', wf: 'tender', handled: 150, hrs: 110, win: 56, status: 'idle' },
+  { id: 'intel', name: 'Radar', title: 'AI Motion Control Market Intelligence', wf: 'intel', handled: 180, hrs: 58, win: 34, status: 'idle' },
+  { id: 'motion_dfm', name: 'AirBearingStageDFM', title: 'AI Air-Bearing Stage DFM Specialist', wf: 'motion_dfm', handled: 475, hrs: 280, win: 86, status: 'idle' },
+  { id: 'automation1_setup', name: 'Automation1Setup', title: 'AI Automation1 & Laser Specialist', wf: 'automation1_setup', handled: 275, hrs: 128, win: 62, status: 'idle' },
+  { id: 'iso_audit', name: 'ISOAudit', title: 'AI Precision Quality Auditor', wf: 'iso_audit', handled: 405, hrs: 160, win: 76, status: 'idle' },
+  { id: 'spares_plan', name: 'SupplyPlanner', title: 'AI Precision Motion Component Planner', wf: 'spares_plan', handled: 235, hrs: 96, win: 0, status: 'idle' }
+];
+
+/* Render Functions */
+function drawWaferGrid() {
+  const grid = document.getElementById("dieGrid");
+  let rects = '';
+  for (let x = -8; x <= 8; x++) {
+    for (let y = -8; y <= 8; y++) {
+      if (x*x + y*y <= 60) {
+        const px = 110 + x * 10 - 4;
+        const py = 105 + y * 10 - 4;
+        const pass = (Math.abs(x*y) % 8 !== 3);
+        const fill = pass ? 'rgba(2, 132, 199, 0.45)' : 'rgba(245, 158, 11, 0.6)';
+        rects += `<rect x="${px}" y="${py}" width="8" height="8" rx="1.5" fill="${fill}"></rect>`;
+      }
+    }
+  }
+  grid.innerHTML = rects;
+}
+
+function renderRoster() {
+  const container = document.getElementById("rosterContainer");
+  let html = '';
+  TRACKS.forEach(tr => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === tr.key);
+    if (!list.length) return;
+    html += `<div class="track-label">${tr.title}</div><div class="roster">`;
+    html += list.map(empCard).join('');
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+}
+
+function empCard(e) {
+  const wf = WORKFLOWS[e.wf] || {};
+  const isFlag = wf.tag === 'flagship';
+  const team = (wf.tasks || []).map(t => t.agent).filter((v, i, a) => a.indexOf(v) === i).map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  return `
+    <div class="op-card ${isFlag ? 'flagship' : ''}" id="emp-${e.id}">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${e.name}</div>
+          <div class="op-role">${e.title}</div>
+        </div>
+        ${isFlag ? '<span class="flag-chip">★ FLAGSHIP OPERATOR</span>' : ''}
+      </div>
+      <div class="op-desc">${wf.desc || ''}</div>
+      <div class="op-agents">${team}</div>
+      <div class="op-stats">
+        <div class="op-stat"><b>${e.handled.toLocaleString()}</b> runs</div>
+        <div class="op-stat"><b>~${e.hrs} hrs</b> saved/mo</div>
+        <div class="op-stat"><b>+${e.win}%</b> speedup</div>
+      </div>
+      <div class="op-actions">
+        <button class="run-btn" onclick="runOperator('${e.wf}')">▶ Run ${e.name}</button>
+      </div>
+    </div>
+  `;
+}
+
+function setView(v) {
+  document.getElementById('view-ops').classList.toggle('hidden', v !== 'ops');
+  document.getElementById('view-hire').classList.toggle('hidden', v !== 'hire');
+  document.getElementById('tabA').classList.toggle('active', v === 'ops');
+  document.getElementById('tabB').classList.toggle('active', v === 'hire');
+  if (v === 'hire') initBuilder();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+let isRunning = false;
+async function runOperator(wfKey) {
+  if (isRunning) return;
+  isRunning = true;
+  const wf = WORKFLOWS[wfKey];
+  if (!wf) return;
+
+  const panel = document.getElementById("runPanel");
+  const title = document.getElementById("runTitle");
+  const sub = document.getElementById("runSub");
+  const progress = document.getElementById("progressRow");
+  const feed = document.getElementById("feedArea");
+  const deliv = document.getElementById("deliverableBox");
+
+  panel.classList.add("active");
+  deliv.classList.remove("show");
+  title.innerText = `Executing Operator: ${wf.name}`;
+  sub.innerText = `Mode: ${wf.mode.toUpperCase()} · ${wf.tasks.length} Specialist Agents`;
+
+  progress.innerHTML = wf.tasks.map((_, i) => `<div class="pstep" id="ps_${i}"></div>`).join('');
+  feed.innerHTML = '';
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  function addFeedLine(agentKey, txt, isDone = false) {
+    const role = AGENT_ROLES[agentKey] || { emoji: '🤖', label: agentKey };
+    const div = document.createElement('div');
+    div.className = `feed-line ${isDone ? 'done' : ''}`;
+    div.innerHTML = `<span class="tag">[${role.emoji} ${role.label}]</span><span class="txt">${txt}</span>`;
+    feed.appendChild(div);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  addFeedLine(wf.tasks[0].agent, `Initializing ${wf.name} autonomous workflow loop...`);
+  await new Promise(r => setTimeout(r, 600));
+
+  for (let i = 0; i < wf.tasks.length; i++) {
+    const t = wf.tasks[i];
+    const stepEl = document.getElementById(`ps_${i}`);
+    if (stepEl) stepEl.classList.add("active");
+
+    addFeedLine(t.agent, `Executing Task ${i+1}: ${t.task}`);
+    await new Promise(r => setTimeout(r, 800));
+
+    const role = AGENT_ROLES[t.agent];
+    if (role && role.tools) {
+      for (const tool of role.tools) {
+        addFeedLine(t.agent, `Invoked tool '${tool}( )' -> ${toolOut(tool)}`);
+        await new Promise(r => setTimeout(r, 600));
+      }
+    }
+
+    if (stepEl) {
+      stepEl.classList.remove("active");
+      stepEl.classList.add("complete");
+    }
+    addFeedLine(t.agent, `Task ${i+1} completed. Artifact saved to shared Aerotech project store.`, true);
+  }
+
+  await new Promise(r => setTimeout(r, 400));
+  document.getElementById("delivTitle").innerText = `Review-Ready Output · ${DTITLE[wfKey] || 'Deliverable'}`;
+  document.getElementById("delivCode").innerText = FINAL[wfKey] || "Execution completed successfully.";
+  deliv.classList.add("show");
+
+  isRunning = false;
+}
+
+function closeRun() {
+  document.getElementById("runPanel").classList.remove("active");
+}
+
+/* DYNEX BUILDER FLOW IMPLEMENTATION */
+let draft = {};
+function initBuilder() {
+  draft = { wf: null, mode: 'sequential', assign: [], name: '', title: '', cadence: 'Per project', step: 1 };
+  renderBuilder();
+}
+
+function renderBuilder() {
+  const steps = [['01', 'Pick a workflow'], ['02', 'Assign the agents'], ['03', 'Name & cadence']];
+  document.getElementById('bSteps').innerHTML = steps.map((s, i) => `
+    <div class="step-item ${draft.step === i + 1 ? 'active' : ''}">
+      <div class="step-num">${s[0]}</div>
+      <div class="step-lbl">${s[1]}</div>
+    </div>
+  `).join('');
+
+  if (draft.step === 1) bS1();
+  else if (draft.step === 2) bS2();
+  else bS3();
+  bNav();
+}
+
+function bS1() {
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 1: Choose Baseline Precision Motion Workflow</label></div>
+    <div class="wf-grid">
+      ${Object.keys(WORKFLOWS).map(k => {
+        const w = WORKFLOWS[k];
+        return `
+          <div class="wf-card ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')">
+            <div class="wf-title">${w.name}</div>
+            <div class="wf-desc">${w.desc}</div>
+            <div class="wf-meta">${w.tasks.length} agents · ${w.mode}</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 2: Assign Each Task to a Specialist Agent</label></div>
+    ${w.tasks.map((t, i) => `
+      <div class="task-row">
+        <div class="tn">${i + 1}</div>
+        <div class="tt">
+          ${t.task}
+          ${t.deps.length ? `<span style="color:var(--muted-2);font-family:var(--font-mono);font-size:11px;"> · waits for step ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}
+        </div>
+        <select onchange="draft.assign[${i}]=this.value">${opts}</select>
+      </div>
+    `).join('')}
+    <div class="field" style="margin-top:16px;">
+      <label>Execution Mode</label>
+      <div class="seg">
+        ${['sequential', 'dag'].map(m => `
+          <button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (Parallel DAG)' : 'Sequential'}</button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 3: Name Operator &amp; Set Cadence</label></div>
+    <div class="field">
+      <label>Operator Name</label>
+      <input type="text" value="${draft.name}" placeholder="e.g. Sub-Nanometer Air-Bearing Stage Specialist" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Role Title</label>
+      <input type="text" value="${draft.title}" placeholder="e.g. Autonomous Precision Motion Engineer" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Cadence</label>
+      <div class="seg">
+        ${['Per project', 'Per batch', 'Weekly', 'On-demand'].map(c => `
+          <button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>
+        `).join('')}
+      </div>
+    </div>
+    <div class="field" style="margin-top:20px;">
+      <label>Live Operator Card Preview</label>
+      <div id="previewCardArea"></div>
+    </div>
+  `;
+  renderPreview();
+}
+
+function renderPreview() {
+  const w = WORKFLOWS[draft.wf];
+  const area = document.getElementById('previewCardArea');
+  if (!area) return;
+  
+  const team = draft.assign.map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  area.innerHTML = `
+    <div class="op-card" style="max-width:440px;">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${draft.name || 'New Operator'}</div>
+          <div class="op-role">${draft.title || 'AI Operator'}</div>
+        </div>
+      </div>
+      <div class="op-desc">Owns <b>${w.name}</b> · ${draft.cadence} · ${draft.mode.toUpperCase()}</div>
+      <div class="op-agents">${team}</div>
+    </div>
+  `;
+}
+
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn btn-ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right = '';
+  if (draft.step === 1) right = `<button class="btn btn-primary" ${draft.wf ? '' : 'disabled'} onclick="draft.step=2;renderBuilder()">Next: Assign Agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn btn-primary" onclick="draft.step=3;renderBuilder()">Next: Name &amp; Cadence →</button>`;
+  else right = `<button class="btn btn-primary" onclick="hire()">✓ Add this AI Operator</button>`;
+
+  document.getElementById('bNav').innerHTML = left + right;
+}
+
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  
+  WORKFLOWS[wfId] = {
+    name: w.name,
+    title: draft.title || w.title,
+    mode: draft.mode || w.mode,
+    track: w.track,
+    deliverable: w.deliverable,
+    desc: w.desc,
+    tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps }))
+  };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({
+    id, name,
+    title: draft.title || w.title,
+    wf: wfId,
+    handled: 0,
+    hrs: Math.floor(Math.random() * 60) + 40,
+    win: 0,
+    status: 'idle'
+  });
+
+  renderRoster();
+  setView('ops');
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  drawWaferGrid();
+  renderRoster();
+});
+</script>
+</body>
+</html>
