@@ -142,3 +142,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/semtech
 https://innvonix-tech-solutions.github.io/ai-workforce/sivers
 https://innvonix-tech-solutions.github.io/ai-workforce/arteris
 https://innvonix-tech-solutions.github.io/ai-workforce/photodigm
+https://innvonix-tech-solutions.github.io/ai-workforce/psiquantum
