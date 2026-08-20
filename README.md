@@ -150,3 +150,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/convergix
 https://innvonix-tech-solutions.github.io/ai-workforce/ferrotec
 https://innvonix-tech-solutions.github.io/ai-workforce/bbs-automation
 https://innvonix-tech-solutions.github.io/ai-workforce/eclipse
+https://innvonix-tech-solutions.github.io/ai-workforce/select-custom
