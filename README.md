@@ -148,3 +148,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/aerotech
 https://innvonix-tech-solutions.github.io/ai-workforce/allient
 https://innvonix-tech-solutions.github.io/ai-workforce/convergix
 https://innvonix-tech-solutions.github.io/ai-workforce/ferrotec
+https://innvonix-tech-solutions.github.io/ai-workforce/bbs-automation
