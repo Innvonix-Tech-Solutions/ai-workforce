@@ -153,3 +153,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/eclipse
 https://innvonix-tech-solutions.github.io/ai-workforce/select-custom
 https://innvonix-tech-solutions.github.io/ai-workforce/sibelhealth
 https://innvonix-tech-solutions.github.io/ai-workforce/powerex
+https://innvonix-tech-solutions.github.io/ai-workforce/atomica
