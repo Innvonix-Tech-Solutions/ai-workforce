@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atomica &mdash; AI Commercial &amp; MEMS Microfabrication Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#fffaf2;--surface2:#fdecd2;--border:#fcd394;--accent:#f59e0b;
+--accent-dim:rgba(245,158,11,.08);--accent-line:rgba(245,158,11,.35);--slate:#0f172a;--slate-line:rgba(15,23,42,.32);--text:#0f172a;--hi:#020617;--tert:#64748b;--ok:#0284c7;--ok-dim:rgba(2,132,199,.10);--gold:#d97706;--gold-bg:#fffbeb;--gold-line:#fde68a}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Montserrat,Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:38px;height:34px;border-radius:8px;background:linear-gradient(135deg,#0f172a,#f59e0b);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:16px;letter-spacing:.5px}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#b45309}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none;font-family:Montserrat,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:900px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#b45309;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(2,132,199,.08);color:var(--ok);border:1px solid rgba(2,132,199,.3)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#b45309}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#b45309;font-size:15px;flex-shrink:0;position:relative;font-family:Montserrat,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#f59e0b}.btn.primary{background:#b45309;border-color:#b45309;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#b45309;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#b45309}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(2,132,199,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(2,132,199,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#f59e0b}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Montserrat,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#b45309;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px;font-family:Inter,sans-serif}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:99px;padding:11px 16px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff;font-weight:700}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5;font-family:Inter,sans-serif}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="header">
+<div class="logo"><div class="mark">ATO</div>
+<div><div class="htitle">Atomica &middot; AI Commercial &amp; MEMS Microfabrication Workforce</div><div class="hsub">AI operators for 150mm/200mm MEMS wafer fab, bio-microfluidic chips, optical MEMS &amp; silicon photonics (Santa Barbara, CA)</div></div></div>
+<div class="badge">Independent concept &nbsp;&middot;&nbsp; <b>illustrative</b></div>
+</header>
+
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>a pure-play 200mm MEMS wafer fab, bio-microfluidic, or optical MEMS engineering workflow turned into an autonomous team of agents</b>. Atomica Corp. (Santa Barbara / Goleta CA 130,000 sq ft manufacturing campus, 30,000 sq ft Class 100 cleanroom) is the leading U.S. pure-play MEMS and microfabrication foundry. One track drives commercial sourcing &amp; biotech/OEM relationships: it captures Bio-MEMS OEMs (Illumina, PacBio, Roche), LiDAR &amp; Optical MEMS makers (Luminar, Innoviz, Meta AR), and Medical Device biosensor firms, quotes 200mm MEMS prototyping and volume wafer fab, structures ISO 13485 biochip foundry proposals, and highlights Atomica's 400+ fab tools, ISO 9001, and ITAR defense registration. The other track delivers microfabrication &amp; cleanroom yield precision: it designs 200mm bio-microfluidic DNA sequencing chip wafer stackups (30:1 DRIE anisotropic etch, anodic glass-to-silicon bonding), simulates 3D LiDAR optical MEMS micro-mirrors (&plusmn;15&deg; deflection at 25kHz), fabricates 200mm PZT/AlN piezoelectric RF MEMS switches, and audits AI-driven wafer inspection &amp; metrology yields. Point one at a MEMS layout print, a biochip RFQ or a 200mm wafer probe log and it runs the loop, then hands back a review-ready output for a person to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial &amp; Bio OEM Sourcing</span> find, 200mm MEMS quote, ISO 13485 proposal</span>
+<span><span class="tag operations">MEMS Fab &amp; Photonics Eng</span> 200mm Bio-MEMS fab, optical micro-mirror, piezo RF MEMS, Santa Barbara yield</span>
+<span><span class="tag hero">Flagship</span> the deepest example run</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+
+<div class="foot">Independent concept prototype prepared by Innvonix Tech Solutions for a conversation with Atomica Corp. (Santa Barbara, CA). It is not affiliated with, endorsed by, or built on Atomica Corp. systems or data. All operators and outputs are illustrative simulations; 200mm wafer probe yields, DRIE aspect ratios, microfluidic channel dimensions, optical mirror deflection angles and commercial wafer quotes are placeholders. A chief executive officer, VP of engineering, fab operations director or chief microfabrication architect reviews and approves every MEMS wafer stackup, DRIE etch recipe, Santa Barbara cleanroom traveler and commercial OEM proposal. This is not a production system and produces no deliverable for a real customer.</div>
+
+<script>
+const AGENT_ROLES={
+researcher:{emoji:'🔎',label:'MEMS, Bio-Microfluidics & Silicon Photonics Research',tools:['research','save']},
+prospector:{emoji:'🧲',label:'Biotech, LiDAR & Sensor OEM Account Sourcing',tools:['source_accounts','save']},
+qualifier:{emoji:'🎯',label:'200mm MEMS Wafer Fab & Bio-MEMS Qualifier',tools:['score_fit','save']},
+mems_process_arch:{emoji:'🔬',label:'MEMS Microfabrication & DRIE Etch Architect',tools:['design_mems_wafer_stackup','simulate_drie_aspect_ratio','save']},
+microfluidics_bio_spec:{emoji:'🧬',label:'Bio-MEMS & Microfluidic Channel Specialist',tools:['verify_microfluidic_flow_rate','audit_surface_biocompatibility','save']},
+optical_mems_eng:{emoji:'💡',label:'Optical MEMS & Silicon Photonics Specialist',tools:['simulate_micromirror_deflection','verify_optical_alignment','save']},
+cleanroom_fab_lead:{emoji:'⚙️',label:'Santa Barbara 200mm Class 100 Cleanroom Lead',tools:['inspect_thin_film_stress','audit_wafer_bonding_voids','save']},
+throughput:{emoji:'🤖',label:'AI-Enabled Wafer Probing & Optical Test Opt',tools:['verify_mems_die_yield','calculate_takt_time','save']},
+compliance:{emoji:'📋',label:'ISO 13485, ISO 9001 & ITAR MEMS Compliance Lead',tools:['check_compliance','save']},
+pricing:{emoji:'🧮',label:'MEMS Foundry Prototyping & 200mm Wafer Quoting',tools:['build_quote','save']},
+writer:{emoji:'✍️',label:'MEMS Fabrication Traveler & Spec Writer',tools:['compose','save']},
+reviewer:{emoji:'✅',label:'QA & Final MEMS Wafer Release Reviewer',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+
+const TRACKS=[['commercial','Commercial &amp; Bio OEM Sourcing'],['operations','MEMS Fab &amp; Photonics Eng']];
+
+const WORKFLOWS={
+scout:{name:'Biotech, LiDAR & MEMS sensor partner discovery',title:'AI Atomica Scout',mode:'dag',track:'commercial',deliverable:'Target Biotech, LiDAR & MEMS Sensor Account List',
+sample:'Find Biotech OEMs (Illumina, PacBio, Roswell Biotech), Autonomous LiDAR makers (Luminar, Innoviz, Hesai), AR/VR Display OEMs (Meta, Apple), and Medical Device firms needing 200mm MEMS wafer fab, microfluidics, and optical MEMS mirrors.',
+desc:'Agents scan next-gen DNA sequencing roadmaps, LiDAR micro-mirror expansion, and biomedical sensor grants, map VP of Hardware Engineering, Chief MEMS Architect, score fit, and compile target list.',
+tasks:[{agent:'researcher',task:'Map high-throughput DNA sequencing biochip demand, LiDAR optical MEMS scanning mirror specs, and 200mm piezo MEMS market growth.',deps:[]},
+{agent:'prospector',task:'Source VP of Microfabrication, Chief Bio-MEMS Scientist, and Head of Foundry Sourcing at biotech & photonics leaders.',deps:[]},
+{agent:'qualifier',task:'Score fit against Atomica capabilities: Santa Barbara 130,000 sq ft campus, 30,000 sq ft Class 100 cleanroom, 200mm wafer fab, ISO 13485 & ITAR certs.',deps:[0,1]},
+{agent:'writer',task:'Compile the ranked target MEMS account list with microfabrication specs, 200mm foundry volume projections, and commercial strategy.',deps:[2]}]},
+
+mems_foundry_quote:{name:'200mm MEMS wafer prototyping & volume foundry quoting',title:'AI MEMS Quoting Estimator',mode:'sequential',track:'commercial',deliverable:'200mm MEMS Wafer Foundry Quote Package',
+sample:'A bio-MEMS OEM uploaded an RFQ: 200mm glass-on-silicon microfluidic sequencing chip, 5,000 wafers/year. Calculate Santa Barbara cleanroom takt time, DRIE mask NRE, and volume price.',
+desc:'Agents parse customer bio-MEMS wafer RFQ, calculate 200mm wafer fab process steps, model Santa Barbara Class 100 cleanroom takt time, lithography mask NRE, and generate quote package.',
+tasks:[{agent:'qualifier',task:'Parse customer bio-MEMS RFQ: 200mm glass-on-silicon microfluidics, 10 µm nano-channels, anodic wafer bonding, 5,000 wafers/year, ISO 13485 medical grade.',deps:[]},
+{agent:'mems_process_arch',task:'Calculate 200mm wafer process flow: 6 lithography masks, DRIE anisotropic silicon etch, PVD platinum electrodes, anodic glass bonding.',deps:[0]},
+{agent:'cleanroom_fab_lead',task:'Estimate Santa Barbara Class 100 cleanroom cycle time: ALD deposition, wafer bonding bake, acoustic void inspection, and dicing takt time.',deps:[1]},
+{agent:'pricing',task:'Structure volume pricing model: unit 200mm wafer price, mask set NRE fee, volume tier discount (20% for 5,000+ wafers), and Santa Barbara dispatch SLA.',deps:[2]},
+{agent:'writer',task:'Produce the 200mm MEMS Wafer Foundry Quote package with process flow schematics, yield SLA, and Santa Barbara facility dispatch terms.',deps:[3]}]},
+
+biochip_foundry_proposal:{name:'ISO 13485 medical bio-MEMS & organ-on-chip proposal',title:'AI Bio-MEMS Proposal Architect',mode:'sequential',track:'commercial',deliverable:'Medical Bio-MEMS Foundry Proposal',
+sample:'Structure a multi-year bio-MEMS foundry proposal for next-gen single-cell sorting biochips (biocompatible glass etching, micro-valves, ISO 13485 medical device certified).',
+desc:'Agents scope medical bio-chip manufacturing requirements, verify ISO 13485 medical device compliance, structure multi-year foundry terms, and produce proposal.',
+tasks:[{agent:'qualifier',task:'Parse medical bio-chip spec: single-cell sorting biochip, biocompatible glass & PDMS channels, integrated micro-valves, ISO 13485 certified.',deps:[]},
+{agent:'microfluidics_bio_spec',task:'Design microfluidic channel architecture: 15 µm sorting channels, zero-cytotoxicity PEG surface functionalization, 99.4% cell viability — PASS.',deps:[0]},
+{agent:'compliance',task:'Verify ISO 13485 medical device quality system, FDA Class II component traceability, and Santa Barbara cleanroom bio-clean protocol.',deps:[1]},
+{agent:'writer',task:'Produce the Medical Bio-MEMS Foundry proposal with microfluidic flow rate charts, ISO 13485 compliance certs, and multi-year production roadmap.',deps:[2]}]},
+
+radar:{name:'Pure-play MEMS foundry competitive intelligence brief',title:'AI Market Intel',mode:'dag',track:'commercial',deliverable:'Competitive Intelligence Brief',
+sample:'How do competing MEMS foundries (Silex Microsystems, Teledyne DALSA, TSMC MEMS, Rogue Valley Micro) compare to Atomica Corp. in 200mm wafer fab, bio-MEMS microfluidics, and ITAR defense compliance?',
+desc:'Agents profile competing MEMS foundries, compare 200mm wafer fab equipment & material flexibility, analyze USA domestic foundry advantages, and produce brief.',
+tasks:[{agent:'researcher',task:'Scan MEMS foundry market: 150mm & 200mm MEMS wafer fabs, bio-MEMS microfluidics, optical MEMS mirrors, piezo MEMS, ITAR defense foundries.',deps:[]},
+{agent:'prospector',task:'Profile competing foundries: Silex Microsystems, Teledyne DALSA, TSMC MEMS, Rogue Valley Microdevices, Sony MEMS.',deps:[]},
+{agent:'mems_process_arch',task:'Compare technology & facility metrics: Atomica 130,000 sq ft Santa Barbara campus + 30,000 sq ft Class 100 cleanroom + 200mm wafer scale + ISO 13485 + ITAR vs offshore foundries.',deps:[0,1]},
+{agent:'writer',task:'Produce competitive intelligence brief highlighting Atomica Santa Barbara manufacturing scale, 200mm bio-MEMS lead, and ITAR defense heritage.',deps:[2]}]},
+
+bio_mems_wafer_fab:{name:'200mm Bio-MEMS microfluidic DNA sequencing chip fab run',title:'AI Bio-MEMS Fab Architect',mode:'sequential',track:'operations',tag:'flagship',deliverable:'200mm Bio-MEMS Production Release Package',
+sample:'Process a high-throughput bio-chip requirement: design 200mm SOI/glass microfluidic wafer stackup (10µm deep nano-fluidic channels), simulate DRIE anisotropic silicon etch (30:1 aspect ratio), execute anodic wafer bonding (<0.8% voiding), audit AI-enabled automated optical inspection yield (>96.5%), QA-review, and produce Atomica MEMS traveler package.',
+desc:'Agents design 200mm SOI/glass bio-MEMS wafer stackup, simulate 30:1 DRIE anisotropic silicon etch, audit anodic wafer bonding voids, QA-review, and produce release package.',
+tasks:[{agent:'mems_process_arch',task:'Design 200mm SOI/borosilicate glass microfluidic wafer stackup: 10 µm nano-channel depth, integrated Ti/Au micro-electrodes.',deps:[]},
+{agent:'mems_process_arch',task:'Simulate Deep Reactive Ion Etch (DRIE): Bosch process anisotropic silicon etch, aspect ratio = 32:1; sidewall roughness Ra < 15 nm — PASS.',deps:[0]},
+{agent:'microfluidics_bio_spec',task:'Audit microfluidic flow rate & biocompatibility: laminar flow velocity = 2.4 mm/s; zero cell lysis under high-throughput fluidic shear — PASS.',deps:[1]},
+{agent:'cleanroom_fab_lead',task:'Audit anodic wafer bonding & thin-film stress: glass-to-silicon anodic bond at 400°C / 800V; acoustic voiding = 0.6% (spec < 1.0%) — PASS.',deps:[2]},
+{agent:'throughput',task:'Audit AI-enabled automated optical inspection (AOI) yield: 96.8% die yield across 200mm wafer; die test takt time = 0.8s/die.',deps:[3]},
+{agent:'compliance',task:'Verify ISO 13485 medical device quality management, ISO 9001 cleanroom standards, and ITAR defense export regulations.',deps:[4]},
+{agent:'reviewer',task:'QA-review Atomica release package: verify DRIE SEM cross-section micrographs, anodic bond acoustic void maps, and Santa Barbara traveler.',deps:[5]},
+{agent:'writer',task:'Produce the 200mm Bio-MEMS Production Release package with DRIE etch recipes, microfluidic flow rate plots, and Santa Barbara cleanroom traveler.',deps:[6]}]},
+
+optical_mems_mirror_fab:{name:'3D LiDAR optical MEMS micro-mirror DRIE & TSV wafer bonding',title:'AI Optical MEMS Specialist',mode:'sequential',track:'operations',deliverable:'Optical MEMS Micro-Mirror Release Package',
+sample:'Design 200mm optical MEMS scanning mirror (2mm resonant mirror dish, PZT piezo actuator), simulate ±15° mirror deflection angle at 25kHz, verify Through-Silicon Via (TSV) interconnector yield, and issue optical MEMS traveler.',
+desc:'Agents design 200mm 3D LiDAR optical MEMS micro-mirror, simulate piezo resonant mirror deflection, verify TSV interconnects, and produce release package.',
+tasks:[{agent:'optical_mems_eng',task:'Design 200mm optical MEMS scanning mirror: 2.0 mm monocrystalline silicon mirror dish, PZT thin-film piezo actuator array, gold reflective coating.',deps:[]},
+{agent:'optical_mems_eng',task:'Simulate mirror deflection & resonance: resonant frequency = 24.8 kHz; optical scan angle = ±15.2° at 15V drive voltage (spec > ±14°) — PASS.',deps:[0]},
+{agent:'cleanroom_fab_lead',task:'Execute Through-Silicon Via (TSV) & wafer-level packaging (WLP): copper via fill, cavity capping wafer bond with vacuum seal (< 1E-3 mbar) — PASS.',deps:[1]},
+{agent:'reviewer',task:'QA-review optical MEMS traveler: verify laser interferometer surface flatness (λ/10 at 1550nm), TSV resistance (< 0.1 Ω), and cleanroom traveler.',deps:[2]},
+{agent:'writer',task:'Produce the Optical MEMS Micro-Mirror Release package with resonant frequency response curves, mirror flatness interferograms, and fab traveler.',deps:[3]}]},
+
+piezo_rf_mems_fab:{name:'200mm Piezoelectric (PZT/AlN) RF MEMS switch fabrication',title:'AI Piezo & RF MEMS Lead',mode:'sequential',track:'operations',deliverable:'200mm Piezo RF MEMS Release Package',
+sample:'Fabricate 200mm PZT/AlN thin-film piezo RF MEMS switch; optimize sputtering film stress (<50 MPa), verify insertion loss < 0.2 dB up to 40 GHz, and issue RF MEMS traveler.',
+desc:'Agents fabricate 200mm PZT/AlN piezoelectric RF MEMS switches for 5G/6G & radar, verify high-frequency RF performance, and produce release package.',
+tasks:[{agent:'mems_process_arch',task:'Fabricate 200mm PZT/AlN piezoelectric RF MEMS switch: reactive sputtering thin-film PZT layer, high-aspect ratio cantilever beam DRIE.',deps:[]},
+{agent:'cleanroom_fab_lead',task:'Optimize thin-film stress & breakdown: PZT film compressive stress = -38 MPa (spec < ±50 MPa); dielectric breakdown > 2.5 MV/cm — PASS.',deps:[0]},
+{agent:'throughput',task:'Execute 40 GHz RF wafer probing: insertion loss IL = 0.18 dB at 28 GHz; isolation ISO = 34 dB; switching speed = 1.4 µs — PASS.',deps:[1]},
+{agent:'reviewer',task:'QA-review RF MEMS traveler: verify S-parameter RF spectrum plots, 10-billion cycle reliability lifetime test, and Santa Barbara fab traveler.',deps:[2]},
+{agent:'writer',task:'Produce the 200mm Piezo RF MEMS Release package with RF S-parameter graphs, PZT film stress charts, and Santa Barbara cleanroom traveler.',deps:[3]}]},
+
+santa_barbara_yield_audit:{name:'Automated 200mm MEMS wafer probe & AI inspection yield audit',title:'AI Santa Barbara Fab & Test Lead',mode:'sequential',track:'operations',deliverable:'Santa Barbara Fab Yield & Reliability Quality Audit',
+sample:'Audit high-volume 200mm MEMS wafer probing line at Santa Barbara facility; measure acoustic microscopy wafer bond voiding, membrane resonance Cpk (1.75), and test takt time (0.8s/die), issuing Santa Barbara fab release traveler.',
+desc:'Agents audit automated 200mm MEMS wafer probing lines at Santa Barbara Class 100 cleanroom, measure membrane resonance Cpk & bond voiding, and produce fab audit.',
+tasks:[{agent:'throughput',task:'Audit automated 200mm MEMS wafer electrical & optical probe line at Santa Barbara Class 100 cleanroom: laser doppler vibrometer probing.',deps:[]},
+{agent:'throughput',task:'Optimize AI-enabled wafer probe test takt time: reduce 100% die test execution to 0.8 seconds per die while logging 3D metrology maps.',deps:[0]},
+{agent:'cleanroom_fab_lead',task:'Run Statistical Process Control (SPC): monitor Cpk = 1.75 for MEMS membrane resonant frequency and wafer bond acoustic voiding (< 0.8%) — PASS.',deps:[1]},
+{agent:'writer',task:'Produce the Santa Barbara Fab Yield & Reliability Quality Audit with 200mm wafer Cpk maps, ISO 13485 cleanroom test certs, and VP of Fab Operations sign-off.',deps:[2]}]},
+};
+
+const DTITLE={scout:'Target Biotech, LiDAR & MEMS Sensor Account List',mems_foundry_quote:'200mm MEMS Wafer Foundry Quote Package',biochip_foundry_proposal:'Medical Bio-MEMS Foundry Proposal',radar:'Competitive Intelligence Brief',bio_mems_wafer_fab:'200mm Bio-MEMS Production Release Package',optical_mems_mirror_fab:'Optical MEMS Micro-Mirror Release Package',piezo_rf_mems_fab:'200mm Piezo RF MEMS Release Package',santa_barbara_yield_audit:'Santa Barbara Fab Yield & Reliability Quality Audit'};
+
+const TOOLS={
+research:()=>'Gathered bio-MEMS microfluidics, LiDAR optical MEMS, and 200mm piezo MEMS market intel; target accounts ranked.',
+source_accounts:()=>'Sourced VP of Microfabrication, Chief Bio-MEMS Scientist, and Head of Foundry Sourcing.',
+score_fit:()=>'Scored against Atomica capabilities: Santa Barbara 130k sq ft campus, Class 100 cleanroom, 200mm wafer fab, ISO 13485 & ITAR.',
+design_mems_wafer_stackup:()=>'Designed 200mm SOI/borosilicate glass microfluidic wafer stackup: 10 µm channel depth, Ti/Au micro-electrodes.',
+simulate_drie_aspect_ratio:()=>'Simulated DRIE anisotropic silicon etch: Bosch process aspect ratio = 32:1, sidewall roughness Ra = 12 nm clean.',
+verify_microfluidic_flow_rate:()=>'Verified microfluidic flow rate & biocompatibility: laminar flow velocity = 2.4 mm/s, zero cell lysis.',
+audit_surface_biocompatibility:()=>'Audited surface biocompatibility: PEG surface functionalization confirmed; zero cytotoxicity, 99.4% cell viability.',
+simulate_micromirror_deflection:()=>'Simulated optical MEMS mirror deflection: 24.8 kHz resonant frequency, ±15.2° optical scan angle at 15V.',
+verify_optical_alignment:()=>'Verified laser interferometer surface flatness: λ/10 at 1550nm wavelength, TSV resistance < 0.1 Ω.',
+inspect_thin_film_stress:()=>'Inspected thin-film PZT stress: compressive stress = -38 MPa clean (spec < ±50 MPa), breakdown > 2.5 MV/cm.',
+audit_wafer_bonding_voids:()=>'Audited anodic glass-to-silicon wafer bonding: acoustic voiding = 0.6% clean (spec < 1.0%).',
+verify_mems_die_yield:()=>'Verified AI-enabled automated optical inspection (AOI) die yield: 96.8% die yield clean across 200mm wafer.',
+calculate_takt_time:()=>'Calculated takt time: 0.8 seconds per die automated MEMS probe test.',
+check_compliance:()=>'Checked ISO 13485 medical device, ISO 9001 cleanroom, FDA Class II traceability, and ITAR defense compliance.',
+build_quote:()=>'Structured 200mm MEMS wafer quote: unit wafer cost, lithography mask NRE fee, volume tier discount (20% for 5,000+).',
+qa_review:()=>'QA: 200mm MEMS wafer stackup, DRIE SEM micrographs, anodic bond void map, and Santa Barbara fab traveler verified.',
+compose:()=>'Drafted in a clear, executive-ready, microfabrication & bio-MEMS-aware technical style.',
+save:()=>'Saved to shared context for downstream agents.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+
+const FINAL={
+scout:`TARGET BIOTECH, LIDAR & MEMS SENSOR ACCOUNT LIST (illustrative)
+
+Scanned Bio-MEMS OEMs, Autonomous LiDAR makers, AR/VR Display developers, and Medical Device firms.
+
+A-tier (pursue now)
+1. Tier-1 DNA Sequencing & Genomics Giant (San Diego CA / Cambridge UK) — 200mm microfluidic sequencing chips — Atomica fit 99
+2. Autonomous LiDAR & 3D Sensing Leader (Sunnyvale CA / Tel Aviv) — 3D optical MEMS scanning micro-mirrors — fit 98
+3. AR/VR Smart Glasses Pioneer (Redmond WA / Cupertino CA) — Silicon photonics & micro-display light engines — fit 97
+4. Implantable Medical Device OEM (Minneapolis MN / Zurich) — Neural probes & micro-dosing bio-pumps — fit 95
+5. Defense & Aerospace Guidance Supplier (Tucson AZ / El Segundo CA) — High-precision MEMS gyros & accelerometers — fit 94
+
+Contacts: VP of Microfabrication, Chief Bio-MEMS Scientist, Head of Foundry Sourcing.
+Technology scope: 200mm MEMS Wafer Fab, 30,000 sq ft Class 100 Cleanroom, ISO 13485 Certified, ITAR Registered.
+
+→ Saved: atomica_target_list, executive_contacts, mems_foundry_matrix
+
+NOTE: illustrative; not affiliated with Atomica Corp.`,
+
+mems_foundry_quote:`200MM MEMS WAFER FOUNDRY QUOTE PACKAGE (illustrative)
+
+Customer: Global Bio-MEMS & DNA Sequencing OEM.
+Order: 200mm Glass-on-Silicon Microfluidic Biochip Wafers (#RFQ-ATOMICA-2026-12).
+
+Wafer fab specifications & cleanroom capacity audit
+• Application: High-Throughput Microfluidic DNA Sequencing Biochip (10 µm Nano-Channels)
+• Technology: 200mm Wafer Fab (DRIE Anisotropic Etch + Anodic Glass Bonding + Au Micro-Electrodes)
+• Quality & Yield: ISO 13485 Medical Device Certified; Anodic Bond Voiding = 0.6%; Die Yield = 96.8% — PASS
+• Facility Location: Atomica Corp. Santa Barbara / Goleta, CA 130,000 sq ft Manufacturing Campus
+
+Commercial summary
+• Quantity: 5,000 Wafers / Year (200mm Substrates)
+• Unit 200mm Wafer Price: $[REDACTED]
+• Volume Tier Discount (20% for 5,000+ wafers): -$[REDACTED]
+• Net Order Value: $[REDACTED] (FOB Santa Barbara, CA — Dispatch in 4 weeks ARO)
+
+→ Saved: atomica_mems_quote, process_flow_schematics, cleanroom_yield_sla
+
+NOTE: illustrative; all financial figures redacted.`,
+
+biochip_foundry_proposal:`MEDICAL BIO-MEMS FOUNDRY PROPOSAL (illustrative)
+
+Customer: Medical Device & Single-Cell Diagnostics OEM.
+Project: Multi-Year Single-Cell Sorting Biochip Manufacturing (#BIO-ATOMICA-2026).
+
+Medical device requirements & Atomica foundry lead
+• Application: High-Precision Single-Cell Sorting & Organ-on-Chip Diagnostics
+• Spec Compliance: ISO 13485 Medical Device Quality Management, FDA Class II Component Traceability — PASS
+• Biocompatibility: PEG surface functionalization; 99.4% cell viability under laminar flow — PASS
+• Micro-Fabrication: Biocompatible borosilicate glass etching with integrated micro-valves
+
+Program roadmap & foundry terms
+• Phase 1: Prototyping & cell viability testing (Santa Barbara Class 100 cleanroom / 3 months)
+• Phase 2: 200mm volume wafer production & medical device release (Santa Barbara campus / 9 months)
+
+→ Saved: medical_biochip_proposal, microfluidic_flow_plots, iso13485_certs
+
+NOTE: illustrative; all financial figures redacted.`,
+
+radar:`COMPETITIVE INTELLIGENCE BRIEF (illustrative)
+
+Landscape
+• Silex Microsystems / Teledyne DALSA: large pure-play foundries, but face capacity constraints on custom bio-fluidics
+• TSMC MEMS: focused on massive volume consumer motion sensors, limited flexibility for custom glass/PZT materials
+• Rogue Valley Micro: smaller regional shop, lacks 200mm wafer scale and 30,000 sq ft Class 100 cleanroom infrastructure
+
+Where Atomica Corp. wins
+• USA Pure-Play 200mm MEMS Foundry: 130,000 sq ft Santa Barbara campus with over 400 pieces of fab equipment
+• Dual ISO 13485 & ITAR Registrations: certified for medical bio-chips and military defense sensors
+• Microfluidic & Optical MEMS Lead: specialized expertise in DRIE, anodic bonding, TSVs, and PZT thin-films
+• Flexible Substrate Capabilities: silicon, SOI, glass, fused silica, quartz, and III-V materials under one roof
+
+Talk tracks
+1. "Atomica is the leading U.S. pure-play MEMS foundry operating a 200mm Class 100 cleanroom campus in Santa Barbara"
+2. "We hold dual ISO 13485 medical device and ITAR defense certifications for bio-chips and optical sensors"
+3. "Our DRIE and wafer bonding capabilities deliver >96.8% yields for next-generation microfluidic sequencing chips"
+
+→ Saved: competitive_matrix, technology_benchmarks, sales_talk_tracks
+
+NOTE: illustrative; not affiliated with Atomica Corp.`,
+
+bio_mems_wafer_fab:`200MM BIO-MEMS PRODUCTION RELEASE PACKAGE (illustrative · flagship)
+
+Wafer Lot: Atomica 200mm Bio-MEMS Microfluidic Sequencing Wafer (#ATOMICA-200MM-BIO-SEQ).
+
+Microfabrication & cleanroom audit
+• Wafer Substrates: 200mm SOI / Borosilicate Glass Stackup (10 µm channel depth) — PASS
+• DRIE Silicon Etch: Bosch process anisotropic etch, aspect ratio = 32:1; sidewall roughness Ra = 12 nm — PASS
+• Biocompatibility & Flow: Laminar flow velocity = 2.4 mm/s; zero cell lysis clean — PASS
+• Anodic Wafer Bonding: Glass-to-silicon bond at 400°C / 800V; acoustic voiding = 0.6% — PASS
+
+AI-Enabled AOI & compliance audit
+• Wafer Inspection Yield: 96.8% die yield clean across 200mm wafer (0.8s/die test takt time) — PASS
+• Standards Compliance: Complies with ISO 13485 medical device, ISO 9001, and ITAR export guidelines
+
+Recommendation: Release 200mm Bio-MEMS wafer lot for dicing and medical chip packaging.
+
+→ Saved: bio_mems_release_package, drie_sem_micrographs, bond_void_maps, santa_barbara_traveler
+
+NOTE: illustrative; confirm against Atomica product specification.`,
+
+optical_mems_mirror_fab:`OPTICAL MEMS MICRO-MIRROR RELEASE PACKAGE (illustrative)
+
+Component: 200mm 3D LiDAR Optical MEMS Scanning Mirror (#OPT-MIRROR-3D-LIDAR).
+
+Optical MEMS & TSV interconnect audit
+• Actuation & Mirror: 2.0 mm monocrystalline mirror dish with PZT piezo actuator array — PASS
+• Resonant Deflection: Resonant frequency = 24.8 kHz; optical scan angle = ±15.2° at 15V — PASS
+• Wafer-Level Packaging: Cavity capping wafer bond with vacuum seal (< 1E-3 mbar); TSV resistance < 0.1 Ω — PASS
+• Mirror Surface Flatness: Laser interferometer surface flatness = λ/10 at 1550nm wavelength — PASS
+
+Status: Certified for autonomous vehicle LiDAR & AR/VR display engine integration.
+
+→ Saved: optical_mems_package, resonance_response_curves, mirror_interferograms, fab_traveler
+
+NOTE: illustrative; confirm against Atomica optical MEMS engineering spec.`,
+
+piezo_rf_mems_fab:`200MM PIEZO RF MEMS RELEASE PACKAGE (illustrative)
+
+Device: 200mm Piezoelectric (PZT/AlN) RF MEMS Switch (#RF-MEMS-PIEZO-40GHZ).
+
+RF performance & thin-film stress audit
+• PZT Sputtering Film Stress: Compressive film stress = -38 MPa (spec < ±50 MPa) — PASS
+• Dielectric Breakdown: Thin-film breakdown voltage > 2.5 MV/cm — PASS
+• High-Frequency RF Performance: Insertion loss IL = 0.18 dB at 28 GHz; isolation ISO = 34 dB — PASS
+• Reliability Lifetime: 10-billion cycle switching lifetime verified without stiction — PASS
+
+Status: Approved for 5G/6G beamforming & defense radar phased array packaging.
+
+→ Saved: piezo_rf_mems_package, rf_s_parameter_graphs, film_stress_charts, fab_traveler
+
+NOTE: illustrative; confirm against Atomica RF MEMS device engineering spec.`,
+
+santa_barbara_yield_audit:`SANTA BARBARA FAB YIELD & RELIABILITY QUALITY AUDIT (illustrative)
+
+Audit Scope: Atomica Corp. Santa Barbara, California Manufacturing Campus (#SANTA-BARBARA-FAB-2026).
+
+Cleanroom fab assembly & test metrics
+• Probing Line Setup: Automated 200mm MEMS electrical, optical & laser doppler vibrometer prober
+• End-of-Line Test Takt Time: 0.8 seconds per die (logging 3D metrology & acoustic void data) — PASS
+• Statistical Process Control: Cpk = 1.75 for MEMS membrane resonance & bond voiding (< 0.8%) — PASS
+• Quality Certifications: Complies with ISO 13485, ISO 9001, and ITAR export regulations — PASS
+
+Quality Sign-off: Certified by VP of Fab Operations & Quality Assurance.
+
+→ Saved: santa_barbara_fab_audit, 200mm_wafer_cpk_maps, iso13485_test_certs, fab_signoff
+
+NOTE: illustrative; confirm against Atomica Santa Barbara cleanroom quality management records.`,
+};
+
+let EMPLOYEES=[
+{id:'scout',name:'Scout',title:'AI Atomica Scout',wf:'scout',handled:320,hrs:68,win:0,status:'idle'},
+{id:'memsestimator',name:'MEMS-Estimator',title:'AI MEMS Quoting Estimator',wf:'mems_foundry_quote',handled:400,hrs:94,win:62,status:'idle'},
+{id:'biochiparchitect',name:'Biochip-Proposal-Arch',title:'AI Bio-MEMS Proposal Architect',wf:'biochip_foundry_proposal',handled:130,hrs:104,win:66,status:'idle'},
+{id:'radar',name:'Radar',title:'AI Market Intel',wf:'radar',handled:150,hrs:38,win:0,status:'idle'},
+{id:'bio_fab_arch',name:'Bio-MEMS-Fab-Arch',title:'AI Bio-MEMS Fab Architect',wf:'bio_mems_wafer_fab',handled:490,hrs:280,win:84,status:'idle'},
+{id:'optical_spec',name:'Optical-MEMS-Spec',title:'AI Optical MEMS Specialist',wf:'optical_mems_mirror_fab',handled:360,hrs:190,win:66,status:'idle'},
+{id:'piezo_lead',name:'Piezo-RF-MEMS-Lead',title:'AI Piezo & RF MEMS Lead',wf:'piezo_rf_mems_fab',handled:320,hrs:172,win:68,status:'idle'},
+{id:'fab_lead',name:'Santa-Barbara-Fab-Lead',title:'AI Santa Barbara Fab & Test Lead',wf:'santa_barbara_yield_audit',handled:390,hrs:205,win:74,status:'idle'},
+];
+
+let running=false;
+const $=id=>document.getElementById(id);const sleep=ms=>new Promise(r=>setTimeout(r,ms));const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;const now=()=>new Date().toLocaleTimeString('en-GB');const mono=n=>n.trim().slice(0,2).toUpperCase();
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Commercial &amp; Bio Sourcing</span>';if(wf.track==='operations')s+='<span class="tag operations">MEMS Fab &amp; Photonics</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+function setView(v){$('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');$('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});}
+function renderEcon(){const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;const cells=[[total,'AI operators (commercial + engineering)'],[h.toLocaleString(),'200mm MEMS wafer runs, DRIE models & quotes handled'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','MEMS & microfluidics engineer hours saved / mo'],['+'+avg+'%','avg turnaround improvement']];$('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');}
+function empCard(e){const wf=WORKFLOWS[e.wf];const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}"><div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div><div class="emp-owns">Owns: <b>${wf.name}</b></div><div class="team">${team}</div><div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'—'}</b>faster</div></div><div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a MEMS spec / RFQ</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;}
+function renderRoster(){const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;let html='';TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});$('roster').innerHTML=html;}
+function assign(id){if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];$('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a MEMS layout print, a biochip RFQ or a 200mm wafer probe log and ${e.name} runs the whole loop.</div></div></div><div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div><div id="stage"></div></div>`;$('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();}
+async function runEmp(id){if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');const stage=$('stage');stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div><div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div><div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;const feed=$('feed');function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;const row=document.createElement('div');row.className='frow';row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,150)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}log(null,`Input received: "${obj.substring(0,54)}…"`);log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);await sleep(rand(700,1100));const grid=$('agrid');wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});await sleep(600);$('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');const done=new Set();async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}$('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');await sleep(400);const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(6,44);$('resultArea').innerHTML=`<div class="result"><div class="rstats"><div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div><div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div><div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'Commercial & Bio Sourcing':'MEMS Fab & Photonics Eng'}</span></div><div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div><div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div><div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div><div class="donebar"><b>${e.name} produced a review-ready output.</b> Read, adapt and QA complete, ready for a CEO, VP of engineering, fab operations director or chief microfabrication architect to confirm against Atomica and ISO 13485 specs. Illustrative simulation, not a production deliverable.</div>`;e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;}
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per MEMS wafer lot',step:1};renderBuilder();}
+function renderBuilder(){const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];$('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+`<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div><div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. Bio-MEMS-Fab-Arch" oninput="draft.name=this.value"></div><div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Bio-MEMS Fab Architect" oninput="draft.title=this.value"></div><div class="field"><label>Cadence</label><div class="seg">`+['Per MEMS wafer lot','Per batch','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div><div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});renderEcon();renderRoster();setView('ops');setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);}
+
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
