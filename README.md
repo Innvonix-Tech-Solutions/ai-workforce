@@ -155,3 +155,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/sibelhealth
 https://innvonix-tech-solutions.github.io/ai-workforce/powerex
 https://innvonix-tech-solutions.github.io/ai-workforce/atomica
 https://innvonix-tech-solutions.github.io/ai-workforce/element-six
+https://innvonix-tech-solutions.github.io/ai-workforce/macom
