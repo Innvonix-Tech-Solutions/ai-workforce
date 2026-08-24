@@ -159,3 +159,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/macom
 https://innvonix-tech-solutions.github.io/ai-workforce/sol-ark
 https://innvonix-tech-solutions.github.io/ai-workforce/ardentmills
 https://innvonix-tech-solutions.github.io/ai-workforce/cincinnati
+https://innvonix-tech-solutions.github.io/ai-workforce/iliabeauty
