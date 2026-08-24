@@ -161,3 +161,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/ardentmills
 https://innvonix-tech-solutions.github.io/ai-workforce/cincinnati
 https://innvonix-tech-solutions.github.io/ai-workforce/iliabeauty
 https://innvonix-tech-solutions.github.io/ai-workforce/kns
+https://innvonix-tech-solutions.github.io/ai-workforce/modutek
