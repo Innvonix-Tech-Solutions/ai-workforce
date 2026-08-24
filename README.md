@@ -157,3 +157,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/atomica
 https://innvonix-tech-solutions.github.io/ai-workforce/element-six
 https://innvonix-tech-solutions.github.io/ai-workforce/macom
 https://innvonix-tech-solutions.github.io/ai-workforce/sol-ark
+https://innvonix-tech-solutions.github.io/ai-workforce/ardentmills
