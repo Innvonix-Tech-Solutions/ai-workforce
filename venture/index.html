@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venture Home — AI Commercial &amp; Operational Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#ffffff;
+  --surface:#f3f3ea;
+  --surface2:#e4ece9;
+  --border:#cbd5e1;
+  --accent:#293c40;
+  --accent-light:#3b565c;
+  --accent-dark:#1b282b;
+  --navy-dark:#231f20;
+  --accent-dim:rgba(41,60,64,.08);
+  --accent-line:rgba(41,60,64,.30);
+  --gold:#293c40;
+  --gold-bg:#f0f5f4;
+  --gold-line:#b8d1cb;
+  --text:#231f20;
+  --hi:#231f20;
+  --tert:#686e77;
+  --ok:#16a34a;
+  --ok-dim:rgba(22,163,74,.10);
+  --mint:#7aefb1;
+}
+body{background:var(--canvas);color:var(--text);font-family:Montserrat,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:2px solid var(--accent);position:sticky;top:0;background:#293c40;color:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{min-width:42px;height:34px;padding:0 10px;border-radius:6px;background:#fff;display:flex;align-items:center;justify-content:center;color:#293c40;font-weight:900;font-size:14px;letter-spacing:1px;white-space:nowrap;overflow:hidden;flex-shrink:0}
+.htitle{font-size:15px;font-weight:800;color:#fff;letter-spacing:.5px;text-transform:uppercase}.hsub{font-size:11px;color:#cbd5e1;margin-top:1px;font-weight:500;letter-spacing:.5px}
+.badge{border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:6px 12px;font-size:11px;color:#94a3b8}.badge b{color:var(--mint)}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:600;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none;letter-spacing:.3px}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface);border-top:3px solid var(--accent)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.5;max-width:900px;margin-bottom:14px}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.commercial{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.operations{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.hero{background:var(--gold-bg);color:var(--accent);border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:24px;font-weight:700;color:var(--accent)}.cell .v .u{color:var(--accent-dark)}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--accent);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:"IBM Plex Sans Condensed",sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;letter-spacing:.2px}.emp-title{font-size:12px;color:var(--tert)}
+.emp-owns{font-size:12px;margin-bottom:10px}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:inherit;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:var(--accent-line)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--navy-dark);border-color:var(--navy-dark)}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent;color:var(--accent)}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert);letter-spacing:.3px}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.3px}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto;color:var(--hi)}
+.donebar{background:var(--surface);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;color:var(--text)}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:var(--accent-line)}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:14px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;letter-spacing:.3px}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 16px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5}
+@media(prefers-rounded-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="header">
+<div class="logo"><div class="mark">VENTURE</div>
+<div><div class="htitle">Venture Home · AI Commercial &amp; Operational Workforce</div><div class="hsub">SCANDINAVIAN FURNITURE · FSC OAK DINING · OUTDOOR LIVING · NORDIC INTERIORS</div></div></div>
+<div class="badge">Independent concept &nbsp;·&nbsp; <b>illustrative</b></div>
+</header>
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>a Venture Home Scandinavian FSC solid oak dining set, weatherproof outdoor patio collection, bouclé armchair, or flat-pack packaging workflow turned into an autonomous team of agents</b>. One track wins the work: it finds European home retail chains (JYSK, XXXLutz, Home24, Wayfair Europe), department store buying offices, and contract interior studios seeking Venture Home Scandinavian dining, sofa, and outdoor collections, quotes turn-key wholesale furniture contracts, responds to global master tenders, and tracks Scandinavian furniture market intelligence. The other track delivers furniture manufacturing and logistics operations: it qualifies solid oak dining sets &amp; outdoor lounge sets under EN 12520 &amp; FSC standards (chair seat static load 200 kg, backrest fatigue 100k cycles, wood moisture 8.5% ± 0.5%, Martindale 55k rubs, zero joint wobble), optimizes automated wood CNC routing yields &amp; pinless moisture meter calibration (99.4% lumber yield, ±0.2mm component precision), simulates outdoor powder-coated aluminum CFD thermal curing (200°C oven curing, 80 µm film uniformity, 1,000 hr salt spray resistance), and manages furniture CAD engineering ECO revisions. Point one at a retail buyer account, a wood moisture kiln log, or a furniture assembly G-code sheet and it runs the loop, then hands back a review-ready output for a Chief Purchasing Officer, Head of Product Development, or Quality Assurance Director to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial</span> find, quote, tender, win</span>
+<span><span class="tag operations">Scandinavian Furniture Manufacturing &amp; Ops</span> Dining Qual, CNC Router Yield, Outdoor CFD Thermal, ECO</span>
+<span><span class="tag hero">Flagship</span> the deepest example run</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+<div class="foot">Independent concept prototype prepared for a conversation with Venture Home (venturehome.com). It is not affiliated with, endorsed by, or built on Venture Home / Venture Design systems or data. All operators and outputs are illustrative simulations; retail buyer accounts, furniture manufacturing yields, wholesale quote schedules, EN 12520 / FSC audits, and qualification reports are placeholders. A Chief Purchasing Officer, Head of Product Development, or Quality Assurance Director reviews and approves every quote, furniture qualification audit, production lot release, FSC check, and CAD ECO file.</div>
+<script>
+const AGENT_ROLES={
+scandinavian_furniture_design_architect:{emoji:'🪵',label:'Scandinavian Furniture & FSC Oak Design Lead',tools:['analyze_nordic_furniture_ergonomics_wood_finish','save']},
+outdoor_patio_weatherproof_materials_spec:{emoji:'☀️',label:'Outdoor Patio & All-Weather Materials Specialist',tools:['verify_uv_waterproof_aluminum_teak_durability','save']},
+sustainable_fsc_e0_environmental_auditor:{emoji:'🌲',label:'FSC Certified & E0 Formaldehyde Eco Auditor',tools:['verify_fsc_chain_of_custody_reach_compliance','save']},
+textile_boucle_upholstery_qa_auditor:{emoji:'🛋️',label:'Bouclé & Linen Textile Durability QA Auditor',tools:['verify_martindale_rub_count_stain_resistance','save']},
+flat_pack_assembly_packaging_spec:{emoji:'📦',label:'Flat-Pack Furniture Assembly & FSC Box Specialist',tools:['verify_flatpack_drop_test_carton_cube_yield','save']},
+furniture_load_durability_testing_spec:{emoji:'🔬',label:'EN 12520 Furniture Stability & Load Testing Lead',tools:['inspect_chair_static_load_fatigue_test_logs','save']},
+wholesale_b2b_furniture_quoting_eng:{emoji:'🧮',label:'B2B Wholesale Furniture & Retail Contract Quoting Lead',tools:['build_venture_quote','save']},
+container_furniture_freight_logistics_spec:{emoji:'🚚',label:'Furniture Container Shipping & Dropship Logistics Lead',tools:['optimize_container_cube_utilization_freight_telemetry','save']},
+eco_furniture_cad_finish_revision_lead:{emoji:'🔄',label:'Furniture CAD Specification & Finish Revision Lead',tools:['eval_venture_eco','save']},
+mes_furniture_assembly_telemetry_spec:{emoji:'📡',label:'Factory Assembly MES & Quality Telemetry Specialist',tools:['inspect_moisture_content_veneer_bonding_telemetry','save']},
+writer:{emoji:'✍️',label:'Technical Scandinavian Furniture Commercial Proposal Writer',tools:['compose','save']},
+reviewer:{emoji:'✅',label:'Furniture Quality Assurance & EN Standard Reviewer',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+const TRACKS=[['commercial','Commercial & Sales Activities'],['operations','Scandinavian Furniture Manufacturing, R&D & Ops']];
+const WORKFLOWS={
+scout:{name:'European home retailer, e-commerce & contract interior buyer discovery',title:'AI Opportunity Scout',mode:'dag',track:'commercial',deliverable:'Target European Home Retailer, E-Commerce & Contract Interior Buyer Discovery List',
+sample:'Identify major European home furnishings retailers (JYSK, XXXLutz, Home24, Wayfair Europe), department store buying offices, hotel/resort interior design firms, and e-commerce platforms seeking Venture Home Scandinavian dining, sofa, and outdoor furniture lines.',
+desc:'Agents map furniture merchandising leads, source Category Manager of Home Furnishings and Head of Furniture Procurement, score annual volume potential (€5M+ per account), and build the target Venture Home sales pipeline.',
+tasks:[{agent:'scandinavian_furniture_design_architect',task:'Source European home retail chains, interior design studios, and e-commerce furniture buyers.',deps:[]},
+{agent:'outdoor_patio_weatherproof_materials_spec',task:'Score accounts on annual indoor/outdoor furniture volume, FSC certified oak demand, and Scandinavian design alignment.',deps:[0]},
+{agent:'writer',task:'Compile target furniture buyer lead list with key Chief Purchasing Officer and Senior Category Manager contacts.',deps:[1]}]},
+quote:{name:'Turn-key 10,000 unit Scandinavian dining & outdoor patio collection quote',title:'AI Furniture Quoting Operator',mode:'sequential',track:'commercial',deliverable:'Turnkey Scandinavian Dining & Outdoor Patio Collection Quoting Proposal',
+sample:'Generate commercial proposal for 10,000 units of FSC-certified solid oak dining sets, bouclé armchairs, and weatherproof outdoor lounge sets (€3.25M contract).',
+desc:'Agents confirm FSC 100% wood sourcing, Martindale >50,000 rub upholstery, flat-pack carton optimization, 40ft HQ container loading, and issue proposal.',
+tasks:[{agent:'scandinavian_furniture_design_architect',task:'Confirm furniture specs (Nordic Solid Oak Dining Tables, Bouclé Armchairs, Aluminum Powder-Coated Outdoor Lounge).',deps:[]},
+{agent:'flat_pack_assembly_packaging_spec',task:'Configure ISTA 3A flat-pack protective packaging, FSC-certified recycled cartons, and assembly instruction hardware kits.',deps:[0]},
+{agent:'wholesale_b2b_furniture_quoting_eng',task:'Structure volume tier pricing, container FCL freight, EU REACH chemical compliance testing, and 2-year warranty (€3,250,000 order).',deps:[1]},
+{agent:'writer',task:'Produce formal customer-ready Venture Home technical commercial proposal.',deps:[2]}]},
+tender:{name:'Global hotel chain & multi-residential contract interior master tender',title:'AI Global Furniture Master Tender Operator',mode:'dag',track:'commercial',deliverable:'Global Hotel Chain & Multi-Residential Contract Interior Master Tender Response',
+sample:'Prepare 3-year master furniture supply and dropshipping maintenance agreement for a premier European hotel group.',
+desc:'Agents verify EN 12520 structural stability compliance, 99.5% OTIF container delivery SLA, FSC Chain of Custody certification, and EDI automated order processing, compiling master tender response.',
+tasks:[{agent:'mes_furniture_assembly_telemetry_spec',task:'Verify automated factory MES production tracking, wood moisture telemetry (<10%), and Certificate of Compliance generation.',deps:[]},
+{agent:'container_furniture_freight_logistics_spec',task:'Structure 40ft HQ container cube optimization, European regional distribution center logistics, and B2C dropship fulfillment.',deps:[0]},
+{agent:'wholesale_b2b_furniture_quoting_eng',task:'Structure 3-year tiered furniture volume pricing, buffer stock warehouse SLAs, and spare hardware kit inventory.',deps:[1]},
+{agent:'writer',task:'Generate comprehensive global furniture master tender response.',deps:[2]}]},
+radar:{name:'Scandinavian furniture, outdoor living & interior design market intelligence',title:'AI Furniture Market Intelligence',mode:'dag',track:'commercial',deliverable:'Scandinavian Furniture, Outdoor Living & Interior Design Market Intelligence Brief',
+sample:'Analyze global Scandinavian furniture brands (Hay, Muuto, Normann Copenhagen, Ferm Living, Bloomingville, Rowico) vs Venture Home.',
+desc:'Agents track competitor price-point positioning, evaluate Venture Home\'s rapid growth in Swedish design heritage, sustainable material leadership, and outdoor living innovation.',
+tasks:[{agent:'outdoor_patio_weatherproof_materials_spec',task:'Gather competitor outdoor dining price points, bouclé fabric rub ratings, and FSC wood certification coverage.',deps:[]},
+{agent:'scandinavian_furniture_design_architect',task:'Highlight Venture Home\'s Växjö Sweden design origin, competitive value-for-money positioning, and short-lead-time EU warehousing.',deps:[]},
+{agent:'writer',task:'Produce quarterly Scandinavian home furnishings market intelligence and competitive positioning brief.',deps:[0,1]}]},
+panel_qualification:{name:'Solid oak dining set & outdoor lounge EN 12520 strength qualification',title:'AI Furniture Quality Qualification Operator',mode:'dag',track:'operations',tag:'flagship',deliverable:'Solid Oak Dining Set & Outdoor Lounge EN 12520 Strength Qualification Dossier',
+sample:'Execute 100,000-cycle structural fatigue and static load trial (chair seat static load 200 kg, backrest fatigue 100k cycles, wood moisture 8.5% ± 0.5%, zero joint wobble) for Scandinavian Dining Set.',
+desc:'Agents audit wood kiln drying moisture levels, dowel & mortise joint shear strength, Martindale fabric rub testing (55,000 cycles passed), UV weatherometer 1,000 hr outdoor exposure, and publish qualification dossier.',
+tasks:[{agent:'scandinavian_furniture_design_architect',task:'Simulate wood leg tensile load, leg angle deflection under 160 kg load, and oil finish scratch resistance.',deps:[]},
+{agent:'sustainable_fsc_e0_environmental_auditor',task:'Audit FSC 100% wood origin certificates, E0 formaldehyde emission testing (EN 717-1 <0.05 ppm), and EU REACH heavy metal screening.',deps:[]},
+{agent:'textile_boucle_upholstery_qa_auditor',task:'Audit Martindale abrasion resistance, fabric pilling resistance (Grade 4-5), and water-repellent coating durability.',deps:[0,1]},
+{agent:'reviewer',task:'QA EN 12520 / EN 581 furniture safety laboratory test reports, CMM dimension inspection sheets, and packaging drop test logs.',deps:[2]},
+{agent:'writer',task:'Produce complete Venture Home furniture qualification dossier.',deps:[3]}]},
+inverter_yield:{name:'Automated wood CNC routing yield & moisture meter calibration test',title:'AI Furniture Operations Operator',mode:'sequential',track:'operations',deliverable:'Automated Wood CNC Routing Yield & Moisture Meter Calibration Test Report',
+sample:'Calibrate 5-axis CNC wood router (99.4% lumber yield) and pinless electromagnetic wood moisture meters on solid oak production line.',
+desc:'Agents analyze 100% component dimension accuracy (±0.2 mm), glue line bond strength (>12 MPa), and kiln moisture uniformity across 5,000 unit production run.',
+tasks:[{agent:'scandinavian_furniture_design_architect',task:'Analyze CNC spindle speed, G-code tool path optimization, and wood grain direction alignment.',deps:[]},
+{agent:'furniture_load_durability_testing_spec',task:'Perform 100% moisture meter calibration against oven-dry gravimetric reference samples.',deps:[0]},
+{agent:'reviewer',task:'QA finished furniture component release metrics against Venture Home Swedish quality standards.',deps:[1]},
+{agent:'writer',task:'Produce comprehensive furniture manufacturing yield and moisture calibration test report.',deps:[2]}]},
+thermal_simulation:{name:'Outdoor powder-coated aluminum CFD thermal curing & weatherization simulation',title:'AI Furniture CFD Thermal Operator',mode:'dag',track:'operations',deliverable:'Outdoor Powder-Coated Aluminum CFD Thermal Curing & Weatherization Simulation Strategy',
+sample:'Generate automated 3D CFD thermal fluid and curing simulation for powder-coating oven curing outdoor aluminum lounge frames (curing at 200°C for 15 min).',
+desc:'Agents configure convection oven airflow velocity CFD, simulate thermosetting polyester powder crosslinking, optimize frame corrosion resistance (salt spray >1,000 hrs), and prevent coating bubbles.',
+tasks:[{agent:'outdoor_patio_weatherproof_materials_spec',task:'Execute 3D Finite Element CFD thermal curing modeling across complex aluminum armchair frames (ensuring uniform film thickness 80 µm ± 5 µm).',deps:[]},
+{agent:'sustainable_fsc_e0_environmental_auditor',task:'Verify VOC powder coating oven exhaust filtration, zero solvent emission, and energy efficiency.',deps:[]},
+{agent:'writer',task:'Produce Venture Home outdoor furniture CFD thermal curing strategy documentation.',deps:[0,1]}]},
+mask_eco:{name:'Furniture CAD engineering ECO & FSC carton packaging revision control',title:'AI Furniture Revision Control Operator',mode:'sequential',track:'operations',deliverable:'Furniture CAD Engineering ECO & FSC Carton Packaging Revision Assessment',
+sample:'Evaluate ECO-2026-1310 (Upgrade Dining Table Leg Attachment Hardware to Heavy-Duty Steel Angle Brackets & Increase Carton Edge Protector Density to 400g).',
+desc:'Agents evaluate CAD drawing diffs, recalculate flat-pack carton ISTA 3A drop test compliance, and update automated factory MES assembly travelers.',
+tasks:[{agent:'eco_furniture_cad_finish_revision_lead',task:'Compare furniture CAD 3D model diffs, joint stress analysis logs, and FSC packaging artwork specs.',deps:[]},
+{agent:'mes_furniture_assembly_telemetry_spec',task:'Update factory MES assembly station travelers, packaging line barcode labels, and ERP inventory item master BOMs.',deps:[0]},
+{agent:'writer',task:'Publish integrated Venture Home furniture ECO cut-over matrix and factory assembly traveler guide.',deps:[1]}]},
+};
+const DTITLE={
+scout:'Target European Home Retailer, E-Commerce & Contract Interior Buyer Discovery List',
+quote:'Turnkey Scandinavian Dining & Outdoor Patio Collection Quoting Proposal',
+tender:'Global Hotel Chain & Multi-Residential Contract Interior Master Tender Response',
+radar:'Scandinavian Furniture, Outdoor Living & Interior Design Market Intelligence Brief',
+panel_qualification:'Solid Oak Dining Set & Outdoor Lounge EN 12520 Strength Qualification Dossier',
+inverter_yield:'Automated Wood CNC Routing Yield & Moisture Meter Calibration Test Report',
+thermal_simulation:'Outdoor Powder-Coated Aluminum CFD Thermal Curing & Weatherization Simulation Strategy',
+mask_eco:'Furniture CAD Engineering ECO & FSC Carton Packaging Revision Assessment'
+};
+const TOOLS={
+source_semiconductor_accounts:()=>'Sourced European home retail chains, interior design studios & e-commerce furniture buyers.',
+analyze_nordic_furniture_ergonomics_wood_finish:()=>'Confirmed furniture specs (Nordic Solid Oak Dining Tables, Bouclé Armchairs, Aluminum Outdoor Lounge).',
+build_venture_quote:()=>'Structured volume tier pricing, container FCL freight & EU REACH chemical compliance testing.',
+verify_uv_waterproof_aluminum_teak_durability:()=>'Scored accounts on annual indoor/outdoor furniture volume & FSC certified oak demand.',
+verify_fsc_chain_of_custody_reach_compliance:()=>'Audited FSC 100% wood origin certificates & E0 formaldehyde emission testing.',
+verify_martindale_rub_count_stain_resistance:()=>'Audited Martindale abrasion resistance & fabric pilling resistance.',
+verify_flatpack_drop_test_carton_cube_yield:()=>'Configured ISTA 3A flat-pack protective packaging & FSC-certified recycled cartons.',
+optimize_container_cube_utilization_freight_telemetry:()=>'Structured 40ft HQ container cube optimization & European regional RDC logistics.',
+eval_venture_eco:()=>'Extracted furniture CAD 3D model diffs, joint stress logs & FSC packaging artwork.',
+inspect_moisture_content_veneer_bonding_telemetry:()=>'Verified automated factory MES production tracking & wood moisture telemetry.',
+inspect_chair_static_load_fatigue_test_logs:()=>'Performed 100% moisture meter calibration against oven-dry gravimetric samples.',
+compose:()=>'Drafted in a clear, Scandinavian furniture design, EN 12520 & FSC standards-aware style, review-ready.',
+qa_review:()=>'QA: EN 12520 / EN 581 furniture safety laboratory test reports & packaging drop test logs checked.',
+save:()=>'Saved to shared context for downstream agents.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+const FINAL={
+scout:`TARGET EUROPEAN HOME RETAILER, E-COMMERCE & CONTRACT INTERIOR BUYER DISCOVERY LIST (illustrative)
+Scanned European home retail chains, department store furniture buyers, interior design studios, and e-commerce platforms.
+
+A-Tier Priority Furniture Target Accounts:
+1. Major Pan-European Home Retail Chain (Scandinavian FSC Dining Sets & Bouclé Living) — Fit Score: 99
+2. Premier UK & Nordic Furniture E-Commerce Platform (Flat-Pack Outdoor Patio & Dining Assortments) — Fit Score: 98
+3. European Hospitality & Contract Interior Design Group (Bespoke Hotel Dining & Lounge Furniture) — Fit Score: 96
+4. Specialty Scandinavian Home Furnishings Chain (Nordic Solid Oak & Minimalist Storage) — Fit Score: 95
+
+Key Decision Makers: Chief Purchasing Officer, Head of Home Merchandising, Senior Furniture Buyer.
+→ Saved: target_venture_accounts, furniture_specs, fit_scores
+NOTE: illustrative; not affiliated with Venture Home (venturehome.com).`,
+quote:`TURNKEY SCANDINAVIAN DINING & OUTDOOR PATIO COLLECTION QUOTING PROPOSAL (illustrative)
+Client Partner: Major Pan-European Home Retail Chain
+Scope: 10,000 Units FSC Solid Oak Dining Sets + Weatherproof Outdoor Lounge Sets
+
+Scandinavian Furniture & Packaging Manifest
+• Dining Room Collection: Venture Home Nordic Solid Oak Dining Tables & Bouclé Upholstered Chairs (FSC 100%)
+• Outdoor Patio Line: Powder-Coated Aluminum Lounge Sets with Water-Repellent Olefin Cushions
+• Packaging & Assembly: Flat-Pack ISTA 3A Drop-Test Certified Recycled Cartons with Pre-Sorted Assembly Hardware
+• Sustainability Standards: 100% FSC Chain of Custody Certified, E0 Low-Formaldehyde, EU REACH Compliant
+
+Pricing & Logistics Schedule
+• Total Turnkey Contract Value (10,000 Units + FCL Container Freight + 2-Yr Warranty): €3,250,000.00
+• Delivery SLA: 40ft HQ container shipments from Växjö, Sweden RDC with 99.5% OTIF guarantee
+→ Saved: venture_furniture_quote, container_manifest
+NOTE: illustrative.`,
+tender:`GLOBAL HOTEL CHAIN & MULTI-RESIDENTIAL CONTRACT INTERIOR MASTER TENDER RESPONSE (illustrative)
+RFP Reference: 3-Year Master Scandinavian Furniture Supply & Dropship Logistics Agreement
+
+Product Quality & Durability SLA
+• EN Structural Safety Standards: Guaranteed 100% compliance with EN 12520 (Domestic Seating) and EN 581 (Outdoor).
+• Upholstery Durability: Guaranteed Martindale abrasion resistance >50,000 rubs with Grade 4-5 pilling resistance.
+• On-Time Delivery Guarantee: Guaranteed 99.5% OTIF container delivery to regional European hubs.
+
+Master Commercial Terms
+• B2C Dropshipping SLA: 24-hour dispatch SLA for single-unit dropshipping orders across Europe.
+→ Saved: global_venture_tender, en12520_fsc_certificate
+NOTE: illustrative.`,
+radar:`SCANDINAVIAN FURNITURE, OUTDOOR LIVING & INTERIOR DESIGN MARKET INTELLIGENCE BRIEF (illustrative)
+European Home Furnishings Market Trends
+• Scandinavian Aesthetic Demand: Rapid global expansion of Nordic minimalist design and warm natural oak tones (+32% YoY).
+• Sustainable FSC Sourcing: Retailers prioritizing 100% FSC certified timber and low-chemical E0 finishes.
+
+Venture Home Market Leadership
+• Swedish Design Heritage: Fast-growing brand from Växjö, Sweden combining aesthetic elegance with accessible pricing.
+• Outdoor Living Innovation: Weatherproof outdoor dining and lounge collections tailored for all climates.
+→ Saved: venture_intel_brief, competitive_positioning
+NOTE: illustrative.`,
+panel_qualification:`SOLID OAK DINING SET & OUTDOOR LOUNGE EN 12520 STRENGTH QUALIFICATION DOSSIER (illustrative · flagship)
+Target System: Venture Home Nordic Solid Oak Dining Set & Outdoor Aluminum Lounge
+Testing Standard: 100,000-Cycle Fatigue Trial & EN 12520 / EN 581 Structural Audit
+
+Factory Analytical & Durability Results
+• Chair Seat Static Load: Measured @ 220 kg seat load without structural deformation (Exceeds 200 kg EN limit).
+• Seat/Back Fatigue Test: Passed 100,000 cycles at 1,000 N force with zero joint looseness or leg wobble.
+• Wood Moisture Uniformity: Kiln-dried solid oak moisture content verified @ 8.5% ± 0.4% (Target 8-10%).
+• Fabric Martindale Abrasion: Bouclé upholstery passed 55,000 rubs without fiber breakdown (Exceeds >30,000 target).
+• Salt Spray Weathering: Outdoor aluminum powder coating passed 1,000-hour salt spray corrosion test (ISO 9227).
+
+QA Sign-Off
+• Verified by Head of Product Development & Quality Assurance Director. Cleared for global retail distribution.
+→ Saved: venture_qualification_dossier, en12520_lab_test_data
+NOTE: illustrative; confirm against customer furniture specifications.`,
+inverter_yield:`AUTOMATED WOOD CNC ROUTING YIELD & MOISTURE METER CALIBRATION TEST REPORT (illustrative)
+Testing Laboratory: Venture Home Manufacturing & Test Center (Växjö, Sweden)
+Target Equipment: 5-Axis Wood CNC Router & Pinless Electromagnetic Moisture Sensor Array
+
+Manufacturing Calibration Results
+• Lumber Material Yield: 5-axis CNC routing nest optimization achieved 99.4% solid oak yield.
+• Component Machining Precision: Leg joint tenon dimension precision verified @ ±0.18 mm (Target ±0.20 mm).
+• Moisture Sensor Linearity: Pinless moisture meter calibration confirmed against gravimetric oven-dry reference (R² = 0.9992).
+
+Release Status: Certified under Swedish furniture standards and ISO 9001 specs; cleared for mass production.
+→ Saved: venture_cnc_yield_report, moisture_sensor_logs
+NOTE: illustrative.`,
+thermal_simulation:`OUTDOOR POWDER-COATED ALUMINUM CFD THERMAL CURING & WEATHERIZATION SIMULATION STRATEGY (illustrative)
+Simulated System: Venture Home Outdoor Aluminum Frame Powder-Coating Convection Oven
+Operating Environment: Thermosetting Polyester Powder Curing at 200°C for 15 Minutes
+
+3D CFD Thermal & Fluid Simulation Results
+• Oven Airflow Velocity Distribution: CFD air modeling established uniform 3.2 m/s hot air circulation around complex frames.
+• Coating Film Thickness Uniformity: Thermoset powder curing achieved uniform 82 µm ± 4.2 µm thickness (zero orange peel).
+• Environmental Safety: Powder coating bake-off VOC emissions verified @ <0.01 ppm (Zero solvent discharge).
+
+Output: 3D CFD thermal curing model validated for commercial outdoor furniture line release.
+→ Saved: venture_cfd_strategy, thermal_curing_contours
+NOTE: illustrative.`,
+mask_eco:`FURNITURE CAD ENGINEERING ECO & FSC CARTON PACKAGING REVISION ASSESSMENT (illustrative)
+Engineering Change Order: ECO-2026-1310
+Affected Product: Venture Home Nordic Dining Table & Packaging Assembly (Rev A -> Rev B)
+
+Change Scope & Hardware Upgrade
+• Steel Angle Leg Brackets: Upgraded corner leg attachment brackets to 3.5mm zinc-plated heavy-duty steel.
+• ISTA 3A Drop-Test Packaging: Reinforced carton corner protectors with 400g high-density recycled honeycomb board.
+
+Factory Assembly Cut-Over Schedule
+• MES Traveler Updates: Updated automated CNC routing files and flat-pack packaging line instructions in Växjö.
+• FSC Barcode Labeling: Updated FSC 100% recycled packaging artwork and ERP item master BOMs.
+→ Saved: venture_eco_matrix, rev_b_table_traveler
+NOTE: illustrative.`,
+};
+let EMPLOYEES=[
+{id:'scout',name:'Scout',title:'AI Opportunity Scout',wf:'scout',handled:584,hrs:222,win:0,status:'idle'},
+{id:'quote',name:'Quote',title:'AI Furniture Quoting Operator',wf:'quote',handled:504,hrs:246,win:86,status:'idle'},
+{id:'tender',name:'Tender',title:'AI Global Furniture Master Operator',wf:'tender',handled:366,hrs:266,win:91,status:'idle'},
+{id:'radar',name:'Radar',title:'AI Furniture Market Intel',wf:'radar',handled:414,hrs:196,win:57,status:'idle'},
+{id:'safety',name:'Sentinel',title:'AI Furniture Quality Qualification Operator',wf:'panel_qualification',handled:402,hrs:338,win:98,status:'idle'},
+{id:'mill',name:'Atlas',title:'AI Furniture Operations Operator',wf:'inverter_yield',handled:450,hrs:254,win:94,status:'idle'},
+{id:'cfd',name:'Vanguard',title:'AI Furniture CFD Thermal Operator',wf:'thermal_simulation',handled:400,hrs:234,win:85,status:'idle'},
+{id:'eco',name:'Nexus',title:'AI Furniture Revision Operator',wf:'mask_eco',handled:402,hrs:240,win:90,status:'idle'},
+];
+let running=false;
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const now=()=>new Date().toLocaleTimeString('en-GB');
+const mono=n=>n.trim().slice(0,2).toUpperCase();
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Commercial</span>';if(wf.track==='operations')s+='<span class="tag operations">Scandinavian Furniture Manufacturing &amp; Ops</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+function setView(v){
+$('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');
+$('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');
+if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderEcon(){
+const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);
+const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;
+const cells=[[total,'AI operators (commercial + furniture manufacturing & ops)'],[h.toLocaleString(),'quotes, EN 12520 furniture audits & CNC yield runs handled'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','chief purchasing officer & product dev head hours saved / month'],['+'+avg+'%','avg turnaround improvement']];
+$('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');
+}
+function empCard(e){const wf=WORKFLOWS[e.wf];
+const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');
+return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}">
+<div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div>
+<div class="emp-owns">Owns: <b>${wf.name}</b></div>
+<div class="team">${team}</div>
+<div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'—'}</b>faster</div></div>
+<div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a project / RFQ</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;
+}
+function renderRoster(){
+const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;
+let html='';
+TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;
+html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});
+const untracked=EMPLOYEES.filter(e=>!WORKFLOWS[e.wf].track);
+if(untracked.length)html+=`<div class="slabel">Other</div><div class="roster">`+untracked.map(empCard).join('')+`</div>`;
+$('roster').innerHTML=html;
+}
+function assign(id){
+if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+$('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div>
+<div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a retail buyer account, a wood moisture kiln log, or a furniture assembly G-code sheet and ${e.name} runs the whole loop.</div></div></div>
+<div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div>
+<div id="stage"></div></div>`;
+$('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();
+}
+async function runEmp(id){
+if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;
+e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');
+const stage=$('stage');
+stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div>
+<div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div>
+<div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;
+const feed=$('feed');
+function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;
+const row=document.createElement('div');row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,150)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}
+log(null,`Input received: "${obj.substring(0,54)}…"`);
+log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);
+await sleep(rand(700,1100));
+const grid=$('agrid');
+wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;
+c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;
+grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});
+await sleep(600);
+$('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');
+const done=new Set();
+async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);
+c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';
+log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));
+for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}
+c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}
+if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}
+else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;
+if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}
+$('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');
+await sleep(400);
+const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(6,44);
+$('resultArea').innerHTML=`<div class="result"><div class="rstats">
+<div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div>
+<div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div>
+<div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'Commercial & Sales':'Scandinavian Furniture Manufacturing & Ops'}</span></div>
+<div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div>
+<div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div>
+<div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div>
+<div class="donebar"><b>${e.name} produced a review-ready output.</b> Execution, furniture testing and QA complete, ready for a Chief Purchasing Officer, Head of Product Development, or Quality Assurance Director to review and confirm. Illustrative simulation placeholder.</div>`;
+e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;
+}
+// builder
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per furniture project',step:1};renderBuilder();}
+function renderBuilder(){
+const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];
+$('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();
+}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+
+Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+
+w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+
+`<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;
+document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div>
+<div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. Venture Home Furniture Operator" oninput="draft.name=this.value"></div>
+<div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Scandinavian Furniture Specialist" oninput="draft.title=this.value"></div>
+<div class="field"><label>Cadence</label><div class="seg">`+['Per furniture project','Per factory DHR production lot','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div>
+<div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;
+let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();
+const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};
+DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];
+const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});
+renderEcon();renderRoster();setView('ops');
+setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);
+}
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
