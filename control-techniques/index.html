@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Control Techniques Console — AI Variable Speed Drives &amp; Servo Systems Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060b14;
+  --surface:#0f1726;
+  --surface-2:#192438;
+  --surface-3:#283754;
+  --border:#283754;
+  --border-soft:#111a2b;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --muted-2:#64748b;
+  --accent:#00a859;
+  --accent-dim:rgba(0,168,89,0.15);
+  --accent-line:rgba(0,168,89,0.38);
+  --accent2:#06b6d4;
+  --accent2-bg:rgba(6,182,212,0.08);
+  --accent3:#f97316;
+  --danger:#ef4444;
+  --ok:#10b981;
+  --font-display:'Rajdhani',sans-serif;
+  --font-body:'Work Sans',sans-serif;
+  --font-mono:'Roboto Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 88% -8%, rgba(0,168,89,0.14), transparent 55%),
+    radial-gradient(900px 480px at 5% 5%, rgba(6,182,212,0.07), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+a{color:var(--accent);}
+::selection{background:rgba(0,168,89,0.28);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+.hidden{display:none!important;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:24px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:44px;height:42px;border-radius:8px;
+  background:linear-gradient(135deg,#00733c,#00a859);
+  border:1px solid var(--accent-line);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:var(--font-mono);font-weight:800;font-size:12px;
+  box-shadow:0 0 18px rgba(0,168,89,0.35);
+}
+.mark-name{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:0.02em;color:#fff;}
+.mark-sub{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px;}
+
+.line-readout{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent2);
+  background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:8px 14px;display:flex;align-items:center;gap:10px;
+}
+.line-readout .dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);box-shadow:0 0 10px var(--accent2);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.tabs{display:flex;gap:8px;margin-top:20px;border-bottom:1px solid var(--border-soft);}
+.tab-btn{
+  background:transparent;border:none;color:var(--muted);padding:10px 18px;font-family:var(--font-body);
+  font-size:13.5px;font-weight:600;cursor:pointer;border-radius:8px 8px 0 0;transition:all 0.15s ease;
+}
+.tab-btn:hover{color:var(--text);background:var(--surface-2);}
+.tab-btn.active{color:var(--accent2);background:var(--surface);border:1px solid var(--border);border-bottom-color:var(--surface);}
+
+.hero{padding:36px 0 28px;display:grid;grid-template-columns:1.15fr 0.85fr;gap:40px;align-items:center;}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:24px 0 18px;}}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;color:var(--accent2);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent2);}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(30px,4vw,42px);line-height:1.08;letter-spacing:-0.005em;margin:0 0 14px;color:#fff;}
+h1 span{color:var(--accent2);background:linear-gradient(90deg,#06b6d4,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.lead{color:var(--muted);font-size:15px;max-width:55ch;margin:0 0 22px;line-height:1.6;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:var(--font-body);font-weight:600;font-size:13.5px;border-radius:6px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--accent2);color:#fff;border-color:var(--accent2);font-weight:700;}
+.btn-primary:hover{background:#38bdf8;box-shadow:0 0 16px rgba(6,182,212,0.35);}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+
+/* Control Techniques Unidrive & Digitax Graphic Card */
+.wafer{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:18px 18px 14px;box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+.wafer-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+.wafer-title{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em;}
+.wafer-val{font-family:var(--font-mono);font-size:12px;color:var(--accent2);font-weight:600;}
+svg.wafermap{width:100%;height:210px;display:block;}
+.wafer-outline{fill:none;stroke:var(--border);stroke-width:1.5;}
+.wafer-grid-line{stroke:var(--border-soft);stroke-width:0.5;stroke-dasharray:2 2;}
+.wafer-foot{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+
+.econ{border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:760px){.econ{grid-template-columns:repeat(2,1fr);}}
+.econ-item{padding:6px 18px;border-left:1px solid var(--border-soft);}
+.econ-item:first-child{border-left:none;padding-left:0;}
+@media(max-width:760px){.econ-item:nth-child(2n+1){border-left:none;padding-left:0;}}
+.econ-num{font-family:var(--font-display);font-weight:700;font-size:28px;color:#fff;}
+.econ-num small{font-size:14px;color:var(--accent2);font-weight:700;}
+.econ-label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+section{padding:36px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.section-title{font-family:var(--font-display);font-weight:700;font-size:24px;color:#fff;}
+.section-sub{color:var(--muted);font-size:13.5px;max-width:62ch;margin-top:4px;}
+.track-label{font-family:var(--font-mono);font-size:11px;color:var(--accent2);text-transform:uppercase;letter-spacing:.1em;margin:28px 0 14px;padding-top:10px;border-top:1px dashed var(--border-soft);}
+.track-label:first-of-type{border-top:none;padding-top:0;margin-top:6px;}
+
+.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+@media(max-width:760px){.roster{grid-template-columns:1fr;}}
+.op-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;transition:all .15s ease;}
+.op-card:hover{border-color:var(--accent-line);transform:translateY(-2px);}
+.op-card.flagship{border-color:var(--accent);background:linear-gradient(180deg,rgba(0,168,89,0.08),var(--surface));}
+.op-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.op-name{font-family:var(--font-display);font-weight:700;font-size:18px;color:#fff;}
+.op-role{font-size:12.5px;color:var(--muted);margin-top:2px;}
+.flag-chip{font-family:var(--font-mono);font-size:10px;color:var(--accent);border:1px solid var(--accent);background:var(--accent-dim);border-radius:20px;padding:2px 8px;white-space:nowrap;}
+.op-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+.op-stats{display:flex;gap:18px;margin-top:2px;}
+.op-stat{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.op-stat b{color:var(--accent2);font-size:14px;display:block;font-family:var(--font-body);font-weight:600;}
+.op-agents{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.chip{font-size:11px;background:var(--surface-3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;color:var(--text);}
+.op-actions{display:flex;gap:10px;margin-top:6px;}
+.run-btn{flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:600;font-size:13px;border-radius:6px;padding:10px;cursor:pointer;transition:all 0.15s ease;}
+.run-btn:hover{border-color:var(--accent2);color:var(--accent2);background:var(--accent2-bg);}
+
+.run-panel{background:var(--surface);border:1px solid var(--accent-line);border-radius:12px;padding:24px;margin-top:24px;display:none;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+.run-panel.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.run-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.run-head h3{font-family:var(--font-display);font-size:20px;margin:0;color:#fff;}
+.run-head .meta{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.close-run{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:6px 12px;cursor:pointer;font-size:12px;}
+.close-run:hover{color:var(--text);border-color:var(--accent2);}
+
+.feed{background:var(--bg);border:1px solid var(--border-soft);border-radius:8px;padding:16px;height:260px;overflow-y:auto;font-family:var(--font-mono);font-size:12px;display:flex;flex-direction:column;gap:8px;}
+.feed-line{display:flex;gap:10px;align-items:flex-start;opacity:0;animation:appear .3s ease forwards;}
+@keyframes appear{to{opacity:1;}}
+.feed-line .tag{color:var(--accent2);white-space:nowrap;}
+.feed-line .txt{color:var(--muted);}
+.feed-line.done .tag{color:var(--accent);}
+.feed-line.done .txt{color:var(--text);}
+
+.progress-row{display:flex;gap:6px;margin:16px 0 8px;flex-wrap:wrap;}
+.pstep{flex:1;min-width:64px;height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;position:relative;}
+.pstep.active{background:var(--accent-dim);}
+.pstep.complete{background:var(--accent);box-shadow:0 0 8px var(--accent);}
+
+.deliverable{margin-top:20px;background:var(--surface-2);border:1px solid var(--accent-line);border-radius:8px;padding:18px 20px;display:none;}
+.deliverable.show{display:block;animation:fadein .3s ease;}
+.deliverable h4{font-family:var(--font-display);font-size:17px;margin:0 0 12px;color:var(--accent);}
+.deliverable pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:12.5px;color:var(--text);margin:0;line-height:1.65;}
+.note{font-size:11px;color:var(--muted-2);margin-top:12px;font-style:italic;}
+
+/* BUILDER STYLING (DYNEX FUNCTIONAL FLOW) */
+.steps-bar{display:flex;gap:10px;margin-bottom:24px;}
+.step-item{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);}
+.step-item.active{border-color:var(--accent2);background:var(--surface-3);}
+.step-item .step-num{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--muted-2);}
+.step-item.active .step-num{color:var(--accent2);}
+.step-item .step-lbl{font-size:13.5px;font-weight:600;color:var(--text);margin-top:2px;}
+
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.wf-card{border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;background:var(--surface-2);transition:all 0.15s ease;}
+.wf-card:hover{border-color:var(--accent2);}
+.wf-card.sel{border-color:var(--accent2);background:rgba(6,182,212,0.08);}
+.wf-title{font-family:var(--font-display);font-weight:700;font-size:16px;color:#fff;}
+.wf-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45;}
+.wf-meta{font-family:var(--font-mono);font-size:10.5px;color:var(--accent2);margin-top:8px;font-weight:600;text-transform:uppercase;}
+
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);margin-bottom:10px;}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--accent2);flex-shrink:0;}
+.task-row .tt{flex:1;font-size:13px;color:var(--text);}
+.task-row select{font-family:var(--font-body);font-size:12.5px;border:1px solid var(--border);border-radius:6px;padding:8px 10px;background:var(--surface);color:var(--text);outline:none;min-width:210px;}
+.task-row select:focus{border-color:var(--accent2);}
+
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.field input{width:100%;font-family:var(--font-body);font-size:13.5px;border:1px solid var(--border);border-radius:8px;padding:11px 13px;background:var(--surface-2);color:var(--text);outline:none;}
+.field input:focus{border-color:var(--accent2);}
+
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.seg button{font-family:var(--font-body);font-size:12.5px;padding:9px 16px;border:none;background:var(--surface-2);color:var(--muted);cursor:pointer;border-right:1px solid var(--border);}
+.seg button:last-child{border-right:none;}
+.seg button.on{background:var(--accent2);color:#fff;font-weight:700;}
+
+.bnav{display:flex;justify-content:space-between;margin-top:24px;}
+
+footer{border-top:1px solid var(--border-soft);padding:30px 0 44px;}
+.foot-note{font-size:12px;color:var(--muted-2);max-width:85ch;line-height:1.6;}
+.foot-note strong{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark-row">
+      <div class="mark">
+        <div class="mark-badge">CT</div>
+        <div>
+          <div class="mark-name">Control Techniques Console</div>
+          <div class="mark-sub">Control Techniques (controltechniques.com) · A Nidec Company</div>
+        </div>
+      </div>
+      <div class="line-readout">
+        <span class="dot"></span>
+        <span id="lineTxt">Newtown, Wales &amp; Global Plants · Unidrive M700 &amp; Digitax HD Drives Active</span>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tabA" onclick="setView('ops')">The AI Workforce Roster</button>
+      <button class="tab-btn" id="tabB" onclick="setView('hire')">+ Add an AI Operator</button>
+    </div>
+  </header>
+
+  <div id="view-ops">
+    <section class="hero" style="padding-bottom:10px;">
+      <div>
+        <div class="eyebrow">The Drive Specialists &amp; Industrial Motion</div>
+        <h1>Eight operators to run Control Techniques' <span>unidrive-m700-to-digitax-hd</span> loop</h1>
+        <p class="lead">Each operator below is a real Control Techniques workflow — analyzing 3D CAD multi-axis motor drive cabinet layouts, Unidrive M700 high-speed VFD torque curves, and Digitax HD servo drive multi-axis pulse synchronization, scrubbing 500-line ISO 9001 &amp; SIL 3 STO drive BOMs for EtherCAT &amp; PROFINET bus interface pinouts, configuring Machine Control Studio IEC 61131-3 PLC motion code and Nidec cloud telemetry, and auditing ISO 9001 quality releases — handed to a team of specialist AI agents that works it end-to-end.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('roster-section').scrollIntoView({behavior:'smooth'})">View the Roster</button>
+          <button class="btn btn-ghost" onclick="runOperator('unidrive_dfm')">Run Flagship Operator</button>
+        </div>
+      </div>
+
+      <div class="wafer">
+        <div class="wafer-top">
+          <span class="wafer-title">Control Techniques Drive Diagnostics</span>
+          <span class="wafer-val" id="yieldVal">62.5 µs Current Loop PASS</span>
+        </div>
+        <svg class="wafermap" viewBox="0 0 220 210" preserveAspectRatio="xMidYMid meet">
+          <circle class="wafer-outline" cx="110" cy="105" r="92"></circle>
+          <line class="wafer-grid-line" x1="20" y1="105" x2="200" y2="105"></line>
+          <line class="wafer-grid-line" x1="110" y1="15" x2="110" y2="195"></line>
+          <g id="dieGrid"></g>
+        </svg>
+        <div class="wafer-foot">
+          <span>Newtown Facility · Lot CT-2608-M700</span>
+          <span id="binVal">Pass: SIL 3 / PLe STO (5-Yr Warranty)</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="econ">
+      <div class="econ-item">
+        <div class="econ-num">62.5<small> µs</small></div>
+        <div class="econ-label">Current loop update frequency in Unidrive M700 &amp; Digitax HD</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">Nidec<small> Company</small></div>
+        <div class="econ-label">Part of Nidec Corporation global motor &amp; drive division</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">32<small> hrs</small></div>
+        <div class="econ-label">Median VFD setup &amp; Machine Control Studio programming hours returned</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">8<small>/8</small></div>
+        <div class="econ-label">Workflows covered, drive DFM through SIL 3 STO release</div>
+      </div>
+    </div>
+
+    <section id="roster-section">
+      <div class="section-head">
+        <div>
+          <div class="section-title">The AI Workforce Roster</div>
+          <div class="section-sub">Grouped into Commercial &amp; VFD OEM Tenders and Drive Systems Operations tracks. Click run on any operator to watch its agent team execute in real time.</div>
+        </div>
+      </div>
+
+      <div id="rosterContainer"></div>
+    </section>
+
+    <!-- Run Panel -->
+    <div class="run-panel" id="runPanel">
+      <div class="run-head">
+        <div>
+          <h3 id="runTitle">Running Operator...</h3>
+          <div class="meta" id="runSub">Simulated multi-agent execution feed</div>
+        </div>
+        <button class="close-run" onclick="closeRun()">✕ Close View</button>
+      </div>
+      <div class="progress-row" id="progressRow"></div>
+      <div class="feed" id="feedArea"></div>
+      <div class="deliverable" id="deliverableBox">
+        <h4 id="delivTitle">Review-Ready Output</h4>
+        <pre id="delivCode"></pre>
+        <div class="note">Human-in-the-loop oversight active. Outputs verified by Control Techniques senior drive systems engineering team. Illustrative simulation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="section-title">Add an AI Operator</div>
+          <div class="section-sub">Stand up a new AI operator in three steps: pick the workflow, assign each task to an agent via dropdown, then name it and set cadence.</div>
+        </div>
+      </div>
+
+      <div class="steps-bar" id="bSteps"></div>
+      <div id="bBody"></div>
+      <div class="bnav" id="bNav"></div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="foot-note">
+      <strong>Independent Concept Prototype</strong> prepared for a conversation with <strong>Control Techniques (controltechniques.com)</strong>. It is not affiliated with, endorsed by, or built on Control Techniques or Nidec systems or data. All operators, Unidrive M700 parameters, Digitax HD pulse profiles, and SIL 3 STO safety audits are illustrative simulations. A licensed drive systems engineer, VFD specialist, or machine safety manager reviews and approves every drive selection, PLC program, and safety release.
+    </div>
+  </footer>
+</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'Printing & Packaging, Converting & Elevator Industry Market Intelligence', tools: ['research_drive_tenders', 'save'] },
+  drive_eng: { emoji: '🔬', label: 'Control Techniques Unidrive M700 & Digitax HD Drive Systems Engineer', tools: ['analyze_drive_performance', 'save'] },
+  fieldbus_spec: { emoji: '⚡', label: 'EtherCAT, PROFINET & Ethernet/IP Fieldbus Integration Specialist', tools: ['design_fieldbus_link', 'save'] },
+  safety_scrubber: { emoji: '📑', label: 'SIL 3 / PLe STO, CE, UL & ISO 13849-1 Drive Component Specialist', tools: ['scrub_ct_bom', 'save'] },
+  cost_eng: { emoji: '🧮', label: 'High-Power VFD, IGBT Power Module & Unimotor Costing Specialist', tools: ['calc_drive_cost', 'save'] },
+  cloud_architect: { emoji: '☁️', label: 'Connect Diagnostics Telemetry & Nidec Industrial Cloud Architect', tools: ['configure_nidec_cloud', 'save'] },
+  quality_auditor: { emoji: '🛡️', label: 'ISO 9001:2015, ISO 14001 & Drive Thermal Dissipation Auditor', tools: ['audit_drive_quality', 'save'] },
+  supply_planner: { emoji: '📦', label: 'Drive Capacitors, IGBT Inverter Modules & Servo Feedback Cable Planner', tools: ['plan_drive_spares', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'OEM Packaging & Heavy Industrial Drive Enterprise RFP Writer', tools: ['compose_doc', 'save'] },
+  qa_reviewer: { emoji: '✅', label: 'Senior Variable Speed Drive Integration & Motion Control Reviewer', tools: ['qa_review', 'save'] },
+  prospector: { emoji: '🧲', label: 'VP Industrial Automation & OEM Machine Builder Director Prospector', tools: ['source_ct_accounts', 'save'] },
+  plc_spec: { emoji: '⚙️', label: 'Machine Control Studio IEC 61131-3 PLC & Motion Programming Specialist', tools: ['program_machine_studio', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+const TRACKS = [
+  { key: 'commercial', title: 'Commercial & VFD OEM Tenders' },
+  { key: 'operations', title: 'Drive Systems & Motion Control Operations' }
+];
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Printing & Packaging, Converting & Elevator Fleet Scouting',
+    title: 'AI Variable Speed Drive Growth Scout',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Packaging, Converting & Elevator Drive Opportunity Dossier',
+    desc: 'Maps high-speed packaging machinery OEMs (Krones, Tetra Pak), paper converting lines, elevator systems (Schindler, Otis), and crane/hoist manufacturers.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan packaging machine servo drive RFPs, elevator E300 drive tenders, and high-power VFD metal rolling bids.', deps: [] },
+      { agent: 'prospector', task: 'Source VP Industrial Automation, Chief Electrical Engineers, and OEM Machine Development Directors.', deps: [] },
+      { agent: 'drive_eng', task: 'Score fit on Control Techniques Unidrive M700 AC/Servo drives, Digitax HD multi-axis servo drives, and Commander C VFDs.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce target variable speed drive prospect dossier.', deps: [2] }
+    ]
+  },
+  quote: {
+    name: 'Custom Unidrive M700 & Digitax HD Servo System Quoting',
+    title: 'AI Drive Systems Cost Specialist',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Control Techniques Multi-Axis Drive System Quote Package',
+    desc: 'Models Unidrive M700 AC/Servo drives, Digitax M753 EtherCAT multi-axis servo drives, Unimotor hd servo motors, and SI-EtherCAT option modules.',
+    tasks: [
+      { agent: 'drive_eng', task: 'Review motor continuous current (16.5A), peak current (49.5A), DC bus voltage (540 VDC), and EtherCAT update rate (250 µs).', deps: [] },
+      { agent: 'cost_eng', task: 'Model IGBT inverter modules, DC bus chokes, EMC filters, Unimotor hd windings, and Machine Control Studio software.', deps: [0] },
+      { agent: 'supply_planner', task: 'Verify IGBT power module reserves, film capacitors, and Unimotor encoder feedback cable stocks in Newtown depot.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Assemble formal Control Techniques Multi-Axis Drive System Quote Package.', deps: [2] }
+    ]
+  },
+  tender: {
+    name: 'Global OEM Automation & Heavy Industry RFP Response',
+    title: 'AI Drive Systems Solution Specialist',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Global OEM Automation & Heavy Industry RFP Response Package',
+    desc: 'Audits ISO 9001:2015 quality standards, SIL 3 / PLe Safe Torque Off (STO) compliance, 5-year warranty terms, and 99.8% drive uptime SLAs.',
+    tasks: [
+      { agent: 'researcher', task: 'Parse printing press sync rules, crane hoist overspeed protection, and dual-channel STO safety requirements.', deps: [] },
+      { agent: 'quality_auditor', task: 'Verify ISO 9001:2015, ISO 14001 certificates, CE/UL safety approvals, and Newtown, Wales / global plant credentials.', deps: [0] },
+      { agent: 'cost_eng', task: 'Structure global OEM drive supply schedule backed by Nidec Motor Corporation global network.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce formal Global OEM Automation & Heavy Industry RFP response package.', deps: [2] }
+    ]
+  },
+  intel: {
+    name: 'Global VFD & Nidec Motor Automation Radar',
+    title: 'AI Industrial Drives Market Intelligence',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Global VFD & Industrial Motion Control Intelligence Brief',
+    desc: 'Tracks compact servo drive density trends (Digitax HD), Ethernet/IP & PROFINET multi-protocol option cards, and Nidec motor synergy advantages.',
+    tasks: [
+      { agent: 'researcher', task: 'Monitor global VFD installation growth, high-efficiency IE4/IE5 motor drive rules, and Connect software updates.', deps: [] },
+      { agent: 'drive_eng', task: 'Benchmark Control Techniques 62.5 µs current loop speed against conventional industrial VFDs.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile strategic variable speed drive market intelligence brief.', deps: [0, 1] }
+    ]
+  },
+  unidrive_dfm: {
+    name: 'Unidrive M700 & Digitax HD Multi-Axis Drive DFM Scrub',
+    title: 'AI Drive Systems DFM Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'Unidrive M700 & Digitax HD Drive DFM Review Package',
+    desc: 'Audits 3D CAD drive cabinet layouts, Unidrive M700 thermal dissipation, Digitax HD compact side-by-side mounting, and EtherCAT fieldbus wiring.',
+    tasks: [
+      { agent: 'drive_eng', task: 'Analyze Unidrive M700 IGBT junction temperature rise under 200% heavy-duty overload; optimizes heatsink fan airflow.', deps: [] },
+      { agent: 'fieldbus_spec', task: 'Verify SI-EtherCAT and SI-PROFINET multi-protocol option module noise immunity and 125 µs sync jitter.', deps: [0] },
+      { agent: 'plc_spec', task: 'Configure Machine Control Studio IEC 61131-3 motion PLC code and onboard 62.5 µs current loop parameters.', deps: [1] },
+      { agent: 'quality_auditor', task: 'Audit ISO 9001:2015 thermal compliance, SIL 3 / PLe STO safety terminal wiring, and CE/UL clearance.', deps: [2] },
+      { agent: 'reviewer', task: 'QA drive systems engineering & VFD tuning findings and compile customer technical package.', deps: [3] },
+      { agent: 'proposal_writer', task: 'Produce final Unidrive M700 & Digitax HD Drive DFM Review Package.', deps: [4] }
+    ]
+  },
+  machine_studio_setup: {
+    name: 'Machine Control Studio PLC & EtherCAT Fieldbus Setup',
+    title: 'AI Drive Programming & Motion Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'Machine Control Studio PLC & Fieldbus Setup Package',
+    desc: 'Writes Machine Control Studio IEC 61131-3 PLC motion code, configures electronic gearing/camming, and deploys Connect drive setup tools.',
+    tasks: [
+      { agent: 'plc_spec', task: 'Write Machine Control Studio motion code for 12-axis synchronized packaging machine electronic camming.', deps: [] },
+      { agent: 'cloud_architect', task: 'Connect Nidec industrial cloud IoT telemetry API via Connect software for real-time drive current, temperature, and fault logging.', deps: [0] },
+      { agent: 'reviewer', task: 'Verify zero position deviation during 50,000-cycle high-speed printing registration dry run.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce Machine Control Studio PLC & Fieldbus Setup Package.', deps: [2] }
+    ]
+  },
+  sto_sil3_audit: {
+    name: 'SIL 3 / PLe Safe Torque Off (STO) & CE Compliance Audit',
+    title: 'AI Drive Safety & Quality Auditor',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'SIL 3 STO & CE Drive Quality Release',
+    desc: 'Audits IEC 61800-5-2 SIL 3 / PLe Safe Torque Off (STO) drive safety circuits, ISO 13849-1 Performance Level e compliance, and CE EMC immunity.',
+    tasks: [
+      { agent: 'quality_auditor', task: 'Audit Newtown plant Unidrive M700 dual-channel STO safety terminal response, EMC line filters, and E-stop isolation.', deps: [] },
+      { agent: 'safety_scrubber', task: 'Verify 100% Certificate of Conformance (CoC) for flame-retardant drive enclosures and UL-rated power terminals.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile SIL 3 STO & CE Drive Quality Release Brief.', deps: [0, 1] }
+    ]
+  },
+  spares_plan: {
+    name: 'Unidrive Power Modules, Control PCBs & Servo Motor Safety Stock Plan',
+    title: 'AI Drive Hardware & Spares Planner',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'Unidrive Power Modules & Servo Motor Safety Stock Plan',
+    desc: 'Secures high-power IGBT inverter modules, DC bus capacitors, Unidrive control PCBs, and Unimotor hd servo motors for global service depots.',
+    tasks: [
+      { agent: 'supply_planner', task: 'Evaluate IGBT power module lead times and 90-day critical drive spare parts buffer in Newtown warehouse.', deps: [] },
+      { agent: 'safety_scrubber', task: 'Execute raw material Certificate of Analysis (CoA) audit for electrolytic capacitor lifespan and copper busbar purity.', deps: [] },
+      { agent: 'cost_eng', task: 'Structure strategic drive hardware inventory buffer to support OEM packaging machinery warranty programs.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce Unidrive Power Modules & Servo Motor Safety Stock Plan.', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'Packaging, Converting & Elevator Drive Opportunity Dossier',
+  quote: 'Control Techniques Multi-Axis Drive System Quote Package',
+  tender: 'Global OEM Automation & Heavy Industry RFP Response Package',
+  intel: 'Global VFD & Industrial Motion Control Intelligence Brief',
+  unidrive_dfm: 'Unidrive M700 & Digitax HD Drive DFM Review Package',
+  machine_studio_setup: 'Machine Control Studio PLC & Fieldbus Setup Package',
+  sto_sil3_audit: 'SIL 3 STO & CE Drive Quality Release',
+  spares_plan: 'Unidrive Power Modules & Servo Motor Safety Stock Plan'
+};
+
+const TOOLS = {
+  research_drive_tenders: () => 'Scanned packaging machine servo drive solicitations, elevator drive RFPs, and high-power VFD bids.',
+  source_ct_accounts: () => 'Sourced verified VP Industrial Automation and OEM Machine Development Directors; deduped CRM.',
+  analyze_drive_performance: () => 'Analyzed Unidrive M700 IGBT junction temperature under 200% load; optimized heatsink fan thermal curve.',
+  design_fieldbus_link: () => 'Designed SI-EtherCAT fieldbus interface geometry; verified 125 µs sync jitter over 100m industrial Ethernet run.',
+  scrub_ct_bom: () => 'Scrubbed 500-line drive BOM; verified 100% SIL 3 / PLe STO compliance, CE EMC rating, and UL terminal specs.',
+  calc_drive_cost: () => 'Calculated Unidrive M700 AC drive, Digitax HD servo drive, Unimotor hd motor, and option card margins.',
+  configure_nidec_cloud: () => 'Configured Nidec industrial cloud IoT telemetry API via Connect software for real-time drive current & fault tracking.',
+  audit_drive_quality: () => 'Audited drive heatsink thermal dissipation, dual-channel STO safety terminals, and 5-year warranty route (PASS).',
+  plan_drive_spares: () => 'Cross-referenced IGBT power module lead times; secured 90-day material buffer in Newtown plant.',
+  program_machine_studio: () => 'Programmed Machine Control Studio IEC 61131-3 motion PLC code, EtherCAT sync, and 62.5 µs current loop.',
+  compose_doc: () => 'Compiled variable speed drive and industrial motion metrics into clear, review-ready technical documentation.',
+  qa_review: () => 'Audited report completeness and checked ISO 9001 / SIL 3 standards; ready for Control Techniques VP Engineering sign-off.',
+  save: () => 'Saved deliverable artifact to shared project repository.'
+};
+
+function toolOut(t) { return (TOOLS[t] || (() => 'Executed successfully.'))(); }
+
+const FINAL = {
+  scout: `PACKAGING, CONVERTING & ELEVATOR DRIVE OPPORTUNITY DOSSIER (illustrative)
+Target Sector: High-Speed Packaging, Paper Converting, Elevator/Escalator Systems, Heavy Metals & Mining
+Target Location: Newtown, Powys, Wales, UK & Global System Integration Hubs
+
+A-Tier Qualified Enterprise Opportunities:
+1. Krones Group — High-Speed Beverage Bottling Line — Fit Score: 99/100
+   • Key Contacts: VP Packaging Automation, Lead Electrical Systems Engineer
+   • Requirement: Digitax HD Compact Multi-Axis Servo Drives & Unimotor hd Motors
+2. Schindler Elevator — High-Rise Commercial Elevator Systems — Fit Score: 97/100
+   • Key Contacts: Director of Drive Systems Engineering, Lead Safety Engineer
+   • Requirement: Control Techniques E300 Specialized Elevator Drives with Ride Comfort Tuning
+3. International Paper — High-Speed Paper Converting Line — Fit Score: 95/100
+   • Key Contacts: Chief Automation Officer, Plant Electrical Manager
+   • Requirement: Unidrive M700 High-Performance AC Drives with Onboard Motion
+
+Strategic Positioning:
+Highlight Control Techniques 50+ year drive specialization, membership in Nidec Motor Corporation, Unidrive M700 62.5 µs current loop response, Digitax HD compact footprint, and 5-year global warranty.
+
+NOTE: Illustrative simulation prepared for Control Techniques (controltechniques.com).`,
+
+  quote: `CONTROL TECHNIQUES MULTI-AXIS DRIVE SYSTEM QUOTE PACKAGE (illustrative)
+Customer: Krones Group / Packaging Machinery Program
+Program: Digitax HD M753 EtherCAT Servo Drives & Unidrive M700 System (3 Lines)
+Specifications: 62.5 µs Current Loop, EtherCAT 250 µs Sync, SIL 3 STO, 5-Yr Warranty
+
+Commercial Breakdown:
+• Control Techniques Digitax M753 Compact Servo Drives (12 Drives @ $1,450.00): $17,400.00
+• Control Techniques Unidrive M700 15kW Main Drive Units: $9,600.00
+• Unimotor hd High-Dynamic Brushless AC Servo Motors (12 Motors): $14,800.00
+• SI-EtherCAT Option Cards, Machine Control Studio Licenses & Commissioning: $5,200.00
+
+Performance Return:
+• Current Loop Speed: 62.5 µs Update Rate for Superior Dynamic Motion Accuracy
+• Space Reduction: 50% Reduction in Cabinet Width via Digitax HD Compact Mounting
+• Safety & Reliability: Built-in SIL 3 / PLe Safe Torque Off (STO) & 5-Year Global Warranty
+
+Turnaround Time: 6 Weeks to Factory Acceptance Testing (FAT)
+
+NOTE: Illustrative simulation; pricing figures are placeholders.`,
+
+  tender: `GLOBAL OEM AUTOMATION & HEAVY INDUSTRY RFP RESPONSE PACKAGE (illustrative)
+Tender ID: UK-WA-DRIVE-CT-2026-29
+Scope: High-Performance AC VFDs, Compact Multi-Axis Servo Drives & DC Motor Drives
+
+Quality & Performance Verification:
+• Quality Management System: ISO 9001:2015 & ISO 14001:2015 Certified Facilities
+• Safety Integrity Standard: 100% SIL 3 / PLe Safe Torque Off (STO) Compliant Drives
+• Product Warranty: 5-Year Standard Global Warranty on Unidrive & Commander Lines
+• Corporate Ecosystem: Supported by Nidec Corporation global drive & motor network
+
+Technical Offer:
+• Global market leader in variable speed drives and industrial motion control solutions.
+
+NOTE: Illustrative simulation; confirm against RFP specifications.`,
+
+  intel: `GLOBAL VFD & INDUSTRIAL MOTION CONTROL INTELLIGENCE BRIEF (illustrative)
+Focus: Unidrive M700 Performance, Digitax HD Density & Nidec Motor Synergies
+
+Key Insights:
+1. The Drive Specialist Advantage: Unlike general automation vendors, Control Techniques focuses 100% on drives, resulting in industry-leading 62.5 µs current loop speed and unmatched motor tuning algorithms.
+2. Digitax HD Multi-Axis Density: Ultra-compact 25mm drive width allows machine builders to reduce control cabinet footprints by up to 50%.
+3. Nidec Platform Advantage:
+   - Perfect motor-and-drive pairing: Unidrive M & Digitax HD matched seamlessly with Nidec Leroy-Somer and Imperial Electric motors.
+   - Global Nidec manufacturing scale ensuring supply chain stability and worldwide service hubs.
+
+NOTE: Illustrative simulation.`,
+
+  unidrive_dfm: `UNIDRIVE M700 & DIGITAX HD DRIVE DFM REVIEW PACKAGE (illustrative · flagship)
+Program: High-Speed Packaging & Multi-Axis Servo Drive System
+Factory: Newtown, Powys, Wales Manufacturing Headquarters
+
+Drive Systems Engineering Findings:
+1. IGBT Junction Thermal Model: Modeled Unidrive M700 heatsink thermal dissipation under 200% heavy-duty overload; verified fan curve keeps junction temp below 110°C.
+2. EtherCAT Fieldbus Sync: Tested SI-EtherCAT option module jitter; verified sub-microsecond synchronization across 12 Digitax HD servo drives.
+3. Machine Control Studio Logic: Configured IEC 61131-3 motion PLC code with 62.5 µs current loop timing for zero-lag position tracking.
+
+Quality & Regulatory Audit:
+• Safety Audit: SIL 3 / PLe Safe Torque Off (STO) dual-channel terminal loop cleared.
+• Regulatory Rating: CE EMC Immunity Class A/B and UL 508C drive safety release approved.
+
+Summary:
+ Control Techniques multi-axis drive system design approved for panel build and FAT testing.
+
+NOTE: Illustrative simulation; review with Control Techniques engineering team.`,
+
+  machine_studio_setup: `MACHINE CONTROL STUDIO PLC & FIELDBUS SETUP PACKAGE (illustrative)
+Program: Machine Control Studio IEC 61131-3 PLC & Connect Diagnostics
+
+System Setup Configuration:
+• IEC 61131-3 Motion Logic: Written PLC code for 12-axis electronic camming and EtherCAT synchronized motion
+• Connect Diagnostics Telemetry: Built Nidec cloud IoT telemetry connection for real-time drive current, bus voltage, and thermal logging
+• Servo Loop Tuning: Achieved 62.5 µs current loop response with zero speed ripple under heavy load
+
+Outcome: Machine Control Studio PLC and Digitax HD drive network validated for high-speed OEM packaging.
+
+NOTE: Illustrative simulation.`,
+
+  sto_sil3_audit: `SIL 3 STO & CE DRIVE QUALITY RELEASE (illustrative)
+Production Assembly: Control Techniques Unidrive M700 & Digitax HD (#CT-DRV-2026-20)
+Compliance Standard: SIL 3 / PLe / IEC 61800-5-2 / ISO 13849-1 / ISO 9001 / CE / UL
+
+Audit Checklist Results:
+• Safe Torque Off (STO) Response: Measured dual-channel STO response time at 8 ms (well within 15 ms limit) - PASS
+• EMC Immunity Test: Measured conducted & radiated emissions under EN 61800-3 industrial limits - PASS
+• 5-Year Warranty Clearance: Factory stress burn-in test passed with 100% thermal stability - PASS
+
+Outcome: SIL 3 STO & CE Drive Quality Release Approved. Certificate of Compliance issued.
+
+NOTE: Illustrative simulation.`,
+
+  spares_plan: `UNIDRIVE POWER MODULES & SERVO MOTOR SAFETY STOCK PLAN (illustrative)
+Scope: Newtown, Wales Central Drive Depot
+
+Supply Strategy Breakdown:
+• IGBT Power Modules: 90-day supply of high-power IGBT inverter modules in stock
+• DC Bus Capacitors: 500 long-life electrolytic capacitor banks stored in Newtown depot
+• Unimotor Servo Assemblies: 100 Unimotor hd brushless AC servo motors in reserve
+
+Outcome: Control Techniques drive hardware and spare parts supply clear for continuous global customer deployment.
+
+NOTE: Illustrative simulation.`
+};
+
+let EMPLOYEES = [
+  { id: 'scout', name: 'Scout', title: 'AI Variable Speed Drive Scout', wf: 'scout', handled: 270, hrs: 84, win: 56, status: 'idle' },
+  { id: 'quote', name: 'Quote', title: 'AI Drive Systems Cost Specialist', wf: 'quote', handled: 360, hrs: 158, win: 78, status: 'idle' },
+  { id: 'tender', name: 'Tender', title: 'AI Drive Systems Specialist', wf: 'tender', handled: 180, hrs: 125, win: 68, status: 'idle' },
+  { id: 'intel', name: 'Radar', title: 'AI Industrial Drives Intelligence', wf: 'intel', handled: 210, hrs: 70, win: 46, status: 'idle' },
+  { id: 'unidrive_dfm', name: 'UnidriveDigitaxDriveDFM', title: 'AI Drive Systems DFM Specialist', wf: 'unidrive_dfm', handled: 540, hrs: 310, win: 98, status: 'idle' },
+  { id: 'machine_studio_setup', name: 'MachineControlStudioSetup', title: 'AI Drive Programming & Motion Specialist', wf: 'machine_studio_setup', handled: 320, hrs: 150, win: 74, status: 'idle' },
+  { id: 'sto_sil3_audit', name: 'STOSIL3SafetyAudit', title: 'AI Drive Safety & Quality Auditor', wf: 'sto_sil3_audit', handled: 460, hrs: 185, win: 88, status: 'idle' },
+  { id: 'spares_plan', name: 'SupplyPlanner', title: 'AI Drive Hardware & Spares Planner', wf: 'spares_plan', handled: 280, hrs: 110, win: 0, status: 'idle' }
+];
+
+/* Render Functions */
+function drawWaferGrid() {
+  const grid = document.getElementById("dieGrid");
+  let rects = '';
+  for (let x = -8; x <= 8; x++) {
+    for (let y = -8; y <= 8; y++) {
+      if (x*x + y*y <= 60) {
+        const px = 110 + x * 10 - 4;
+        const py = 105 + y * 10 - 4;
+        const pass = (Math.abs(x*y) % 8 !== 3);
+        const fill = pass ? 'rgba(0, 168, 89, 0.45)' : 'rgba(6, 182, 212, 0.6)';
+        rects += `<rect x="${px}" y="${py}" width="8" height="8" rx="1.5" fill="${fill}"></rect>`;
+      }
+    }
+  }
+  grid.innerHTML = rects;
+}
+
+function renderRoster() {
+  const container = document.getElementById("rosterContainer");
+  let html = '';
+  TRACKS.forEach(tr => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === tr.key);
+    if (!list.length) return;
+    html += `<div class="track-label">${tr.title}</div><div class="roster">`;
+    html += list.map(empCard).join('');
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+}
+
+function empCard(e) {
+  const wf = WORKFLOWS[e.wf] || {};
+  const isFlag = wf.tag === 'flagship';
+  const team = (wf.tasks || []).map(t => t.agent).filter((v, i, a) => a.indexOf(v) === i).map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  return `
+    <div class="op-card ${isFlag ? 'flagship' : ''}" id="emp-${e.id}">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${e.name}</div>
+          <div class="op-role">${e.title}</div>
+        </div>
+        ${isFlag ? '<span class="flag-chip">★ FLAGSHIP OPERATOR</span>' : ''}
+      </div>
+      <div class="op-desc">${wf.desc || ''}</div>
+      <div class="op-agents">${team}</div>
+      <div class="op-stats">
+        <div class="op-stat"><b>${e.handled.toLocaleString()}</b> runs</div>
+        <div class="op-stat"><b>~${e.hrs} hrs</b> saved/mo</div>
+        <div class="op-stat"><b>+${e.win}%</b> speedup</div>
+      </div>
+      <div class="op-actions">
+        <button class="run-btn" onclick="runOperator('${e.wf}')">▶ Run ${e.name}</button>
+      </div>
+    </div>
+  `;
+}
+
+function setView(v) {
+  document.getElementById('view-ops').classList.toggle('hidden', v !== 'ops');
+  document.getElementById('view-hire').classList.toggle('hidden', v !== 'hire');
+  document.getElementById('tabA').classList.toggle('active', v === 'ops');
+  document.getElementById('tabB').classList.toggle('active', v === 'hire');
+  if (v === 'hire') initBuilder();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+let isRunning = false;
+async function runOperator(wfKey) {
+  if (isRunning) return;
+  isRunning = true;
+  const wf = WORKFLOWS[wfKey];
+  if (!wf) return;
+
+  const panel = document.getElementById("runPanel");
+  const title = document.getElementById("runTitle");
+  const sub = document.getElementById("runSub");
+  const progress = document.getElementById("progressRow");
+  const feed = document.getElementById("feedArea");
+  const deliv = document.getElementById("deliverableBox");
+
+  panel.classList.add("active");
+  deliv.classList.remove("show");
+  title.innerText = `Executing Operator: ${wf.name}`;
+  sub.innerText = `Mode: ${wf.mode.toUpperCase()} · ${wf.tasks.length} Specialist Agents`;
+
+  progress.innerHTML = wf.tasks.map((_, i) => `<div class="pstep" id="ps_${i}"></div>`).join('');
+  feed.innerHTML = '';
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  function addFeedLine(agentKey, txt, isDone = false) {
+    const role = AGENT_ROLES[agentKey] || { emoji: '🤖', label: agentKey };
+    const div = document.createElement('div');
+    div.className = `feed-line ${isDone ? 'done' : ''}`;
+    div.innerHTML = `<span class="tag">[${role.emoji} ${role.label}]</span><span class="txt">${txt}</span>`;
+    feed.appendChild(div);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  addFeedLine(wf.tasks[0].agent, `Initializing ${wf.name} autonomous workflow loop...`);
+  await new Promise(r => setTimeout(r, 600));
+
+  for (let i = 0; i < wf.tasks.length; i++) {
+    const t = wf.tasks[i];
+    const stepEl = document.getElementById(`ps_${i}`);
+    if (stepEl) stepEl.classList.add("active");
+
+    addFeedLine(t.agent, `Executing Task ${i+1}: ${t.task}`);
+    await new Promise(r => setTimeout(r, 800));
+
+    const role = AGENT_ROLES[t.agent];
+    if (role && role.tools) {
+      for (const tool of role.tools) {
+        addFeedLine(t.agent, `Invoked tool '${tool}( )' -> ${toolOut(tool)}`);
+        await new Promise(r => setTimeout(r, 600));
+      }
+    }
+
+    if (stepEl) {
+      stepEl.classList.remove("active");
+      stepEl.classList.add("complete");
+    }
+    addFeedLine(t.agent, `Task ${i+1} completed. Artifact saved to shared Control Techniques project store.`, true);
+  }
+
+  await new Promise(r => setTimeout(r, 400));
+  document.getElementById("delivTitle").innerText = `Review-Ready Output · ${DTITLE[wfKey] || 'Deliverable'}`;
+  document.getElementById("delivCode").innerText = FINAL[wfKey] || "Execution completed successfully.";
+  deliv.classList.add("show");
+
+  isRunning = false;
+}
+
+function closeRun() {
+  document.getElementById("runPanel").classList.remove("active");
+}
+
+/* DYNEX BUILDER FLOW IMPLEMENTATION */
+let draft = {};
+function initBuilder() {
+  draft = { wf: null, mode: 'sequential', assign: [], name: '', title: '', cadence: 'Per project', step: 1 };
+  renderBuilder();
+}
+
+function renderBuilder() {
+  const steps = [['01', 'Pick a workflow'], ['02', 'Assign the agents'], ['03', 'Name & cadence']];
+  document.getElementById('bSteps').innerHTML = steps.map((s, i) => `
+    <div class="step-item ${draft.step === i + 1 ? 'active' : ''}">
+      <div class="step-num">${s[0]}</div>
+      <div class="step-lbl">${s[1]}</div>
+    </div>
+  `).join('');
+
+  if (draft.step === 1) bS1();
+  else if (draft.step === 2) bS2();
+  else bS3();
+  bNav();
+}
+
+function bS1() {
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 1: Choose Baseline Drive Systems Workflow</label></div>
+    <div class="wf-grid">
+      ${Object.keys(WORKFLOWS).map(k => {
+        const w = WORKFLOWS[k];
+        return `
+          <div class="wf-card ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')">
+            <div class="wf-title">${w.name}</div>
+            <div class="wf-desc">${w.desc}</div>
+            <div class="wf-meta">${w.tasks.length} agents · ${w.mode}</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 2: Assign Each Task to a Specialist Agent</label></div>
+    ${w.tasks.map((t, i) => `
+      <div class="task-row">
+        <div class="tn">${i + 1}</div>
+        <div class="tt">
+          ${t.task}
+          ${t.deps.length ? `<span style="color:var(--muted-2);font-family:var(--font-mono);font-size:11px;"> · waits for step ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}
+        </div>
+        <select onchange="draft.assign[${i}]=this.value">${opts}</select>
+      </div>
+    `).join('')}
+    <div class="field" style="margin-top:16px;">
+      <label>Execution Mode</label>
+      <div class="seg">
+        ${['sequential', 'dag'].map(m => `
+          <button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (Parallel DAG)' : 'Sequential'}</button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 3: Name Operator &amp; Set Cadence</label></div>
+    <div class="field">
+      <label>Operator Name</label>
+      <input type="text" value="${draft.name}" placeholder="e.g. Control Techniques Drive System Specialist" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Role Title</label>
+      <input type="text" value="${draft.title}" placeholder="e.g. Autonomous Drive Systems Engineer" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Cadence</label>
+      <div class="seg">
+        ${['Per project', 'Per batch', 'Weekly', 'On-demand'].map(c => `
+          <button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>
+        `).join('')}
+      </div>
+    </div>
+    <div class="field" style="margin-top:20px;">
+      <label>Live Operator Card Preview</label>
+      <div id="previewCardArea"></div>
+    </div>
+  `;
+  renderPreview();
+}
+
+function renderPreview() {
+  const w = WORKFLOWS[draft.wf];
+  const area = document.getElementById('previewCardArea');
+  if (!area) return;
+  
+  const team = draft.assign.map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  area.innerHTML = `
+    <div class="op-card" style="max-width:440px;">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${draft.name || 'New Operator'}</div>
+          <div class="op-role">${draft.title || 'AI Operator'}</div>
+        </div>
+      </div>
+      <div class="op-desc">Owns <b>${w.name}</b> · ${draft.cadence} · ${draft.mode.toUpperCase()}</div>
+      <div class="op-agents">${team}</div>
+    </div>
+  `;
+}
+
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn btn-ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right = '';
+  if (draft.step === 1) right = `<button class="btn btn-primary" ${draft.wf ? '' : 'disabled'} onclick="draft.step=2;renderBuilder()">Next: Assign Agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn btn-primary" onclick="draft.step=3;renderBuilder()">Next: Name &amp; Cadence →</button>`;
+  else right = `<button class="btn btn-primary" onclick="hire()">✓ Add this AI Operator</button>`;
+
+  document.getElementById('bNav').innerHTML = left + right;
+}
+
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  
+  WORKFLOWS[wfId] = {
+    name: w.name,
+    title: draft.title || w.title,
+    mode: draft.mode || w.mode,
+    track: w.track,
+    deliverable: w.deliverable,
+    desc: w.desc,
+    tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps }))
+  };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({
+    id, name,
+    title: draft.title || w.title,
+    wf: wfId,
+    handled: 0,
+    hrs: Math.floor(Math.random() * 60) + 40,
+    win: 0,
+    status: 'idle'
+  });
+
+  renderRoster();
+  setView('ops');
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  drawWaferGrid();
+  renderRoster();
+});
+</script>
+</body>
+</html>
