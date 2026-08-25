@@ -165,3 +165,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/modutek
 https://innvonix-tech-solutions.github.io/ai-workforce/venture
 https://innvonix-tech-solutions.github.io/ai-workforce/ipte
 https://innvonix-tech-solutions.github.io/ai-workforce/forbo-siegling
+https://innvonix-tech-solutions.github.io/ai-workforce/treace
