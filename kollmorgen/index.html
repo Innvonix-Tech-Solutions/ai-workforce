@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kollmorgen Console — AI Motion Control &amp; Servo Systems Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060b14;
+  --surface:#0f1726;
+  --surface-2:#192438;
+  --surface-3:#283754;
+  --border:#283754;
+  --border-soft:#111a2b;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --muted-2:#64748b;
+  --accent:#0055a5;
+  --accent-dim:rgba(0,85,165,0.15);
+  --accent-line:rgba(0,85,165,0.38);
+  --accent2:#06b6d4;
+  --accent2-bg:rgba(6,182,212,0.08);
+  --accent3:#10b981;
+  --danger:#ef4444;
+  --ok:#10b981;
+  --font-display:'Rajdhani',sans-serif;
+  --font-body:'Work Sans',sans-serif;
+  --font-mono:'Roboto Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 88% -8%, rgba(0,85,165,0.14), transparent 55%),
+    radial-gradient(900px 480px at 5% 5%, rgba(6,182,212,0.07), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+a{color:var(--accent);}
+::selection{background:rgba(0,85,165,0.28);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+.hidden{display:none!important;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:24px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:44px;height:42px;border-radius:8px;
+  background:linear-gradient(135deg,#003970,#0055a5);
+  border:1px solid var(--accent-line);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:var(--font-mono);font-weight:800;font-size:10px;
+  box-shadow:0 0 18px rgba(0,85,165,0.35);
+}
+.mark-name{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:0.02em;color:#fff;}
+.mark-sub{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px;}
+
+.line-readout{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent2);
+  background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:8px 14px;display:flex;align-items:center;gap:10px;
+}
+.line-readout .dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);box-shadow:0 0 10px var(--accent2);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.tabs{display:flex;gap:8px;margin-top:20px;border-bottom:1px solid var(--border-soft);}
+.tab-btn{
+  background:transparent;border:none;color:var(--muted);padding:10px 18px;font-family:var(--font-body);
+  font-size:13.5px;font-weight:600;cursor:pointer;border-radius:8px 8px 0 0;transition:all 0.15s ease;
+}
+.tab-btn:hover{color:var(--text);background:var(--surface-2);}
+.tab-btn.active{color:var(--accent2);background:var(--surface);border:1px solid var(--border);border-bottom-color:var(--surface);}
+
+.hero{padding:36px 0 28px;display:grid;grid-template-columns:1.15fr 0.85fr;gap:40px;align-items:center;}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:24px 0 18px;}}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;color:var(--accent2);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent2);}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(30px,4vw,42px);line-height:1.08;letter-spacing:-0.005em;margin:0 0 14px;color:#fff;}
+h1 span{color:var(--accent2);background:linear-gradient(90deg,#06b6d4,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.lead{color:var(--muted);font-size:15px;max-width:55ch;margin:0 0 22px;line-height:1.6;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:var(--font-body);font-weight:600;font-size:13.5px;border-radius:6px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--accent2);color:#fff;border-color:var(--accent2);font-weight:700;}
+.btn-primary:hover{background:#38bdf8;box-shadow:0 0 16px rgba(6,182,212,0.35);}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+
+/* Kollmorgen AKM2G & AKD2G Graphic Card */
+.wafer{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:18px 18px 14px;box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+.wafer-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+.wafer-title{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em;}
+.wafer-val{font-family:var(--font-mono);font-size:12px;color:var(--accent2);font-weight:600;}
+svg.wafermap{width:100%;height:210px;display:block;}
+.wafer-outline{fill:none;stroke:var(--border);stroke-width:1.5;}
+.wafer-grid-line{stroke:var(--border-soft);stroke-width:0.5;stroke-dasharray:2 2;}
+.wafer-foot{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+
+.econ{border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:760px){.econ{grid-template-columns:repeat(2,1fr);}}
+.econ-item{padding:6px 18px;border-left:1px solid var(--border-soft);}
+.econ-item:first-child{border-left:none;padding-left:0;}
+@media(max-width:760px){.econ-item:nth-child(2n+1){border-left:none;padding-left:0;}}
+.econ-num{font-family:var(--font-display);font-weight:700;font-size:28px;color:#fff;}
+.econ-num small{font-size:14px;color:var(--accent2);font-weight:700;}
+.econ-label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+section{padding:36px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.section-title{font-family:var(--font-display);font-weight:700;font-size:24px;color:#fff;}
+.section-sub{color:var(--muted);font-size:13.5px;max-width:62ch;margin-top:4px;}
+.track-label{font-family:var(--font-mono);font-size:11px;color:var(--accent2);text-transform:uppercase;letter-spacing:.1em;margin:28px 0 14px;padding-top:10px;border-top:1px dashed var(--border-soft);}
+.track-label:first-of-type{border-top:none;padding-top:0;margin-top:6px;}
+
+.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+@media(max-width:760px){.roster{grid-template-columns:1fr;}}
+.op-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;transition:all .15s ease;}
+.op-card:hover{border-color:var(--accent-line);transform:translateY(-2px);}
+.op-card.flagship{border-color:var(--accent2);background:linear-gradient(180deg,rgba(6,182,212,0.08),var(--surface));}
+.op-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.op-name{font-family:var(--font-display);font-weight:700;font-size:18px;color:#fff;}
+.op-role{font-size:12.5px;color:var(--muted);margin-top:2px;}
+.flag-chip{font-family:var(--font-mono);font-size:10px;color:var(--accent2);border:1px solid var(--accent2);background:var(--accent2-bg);border-radius:20px;padding:2px 8px;white-space:nowrap;}
+.op-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+.op-stats{display:flex;gap:18px;margin-top:2px;}
+.op-stat{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.op-stat b{color:var(--accent2);font-size:14px;display:block;font-family:var(--font-body);font-weight:600;}
+.op-agents{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.chip{font-size:11px;background:var(--surface-3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;color:var(--text);}
+.op-actions{display:flex;gap:10px;margin-top:6px;}
+.run-btn{flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:600;font-size:13px;border-radius:6px;padding:10px;cursor:pointer;transition:all 0.15s ease;}
+.run-btn:hover{border-color:var(--accent2);color:var(--accent2);background:var(--accent2-bg);}
+
+.run-panel{background:var(--surface);border:1px solid var(--accent-line);border-radius:12px;padding:24px;margin-top:24px;display:none;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+.run-panel.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.run-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.run-head h3{font-family:var(--font-display);font-size:20px;margin:0;color:#fff;}
+.run-head .meta{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.close-run{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:6px 12px;cursor:pointer;font-size:12px;}
+.close-run:hover{color:var(--text);border-color:var(--accent2);}
+
+.feed{background:var(--bg);border:1px solid var(--border-soft);border-radius:8px;padding:16px;height:260px;overflow-y:auto;font-family:var(--font-mono);font-size:12px;display:flex;flex-direction:column;gap:8px;}
+.feed-line{display:flex;gap:10px;align-items:flex-start;opacity:0;animation:appear .3s ease forwards;}
+@keyframes appear{to{opacity:1;}}
+.feed-line .tag{color:var(--accent2);white-space:nowrap;}
+.feed-line .txt{color:var(--muted);}
+.feed-line.done .tag{color:var(--accent);}
+.feed-line.done .txt{color:var(--text);}
+
+.progress-row{display:flex;gap:6px;margin:16px 0 8px;flex-wrap:wrap;}
+.pstep{flex:1;min-width:64px;height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;position:relative;}
+.pstep.active{background:var(--accent-dim);}
+.pstep.complete{background:var(--accent);box-shadow:0 0 8px var(--accent);}
+
+.deliverable{margin-top:20px;background:var(--surface-2);border:1px solid var(--accent-line);border-radius:8px;padding:18px 20px;display:none;}
+.deliverable.show{display:block;animation:fadein .3s ease;}
+.deliverable h4{font-family:var(--font-display);font-size:17px;margin:0 0 12px;color:var(--accent);}
+.deliverable pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:12.5px;color:var(--text);margin:0;line-height:1.65;}
+.note{font-size:11px;color:var(--muted-2);margin-top:12px;font-style:italic;}
+
+/* BUILDER STYLING (DYNEX FUNCTIONAL FLOW) */
+.steps-bar{display:flex;gap:10px;margin-bottom:24px;}
+.step-item{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);}
+.step-item.active{border-color:var(--accent2);background:var(--surface-3);}
+.step-item .step-num{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--muted-2);}
+.step-item.active .step-num{color:var(--accent2);}
+.step-item .step-lbl{font-size:13.5px;font-weight:600;color:var(--text);margin-top:2px;}
+
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.wf-card{border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;background:var(--surface-2);transition:all 0.15s ease;}
+.wf-card:hover{border-color:var(--accent2);}
+.wf-card.sel{border-color:var(--accent2);background:rgba(6,182,212,0.08);}
+.wf-title{font-family:var(--font-display);font-weight:700;font-size:16px;color:#fff;}
+.wf-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45;}
+.wf-meta{font-family:var(--font-mono);font-size:10.5px;color:var(--accent2);margin-top:8px;font-weight:600;text-transform:uppercase;}
+
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);margin-bottom:10px;}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--accent2);flex-shrink:0;}
+.task-row .tt{flex:1;font-size:13px;color:var(--text);}
+.task-row select{font-family:var(--font-body);font-size:12.5px;border:1px solid var(--border);border-radius:6px;padding:8px 10px;background:var(--surface);color:var(--text);outline:none;min-width:210px;}
+.task-row select:focus{border-color:var(--accent2);}
+
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.field input{width:100%;font-family:var(--font-body);font-size:13.5px;border:1px solid var(--border);border-radius:8px;padding:11px 13px;background:var(--surface-2);color:var(--text);outline:none;}
+.field input:focus{border-color:var(--accent2);}
+
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.seg button{font-family:var(--font-body);font-size:12.5px;padding:9px 16px;border:none;background:var(--surface-2);color:var(--muted);cursor:pointer;border-right:1px solid var(--border);}
+.seg button:last-child{border-right:none;}
+.seg button.on{background:var(--accent2);color:#fff;font-weight:700;}
+
+.bnav{display:flex;justify-content:space-between;margin-top:24px;}
+
+footer{border-top:1px solid var(--border-soft);padding:30px 0 44px;}
+.foot-note{font-size:12px;color:var(--muted-2);max-width:85ch;line-height:1.6;}
+.foot-note strong{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark-row">
+      <div class="mark">
+        <div class="mark-badge">KOLL</div>
+        <div>
+          <div class="mark-name">Kollmorgen Console</div>
+          <div class="mark-sub">Kollmorgen (kollmorgen.com) · A Regal Rexnord Company</div>
+        </div>
+      </div>
+      <div class="line-readout">
+        <span class="dot"></span>
+        <span id="lineTxt">Radford, VA &amp; Ratingen Plants · AKD2G &amp; AKM2G Motion Systems Active</span>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tabA" onclick="setView('ops')">The AI Workforce Roster</button>
+      <button class="tab-btn" id="tabB" onclick="setView('hire')">+ Add an AI Operator</button>
+    </div>
+  </header>
+
+  <div id="view-ops">
+    <section class="hero" style="padding-bottom:10px;">
+      <div>
+        <div class="eyebrow">High-Performance Motion Control &amp; Servo Systems</div>
+        <h1>Eight operators to run Kollmorgen's <span>akm2g-to-akd2g-motion</span> loop</h1>
+        <p class="lead">Each operator below is a real Kollmorgen workflow — analyzing 3D CAD multi-axis servo motion layouts, AKM2G servo motor thermal torque curves, and Cartridge DDR direct-drive rotary motor backlash limits, scrubbing 500-line ISO 9001 &amp; SIL 3 SafeMotion BOMs for AKD2G drive single-cable feedback pinouts, configuring Kollmorgen Automation Suite (KAS) motion programming and NDC Solutions AGV vehicle telemetry, and auditing ISO 9001 quality releases — handed to a team of specialist AI agents that works it end-to-end.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('roster-section').scrollIntoView({behavior:'smooth'})">View the Roster</button>
+          <button class="btn btn-ghost" onclick="runOperator('akm2g_dfm')">Run Flagship Operator</button>
+        </div>
+      </div>
+
+      <div class="wafer">
+        <div class="wafer-top">
+          <span class="wafer-title">Kollmorgen 2G Motion System Telemetry</span>
+          <span class="wafer-val" id="yieldVal">1.25 µs Current Loop PASS</span>
+        </div>
+        <svg class="wafermap" viewBox="0 0 220 210" preserveAspectRatio="xMidYMid meet">
+          <circle class="wafer-outline" cx="110" cy="105" r="92"></circle>
+          <line class="wafer-grid-line" x1="20" y1="105" x2="200" y2="105"></line>
+          <line class="wafer-grid-line" x1="110" y1="15" x2="110" y2="195"></line>
+          <g id="dieGrid"></g>
+        </svg>
+        <div class="wafer-foot">
+          <span>Radford Facility · Lot KOLL-2608-AKM</span>
+          <span id="binVal">Pass: SIL 3 / PLe SafeMotion</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="econ">
+      <div class="econ-item">
+        <div class="econ-num">+30<small>%</small></div>
+        <div class="econ-label">Torque density gain via AKM2G servo motor design</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">Regal Rexnord<small> Company</small></div>
+        <div class="econ-label">Part of Regal Rexnord motion &amp; control global group</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">32<small> hrs</small></div>
+        <div class="econ-label">Median servo sizing &amp; KAS motion setup hours returned</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">8<small>/8</small></div>
+        <div class="econ-label">Workflows covered, motor DFM through SIL 3 safety release</div>
+      </div>
+    </div>
+
+    <section id="roster-section">
+      <div class="section-head">
+        <div>
+          <div class="section-title">The AI Workforce Roster</div>
+          <div class="section-sub">Grouped into Commercial &amp; Motion OEM Tenders and Servo Systems Operations tracks. Click run on any operator to watch its agent team execute in real time.</div>
+        </div>
+      </div>
+
+      <div id="rosterContainer"></div>
+    </section>
+
+    <!-- Run Panel -->
+    <div class="run-panel" id="runPanel">
+      <div class="run-head">
+        <div>
+          <h3 id="runTitle">Running Operator...</h3>
+          <div class="meta" id="runSub">Simulated multi-agent execution feed</div>
+        </div>
+        <button class="close-run" onclick="closeRun()">✕ Close View</button>
+      </div>
+      <div class="progress-row" id="progressRow"></div>
+      <div class="feed" id="feedArea"></div>
+      <div class="deliverable" id="deliverableBox">
+        <h4 id="delivTitle">Review-Ready Output</h4>
+        <pre id="delivCode"></pre>
+        <div class="note">Human-in-the-loop oversight active. Outputs verified by Kollmorgen senior motion systems engineering team. Illustrative simulation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="section-title">Add an AI Operator</div>
+          <div class="section-sub">Stand up a new AI operator in three steps: pick the workflow, assign each task to an agent via dropdown, then name it and set cadence.</div>
+        </div>
+      </div>
+
+      <div class="steps-bar" id="bSteps"></div>
+      <div id="bBody"></div>
+      <div class="bnav" id="bNav"></div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="foot-note">
+      <strong>Independent Concept Prototype</strong> prepared for a conversation with <strong>Kollmorgen (kollmorgen.com)</strong>. It is not affiliated with, endorsed by, or built on Kollmorgen or Regal Rexnord systems or data. All operators, AKM2G torque curves, AKD2G SafeMotion loops, and SIL 3 safety audits are illustrative simulations. A licensed motion control engineer, servo specialist, or safety manager reviews and approves every motor selection, drive configuration, and safety release.
+    </div>
+  </footer>
+</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'Aerospace, Surgical Robotics & AGV Industry Market Intelligence', tools: ['research_motion_tenders', 'save'] },
+  motion_eng: { emoji: '🔬', label: 'Kollmorgen AKM2G & Cartridge DDR Servo Kinematics Engineer', tools: ['analyze_servo_kinematics', 'save'] },
+  feedback_spec: { emoji: '⚡', label: 'SFD3 / HIPERFACE DSL Single-Cable Feedback Specialist', tools: ['design_feedback_link', 'save'] },
+  safety_scrubber: { emoji: '📑', label: 'SIL 3 / PLe SafeMotion, IP69K & UL Component Specialist', tools: ['scrub_kollmorgen_bom', 'save'] },
+  cost_eng: { emoji: '🧮', label: 'AKD2G Drive, Neodymium Rotor & CNC Stator Costing Specialist', tools: ['calc_servo_cost', 'save'] },
+  cloud_architect: { emoji: '☁️', label: 'Kollmorgen Telemetry & NDC Solutions AGV Fleet SCADA Architect', tools: ['configure_ndc_cloud', 'save'] },
+  quality_auditor: { emoji: '🛡️', label: 'ISO 9001:2015, ISO 14001 & Servo Thermal Quality Auditor', tools: ['audit_servo_quality', 'save'] },
+  supply_planner: { emoji: '📦', label: 'Neodymium Magnets, Copper Magnet Wire & Drive IGBTs Planner', tools: ['plan_motion_spares', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'OEM Robotics & AGV Enterprise RFP Solution Writer', tools: ['compose_doc', 'save'] },
+  qa_reviewer: { emoji: '✅', label: 'Senior Motion Control & Servo System Tuning Reviewer', tools: ['qa_review', 'save'] },
+  prospector: { emoji: '🧲', label: 'VP Robotics Engineering & Surgical System Director Prospector', tools: ['source_kollmorgen_accounts', 'save'] },
+  drive_spec: { emoji: '⚙️', label: 'AKD2G Dual-Axis Servo Drive & KAS Motion Programming Specialist', tools: ['program_akd2g_drive', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+const TRACKS = [
+  { key: 'commercial', title: 'Commercial & Motion OEM Tenders' },
+  { key: 'operations', title: 'Servo Systems & Motion Engineering Operations' }
+];
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Aerospace & Defense, Surgical Robotics & Mobile AGV Fleet Scouting',
+    title: 'AI Motion Control Growth Scout',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Aerospace & Surgical Robotics Motion Opportunity Dossier',
+    desc: 'Maps surgical robot OEMs (Intuitive Surgical, Medtronic), defense aerospace gimbal projects, and warehouse AGV/AMR builders utilizing NDC Solutions.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan surgical arm frameless motor tenders, satellite reaction wheel RFPs, and low-voltage AGV servo drive bids.', deps: [] },
+      { agent: 'prospector', task: 'Source VP Surgical Robotics, Chief Motion Engineers, and AGV Fleet Engineering Directors.', deps: [] },
+      { agent: 'motion_eng', task: 'Score fit on Kollmorgen AKM2G servo motors, Cartridge DDR direct-drive rotaries, and AKD2G dual-axis drives.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce target motion control prospect dossier.', deps: [2] }
+    ]
+  },
+  quote: {
+    name: 'Custom AKM2G Servo Motor & AKD2G Multi-Axis System Quoting',
+    title: 'AI Motion Systems Cost Specialist',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Kollmorgen 2G Motion System Quote Package',
+    desc: 'Models AKM2G high-torque servo motors, AKD2G dual-axis servo drives, SFD3 single-cable feedback, and PCMM motion controllers.',
+    tasks: [
+      { agent: 'motion_eng', task: 'Review continuous torque (4.5 Nm), peak torque (14.2 Nm), rotor inertia (0.85 kg·cm²), and bus voltage (480 VAC).', deps: [] },
+      { agent: 'cost_eng', task: 'Model neodymium rotor magnet assembly, precision stator winding, AKD2G drive power electronics, and KAS software licensing.', deps: [0] },
+      { agent: 'supply_planner', task: 'Verify rare-earth magnet reserves, high-temperature copper wire, and AKD2G drive IGBT module stocks.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Assemble formal Kollmorgen 2G Motion System Quote Package.', deps: [2] }
+    ]
+  },
+  tender: {
+    name: 'Global OEM Robotics & Medical Automation RFP Response',
+    title: 'AI Motion Solution Specialist',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Global OEM Robotics & Medical Automation RFP Response Package',
+    desc: 'Audits ISO 9001:2015 quality standards, SIL 3 / PLe SafeMotion compliance, IP69K washdown rating, and sub-micron positioning accuracy SLAs.',
+    tasks: [
+      { agent: 'researcher', task: 'Parse surgical robot zero-backlash rules, IP69K food contact rules, and SIL 3 safe torque off (STO) mandates.', deps: [] },
+      { agent: 'quality_auditor', task: 'Verify ISO 9001:2015, ISO 14001 certificates, CE/UL safety approvals, and Radford, VA / Ratingen plant credentials.', deps: [0] },
+      { agent: 'cost_eng', task: 'Structure global OEM supply schedule backed by Regal Rexnord global manufacturing network.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce formal Global OEM Robotics & Medical Automation RFP response package.', deps: [2] }
+    ]
+  },
+  intel: {
+    name: 'Global Servo Drives & NDC AGV Vehicle Automation Radar',
+    title: 'AI Motion Control Market Intelligence',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Global Motion Control & AGV Automation Intelligence Brief',
+    desc: 'Tracks low-voltage mobile robot motor adoption (24-96 VDC AKM2G), single-cable feedback trends, and NDC Solutions AGV fleet software growth.',
+    tasks: [
+      { agent: 'researcher', task: 'Monitor global industrial servo market capex, surgical robotics investments, and AMR navigation software updates.', deps: [] },
+      { agent: 'motion_eng', task: 'Benchmark Kollmorgen AKM2G 30% torque density advantage over conventional brushless AC servo motors.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile strategic motion control market intelligence brief.', deps: [0, 1] }
+    ]
+  },
+  akm2g_dfm: {
+    name: 'AKM2G Servo Motor & AKD2G Dual-Axis Drive DFM Scrub',
+    title: 'AI Motion Systems DFM Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'AKM2G Servo Motor & AKD2G Drive DFM Review Package',
+    desc: 'Audits 3D CAD multi-axis servo motion assemblies, AKM2G thermal winding curves, SFD3 single-cable feedback, and AKD2G dual-axis drive density.',
+    tasks: [
+      { agent: 'motion_eng', task: 'Analyze AKM2G motor thermal dissipation curve under 300% peak overload; verifies zero cogging torque for smooth low-speed rotation.', deps: [] },
+      { agent: 'feedback_spec', task: 'Verify SFD3 / HIPERFACE DSL single-cable digital feedback signal integrity over 50-meter cable run.', deps: [0] },
+      { agent: 'drive_spec', task: 'Configure AKD2G dual-axis drive 1.25 µs current loop update frequency and onboard SafeMotion (SIL 3 / PLe STO).', deps: [1] },
+      { agent: 'quality_auditor', task: 'Audit ISO 9001:2015 thermal insulation Class F (155°C), IP65/IP67 shaft sealing, and CE/UL safety release checklist.', deps: [2] },
+      { agent: 'reviewer', task: 'QA motion engineering & servo tuning findings and compile customer technical package.', deps: [3] },
+      { agent: 'proposal_writer', task: 'Produce final AKM2G Servo Motor & AKD2G Drive DFM Review Package.', deps: [4] }
+    ]
+  },
+  kas_setup: {
+    name: 'Kollmorgen Automation Suite (KAS) & NDC AGV Setup',
+    title: 'AI Motion Controller & AGV Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'Kollmorgen Automation Suite & NDC AGV Setup Package',
+    desc: 'Programs KAS IEC 61131-3 motion logic, configures EtherCAT multi-axis trajectory generation, and deploys NDC Solutions AGV navigation software.',
+    tasks: [
+      { agent: 'drive_spec', task: 'Write KAS motion code for 16-axis electronic camming and microsecond EtherCAT synchronization.', deps: [] },
+      { agent: 'cloud_architect', task: 'Connect NDC Solutions AGV fleet management portal API for real-time vehicle battery, position, and motor torque logging.', deps: [0] },
+      { agent: 'reviewer', task: 'Verify zero trajectory lag during 100,000-cycle high-speed S-curve motion profile dry run.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce Kollmorgen Automation Suite & NDC AGV Setup Package.', deps: [2] }
+    ]
+  },
+  sil3_audit: {
+    name: 'SIL 3 / PLe SafeMotion & IP69K Hygienic Compliance Audit',
+    title: 'AI Motion Safety & Quality Auditor',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'SIL 3 SafeMotion & IP69K Servo Quality Release',
+    desc: 'Audits IEC 61800-5-2 SIL 3 / PLe SafeMotion drive safety logic, AKMH stainless steel IP69K washdown seals, and FDA food-contact compliance.',
+    tasks: [
+      { agent: 'quality_auditor', task: 'Audit Radford plant AKD2G drive dual-channel STO safety circuit, Safe Stop 1 (SS1), and Safe Brake Control (SBC).', deps: [] },
+      { agent: 'safety_scrubber', task: 'Verify 100% Certificate of Conformance (CoC) for AKMH stainless steel 316L housings and food-grade shaft seals.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile SIL 3 SafeMotion & IP69K Servo Quality Release Brief.', deps: [0, 1] }
+    ]
+  },
+  spares_plan: {
+    name: 'AKM2G Rotors, Stators & AKD2G Power Module Safety Stock Plan',
+    title: 'AI Motion Hardware & Spares Planner',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'AKM2G Motor & AKD2G Drive Safety Stock Plan',
+    desc: 'Secures high-grade N45SH neodymium magnets, precision-wound stators, AKD2G drive power boards, and single-cable feedback connectors for global depots.',
+    tasks: [
+      { agent: 'supply_planner', task: 'Evaluate rare-earth neodymium magnet lead times and 90-day critical servo motor spare parts buffer in Radford depot.', deps: [] },
+      { agent: 'safety_scrubber', task: 'Execute raw material Certificate of Analysis (CoA) audit for copper wire insulation purity and shaft steel hardness.', deps: [] },
+      { agent: 'cost_eng', task: 'Structure strategic motor hardware inventory buffer to support Tier-1 OEM robotics production schedules.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce AKM2G Motor & AKD2G Drive Safety Stock Plan.', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'Aerospace & Surgical Robotics Motion Opportunity Dossier',
+  quote: 'Kollmorgen 2G Motion System Quote Package',
+  tender: 'Global OEM Robotics & Medical Automation RFP Response Package',
+  intel: 'Global Motion Control & AGV Automation Intelligence Brief',
+  akm2g_dfm: 'AKM2G Servo Motor & AKD2G Drive DFM Review Package',
+  kas_setup: 'Kollmorgen Automation Suite & NDC AGV Setup Package',
+  sil3_audit: 'SIL 3 SafeMotion & IP69K Servo Quality Release',
+  spares_plan: 'AKM2G Motor & AKD2G Drive Safety Stock Plan'
+};
+
+const TOOLS = {
+  research_motion_tenders: () => 'Scanned surgical robotics frameless motor solicitations, satellite gimbal RFPs, and AGV drive bids.',
+  source_kollmorgen_accounts: () => 'Sourced verified VP Robotics Engineering and Surgical System Directors; deduped CRM.',
+  analyze_servo_kinematics: () => 'Analyzed AKM2G thermal winding curve under 300% peak load; verified zero cogging for smooth low-speed tracking.',
+  design_feedback_link: () => 'Designed SFD3 single-cable feedback geometry; verified noise-immune digital feedback over 50m cable run.',
+  scrub_kollmorgen_bom: () => 'Scrubbed 500-line motion BOM; verified 100% SIL 3 / PLe compliance, IP67 sealing, and UL motor insulation specs.',
+  calc_servo_cost: () => 'Calculated AKM2G servo motor, AKD2G dual-axis drive, SFD3 feedback cable, and KAS software license margins.',
+  configure_ndc_cloud: () => 'Configured NDC Solutions AGV fleet SCADA portal API for real-time vehicle battery, position, and motor torque tracking.',
+  audit_servo_quality: () => 'Audited Class F thermal insulation, AKD2G drive STO safety circuits, and IP69K stainless washdown seals (PASS).',
+  plan_motion_spares: () => 'Cross-referenced neodymium magnet lead times; secured 90-day material buffer in Radford plant.',
+  program_akd2g_drive: () => 'Programmed AKD2G drive 1.25 µs current loop, KAS EtherCAT multi-axis trajectory, and onboard SafeMotion STO.',
+  compose_doc: () => 'Compiled high-performance motion control and servo engineering metrics into clear, review-ready technical documentation.',
+  qa_review: () => 'Audited report completeness and checked ISO 9001 / SIL 3 standards; ready for Kollmorgen VP Engineering sign-off.',
+  save: () => 'Saved deliverable artifact to shared project repository.'
+};
+
+function toolOut(t) { return (TOOLS[t] || (() => 'Executed successfully.'))(); }
+
+const FINAL = {
+  scout: `AEROSPACE & SURGICAL ROBOTICS MOTION OPPORTUNITY DOSSIER (illustrative)
+Target Sector: Surgical Robotics, Aerospace & Defense Gimbals, Medical Equipment, Mobile AGVs/AMRs
+Target Location: Radford, VA, Ratingen & Global System Integration Hubs
+
+A-Tier Qualified Enterprise Opportunities:
+1. Intuitive Surgical — Next-Gen Da Vinci Arm Motors — Fit Score: 99/100
+   • Key Contacts: VP Surgical Robotics, Lead Servo Motor Engineer
+   • Requirement: Kollmorgen KBM Frameless Brushless Motors & High-Resolution Single-Cable Feedback
+2. Lockheed Martin Aerospace — Defense Optical Gimbal Trajectory System — Fit Score: 97/100
+   • Key Contacts: Director of Aerospace Guidance, Lead Motion Control Engineer
+   • Requirement: Cartridge DDR Direct-Drive Rotary Motors & AKD2G Servo Drives
+3. Toyota Material Handling — Autonomous Mobile Robot (AMR) Fleet — Fit Score: 95/100
+   • Key Contacts: Director of Automated Vehicle Engineering
+   • Requirement: Low-Voltage 48 VDC AKM2G Servo Motors & NDC Solutions AGV Automation
+
+Strategic Positioning:
+Highlight Kollmorgen 100+ year motion performance heritage, membership in Regal Rexnord Corporation, AKM2G 30% torque density advantage, and NDC Solutions AGV vehicle software dominance.
+
+NOTE: Illustrative simulation prepared for Kollmorgen (kollmorgen.com).`,
+
+  quote: `KOLLMORGEN 2G MOTION SYSTEM QUOTE PACKAGE (illustrative)
+Customer: Intuitive Surgical / Medical Robotics Program
+Program: AKM2G Servo Motors & AKD2G Dual-Axis Servo Drives (4 Multi-Axis Cells)
+Specifications: 4.5 Nm Cont. Torque, 1.25 µs Current Loop, SFD3 Single-Cable, SIL 3 STO
+
+Commercial Breakdown:
+• Kollmorgen AKM2G Brushless AC Servo Motors (16 Motors @ $1,850.00): $29,600.00
+• Kollmorgen AKD2G Dual-Axis Servo Drives with Onboard SafeMotion: $18,400.00
+• SFD3 Hybrid Single-Cable Assemblies & Connectors (50m Runs): $6,200.00
+• Kollmorgen Automation Suite (KAS) Multi-Axis Motion Licenses & Commissioning: $8,800.00
+
+Performance Return:
+• Torque Density: +30% Higher Continuous Torque vs Standard Brushless Motors
+• Dynamic Response: 1.25 µs Current Loop Update Rate for Sub-Micron Precision
+• Safety Integrity: Built-in SIL 3 / PLe Safe Torque Off (STO)
+
+Turnaround Time: 6 Weeks to Factory Acceptance Testing (FAT)
+
+NOTE: Illustrative simulation; pricing figures are placeholders.`,
+
+  tender: `GLOBAL OEM ROBOTICS & MEDICAL AUTOMATION RFP RESPONSE PACKAGE (illustrative)
+Tender ID: US-VA-MOTION-KOLL-2026-28
+Scope: High-Performance Servo Motors, Dual-Axis Servo Drives & AGV Vehicle Controls
+
+Quality & Performance Verification:
+• Quality Management System: ISO 9001:2015 & ISO 14001:2015 Certified Facilities
+• Safety Integrity Standard: 100% SIL 3 / PLe SafeMotion (IEC 61800-5-2) Compliant Drives
+• Ingress Protection: IP65/IP67 Standard, IP69K Stainless Steel AKMH Washdown Variant
+• Corporate Ecosystem: Supported by Regal Rexnord global motion & control network
+
+Technical Offer:
+• Global market leader in high-performance motion control, servo systems, and AGV automation.
+
+NOTE: Illustrative simulation; confirm against RFP specifications.`,
+
+  intel: `GLOBAL MOTION CONTROL & AGV AUTOMATION INTELLIGENCE BRIEF (illustrative)
+Focus: AKM2G 2G Motion System, Single-Cable Feedback & NDC Solutions AGV Platform
+
+Key Insights:
+1. The 2G Motion Advantage: Combining AKM2G servo motors with AKD2G dual-axis drives reduces cabinet space by 50% while boosting overall system dynamic throughput by 30%.
+2. Single-Cable Technology: SFD3 and HIPERFACE DSL single-cable digital feedback eliminates separate feedback cables, reducing wiring labor and failure points.
+3. Kollmorgen Platform Advantage:
+   - Complete motion portfolio: Frameless, direct-drive, standard servo motors, drives, and AGV controls.
+   - Regal Rexnord global manufacturing scale ensuring supply chain resilience and global support.
+
+NOTE: Illustrative simulation.`,
+
+  akm2g_dfm: `AKM2G SERVO MOTOR & AKD2G DRIVE DFM REVIEW PACKAGE (illustrative · flagship)
+Program: Surgical Robotics & High-Precision Multi-Axis Motion
+Factory: Radford, Virginia Motion Headquarters
+
+Motion Engineering Findings:
+1. Motor Thermal Dissipation: Modeled AKM2G winding temperature rise under 300% peak torque overload; verified Class F (155°C) thermal safety margin.
+2. SFD3 Single-Cable Signal: Calibrated SFD3 digital feedback transceiver; verified noise-free encoder data over 50-meter cable run.
+3. AKD2G Drive Servo Tuning: Configured 1.25 µs current loop and tuned position loop gain for zero overshoot on micro-stepping profiles.
+
+Quality & Regulatory Audit:
+• Safety Audit: SIL 3 / PLe Safe Torque Off (STO) drive dual-channel interlocks verified.
+• Protection Rating: IP67 shaft seal integrity and CE/UL compliance cleared.
+
+Summary:
+ Kollmorgen 2G motion system design approved for motor build and FAT testing.
+
+NOTE: Illustrative simulation; review with Kollmorgen engineering team.`,
+
+  kas_setup: `KOLLMORGEN AUTOMATION SUITE & NDC AGV SETUP PACKAGE (illustrative)
+Program: KAS Motion Programming & NDC Solutions AGV Vehicle Setup
+
+System Setup Configuration:
+• KAS IEC 61131-3 Logic: Programmed 16-axis electronic camming profiles and EtherCAT microsecond synchronization
+• NDC AGV Fleet Integration: Connected System Manager NG telemetry API for real-time AGV position, battery, and drive motor status
+• Servo Performance Tuning: Achieved 0.05% speed regulation across full operating speed range
+
+Outcome: KAS motion controller and NDC AGV software validated for high-speed automated material handling.
+
+NOTE: Illustrative simulation.`,
+
+  sil3_audit: `SIL 3 SAFEMOTION & IP69K SERVO QUALITY RELEASE (illustrative)
+Production Assembly: Kollmorgen AKD2G Drive & AKMH Stainless Motor (#KOLL-SYS-2026-19)
+Compliance Standard: SIL 3 / PLe / IEC 61800-5-2 / IP69K / ISO 9001 / CE / UL
+
+Audit Checklist Results:
+• Safe Torque Off (STO) Test: Measured STO safety response time at 12 ms (well within 20 ms limit) - PASS
+• Safe Operating Stop (SOS): Verified dual-channel drive safety monitoring without cutting motor power - PASS
+• IP69K Washdown Test: 1,500 PSI hot water jet spray test passed with zero shaft seal ingress - PASS
+
+Outcome: SIL 3 SafeMotion & IP69K Servo Quality Release Approved. Certificate of Compliance issued.
+
+NOTE: Illustrative simulation.`,
+
+  spares_plan: `AKM2G MOTOR & AKD2G DRIVE SAFETY STOCK PLAN (illustrative)
+Scope: Radford, Virginia Central Motion Systems Depot
+
+Supply Strategy Breakdown:
+• Rare-Earth Neodymium Magnets: 90-day supply of N45SH high-temp magnets in stock
+• AKD2G Power Transistors: 100 dual-axis IGBT drive power modules in reserve
+• Material Pedigree: 100% Certificate of Analysis (CoA) verified for copper wire insulation and stator steel
+
+Outcome: Kollmorgen servo motor and drive hardware supply clear for continuous global customer deployment.
+
+NOTE: Illustrative simulation.`
+};
+
+let EMPLOYEES = [
+  { id: 'scout', name: 'Scout', title: 'AI Motion Control Scout', wf: 'scout', handled: 265, hrs: 82, win: 54, status: 'idle' },
+  { id: 'quote', name: 'Quote', title: 'AI Motion Systems Cost Specialist', wf: 'quote', handled: 355, hrs: 155, win: 76, status: 'idle' },
+  { id: 'tender', name: 'Tender', title: 'AI Motion Solution Specialist', wf: 'tender', handled: 175, hrs: 122, win: 66, status: 'idle' },
+  { id: 'intel', name: 'Radar', title: 'AI Motion Control Intelligence', wf: 'intel', handled: 205, hrs: 68, win: 44, status: 'idle' },
+  { id: 'akm2g_dfm', name: 'AKM2GServoMotorDFM', title: 'AI Motion Systems DFM Specialist', wf: 'akm2g_dfm', handled: 530, hrs: 305, win: 96, status: 'idle' },
+  { id: 'kas_setup', name: 'KASMotionDriveSetup', title: 'AI Motion Controller & AGV Specialist', wf: 'kas_setup', handled: 310, hrs: 148, win: 72, status: 'idle' },
+  { id: 'sil3_audit', name: 'SIL3SafeMotionAudit', title: 'AI Motion Safety & Quality Auditor', wf: 'sil3_audit', handled: 450, hrs: 180, win: 86, status: 'idle' },
+  { id: 'spares_plan', name: 'SupplyPlanner', title: 'AI Motion Hardware & Spares Planner', wf: 'spares_plan', handled: 270, hrs: 108, win: 0, status: 'idle' }
+];
+
+/* Render Functions */
+function drawWaferGrid() {
+  const grid = document.getElementById("dieGrid");
+  let rects = '';
+  for (let x = -8; x <= 8; x++) {
+    for (let y = -8; y <= 8; y++) {
+      if (x*x + y*y <= 60) {
+        const px = 110 + x * 10 - 4;
+        const py = 105 + y * 10 - 4;
+        const pass = (Math.abs(x*y) % 8 !== 3);
+        const fill = pass ? 'rgba(0, 85, 165, 0.45)' : 'rgba(6, 182, 212, 0.6)';
+        rects += `<rect x="${px}" y="${py}" width="8" height="8" rx="1.5" fill="${fill}"></rect>`;
+      }
+    }
+  }
+  grid.innerHTML = rects;
+}
+
+function renderRoster() {
+  const container = document.getElementById("rosterContainer");
+  let html = '';
+  TRACKS.forEach(tr => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === tr.key);
+    if (!list.length) return;
+    html += `<div class="track-label">${tr.title}</div><div class="roster">`;
+    html += list.map(empCard).join('');
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+}
+
+function empCard(e) {
+  const wf = WORKFLOWS[e.wf] || {};
+  const isFlag = wf.tag === 'flagship';
+  const team = (wf.tasks || []).map(t => t.agent).filter((v, i, a) => a.indexOf(v) === i).map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  return `
+    <div class="op-card ${isFlag ? 'flagship' : ''}" id="emp-${e.id}">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${e.name}</div>
+          <div class="op-role">${e.title}</div>
+        </div>
+        ${isFlag ? '<span class="flag-chip">★ FLAGSHIP OPERATOR</span>' : ''}
+      </div>
+      <div class="op-desc">${wf.desc || ''}</div>
+      <div class="op-agents">${team}</div>
+      <div class="op-stats">
+        <div class="op-stat"><b>${e.handled.toLocaleString()}</b> runs</div>
+        <div class="op-stat"><b>~${e.hrs} hrs</b> saved/mo</div>
+        <div class="op-stat"><b>+${e.win}%</b> speedup</div>
+      </div>
+      <div class="op-actions">
+        <button class="run-btn" onclick="runOperator('${e.wf}')">▶ Run ${e.name}</button>
+      </div>
+    </div>
+  `;
+}
+
+function setView(v) {
+  document.getElementById('view-ops').classList.toggle('hidden', v !== 'ops');
+  document.getElementById('view-hire').classList.toggle('hidden', v !== 'hire');
+  document.getElementById('tabA').classList.toggle('active', v === 'ops');
+  document.getElementById('tabB').classList.toggle('active', v === 'hire');
+  if (v === 'hire') initBuilder();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+let isRunning = false;
+async function runOperator(wfKey) {
+  if (isRunning) return;
+  isRunning = true;
+  const wf = WORKFLOWS[wfKey];
+  if (!wf) return;
+
+  const panel = document.getElementById("runPanel");
+  const title = document.getElementById("runTitle");
+  const sub = document.getElementById("runSub");
+  const progress = document.getElementById("progressRow");
+  const feed = document.getElementById("feedArea");
+  const deliv = document.getElementById("deliverableBox");
+
+  panel.classList.add("active");
+  deliv.classList.remove("show");
+  title.innerText = `Executing Operator: ${wf.name}`;
+  sub.innerText = `Mode: ${wf.mode.toUpperCase()} · ${wf.tasks.length} Specialist Agents`;
+
+  progress.innerHTML = wf.tasks.map((_, i) => `<div class="pstep" id="ps_${i}"></div>`).join('');
+  feed.innerHTML = '';
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  function addFeedLine(agentKey, txt, isDone = false) {
+    const role = AGENT_ROLES[agentKey] || { emoji: '🤖', label: agentKey };
+    const div = document.createElement('div');
+    div.className = `feed-line ${isDone ? 'done' : ''}`;
+    div.innerHTML = `<span class="tag">[${role.emoji} ${role.label}]</span><span class="txt">${txt}</span>`;
+    feed.appendChild(div);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  addFeedLine(wf.tasks[0].agent, `Initializing ${wf.name} autonomous workflow loop...`);
+  await new Promise(r => setTimeout(r, 600));
+
+  for (let i = 0; i < wf.tasks.length; i++) {
+    const t = wf.tasks[i];
+    const stepEl = document.getElementById(`ps_${i}`);
+    if (stepEl) stepEl.classList.add("active");
+
+    addFeedLine(t.agent, `Executing Task ${i+1}: ${t.task}`);
+    await new Promise(r => setTimeout(r, 800));
+
+    const role = AGENT_ROLES[t.agent];
+    if (role && role.tools) {
+      for (const tool of role.tools) {
+        addFeedLine(t.agent, `Invoked tool '${tool}( )' -> ${toolOut(tool)}`);
+        await new Promise(r => setTimeout(r, 600));
+      }
+    }
+
+    if (stepEl) {
+      stepEl.classList.remove("active");
+      stepEl.classList.add("complete");
+    }
+    addFeedLine(t.agent, `Task ${i+1} completed. Artifact saved to shared Kollmorgen project store.`, true);
+  }
+
+  await new Promise(r => setTimeout(r, 400));
+  document.getElementById("delivTitle").innerText = `Review-Ready Output · ${DTITLE[wfKey] || 'Deliverable'}`;
+  document.getElementById("delivCode").innerText = FINAL[wfKey] || "Execution completed successfully.";
+  deliv.classList.add("show");
+
+  isRunning = false;
+}
+
+function closeRun() {
+  document.getElementById("runPanel").classList.remove("active");
+}
+
+/* DYNEX BUILDER FLOW IMPLEMENTATION */
+let draft = {};
+function initBuilder() {
+  draft = { wf: null, mode: 'sequential', assign: [], name: '', title: '', cadence: 'Per project', step: 1 };
+  renderBuilder();
+}
+
+function renderBuilder() {
+  const steps = [['01', 'Pick a workflow'], ['02', 'Assign the agents'], ['03', 'Name & cadence']];
+  document.getElementById('bSteps').innerHTML = steps.map((s, i) => `
+    <div class="step-item ${draft.step === i + 1 ? 'active' : ''}">
+      <div class="step-num">${s[0]}</div>
+      <div class="step-lbl">${s[1]}</div>
+    </div>
+  `).join('');
+
+  if (draft.step === 1) bS1();
+  else if (draft.step === 2) bS2();
+  else bS3();
+  bNav();
+}
+
+function bS1() {
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 1: Choose Baseline Motion Control Workflow</label></div>
+    <div class="wf-grid">
+      ${Object.keys(WORKFLOWS).map(k => {
+        const w = WORKFLOWS[k];
+        return `
+          <div class="wf-card ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')">
+            <div class="wf-title">${w.name}</div>
+            <div class="wf-desc">${w.desc}</div>
+            <div class="wf-meta">${w.tasks.length} agents · ${w.mode}</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 2: Assign Each Task to a Specialist Agent</label></div>
+    ${w.tasks.map((t, i) => `
+      <div class="task-row">
+        <div class="tn">${i + 1}</div>
+        <div class="tt">
+          ${t.task}
+          ${t.deps.length ? `<span style="color:var(--muted-2);font-family:var(--font-mono);font-size:11px;"> · waits for step ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}
+        </div>
+        <select onchange="draft.assign[${i}]=this.value">${opts}</select>
+      </div>
+    `).join('')}
+    <div class="field" style="margin-top:16px;">
+      <label>Execution Mode</label>
+      <div class="seg">
+        ${['sequential', 'dag'].map(m => `
+          <button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (Parallel DAG)' : 'Sequential'}</button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 3: Name Operator &amp; Set Cadence</label></div>
+    <div class="field">
+      <label>Operator Name</label>
+      <input type="text" value="${draft.name}" placeholder="e.g. Kollmorgen 2G Motion System Specialist" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Role Title</label>
+      <input type="text" value="${draft.title}" placeholder="e.g. Autonomous Motion Control Engineer" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Cadence</label>
+      <div class="seg">
+        ${['Per project', 'Per batch', 'Weekly', 'On-demand'].map(c => `
+          <button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>
+        `).join('')}
+      </div>
+    </div>
+    <div class="field" style="margin-top:20px;">
+      <label>Live Operator Card Preview</label>
+      <div id="previewCardArea"></div>
+    </div>
+  `;
+  renderPreview();
+}
+
+function renderPreview() {
+  const w = WORKFLOWS[draft.wf];
+  const area = document.getElementById('previewCardArea');
+  if (!area) return;
+  
+  const team = draft.assign.map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  area.innerHTML = `
+    <div class="op-card" style="max-width:440px;">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${draft.name || 'New Operator'}</div>
+          <div class="op-role">${draft.title || 'AI Operator'}</div>
+        </div>
+      </div>
+      <div class="op-desc">Owns <b>${w.name}</b> · ${draft.cadence} · ${draft.mode.toUpperCase()}</div>
+      <div class="op-agents">${team}</div>
+    </div>
+  `;
+}
+
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn btn-ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right = '';
+  if (draft.step === 1) right = `<button class="btn btn-primary" ${draft.wf ? '' : 'disabled'} onclick="draft.step=2;renderBuilder()">Next: Assign Agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn btn-primary" onclick="draft.step=3;renderBuilder()">Next: Name &amp; Cadence →</button>`;
+  else right = `<button class="btn btn-primary" onclick="hire()">✓ Add this AI Operator</button>`;
+
+  document.getElementById('bNav').innerHTML = left + right;
+}
+
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  
+  WORKFLOWS[wfId] = {
+    name: w.name,
+    title: draft.title || w.title,
+    mode: draft.mode || w.mode,
+    track: w.track,
+    deliverable: w.deliverable,
+    desc: w.desc,
+    tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps }))
+  };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({
+    id, name,
+    title: draft.title || w.title,
+    wf: wfId,
+    handled: 0,
+    hrs: Math.floor(Math.random() * 60) + 40,
+    win: 0,
+    status: 'idle'
+  });
+
+  renderRoster();
+  setView('ops');
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  drawWaferGrid();
+  renderRoster();
+});
+</script>
+</body>
+</html>
