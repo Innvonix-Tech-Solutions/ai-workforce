@@ -162,3 +162,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/cincinnati
 https://innvonix-tech-solutions.github.io/ai-workforce/iliabeauty
 https://innvonix-tech-solutions.github.io/ai-workforce/kns
 https://innvonix-tech-solutions.github.io/ai-workforce/modutek
+https://innvonix-tech-solutions.github.io/ai-workforce/venture
