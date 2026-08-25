@@ -169,3 +169,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/treace
 https://innvonix-tech-solutions.github.io/ai-workforce/yestech
 https://innvonix-tech-solutions.github.io/ai-workforce/central
 https://innvonix-tech-solutions.github.io/ai-workforce/huber
+https://innvonix-tech-solutions.github.io/ai-workforce/otc-industrial
