@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Treace Medical Concepts — AI Commercial &amp; Operational Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#ffffff;
+  --surface:#f0f8fc;
+  --surface2:#e6f4fa;
+  --border:#cbd5e1;
+  --accent:#004b87;
+  --accent-light:#0066b3;
+  --accent-dark:#003366;
+  --navy-dark:#010b13;
+  --accent-dim:rgba(0,75,135,.08);
+  --accent-line:rgba(0,75,135,.30);
+  --gold:#004b87;
+  --gold-bg:#f0f7fc;
+  --gold-line:#b3d6f0;
+  --text:#1c2833;
+  --hi:#010b13;
+  --tert:#64748b;
+  --ok:#16a34a;
+  --ok-dim:rgba(22,163,74,.10);
+  --cyan:#00a3e0;
+}
+body{background:var(--canvas);color:var(--text);font-family:Montserrat,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:2px solid var(--accent);position:sticky;top:0;background:#004b87;color:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{min-width:42px;height:34px;padding:0 10px;border-radius:6px;background:#fff;display:flex;align-items:center;justify-content:center;color:#004b87;font-weight:900;font-size:14px;letter-spacing:1px;white-space:nowrap;overflow:hidden;flex-shrink:0}
+.htitle{font-size:15px;font-weight:800;color:#fff;letter-spacing:.5px;text-transform:uppercase}.hsub{font-size:11px;color:#cbd5e1;margin-top:1px;font-weight:500;letter-spacing:.5px}
+.badge{border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:6px 12px;font-size:11px;color:#94a3b8}.badge b{color:var(--cyan)}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:600;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none;letter-spacing:.3px}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface);border-top:3px solid var(--accent)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.5;max-width:900px;margin-bottom:14px}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.commercial{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.operations{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.hero{background:var(--gold-bg);color:var(--accent);border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:24px;font-weight:700;color:var(--accent)}.cell .v .u{color:var(--accent-dark)}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--accent);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:"IBM Plex Sans Condensed",sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;letter-spacing:.2px}.emp-title{font-size:12px;color:var(--tert)}
+.emp-owns{font-size:12px;margin-bottom:10px}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:inherit;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:var(--accent-line)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--navy-dark);border-color:var(--navy-dark)}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent;color:var(--accent)}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert);letter-spacing:.3px}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.3px}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto;color:var(--hi)}
+.donebar{background:var(--surface);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;color:var(--text)}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:var(--accent-line)}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:14px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;letter-spacing:.3px}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 16px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5}
+@media(prefers-rounded-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="header">
+<div class="logo"><div class="mark">TREACE</div>
+<div><div class="htitle">Treace Medical Concepts · AI Commercial &amp; Operational Workforce</div><div class="hsub">LAPIPLASTY 3D BUNION CORRECTION · TITANIUM SPEEDPLATE · ADDUCTOPLASTY · MICRO-LAPIPLASTY MIS</div></div></div>
+<div class="badge">Independent concept &nbsp;·&nbsp; <b>illustrative</b></div>
+</header>
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>a Treace Medical Concepts Lapiplasty 3D Bunion Correction, titanium SpeedPlate, Micro-Lapiplasty MIS surgical guide, or sterile tray logistics workflow turned into an autonomous team of agents</b>. One track wins the work: it finds hospital Integrated Delivery Networks (IDNs), Ambulatory Surgery Centers (ASCs), and podiatric orthopedic surgeons seeking Lapiplasty 3D Bunion Correction, quotes turn-key surgical tray &amp; titanium SpeedPlate consignment contracts, responds to national healthcare master tenders, and tracks orthopedic surgical market intelligence. The other track delivers medical device manufacturing and clinical operations: it qualifies titanium SpeedPlates &amp; Lapiplasty 3D cut guides under ASTM F382, FDA 510(k), &amp; ISO 13485 standards (bending fatigue 450 N @ 5M cycles, screw pull-out &gt;850 N, bioburden &lt;10^-6 SAL), optimizes 5-axis CNC titanium milling yields &amp; CMM optical gauge calibration (99.6% implant yield, ±0.012mm precision), simulates titanium vacuum heat treatment &amp; CFD argon gas quenching (950°C annealing, 15°C/sec cooling rate), and manages implant CAD engineering ECO revisions. Point one at a hospital procurement account, a CMM laser inspection log, or an implant CNC G-code sheet and it runs the loop, then hands back a review-ready output for a VP of Clinical Operations, Director of Orthopedic R&amp;D, or Quality Assurance Director to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial</span> find, quote, tender, win</span>
+<span><span class="tag operations">Orthopedic Device Manufacturing &amp; Ops</span> Implant Qual, CNC Milling Yield, Titanium CFD Thermal, ECO</span>
+<span><span class="tag hero">Flagship</span> the deepest example run</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+<div class="foot">Independent concept prototype prepared for a conversation with Treace Medical Concepts, Inc. (treace.com). It is not affiliated with, endorsed by, or built on Treace Medical Concepts systems or data. All operators and outputs are illustrative simulations; hospital buyer accounts, implant manufacturing yields, surgical quote schedules, FDA 510(k) / ASTM audits, and qualification reports are placeholders. A VP of Clinical Operations, Director of Orthopedic R&amp;D, or Quality Assurance Director reviews and approves every quote, implant qualification audit, sterile production lot release, FDA check, and CAD ECO file.</div>
+<script>
+const AGENT_ROLES={
+lapiplasty_3d_surgical_system_architect:{emoji:'🦴',label:'Lapiplasty 3D Bunion & Orthopedic System Lead',tools:['analyze_3d_bunion_anatomical_correction_angle','save']},
+orthopedic_titanium_implant_spec:{emoji:'⚙️',label:'Titanium SpeedPlate & TriStaple Implant Specialist',tools:['verify_titanium_plate_fatigue_strength_biomechanics','save']},
+fda_510k_iso13485_medical_device_auditor:{emoji:'📋',label:'FDA 510(k), ISO 13485 & MDR Medical Device Auditor',tools:['verify_fda_510k_dhr_biocompatibility_sterilization','save']},
+minimally_invasive_micro_lapiplasty_spec:{emoji:'🔬',label:'Micro-Lapiplasty MIS Surgical Guide Lead',tools:['verify_mis_incision_fluoroscopy_alignment','save']},
+cleanroom_gamma_sterilization_packaging_spec:{emoji:'🧼',label:'Cleanroom ISO Class 7 & Gamma Packaging Specialist',tools:['verify_gamma_sterilization_dose_barrier_tray','save']},
+orthopedic_biomechanical_fatigue_testing_spec:{emoji:'📊',label:'ASTM F1264 & F382 Biomechanical Fatigue Lead',tools:['inspect_implant_static_bend_cyclical_fatigue_logs','save']},
+hospital_orthopedic_b2b_quoting_eng:{emoji:'🧮',label:'Hospital IDN & Ambulatory Surgical Center Quoting Lead',tools:['build_treace_quote','save']},
+cold_chain_surgical_tray_freight_logistics_spec:{emoji:'🚚',label:'Sterile Surgical Instrument Tray Logistics Lead',tools:['optimize_hospital_tray_rotation_freight_telemetry','save']},
+eco_implant_cad_laser_marking_revision_lead:{emoji:'🔄',label:'Orthopedic Implant CAD & Laser Marking ECO Lead',tools:['eval_treace_eco','save']},
+mes_treace_connect_telemetry_spec:{emoji:'📡',label:'Treace MES & Implant Lot Serial Telemetry Specialist',tools:['inspect_titanium_cnc_milling_laser_etch_telemetry','save']},
+writer:{emoji:'✍️',label:'Technical Orthopedic Commercial Proposal Writer',tools:['compose','save']},
+reviewer:{emoji:'✅',label:'Medical Device Quality Assurance & Regulatory Reviewer',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+const TRACKS=[['commercial','Commercial & Sales Activities'],['operations','Orthopedic Device Manufacturing, R&D & Ops']];
+const WORKFLOWS={
+scout:{name:'Hospital IDN, Ambulatory Surgery Center & podiatric surgeon discovery',title:'AI Opportunity Scout',mode:'dag',track:'commercial',deliverable:'Target Hospital IDN, Ambulatory Surgery Center & Podiatric Surgeon Discovery List',
+sample:'Identify chief orthopedic surgeons, foot & ankle specialists, hospital Integrated Delivery Networks (HCA, Kaiser Permanente, Ascension), and Ambulatory Surgery Centers (ASCs) seeking Lapiplasty 3D Bunion Correction, Adductoplasty, and Micro-Lapiplasty MIS systems.',
+desc:'Agents map surgical account leads, source Director of Surgical Services and Chief of Orthopedic Surgery, score annual case volume potential ($2M+ per account), and build the target Treace Medical sales pipeline.',
+tasks:[{agent:'lapiplasty_3d_surgical_system_architect',task:'Source orthopedic surgery centers, podiatric medical groups, and hospital IDN buying committees.',deps:[]},
+{agent:'orthopedic_titanium_implant_spec',task:'Score accounts on annual bunion procedure volume (200mm vs 3D anatomical alignment), SpeedPlate fixation demand, and MIS adoption.',deps:[0]},
+{agent:'writer',task:'Compile target surgical system buyer lead list with key Chief of Surgery and Materials Management contacts.',deps:[1]}]},
+quote:{name:'Turn-key Lapiplasty 3D instrument tray & titanium SpeedPlate inventory quote',title:'AI Surgical System Quoting Operator',mode:'sequential',track:'commercial',deliverable:'Turnkey Lapiplasty 3D Instrument Tray & Titanium SpeedPlate Quoting Proposal',
+sample:'Generate commercial proposal for 50 Lapiplasty 3D Bunion Correction Reusable Instrument Trays, 500 SpeedPlate Titanium Contour Assemblies, and Micro-Lapiplasty MIS guides ($1.45M contract).',
+desc:'Agents confirm Ti-6Al-4V ELI implant specifications, FDA 510(k) cleared indications, sterile packaging integrity, consignment inventory terms, and issue proposal.',
+tasks:[{agent:'lapiplasty_3d_surgical_system_architect',task:'Confirm surgical system specs (Lapiplasty 3D Cut Guide, Positioner, Compress, and SpeedPlate Locking Screws).',deps:[]},
+{agent:'cleanroom_gamma_sterilization_packaging_spec',task:'Configure sterile barrier double-pouch packaging, ISO 11607 validation, and gamma irradiation dose audit.',deps:[0]},
+{agent:'hospital_orthopedic_b2b_quoting_eng',task:'Structure hospital contract pricing, consignment tray rotation, 24/7 rep coverage, and 2-year warranty ($1,450,000 order).',deps:[1]},
+{agent:'writer',task:'Produce formal customer-ready Treace Medical Concepts technical commercial proposal.',deps:[2]}]},
+tender:{name:'National healthcare network & VA hospital orthopedic implant master tender',title:'AI Global Medical Master Tender Operator',mode:'dag',track:'commercial',deliverable:'National Healthcare Network & VA Hospital Orthopedic Implant Master Tender Response',
+sample:'Prepare 3-year master orthopedic implant supply and surgical tray management agreement for a national healthcare system.',
+desc:'Agents verify FDA 510(k) clearance, 99.8% surgical tray delivery SLA, ISO 13485 quality system certification, and 24-hour emergency surgical case support, compiling master tender response.',
+tasks:[{agent:'mes_treace_connect_telemetry_spec',task:'Verify automated factory MES lot traceability, UDI laser marking validation, and Certificate of Sterility generation.',deps:[]},
+{agent:'cold_chain_surgical_tray_freight_logistics_spec',task:'Structure hospital tray rotation logistics, emergency courier SLA, and mobile rep inventory tracking.',deps:[0]},
+{agent:'hospital_orthopedic_b2b_quoting_eng',task:'Structure 3-year tiered implant volume pricing, consignment inventory guarantees, and dedicated clinical specialist SLAs.',deps:[1]},
+{agent:'writer',task:'Generate comprehensive national orthopedic master tender response.',deps:[2]}]},
+radar:{name:'3D bunion correction, midfoot deformity & MIS orthopedic market intelligence',title:'AI Orthopedic Market Intelligence',mode:'dag',track:'commercial',deliverable:'3D Bunion Correction, Midfoot Deformity & MIS Orthopedic Market Intelligence Brief',
+sample:'Analyze global foot and ankle orthopedic technology companies (Stryker, Wright Medical/Arthrex, Paragon 28, Zimmer Biomet) vs Treace Medical Concepts.',
+desc:'Agents track competitor 2D osteotomy vs 3D triplane correction market share, evaluate Treace\'s pioneer clinical evidence (99%+ nonunion success), patent protection, and MIS innovation.',
+tasks:[{agent:'minimally_invasive_micro_lapiplasty_spec',task:'Gather competitor incision size, fixation strength, recurrence rate data, and surgeon training adoption.',deps:[]},
+{agent:'lapiplasty_3d_surgical_system_architect',task:'Highlight Treace Medical\'s 3D Bunion Correction market leadership, proprietary SpeedPlate multiplanar fixation, and rapid weight-bearing protocol.',deps:[]},
+{agent:'writer',task:'Produce quarterly orthopedic industry market intelligence and competitive positioning brief.',deps:[0,1]}]},
+panel_qualification:{name:'Titanium SpeedPlate & Lapiplasty 3D cut guide ASTM F382 fatigue qualification',title:'AI Surgical Quality Qualification Operator',mode:'dag',track:'operations',tag:'flagship',deliverable:'Titanium SpeedPlate & Lapiplasty 3D Cut Guide ASTM F382 Fatigue Qualification Dossier',
+sample:'Execute 5,000,000-cycle biomechanical fatigue trial (four-point bending fatigue strength 450 N, screw pull-out force >850 N, Ti-6Al-4V grain size ASTM 10, zero fatigue crack) for SpeedPlate Titanium Implant.',
+desc:'Agents audit Ti-6Al-4V ELI titanium bar stock mill test reports, anodization layer thickness (Type II anodize 3-5 µm), CMM cut guide angle tolerance (±0.15°), gamma sterilization bioburden (<10^-6 SAL), and publish qualification dossier.',
+tasks:[{agent:'lapiplasty_3d_surgical_system_architect',task:'Simulate triplane correction angle stability, 1st tarsometatarsal joint compression force, and screw insertion torque.',deps:[]},
+{agent:'fda_510k_iso13485_medical_device_auditor',task:'Audit FDA DHR (Device History Record), ISO 10993 cytotoxicity & hemocompatibility reports, and ISO 13485 CAPA logs.',deps:[]},
+{agent:'orthopedic_biomechanical_fatigue_testing_spec',task:'Audit ASTM F382 four-point bending fatigue, ASTM F543 screw axial pull-out, and fretting corrosion in saline bath.',deps:[0,1]},
+{agent:'reviewer',task:'QA orthopedic laboratory fatigue test reports, CMM dimension inspection sheets, and sterility validation certificates.',deps:[2]},
+{agent:'writer',task:'Produce complete Treace Medical Concepts surgical qualification dossier.',deps:[3]}]},
+inverter_yield:{name:'5-axis CNC titanium milling yield & CMM optical dimension inspection test',title:'AI Surgical Operations Operator',mode:'sequential',track:'operations',deliverable:'5-Axis CNC Titanium Milling Yield & CMM Optical Dimension Inspection Test Report',
+sample:'Calibrate 5-axis Swiss CNC titanium milling machines (99.6% implant yield) and CMM laser scanner on SpeedPlate production line.',
+desc:'Agents analyze 100% component dimension accuracy (±0.012 mm), surface roughness Ra <0.8 µm, and passivated titanium oxide film uniformity across 10,000 unit production run.',
+tasks:[{agent:'lapiplasty_3d_surgical_system_architect',task:'Analyze CNC spindle speed, G-code tool path optimization, and titanium burr removal.',deps:[]},
+{agent:'orthopedic_biomechanical_fatigue_testing_spec',task:'Perform 100% CMM laser scan dimension calibration against NIST traceable optical gauge blocks.',deps:[0]},
+{agent:'reviewer',task:'QA finished titanium implant release metrics against Treace Medical quality standards.',deps:[1]},
+{agent:'writer',task:'Produce comprehensive titanium implant manufacturing yield and CMM inspection report.',deps:[2]}]},
+thermal_simulation:{name:'Titanium SpeedPlate vacuum heat treatment & CFD argon quenching simulation',title:'AI Surgical CFD Thermal Operator',mode:'dag',track:'operations',deliverable:'Titanium SpeedPlate Vacuum Heat Treatment & CFD Argon Quenching Simulation Strategy',
+sample:'Generate automated 3D CFD thermal fluid and heat treatment simulation for vacuum annealing Ti-6Al-4V implants (annealing at 950°C for 2 hrs with argon gas quenching).',
+desc:'Agents configure vacuum furnace convection CFD, simulate beta transus phase transformation, optimize gas quenching cooling rate (15°C/sec), and prevent thermal distortion.',
+tasks:[{agent:'orthopedic_titanium_implant_spec',task:'Execute 3D Finite Element CFD thermal quenching modeling across titanium plates (ensuring uniform alpha-beta microstructure and zero thermal warpage).',deps:[]},
+{agent:'fda_510k_iso13485_medical_device_auditor',task:'Verify vacuum furnace atmosphere purity, zero oxygen embrittlement, and NADCAP accreditation.',deps:[]},
+{agent:'writer',task:'Produce Treace Medical titanium heat treatment CFD strategy documentation.',deps:[0,1]}]},
+mask_eco:{name:'Orthopedic implant CAD engineering ECO & UDI laser marking revision control',title:'AI Surgical Revision Control Operator',mode:'sequential',track:'operations',deliverable:'Orthopedic Implant CAD Engineering ECO & UDI Laser Marking Revision Assessment',
+sample:'Evaluate ECO-2026-1320 (Upgrade SpeedPlate Screw Hole Chamfer Radius to 0.5mm & Add GS1-128 UDI Direct Part Marking Code).',
+desc:'Agents evaluate CAD drawing diffs, recalculate FEA stress concentration factors, verify laser marking readability, and update automated factory MES assembly travelers.',
+tasks:[{agent:'eco_implant_cad_laser_marking_revision_lead',task:'Compare implant CAD 3D model diffs, FEA stress concentration logs, and GS1 UDI barcode specs.',deps:[]},
+{agent:'mes_treace_connect_telemetry_spec',task:'Update factory MES CNC programming stations, laser marking station barcode validators, and ERP item master BOMs.',deps:[0]},
+{agent:'writer',task:'Publish integrated Treace Medical implant ECO cut-over matrix and factory assembly traveler guide.',deps:[1]}]},
+};
+const DTITLE={
+scout:'Target Hospital IDN, Ambulatory Surgery Center & Podiatric Surgeon Discovery List',
+quote:'Turnkey Lapiplasty 3D Instrument Tray & Titanium SpeedPlate Quoting Proposal',
+tender:'National Healthcare Network & VA Hospital Orthopedic Implant Master Tender Response',
+radar:'3D Bunion Correction, Midfoot Deformity & MIS Orthopedic Market Intelligence Brief',
+panel_qualification:'Titanium SpeedPlate & Lapiplasty 3D Cut Guide ASTM F382 Fatigue Qualification Dossier',
+inverter_yield:'5-Axis CNC Titanium Milling Yield & CMM Optical Dimension Inspection Test Report',
+thermal_simulation:'Titanium SpeedPlate Vacuum Heat Treatment & CFD Argon Quenching Simulation Strategy',
+mask_eco:'Orthopedic Implant CAD Engineering ECO & UDI Laser Marking Revision Assessment'
+};
+const TOOLS={
+source_semiconductor_accounts:()=>'Sourced orthopedic surgery centers, podiatric medical groups & hospital IDN buying committees.',
+analyze_3d_bunion_anatomical_correction_angle:()=>'Confirmed surgical system specs (Lapiplasty 3D Cut Guide, Positioner, Compress & SpeedPlate).',
+build_treace_quote:()=>'Structured hospital contract pricing, consignment tray rotation & 24/7 rep coverage.',
+verify_titanium_plate_fatigue_strength_biomechanics:()=>'Scored accounts on annual bunion procedure volume & SpeedPlate fixation demand.',
+verify_fda_510k_dhr_biocompatibility_sterilization:()=>'Audited FDA DHR (Device History Record) & ISO 10993 cytotoxicity reports.',
+verify_mis_incision_fluoroscopy_alignment:()=>'Gathered competitor incision size, fixation strength & recurrence rate data.',
+verify_gamma_sterilization_dose_barrier_tray:()=>'Configured sterile barrier double-pouch packaging & ISO 11607 validation.',
+optimize_hospital_tray_rotation_freight_logistics:()=>'Structured hospital tray rotation logistics & emergency courier SLA.',
+eval_treace_eco:()=>'Extracted implant CAD 3D model diffs, FEA stress logs & GS1 UDI barcode specs.',
+inspect_titanium_cnc_milling_laser_etch_telemetry:()=>'Verified automated factory MES lot traceability & UDI laser marking validation.',
+inspect_implant_static_bend_cyclical_fatigue_logs:()=>'Performed 100% CMM laser scan dimension calibration against NIST optical gauge blocks.',
+compose:()=>'Drafted in a clear, 3D orthopedic surgery, ASTM F382 & FDA 510(k) standards-aware style, review-ready.',
+qa_review:()=>'QA: Orthopedic laboratory fatigue test reports & CMM dimension inspection sheets checked.',
+save:()=>'Saved to shared context for downstream agents.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+const FINAL={
+scout:`TARGET HOSPITAL IDN, AMBULATORY SURGERY CENTER & PODIATRIC SURGEON DISCOVERY LIST (illustrative)
+Scanned chief orthopedic surgeons, foot & ankle specialists, hospital IDN procurement committees, and ASC surgical managers.
+
+A-Tier Priority Surgical System Target Accounts:
+1. Premier National Hospital Integrated Delivery Network (Lapiplasty 3D Bunion & SpeedPlate Fixation) — Fit Score: 99
+2. High-Volume Regional Ambulatory Surgery Center Network (Micro-Lapiplasty MIS & Fast-Track Trays) — Fit Score: 98
+3. Multi-Specialty Orthopedic & Podiatric Surgical Group (TriStaple Anatomic Fixation & Adductoplasty) — Fit Score: 96
+4. Academic Medical Center Foot & Ankle Fellowship Program (3D Triplane Correction Clinical Evidence) — Fit Score: 95
+
+Key Decision Makers: Director of Surgical Services, Chief of Orthopedic Surgery, VP of Materials Management.
+→ Saved: target_treace_accounts, surgical_specs, fit_scores
+NOTE: illustrative; not affiliated with Treace Medical Concepts, Inc. (treace.com).`,
+quote:`TURNKEY LAPIPLASTY 3D INSTRUMENT TRAY & TITANIUM SPEEDPLATE QUOTING PROPOSAL (illustrative)
+Client Partner: Premier National Hospital Integrated Delivery Network
+Scope: 50 Lapiplasty 3D Reusable Instrument Trays + 500 SpeedPlate Titanium Contour Assemblies
+
+Orthopedic Implant & Instrument Manifest
+• Lapiplasty 3D System: Cut Guides, Positioner, Compress, and Precision Anatomic Instrumentation
+• SpeedPlate Implants: Multiplanar Titanium Locking Plates & Ti-6Al-4V ELI Locking Screws
+• Packaging & Sterilization: ISO 11607 Sterile Double-Barrier Pouches with Gamma Irradiation Audit
+• Regulatory Compliance: FDA 510(k) Cleared, ISO 13485 Quality System Certified, UDI GS1 Barcoded
+
+Pricing & Logistics Schedule
+• Total Turnkey Contract Value (50 Trays + 500 Implants + Consignment Logistics + 2-Yr SLA): $1,450,000.00
+• Field Support SLA: 24/7 on-site clinical specialist coverage and 4-hour emergency surgical tray delivery
+→ Saved: treace_surgical_quote, tray_inventory_manifest
+NOTE: illustrative.`,
+tender:`NATIONAL HEALTHCARE NETWORK & VA HOSPITAL ORTHOPEDIC IMPLANT MASTER TENDER RESPONSE (illustrative)
+RFP Reference: 3-Year Master Orthopedic Implant Supply & Surgical Tray Management Agreement
+
+Clinical Performance & Tray SLA
+• Biomechanical Fixation Stability: Guaranteed 3D triplane anatomical correction with <1% nonunion recurrence.
+• Sterility & Traceability: 100% lot-level UDI barcode traceability with Certificate of Sterility for every tray.
+• Emergency Courier SLA: Guaranteed 4-hour emergency instrument tray delivery to registered operating rooms.
+
+Master Commercial Terms
+• Consignment Stock Guarantee: Dedicated hospital consignment stock with zero upfront capital expenditure.
+→ Saved: national_treace_tender, fda_510k_certificate
+NOTE: illustrative.`,
+radar:`3D BUNION CORRECTION, MIDFOOT DEFORMITY & MIS ORTHOPEDIC MARKET INTELLIGENCE BRIEF (illustrative)
+Foot & Ankle Orthopedic Market Trends
+• Shift to 3D Triplane Correction: Rapid transition from traditional 2D osteotomy to 3D Lapiplasty alignment (+35% YoY).
+• Minimally Invasive Surgery (MIS): High demand for Micro-Lapiplasty MIS systems enabling rapid weight-bearing.
+
+Treace Medical Concepts Market Leadership
+• Category Pioneer & Market Leader: Benchmark 3D bunion correction technology backed by extensive clinical trials.
+• Proprietary SpeedPlate Fixation: Advanced titanium multiplanar stability engineered for early patient mobility.
+→ Saved: treace_intel_brief, competitive_positioning
+NOTE: illustrative.`,
+panel_qualification:`TITANIUM SPEEDPLATE & LAPIPLASTY 3D CUT GUIDE ASTM F382 FATIGUE QUALIFICATION DOSSIER (illustrative · flagship)
+Target System: Treace SpeedPlate Titanium Locking Plate & Lapiplasty 3D Surgical Guide
+Testing Standard: 5,000,000-Cycle Biomechanical Fatigue Trial & ASTM F382 / FDA 510(k) Audit
+
+Factory Analytical & Biomechanical Results
+• Four-Point Bending Fatigue: Passed 5,000,000 cycles at 450 N load without micro-fracture (Exceeds ASTM target).
+• Screw Axial Pull-Out Force: Measured average screw retention force @ 920 N (Exceeds >850 N limit).
+• Titanium Microstructure: Ti-6Al-4V ELI bar stock grain size verified @ ASTM 10 (Zero alpha case contamination).
+• Biocompatibility & Cytotoxicity: Passed ISO 10993-5 MEM elution and ISO 10993-10 sensitization screening.
+
+QA Sign-Off
+• Verified by Director of Orthopedic R&D & Quality Assurance Director. Cleared for hospital surgical distribution.
+→ Saved: treace_qualification_dossier, astm_f382_lab_test_data
+NOTE: illustrative; confirm against customer surgical implant specifications.`,
+inverter_yield:`5-AXIS CNC TITANIUM MILLING YIELD & CMM OPTICAL DIMENSION INSPECTION TEST REPORT (illustrative)
+Testing Laboratory: Treace Medical Manufacturing & Cleanroom Facility (Ponte Vedra, Florida USA)
+Target Equipment: 5-Axis Swiss CNC Titanium Milling Array & CMM Optical Laser Scanner
+
+Manufacturing Calibration Results
+• Implant CNC Milling Yield: 5-axis titanium milling nest optimization achieved 99.6% SpeedPlate yield.
+• CMM Machining Precision: Screw hole thread pitch and chamfer precision verified @ ±0.008 mm (Target ±0.012 mm).
+• Surface Roughness Ra: Titanium plate surface finish verified @ Ra 0.42 µm (Exceeds <0.8 µm requirement).
+
+Release Status: Certified under FDA Quality System Regulations (21 CFR 820) and ISO 13485; cleared for distribution.
+→ Saved: treace_cnc_yield_report, cmm_inspection_logs
+NOTE: illustrative.`,
+thermal_simulation:`TITANIUM SPEEDPLATE VACUUM HEAT TREATMENT & CFD ARGON QUENCHING SIMULATION STRATEGY (illustrative)
+Simulated System: Treace Titanium Implant Vacuum Annealing Furnace & Argon Gas Quench
+Operating Environment: Vacuum Heat Treatment at 950°C for 2 Hours with High-Pressure Argon Quench
+
+3D CFD Thermal & Fluid Simulation Results
+• Argon Gas Quenching Velocity: CFD fluid modeling established uniform 15°C/sec cooling rate across titanium plates.
+• Phase Transformation Uniformity: Heat treatment achieved homogenous alpha-beta titanium crystal structure.
+• Thermal Warpage Prevention: Zero plate distortion or screw thread dimensional shift observed post-quenching.
+
+Output: 3D CFD thermal heat treatment strategy validated for production titanium implant release.
+→ Saved: treace_cfd_strategy, thermal_quenching_contours
+NOTE: illustrative.`,
+mask_eco:`ORTHOPEDIC IMPLANT CAD ENGINEERING ECO & UDI LASER MARKING REVISION ASSESSMENT (illustrative)
+Engineering Change Order: ECO-2026-1320
+Affected Product: Treace SpeedPlate Titanium Locking Plate Assembly (Rev B -> Rev C)
+
+Change Scope & Feature Upgrade
+• Screw Hole Chamfer Radius: Increased screw hole chamfer radius to 0.5mm to eliminate stress concentration.
+• GS1-128 UDI Laser Marking: Added automated high-resolution fiber laser UDI barcode marking.
+
+Factory Assembly Cut-Over Schedule
+• CNC Programming Stations: Updated 5-axis G-code tool paths and laser marking cell verifiers in Florida facility.
+• ERP Item Master BOMs: Updated device master records, sterile box artwork, and FDA UDI database entries.
+→ Saved: treace_eco_matrix, rev_c_speedplate_traveler
+NOTE: illustrative.`,
+};
+let EMPLOYEES=[
+{id:'scout',name:'Scout',title:'AI Opportunity Scout',wf:'scout',handled:592,hrs:224,win:0,status:'idle'},
+{id:'quote',name:'Quote',title:'AI Surgical System Quoting Operator',wf:'quote',handled:512,hrs:248,win:86,status:'idle'},
+{id:'tender',name:'Tender',title:'AI Global Medical Master Operator',wf:'tender',handled:372,hrs:268,win:91,status:'idle'},
+{id:'radar',name:'Radar',title:'AI Orthopedic Market Intel',wf:'radar',handled:420,hrs:198,win:57,status:'idle'},
+{id:'safety',name:'Sentinel',title:'AI Surgical Quality Qualification Operator',wf:'panel_qualification',handled:408,hrs:340,win:98,status:'idle'},
+{id:'mill',name:'Atlas',title:'AI Surgical Operations Operator',wf:'inverter_yield',handled:456,hrs:256,win:94,status:'idle'},
+{id:'cfd',name:'Vanguard',title:'AI Surgical CFD Thermal Operator',wf:'thermal_simulation',handled:406,hrs:236,win:85,status:'idle'},
+{id:'eco',name:'Nexus',title:'AI Surgical Revision Operator',wf:'mask_eco',handled:408,hrs:242,win:90,status:'idle'},
+];
+let running=false;
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const now=()=>new Date().toLocaleTimeString('en-GB');
+const mono=n=>n.trim().slice(0,2).toUpperCase();
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Commercial</span>';if(wf.track==='operations')s+='<span class="tag operations">Orthopedic Device Manufacturing &amp; Ops</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+function setView(v){
+$('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');
+$('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');
+if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderEcon(){
+const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);
+const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;
+const cells=[[total,'AI operators (commercial + medical device manufacturing & ops)'],[h.toLocaleString(),'quotes, ASTM F382 fatigue audits & CNC yield runs handled'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','orthopedic R&D director & clinical ops VP hours saved / month'],['+'+avg+'%','avg turnaround improvement']];
+$('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');
+}
+function empCard(e){const wf=WORKFLOWS[e.wf];
+const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');
+return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}">
+<div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div>
+<div class="emp-owns">Owns: <b>${wf.name}</b></div>
+<div class="team">${team}</div>
+<div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'—'}</b>faster</div></div>
+<div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a project / RFQ</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;
+}
+function renderRoster(){
+const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;
+let html='';
+TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;
+html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});
+const untracked=EMPLOYEES.filter(e=>!WORKFLOWS[e.wf].track);
+if(untracked.length)html+=`<div class="slabel">Other</div><div class="roster">`+untracked.map(empCard).join('')+`</div>`;
+$('roster').innerHTML=html;
+}
+function assign(id){
+if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+$('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div>
+<div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a hospital procurement account, a CMM laser inspection log, or an implant CNC G-code sheet and ${e.name} runs the whole loop.</div></div></div>
+<div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div>
+<div id="stage"></div></div>`;
+$('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();
+}
+async function runEmp(id){
+if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;
+e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');
+const stage=$('stage');
+stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div>
+<div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div>
+<div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;
+const feed=$('feed');
+function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;
+const row=document.createElement('div');row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,150)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}
+log(null,`Input received: "${obj.substring(0,54)}…"`);
+log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);
+await sleep(rand(700,1100));
+const grid=$('agrid');
+wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;
+c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;
+grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});
+await sleep(600);
+$('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');
+const done=new Set();
+async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);
+c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';
+log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));
+for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}
+c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}
+if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}
+else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;
+if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}
+$('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');
+await sleep(400);
+const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(6,44);
+$('resultArea').innerHTML=`<div class="result"><div class="rstats">
+<div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div>
+<div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div>
+<div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'Commercial & Sales':'Orthopedic Device Manufacturing & Ops'}</span></div>
+<div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div>
+<div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div>
+<div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div>
+<div class="donebar"><b>${e.name} produced a review-ready output.</b> Execution, surgical testing and QA complete, ready for a VP of Clinical Operations, Director of Orthopedic R&amp;D, or Quality Assurance Director to review and confirm. Illustrative simulation placeholder.</div>`;
+e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;
+}
+// builder
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per surgical project',step:1};renderBuilder();}
+function renderBuilder(){
+const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];
+$('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();
+}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+
+Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+
+w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+
+`<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;
+document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div>
+<div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. Treace Surgical Operator" oninput="draft.name=this.value"></div>
+<div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Orthopedic Specialist" oninput="draft.title=this.value"></div>
+<div class="field"><label>Cadence</label><div class="seg">`+['Per surgical project','Per sterile DHR production lot','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div>
+<div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;
+let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();
+const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};
+DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];
+const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});
+renderEcon();renderRoster();setView('ops');
+setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);
+}
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
