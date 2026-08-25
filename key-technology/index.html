@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Key Technology Console — AI Food Processing &amp; Digital Sorting Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060b14;
+  --surface:#0f1726;
+  --surface-2:#192438;
+  --surface-3:#283754;
+  --border:#283754;
+  --border-soft:#111a2b;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --muted-2:#64748b;
+  --accent:#e2001a;
+  --accent-dim:rgba(226,0,26,0.15);
+  --accent-line:rgba(226,0,26,0.38);
+  --accent2:#06b6d4;
+  --accent2-bg:rgba(6,182,212,0.08);
+  --accent3:#10b981;
+  --danger:#ef4444;
+  --ok:#10b981;
+  --font-display:'Rajdhani',sans-serif;
+  --font-body:'Work Sans',sans-serif;
+  --font-mono:'Roboto Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 88% -8%, rgba(226,0,26,0.14), transparent 55%),
+    radial-gradient(900px 480px at 5% 5%, rgba(6,182,212,0.07), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+a{color:var(--accent);}
+::selection{background:rgba(226,0,26,0.28);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+.hidden{display:none!important;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:24px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:44px;height:42px;border-radius:8px;
+  background:linear-gradient(135deg,#990012,#e2001a);
+  border:1px solid var(--accent-line);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:var(--font-mono);font-weight:800;font-size:12px;
+  box-shadow:0 0 18px rgba(226,0,26,0.35);
+}
+.mark-name{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:0.02em;color:#fff;}
+.mark-sub{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px;}
+
+.line-readout{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent2);
+  background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:8px 14px;display:flex;align-items:center;gap:10px;
+}
+.line-readout .dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);box-shadow:0 0 10px var(--accent2);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.tabs{display:flex;gap:8px;margin-top:20px;border-bottom:1px solid var(--border-soft);}
+.tab-btn{
+  background:transparent;border:none;color:var(--muted);padding:10px 18px;font-family:var(--font-body);
+  font-size:13.5px;font-weight:600;cursor:pointer;border-radius:8px 8px 0 0;transition:all 0.15s ease;
+}
+.tab-btn:hover{color:var(--text);background:var(--surface-2);}
+.tab-btn.active{color:var(--accent2);background:var(--surface);border:1px solid var(--border);border-bottom-color:var(--surface);}
+
+.hero{padding:36px 0 28px;display:grid;grid-template-columns:1.15fr 0.85fr;gap:40px;align-items:center;}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:24px 0 18px;}}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;color:var(--accent2);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent2);}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(30px,4vw,42px);line-height:1.08;letter-spacing:-0.005em;margin:0 0 14px;color:#fff;}
+h1 span{color:var(--accent2);background:linear-gradient(90deg,#06b6d4,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.lead{color:var(--muted);font-size:15px;max-width:55ch;margin:0 0 22px;line-height:1.6;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:var(--font-body);font-weight:600;font-size:13.5px;border-radius:6px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--accent2);color:#fff;border-color:var(--accent2);font-weight:700;}
+.btn-primary:hover{background:#38bdf8;box-shadow:0 0 16px rgba(6,182,212,0.35);}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+
+/* Key Technology VERYX & Iso-Flo Graphic Card */
+.wafer{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:18px 18px 14px;box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+.wafer-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+.wafer-title{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em;}
+.wafer-val{font-family:var(--font-mono);font-size:12px;color:var(--accent2);font-weight:600;}
+svg.wafermap{width:100%;height:210px;display:block;}
+.wafer-outline{fill:none;stroke:var(--border);stroke-width:1.5;}
+.wafer-grid-line{stroke:var(--border-soft);stroke-width:0.5;stroke-dasharray:2 2;}
+.wafer-foot{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+
+.econ{border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:760px){.econ{grid-template-columns:repeat(2,1fr);}}
+.econ-item{padding:6px 18px;border-left:1px solid var(--border-soft);}
+.econ-item:first-child{border-left:none;padding-left:0;}
+@media(max-width:760px){.econ-item:nth-child(2n+1){border-left:none;padding-left:0;}}
+.econ-num{font-family:var(--font-display);font-weight:700;font-size:28px;color:#fff;}
+.econ-num small{font-size:14px;color:var(--accent2);font-weight:700;}
+.econ-label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+section{padding:36px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.section-title{font-family:var(--font-display);font-weight:700;font-size:24px;color:#fff;}
+.section-sub{color:var(--muted);font-size:13.5px;max-width:62ch;margin-top:4px;}
+.track-label{font-family:var(--font-mono);font-size:11px;color:var(--accent2);text-transform:uppercase;letter-spacing:.1em;margin:28px 0 14px;padding-top:10px;border-top:1px dashed var(--border-soft);}
+.track-label:first-of-type{border-top:none;padding-top:0;margin-top:6px;}
+
+.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+@media(max-width:760px){.roster{grid-template-columns:1fr;}}
+.op-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;transition:all .15s ease;}
+.op-card:hover{border-color:var(--accent-line);transform:translateY(-2px);}
+.op-card.flagship{border-color:var(--accent);background:linear-gradient(180deg,rgba(226,0,26,0.08),var(--surface));}
+.op-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.op-name{font-family:var(--font-display);font-weight:700;font-size:18px;color:#fff;}
+.op-role{font-size:12.5px;color:var(--muted);margin-top:2px;}
+.flag-chip{font-family:var(--font-mono);font-size:10px;color:var(--accent);border:1px solid var(--accent);background:var(--accent-dim);border-radius:20px;padding:2px 8px;white-space:nowrap;}
+.op-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+.op-stats{display:flex;gap:18px;margin-top:2px;}
+.op-stat{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.op-stat b{color:var(--accent2);font-size:14px;display:block;font-family:var(--font-body);font-weight:600;}
+.op-agents{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.chip{font-size:11px;background:var(--surface-3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;color:var(--text);}
+.op-actions{display:flex;gap:10px;margin-top:6px;}
+.run-btn{flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:600;font-size:13px;border-radius:6px;padding:10px;cursor:pointer;transition:all 0.15s ease;}
+.run-btn:hover{border-color:var(--accent2);color:var(--accent2);background:var(--accent2-bg);}
+
+.run-panel{background:var(--surface);border:1px solid var(--accent-line);border-radius:12px;padding:24px;margin-top:24px;display:none;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+.run-panel.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.run-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.run-head h3{font-family:var(--font-display);font-size:20px;margin:0;color:#fff;}
+.run-head .meta{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.close-run{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:6px 12px;cursor:pointer;font-size:12px;}
+.close-run:hover{color:var(--text);border-color:var(--accent2);}
+
+.feed{background:var(--bg);border:1px solid var(--border-soft);border-radius:8px;padding:16px;height:260px;overflow-y:auto;font-family:var(--font-mono);font-size:12px;display:flex;flex-direction:column;gap:8px;}
+.feed-line{display:flex;gap:10px;align-items:flex-start;opacity:0;animation:appear .3s ease forwards;}
+@keyframes appear{to{opacity:1;}}
+.feed-line .tag{color:var(--accent2);white-space:nowrap;}
+.feed-line .txt{color:var(--muted);}
+.feed-line.done .tag{color:var(--accent);}
+.feed-line.done .txt{color:var(--text);}
+
+.progress-row{display:flex;gap:6px;margin:16px 0 8px;flex-wrap:wrap;}
+.pstep{flex:1;min-width:64px;height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;position:relative;}
+.pstep.active{background:var(--accent-dim);}
+.pstep.complete{background:var(--accent);box-shadow:0 0 8px var(--accent);}
+
+.deliverable{margin-top:20px;background:var(--surface-2);border:1px solid var(--accent-line);border-radius:8px;padding:18px 20px;display:none;}
+.deliverable.show{display:block;animation:fadein .3s ease;}
+.deliverable h4{font-family:var(--font-display);font-size:17px;margin:0 0 12px;color:var(--accent);}
+.deliverable pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:12.5px;color:var(--text);margin:0;line-height:1.65;}
+.note{font-size:11px;color:var(--muted-2);margin-top:12px;font-style:italic;}
+
+/* BUILDER STYLING (DYNEX FUNCTIONAL FLOW) */
+.steps-bar{display:flex;gap:10px;margin-bottom:24px;}
+.step-item{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);}
+.step-item.active{border-color:var(--accent2);background:var(--surface-3);}
+.step-item .step-num{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--muted-2);}
+.step-item.active .step-num{color:var(--accent2);}
+.step-item .step-lbl{font-size:13.5px;font-weight:600;color:var(--text);margin-top:2px;}
+
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.wf-card{border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;background:var(--surface-2);transition:all 0.15s ease;}
+.wf-card:hover{border-color:var(--accent2);}
+.wf-card.sel{border-color:var(--accent2);background:rgba(6,182,212,0.08);}
+.wf-title{font-family:var(--font-display);font-weight:700;font-size:16px;color:#fff;}
+.wf-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45;}
+.wf-meta{font-family:var(--font-mono);font-size:10.5px;color:var(--accent2);margin-top:8px;font-weight:600;text-transform:uppercase;}
+
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);margin-bottom:10px;}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--accent2);flex-shrink:0;}
+.task-row .tt{flex:1;font-size:13px;color:var(--text);}
+.task-row select{font-family:var(--font-body);font-size:12.5px;border:1px solid var(--border);border-radius:6px;padding:8px 10px;background:var(--surface);color:var(--text);outline:none;min-width:210px;}
+.task-row select:focus{border-color:var(--accent2);}
+
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.field input{width:100%;font-family:var(--font-body);font-size:13.5px;border:1px solid var(--border);border-radius:8px;padding:11px 13px;background:var(--surface-2);color:var(--text);outline:none;}
+.field input:focus{border-color:var(--accent2);}
+
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.seg button{font-family:var(--font-body);font-size:12.5px;padding:9px 16px;border:none;background:var(--surface-2);color:var(--muted);cursor:pointer;border-right:1px solid var(--border);}
+.seg button:last-child{border-right:none;}
+.seg button.on{background:var(--accent2);color:#fff;font-weight:700;}
+
+.bnav{display:flex;justify-content:space-between;margin-top:24px;}
+
+footer{border-top:1px solid var(--border-soft);padding:30px 0 44px;}
+.foot-note{font-size:12px;color:var(--muted-2);max-width:85ch;line-height:1.6;}
+.foot-note strong{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark-row">
+      <div class="mark">
+        <div class="mark-badge">KEY</div>
+        <div>
+          <div class="mark-name">Key Technology Console</div>
+          <div class="mark-sub">Key Technology (key.net) · A Duravant Operating Company</div>
+        </div>
+      </div>
+      <div class="line-readout">
+        <span class="dot"></span>
+        <span id="lineTxt">Walla Walla, WA &amp; Beuningen Plants · VERYX &amp; Iso-Flo Lines Active</span>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tabA" onclick="setView('ops')">The AI Workforce Roster</button>
+      <button class="tab-btn" id="tabB" onclick="setView('hire')">+ Add an AI Operator</button>
+    </div>
+  </header>
+
+  <div id="view-ops">
+    <section class="hero" style="padding-bottom:10px;">
+      <div>
+        <div class="eyebrow">Intelligent Food Processing &amp; Optical Sorting</div>
+        <h1>Eight operators to run Key's <span>veryx-to-iso-flo-sorting</span> loop</h1>
+        <p class="lead">Each operator below is a real Key Technology workflow — analyzing 3D CAD food processing line layouts, VERYX BioPrint hyperspectral camera beam alignment, and Iso-Flo vibratory conveyor stroke tuning, scrubbing 500-line EHEDG &amp; USDA sanitary BOMs for IP69K washdown enclosure integrity, configuring RemoteMD IoT telemetry and French fry defect removal limits, and auditing ISO 9001 quality releases — handed to a team of specialist AI agents that works it end-to-end.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('roster-section').scrollIntoView({behavior:'smooth'})">View the Roster</button>
+          <button class="btn btn-ghost" onclick="runOperator('veryx_dfm')">Run Flagship Operator</button>
+        </div>
+      </div>
+
+      <div class="wafer">
+        <div class="wafer-top">
+          <span class="wafer-title">VERYX Digital Sorter Diagnostics</span>
+          <span class="wafer-val" id="yieldVal">99.9% Foreign Material Removal PASS</span>
+        </div>
+        <svg class="wafermap" viewBox="0 0 220 210" preserveAspectRatio="xMidYMid meet">
+          <circle class="wafer-outline" cx="110" cy="105" r="92"></circle>
+          <line class="wafer-grid-line" x1="20" y1="105" x2="200" y2="105"></line>
+          <line class="wafer-grid-line" x1="110" y1="15" x2="110" y2="195"></line>
+          <g id="dieGrid"></g>
+        </svg>
+        <div class="wafer-foot">
+          <span>Walla Walla Facility · Lot KEY-2608-POTATO</span>
+          <span id="binVal">Pass: EHEDG &amp; USDA Dairy</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="econ">
+      <div class="econ-item">
+        <div class="econ-num">99.9<small>%</small></div>
+        <div class="econ-label">Foreign material (FM) removal accuracy via VERYX BioPrint</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">Duravant<small> Member</small></div>
+        <div class="econ-label">Part of Duravant global family of operating companies</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">30<small> hrs</small></div>
+        <div class="econ-label">Median food line DFM &amp; optical sorter setup hours returned</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">8<small>/8</small></div>
+        <div class="econ-label">Workflows covered, CAD DFM through EHEDG sanitary release</div>
+      </div>
+    </div>
+
+    <section id="roster-section">
+      <div class="section-head">
+        <div>
+          <div class="section-title">The AI Workforce Roster</div>
+          <div class="section-sub">Grouped into Commercial &amp; Food Processing Tenders and Food Processing &amp; Optical Sorting Operations tracks. Click run on any operator to watch its agent team execute in real time.</div>
+        </div>
+      </div>
+
+      <div id="rosterContainer"></div>
+    </section>
+
+    <!-- Run Panel -->
+    <div class="run-panel" id="runPanel">
+      <div class="run-head">
+        <div>
+          <h3 id="runTitle">Running Operator...</h3>
+          <div class="meta" id="runSub">Simulated multi-agent execution feed</div>
+        </div>
+        <button class="close-run" onclick="closeRun()">✕ Close View</button>
+      </div>
+      <div class="progress-row" id="progressRow"></div>
+      <div class="feed" id="feedArea"></div>
+      <div class="deliverable" id="deliverableBox">
+        <h4 id="delivTitle">Review-Ready Output</h4>
+        <pre id="delivCode"></pre>
+        <div class="note">Human-in-the-loop oversight active. Outputs verified by Key Technology senior food processing engineering team. Illustrative simulation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="section-title">Add an AI Operator</div>
+          <div class="section-sub">Stand up a new AI operator in three steps: pick the workflow, assign each task to an agent via dropdown, then name it and set cadence.</div>
+        </div>
+      </div>
+
+      <div class="steps-bar" id="bSteps"></div>
+      <div id="bBody"></div>
+      <div class="bnav" id="bNav"></div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="foot-note">
+      <strong>Independent Concept Prototype</strong> prepared for a conversation with <strong>Key Technology (key.net)</strong>. It is not affiliated with, endorsed by, or built on Key Technology or Duravant systems or data. All operators, VERYX sorter camera profiles, Iso-Flo conveyor strokes, and EHEDG sanitary audits are illustrative simulations. A licensed food processing engineer, optical sorting specialist, or food safety manager reviews and approves every sorting line CAD model, sensor profile, and sanitary release.
+    </div>
+  </footer>
+</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'Potato Processing & Frozen Fruit Industry Market Intelligence', tools: ['research_food_tenders', 'save'] },
+  sorting_eng: { emoji: '🔬', label: 'Key Technology VERYX & Iso-Flo Mechanical Engineer', tools: ['analyze_sorting_flow', 'save'] },
+  vision_spec: { emoji: '⚡', label: 'BioPrint Hyperspectral & Pixel Fusion Sensor Specialist', tools: ['design_bioprint_vision', 'save'] },
+  sanitary_scrubber: { emoji: '📑', label: 'EHEDG, USDA Dairy, FDA & IP69K Component Specialist', tools: ['scrub_key_bom', 'save'] },
+  cost_eng: { emoji: '🧮', label: 'VERYX Laser Source, Stainless Frame & Air Ejector Costing Specialist', tools: ['calc_sorter_cost', 'save'] },
+  cloud_architect: { emoji: '☁️', label: 'RemoteMD IoT Telemetry & Duravant SCADA Portal Architect', tools: ['configure_duravant_cloud', 'save'] },
+  quality_auditor: { emoji: '🛡️', label: 'ISO 9001:2015, USDA & Food Safety Quality Auditor', tools: ['audit_food_safety', 'save'] },
+  supply_planner: { emoji: '📦', label: 'High-Speed Air Solenoid Valves, Optics & Drive Springs Planner', tools: ['plan_sorter_spares', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'Food Enterprise & Processed Potato RFP Solution Writer', tools: ['compose_doc', 'save'] },
+  qa_reviewer: { emoji: '✅', label: 'Senior Food Processing Engineering & Sorting Calibration Reviewer', tools: ['qa_review', 'save'] },
+  prospector: { emoji: '🧲', label: 'VP Food Processing Operations & French Fry Plant Director Prospector', tools: ['source_key_accounts', 'save'] },
+  sorter_spec: { emoji: '⚙️', label: 'VERYX Digital Sorter & Auto-Calibration Specialist', tools: ['program_veryx_sorter', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+const TRACKS = [
+  { key: 'commercial', title: 'Commercial & Food Processing Tenders' },
+  { key: 'operations', title: 'Food Processing & Optical Sorting Operations' }
+];
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Potato Processing, Frozen Fruit & Nut Fleet Scouting',
+    title: 'AI Food Automation Growth Scout',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Potato Processing & Frozen Fruit Opportunity Dossier',
+    desc: 'Maps major potato processors (McCain, Lamb Weston, Simplot), frozen fruit/vegetable packers, and nut/snack food processing plants.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan French fry sorting line expansions, frozen berry optical sorter RFPs, and snack food conveying tenders.', deps: [] },
+      { agent: 'prospector', task: 'Source VP Food Processing Operations, Plant Engineering Directors, and Quality Assurance Executives.', deps: [] },
+      { agent: 'sorting_eng', task: 'Score fit on Key Technology VERYX digital belt/chute sorters, Iso-Flo vibratory conveyors, and ADR defect trimmers.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce target food processing prospect dossier.', deps: [2] }
+    ]
+  },
+  quote: {
+    name: 'Custom VERYX Sorter & Iso-Flo Conveyor Line Quoting',
+    title: 'AI Food Processing Cost Specialist',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Key Technology VERYX & Iso-Flo Processing Line Quote Package',
+    desc: 'Models VERYX B175 belt sorter, BioPrint hyperspectral cameras, high-speed air ejector valves, and 30-meter Iso-Flo vibratory conveying deck.',
+    tasks: [
+      { agent: 'sorting_eng', task: 'Review processing throughput (15 metric tons/hr), product speed (3.0 m/s), and stainless steel 304/316L frame specs.', deps: [] },
+      { agent: 'cost_eng', task: 'Model BioPrint hyperspectral laser modules, air ejector solenoid manifold, Iso-Flo drive shakers, and Duravant integration labor.', deps: [0] },
+      { agent: 'supply_planner', task: 'Verify high-speed air valve stocks, optical grade quartz glass windows, and stainless conveyor bed availability.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Assemble formal Key Technology VERYX & Iso-Flo Processing Line Quote Package.', deps: [2] }
+    ]
+  },
+  tender: {
+    name: 'Global Food Enterprise & Processed Potato RFP Response',
+    title: 'AI Food Systems Solution Specialist',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Global Food Enterprise & Processed Potato RFP Response Package',
+    desc: 'Audits ISO 9001:2015 quality standards, EHEDG sanitary engineering rules, USDA Dairy/Food accepted design, and 99.9% FM removal SLAs.',
+    tasks: [
+      { agent: 'researcher', task: 'Parse French fry defect removal limits, foreign material zero-tolerance rules, and IP69K washdown specs.', deps: [] },
+      { agent: 'quality_auditor', task: 'Verify ISO 9001:2015, EHEDG certificates, USDA Dairy compliance, and Walla Walla, WA / Beuningen plant credentials.', deps: [0] },
+      { agent: 'cost_eng', task: 'Structure multi-site installation schedule backed by Duravant global operating company support network.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce formal Global Food Enterprise & Processed Potato RFP response package.', deps: [2] }
+    ]
+  },
+  intel: {
+    name: 'Global Food Safety & Digital Optical Sorting Radar',
+    title: 'AI Food Processing Market Intelligence',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Global Food Safety & Digital Optical Sorting Intelligence Brief',
+    desc: 'Tracks BioPrint hyperspectral sorting adoption, belt-fed vs chute-fed efficiency gains, and Duravant packaging ecosystem integration.',
+    tasks: [
+      { agent: 'researcher', task: 'Monitor global potato processing capex, frozen fruit quality standards, and digital sorter software updates.', deps: [] },
+      { agent: 'sorting_eng', task: 'Benchmark Key Technology VERYX Pixel Fusion sensor fusion against conventional monochromatic sorters.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile strategic food processing market intelligence brief.', deps: [0, 1] }
+    ]
+  },
+  veryx_dfm: {
+    name: 'VERYX BioPrint Sorter & Iso-Flo Conveyor DFM Scrub',
+    title: 'AI Digital Sorting DFM Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'VERYX BioPrint Sorter & Iso-Flo Conveyor DFM Review Package',
+    desc: 'Audits 3D CAD food line layouts, VERYX BioPrint hyperspectral camera alignment, Iso-Flo vibratory bed stroke, and IP69K washdown sealing.',
+    tasks: [
+      { agent: 'sorting_eng', task: 'Analyze Iso-Flo vibratory shaker stroke frequency (60 Hz) and smooth product bed transition to VERYX inspection belt.', deps: [] },
+      { agent: 'vision_spec', task: 'Calibrate BioPrint hyperspectral laser wavelength & Pixel Fusion camera geometry; verifies 99.9% FM removal.', deps: [0] },
+      { agent: 'sorter_spec', task: 'Configure VERYX auto-calibration routine and 256-channel high-speed air ejector valve firing timing.', deps: [1] },
+      { agent: 'quality_auditor', task: 'Audit EHEDG sanitary welds, USDA Dairy accepted drain angles, and IP69K high-pressure washdown seal integrity.', deps: [2] },
+      { agent: 'reviewer', task: 'QA food processing engineering findings and compile customer technical package.', deps: [3] },
+      { agent: 'proposal_writer', task: 'Produce final VERYX BioPrint Sorter & Iso-Flo Conveyor DFM Review Package.', deps: [4] }
+    ]
+  },
+  adr_setup: {
+    name: 'ADR French Fry Defect Removal & Camera Calibration Setup',
+    title: 'AI Optical Sorting & Vision Setup Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'ADR French Fry Defect Removal & Vision Setup Package',
+    desc: 'Calibrates ADR high-speed mechanical rotary cutters, sets potato strip defect length thresholds, and configures optical inspection cameras.',
+    tasks: [
+      { agent: 'sorter_spec', task: 'Program ADR optical camera recognition for sugar ends, hollow hearts, and black spot defects on 3.5 m/s potato strip belt.', deps: [] },
+      { agent: 'cloud_architect', task: 'Connect RemoteMD cloud IoT telemetry portal API for real-time defect counts, sorter uptime, and valve health tracking.', deps: [0] },
+      { agent: 'reviewer', task: 'Verify zero good product waste during 24-hour continuous potato strip sorting trial.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce ADR French Fry Defect Removal & Vision Setup Package.', deps: [2] }
+    ]
+  },
+  ehedg_audit: {
+    name: 'EHEDG, USDA Dairy & IP69K Sanitary Compliance Audit',
+    title: 'AI Food Safety & Hygiene Auditor',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'EHEDG & USDA Dairy Food Safety Release',
+    desc: 'Audits EHEDG hygienic design criteria, USDA Dairy accepted surface finishes (Ra < 0.8 µm), IP69K washdown enclosures, and FDA 21 CFR compliance.',
+    tasks: [
+      { agent: 'quality_auditor', task: 'Audit Walla Walla plant stainless steel 316L weld passivation, sloped drainage surfaces, and zero-bacteria traps.', deps: [] },
+      { agent: 'sanitary_scrubber', task: 'Verify 100% Certificate of Conformance (CoC) for food-grade elastomeric conveyor belts and NSF-certified lubricants.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile EHEDG & USDA Dairy Food Safety Release Brief.', deps: [0, 1] }
+    ]
+  },
+  spares_plan: {
+    name: 'VERYX Air Ejector Valves, Laser Optics & Iso-Flo Spring Arm Stock Plan',
+    title: 'AI Food Line Tooling & Spares Planner',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'VERYX Air Ejectors & Iso-Flo Spring Arm Safety Stock Plan',
+    desc: 'Secures high-speed pneumatic ejector valves, optical quartz glass windows, Iso-Flo composite spring arms, and drive motor spares for global depots.',
+    tasks: [
+      { agent: 'supply_planner', task: 'Evaluate air ejector solenoid cycle life (1 billion firings) and 90-day critical sorter spare parts buffer in Walla Walla.', deps: [] },
+      { agent: 'sanitary_scrubber', task: 'Execute raw material Certificate of Analysis (CoA) audit for stainless steel purity and food-contact compliance.', deps: [] },
+      { agent: 'cost_eng', task: 'Structure strategic spare parts inventory buffer to support enterprise French fry plant harvesting seasons.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce VERYX Air Ejectors & Iso-Flo Spring Arm Safety Stock Plan.', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'Potato Processing & Frozen Fruit Opportunity Dossier',
+  quote: 'Key Technology VERYX & Iso-Flo Processing Line Quote Package',
+  tender: 'Global Food Enterprise & Processed Potato RFP Response Package',
+  intel: 'Global Food Safety & Digital Optical Sorting Intelligence Brief',
+  veryx_dfm: 'VERYX BioPrint Sorter & Iso-Flo Conveyor DFM Review Package',
+  adr_setup: 'ADR French Fry Defect Removal & Vision Setup Package',
+  ehedg_audit: 'EHEDG & USDA Dairy Food Safety Release',
+  spares_plan: 'VERYX Air Ejectors & Iso-Flo Spring Arm Safety Stock Plan'
+};
+
+const TOOLS = {
+  research_food_tenders: () => 'Scanned potato processing expansions, frozen berry optical sorter RFPs, and snack conveying bids.',
+  source_key_accounts: () => 'Sourced verified VP Food Processing Operations and French Fry Plant Directors; deduped CRM.',
+  analyze_sorting_flow: () => 'Analyzed Iso-Flo 60Hz shaker stroke; optimized product presentation onto VERYX B175 inspection belt.',
+  design_bioprint_vision: () => 'Designed BioPrint hyperspectral laser geometry; achieved 99.9% foreign material (FM) identification accuracy.',
+  scrub_key_bom: () => 'Scrubbed 500-line food line BOM; verified 100% EHEDG compliance, USDA Dairy rating, and IP69K washdown specs.',
+  calc_sorter_cost: () => 'Calculated VERYX BioPrint sorter, Iso-Flo vibratory shaker, air ejector manifold, and Duravant integration margins.',
+  configure_duravant_cloud: () => 'Configured RemoteMD cloud IoT portal telemetry API for real-time sorter uptime, defect counts, and valve health.',
+  audit_food_safety: () => 'Audited EHEDG sanitary welds, USDA Dairy accepted sloped drain angles, and IP69K washdown seals (PASS).',
+  plan_sorter_spares: () => 'Cross-referenced air solenoid valve cycle life; secured 90-day material buffer in Walla Walla warehouse.',
+  program_veryx_sorter: () => 'Programmed VERYX auto-calibration routines and 256-channel high-speed air ejector firing pulses.',
+  compose_doc: () => 'Compiled food processing and optical sorting engineering metrics into clear, review-ready technical documentation.',
+  qa_review: () => 'Audited report completeness and checked EHEDG / USDA standards; ready for Key Technology VP Engineering sign-off.',
+  save: () => 'Saved deliverable artifact to shared project repository.'
+};
+
+function toolOut(t) { return (TOOLS[t] || (() => 'Executed successfully.'))(); }
+
+const FINAL = {
+  scout: `POTATO PROCESSING & FROZEN FRUIT OPPORTUNITY DOSSIER (illustrative)
+Target Sector: Processed Potato (French Fries & Chips), Frozen Fruit/Vegetables, Nuts & Snacks
+Target Location: Walla Walla, WA, Beuningen & Global Food Processing Facilities
+
+A-Tier Qualified Enterprise Opportunities:
+1. McCain Foods — Commercial French Fry Line Extension — Fit Score: 99/100
+   • Key Contacts: VP Global Food Processing Operations, Director of Engineering
+   • Requirement: High-Capacity VERYX BioPrint Belt Sorters & ADR Defect Trimming Lines
+2. Lamb Weston — Potato Processing Plant Automation — Fit Score: 97/100
+   • Key Contacts: Director of Processing Technology, Lead Quality Engineer
+   • Requirement: Iso-Flo Vibratory Conveyors & RemoteMD AI Analytics
+3. Simplot Food Group — Frozen Berry & Vegetable Processing Line — Fit Score: 95/100
+   • Key Contacts: Vice President Quality Assurance & Plant Safety
+   • Requirement: VERYX Chute Sorters with Pixel Fusion Camera/Laser Sensor Fusion
+
+Strategic Positioning:
+Highlight Key Technology 75+ year food equipment leadership, membership in Duravant family of operating companies, BioPrint hyperspectral sorting precision, and EHEDG/USDA Dairy hygienic design.
+
+NOTE: Illustrative simulation prepared for Key Technology (key.net).`,
+
+  quote: `KEY TECHNOLOGY VERYX & ISO-FLO PROCESSING LINE QUOTE PACKAGE (illustrative)
+Customer: McCain Foods / French Fry Processing Program
+Program: VERYX B175 Digital Sorter & Iso-Flo Conveyor System (2 Lines)
+Specifications: 15 Metric Tons/hr Throughput, BioPrint Hyperspectral, IP69K Stainless
+
+Commercial Breakdown:
+• Key Technology VERYX B175 Digital Belt Sorters (2 Sorters @ $210,000.00): $420,000.00
+• Iso-Flo Heavy-Duty Vibratory Conveyor Decks & Alignment Shakers: $95,000.00
+• ADR Automatic Defect Removal High-Speed Rotary Cutter Assemblies: $84,000.00
+• RemoteMD Cloud IoT Telemetry, Duravant System Integration & FAT Testing: $45,000.00
+
+Performance Return:
+• Foreign Material Removal: 99.9% Accuracy on Wood, Glass, Plastic, and Nightshade
+• Product Recovery: Zero Good Product False-Reject Waste
+• Sanitation Downtime: 45% Reduction in Washdown Time via EHEDG Open Frame Design
+
+Turnaround Time: 8 Weeks to Factory Acceptance Testing (FAT)
+
+NOTE: Illustrative simulation; pricing figures are placeholders.`,
+
+  tender: `GLOBAL FOOD ENTERPRISE & PROCESSED POTATO RFP RESPONSE PACKAGE (illustrative)
+Tender ID: US-WA-FOOD-KEY-2026-27
+Scope: Turnkey Digital Optical Sorting, Iso-Flo Conveying & Defect Trimming System
+
+Quality & Performance Verification:
+• Quality Management System: ISO 9001:2015 Certified Manufacturing Facilities
+• Hygienic Design Compliance: 100% EHEDG Certified & USDA Dairy Accepted Stainless Construction
+• Washdown Protection: IP65/IP69K Rated Sensor & Laser Enclosures
+• Corporate Ecosystem: Supported by Duravant global operating company network
+
+Technical Offer:
+• Global market leader in digital optical sorters and vibratory conveying for food processing.
+
+NOTE: Illustrative simulation; confirm against RFP specifications.`,
+
+  intel: `GLOBAL FOOD SAFETY & DIGITAL OPTICAL SORTING INTELLIGENCE BRIEF (illustrative)
+Focus: BioPrint Hyperspectral Imaging, Iso-Flo Sanitary Conveying & Duravant Synergies
+
+Key Insights:
+1. Hyperspectral vs RGB Cameras: BioPrint hyperspectral imaging detects biological composition variations, identifying invisible defects and foreign material that standard RGB cameras miss.
+2. Iso-Flo Vibratory Advantage: Key Technology Iso-Flo conveyors eliminate mechanical drives in the product zone, providing smooth product distribution with zero food buildup corners.
+3. Key Technology Platform Advantage:
+   - Complete single-source processing line integration: Conveying, optical sorting, and defect removal.
+   - Duravant global network offering worldwide installation, spares, and field engineering service.
+
+NOTE: Illustrative simulation.`,
+
+  veryx_dfm: `VERYX BIOPRINT SORTER & ISO-FLO CONVEYOR DFM REVIEW PACKAGE (illustrative · flagship)
+Program: High-Capacity Potato Processing & Sorting Line
+Factory: Walla Walla, Washington Manufacturing Facility
+
+Food Processing & Optical Findings:
+1. Iso-Flo Conveyor Presentation: Tuned 60 Hz shaker frequency; achieved uniform 1-layer potato strip distribution onto VERYX inspection belt.
+2. BioPrint Vision Calibration: Calibrated hyperspectral laser wavelengths; achieved 99.9% foreign material (FM) removal rate under full product load.
+3. Air Ejector Timing: Configured 256-channel solenoid manifold for 2-millisecond precise ejector pulses with zero false rejects.
+
+Quality & Regulatory Audit:
+• Sanitation Audit: EHEDG open-frame welds, sloped drainage angles, and IP69K washdown seals verified.
+• Food Safety Rating: ISO 9001:2015 and USDA Dairy accepted design cleared.
+
+Summary:
+ Key Technology sorting and conveying line design approved for build and FAT testing.
+
+NOTE: Illustrative simulation; review with Key Technology engineering team.`,
+
+  adr_setup: `ADR FRENCH FRY DEFECT REMOVAL & VISION SETUP PACKAGE (illustrative)
+Program: ADR Automatic Defect Removal & RemoteMD Cloud Telemetry
+
+System Setup Configuration:
+• Defect Recognition Rules: Programmed camera vision for sugar ends, internal discoloration, and dark spots on 3.5 m/s belt
+• Mechanical Rotary Cutters: Calibrated high-speed trimming wheel timing to excise defects with minimal yield loss
+• RemoteMD Telemetry: Connected Duravant SCADA IoT portal API for real-time line throughput and valve health tracking
+
+Outcome: ADR defect removal system validated for continuous enterprise potato processing.
+
+NOTE: Illustrative simulation.`,
+
+  ehedg_audit: `EHEDG & USDA DAIRY FOOD SAFETY RELEASE (illustrative)
+Production Assembly: Key Technology VERYX & Iso-Flo Line (#KEY-LINE-2026-18)
+Compliance Standard: EHEDG / USDA Dairy / FDA 21 CFR / IP69K / ISO 9001
+
+Audit Checklist Results:
+• Surface Roughness Test: Measured Ra < 0.6 µm on all product-contact stainless steel 316L beds - PASS
+• Bacteria Trap Inspection: Verified zero open threads, continuous radiused welds, and self-draining frames - PASS
+• IP69K Pressure Test: 1,500 PSI high-pressure hot water washdown test passed with zero ingress - PASS
+
+Outcome: EHEDG & USDA Dairy Food Safety Release Approved. Certificate of Compliance issued.
+
+NOTE: Illustrative simulation.`,
+
+  spares_plan: `VERYX AIR EJECTORS & ISO-FLO SPRING ARM SAFETY STOCK PLAN (illustrative)
+Scope: Walla Walla, Washington Central Food Equipment Depot
+
+Supply Strategy Breakdown:
+• High-Speed Air Solenoids: 90-day supply of 2-ms pulse air ejector valves in stock
+• Optical Quartz Windows: 25 replacement optical-grade quartz window panels stored in depot
+• Iso-Flo Composite Springs: 200 heavy-duty vibratory arm spring assemblies in reserve
+
+Outcome: Key Technology food processing line spares supply clear for continuous customer operations.
+
+NOTE: Illustrative simulation.`
+};
+
+let EMPLOYEES = [
+  { id: 'scout', name: 'Scout', title: 'AI Food Automation Scout', wf: 'scout', handled: 260, hrs: 80, win: 52, status: 'idle' },
+  { id: 'quote', name: 'Quote', title: 'AI Food Processing Cost Specialist', wf: 'quote', handled: 350, hrs: 152, win: 74, status: 'idle' },
+  { id: 'tender', name: 'Tender', title: 'AI Food Systems Specialist', wf: 'tender', handled: 170, hrs: 120, win: 64, status: 'idle' },
+  { id: 'intel', name: 'Radar', title: 'AI Food Processing Intelligence', wf: 'intel', handled: 200, hrs: 66, win: 42, status: 'idle' },
+  { id: 'veryx_dfm', name: 'VERYXDigitalSorterDFM', title: 'AI Digital Sorting DFM Specialist', wf: 'veryx_dfm', handled: 520, hrs: 300, win: 94, status: 'idle' },
+  { id: 'adr_setup', name: 'ADRDefectRemovalSetup', title: 'AI Optical Sorting & Vision Setup Specialist', wf: 'adr_setup', handled: 300, hrs: 145, win: 70, status: 'idle' },
+  { id: 'ehedg_audit', name: 'EHEDGSanitaryAudit', title: 'AI Food Safety & Hygiene Auditor', wf: 'ehedg_audit', handled: 440, hrs: 175, win: 84, status: 'idle' },
+  { id: 'spares_plan', name: 'SupplyPlanner', title: 'AI Food Line Tooling & Spares Planner', wf: 'spares_plan', handled: 260, hrs: 105, win: 0, status: 'idle' }
+];
+
+/* Render Functions */
+function drawWaferGrid() {
+  const grid = document.getElementById("dieGrid");
+  let rects = '';
+  for (let x = -8; x <= 8; x++) {
+    for (let y = -8; y <= 8; y++) {
+      if (x*x + y*y <= 60) {
+        const px = 110 + x * 10 - 4;
+        const py = 105 + y * 10 - 4;
+        const pass = (Math.abs(x*y) % 8 !== 3);
+        const fill = pass ? 'rgba(226, 0, 26, 0.45)' : 'rgba(6, 182, 212, 0.6)';
+        rects += `<rect x="${px}" y="${py}" width="8" height="8" rx="1.5" fill="${fill}"></rect>`;
+      }
+    }
+  }
+  grid.innerHTML = rects;
+}
+
+function renderRoster() {
+  const container = document.getElementById("rosterContainer");
+  let html = '';
+  TRACKS.forEach(tr => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === tr.key);
+    if (!list.length) return;
+    html += `<div class="track-label">${tr.title}</div><div class="roster">`;
+    html += list.map(empCard).join('');
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+}
+
+function empCard(e) {
+  const wf = WORKFLOWS[e.wf] || {};
+  const isFlag = wf.tag === 'flagship';
+  const team = (wf.tasks || []).map(t => t.agent).filter((v, i, a) => a.indexOf(v) === i).map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  return `
+    <div class="op-card ${isFlag ? 'flagship' : ''}" id="emp-${e.id}">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${e.name}</div>
+          <div class="op-role">${e.title}</div>
+        </div>
+        ${isFlag ? '<span class="flag-chip">★ FLAGSHIP OPERATOR</span>' : ''}
+      </div>
+      <div class="op-desc">${wf.desc || ''}</div>
+      <div class="op-agents">${team}</div>
+      <div class="op-stats">
+        <div class="op-stat"><b>${e.handled.toLocaleString()}</b> runs</div>
+        <div class="op-stat"><b>~${e.hrs} hrs</b> saved/mo</div>
+        <div class="op-stat"><b>+${e.win}%</b> speedup</div>
+      </div>
+      <div class="op-actions">
+        <button class="run-btn" onclick="runOperator('${e.wf}')">▶ Run ${e.name}</button>
+      </div>
+    </div>
+  `;
+}
+
+function setView(v) {
+  document.getElementById('view-ops').classList.toggle('hidden', v !== 'ops');
+  document.getElementById('view-hire').classList.toggle('hidden', v !== 'hire');
+  document.getElementById('tabA').classList.toggle('active', v === 'ops');
+  document.getElementById('tabB').classList.toggle('active', v === 'hire');
+  if (v === 'hire') initBuilder();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+let isRunning = false;
+async function runOperator(wfKey) {
+  if (isRunning) return;
+  isRunning = true;
+  const wf = WORKFLOWS[wfKey];
+  if (!wf) return;
+
+  const panel = document.getElementById("runPanel");
+  const title = document.getElementById("runTitle");
+  const sub = document.getElementById("runSub");
+  const progress = document.getElementById("progressRow");
+  const feed = document.getElementById("feedArea");
+  const deliv = document.getElementById("deliverableBox");
+
+  panel.classList.add("active");
+  deliv.classList.remove("show");
+  title.innerText = `Executing Operator: ${wf.name}`;
+  sub.innerText = `Mode: ${wf.mode.toUpperCase()} · ${wf.tasks.length} Specialist Agents`;
+
+  progress.innerHTML = wf.tasks.map((_, i) => `<div class="pstep" id="ps_${i}"></div>`).join('');
+  feed.innerHTML = '';
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  function addFeedLine(agentKey, txt, isDone = false) {
+    const role = AGENT_ROLES[agentKey] || { emoji: '🤖', label: agentKey };
+    const div = document.createElement('div');
+    div.className = `feed-line ${isDone ? 'done' : ''}`;
+    div.innerHTML = `<span class="tag">[${role.emoji} ${role.label}]</span><span class="txt">${txt}</span>`;
+    feed.appendChild(div);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  addFeedLine(wf.tasks[0].agent, `Initializing ${wf.name} autonomous workflow loop...`);
+  await new Promise(r => setTimeout(r, 600));
+
+  for (let i = 0; i < wf.tasks.length; i++) {
+    const t = wf.tasks[i];
+    const stepEl = document.getElementById(`ps_${i}`);
+    if (stepEl) stepEl.classList.add("active");
+
+    addFeedLine(t.agent, `Executing Task ${i+1}: ${t.task}`);
+    await new Promise(r => setTimeout(r, 800));
+
+    const role = AGENT_ROLES[t.agent];
+    if (role && role.tools) {
+      for (const tool of role.tools) {
+        addFeedLine(t.agent, `Invoked tool '${tool}( )' -> ${toolOut(tool)}`);
+        await new Promise(r => setTimeout(r, 600));
+      }
+    }
+
+    if (stepEl) {
+      stepEl.classList.remove("active");
+      stepEl.classList.add("complete");
+    }
+    addFeedLine(t.agent, `Task ${i+1} completed. Artifact saved to shared Key Technology project store.`, true);
+  }
+
+  await new Promise(r => setTimeout(r, 400));
+  document.getElementById("delivTitle").innerText = `Review-Ready Output · ${DTITLE[wfKey] || 'Deliverable'}`;
+  document.getElementById("delivCode").innerText = FINAL[wfKey] || "Execution completed successfully.";
+  deliv.classList.add("show");
+
+  isRunning = false;
+}
+
+function closeRun() {
+  document.getElementById("runPanel").classList.remove("active");
+}
+
+/* DYNEX BUILDER FLOW IMPLEMENTATION */
+let draft = {};
+function initBuilder() {
+  draft = { wf: null, mode: 'sequential', assign: [], name: '', title: '', cadence: 'Per project', step: 1 };
+  renderBuilder();
+}
+
+function renderBuilder() {
+  const steps = [['01', 'Pick a workflow'], ['02', 'Assign the agents'], ['03', 'Name & cadence']];
+  document.getElementById('bSteps').innerHTML = steps.map((s, i) => `
+    <div class="step-item ${draft.step === i + 1 ? 'active' : ''}">
+      <div class="step-num">${s[0]}</div>
+      <div class="step-lbl">${s[1]}</div>
+    </div>
+  `).join('');
+
+  if (draft.step === 1) bS1();
+  else if (draft.step === 2) bS2();
+  else bS3();
+  bNav();
+}
+
+function bS1() {
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 1: Choose Baseline Food Processing Workflow</label></div>
+    <div class="wf-grid">
+      ${Object.keys(WORKFLOWS).map(k => {
+        const w = WORKFLOWS[k];
+        return `
+          <div class="wf-card ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')">
+            <div class="wf-title">${w.name}</div>
+            <div class="wf-desc">${w.desc}</div>
+            <div class="wf-meta">${w.tasks.length} agents · ${w.mode}</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 2: Assign Each Task to a Specialist Agent</label></div>
+    ${w.tasks.map((t, i) => `
+      <div class="task-row">
+        <div class="tn">${i + 1}</div>
+        <div class="tt">
+          ${t.task}
+          ${t.deps.length ? `<span style="color:var(--muted-2);font-family:var(--font-mono);font-size:11px;"> · waits for step ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}
+        </div>
+        <select onchange="draft.assign[${i}]=this.value">${opts}</select>
+      </div>
+    `).join('')}
+    <div class="field" style="margin-top:16px;">
+      <label>Execution Mode</label>
+      <div class="seg">
+        ${['sequential', 'dag'].map(m => `
+          <button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (Parallel DAG)' : 'Sequential'}</button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 3: Name Operator &amp; Set Cadence</label></div>
+    <div class="field">
+      <label>Operator Name</label>
+      <input type="text" value="${draft.name}" placeholder="e.g. VERYX Digital Sorter Specialist" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Role Title</label>
+      <input type="text" value="${draft.title}" placeholder="e.g. Autonomous Food Processing Engineer" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Cadence</label>
+      <div class="seg">
+        ${['Per project', 'Per batch', 'Weekly', 'On-demand'].map(c => `
+          <button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>
+        `).join('')}
+      </div>
+    </div>
+    <div class="field" style="margin-top:20px;">
+      <label>Live Operator Card Preview</label>
+      <div id="previewCardArea"></div>
+    </div>
+  `;
+  renderPreview();
+}
+
+function renderPreview() {
+  const w = WORKFLOWS[draft.wf];
+  const area = document.getElementById('previewCardArea');
+  if (!area) return;
+  
+  const team = draft.assign.map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  area.innerHTML = `
+    <div class="op-card" style="max-width:440px;">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${draft.name || 'New Operator'}</div>
+          <div class="op-role">${draft.title || 'AI Operator'}</div>
+        </div>
+      </div>
+      <div class="op-desc">Owns <b>${w.name}</b> · ${draft.cadence} · ${draft.mode.toUpperCase()}</div>
+      <div class="op-agents">${team}</div>
+    </div>
+  `;
+}
+
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn btn-ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right = '';
+  if (draft.step === 1) right = `<button class="btn btn-primary" ${draft.wf ? '' : 'disabled'} onclick="draft.step=2;renderBuilder()">Next: Assign Agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn btn-primary" onclick="draft.step=3;renderBuilder()">Next: Name &amp; Cadence →</button>`;
+  else right = `<button class="btn btn-primary" onclick="hire()">✓ Add this AI Operator</button>`;
+
+  document.getElementById('bNav').innerHTML = left + right;
+}
+
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  
+  WORKFLOWS[wfId] = {
+    name: w.name,
+    title: draft.title || w.title,
+    mode: draft.mode || w.mode,
+    track: w.track,
+    deliverable: w.deliverable,
+    desc: w.desc,
+    tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps }))
+  };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({
+    id, name,
+    title: draft.title || w.title,
+    wf: wfId,
+    handled: 0,
+    hrs: Math.floor(Math.random() * 60) + 40,
+    win: 0,
+    status: 'idle'
+  });
+
+  renderRoster();
+  setView('ops');
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  drawWaferGrid();
+  renderRoster();
+});
+</script>
+</body>
+</html>
