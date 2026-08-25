@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>J.M. Huber Corporation — AI Commercial &amp; Operational Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#ffffff;
+  --surface:#e8f4f8;
+  --surface2:#d0e8f2;
+  --border:#cbd5e1;
+  --accent:#0083b7;
+  --accent-light:#1d8be5;
+  --accent-dark:#0055a0;
+  --navy-dark:#0c2340;
+  --accent-dim:rgba(0,131,183,.08);
+  --accent-line:rgba(0,131,183,.30);
+  --gold:#0083b7;
+  --gold-bg:#f0f8fb;
+  --gold-line:#9ed5eb;
+  --text:#0c2340;
+  --hi:#0c2340;
+  --tert:#64748b;
+  --ok:#16a34a;
+  --ok-dim:rgba(22,163,74,.10);
+  --blue:#0055a0;
+}
+body{background:var(--canvas);color:var(--text);font-family:Montserrat,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:2px solid var(--accent);position:sticky;top:0;background:#0083b7;color:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{min-width:42px;height:34px;padding:0 10px;border-radius:6px;background:#fff;display:flex;align-items:center;justify-content:center;color:#0083b7;font-weight:900;font-size:14px;letter-spacing:1px;white-space:nowrap;overflow:hidden;flex-shrink:0}
+.htitle{font-size:15px;font-weight:800;color:#fff;letter-spacing:.5px;text-transform:uppercase}.hsub{font-size:11px;color:#cbd5e1;margin-top:1px;font-weight:500;letter-spacing:.5px}
+.badge{border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:6px 12px;font-size:11px;color:#94a3b8}.badge b{color:#7dd4f7}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:600;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none;letter-spacing:.3px}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface);border-top:3px solid var(--accent)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.5;max-width:900px;margin-bottom:14px}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.commercial{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.operations{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.hero{background:var(--gold-bg);color:var(--accent);border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:24px;font-weight:700;color:var(--accent)}.cell .v .u{color:var(--accent-dark)}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--accent);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:"IBM Plex Sans Condensed",sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;letter-spacing:.2px}.emp-title{font-size:12px;color:var(--tert)}
+.emp-owns{font-size:12px;margin-bottom:10px}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:inherit;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:var(--accent-line)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--navy-dark);border-color:var(--navy-dark)}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent;color:var(--accent)}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert);letter-spacing:.3px}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.3px}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto;color:var(--hi)}
+.donebar{background:var(--surface);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;color:var(--text)}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:var(--accent-line)}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:14px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;letter-spacing:.3px}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 16px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5}
+@media(prefers-rounded-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="header">
+<div class="logo"><div class="mark">HUBER</div>
+<div><div class="htitle">J.M. Huber Corporation · AI Commercial &amp; Operational Workforce</div><div class="hsub">HUBER ENGINEERED WOODS · ZIP SYSTEM &amp; ADVANTECH · CP KELCO BIOPOLYMERS · MARTINAL ATH</div></div></div>
+<div class="badge">Independent concept &nbsp;·&nbsp; <b>illustrative</b></div>
+</header>
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>a J.M. Huber Corporation ZIP System sheathing, CP Kelco gellan gum biopolymer, Martinal ATH flame retardant, or rotary kiln calcination workflow turned into an autonomous team of agents</b>. One track wins the work: it finds pro lumberyards (Builders FirstSource, ABC Supply), global CPG food processors (Nestlé, PepsiCo), and cable polymer compounders seeking Huber ZIP System, CP Kelco, and Martinal ATH product lines, quotes turn-key wholesale industrial contracts, responds to national homebuilder master tenders, and tracks specialty engineered materials market intelligence. The other track delivers specialty materials manufacturing and operations: it qualifies ZIP System air/water barriers &amp; ATH flame retardants under ASTM E84, UL 94 V-0, &amp; ISO 9001 standards (water resistance &gt;14 days under 100 mph rain, flame spread &lt;25, smoke developed &lt;50, zero drip), optimizes OSB strand alignment yields &amp; rotary kiln calcination (99.4% thickness uniformity, purity &gt;99.6%), simulates rotary kiln calcination CFD thermal fluid &amp; heat transfer (1,100°C combustion, refractory temp &lt;1,150°C), and manages MDI resin binder &amp; acrylic tape ECO revisions. Point one at an industrial buyer account, a third-party ASTM E84 fire lab sheet, or a kiln telemetry G-code file and it runs the loop, then hands back a review-ready output for a VP of Commercial Building Products, Chief Formulator, or Quality Assurance Director to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial</span> find, quote, tender, win</span>
+<span><span class="tag operations">Specialty Materials Manufacturing &amp; Ops</span> ZIP Qual, Kiln Calcination Yield, Kiln CFD Thermal, ECO</span>
+<span><span class="tag hero">Flagship</span> the deepest example run</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+<div class="foot">Independent concept prototype prepared for a conversation with J.M. Huber Corporation (huber.com). It is not affiliated with, endorsed by, or built on J.M. Huber Corporation systems or data. All operators and outputs are illustrative simulations; industrial buyer accounts, rotary kiln calcination yields, wholesale quote schedules, ASTM E84 / UL 94 audits, and qualification reports are placeholders. A VP of Commercial Building Products, Chief Formulator, or Quality Assurance Director reviews and approves every quote, product qualification audit, calcination production lot release, fire safety check, and formula ECO file.</div>
+<script>
+const AGENT_ROLES={
+engineered_wood_sheathing_architect:{emoji:'🪵',label:'Huber ZIP System & AdvanTech Wood Polymer Architect',tools:['analyze_sheathing_water_barrier_moisture_permeability','save']},
+hydrocolloid_biopolymer_formulation_spec:{emoji:'🧪',label:'CP Kelco Gellan Gum & Pectin Rheology Specialist',tools:['verify_xanthan_gum_viscosity_gellan_gelation_ph','save']},
+iso9001_astm_e84_flame_retardant_auditor:{emoji:'📋',label:'ASTM E84, UL 94 & ISO 9001 Specialty Chemical Auditor',tools:['verify_ath_flame_retardancy_smoke_density_ul94_v0','save']},
+building_products_dealer_merchandising_spec:{emoji:'🏗️',label:'Lumberyard & Pro Dealer Channel Merchandising Lead',tools:['verify_pro_dealer_zip_system_tape_planogram_stocking','save']},
+cleanroom_chemical_calcination_packaging_spec:{emoji:'🧼',label:'High-Temperature Calcination & Silo Packaging Specialist',tools:['verify_ath_particle_size_d50_loss_on_ignition_moisture','save']},
+structural_flexural_shear_testing_spec:{emoji:'📊',label:'ASTM E72 & Structural Flexural Testing Lead',tools:['inspect_sheathing_wind_uplift_fastener_withdrawal_logs','save']},
+industrial_b2b_material_quoting_eng:{emoji:'🧮',label:'Global Industrial Materials & B2B Contract Quoting Lead',tools:['build_huber_quote','save']},
+bulk_chemical_freight_logistics_spec:{emoji:'🚚',label:'Bulk Powder Railcar & Overseas Container Logistics Lead',tools:['optimize_bulk_hopper_railcar_freight_telemetry','save']},
+eco_resin_wood_formula_revision_lead:{emoji:'🔄',label:'Wood Resin Binder & ATH Polymer Filler ECO Lead',tools:['eval_huber_eco','save']},
+mes_huber_connect_telemetry_spec:{emoji:'📡',label:'Huber MES & Automated Rotary Kiln Telemetry Specialist',tools:['inspect_calcination_furnace_temp_moisture_telemetry','save']},
+writer:{emoji:'✍️',label:'Technical Engineered Materials Proposal Writer',tools:['compose','save']},
+reviewer:{emoji:'✅',label:'Building Code & Chemical Safety Reviewer',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+const TRACKS=[['commercial','Commercial & Sales Activities'],['operations','Specialty Materials Manufacturing, R&D & Ops']];
+const WORKFLOWS={
+scout:{name:'Pro lumberyards, CPG food formulators & cable compounder discovery',title:'AI Opportunity Scout',mode:'dag',track:'commercial',deliverable:'Target Pro Lumberyards, CPG Food Formulators & Cable Compounder Discovery List',
+sample:'Identify commercial purchasing directors at national pro building material dealers (Builders FirstSource, ABC Supply), global CPG food & beverage processors (Nestlé, PepsiCo, Unilever), and wire & cable polymer compounders seeking Huber ZIP System, CP Kelco gellan gum, and Martinal ATH flame retardants.',
+desc:'Agents map industrial buyer leads, source VP of Commercial Building Procurement and Chief Formulator Officer, score annual volume potential ($15M+ per account), and build the target J.M. Huber sales pipeline.',
+tasks:[{agent:'engineered_wood_sheathing_architect',task:'Source pro lumberyard networks, CPG food processors, and flame-retardant plastics compounders.',deps:[]},
+{agent:'building_products_dealer_merchandising_spec',task:'Score accounts on annual engineered wood OSB volume, gellan gum rheology demand, and halogen-free ATH filler adoption.',deps:[0]},
+{agent:'writer',task:'Compile target industrial buyer lead list with key Chief Procurement Officer and Director of R&D contacts.',deps:[1]}]},
+quote:{name:'Turn-key 100,000 panel ZIP System & CP Kelco gellan gum contract quote',title:'AI Industrial Quoting Operator',mode:'sequential',track:'commercial',deliverable:'Turnkey 100,000 Panel ZIP System & CP Kelco Gellan Gum Quoting Proposal',
+sample:'Generate commercial proposal for 100,000 sheets of Huber ZIP System 7/16" Sheathing, 50,000 rolls of ZIP System Flash Tape, 50 MT of CP Kelco KELCOGEL Gellan Gum, and 200 MT of Martinal ATH Flame Retardants ($5.45M contract).',
+desc:'Agents confirm ICC-ES building code reports, FDA food-grade allergen compliance, bulk hopper railcar shipping allowances, and issue proposal.',
+tasks:[{agent:'engineered_wood_sheathing_architect',task:'Confirm material specs (ZIP System R-Sheathing 1.5", CP Kelco KELCOGEL Fine Mesh, Martinal OL-104 LEO ATH).',deps:[]},
+{agent:'cleanroom_chemical_calcination_packaging_spec',task:'Configure bulk super-sack packaging, moisture-barrier pallet stretch wrapping, and railcar loading protocols.',deps:[0]},
+{agent:'industrial_b2b_material_quoting_eng',task:'Structure volume tier pricing, bulk railcar freight allowance, regional distribution agreements, and 30-year warranty ($5,450,000 order).',deps:[1]},
+{agent:'writer',task:'Produce formal customer-ready J.M. Huber technical commercial proposal.',deps:[2]}]},
+tender:{name:'National residential builder & global food processor master tender',title:'AI Global Industrial Master Tender Operator',mode:'dag',track:'commercial',deliverable:'National Residential Builder & Global Food Processor Master Tender Response',
+sample:'Prepare 3-year master engineered wood sheathing and biopolymer supply agreement for a top-5 national residential homebuilder.',
+desc:'Agents verify ICC-ES ESR-1473 building code clearance, 99.8% railcar delivery SLA, ISO 9001 quality certification, and 24/7 technical field support, compiling master tender response.',
+tasks:[{agent:'mes_huber_connect_telemetry_spec',task:'Verify automated factory MES rotary kiln calcination logs, particle size distribution curves (D50), and Certificate of Analysis (COA) generation.',deps:[]},
+{agent:'bulk_chemical_freight_logistics_spec',task:'Structure bulk powder railcar dispatch, regional warehouse buffer inventory, and overseas ISO container logistics.',deps:[0]},
+{agent:'industrial_b2b_material_quoting_eng',task:'Structure 3-year tiered industrial material pricing, price index rebate caps, and dedicated technical service SLAs.',deps:[1]},
+{agent:'writer',task:'Generate comprehensive global industrial material master tender response.',deps:[2]}]},
+radar:{name:'Engineered wood, hydrocolloids & flame retardant market intelligence',title:'AI Industrial Market Intelligence',mode:'dag',track:'commercial',deliverable:'Engineered Wood, Hydrocolloids & Flame Retardant Market Intelligence Brief',
+sample:'Analyze global specialty materials manufacturers (LP Building Products, Georgia-Pacific, Kerry Group, Nabaltec, Albemarle) vs J.M. Huber Corporation.',
+desc:'Agents track competitor OSB sheathing moisture barrier patents, biopolymer fermentation yield trends, halogen-free ATH flame retardant demand, and raw material pricing.',
+tasks:[{agent:'structural_flexural_shear_testing_spec',task:'Gather competitor sheathing air leakage rates (ACH50), hydrocolloid gel strength (g/cm²), and ATH thermal decomposition temperatures.',deps:[]},
+{agent:'engineered_wood_sheathing_architect',task:'Highlight J.M. Huber\'s 140+ year legacy, integrated ZIP System air & water barrier technology, and CP Kelco fermentation expertise.',deps:[]},
+{agent:'writer',task:'Produce quarterly specialty engineered materials market intelligence and competitive positioning brief.',deps:[0,1]}]},
+panel_qualification:{name:'ZIP System sheathing air/water barrier & ATH flame retardancy qualification',title:'AI Material Quality Qualification Operator',mode:'dag',track:'operations',tag:'flagship',deliverable:'ZIP System Sheathing Air/Water Barrier & ATH Flame Retardancy Qualification Dossier',
+sample:'Execute 1,000-hour accelerated weathering and ASTM E84 / UL 94 V-0 flame test trial (water resistance >14 days under 100 mph wind-driven rain, flame spread index <25, smoke developed <50, zero drip) for ZIP System & Martinal ATH.',
+desc:'Agents audit OSB internal bond strength (>0.75 MPa), acrylic tape shear adhesion, ATH loss-on-ignition (LOI 34.5% H2O release @ 200°C), particle size D50 (1.5 µm ± 0.2 µm), and publish qualification dossier.',
+tasks:[{agent:'engineered_wood_sheathing_architect',task:'Simulate wood strand moisture swelling, resin crosslinking density, and polymer tape thermal cycling (-40°C to +80°C).',deps:[]},
+{agent:'iso9001_astm_e84_flame_retardant_auditor',task:'Audit ASTM E84 tunnel fire test certification, ICC-ES ESR-1473 code evaluation reports, and FDA GRAS food safety filings.',deps:[]},
+{agent:'structural_flexural_shear_testing_spec',task:'Audit structural racking shear strength (ASTM E72), fastener withdrawal load (>1,200 N), and air permeability (<0.02 L/s·m²).',deps:[0,1]},
+{agent:'reviewer',task:'QA official third-party laboratory fire test reports, CMM optical thickness scans, and LOI moisture loss certificates.',deps:[2]},
+{agent:'writer',task:'Produce complete J.M. Huber engineered materials qualification dossier.',deps:[3]}]},
+inverter_yield:{name:'Automated OSB strand alignment yield & ATH rotary kiln calcination test',title:'AI Material Operations Operator',mode:'sequential',track:'operations',deliverable:'Automated OSB Strand Alignment Yield & ATH Rotary Kiln Calcination Test Report',
+sample:'Calibrate continuous press hydraulic pressure (99.4% thickness uniformity) and high-temperature rotary kilns on Martinal ATH calcination line.',
+desc:'Agents analyze 100% board density profile (42 lb/ft³ ± 0.5), ATH crystal purity (>99.6%), and laser thickness gauge telemetry across 50,000 panel production run.',
+tasks:[{agent:'engineered_wood_sheathing_architect',task:'Analyze OSB flaker knife sharpness, MDI resin spray atomization, and thermal press curing cycles.',deps:[]},
+{agent:'structural_flexural_shear_testing_spec',task:'Perform 100% ultrasonic flaw detection and gravimetric moisture analysis across raw wood strand batches.',deps:[0]},
+{agent:'reviewer',task:'QA finished board and chemical lot release metrics against J.M. Huber factory quality standards.',deps:[1]},
+{agent:'writer',task:'Produce comprehensive OSB manufacturing yield and rotary kiln calcination report.',deps:[2]}]},
+thermal_simulation:{name:'Rotary kiln calcination CFD thermal fluid & heat transfer simulation',title:'AI Material CFD Thermal Operator',mode:'dag',track:'operations',deliverable:'Rotary Kiln Calcination CFD Thermal Fluid & Heat Transfer Simulation Strategy',
+sample:'Generate automated 3D CFD thermal fluid and combustion simulation for gas-fired rotary kilns operating at 1,100°C for specialty alumina calcination.',
+desc:'Agents configure natural gas burner combustion CFD, simulate radiant heat transfer to alumina bed, optimize kiln rotation speed (3.5 RPM), and prevent local sintering overheating.',
+tasks:[{agent:'hydrocolloid_biopolymer_formulation_spec',task:'Execute 3D Finite Element CFD thermal modeling across kiln refractory brick linings (ensuring gas temp remains <1,150°C).',deps:[]},
+{agent:'iso9001_astm_e84_flame_retardant_auditor',task:'Verify EPA Title V air emissions compliance, low-NOx burner performance, and thermal efficiency (>88%).',deps:[]},
+{agent:'writer',task:'Produce J.M. Huber rotary kiln thermal CFD calcination strategy documentation.',deps:[0,1]}]},
+mask_eco:{name:'MDI resin binder formula ECO & ZIP System tape acrylic revision control',title:'AI Material Revision Control Operator',mode:'sequential',track:'operations',deliverable:'MDI Resin Binder Formula ECO & ZIP System Tape Acrylic Revision Assessment',
+sample:'Evaluate ECO-2026-1350 (Upgrade ZIP System Tape Adhesive to Ultra-Low Temp -15°F Cold-Weather Acrylic & Reduce MDI Resin Consumption by 8% via Nano-Cellulose Reinforcement).',
+desc:'Agents evaluate adhesive shear strength logs, recalculate OSB internal bond FEA, verify VOC reduction, and update automated factory MES assembly travelers.',
+tasks:[{agent:'eco_resin_wood_formula_revision_lead',task:'Compare MDI resin binder BOM diffs, tape peel strength test logs, and ICC-ES evaluation specs.',deps:[]},
+{agent:'mes_huber_connect_telemetry_spec',task:'Update factory MES press control recipes, automated dosing pump calibration, and ERP item master BOMs.',deps:[0]},
+{agent:'writer',task:'Publish integrated J.M. Huber material ECO cut-over matrix and factory production traveler guide.',deps:[1]}]},
+};
+const DTITLE={
+scout:'Target Pro Lumberyards, CPG Food Formulators & Cable Compounder Discovery List',
+quote:'Turnkey 100,000 Panel ZIP System & CP Kelco Gellan Gum Quoting Proposal',
+tender:'National Residential Builder & Global Food Processor Master Tender Response',
+radar:'Engineered Wood, Hydrocolloids & Flame Retardant Market Intelligence Brief',
+panel_qualification:'ZIP System Sheathing Air/Water Barrier & ATH Flame Retardancy Qualification Dossier',
+inverter_yield:'Automated OSB Strand Alignment Yield & ATH Rotary Kiln Calcination Test Report',
+thermal_simulation:'Rotary Kiln Calcination CFD Thermal Fluid & Heat Transfer Simulation Strategy',
+mask_eco:'MDI Resin Binder Formula ECO & ZIP System Tape Acrylic Revision Assessment'
+};
+const TOOLS={
+source_semiconductor_accounts:()=>'Sourced pro lumberyard networks, CPG food processors & plastics compounders.',
+analyze_sheathing_water_barrier_moisture_permeability:()=>'Confirmed material specs (ZIP System R-1.5, CP Kelco KELCOGEL & Martinal ATH).',
+build_huber_quote:()=>'Structured volume tier pricing, bulk railcar freight allowance & regional distribution agreements.',
+verify_xanthan_gum_viscosity_gellan_gelation_ph:()=>'Simulated kiln refractory temperatures & biopolymer viscosity stability.',
+verify_ath_flame_retardancy_smoke_density_ul94_v0:()=>'Audited ASTM E84 tunnel fire test certs & ICC-ES ESR-1473 code evaluation reports.',
+verify_pro_dealer_zip_system_tape_planogram_stocking:()=>'Scored accounts on annual OSB volume & halogen-free ATH filler adoption.',
+verify_ath_particle_size_d50_loss_on_ignition_moisture:()=>'Configured bulk super-sack packaging & railcar loading protocols.',
+optimize_bulk_hopper_railcar_freight_telemetry:()=>'Structured bulk powder railcar dispatch & regional warehouse buffer inventory.',
+eval_huber_eco:()=>'Extracted MDI resin binder BOM diffs, tape peel strength logs & ICC-ES specs.',
+inspect_calcination_furnace_temp_moisture_telemetry:()=>'Verified automated factory MES rotary kiln calcination logs & particle size D50.',
+inspect_sheathing_wind_uplift_fastener_withdrawal_logs:()=>'Performed 100% ultrasonic flaw detection across raw wood strand batches.',
+compose:()=>'Drafted in a clear, specialty engineered materials, ASTM & ICC-ES standards-aware style, review-ready.',
+qa_review:()=>'QA: Official third-party laboratory fire test reports & CMM optical thickness scans checked.',
+save:()=>'Saved to shared context for downstream agents.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+const FINAL={
+scout:`TARGET PRO LUMBERYARDS, CPG FOOD FORMULATORS & CABLE COMPOUNDER DISCOVERY LIST (illustrative)
+Scanned commercial purchasing directors at national pro lumberyards, CPG food processors, and plastics compounders.
+
+A-Tier Priority Specialty Engineered Materials Target Accounts:
+1. National Pro Building Material Dealer (ZIP System Sheathing & AdvanTech Subflooring) — Fit Score: 99
+2. Global CPG Food & Beverage Processor (CP Kelco KELCOGEL Gellan Gum & Pectin) — Fit Score: 98
+3. Premier Wire & Cable Polymer Compounder (Martinal Halogen-Free ATH Flame Retardants) — Fit Score: 96
+4. Top-10 National Residential Homebuilder (System Integrated ZIP System Air & Water Barriers) — Fit Score: 95
+
+Key Decision Makers: Chief Procurement Officer, VP of Commercial Building Products, Director of Formulations R&D.
+→ Saved: target_huber_accounts, material_specs, fit_scores
+NOTE: illustrative; not affiliated with J.M. Huber Corporation (huber.com).`,
+quote:`TURNKEY 100,000 PANEL ZIP SYSTEM & CP KELCO GELLAN GUM QUOTING PROPOSAL (illustrative)
+Client Partner: National Pro Building Material Dealer
+Scope: 100,000 Sheets ZIP System 7/16" Sheathing + 50,000 Rolls Flash Tape + 50 MT CP Kelco Gellan Gum
+
+Engineered Materials & Chemical Packaging Manifest
+• Engineered Wood Line: Huber ZIP System 7/16" OSB Sheathing with Integrated Water-Resistant Barrier
+• Weatherization Hardware: ZIP System Acrylic Flashing Tape & High-Performance Stretch Tape
+• CP Kelco Biopolymer Line: KELCOGEL Fine Mesh Gellan Gum (Food & Pharma Grade)
+• Flame Retardant Line: Martinal OL-104 LEO Precipitated Alumina Trihydrate (Halogen-Free ATH)
+
+Pricing & Logistics Schedule
+• Total Turnkey Contract Value (100,000 Sheets + Tape + Gellan Gum + Railcar Freight + 30-Yr Warranty): $5,450,000.00
+• Shipping & Distribution SLA: Bulk railcar & flatbed truck direct delivery to 15 regional distribution hubs
+→ Saved: huber_material_quote, railcar_manifest
+NOTE: illustrative.`,
+tender:`NATIONAL RESIDENTIAL BUILDER & GLOBAL FOOD PROCESSOR MASTER TENDER RESPONSE (illustrative)
+RFP Reference: 3-Year Master Specialty Materials Supply & Technical Service Agreement
+
+Building Code & Product Quality SLA
+• Air & Water Permeability: Guaranteed <0.02 L/s·m² air leakage rate with continuous 14-day water resistance.
+• Building Code Clearance: 100% compliant with ICC-ES ESR-1473 code evaluation reports across all US jurisdictions.
+• Delivery SLA: Guaranteed 99.8% on-time railcar and flatbed fleet fulfillment.
+
+Master Commercial Terms
+• Guaranteed Volume Rebate SLA: Tiered volume pricing with 30-year limited warranty protection.
+→ Saved: national_huber_tender, icces_code_certificate
+NOTE: illustrative.`,
+radar:`ENGINEERED WOOD, HYDROCOLLOIDS & FLAME RETARDANT MARKET INTELLIGENCE BRIEF (illustrative)
+Specialty Materials Industry Trends
+• Integrated Sheathing Adoption: Accelerated shift from traditional housewrap to ZIP System integrated barriers (+28% YoY).
+• Halogen-Free Flame Retardants: High demand for eco-friendly Martinal ATH in electric vehicle and cable insulation.
+
+J.M. Huber Corporation Market Leadership
+• 140+ Year Engineering Pedigree: Global leader with strong ESG, zero landfill, and proprietary material patents.
+• Dual-Division Strength: Unmatched capability spanning engineered wood panels and CP Kelco bio-based hydrocolloids.
+→ Saved: huber_intel_brief, competitive_positioning
+NOTE: illustrative.`,
+panel_qualification:`ZIP SYSTEM SHEATHING AIR/WATER BARRIER & ATH FLAME RETARDANCY QUALIFICATION DOSSIER (illustrative · flagship)
+Target System: Huber ZIP System Sheathing & Martinal ATH Flame Retardant
+Testing Standard: ASTM E84 Tunnel Fire Test, UL 94 V-0, & Accelerated Weathering Laboratory Audit
+
+Factory Analytical & Fire Test Results
+• ASTM E84 Flame Spread Index: Measured flame spread @ 18 with smoke developed @ 35 (Exceeds Class A spec).
+• Water Barrier Durability: Zero liquid water penetration after 14 days continuous 100 mph wind-driven rain testing.
+• Structural Racking Shear: Structural racking capacity verified @ 1,480 lb/ft (Exceeds ASTM E72 requirements).
+• Flame Retardant LOI Release: Martinal ATH endothermic water release confirmed @ 34.5% @ 200°C (Zero toxic smoke).
+
+QA Sign-Off
+• Verified by VP of Building Products R&D & Quality Assurance Director. Cleared for commercial distribution.
+→ Saved: huber_qualification_dossier, astm_fire_lab_data
+NOTE: illustrative; confirm against customer specialty material specifications.`,
+inverter_yield:`AUTOMATED OSB STRAND ALIGNMENT YIELD & ATH ROTARY KILN CALCINATION TEST REPORT (illustrative)
+Testing Laboratory: J.M. Huber Specialty Materials Testing Center (Atlanta, Georgia USA)
+Target Equipment: Continuous Hydraulic Press Array & High-Temperature Rotary Calcination Kiln
+
+Manufacturing Calibration Results
+• OSB Thickness Uniformity: Hydraulic press continuous profile achieved 99.42% thickness precision.
+• ATH Chemical Purity: Rotary kiln calcination yielded 99.68% pure alumina trihydrate crystal structure.
+• Board Density Profile: Measured mean density @ 42.4 lb/ft³ ± 0.3 lb/ft³ across 50,000 panel production lot.
+
+Release Status: Certified under ICC-ES ESR-1473 and ISO 9001 specs; cleared for volume shipment release.
+→ Saved: huber_osb_yield_report, kiln_calcination_logs
+NOTE: illustrative.`,
+thermal_simulation:`ROTARY KILN CALCINATION CFD THERMAL FLUID & HEAT TRANSFER SIMULATION STRATEGY (illustrative)
+Simulated System: Gas-Fired High-Temperature Rotary Calcination Kiln for Alumina Trihydrate
+Operating Environment: Continuous Calcination at 1,100°C Operating Temperature under 3.5 RPM Kiln Rotation
+
+3D CFD Thermal & Fluid Simulation Results
+• Refractory Temp Distribution: CFD thermal modeling established refractory brick surface temp @ 1,120°C (Safely <1,150°C rating).
+• Bed Heat Conduction: Radiant heat transfer to alumina bed achieved 99.1% uniform calcination conversion.
+• Low-NOx Emission Rate: Gas combustion modeling confirmed EPA Title V compliance with 14% NOx reduction.
+
+Output: 3D CFD thermal calcination strategy validated for high-capacity rotary kiln production release.
+→ Saved: huber_cfd_strategy, thermal_calcination_contours
+NOTE: illustrative.`,
+mask_eco:`MDI RESIN BINDER FORMULA ECO & ZIP SYSTEM TAPE ACRYLIC REVISION ASSESSMENT (illustrative)
+Engineering Change Order: ECO-2026-1350
+Affected Product: ZIP System Flashing Tape & OSB Board Assembly (Rev C -> Rev D)
+
+Change Scope & Material Upgrade
+• Cold-Weather Acrylic Adhesive: Upgraded ZIP System tape adhesive to ultra-low temperature -15°F installation formula.
+• Nano-Cellulose Resin Binder: Reduced MDI resin consumption by 8% via nano-cellulose reinforced wood binder.
+
+Factory Assembly Cut-Over Schedule
+• Press Dosing Calibration: Updated automated resin pump flow meters and thermal curing press timers.
+• ERP Item Master BOMs: Updated wood binder formulations, tape coating specs, and ICC-ES evaluation records.
+→ Saved: huber_eco_matrix, rev_d_osb_traveler
+NOTE: illustrative.`,
+};
+let EMPLOYEES=[
+{id:'scout',name:'Scout',title:'AI Opportunity Scout',wf:'scout',handled:616,hrs:230,win:0,status:'idle'},
+{id:'quote',name:'Quote',title:'AI Industrial Quoting Operator',wf:'quote',handled:536,hrs:254,win:86,status:'idle'},
+{id:'tender',name:'Tender',title:'AI Global Industrial Master Operator',wf:'tender',handled:390,hrs:274,win:91,status:'idle'},
+{id:'radar',name:'Radar',title:'AI Industrial Market Intel',wf:'radar',handled:438,hrs:204,win:57,status:'idle'},
+{id:'safety',name:'Sentinel',title:'AI Material Quality Qualification Operator',wf:'panel_qualification',handled:426,hrs:346,win:98,status:'idle'},
+{id:'mill',name:'Atlas',title:'AI Material Operations Operator',wf:'inverter_yield',handled:474,hrs:262,win:94,status:'idle'},
+{id:'cfd',name:'Vanguard',title:'AI Material CFD Thermal Operator',wf:'thermal_simulation',handled:424,hrs:242,win:85,status:'idle'},
+{id:'eco',name:'Nexus',title:'AI Material Revision Operator',wf:'mask_eco',handled:426,hrs:248,win:90,status:'idle'},
+];
+let running=false;
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const now=()=>new Date().toLocaleTimeString('en-GB');
+const mono=n=>n.trim().slice(0,2).toUpperCase();
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Commercial</span>';if(wf.track==='operations')s+='<span class="tag operations">Specialty Materials Manufacturing &amp; Ops</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+function setView(v){
+$('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');
+$('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');
+if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderEcon(){
+const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);
+const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;
+const cells=[[total,'AI operators (commercial + specialty materials manufacturing & ops)'],[h.toLocaleString(),'quotes, ASTM fire audits & kiln yield runs handled'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','building products VP & chief formulator hours saved / month'],['+'+avg+'%','avg turnaround improvement']];
+$('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');
+}
+function empCard(e){const wf=WORKFLOWS[e.wf];
+const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');
+return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}">
+<div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div>
+<div class="emp-owns">Owns: <b>${wf.name}</b></div>
+<div class="team">${team}</div>
+<div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'—'}</b>faster</div></div>
+<div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a project / RFQ</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;
+}
+function renderRoster(){
+const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;
+let html='';
+TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;
+html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});
+const untracked=EMPLOYEES.filter(e=>!WORKFLOWS[e.wf].track);
+if(untracked.length)html+=`<div class="slabel">Other</div><div class="roster">`+untracked.map(empCard).join('')+`</div>`;
+$('roster').innerHTML=html;
+}
+function assign(id){
+if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+$('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div>
+<div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at an industrial buyer account, a third-party ASTM E84 fire lab sheet, or a kiln telemetry G-code file and ${e.name} runs the whole loop.</div></div></div>
+<div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div>
+<div id="stage"></div></div>`;
+$('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();
+}
+async function runEmp(id){
+if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;
+e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');
+const stage=$('stage');
+stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div>
+<div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div>
+<div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;
+const feed=$('feed');
+function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;
+const row=document.createElement('div');row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,150)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}
+log(null,`Input received: "${obj.substring(0,54)}…"`);
+log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);
+await sleep(rand(700,1100));
+const grid=$('agrid');
+wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;
+c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;
+grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});
+await sleep(600);
+$('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');
+const done=new Set();
+async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);
+c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';
+log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));
+for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}
+c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}
+if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}
+else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;
+if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}
+$('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');
+await sleep(400);
+const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(6,44);
+$('resultArea').innerHTML=`<div class="result"><div class="rstats">
+<div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div>
+<div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div>
+<div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'Commercial & Sales':'Specialty Materials Manufacturing & Ops'}</span></div>
+<div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div>
+<div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div>
+<div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div>
+<div class="donebar"><b>${e.name} produced a review-ready output.</b> Execution, material testing and QA complete, ready for a VP of Commercial Building Products, Chief Formulator, or Quality Assurance Director to review and confirm. Illustrative simulation placeholder.</div>`;
+e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;
+}
+// builder
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per industrial project',step:1};renderBuilder();}
+function renderBuilder(){
+const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];
+$('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();
+}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+
+Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+
+w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+
+`<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;
+document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div>
+<div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. Huber Materials Operator" oninput="draft.name=this.value"></div>
+<div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Specialty Materials Specialist" oninput="draft.title=this.value"></div>
+<div class="field"><label>Cadence</label><div class="seg">`+['Per industrial project','Per calcination production lot','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div>
+<div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;
+let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();
+const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};
+DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];
+const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});
+renderEcon();renderRoster();setView('ops');
+setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);
+}
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
