@@ -175,3 +175,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/kollmorgen
 https://innvonix-tech-solutions.github.io/ai-workforce/key-technology
 https://innvonix-tech-solutions.github.io/ai-workforce/yaskawa-motoman
 https://innvonix-tech-solutions.github.io/ai-workforce/voltserver
+https://innvonix-tech-solutions.github.io/ai-workforce/dreyerkliche
