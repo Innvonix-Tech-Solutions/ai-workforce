@@ -182,3 +182,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/navitas
 https://innvonix-tech-solutions.github.io/ai-workforce/indie-ai
 https://innvonix-tech-solutions.github.io/ai-workforce/skywater
 https://innvonix-tech-solutions.github.io/ai-workforce/alpha-omega
+https://innvonix-tech-solutions.github.io/ai-workforce/cdf
