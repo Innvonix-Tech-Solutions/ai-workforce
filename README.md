@@ -180,3 +180,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/maxlinear
 https://innvonix-tech-solutions.github.io/ai-workforce/lattice
 https://innvonix-tech-solutions.github.io/ai-workforce/navitas
 https://innvonix-tech-solutions.github.io/ai-workforce/indie-ai
+https://innvonix-tech-solutions.github.io/ai-workforce/skywater
