@@ -178,3 +178,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/voltserver
 https://innvonix-tech-solutions.github.io/ai-workforce/dreyerkliche
 https://innvonix-tech-solutions.github.io/ai-workforce/maxlinear
 https://innvonix-tech-solutions.github.io/ai-workforce/lattice
+https://innvonix-tech-solutions.github.io/ai-workforce/navitas
