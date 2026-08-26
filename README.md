@@ -177,3 +177,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/yaskawa-motoman
 https://innvonix-tech-solutions.github.io/ai-workforce/voltserver
 https://innvonix-tech-solutions.github.io/ai-workforce/dreyerkliche
 https://innvonix-tech-solutions.github.io/ai-workforce/maxlinear
+https://innvonix-tech-solutions.github.io/ai-workforce/lattice
