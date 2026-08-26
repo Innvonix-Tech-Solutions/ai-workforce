@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Navitas Semiconductor &mdash; AI Commercial &amp; Power Semiconductor Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f0faf8;--surface2:#ceefe8;--border:#96e2d3;--accent:#00a887;
+--accent-dim:rgba(0,168,135,.09);--accent-line:rgba(0,168,135,.35);--slate:#07172b;--slate-line:rgba(7,23,43,.32);--text:#0f172a;--hi:#020617;--tert:#64748b;--ok:#0284c7;--ok-dim:rgba(2,132,199,.10);--gold:#d97706;--gold-bg:#fffbeb;--gold-line:#fde68a}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Montserrat,Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:38px;height:34px;border-radius:8px;background:linear-gradient(135deg,#07172b,#00a887);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:16px;letter-spacing:.5px}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#007a62}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none;font-family:Montserrat,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:900px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#007a62;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(2,132,199,.08);color:var(--ok);border:1px solid rgba(2,132,199,.3)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#007a62}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#007a62;font-size:15px;flex-shrink:0;position:relative;font-family:Montserrat,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#00a887}.btn.primary{background:#007a62;border-color:#007a62;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#007a62;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#007a62}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(2,132,199,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(2,132,199,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#00a887}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Montserrat,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#007a62;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px;font-family:Inter,sans-serif}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:99px;padding:11px 16px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff;font-weight:700}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5;font-family:Inter,sans-serif}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="header">
+<div class="logo"><div class="mark">NVTS</div>
+<div><div class="htitle">Navitas Semiconductor &middot; AI Commercial &amp; GaN/SiC Power Workforce</div><div class="hsub">AI operators for GaNFast&trade; power ICs, GeneSiC&trade; SiC MOSFETs, GaNSense&trade; protection, and AI data center PSUs (Torrance, CA)</div></div></div>
+<div class="badge">Independent concept &nbsp;&middot;&nbsp; <b>illustrative</b></div>
+</header>
+
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>a GaNFast&trade; power IC, GeneSiC&trade; 1200V MOSFET, or AI data center PSU engineering workflow turned into an autonomous team of agents</b>. Navitas Semiconductor Corporation (NASDAQ: NVTS, Torrance, California HQ with R&amp;D in Dublin &amp; Shanghai) is the pure-play leader in next-generation GaN and SiC power semiconductors under the banner &ldquo;Electrify Our World&trade;&rdquo;. One track drives commercial sourcing &amp; AI data center/EV OEM relationships: it captures AI Data Center PSU Manufacturers (Delta Electronics, Lite-On, Seasonic, Supermicro), EV Onboard Charger OEMs (Tesla, Hyundai/Kia, BYD, BorgWarner), and Solar &amp; ESS Inverter Makers (Enphase, SolarEdge, Sungrow), quotes GaNFast&trade; IC &amp; GeneSiC&trade; module volume orders, structures 22kW 800V EV onboard charger proposals, and highlights Navitas' GaNSense&trade; autonomous protection, 80+ Titanium PSU efficiency, and TSMC GaN wafer fab scale. The other track delivers power semiconductor engineering precision: it designs 3.2kW 80+ Titanium AI Data Center GaNFast&trade; PSUs (97.6% efficiency at 100 W/in&sup3; power density), optimizes 22kW 800V EV onboard charger GeneSiC&trade; SiC MOSFET modules (99.1% efficiency), tests GaNSense&trade; autonomous short-circuit protection (&lt; 30 ns fault-to-shutdown response), and audits Torrance CA wafer prober &amp; high-voltage ATE yields (Cpk = 1.84). Point one at a power circuit schematic, an AI data center PSU spec or a wafer probe log and it runs the loop, then hands back a review-ready output for a person to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial &amp; Data Center Sourcing</span> find, GaNFast/GeneSiC quote, EV 800V proposal</span>
+<span><span class="tag operations">GaN &amp; SiC Power Semiconductor Eng</span> AI 3.2kW PSU design, EV 22kW SiC module, GaNSense protection, Torrance fab yield</span>
+<span><span class="tag hero">Flagship</span> the deepest example run</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+
+<div class="foot">Independent concept prototype prepared by Innvonix Tech Solutions for a conversation with Navitas Semiconductor Corporation (Torrance, CA). It is not affiliated with, endorsed by, or built on Navitas Semiconductor systems or data. All operators and outputs are illustrative simulations; GaNFast 80+ Titanium efficiency numbers, GeneSiC 1200V RDS(ON) junction temps, GaNSense protection latencies, Torrance fab ATE yields and commercial quotes are placeholders. A chief executive officer, VP of engineering, fab operations director or chief power electronics architect reviews and approves every power IC schematic, GaNSense protection layout, Torrance validation traveler and commercial OEM proposal. This is not a production system and produces no deliverable for a real customer.</div>
+
+<script>
+const AGENT_ROLES={
+researcher:{emoji:'🔎',label:'GaN, SiC, AI Data Center & EV Power Research',tools:['research','save']},
+prospector:{emoji:'🧲',label:'AI Data Center, EV Charger & Solar OEM Sourcing',tools:['source_accounts','save']},
+qualifier:{emoji:'🎯',label:'GaNFast™, GeneSiC™ & GaNSense™ Qualifier',tools:['score_fit','save']},
+gan_power_ic_arch:{emoji:'⚡',label:'GaNFast™ & GaNSafe™ Power IC Architect',tools:['design_gan_power_ic','simulate_switching_efficiency','save']},
+sic_high_voltage_spec:{emoji:'🔋',label:'GeneSiC™ High-Voltage SiC MOSFET Specialist',tools:['simulate_sic_rdson_junction_temp','verify_high_pot_isolation','save']},
+gansense_protection_eng:{emoji:'🛡️',label:'GaNSense™ On-Chip Sensing & Protection Spec',tools:['simulate_short_circuit_response','audit_lossless_current_sensing','save']},
+semiconductor_process_eng:{emoji:'🔬',label:'TSMC GaN & GeneSiC Wafer Fab Lead',tools:['inspect_epitaxial_defect_density','audit_packaging_thermal_rth','save']},
+throughput:{emoji:'🤖',label:'Automated Power Wafer Probing & High-Volt Opt',tools:['verify_power_die_yield','calculate_takt_time','save']},
+compliance:{emoji:'📋',label:'Automotive AEC-Q100/101, 80+ Titanium & UL Lead',tools:['check_compliance','save']},
+pricing:{emoji:'🧮',label:'GaNFast IC & GeneSiC MOSFET Volume Quoting',tools:['build_quote','save']},
+writer:{emoji:'✍️',label:'Power Semiconductor Datasheet & App Note Writer',tools:['compose','save']},
+reviewer:{emoji:'✅',label:'QA & Final Power Semiconductor Release Reviewer',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+
+const TRACKS=[['commercial','Commercial &amp; Data Center Sourcing'],['operations','GaN &amp; SiC Power Semiconductor Eng']];
+
+const WORKFLOWS={
+scout:{name:'AI data center, EV charger & solar inverter partner discovery',title:'AI Navitas Scout',mode:'dag',track:'commercial',deliverable:'Target AI Data Center, EV & Solar OEM Account List',
+sample:'Find AI Data Center PSU Manufacturers (Delta Electronics, Lite-On, Seasonic, Supermicro), EV Onboard Charger OEMs (Tesla, Hyundai/Kia, BYD, BorgWarner), Solar & ESS Inverter Makers (Enphase, SolarEdge, Sungrow), and Fast Charger OEMs needing GaNFast™, GeneSiC™, and GaNSafe™ ICs.',
+desc:'Agents scan AI data center 80+ Titanium PSU requirements, 800V EV onboard charger roadmaps, and residential solar inverter designs, map VP of Power Electronics, Chief Hardware Architect, score fit, and compile target list.',
+tasks:[{agent:'researcher',task:'Map AI data center 3.2kW - 12kW PSU power density demand (100 W/in³), 800V EV 22kW OBC specs, and 1500V solar inverter SiC requirements.',deps:[]},
+{agent:'prospector',task:'Source VP of Power Systems Engineering, Chief Power Electronics Architect, and Head of Semiconductor Procurement at server & EV leaders.',deps:[]},
+{agent:'qualifier',task:'Score fit against Navitas capabilities: GaNFast™ integrated ICs, GeneSiC™ 1200V MOSFETs, GaNSense™ <30ns protection, Torrance CA labs.',deps:[0,1]},
+{agent:'writer',task:'Compile the ranked target power semiconductor account list with power specs, volume IC projections, and commercial engagement strategy.',deps:[2]}]},
+
+power_ic_volume_quote:{name:'GaNFast™ & GeneSiC™ power IC volume quoting',title:'AI Power IC Quoting Estimator',mode:'sequential',track:'commercial',deliverable:'GaNFast & GeneSiC Power IC Quote Package',
+sample:'An AI data center PSU OEM uploaded an RFQ: 3.2kW 80+ Titanium PSU, 650V GaNFast ICs + 1200V GeneSiC SiC MOSFETs, 300,000 units/year. Calculate TSMC GaN wafer fab cycle time, QFN package cost, and volume price.',
+desc:'Agents parse customer AI data center PSU RFQ, calculate 650V GaNFast™ & 1200V GeneSiC™ die size, model TSMC GaN wafer fab line cycle time, QFN package cost, and generate quote package.',
+tasks:[{agent:'qualifier',task:'Parse customer AI data center PSU RFQ: 650V GaNFast™ IC set + 1200V / 40mΩ GeneSiC™ SiC MOSFETs for 3.2kW Titanium PSU, 300,000 units/year.',deps:[]},
+{agent:'gan_power_ic_arch',task:'Calculate GaNFast™ IC & GeneSiC™ die size: integrated GaNSense™ protection, 5x6mm PQFN packaging, sub-15 mW standby power.',deps:[0]},
+{agent:'semiconductor_process_eng',task:'Estimate TSMC GaN-on-Si & GeneSiC wafer fab manufacturing cycle time: epitaxy growth, copper pillar flip-chip assembly, automated high-pot testing.',deps:[1]},
+{agent:'pricing',task:'Structure volume pricing model: unit IC set price, NRE mask fee, volume tier discount (26% for 300,000+ units), and Torrance dispatch SLA.',deps:[2]},
+{agent:'writer',task:'Produce the GaNFast & GeneSiC Power IC Quote package with switching loss graphs, thermal resistance schematics, and Torrance SLA.',deps:[3]}]},
+
+ev_obc_power_proposal:{name:'22kW 800V EV onboard charger GeneSiC™ proposal',title:'AI EV Power Proposal Architect',mode:'sequential',track:'commercial',deliverable:'22kW 800V EV Onboard Charger Proposal',
+sample:'Structure a multi-year automotive proposal supplying 22kW 800V bi-directional onboard charger (OBC) modules using 1200V GeneSiC™ SiC MOSFETs and GaNSafe™ integrated gate drive ICs (AEC-Q101 qualified).',
+desc:'Agents scope automotive EV powertrain requirements, design 22kW 800V bi-directional OBC power module, verify AEC-Q100/101 & ISO 26262 compliance, and produce proposal.',
+tasks:[{agent:'qualifier',task:'Parse automotive EV RFQ: 22kW 800V bi-directional OBC + 3kW DC-DC converter, 1200V GeneSiC™ SiC MOSFETs, AEC-Q100/101 qualified.',deps:[]},
+{agent:'sic_high_voltage_spec',task:'Design 22kW 800V OBC topology: dual-active bridge (DAB) DC-DC + totem-pole PFC, 1200V / 25mΩ GeneSiC™ MOSFETs, liquid-cooled cold plate.',deps:[0]},
+{agent:'compliance',task:'Verify AEC-Q100/101 automotive reliability, ISO 26262 ASIL-D functional safety, and UL 62368-1 power safety compliance.',deps:[1]},
+{agent:'writer',task:'Produce the 22kW 800V EV Onboard Charger proposal with efficiency curves, thermal SOA charts, and Torrance development roadmap.',deps:[2]}]},
+
+radar:{name:'Next-gen GaN & SiC power semiconductor competitive intel',title:'AI Market Intel',mode:'dag',track:'commercial',deliverable:'Competitive Intelligence Brief',
+sample:'How do competing power semiconductor chipmakers (Infineon, STMicroelectronics, Wolfspeed, Texas Instruments, EPC) compare to Navitas Semiconductor in GaNFast™ integrated gate drive, GeneSiC™ 1200V performance, and GaNSense™ <30ns protection?',
+desc:'Agents profile competing power semiconductor chipmakers, compare GaN & SiC switching loss, analyze integrated gate drive & protection advantages, producing brief.',
+tasks:[{agent:'researcher',task:'Scan power semiconductor market: GaNFast™ power ICs, GeneSiC™ 1200V SiC MOSFETs, GaNSense™ protection, AI data center PSUs, EV OBCs.',deps:[]},
+{agent:'prospector',task:'Profile competing vendors: Infineon Technologies, STMicroelectronics, Wolfspeed, Texas Instruments, Efficient Power Conversion (EPC).',deps:[]},
+{agent:'gan_power_ic_arch',task:'Compare technology & chip metrics: Navitas pure-play GaN+SiC + GaNFast™ integrated gate drive + GaNSense™ <30ns protection vs discrete silicon/GaN component suppliers.',deps:[0,1]},
+{agent:'writer',task:'Produce competitive intelligence brief highlighting Navitas\' GaNFast™ integrated lead, GeneSiC™ SiC performance, and AI data center momentum.',deps:[2]}]},
+
+ai_psu_ganfast_design:{name:'3.2kW 80+ Titanium AI Data Center GaNFast™ PSU design',title:'AI Power IC Architect',mode:'sequential',track:'operations',tag:'flagship',deliverable:'3.2kW 80+ Titanium GaNFast PSU Production Release Package',
+sample:'Process a 3.2kW AI data center power supply unit (PSU) requirement: design totem-pole PFC & LLC resonant converter stage using 650V GaNFast™ ICs (integrated GaNSense™ protection), simulate 97.6% peak efficiency at 100 W/in³ power density, audit TSMC GaN-on-Si wafer fab epitaxy defect density (< 0.1 cm^-2), QA-review, and produce Navitas production traveler package.',
+desc:'Agents design 3.2kW 80+ Titanium AI data center GaNFast™ PSU, simulate 97.6% peak efficiency & 100 W/in³ power density, audit TSMC GaN wafer fab defect density, QA-review, and produce release package.',
+tasks:[{agent:'gan_power_ic_arch',task:'Design 3.2kW AI data center PSU topology: 650V GaNFast™ ICs in totem-pole bridgeless PFC + full-bridge LLC resonant converter.',deps:[]},
+{agent:'gan_power_ic_arch',task:'Simulate power conversion efficiency & density: peak efficiency = 97.65% at 50% load (80+ Titanium certified); power density = 102 W/in³ — PASS.',deps:[0]},
+{agent:'gansense_protection_eng',task:'Audit GaNSense™ autonomous protection: on-chip lossless current sensing accuracy < 1.2%; short-circuit response time = 24 ns — PASS.',deps:[1]},
+{agent:'semiconductor_process_eng',task:'Audit TSMC GaN-on-Si wafer fab epitaxy: GaN buffer layer defect density = 0.08 cm^-2; 5x6mm PQFN Rth(j-c) = 0.85 K/W — PASS.',deps:[2]},
+{agent:'throughput',task:'Execute high-voltage ATE wafer prober & full-power load test: 100% die tested at 650V; wafer die yield = 97.8%; ATE takt time = 0.25s/die.',deps:[3]},
+{agent:'compliance',task:'Verify 80+ Titanium efficiency certification, UL 62368-1 server safety, and IEC 61000-3-2 harmonic emissions standards.',deps:[4]},
+{agent:'reviewer',task:'QA-review Navitas release package: verify PFC/LLC efficiency curves, GaNSense protection waveforms, and Torrance traveler.',deps:[5]},
+{agent:'writer',task:'Produce the 3.2kW 80+ Titanium GaNFast PSU Production Release package with efficiency curves, thermal SOA charts, and Torrance traveler.',deps:[6]}]},
+
+ev_800v_genesic_module_design:{name:'22kW 800V EV onboard charger GeneSiC™ SiC MOSFET module design',title:'AI GeneSiC Module Lead',mode:'sequential',track:'operations',deliverable:'22kW 800V EV GeneSiC Module Production Release Package',
+sample:'Design 1200V / 25mΩ GeneSiC™ SiC MOSFET power module for 800V EV powertrain; simulate 99.1% efficiency, verify thermal junction temp (Tj = 142°C at 22kW peak load), and issue automotive release traveler.',
+desc:'Agents design 1200V GeneSiC™ SiC MOSFET power module for 22kW 800V EV onboard chargers, simulate 99.1% efficiency & thermal junction temp, producing release package.',
+tasks:[{agent:'sic_high_voltage_spec',task:'Design 1200V / 25mΩ GeneSiC™ SiC MOSFET module: trench-assisted planar technology, integrated SiC Schottky barrier diodes.',deps:[]},
+{agent:'sic_high_voltage_spec',task:'Simulate switching & conduction losses: total module efficiency = 99.12% at 22kW / 800V DC link voltage — PASS.',deps:[0]},
+{agent:'semiconductor_process_eng',task:'Simulate 3D FEA thermal dissipation: silicon nitride (Si3N4) DBC substrate, junction temp Tj = 142°C at 22kW continuous load — PASS.',deps:[1]},
+{agent:'reviewer',task:'QA-review GeneSiC module traveler: verify RDS(ON) vs temperature curves, high-pot isolation (5,000V AC 1-min), and Torrance traveler.',deps:[2]},
+{agent:'writer',task:'Produce the 22kW 800V EV GeneSiC Module Production Release package with efficiency plots, thermal resistance schematics, and fab traveler.',deps:[3]}]},
+
+gansense_short_circuit_test:{name:'GaNSense™ <30ns autonomous short-circuit protection test',title:'AI GaNSense Protection Specialist',mode:'sequential',track:'operations',deliverable:'GaNSense Protection Test & Safety Certificate',
+sample:'Execute GaNSense™ autonomous protection test run; measure short-circuit response time (24 ns fault-to-shutdown), verify lossless current sensing accuracy (< 1.5%), and issue GaNSense™ safety test certificate.',
+desc:'Agents test GaNSense™ autonomous short-circuit protection & lossless current sensing on 650V GaNFast ICs, issuing certified safety report.',
+tasks:[{agent:'gansense_protection_eng',task:'Execute 650V GaNFast™ IC hard-short fault test: apply direct hard short-circuit across drain-source terminals at 400V DC link.',deps:[]},
+{agent:'gansense_protection_eng',task:'Measure short-circuit response latency: GaNSense™ autonomous shutdown latency = 24.2 ns (spec < 30 ns); zero gate driver overshoot — PASS.',deps:[0]},
+{agent:'gansense_protection_eng',task:'Verify integrated lossless current sensing: current sense signal accuracy = ±1.1% across 25°C to 125°C — PASS.',deps:[1]},
+{agent:'writer',task:'Produce the GaNSense Protection Test & Safety Certificate with short-circuit oscilloscope waveforms, current sense linearity curves, and QA sign-off.',deps:[2]}]},
+
+torrance_fab_yield_audit:{name:'Automated power wafer probe & high-voltage ATE yield audit',title:'AI Torrance Fab & Test Lead',mode:'sequential',track:'operations',deliverable:'Torrance Fab Yield & Reliability Quality Audit',
+sample:'Audit high-volume GaN/SiC wafer probing line at Torrance CA facility; measure RDS(ON) Cpk (1.84), automated ATE test takt time (0.25s/die), and issue Torrance fab release traveler.',
+desc:'Agents audit automated GaN & SiC wafer probing lines at Torrance CA facility, measure RDS(ON) Cpk & high-voltage ATE yield, producing fab audit.',
+tasks:[{agent:'throughput',task:'Audit automated 150mm/200mm GaN & SiC wafer high-voltage ATE prober line at Torrance CA facility.',deps:[]},
+{agent:'throughput',task:'Optimize automated ATE wafer test takt time: reduce 100% 650V/1200V breakdown & RDS(ON) test execution to 0.25 seconds per die while logging wafer maps.',deps:[0]},
+{agent:'semiconductor_process_eng',task:'Run Statistical Process Control (SPC): monitor Cpk = 1.84 for RDS(ON) resistance and gate breakdown voltage Vbk (> 750V) — PASS.',deps:[1]},
+{agent:'writer',task:'Produce the Torrance Fab Yield & Reliability Quality Audit with wafer yield maps, AEC-Q100 safety certs, and VP of Fab Operations sign-off.',deps:[2]}]},
+};
+
+const DTITLE={scout:'Target AI Data Center, EV & Solar OEM Account List',power_ic_volume_quote:'GaNFast & GeneSiC Power IC Quote Package',ev_obc_power_proposal:'22kW 800V EV Onboard Charger Proposal',radar:'Competitive Intelligence Brief',ai_psu_ganfast_design:'3.2kW 80+ Titanium GaNFast PSU Production Release Package',ev_800v_genesic_module_design:'22kW 800V EV GeneSiC Module Production Release Package',gansense_short_circuit_test:'GaNSense Protection Test & Safety Certificate',torrance_fab_yield_audit:'Torrance Fab Yield & Reliability Quality Audit'};
+
+const TOOLS={
+research:()=>'Gathered AI data center 80+ Titanium PSUs, 800V EV 22kW OBCs, and 1200V SiC power semiconductor market intel; target accounts ranked.',
+source_accounts:()=>'Sourced VP of Power Systems Engineering, Chief Power Electronics Architect, and Head of Semiconductor Procurement.',
+score_fit:()=>'Scored against Navitas capabilities: GaNFast™ integrated ICs, GeneSiC™ 1200V MOSFETs, GaNSense™ <30ns protection, Torrance labs.',
+design_gan_power_ic:()=>'Designed 650V GaNFast™ power IC topology: integrated gate drive, GaNSense™ protection, totem-pole PFC + LLC resonant converter.',
+simulate_switching_efficiency:()=>'Simulated switching efficiency: peak efficiency = 97.65% at 50% load (80+ Titanium certified), power density = 102 W/in³.',
+simulate_sic_rdson_junction_temp:()=>'Simulated 1200V / 25mΩ GeneSiC™ SiC MOSFET module: 99.12% efficiency at 22kW / 800V load, junction temp Tj = 142°C.',
+verify_high_pot_isolation:()=>'Verified high-pot isolation: silicon nitride (Si3N4) DBC substrate isolation > 5,000V AC RMS 1-minute — PASS.',
+simulate_short_circuit_response:()=>'Simulated & measured GaNSense™ short-circuit response: shutdown latency = 24.2 ns clean (spec < 30 ns).',
+audit_lossless_current_sensing:()=>'Audited integrated lossless current sensing: current sense signal accuracy = ±1.1% clean across 25°C to 125°C.',
+inspect_epitaxial_defect_density:()=>'Inspected TSMC GaN-on-Si epitaxy: buffer layer defect density = 0.08 cm^-2 clean, 5x6mm PQFN Rth(j-c) = 0.85 K/W.',
+audit_packaging_thermal_rth:()=>'Audited PQFN & QFN packaging thermal resistance: Rth(j-c) = 0.85 K/W clean under 100W peak power dissipation.',
+verify_power_die_yield:()=>'Verified automated high-voltage ATE wafer die yield: 97.8% die yield clean across 650V GaN wafer.',
+calculate_takt_time:()=>'Calculated takt time: 0.25 seconds per die automated high-voltage breakdown & RDS(ON) prober test.',
+check_compliance:()=>'Checked 80+ Titanium efficiency, AEC-Q100/101 automotive, ISO 26262 ASIL-D, and UL 62368-1 standards.',
+build_quote:()=>'Structured GaNFast & GeneSiC quote: unit IC set cost, wafer mask NRE fee, volume tier discount (26% for 300k+).',
+qa_review:()=>'QA: 80+ Titanium efficiency curves, GeneSiC 1200V RDS(ON) plots, GaNSense protection waveforms, and Torrance traveler verified.',
+compose:()=>'Drafted in a clear, executive-ready, GaN/SiC power semiconductor-aware technical style.',
+save:()=>'Saved to shared context for downstream agents.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+
+const FINAL={
+scout:`TARGET AI DATA CENTER, EV & SOLAR OEM ACCOUNT LIST (illustrative)
+
+Scanned AI Data Center PSU Manufacturers, EV Onboard Charger OEMs, and Solar Inverter Makers.
+
+A-tier (pursue now)
+1. AI Data Center PSU Power Giant (Taipei / Taoyuan / San Jose CA) — 3.2kW - 12kW 80+ Titanium GaNFast™ PSUs — Navitas fit 99
+2. Tier-1 EV Onboard Charger & Powertrain Supplier (Austin TX / Seoul / Stuttgart) — 22kW 800V GeneSiC™ SiC MOSFETs — fit 98
+3. Residential & Commercial Solar Inverter Leader (Fremont CA / Munich / Shenzhen) — 1500V GeneSiC™ SiC diodes & MOSFETs — fit 97
+4. Industrial AC Motor Drive & Automation Maker (Nuremberg / Milwaukee WI) — GaNSafe™ integrated power ICs — fit 95
+5. Mobile Fast Charger & Consumer Tech Pioneer (Cupertino CA / Shenzhen) — GaNFast™ ultra-fast charger ICs — fit 94
+
+Contacts: VP of Power Systems Engineering, Chief Power Electronics Architect, Head of Semiconductor Procurement.
+Technology scope: GaNFast™ Power ICs, GeneSiC™ SiC MOSFETs, GaNSense™ Protection, Torrance CA Labs.
+
+→ Saved: navitas_target_list, executive_contacts, power_semiconductor_matrix
+
+NOTE: illustrative; not affiliated with Navitas Semiconductor.`,
+
+power_ic_volume_quote:`GANFAST & GENESIC POWER IC QUOTE PACKAGE (illustrative)
+
+Customer: Hyperscale AI Data Center & PSU Manufacturer.
+Order: 3.2kW 80+ Titanium GaNFast™ IC + GeneSiC™ SiC MOSFET Set (#RFQ-NVTS-2026-19).
+
+Power IC specifications & fab capacity audit
+• Application: 3.2kW AI Data Center Power Supply Unit (Totem-Pole PFC + LLC Resonant Converter)
+• Semiconductor Tech: 650V GaNFast™ ICs (Integrated GaNSense™ Protection) + 1200V GeneSiC™ SiC MOSFETs
+• Efficiency & Density: Peak Efficiency = 97.65% (80+ Titanium Certified); Power Density = 102 W/in³ — PASS
+• Facility Location: Navitas Semiconductor Torrance, California Facility / TSMC Line
+
+Commercial summary
+• Quantity: 300,000 IC Sets / Year (5x6mm PQFN Packaging)
+• Unit IC Set Price: $[REDACTED]
+• Volume Tier Discount (26% for 300,000+ sets): -$[REDACTED]
+• Net Order Value: $[REDACTED] (FOB Torrance, CA / Dublin — Dispatch in 4 weeks ARO)
+
+→ Saved: navitas_power_quote, switching_loss_graphs, thermal_resistance_schematics
+
+NOTE: illustrative; all financial figures redacted.`,
+
+ev_obc_power_proposal:`22KW 800V EV ONBOARD CHARGER PROPOSAL (illustrative)
+
+Customer: Tier-1 Automotive EV Powertrain & Onboard Charger OEM.
+Project: 22kW 800V Bi-Directional EV Onboard Charger (OBC) Module (#EV-POWER-NVTS-2026).
+
+EV powertrain requirements & Navitas semiconductor lead
+• Application: 22kW 800V Bi-Directional EV Onboard Charger + 3kW DC-DC Converter
+• Spec Compliance: AEC-Q100/101 Automotive Qualified, ISO 26262 ASIL-D, UL 62368-1 — PASS
+• Silicon Carbide Lead: 1200V / 25mΩ GeneSiC™ SiC MOSFETs delivering 99.12% peak efficiency
+• GaNSafe™ Integration: Integrated gate drive & isolation with sub-30ns autonomous fault protection
+
+Program roadmap & manufacturing terms
+• Phase 1: OBC reference board evaluation & AEC-Q101 qualification (Torrance CA labs / 3 months)
+• Phase 2: Mass production release & automotive supply chain deployment (Torrance facility / 7 months)
+
+→ Saved: ev_obc_power_proposal, efficiency_curves, thermal_soa_charts
+
+NOTE: illustrative; all financial figures redacted.`,
+
+radar:`COMPETITIVE INTELLIGENCE BRIEF (illustrative)
+
+Landscape
+• Infineon Technologies: strong in discrete silicon & SiC, but less integrated GaN gate drive & sensing functionality
+• STMicroelectronics: broad automotive presence, but relies on multi-chip solutions for high-frequency GaN PSUs
+• Wolfspeed: focused purely on SiC substrates & discretes, lacking GaNFast™ power IC integration for AI data centers
+
+Where Navitas Semiconductor wins
+• Pure-Play GaN + SiC Synergy: single vendor providing both GaNFast™ ICs and GeneSiC™ SiC MOSFETs
+• GaNFast™ Integrated Gate Drive & Control: eliminating external gate drive parasitic inductance for >2 MHz switching
+• GaNSense™ Autonomous <30ns Protection: on-chip short-circuit protection 6x faster than discrete silicon sense circuits
+• 80+ Titanium AI Data Center Leadership: proven 97.6%+ efficiency at 100 W/in³ power density for AI PSUs
+
+Talk tracks
+1. "Navitas is the pure-play next-gen power semiconductor leader with GaNFast™ and GeneSiC™ technologies"
+2. "Our GaNSense™ technology provides on-chip autonomous protection in under 30 ns, 6x faster than discrete circuits"
+3. "Our 3.2kW 80+ Titanium AI PSU solutions deliver 97.6% efficiency at 100 W/in³ power density"
+
+→ Saved: competitive_matrix, technology_benchmarks, sales_talk_tracks
+
+NOTE: illustrative; not affiliated with Navitas Semiconductor.`,
+
+ai_psu_ganfast_design:`3.2KW 80+ TITANIUM GANFAST PSU PRODUCTION RELEASE PACKAGE (illustrative · flagship)
+
+Power IC Set: Navitas 650V GaNFast™ IC + GaNSense™ Protection Set (#NV6128-GANFAST-AI-3.2KW).
+
+Converter efficiency & power density audit
+• Topology & ICs: Totem-pole PFC + LLC resonant converter using 650V GaNFast™ Power ICs — PASS
+• Conversion Efficiency: Peak efficiency = 97.65% at 50% load (80+ Titanium certified) — PASS
+• Power Density: Power density = 102 W/in³ (2x density of legacy silicon PSUs) — PASS
+• GaNSense™ Protection: Short-circuit shutdown latency = 24.2 ns; current sense accuracy = ±1.1% — PASS
+
+TSMC fab & thermal packaging audit
+• Epitaxy & Packaging: GaN buffer defect density = 0.08 cm^-2; 5x6mm PQFN Rth(j-c) = 0.85 K/W — PASS
+• Standards Compliance: Complies with 80+ Titanium, UL 62368-1 server safety, and IEC 61000-3-2
+
+Recommendation: Release GaNFast™ power IC set lot for high-volume AI data center PSU manufacturing.
+
+→ Saved: ai_psu_release_package, pfc_llc_efficiency_curves, gansense_waveforms, torrance_traveler
+
+NOTE: illustrative; confirm against Navitas product specification.`,
+
+ev_800v_genesic_module_design:`22KW 800V EV GENESIC MODULE PRODUCTION RELEASE PACKAGE (illustrative)
+
+Module: Navitas 1200V / 25mΩ GeneSiC™ SiC MOSFET Module (#G3R25MT12D-GENESIC).
+
+SiC switching & thermal junction audit
+• Semiconductor Tech: 1200V GeneSiC™ SiC MOSFETs with integrated SiC Schottky diodes — PASS
+• Conversion Efficiency: Total module efficiency = 99.12% at 22kW / 800V DC link — PASS
+• Thermal Dissipation: Si3N4 ceramic DBC substrate; junction temp Tj = 142°C at 22kW load — PASS
+• Dielectric Isolation: High-pot isolation verified > 5,000V AC RMS 1-minute — PASS
+
+Status: Certified for automotive 800V bi-directional onboard chargers & EV powertrains.
+
+→ Saved: ev_genesic_release_package, efficiency_plots, thermal_schematics, torrance_traveler
+
+NOTE: illustrative; confirm against Navitas GeneSiC product engineering spec.`,
+
+gansense_short_circuit_test:`GANSENSE PROTECTION TEST & SAFETY CERTIFICATE (illustrative)
+
+Test Run: GaNSense™ Autonomous On-Chip Protection & Fault Line (#GANSENSE-FAULT-TEST-2026).
+
+Autonomous protection & sensing metrics
+• Hard Short Fault Test: Direct short-circuit across drain-source at 400V DC link voltage — PASS
+• Shutdown Latency: GaNSense™ autonomous shutdown latency = 24.2 ns (spec < 30 ns) — PASS
+• Lossless Current Sensing: On-chip current sense signal accuracy = ±1.1% across 25°C - 125°C — PASS
+• Gate Drive Integrity: Zero gate voltage ringing or false triggering during fault shutdown — PASS
+
+Quality Sign-off: Certified by Chief Protection Architect & QA Director.
+
+→ Saved: gansense_safety_certificate, short_circuit_oscillograms, current_sense_curves, qa_signoff
+
+NOTE: illustrative; confirm against Navitas protection test lab records.`,
+
+torrance_fab_yield_audit:`TORRANCE FAB YIELD & RELIABILITY QUALITY AUDIT (illustrative)
+
+Audit Scope: Navitas Semiconductor Torrance, California Facility (#TORRANCE-FAB-AUDIT-2026).
+
+Validation & ATE testing metrics
+• Automated ATE Probing: 650V/1200V automated high-voltage wafer prober & ATE test line
+• End-of-Line Test Takt Time: 0.25 seconds per die (logging 100% breakdown & RDS(ON) data) — PASS
+• Statistical Process Control: Cpk = 1.84 for RDS(ON) resistance & gate breakdown voltage (> 750V) — PASS
+• Wafer Die Yield: 97.8% end-to-end GaN & SiC wafer die yield across Torrance ATE line — PASS
+
+Quality Sign-off: Certified by VP of Fab Operations & Quality Assurance.
+
+→ Saved: torrance_fab_yield_audit, wafer_yield_maps, aec_q100_safety_certs, fab_signoff
+
+NOTE: illustrative; confirm against Torrance facility quality management records.`,
+};
+
+let EMPLOYEES=[
+{id:'scout',name:'Scout',title:'AI Navitas Scout',wf:'scout',handled:350,hrs:74,win:0,status:'idle'},
+{id:'powericestimator',name:'Power-IC-Estimator',title:'AI Power IC Quoting Estimator',wf:'power_ic_volume_quote',handled:430,hrs:100,win:64,status:'idle'},
+{id:'evpowerarchitect',name:'EV-Power-Proposal-Arch',title:'AI EV Power Proposal Architect',wf:'ev_obc_power_proposal',handled:145,hrs:110,win:68,status:'idle'},
+{id:'radar',name:'Radar',title:'AI Market Intel',wf:'radar',handled:175,hrs:44,win:0,status:'idle'},
+{id:'gan_power_arch',name:'Power-IC-Arch',title:'AI Power IC Architect',wf:'ai_psu_ganfast_design',handled:520,hrs:295,win:86,status:'idle'},
+{id:'genesic_lead',name:'GeneSiC-Module-Lead',title:'AI GeneSiC Module Lead',wf:'ev_800v_genesic_module_design',handled:380,hrs:200,win:66,status:'idle'},
+{id:'gansense_spec',name:'GaNSense-Protection-Spec',title:'AI GaNSense Protection Specialist',wf:'gansense_short_circuit_test',handled:340,hrs:180,win:70,status:'idle'},
+{id:'fab_lead',name:'Torrance-Fab-Lead',title:'AI Torrance Fab & Test Lead',wf:'torrance_fab_yield_audit',handled:410,hrs:215,win:76,status:'idle'},
+];
+
+let running=false;
+const $=id=>document.getElementById(id);const sleep=ms=>new Promise(r=>setTimeout(r,ms));const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;const now=()=>new Date().toLocaleTimeString('en-GB');const mono=n=>n.trim().slice(0,2).toUpperCase();
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Commercial &amp; Data Center</span>';if(wf.track==='operations')s+='<span class="tag operations">GaN &amp; SiC Power Eng</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+function setView(v){$('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');$('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});}
+function renderEcon(){const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;const cells=[[total,'AI operators (commercial + engineering)'],[h.toLocaleString(),'GaNFast PSU designs, GeneSiC modules & quotes handled'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','GaN/SiC power semiconductor engineer hours saved / mo'],['+'+avg+'%','avg turnaround improvement']];$('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');}
+function empCard(e){const wf=WORKFLOWS[e.wf];const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}"><div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div><div class="emp-owns">Owns: <b>${wf.name}</b></div><div class="team">${team}</div><div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'—'}</b>faster</div></div><div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a power IC / PSU spec</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;}
+function renderRoster(){const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;let html='';TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});$('roster').innerHTML=html;}
+function assign(id){if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];$('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a power circuit schematic, an AI data center PSU spec or a wafer probe log and ${e.name} runs the whole loop.</div></div></div><div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div><div id="stage"></div></div>`;$('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();}
+async function runEmp(id){if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');const stage=$('stage');stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div><div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div><div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;const feed=$('feed');function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;const row=document.createElement('div');row.className='frow';row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,150)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}log(null,`Input received: "${obj.substring(0,54)}…"`);log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);await sleep(rand(700,1100));const grid=$('agrid');wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});await sleep(600);$('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');const done=new Set();async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}$('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');await sleep(400);const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(6,44);$('resultArea').innerHTML=`<div class="result"><div class="rstats"><div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div><div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div><div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'Commercial & Data Center':'GaN & SiC Power Eng'}</span></div><div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div><div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div><div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div><div class="donebar"><b>${e.name} produced a review-ready output.</b> Read, adapt and QA complete, ready for a CEO, VP of engineering, fab operations director or chief power electronics architect to confirm against Navitas and 80+ Titanium specs. Illustrative simulation, not a production deliverable.</div>`;e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;}
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per wafer lot',step:1};renderBuilder();}
+function renderBuilder(){const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];$('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+`<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>` ).join('')+`</div></div>`;document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div><div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. Power-IC-Arch" oninput="draft.name=this.value"></div><div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Power IC Architect" oninput="draft.title=this.value"></div><div class="field"><label>Cadence</label><div class="seg">`+['Per wafer lot','Per batch','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div><div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});renderEcon();renderRoster();setView('ops');setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);}
+
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
