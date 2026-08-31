@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kopin &mdash; AI Commercial &amp; Defense Microdisplay Semiconductor Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f0f5fa;--surface2:#cce0f2;--border:#85b8e0;--accent:#004b87;
+--accent-dim:rgba(0,75,135,.10);--accent-line:rgba(0,75,135,.40);--slate:#061833;--slate-line:rgba(6,24,51,.32);--text:#0f172a;--hi:#020617;--tert:#64748b;--ok:#0077c8;--ok-dim:rgba(0,119,200,.10);--gold:#d97706;--gold-bg:#fffbeb;--gold-line:#fde68a}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Montserrat,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:46px;height:34px;border-radius:8px;background:linear-gradient(135deg,#061833,#004b87);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:14px;letter-spacing:.5px;font-family:Montserrat,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#004b87}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Montserrat,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:900px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#004b87;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(0,119,200,.08);color:var(--ok);border:1px solid rgba(0,119,200,.3)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#004b87}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#004b87;font-size:15px;flex-shrink:0;position:relative;font-family:Montserrat,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#004b87}.btn.primary{background:#004b87;border-color:#004b87;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#004b87;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#004b87}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(0,119,200,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(0,119,200,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#004b87}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Montserrat,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#004b87;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px;font-family:Inter,sans-serif}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:99px;padding:11px 16px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:99px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff;font-weight:700}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5;font-family:Inter,sans-serif}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="header">
+<div class="logo"><div class="mark">KOPN</div>
+<div><div class="htitle">Kopin &middot; AI Commercial &amp; Defense Microdisplay Semiconductor Workforce</div><div class="hsub">AI operators for MicroOLED-on-Silicon (OLEDoS), MicroLED, Pancake Optics, and F-35 HMDS Displays (Westborough, MA)</div></div></div>
+<div class="badge">Independent concept &nbsp;&middot;&nbsp; <b>illustrative</b></div>
+</header>
+
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>a 2K x 2K OLED-on-Silicon (OLEDoS) microdisplay backplane, pancake optical module, or F-35 Joint Strike Fighter helmet-mounted display system (HMDS) engineering workflow turned into an autonomous team of agents</b>. Kopin Corporation (NASDAQ: KOPN, headquartered in Westborough, Massachusetts) is the premier developer of high-resolution microdisplays (MicroOLED, MicroLED, OLED-on-Silicon, CyberDisplay&reg; AMLCD), optical modules (pancake optics, free-form prisms, spatial light modulators), and sub-systems for defense (F-35 HMDS helmet displays, thermal weapon sights, IVAS), medical surgical displays, industrial AR/VR headsets, and AI optical interconnects. One track drives commercial sourcing &amp; defense prime relationships: it captures Defense Primes (Collins Aerospace, Elbit Systems, BAE Systems, Raytheon), Medical Device OEMs (Intuitive Surgical, Stryker), and Enterprise AR/VR Builders, quotes 2K x 2K MicroOLED display engines (35,000+ nits, 50,000 units/year), structures F-35 HMDS display upgrade proposals, and highlights Kopin's sole-source F-35 defense heritage, high-brightness MicroOLED lead, and custom optical sub-system integration. The other track delivers microdisplay &amp; defense optical semiconductor engineering precision: it designs 2K x 2K 0.9&quot; OLEDoS microdisplay backplanes (38,500 nits peak white, 100,000:1 contrast ratio, 120 Hz refresh rate), optimizes compact pancake optical modules (MTF &gt; 0.55 at 50 lp/mm, ghosting &lt; 0.15%), verifies MIL-STD-3009 NVIS Class B night-vision compatibility, and audits Westborough MA wafer probe &amp; optical ATE lines (luminance uniformity Cpk = 1.91). Point one at an OLEDoS silicon spec, a pancake optics ray-trace log or an NVIS night-vision trace and it runs the loop, then hands back a review-ready output for a person to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial &amp; Defense Sourcing</span> find, MicroOLED display quote, F-35 HMDS proposal</span>
+<span><span class="tag operations">Microdisplay &amp; Defense Optics Eng</span> 2K OLEDoS Backplane, Pancake Optics, MIL-STD NVIS, Westborough fab yield</span>
+<span><span class="tag hero">Flagship</span> the deepest example run</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+
+<div class="foot">Independent concept prototype prepared by Innvonix Tech Solutions for a conversation with Kopin Corporation (Westborough, MA). It is not affiliated with, endorsed by, or built on Kopin systems or data. All operators and outputs are illustrative simulations; OLEDoS luminance nits, optical MTF curves, NVIS spectral radiance limits, Westborough fab ATE yields and commercial quotes are placeholders. A chief executive officer, VP of engineering, fab operations director or chief optical systems architect reviews and approves every OLEDoS backplane IC schematic, pancake optical module traveler, NVIS defense traveler and commercial display proposal. This is not a production system and produces no deliverable for a real customer.</div>
+
+<script>
+const AGENT_ROLES={
+researcher:{emoji:'🔎',label:'MicroOLED, MicroLED & Defense Optics Research',tools:['research','save']},
+prospector:{emoji:'🧲',label:'Defense Prime, Medical OEM & AR/VR Sourcing',tools:['source_accounts','save']},
+qualifier:{emoji:'🎯',label:'OLEDoS, Pancake Optics & F-35 Display Qualifier',tools:['score_fit','save']},
+microdisplay_silicon_arch:{emoji:'👁️',label:'OLED-on-Silicon (OLEDoS) & Backplane Architect',tools:['design_oledos_backplane_pixel','simulate_luminance_contrast_ratio','save']},
+optics_system_spec:{emoji:'🕶️',label:'Pancake Optics & Spatial Light Modulator Spec',tools:['simulate_pancake_optical_transfer_function','verify_stray_light_ghosting','save']},
+defense_hud_integrator:{emoji:'🪖',label:'F-35 HMDS, Thermal Sight & IVAS Integrator',tools:['audit_night_vision_compatibility','verify_high_dynamic_range','save']},
+semiconductor_process_eng:{emoji:'🔬',label:'MicroOLED Deposition & Wafer Fab Lead',tools:['inspect_oled_color_filter_cd','audit_bump_coplanarity','save']},
+throughput:{emoji:'🤖',label:'Automated Microdisplay Wafer & Optical Probe Opt',tools:['verify_kopin_die_yield','calculate_takt_time','save']},
+compliance:{emoji:'📋',label:'Defense MIL-STD-810G, MIL-STD-3009 & FAA Lead',tools:['check_compliance','save']},
+pricing:{emoji:'🧮',label:'Microdisplay Engine & Optical Module Quoting',tools:['build_quote','save']},
+writer:{emoji:'✍️',label:'Optical Systems Datasheet & Technical Writer',tools:['compose','save']},
+reviewer:{emoji:'✅',label:'QA & Final Kopin Release Reviewer',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+
+const TRACKS=[['commercial','Commercial &amp; Defense Sourcing'],['operations','Microdisplay &amp; Defense Optics Eng']];
+
+const WORKFLOWS={
+scout:{name:'Defense prime, medical OEM & AR/VR headset discovery',title:'AI Kopin Scout',mode:'dag',track:'commercial',deliverable:'Target Defense Prime, Medical OEM & AR/VR Account List',
+sample:'Find Defense Primes (Collins Aerospace, Elbit Systems, BAE Systems, Raytheon), Medical Device OEMs (Intuitive Surgical, Stryker), and Enterprise AR/VR Headset Builders (Vuzix, Magic Leap) needing MicroOLED displays, pancake optics, and thermal weapon sight modules.',
+desc:'Agents scan military helmet display upgrades (F-35 HMDS, IVAS), surgical robotic AR displays, and enterprise smart glass specs, map VP of Display Engineering, Chief Defense Architect, score fit, and compile target list.',
+tasks:[{agent:'researcher',task:'Map MicroOLED / OLEDoS demand, F-35 HMDS helmet display specs, and medical AR surgical visor requirements.',deps:[]},
+{agent:'prospector',task:'Source VP of Helmet Display Systems, Chief Optical Systems Architect, and Head of Procurement at defense & medical OEM leaders.',deps:[]},
+{agent:'qualifier',task:'Score fit against Kopin capabilities: OLEDoS Microdisplays, MicroLED Backplanes, Pancake Optics, CyberDisplay, Westborough labs.',deps:[0,1]},
+{agent:'writer',task:'Compile the ranked target defense & medical account list with microdisplay specs, volume unit projections, and commercial engagement strategy.',deps:[2]}]},
+
+oledos_display_volume_quote:{name:'2K x 2K MicroOLED display engine volume quoting',title:'AI Microdisplay Quoting Estimator',mode:'sequential',track:'commercial',deliverable:'2K x 2K MicroOLED Display Engine Volume Quote Package',
+sample:'A defense HUD / medical AR headset customer uploaded an RFQ: 2K x 2K 0.9" MicroOLED-on-Silicon display engine, 35,000 nits peak white, 50,000 units/year. Calculate silicon backplane CMOS cost, OLED deposition cycle time, volume discount, and dispatch SLA.',
+desc:'Agents parse customer microdisplay RFQ, calculate OLEDoS silicon backplane area, OLED organic layer deposition cycle time, volume discount, and generate quote package.',
+tasks:[{agent:'qualifier',task:'Parse microdisplay RFQ: 2048 x 2048 0.9" OLEDoS display engine, 35,000 nits luminance, 120 Hz refresh rate, 50,000 units/year.',deps:[]},
+{agent:'microdisplay_silicon_arch',task:'Calculate backplane CMOS die area & power dissipation: 28nm HV-CMOS process, 10-bit DAC pixel driver, total display power < 1.1W.',deps:[0]},
+{agent:'semiconductor_process_eng',task:'Estimate wafer fab & OLED deposition cycle time: 300mm silicon backplane dicing, color filter lithography, 100% optical ATE test.',deps:[1]},
+{agent:'pricing',task:'Structure volume pricing model: unit microdisplay price, mask NRE waiver, volume tier discount (24% for 50k+ units), and Westborough SLA.',deps:[2]},
+{agent:'writer',task:'Produce the 2K x 2K MicroOLED Display Engine Volume Quote package with luminance vs power charts, contrast ratio curves, and Westborough SLA.',deps:[3]}]},
+
+f35_hmds_upgrade_proposal:{name:'F-35 HMDS next-gen OLEDoS display upgrade proposal',title:'AI Defense Display Proposal Architect',mode:'sequential',track:'commercial',deliverable:'F-35 HMDS OLEDoS Display Upgrade Proposal',
+sample:'Structure a multi-year defense proposal upgrading the F-35 Joint Strike Fighter helmet-mounted display system to high-dynamic-range OLED-on-Silicon (OLEDoS) microdisplays with night-vision Goggle (NVG) compatibility.',
+desc:'Agents scope defense jet helmet display requirements, design OLEDoS microdisplay sub-assembly, verify MIL-STD-810G & MIL-STD-3009 (NVIS) standards, and produce proposal.',
+tasks:[{agent:'qualifier',task:'Parse defense jet helmet RFQ: F-35 HMDS next-gen OLEDoS display upgrade, 35,000 nits day flight readability, MIL-STD-3009 NVIS Class B compatible.',deps:[]},
+{agent:'defense_hud_integrator',task:'Design F-35 helmet display sub-assembly: OLEDoS microdisplay + custom optical module + integrated thermal sight video overlay controller.',deps:[0]},
+{agent:'compliance',task:'Verify MIL-STD-810G environmental ruggedization (-40°C to +85°C), MIL-STD-3009 NVIS Class B night vision, and FAA flight safety certs.',deps:[1]},
+{agent:'writer',task:'Produce the F-35 HMDS OLEDoS Display Upgrade proposal with day/night readability contrast plots, helmet weight budget impact, and delivery roadmap.',deps:[2]}]},
+
+radar:{name:'Microdisplay & optical sub-system competitive intelligence brief',title:'AI Market Intel',mode:'dag',track:'commercial',deliverable:'Competitive Intelligence Brief',
+sample:'How do competing microdisplay vendors (Sony, eMagin/Samsung, BOE, JBD) compare to Kopin Corporation in F-35 sole-source defense lead, 35,000+ nits MicroOLED brightness, and custom optics?',
+desc:'Agents profile competing microdisplay and optical sub-system vendors, compare MicroOLED brightness & defense ruggedization, analyze Kopin advantages, producing brief.',
+tasks:[{agent:'researcher',task:'Scan microdisplay & optics market: MicroOLED (OLEDoS), MicroLED, CyberDisplay AMLCD, pancake optics, defense HUDs.',deps:[]},
+{agent:'prospector',task:'Profile competing vendors: Sony Semiconductor, eMagin (Samsung Display), BOE Microdisplay, Jade Bird Display (JBD).',deps:[]},
+{agent:'microdisplay_silicon_arch',task:'Compare technology & display metrics: Kopin sole-source F-35 defense flight heritage + 35,000+ nits high-brightness MicroOLED + turnkey optical modules vs standalone display panel vendors.',deps:[0,1]},
+{agent:'writer',task:'Produce competitive intelligence brief highlighting Kopin\'s defense flight lead, MicroOLED brightness advantage, and optics integration momentum.',deps:[2]}]},
+
+oledos_microdisplay_design:{name:'High-Brightness 2K x 2K OLED-on-Silicon (OLEDoS) Microdisplay design',title:'AI OLEDoS Display Architect',mode:'sequential',track:'operations',tag:'flagship',deliverable:'2K x 2K OLEDoS Microdisplay Production Release Package',
+sample:'Process a defense pilot helmet HUD specification: design 2048 x 2048 0.9" OLEDoS microdisplay backplane IC (10-bit color depth, digital-to-analog pixel driver, 120 Hz refresh rate), simulate luminance & contrast ratio (38,500 nits peak white, 100,000:1 contrast ratio), audit 28nm HV-CMOS wafer lithography CD, QA-review, and produce Kopin production traveler package.',
+desc:'Agents design 2K x 2K OLEDoS microdisplay backplane IC, simulate 38,500 nits peak luminance & 100,000:1 contrast, audit 28nm HV-CMOS lithography CD, QA-review, and produce release package.',
+tasks:[{agent:'microdisplay_silicon_arch',task:'Design 2048 x 2048 0.9" OLEDoS microdisplay backplane IC: 28nm HV-CMOS process, 10-bit DAC per pixel, 120 Hz frame rate driver.',deps:[]},
+{agent:'microdisplay_silicon_arch',task:'Simulate luminance & contrast ratio: peak white luminance = 38,500 nits (spec > 35,000 nits); contrast ratio = 120,000:1; power = 0.98W — PASS.',deps:[0]},
+{agent:'microdisplay_silicon_arch',task:'Simulate pixel response time & color gamut: pixel rise/fall time = 12 µs (spec < 20 µs); sRGB color gamut = 112% — PASS.',deps:[1]},
+{agent:'semiconductor_process_eng',task:'Audit 28nm HV-CMOS silicon backplane wafer fab lithography: pixel anode Critical Dimension Cpk = 1.91; color filter alignment < 0.2 µm — PASS.',deps:[2]},
+{agent:'throughput',task:'Execute high-volume automated optical & wafer prober ATE test: 100% displays tested for pixel defects; die yield = 98.1%; ATE takt time = 0.28s/display — PASS.',deps:[3]},
+{agent:'compliance',task:'Verify MIL-STD-810G environmental compliance, MIL-STD-3009 NVIS Class B night vision, and FAA flight safety requirements.',deps:[4]},
+{agent:'reviewer',task:'QA-review Kopin release package: verify luminance vs current curves, sRGB color gamut plots, and Westborough traveler.',deps:[5]},
+{agent:'writer',task:'Produce the 2K x 2K OLEDoS Microdisplay Production Release package with luminance charts, pixel defect maps, and Westborough validation traveler.',deps:[6]}]},
+
+pancake_optics_module_design:{name:'Pancake optical module & free-form prism design',title:'AI Optical Systems Specialist',mode:'sequential',track:'operations',deliverable:'Pancake Optical Module Release Package',
+sample:'Design compact pancake optical module for wearable AR/VR headset; simulate Optical Transfer Function (OTF) & Modulation Transfer Function (MTF > 0.55 at 50 lp/mm, FOV = 90°), verify stray light ghosting suppression (< 0.15%), and issue optical release traveler.',
+desc:'Agents design compact pancake optical module, simulate MTF resolution & stray light ghosting suppression, producing optical release package.',
+tasks:[{agent:'optics_system_spec',task:'Design compact pancake optical module: folded optical path, quarter-wave plate polarizers, 90° field-of-view (FOV).',deps:[]},
+{agent:'optics_system_spec',task:'Simulate Optical Transfer Function (OTF) & MTF resolution: MTF = 0.58 at 50 lp/mm (spec > 0.55); distortion < 1.2% — PASS.',deps:[0]},
+{agent:'optics_system_spec',task:'Verify stray light & ghosting suppression: ghost image intensity = 0.11% of primary image (spec < 0.15%) — PASS.',deps:[1]},
+{agent:'reviewer',task:'QA-review pancake optical module traveler: verify MTF spatial frequency curves, distortion maps, and Westborough optics traveler.',deps:[2]},
+{agent:'writer',task:'Produce the Pancake Optical Module Release package with MTF resolution benchmarks, stray light ray traces, and QA test cert.',deps:[3]}]},
+
+f35_nvis_night_vision_test:{name:'MIL-STD-3009 Night Vision (NVIS) & thermal sight verification',title:'AI Defense HUD Integrator',mode:'sequential',track:'operations',deliverable:'MIL-STD-3009 NVIS Defense Release Package',
+sample:'Execute MIL-STD-3009 NVIS Class B night-vision compatibility evaluation on defense MicroOLED sub-assembly; measure spectral radiance below NVIS NRB limit (< 1.2E-9 W/cm²/sr/nm), verify thermal weapon sight overlay, and issue defense cert.',
+desc:'Agents evaluate MIL-STD-3009 NVIS Class B night vision compatibility on defense microdisplay sub-assemblies, measuring spectral radiance & thermal sight video overlay, producing defense release package.',
+tasks:[{agent:'defense_hud_integrator',task:'Execute MIL-STD-3009 NVIS Class B night-vision compatibility evaluation on F-35 / thermal sight microdisplay sub-assembly.',deps:[]},
+{agent:'defense_hud_integrator',task:'Measure NVIS spectral radiance & NRB limit: NVIS Radiance B = 8.4E-10 W/cm²/sr/nm at 15 nits display setting (spec < 1.2E-9) — PASS.',deps:[0]},
+{agent:'defense_hud_integrator',task:'Audit thermal weapon sight video overlay latency & symbology readability: latency = 1.2 ms; 100% daylight legibility clean — PASS.',deps:[1]},
+{agent:'writer',task:'Produce the MIL-STD-3009 NVIS Defense Release package with NVIS spectral radiance plots, thermal overlay test logs, and QA test cert.',deps:[2]}]},
+
+westborough_wafer_probe_audit:{name:'High-volume microdisplay wafer probe & optical ATE yield audit',title:'AI Westborough Fab & Test Lead',mode:'sequential',track:'operations',deliverable:'Westborough Microdisplay Yield & Quality Audit',
+sample:'Audit high-volume microdisplay probing line at Westborough MA facility; measure pixel luminance uniformity Cpk (1.91), ATE test takt time (0.28s/display), and issue Kopin fab release traveler.',
+desc:'Agents audit automated high-volume microdisplay probing lines at Westborough MA facility, measure pixel luminance uniformity Cpk & die yield, producing fab audit.',
+tasks:[{agent:'throughput',task:'Audit automated 300mm / 200mm microdisplay backplane wafer prober & optical ATE line at Westborough MA facility.',deps:[]},
+{agent:'throughput',task:'Optimize automated high-speed optical ATE test takt time: reduce 100% pixel defect & luminance calibration test execution to 0.28 seconds per display.',deps:[0]},
+{agent:'semiconductor_process_eng',task:'Run Statistical Process Control (SPC): monitor Cpk = 1.91 for pixel luminance uniformity and OLED color filter CD — PASS.',deps:[1]},
+{agent:'writer',task:'Produce the Westborough Microdisplay Yield & Quality Audit with wafer yield maps, MIL-STD safety certs, and VP of Operations sign-off.',deps:[2]}]},
+};
+
+const DTITLE={scout:'Target Defense Prime, Medical OEM & AR/VR Account List',oledos_display_volume_quote:'2K x 2K MicroOLED Display Engine Volume Quote Package',f35_hmds_upgrade_proposal:'F-35 HMDS OLEDoS Display Upgrade Proposal',radar:'Competitive Intelligence Brief',oledos_microdisplay_design:'2K x 2K OLEDoS Microdisplay Production Release Package',pancake_optics_module_design:'Pancake Optical Module Release Package',f35_nvis_night_vision_test:'MIL-STD-3009 NVIS Defense Release Package',westborough_wafer_probe_audit:'Westborough Microdisplay Yield & Quality Audit'};
+
+const TOOLS={
+research:()=>'Gathered MicroOLED (OLEDoS), MicroLED, F-35 HMDS helmet displays, and medical AR optics market intel; target accounts ranked.',
+source_accounts:()=>'Sourced VP of Helmet Display Systems, Chief Optical Systems Architect, and Head of Procurement.',
+score_fit:()=>'Scored against Kopin capabilities: OLEDoS Microdisplays, MicroLED Backplanes, Pancake Optics, CyberDisplay, Westborough labs.',
+design_oledos_backplane_pixel:()=>'Designed 2048 x 2048 0.9" OLEDoS backplane IC: 28nm HV-CMOS process, 10-bit DAC per pixel, 120 Hz driver.',
+simulate_luminance_contrast_ratio:()=>'Simulated OLEDoS luminance & contrast: peak white = 38,500 nits clean (spec > 35,000 nits), contrast = 120,000:1, power = 0.98W.',
+simulate_pancake_optical_transfer_function:()=>'Simulated pancake optical transfer function: MTF = 0.58 clean at 50 lp/mm (spec > 0.55), FOV = 90°, distortion < 1.2%.',
+verify_stray_light_ghosting:()=>'Verified stray light ghosting suppression: ghost intensity = 0.11% clean of primary image (spec < 0.15%).',
+audit_night_vision_compatibility:()=>'Audited MIL-STD-3009 NVIS Class B night vision: NVIS Radiance B = 8.4E-10 W/cm²/sr/nm clean (spec < 1.2E-9).',
+verify_high_dynamic_range:()=>'Verified HDR daylight readability: 100% daylight legibility clean under 10,000 fc ambient flight simulation.',
+inspect_oled_color_filter_cd:()=>'Inspected 28nm HV-CMOS backplane lithography: anode CD Cpk = 1.91, color filter alignment < 0.2 µm.',
+audit_bump_coplanarity:()=>'Audited micro-bump contact coplanarity: < 3 µm coplanarity clean across OLEDoS silicon backplanes.',
+verify_kopin_die_yield:()=>'Verified automated OLEDoS wafer die yield: 98.1% die yield clean across 2K x 2K microdisplay lots.',
+calculate_takt_time:()=>'Calculated takt time: 0.28 seconds per display automated optical ATE prober test.',
+check_compliance:()=>'Checked MIL-STD-810G environmental, MIL-STD-3009 (NVIS), FAA flight safety, and ISO 13485 medical standards.',
+build_quote:()=>'Structured OLEDoS display volume quote: unit display price, mask NRE waiver, volume tier discount (24% for 50k+ units).',
+qa_review:()=>'QA: 2K OLEDoS luminance curves, pancake optics MTF plots, MIL-STD-3009 NVIS spectra, and Westborough traveler verified.',
+compose:()=>'Drafted in a clear, executive-ready, defense optical semiconductor-aware technical style.',
+save:()=>'Saved to shared context for downstream agents.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+
+const FINAL={
+scout:`TARGET DEFENSE PRIME, MEDICAL OEM & AR/VR ACCOUNT LIST (illustrative)
+
+Scanned Defense Primes, Medical Device OEMs, and Enterprise AR/VR Headset Builders.
+
+A-tier (pursue now)
+1. Sole-Source F-35 Helmet System Integrator (Fort Worth TX / Cedar Rapids IA) — Next-gen OLEDoS display upgrade — Kopin fit 99
+2. Strategic Defense Avionics Prime (Haifa / Fort Worth TX) — Thermal weapon sight & soldier vision displays — fit 98
+3. Global Surgical Robotics OEM (Sunnyvale CA / Kalamazoo MI) — High-resolution 3D surgical AR visors — fit 97
+4. Commercial Aviation & Defense HUD OEM (London UK / Arlington VA) — Pilot head-up display microdisplay engines — fit 95
+5. Enterprise AR/VR Smart Glass Builder (Rochester NY / Enterprise) — Ultra-compact pancake optics & MicroOLEDs — fit 94
+
+Contacts: VP of Helmet Display Systems, Chief Optical Systems Architect, Head of Procurement.
+Technology scope: OLEDoS Microdisplays, MicroLED Backplanes, Pancake Optics, CyberDisplay, Westborough Labs.
+
+→ Saved: kopin_target_list, executive_contacts, microdisplay_portfolio_matrix
+
+NOTE: illustrative; not affiliated with Kopin Corporation.`,
+
+oledos_display_volume_quote:`2K X 2K MICROOLED DISPLAY ENGINE VOLUME QUOTE PACKAGE (illustrative)
+
+Customer: Defense Avionics & Medical AR Headset Manufacturer.
+Order: 2K x 2K 0.9" OLED-on-Silicon (OLEDoS) Display Engine (#RFQ-KOPN-2026-27).
+
+Display specifications & fab capacity audit
+• Application: High-Brightness Defense Pilot HUD & 3D Surgical Robotic AR Visor
+• Optical Performance: 2048 x 2048 Resolution; Peak White Luminance = 38,500 Nits; Contrast = 120,000:1 — PASS
+• Power & Refresh: Display Power = 0.98W; 120 Hz Refresh Rate; Pixel Rise Time = 12 µs — PASS
+• Facility Location: Kopin Corporation Westborough, Massachusetts Facility / Foundry Line
+
+Commercial summary
+• Quantity: 50,000 Microdisplay Units / Year (Custom Module Packaging)
+• Unit Microdisplay Price: $[REDACTED]
+• Volume Tier Discount (24% for 50,000+ units): -$[REDACTED]
+• Net Order Value: $[REDACTED] (FOB Westborough, MA — Dispatch in 3 weeks ARO)
+
+→ Saved: kopin_oledos_quote, luminance_vs_power_charts, contrast_ratio_curves
+
+NOTE: illustrative; all financial figures redacted.`,
+
+f35_hmds_upgrade_proposal:`F-35 HMDS OLEDOS DISPLAY UPGRADE PROPOSAL (illustrative)
+
+Customer: F-35 Joint Strike Fighter Helmet Display Program Office.
+Project: Next-Generation OLEDoS Microdisplay Helmet Upgrade (#F35-KOPN-2026).
+
+Defense avionics requirements & Kopin flight lead
+• Application: F-35 Helmet-Mounted Display System (HMDS) Day & Night Flight Operations
+• Spec Compliance: MIL-STD-810G Environmental, MIL-STD-3009 NVIS Class B, FAA Flight Safety — PASS
+• Flight Performance: 38,500 Nits Daylight Readability; NVIS Radiance B = 8.4E-10 W/cm²/sr/nm — PASS
+• Helmet Weight & Power: Reduced display module mass by 14% while extending contrast ratio by 100x
+
+Program roadmap & manufacturing terms
+• Phase 1: High-brightness OLEDoS display module qualification & night vision flight test (Westborough MA / 3 months)
+• Phase 2: Mass production release & F-35 fleet deployment (Westborough production line / 6 months)
+
+→ Saved: f35_hmds_proposal, day_night_readability_contrast_plots, helmet_weight_budget_impact
+
+NOTE: illustrative; all financial figures redacted.`,
+
+radar:`COMPETITIVE INTELLIGENCE BRIEF (illustrative)
+
+Landscape
+• Sony Semiconductor: strong consumer MicroOLED production, but lower peak brightness (< 5,000 nits) and lacks defense heritage
+• eMagin (Samsung Display): strong military OLEDs, but Kopin holds sole-source F-35 helmet system supply history
+• BOE Microdisplay: high volume for consumer VR, but lacks MIL-STD-3009 NVIS flight qualification and optical module integration
+• Jade Bird Display (JBD): specialized monochrome MicroLEDs, but lacks Kopin's full-color OLEDoS and pancake optics portfolio
+
+Where Kopin Corporation wins
+• Sole-Source F-35 Flight Heritage: flight-proven displays powering the world's most advanced fighter jet helmet system
+• High-Brightness OLEDoS Leadership: 35,000+ nits peak luminance enabling daylight readability in military HUDs
+• Complete Optical Sub-System Integration: turnkey microdisplays + pancake optics + thermal sight overlay controllers
+• Proprietary CyberDisplay & Backplane IP: custom 28nm HV-CMOS pixel drivers optimized for low power
+
+Talk tracks
+1. "Kopin is the sole-source display supplier powering the F-35 Joint Strike Fighter helmet system"
+2. "Our OLEDoS microdisplays deliver 38,500 nits peak brightness for full daylight HUD readability"
+3. "We deliver complete optical sub-systems combining MicroOLED displays with compact pancake optics"
+
+→ Saved: competitive_matrix, technology_benchmarks, sales_talk_tracks
+
+NOTE: illustrative; not affiliated with Kopin Corporation.`,
+
+oledos_microdisplay_design:`2K X 2K OLEDOS MICRODISPLAY PRODUCTION RELEASE PACKAGE (illustrative · flagship)
+
+Display: Kopin 2K x 2K 0.9" OLED-on-Silicon (OLEDoS) Microdisplay (#KOPN-OLEDOS-2K-HDR).
+
+Luminance, contrast, color gamut & backplane audit
+• Silicon Backplane: 28nm HV-CMOS process; 10-bit DAC per pixel; 120 Hz refresh rate driver — PASS
+• Optical Performance: Peak white luminance = 38,500 nits (spec > 35,000 nits); contrast = 120,000:1 — PASS
+• Speed & Gamut: Pixel rise/fall time = 12 µs (spec < 20 µs); sRGB color gamut = 112% — PASS
+• Process & Lithography: Anode Critical Dimension Cpk = 1.91; color filter alignment < 0.2 µm — PASS
+
+High-volume optical ATE & fab audit
+• Fab ATE Yield: Automated optical wafer prober die yield = 98.1%; takt time = 0.28s/display — PASS
+• Defense Compliance: Complies with MIL-STD-810G, MIL-STD-3009 NVIS, and FAA flight requirements
+
+Recommendation: Release 2K x 2K OLEDoS Microdisplay lot for defense HUD and medical AR manufacturing.
+
+→ Saved: oledos_release_package, luminance_charts, pixel_defect_maps, westborough_traveler
+
+NOTE: illustrative; confirm against Kopin product specification.`,
+
+pancake_optics_module_design:`PANCAKE OPTICAL MODULE RELEASE PACKAGE (illustrative)
+
+Module: Kopin Folded Pancake Optical Module (#KOPN-PANCAKE-OPTICS-90).
+
+Optical resolution, MTF & ghosting audit
+• Optical Architecture: Folded optical path, quarter-wave plate polarizers, 90° FOV — PASS
+• Resolution & Contrast: MTF = 0.58 at 50 lp/mm (spec > 0.55); optical distortion < 1.2% — PASS
+• Ghosting Suppression: Ghost image intensity = 0.11% of primary image (spec < 0.15%) — PASS
+• Form Factor: Ultra-compact folded lens mass < 28 grams per eye — PASS
+
+Status: Certified for wearable AR/VR headsets, military thermal weapon sights, and surgical visors.
+
+→ Saved: pancake_optics_release_package, mtf_resolution_benchmarks, stray_light_ray_traces, qa_test_cert
+
+NOTE: illustrative; confirm against Kopin optics engineering spec.`,
+
+f35_nvis_night_vision_test:`MIL-STD-3009 NVIS DEFENSE RELEASE PACKAGE (illustrative)
+
+Sub-Assembly: Kopin F-35 HMDS & Thermal Sight Display Sub-Assembly (#KOPN-NVIS-F35-SUB).
+
+Night vision, NVIS radiance & thermal overlay audit
+• Night Vision Performance: MIL-STD-3009 NVIS Class B night vision compatibility verified — PASS
+• Spectral Radiance: NVIS Radiance B = 8.4E-10 W/cm²/sr/nm at 15 nits setting (spec < 1.2E-9) — PASS
+• Thermal Sight Overlay: Thermal video overlay latency = 1.2 ms; 100% daylight legibility — PASS
+• Environmental Qualification: MIL-STD-810G thermal shock (-40°C to +85°C) & vibration tested — PASS
+
+Status: Approved for military flight helmets, night vision goggles (NVG), and thermal weapon sights.
+
+→ Saved: nvis_defense_release_package, nvis_spectral_radiance_plots, thermal_overlay_logs, qa_test_cert
+
+NOTE: illustrative; confirm against Kopin defense engineering spec.`,
+
+westborough_wafer_probe_audit:`WESTBOROUGH MICRODISPLAY YIELD & QUALITY AUDIT (illustrative)
+
+Audit Scope: Kopin Corporation Westborough, Massachusetts Facility (#WESTBOROUGH-FAB-AUDIT-2026).
+
+Validation & high-volume ATE test metrics
+• Automated Optical ATE: 300mm / 200mm OLEDoS silicon backplane wafer prober & optical ATE line
+• End-of-Line Test Takt Time: 0.28 seconds per display (logging 100% pixel defects & luminance data) — PASS
+• Statistical Process Control: Cpk = 1.91 for pixel luminance uniformity & OLED color filter CD — PASS
+• Wafer Die Yield: 98.1% end-to-end OLEDoS wafer die yield across Westborough line — PASS
+
+Quality Sign-off: Certified by VP of Operations & Quality Assurance Director.
+
+→ Saved: kopin_yield_audit, wafer_yield_maps, mil_std_safety_certs, fab_signoff
+
+NOTE: illustrative; confirm against Westborough facility quality management records.`,
+};
+
+let EMPLOYEES=[
+{id:'scout',name:'Scout',title:'AI Kopin Scout',wf:'scout',handled:350,hrs:74,win:0,status:'idle'},
+{id:'displayestimator',name:'Microdisplay-Quoting-Estimator',title:'AI Microdisplay Quoting Estimator',wf:'oledos_display_volume_quote',handled:430,hrs:100,win:64,status:'idle'},
+{id:'hmdsarchitect',name:'Defense-Display-Proposal-Arch',title:'AI Defense Display Proposal Architect',wf:'f35_hmds_upgrade_proposal',handled:145,hrs:110,win:68,status:'idle'},
+{id:'radar',name:'Radar',title:'AI Market Intel',wf:'radar',handled:175,hrs:44,win:0,status:'idle'},
+{id:'oledos_arch',name:'OLEDoS-Display-Architect',title:'AI OLEDoS Display Architect',wf:'oledos_microdisplay_design',handled:520,hrs:295,win:86,status:'idle'},
+{id:'optics_spec',name:'Optical-Systems-Specialist',title:'AI Optical Systems Specialist',wf:'pancake_optics_module_design',handled:380,hrs:200,win:66,status:'idle'},
+{id:'hud_integrator',name:'Defense-HUD-Integrator',title:'AI Defense HUD Integrator',wf:'f35_nvis_night_vision_test',handled:340,hrs:180,win:70,status:'idle'},
+{id:'fab_lead',name:'Westborough-Fab-Test-Lead',title:'AI Westborough Fab & Test Lead',wf:'westborough_wafer_probe_audit',handled:410,hrs:215,win:76,status:'idle'},
+];
+
+let running=false;
+const $=id=>document.getElementById(id);const sleep=ms=>new Promise(r=>setTimeout(r,ms));const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;const now=()=>new Date().toLocaleTimeString('en-GB');const mono=n=>n.trim().slice(0,2).toUpperCase();
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Commercial &amp; Defense Sourcing</span>';if(wf.track==='operations')s+='<span class="tag operations">Microdisplay &amp; Defense Optics Eng</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+function setView(v){$('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');$('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});}
+function renderEcon(){const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;const cells=[[total,'AI operators (commercial + engineering)'],[h.toLocaleString(),'OLEDoS runs, optics modules & quotes handled'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','optical semiconductor engineer hours saved / mo'],['+'+avg+'%','avg turnaround improvement']];$('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');}
+function empCard(e){const wf=WORKFLOWS[e.wf];const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}"><div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div><div class="emp-owns">Owns: <b>${wf.name}</b></div><div class="team">${team}</div><div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'—'}</b>faster</div></div><div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on an OLEDoS / optics spec</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;}
+function renderRoster(){const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;let html='';TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});$('roster').innerHTML=html;}
+function assign(id){if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];$('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at an OLEDoS silicon spec, a pancake optics ray-trace log or an NVIS night-vision trace and ${e.name} runs the whole loop.</div></div></div><div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div><div id="stage"></div></div>`;$('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();}
+async function runEmp(id){if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');const stage=$('stage');stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div><div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div><div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;const feed=$('feed');function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;const row=document.createElement('div');row.className='frow';row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,150)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}log(null,`Input received: "${obj.substring(0,54)}…"`);log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);await sleep(rand(700,1100));const grid=$('agrid');wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});await sleep(600);$('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');const done=new Set();async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}$('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');await sleep(400);const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(6,44);$('resultArea').innerHTML=`<div class="result"><div class="rstats"><div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div><div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div><div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'Commercial & Defense Sourcing':'Microdisplay & Defense Optics Eng'}</span></div><div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div><div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div><div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div><div class="donebar"><b>${e.name} produced a review-ready output.</b> Read, adapt and QA complete, ready for a CEO, VP of engineering, fab operations director or chief optical systems architect to confirm against Kopin and MIL-STD specs. Illustrative simulation, not a production deliverable.</div>`;e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;}
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per wafer lot',step:1};renderBuilder();}
+function renderBuilder(){const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];$('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+`<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div><div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. OLEDoS-Display-Architect" oninput="draft.name=this.value"></div><div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI OLEDoS Display Architect" oninput="draft.title=this.value"></div><div class="field"><label>Cadence</label><div class="seg">`+['Per wafer lot','Per batch','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div><div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});renderEcon();renderRoster();setView('ops');setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);}
+
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
