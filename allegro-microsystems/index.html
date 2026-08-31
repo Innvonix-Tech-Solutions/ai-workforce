@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Allegro MicroSystems &mdash; AI Commercial &amp; Automotive Sensing Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#fef2f3;--surface2:#fccad0;--border:#f78591;--accent:#e31b23;
+--accent-dim:rgba(227,27,35,.10);--accent-line:rgba(227,27,35,.40);--slate:#002b49;--slate-line:rgba(0,43,73,.32);--text:#0f172a;--hi:#020617;--tert:#64748b;--ok:#4ca30d;--ok-dim:rgba(76,163,13,.10);--gold:#d97706;--gold-bg:#fffbeb;--gold-line:#fde68a}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:46px;height:34px;border-radius:8px;background:linear-gradient(135deg,#002b49,#e31b23);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:14px;letter-spacing:.5px;font-family:Inter,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#c01018}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:900px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#c01018;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(76,163,13,.08);color:var(--ok);border:1px solid rgba(76,163,13,.3)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#c01018}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#c01018;font-size:15px;flex-shrink:0;position:relative;font-family:Inter,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#e31b23}.btn.primary{background:#c01018;border-color:#c01018;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#c01018;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#c01018}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(76,163,13,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(76,163,13,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#e31b23}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Inter,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#c01018;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px;font-family:Inter,sans-serif}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:99px;padding:11px 16px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:99px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff;font-weight:700}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5;font-family:Inter,sans-serif}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="header">
+<div class="logo"><div class="mark">ALGM</div>
+<div><div class="htitle">Allegro MicroSystems &middot; AI Commercial &amp; Automotive Sensing Workforce</div><div class="hsub">AI operators for XtremeSense™ TMR Sensors, Hall-Effect ICs, QuietControl™ Motor Drivers, and ISO 26262 ASIL-D (Manchester, NH)</div></div></div>
+<div class="badge">Independent concept &nbsp;&middot;&nbsp; <b>illustrative</b></div>
+</header>
+
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>an XtremeSense&trade; Tunnel Magnetoresistance (TMR) current sensor IC, QuietControl&trade; 3-phase BLDC gate driver, or ISO 26262 ASIL-D automotive safety engineering workflow turned into an autonomous team of agents</b>. Allegro MicroSystems, Inc. (NASDAQ: ALGM, headquartered in Manchester, New Hampshire) is a global leader in power and sensing semiconductor solutions for motion control, EV powertrains, ADAS safety, clean energy, and industrial automation. One track drives commercial sourcing &amp; automotive OEM/Tier-1 relationships: it captures Automotive Tier-1 Suppliers (Bosch, Continental, Denso, ZF), EV Manufacturers (Tesla, BYD, Rivian), and Industrial Automation Builders, quotes XtremeSense TMR current sensor IC volumes (10,000,000+ units/year), structures 800V EV traction inverter gate driver proposals, and highlights Allegro's #1 magnetic sensor market lead, XtremeSense TMR bandwidth advantage, and integrated current sensing. The other track delivers automotive &amp; industrial semiconductor engineering precision: it designs XtremeSense TMR current sensor ICs (integrated 5kV RMS galvanic isolation, 1 MHz bandwidth, 1.0% total error over -40&deg;C to +150&deg;C), integrates QuietControl BLDC gate drivers (&lt; 25 ns rise time, 100% shoot-through protection), verifies ISO 26262 ASIL-D safety metrics (SPFM &gt; 99%), and audits Manchester NH / foundry ATE test lines (magnetic sensitivity Cpk = 1.92). Point one at a TMR sensor spec, a QuietControl driver log or an ASIL-D safety trace and it runs the loop, then hands back a review-ready output for a person to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial &amp; Automotive Sourcing</span> find, TMR sensor volume quote, 800V EV inverter proposal</span>
+<span><span class="tag operations">Automotive Sensing &amp; Power Eng</span> XtremeSense TMR IC, QuietControl BLDC, ASIL-D Safety, Manchester fab yield</span>
+<span><span class="tag hero">Flagship</span> the deepest example run</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+
+<div class="foot">Independent concept prototype prepared by Innvonix Tech Solutions for a conversation with Allegro MicroSystems, Inc. (Manchester, NH). It is not affiliated with, endorsed by, or built on Allegro systems or data. All operators and outputs are illustrative simulations; TMR sensor bandwidth, total error percentages, gate driver slew rates, Manchester fab ATE yields and commercial quotes are placeholders. A chief executive officer, VP of engineering, fab operations director or chief magnetic sensor architect reviews and approves every TMR schematic, QuietControl gate driver traveler, ASIL-D safety traveler and commercial automotive proposal. This is not a production system and produces no deliverable for a real customer.</div>
+
+<script>
+const AGENT_ROLES={
+researcher:{emoji:'🔎',label:'EV Powertrain, TMR Sensors & Motor Driver Research',tools:['research','save']},
+prospector:{emoji:'🧲',label:'EV Tier-1, OEM & Industrial Automation Sourcing',tools:['source_accounts','save']},
+qualifier:{emoji:'🎯',label:'TMR Current Sensor, QuietControl Driver & ASIL-D Qualifier',tools:['score_fit','save']},
+sensor_silicon_arch:{emoji:'🧲',label:'XtremeSense™ TMR & Hall-Effect Sensor Architect',tools:['design_tmr_current_sensor_core','simulate_magnetic_sensitivity_bandwidth','save']},
+power_driver_spec:{emoji:'⚡',label:'Gate Driver & QuietControl™ BLDC Motor Driver Spec',tools:['simulate_gate_drive_slew_rate','verify_bldc_commutation_efficiency','save']},
+functional_safety_spec:{emoji:'🛡️',label:'ISO 26262 ASIL-D & Automotive Safety Specialist',tools:['audit_fmeda_asil_d_coverage','verify_galvanic_isolation_breakdown','save']},
+semiconductor_process_eng:{emoji:'🔬',label:'BCD (Bipolar-CMOS-DMOS) Wafer Fab & Packaging Lead',tools:['inspect_bcd_lithography_cd','audit_bump_coplanarity','save']},
+throughput:{emoji:'🤖',label:'High-Volume Sensor Wafer Probe & ATE Test Opt',tools:['verify_allegro_die_yield','calculate_takt_time','save']},
+compliance:{emoji:'📋',label:'AEC-Q100, ISO 26262 & UL 60950 Isolation Lead',tools:['check_compliance','save']},
+pricing:{emoji:'🧮',label:'Automotive Sensor & Power IC Volume Quoting',tools:['build_quote','save']},
+writer:{emoji:'✍️',label:'Semiconductor IC Datasheet & Technical Writer',tools:['compose','save']},
+reviewer:{emoji:'✅',label:'QA & Final Allegro Release Reviewer',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+
+const TRACKS=[['commercial','Commercial &amp; Automotive Sourcing'],['operations','Automotive Sensing &amp; Power Eng']];
+
+const WORKFLOWS={
+scout:{name:'EV Tier-1, OEM & industrial automation discovery',title:'AI Allegro Scout',mode:'dag',track:'commercial',deliverable:'Target EV Tier-1, OEM & Industrial Account List',
+sample:'Find Automotive Tier-1 Suppliers (Bosch, Continental, Denso, ZF), EV Manufacturers (Tesla, BYD, Rivian), and Industrial Robotics Builders (ABB, Siemens, FANUC) needing TMR current sensors, Hall-effect speed ICs, and BLDC gate drivers.',
+desc:'Agents scan 800V EV traction inverter specs, electric power steering (EPS) angle sensors, and industrial motor drive requirements, map VP of Powertrain Engineering, Chief System Architect, score fit, and compile target list.',
+tasks:[{agent:'researcher',task:'Map 800V EV inverter current sensing demand, TMR sensor bandwidth specs, and ISO 26262 ASIL-D safety requirements.',deps:[]},
+{agent:'prospector',task:'Source VP of Powertrain Electronics, Chief Automotive Safety Officer, and Head of Semiconductor Procurement at Tier-1 & OEM leaders.',deps:[]},
+{agent:'qualifier',task:'Score fit against Allegro capabilities: XtremeSense TMR Sensors, Hall-Effect ICs, QuietControl BLDC Drivers, Manchester NH labs.',deps:[0,1]},
+{agent:'writer',task:'Compile the ranked target EV & industrial account list with magnetic sensor specs, volume IC projections, and commercial engagement strategy.',deps:[2]}]},
+
+tmr_current_sensor_volume_quote:{name:'Automotive XtremeSense™ TMR current sensor volume quoting',title:'AI Sensor Quoting Estimator',mode:'sequential',track:'commercial',deliverable:'XtremeSense TMR Current Sensor Volume Quote Package',
+sample:'An 800V EV traction inverter customer uploaded an RFQ: XtremeSense™ TMR current sensor ICs, 1,000A peak current range, 1 MHz bandwidth, 10,000,000 units/year. Calculate BCD wafer fab cost, SOIC-16 custom leadframe cost, volume discount, and dispatch SLA.',
+desc:'Agents parse customer EV inverter current sensor RFQ, calculate BCD silicon die size, TMR thin-film deposition cycle time, volume discount, and generate quote package.',
+tasks:[{agent:'qualifier',task:'Parse EV inverter sensor RFQ: XtremeSense TMR current sensor IC, 1,000A peak range, 5kV RMS galvanic isolation, 10,000,000 units/year.',deps:[]},
+{agent:'sensor_silicon_arch',task:'Calculate sensor die size & power dissipation: BCD process, integrated primary conductor, total IC power dissipation < 45 mW.',deps:[0]},
+{agent:'semiconductor_process_eng',task:'Estimate wafer fab & custom leadframe manufacturing cycle time: TMR magnetic layer sputtering, SOIC-16 custom copper leadframe, 100% magnetic ATE test.',deps:[1]},
+{agent:'pricing',task:'Structure volume pricing model: unit sensor IC price, mask NRE waiver, volume tier discount (26% for 10M+ units), and Manchester SLA.',deps:[2]},
+{agent:'writer',task:'Produce the XtremeSense TMR Current Sensor Volume Quote package with sensitivity vs temperature plots, bandwidth charts, and Manchester SLA.',deps:[3]}]},
+
+ev_inverter_gate_driver_proposal:{name:'800V EV traction inverter gate driver proposal',title:'AI EV Inverter Proposal Architect',mode:'sequential',track:'commercial',deliverable:'800V EV Traction Inverter Gate Driver Proposal',
+sample:'Structure a multi-year automotive proposal equipping 800V SiC/GaN traction inverters with Allegro isolated gate drivers and QuietControl™ BLDC motor controllers.',
+desc:'Agents scope EV traction inverter requirements, design isolated gate driver & BLDC controller architecture, verify ISO 26262 ASIL-D standards, and produce proposal.',
+tasks:[{agent:'qualifier',task:'Parse EV OEM RFQ: 800V SiC traction inverter gate driver, 10A peak drive current, integrated desaturation protection, ASIL-D safety.',deps:[]},
+{agent:'power_driver_spec',task:'Design isolated gate driver architecture: QuietControl motor drive engine, CMTI > 100 kV/µs, active Miller clamp.',deps:[0]},
+{agent:'compliance',task:'Verify AEC-Q100 Grade 0 qualification (-40°C to +150°C), ISO 26262 ASIL-D safety, and UL 1577 5kV RMS isolation certs.',deps:[1]},
+{agent:'writer',task:'Produce the 800V EV Traction Inverter Gate Driver proposal with switching loss curves, CMTI transient waveforms, and Manchester delivery roadmap.',deps:[2]}]},
+
+radar:{name:'Automotive magnetic sensor & power IC competitive intelligence brief',title:'AI Market Intel',mode:'dag',track:'commercial',deliverable:'Competitive Intelligence Brief',
+sample:'How do competing sensor & power vendors (Melexis, Infineon, TI, AKM) compare to Allegro MicroSystems in #1 magnetic sensor market lead, XtremeSense TMR bandwidth, and integrated current sensing?',
+desc:'Agents profile competing magnetic sensor and power IC chipmakers, compare TMR bandwidth & galvanic isolation performance, analyze Allegro advantages, producing brief.',
+tasks:[{agent:'researcher',task:'Scan automotive magnetic sensor & power IC market: Hall-effect sensors, XtremeSense TMR, QuietControl motor drivers, EV inverters.',deps:[]},
+{agent:'prospector',task:'Profile competing vendors: Melexis, Infineon Technologies, Texas Instruments, AKM (Asahi Kasei Microdevices).',deps:[]},
+{agent:'sensor_silicon_arch',task:'Compare technology & sensor metrics: Allegro #1 magnetic sensor market share + XtremeSense TMR 1 MHz bandwidth (-3dB) + integrated 5kV RMS isolation vs discrete shunt resistors.',deps:[0,1]},
+{agent:'writer',task:'Produce competitive intelligence brief highlighting Allegro\'s magnetic sensor lead, XtremeSense TMR superiority, and EV powertrain momentum.',deps:[2]}]},
+
+tmr_current_sensor_design:{name:'High-Bandwidth XtremeSense™ TMR Current Sensor IC design',title:'AI Allegro Sensor Architect',mode:'sequential',track:'operations',tag:'flagship',deliverable:'XtremeSense TMR Current Sensor Production Release Package',
+sample:'Process an 800V EV traction inverter current sensing specification: design XtremeSense™ TMR current sensor IC (integrated galvanic isolation barrier, 1 MHz bandwidth, differential TMR bridge), simulate magnetic sensitivity & thermal drift (1.0% total error over -40°C to +150°C), audit BCD silicon wafer lithography CD, QA-review, and produce Allegro production traveler package.',
+desc:'Agents design XtremeSense TMR current sensor IC, simulate 1 MHz bandwidth & 1.0% thermal error, audit BCD silicon lithography CD, QA-review, and produce release package.',
+tasks:[{agent:'sensor_silicon_arch',task:'Design XtremeSense TMR current sensor IC: differential TMR bridge, integrated 5kV RMS isolation, low-noise chopper amplifier, BCD core.',deps:[]},
+{agent:'sensor_silicon_arch',task:'Simulate magnetic sensitivity & thermal drift: sensitivity = 40 mV/A; total error = 1.0% over -40°C to +150°C (spec < 1.5%) — PASS.',deps:[0]},
+{agent:'sensor_silicon_arch',task:'Simulate bandwidth & step response: -3dB bandwidth = 1.05 MHz (spec > 1.00 MHz); response time = 280 ns — PASS.',deps:[1]},
+{agent:'semiconductor_process_eng',task:'Audit BCD wafer fab & TMR magnetic deposition lithography: TMR layer Critical Dimension Cpk = 1.92; SOIC-16 leadframe coplanarity < 4 µm — PASS.',deps:[2]},
+{agent:'throughput',task:'Execute high-volume automated magnetic prober & ATE test: 100% ICs tested for magnetic sensitivity & isolation; die yield = 98.3%; ATE takt time = 0.21s/die — PASS.',deps:[3]},
+{agent:'compliance',task:'Verify AEC-Q100 Grade 0, ISO 26262 ASIL-D safety, and UL 60950 / UL 1577 5kV RMS reinforced isolation standards.',deps:[4]},
+{agent:'reviewer',task:'QA-review Allegro release package: verify TMR sensitivity curves, bandwidth Bode plots, ASIL-D FMEDA reports, and Manchester traveler.',deps:[5]},
+{agent:'writer',task:'Produce the XtremeSense TMR Current Sensor Production Release package with sensitivity charts, Bode bandwidth plots, and Manchester validation traveler.',deps:[6]}]},
+
+bldc_gate_driver_ic_design:{name:'QuietControl™ 3-Phase BLDC Motor & Gate Driver IC integration',title:'AI Power Driver Specialist',mode:'sequential',track:'operations',deliverable:'QuietControl Gate Driver Release Package',
+sample:'Design QuietControl™ 3-phase BLDC motor gate driver IC; simulate gate drive slew rate & switching loss (< 25 ns rise time, 100% shoot-through protection), verify sensorless FOC algorithm execution, and issue gate driver release traveler.',
+desc:'Agents design QuietControl 3-phase BLDC gate driver IC, simulate switching slew rate & sensorless FOC motor efficiency, producing release package.',
+tasks:[{agent:'power_driver_spec',task:'Design QuietControl 3-phase BLDC gate driver IC: 50V BCD process, integrated charge pump, active Miller clamp.',deps:[]},
+{agent:'power_driver_spec',task:'Simulate gate drive slew rate & switching time: gate rise time = 22 ns (spec < 25 ns); fall time = 18 ns; dead-time = 50 ns — PASS.',deps:[0]},
+{agent:'power_driver_spec',task:'Verify sensorless Field Oriented Control (FOC) motor efficiency: motor acoustic noise reduction = 14 dB; efficiency = 97.4% — PASS.',deps:[1]},
+{agent:'reviewer',task:'QA-review QuietControl gate driver traveler: verify gate drive switching waveforms, efficiency curves, and Manchester traveler.',deps:[2]},
+{agent:'writer',task:'Produce the QuietControl Gate Driver Release package with gate drive timing benchmarks, motor acoustic spectrum plots, and QA test cert.',deps:[3]}]},
+
+asil_d_functional_safety_test:{name:'ISO 26262 ASIL-D & 5kV RMS galvanic isolation verification',title:'AI Automotive Safety Specialist',mode:'sequential',track:'operations',deliverable:'ISO 26262 ASIL-D Safety Release Package',
+sample:'Execute ISO 26262 ASIL-D FMEDA evaluation on automotive current sensor IC; measure safety metric coverage (SPFM > 99%, LFM > 90%), verify 5kV RMS reinforced insulation withstand voltage (60s breakdown test), and issue ASIL-D safety cert.',
+desc:'Agents evaluate ISO 26262 ASIL-D safety metrics & 5kV RMS galvanic isolation withstand voltage on automotive sensor ICs, producing safety release package.',
+tasks:[{agent:'functional_safety_spec',task:'Execute ISO 26262 ASIL-D FMEDA evaluation on automotive XtremeSense TMR current sensor IC.',deps:[]},
+{agent:'functional_safety_spec',task:'Measure Single Point Fault Metric (SPFM) & Latent Fault Metric (LFM): SPFM = 99.4% (spec > 99.0%); LFM = 94.2% (spec > 90.0%) — PASS.',deps:[0]},
+{agent:'functional_safety_spec',task:'Audit 5kV RMS galvanic isolation withstand voltage: 60-second high-voltage breakdown test at 6,000V AC clean without discharge — PASS.',deps:[1]},
+{agent:'writer',task:'Produce the ISO 26262 ASIL-D Safety Release package with FMEDA coverage tables, isolation breakdown test logs, and QA test cert.',deps:[2]}]},
+
+manchester_wafer_probe_audit:{name:'High-volume magnetic wafer probe & ATE yield audit',title:'AI Manchester Fab & Test Lead',mode:'sequential',track:'operations',deliverable:'Manchester Sensor Yield & Quality Audit',
+sample:'Audit high-volume magnetic sensor probing line at foundry / Manchester NH facility; measure magnetic sensitivity Cpk (1.92), ATE test takt time (0.21s/die), and issue Allegro fab release traveler.',
+desc:'Agents audit automated high-volume magnetic sensor probing lines at foundry / Manchester NH facility, measure magnetic sensitivity Cpk & die yield, producing fab audit.',
+tasks:[{agent:'throughput',task:'Audit automated 200mm BCD magnetic sensor wafer prober & ATE test line at foundry / Manchester NH facility.',deps:[]},
+{agent:'throughput',task:'Optimize automated high-speed ATE magnetic test takt time: reduce 100% magnetic sensitivity & isolation test execution to 0.21 seconds per die.',deps:[0]},
+{agent:'semiconductor_process_eng',task:'Run Statistical Process Control (SPC): monitor Cpk = 1.92 for magnetic sensitivity and SOIC-16 leadframe coplanarity — PASS.',deps:[1]},
+{agent:'writer',task:'Produce the Manchester Sensor Yield & Quality Audit with wafer yield maps, AEC-Q100 safety certs, and VP of Operations sign-off.',deps:[2]}]},
+};
+
+const DTITLE={scout:'Target EV Tier-1, OEM & Industrial Account List',tmr_current_sensor_volume_quote:'XtremeSense TMR Current Sensor Volume Quote Package',ev_inverter_gate_driver_proposal:'800V EV Traction Inverter Gate Driver Proposal',radar:'Competitive Intelligence Brief',tmr_current_sensor_design:'XtremeSense TMR Current Sensor Production Release Package',bldc_gate_driver_ic_design:'QuietControl Gate Driver Release Package',asil_d_functional_safety_test:'ISO 26262 ASIL-D Safety Release Package',manchester_wafer_probe_audit:'Manchester Sensor Yield & Quality Audit'};
+
+const TOOLS={
+research:()=>'Gathered EV powertrain, XtremeSense TMR current sensors, QuietControl BLDC gate drivers, and ISO 26262 ASIL-D market intel; target accounts ranked.',
+source_accounts:()=>'Sourced VP of Powertrain Electronics, Chief Automotive Safety Officer, and Head of Semiconductor Procurement.',
+score_fit:()=>'Scored against Allegro capabilities: XtremeSense TMR Sensors, Hall-Effect ICs, QuietControl BLDC Drivers, Manchester NH labs.',
+design_tmr_current_sensor_core:()=>'Designed XtremeSense TMR current sensor IC: differential TMR bridge, integrated 5kV RMS isolation, low-noise chopper amp, BCD core.',
+simulate_magnetic_sensitivity_bandwidth:()=>'Simulated TMR sensitivity & bandwidth: sensitivity = 40 mV/A, total error = 1.0% clean (-40°C to +150°C), -3dB bandwidth = 1.05 MHz.',
+simulate_gate_drive_slew_rate:()=>'Simulated QuietControl gate drive slew rate: gate rise time = 22 ns clean (spec < 25 ns), fall time = 18 ns, dead-time = 50 ns.',
+verify_bldc_commutation_efficiency:()=>'Verified QuietControl sensorless FOC motor efficiency: 97.4% efficiency clean, acoustic noise reduction = 14 dB.',
+audit_fmeda_asil_d_coverage:()=>'Audited ISO 26262 ASIL-D FMEDA coverage: SPFM = 99.4% clean (spec > 99.0%), LFM = 94.2% (spec > 90.0%).',
+verify_galvanic_isolation_breakdown:()=>'Verified 5kV RMS galvanic isolation: 6,000V AC 60-second breakdown test clean without discharge.',
+inspect_bcd_lithography_cd:()=>'Inspected BCD wafer fab & TMR magnetic deposition lithography: TMR CD Cpk = 1.92, SOIC-16 leadframe coplanarity < 4 µm.',
+audit_bump_coplanarity:()=>'Audited SOIC / QFN leadframe coplanarity: < 4 µm coplanarity clean across automotive sensor packages.',
+verify_allegro_die_yield:()=>'Verified automated magnetic sensor wafer die yield: 98.3% die yield clean across XtremeSense TMR wafer lots.',
+calculate_takt_time:()=>'Calculated takt time: 0.21 seconds per die automated high-speed magnetic ATE prober test.',
+check_compliance:()=>'Checked AEC-Q100 Grade 0, ISO 26262 ASIL-D safety, UL 1577 5kV RMS isolation, and UL 60950 standards.',
+build_quote:()=>'Structured TMR sensor volume quote: unit sensor IC price, mask NRE waiver, volume tier discount (26% for 10M+ units).',
+qa_review:()=>'QA: TMR sensitivity curves, bandwidth Bode plots, ASIL-D FMEDA reports, QuietControl switching waveforms, and Manchester traveler verified.',
+compose:()=>'Drafted in a clear, executive-ready, automotive semiconductor-aware technical style.',
+save:()=>'Saved to shared context for downstream agents.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+
+const FINAL={
+scout:`TARGET EV TIER-1, OEM & INDUSTRIAL ACCOUNT LIST (illustrative)
+
+Scanned Automotive Tier-1 Suppliers, EV Manufacturers, and Industrial Automation Builders.
+
+A-tier (pursue now)
+1. Global #1 Automotive Tier-1 Supplier (Gerlingen / Farmington Hills MI) — 800V EV inverter TMR current sensors — Allegro fit 99
+2. Leading EV Automotive OEM (Austin TX / Fremont CA) — Traction inverter & battery management TMR sensors — fit 98
+3. Global Automotive Powertrain & Chassis Tier-1 (Friedrichshafen / Detroit MI) — Electric power steering (EPS) angle ICs — fit 97
+4. Global Industrial Automation & Robotics Giant (Zurich / Alpharetta GA) — QuietControl 3-phase BLDC motor drivers — fit 95
+5. Clean Energy Solar Inverter Manufacturer (Herzliya / Fremont CA) — High-bandwidth grid current sensor ICs — fit 94
+
+Contacts: VP of Powertrain Electronics, Chief Automotive Safety Officer, Head of Semiconductor Procurement.
+Technology scope: XtremeSense TMR Sensors, Hall-Effect ICs, QuietControl Drivers, Manchester Labs.
+
+→ Saved: allegro_target_list, executive_contacts, sensor_power_portfolio_matrix
+
+NOTE: illustrative; not affiliated with Allegro MicroSystems, Inc.`,
+
+tmr_current_sensor_volume_quote:`XTREMESENSE TMR CURRENT SENSOR VOLUME QUOTE PACKAGE (illustrative)
+
+Customer: Global Automotive Tier-1 Traction Inverter Supplier.
+Order: XtremeSense™ TMR Current Sensor IC (#RFQ-ALGM-2026-28).
+
+IC specifications & fab capacity audit
+• Application: 800V EV Traction Inverter & Battery Management System (1,000A Peak Range)
+• Sensing Performance: 1.05 MHz -3dB Bandwidth; Total Error = 1.0% over -40°C to +150°C — PASS
+• Isolation & Safety: 5kV RMS Reinforced Galvanic Isolation; ISO 26262 ASIL-D Compliant — PASS
+• Facility Location: Allegro MicroSystems Manchester, New Hampshire Facility / Foundry Line
+
+Commercial summary
+• Quantity: 10,000,000 Sensor IC Units / Year (SOIC-16 Custom Leadframe)
+• Unit Sensor IC Price: $[REDACTED]
+• Volume Tier Discount (26% for 10,000,000+ units): -$[REDACTED]
+• Net Order Value: $[REDACTED] (FOB Manchester, NH — Dispatch in 2 weeks ARO)
+
+→ Saved: allegro_tmr_quote, sensitivity_vs_temp_plots, bandwidth_bode_charts
+
+NOTE: illustrative; all financial figures redacted.`,
+
+ev_inverter_gate_driver_proposal:`800V EV TRACTION INVERTER GATE DRIVER PROPOSAL (illustrative)
+
+Customer: Leading EV Automotive OEM.
+Project: 800V SiC Traction Inverter Isolated Gate Driver (#INVERTER-ALGM-2026).
+
+EV powertrain requirements & Allegro lead
+• Application: 800V SiC/GaN EV Traction Inverter & On-Board Charger
+• Spec Compliance: AEC-Q100 Grade 0 (-40°C to +150°C), ISO 26262 ASIL-D, UL 1577 5kV Isolation — PASS
+• Driver Performance: 10A Peak Gate Drive Current; CMTI > 100 kV/µs; Desaturation Protection — PASS
+• Efficiency Impact: Reduces SiC switching losses by 18% with active Miller clamping
+
+Program roadmap & manufacturing terms
+• Phase 1: Isolated gate driver pilot & 800V SiC inverter double-pulse testing (Manchester NH / 2 months)
+• Phase 2: Mass production release & EV platform deployment (Allegro production line / 5 months)
+
+→ Saved: ev_inverter_proposal, switching_loss_curves, cmti_transient_waveforms
+
+NOTE: illustrative; all financial figures redacted.`,
+
+radar:`COMPETITIVE INTELLIGENCE BRIEF (illustrative)
+
+Landscape
+• Melexis: strong European automotive presence, but slower transition to high-bandwidth TMR current sensing
+• Infineon Technologies: large power semiconductor catalog, but relies on external shunt resistors or lower bandwidth Hall sensors for high-current loops
+• Texas Instruments: broad analog vendor, but lacks Allegro's specialized integrated current conductor lead and TMR sensitivity
+• AKM (Asahi Kasei Microdevices): specialized Hall vendor, but lacks Allegro's complete automotive gate driver and ASIL-D safety ecosystem
+
+Where Allegro MicroSystems, Inc. wins
+• #1 Global Market Share in Magnetic Sensors: 30+ years of automotive motion control and sensing leadership
+• XtremeSense TMR Bandwidth Superiority: 1 MHz bandwidth with integrated 5kV RMS galvanic isolation
+• Integrated Current Conductor Packaging: custom low-resistance leadframes eliminating external shunt power loss
+• Turnkey ASIL-D Safety & QuietControl: complete sensor + motor driver safety package for ISO 26262 compliance
+
+Talk tracks
+1. "Allegro XtremeSense TMR current sensors deliver 1 MHz bandwidth with 1.0% total error over -40°C to +150°C"
+2. "Our integrated conductor leadframes provide 5kV RMS galvanic isolation while eliminating external shunt resistors"
+3. "Allegro offers a complete ISO 26262 ASIL-D safety package for 800V EV traction inverters and EPS"
+
+→ Saved: competitive_matrix, technology_benchmarks, sales_talk_tracks
+
+NOTE: illustrative; not affiliated with Allegro MicroSystems, Inc.`,
+
+tmr_current_sensor_design:`XTREMESENSE TMR CURRENT SENSOR PRODUCTION RELEASE PACKAGE (illustrative · flagship)
+
+IC: Allegro XtremeSense™ TMR Current Sensor IC (#ALGM-TMR-1000A-SENS).
+
+Sensing accuracy, bandwidth & isolation audit
+• Silicon Architecture: Bipolar-CMOS-DMOS (BCD) core; differential TMR bridge, low-noise chopper amp — PASS
+• Accuracy & Sensitivity: Sensitivity = 40 mV/A; total error = 1.0% over -40°C to +150°C (spec < 1.5%) — PASS
+• Bandwidth & Speed: -3dB bandwidth = 1.05 MHz (spec > 1.00 MHz); response time = 280 ns — PASS
+• Galvanic Isolation: 5kV RMS reinforced isolation; 6,000V AC 60-second breakdown test — PASS
+
+High-volume magnetic ATE & fab audit
+• Fab ATE Yield: Automated magnetic wafer prober die yield = 98.3%; takt time = 0.21s/die — PASS
+• Automotive Compliance: AEC-Q100 Grade 0, ISO 26262 ASIL-D, and UL 60950 / UL 1577 certified
+
+Recommendation: Release XtremeSense TMR Sensor lot for 800V EV traction inverter manufacturing.
+
+→ Saved: tmr_sensor_release_package, sensitivity_charts, bode_bandwidth_plots, manchester_traveler
+
+NOTE: illustrative; confirm against Allegro product specification.`,
+
+bldc_gate_driver_ic_design:`QUIETCONTROL GATE DRIVER RELEASE PACKAGE (illustrative)
+
+IC: Allegro QuietControl™ 3-Phase BLDC Motor Gate Driver IC (#ALGM-QUIETCONTROL-BLDC).
+
+Gate drive slew rate, efficiency & protection audit
+• Driver Architecture: 50V BCD process; 3-phase half-bridge driver, charge pump, active Miller clamp — PASS
+• Switching Speed: Gate rise time = 22 ns (spec < 25 ns); fall time = 18 ns; dead-time = 50 ns — PASS
+• Motor Efficiency: QuietControl sensorless FOC algorithm; 97.4% motor efficiency; 14 dB noise reduction — PASS
+• Automotive Compliance: AEC-Q100 Grade 0 qualified (-40°C to +150°C) — PASS
+
+Status: Approved for EV thermal management pumps, electronic power steering (EPS), and industrial robotics.
+
+→ Saved: quietcontrol_release_package, gate_drive_timing_benchmarks, acoustic_spectrum_plots, qa_test_cert
+
+NOTE: illustrative; confirm against Allegro power driver spec.`,
+
+asil_d_functional_safety_test:`ISO 26262 ASIL-D SAFETY RELEASE PACKAGE (illustrative)
+
+IC: Allegro Automotive Safety & Galvanic Isolation Engine (#ALGM-ASIL-D-SAFETY).
+
+ISO 26262 FMEDA & isolation breakdown audit
+• Safety Architecture: Dual redundant sensing channels, integrated diagnostic logic, BIST — PASS
+• FMEDA Safety Metrics: SPFM = 99.4% (spec > 99.0%); LFM = 94.2% (spec > 90.0%) — PASS
+• High-Voltage Isolation: 5kV RMS 60-second AC breakdown test clean at 6,000V AC — PASS
+• Standards Compliance: Complies with ISO 26262 ASIL-D and UL 1577 reinforced insulation — PASS
+
+Status: Certified for drive-by-wire, autonomous braking, and 800V EV powertrain safety loops.
+
+→ Saved: asil_d_safety_release_package, fmeda_coverage_tables, isolation_breakdown_logs, qa_test_cert
+
+NOTE: illustrative; confirm against Allegro safety engineering spec.`,
+
+manchester_wafer_probe_audit:`MANCHESTER SENSOR YIELD & QUALITY AUDIT (illustrative)
+
+Audit Scope: Allegro MicroSystems, Inc. Manchester, New Hampshire Facility (#MANCHESTER-FAB-AUDIT-2026).
+
+Validation & high-volume ATE test metrics
+• Automated Magnetic ATE: 200mm BCD magnetic wafer prober & high-voltage isolation test line
+• End-of-Line Test Takt Time: 0.21 seconds per die (logging 100% magnetic sensitivity & isolation data) — PASS
+• Statistical Process Control: Cpk = 1.92 for magnetic sensitivity & SOIC-16 leadframe coplanarity — PASS
+• Wafer Die Yield: 98.3% end-to-end magnetic sensor wafer die yield across Manchester line — PASS
+
+Quality Sign-off: Certified by VP of Operations & Quality Assurance Director.
+
+→ Saved: allegro_yield_audit, wafer_yield_maps, aec_q100_safety_certs, fab_signoff
+
+NOTE: illustrative; confirm against Manchester facility quality management records.`,
+};
+
+let EMPLOYEES=[
+{id:'scout',name:'Scout',title:'AI Allegro Scout',wf:'scout',handled:350,hrs:74,win:0,status:'idle'},
+{id:'sensorestimator',name:'Sensor-Quoting-Estimator',title:'AI Sensor Quoting Estimator',wf:'tmr_current_sensor_volume_quote',handled:430,hrs:100,win:64,status:'idle'},
+{id:'inverterarchitect',name:'EV-Inverter-Proposal-Arch',title:'AI EV Inverter Proposal Architect',wf:'ev_inverter_gate_driver_proposal',handled:145,hrs:110,win:68,status:'idle'},
+{id:'radar',name:'Radar',title:'AI Market Intel',wf:'radar',handled:175,hrs:44,win:0,status:'idle'},
+{id:'tmr_sensor_arch',name:'Allegro-Sensor-Architect',title:'AI Allegro Sensor Architect',wf:'tmr_current_sensor_design',handled:520,hrs:295,win:86,status:'idle'},
+{id:'power_driver_spec',name:'Power-Driver-Specialist',title:'AI Power Driver Specialist',wf:'bldc_gate_driver_ic_design',handled:380,hrs:200,win:66,status:'idle'},
+{id:'safety_spec',name:'Automotive-Safety-Specialist',title:'AI Automotive Safety Specialist',wf:'asil_d_functional_safety_test',handled:340,hrs:180,win:70,status:'idle'},
+{id:'fab_lead',name:'Manchester-Fab-Test-Lead',title:'AI Manchester Fab & Test Lead',wf:'manchester_wafer_probe_audit',handled:410,hrs:215,win:76,status:'idle'},
+];
+
+let running=false;
+const $=id=>document.getElementById(id);const sleep=ms=>new Promise(r=>setTimeout(r,ms));const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;const now=()=>new Date().toLocaleTimeString('en-GB');const mono=n=>n.trim().slice(0,2).toUpperCase();
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Commercial &amp; Automotive Sourcing</span>';if(wf.track==='operations')s+='<span class="tag operations">Automotive Sensing &amp; Power Eng</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+function setView(v){$('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');$('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});}
+function renderEcon(){const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;const cells=[[total,'AI operators (commercial + engineering)'],[h.toLocaleString(),'XtremeSense TMR runs, gate drivers & quotes handled'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','automotive sensor engineer hours saved / mo'],['+'+avg+'%','avg turnaround improvement']];$('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');}
+function empCard(e){const wf=WORKFLOWS[e.wf];const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}"><div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div><div class="emp-owns">Owns: <b>${wf.name}</b></div><div class="team">${team}</div><div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'—'}</b>faster</div></div><div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a TMR / driver spec</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;}
+function renderRoster(){const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;let html='';TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});$('roster').innerHTML=html;}
+function assign(id){if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];$('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a TMR sensor spec, a QuietControl driver log or an ASIL-D safety trace and ${e.name} runs the whole loop.</div></div></div><div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div><div id="stage"></div></div>`;$('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();}
+async function runEmp(id){if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');const stage=$('stage');stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div><div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div><div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;const feed=$('feed');function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;const row=document.createElement('div');row.className='frow';row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,150)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}log(null,`Input received: "${obj.substring(0,54)}…"`);log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);await sleep(rand(700,1100));const grid=$('agrid');wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});await sleep(600);$('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');const done=new Set();async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}$('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');await sleep(400);const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(6,44);$('resultArea').innerHTML=`<div class="result"><div class="rstats"><div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div><div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div><div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'Commercial & Automotive Sourcing':'Automotive Sensing & Power Eng'}</span></div><div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div><div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div><div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div><div class="donebar"><b>${e.name} produced a review-ready output.</b> Read, adapt and QA complete, ready for a CEO, VP of engineering, fab operations director or chief magnetic sensor architect to confirm against Allegro and AEC-Q100 / ISO 26262 specs. Illustrative simulation, not a production deliverable.</div>`;e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;}
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per wafer lot',step:1};renderBuilder();}
+function renderBuilder(){const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];$('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+`<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div><div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. Allegro-Sensor-Architect" oninput="draft.name=this.value"></div><div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Allegro Sensor Architect" oninput="draft.title=this.value"></div><div class="field"><label>Cadence</label><div class="seg">`+['Per wafer lot','Per batch','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div><div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});renderEcon();renderRoster();setView('ops');setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);}
+
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
