@@ -188,3 +188,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/litrinium
 https://innvonix-tech-solutions.github.io/ai-workforce/impinj
 https://innvonix-tech-solutions.github.io/ai-workforce/rambus
 https://innvonix-tech-solutions.github.io/ai-workforce/quicklogic-corporation
+https://innvonix-tech-solutions.github.io/ai-workforce/kopin-corporation
