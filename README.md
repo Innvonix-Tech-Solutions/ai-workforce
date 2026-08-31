@@ -189,3 +189,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/impinj
 https://innvonix-tech-solutions.github.io/ai-workforce/rambus
 https://innvonix-tech-solutions.github.io/ai-workforce/quicklogic-corporation
 https://innvonix-tech-solutions.github.io/ai-workforce/kopin-corporation
+https://innvonix-tech-solutions.github.io/ai-workforce/allegro-microsystems
