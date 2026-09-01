@@ -191,3 +191,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/quicklogic-corporation
 https://innvonix-tech-solutions.github.io/ai-workforce/kopin-corporation
 https://innvonix-tech-solutions.github.io/ai-workforce/allegro-microsystems
 https://innvonix-tech-solutions.github.io/ai-workforce/sourceability
+https://innvonix-tech-solutions.github.io/ai-workforce/ebara
