@@ -198,3 +198,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/synaptics-incorporated
 https://innvonix-tech-solutions.github.io/ai-workforce/pemnet
 https://innvonix-tech-solutions.github.io/ai-workforce/sk-siltron
 https://innvonix-tech-solutions.github.io/ai-workforce/brewer-science
+https://innvonix-tech-solutions.github.io/ai-workforce/tacair
