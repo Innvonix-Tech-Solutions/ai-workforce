@@ -194,3 +194,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/sourceability
 https://innvonix-tech-solutions.github.io/ai-workforce/ebara
 https://innvonix-tech-solutions.github.io/ai-workforce/atslab
 https://innvonix-tech-solutions.github.io/ai-workforce/a2global
+https://innvonix-tech-solutions.github.io/ai-workforce/synaptics-incorporated
