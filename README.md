@@ -200,3 +200,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/sk-siltron
 https://innvonix-tech-solutions.github.io/ai-workforce/brewer-science
 https://innvonix-tech-solutions.github.io/ai-workforce/tacair
 https://innvonix-tech-solutions.github.io/ai-workforce/killerbrownie
+https://innvonix-tech-solutions.github.io/ai-workforce/amogy
