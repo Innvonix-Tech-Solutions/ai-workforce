@@ -205,3 +205,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/longroad
 https://innvonix-tech-solutions.github.io/ai-workforce/phononic-inc
 https://innvonix-tech-solutions.github.io/ai-workforce/clenera
 https://innvonix-tech-solutions.github.io/ai-workforce/current-lightning
+https://innvonix-tech-solutions.github.io/ai-workforce/pentagon-technologies
