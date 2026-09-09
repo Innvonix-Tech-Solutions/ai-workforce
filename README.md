@@ -202,3 +202,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/tacair
 https://innvonix-tech-solutions.github.io/ai-workforce/killerbrownie
 https://innvonix-tech-solutions.github.io/ai-workforce/amogy
 https://innvonix-tech-solutions.github.io/ai-workforce/longroad
+https://innvonix-tech-solutions.github.io/ai-workforce/phononic-inc
