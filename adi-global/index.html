@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADI Global Distribution - AI Commercial &amp; Systems Engineering Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,400&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#ffffff;
+  --surface:#fdf8f8;
+  --surface2:#faf0f1;
+  --border:#ebd0d3;
+  --accent:#ac1f2d;
+  --accent-light:#c72c3b;
+  --accent-dark:#7d131d;
+  --navy-dark:#111827;
+  --biscay:#1a4366;
+  --accent-dim:rgba(172,31,45,.08);
+  --accent-line:rgba(172,31,45,.28);
+  --gold:#ac1f2d;
+  --gold-bg:#fdf4f5;
+  --gold-line:#f2cfd3;
+  --text:#111827;
+  --hi:#111827;
+  --tert:#5b6471;
+  --ok:#16a34a;
+  --ok-dim:rgba(22,163,74,.10);
+  --adi-red:#ac1f2d;
+}
+body{background:var(--canvas);color:var(--text);font-family:"Nunito Sans",system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:3px solid #ac1f2d;position:sticky;top:0;background:#111827;color:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:14px}
+.mark{min-width:54px;height:36px;padding:0 12px;border-radius:6px;background:#ac1f2d;display:flex;align-items:center;justify-content:center;color:#ffffff;font-weight:900;font-size:17px;letter-spacing:1px;white-space:nowrap;overflow:hidden;flex-shrink:0}
+.htitle{font-size:15px;font-weight:800;color:#fff;letter-spacing:.4px;text-transform:uppercase;font-family:"Plus Jakarta Sans",sans-serif}.hsub{font-size:11px;color:#fce7e9;margin-top:1px;font-weight:500;letter-spacing:.3px}
+.badge{border:1px solid rgba(172,31,45,.6);border-radius:6px;padding:6px 12px;font-size:11px;color:#fce7e9;background:rgba(172,31,45,.25)}.badge b{color:#ffffff}
+.tabs{max-width:1200px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none;letter-spacing:.3px;font-family:"Plus Jakarta Sans",sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface);border-top:3px solid var(--accent)}
+.main{max-width:1200px;margin:0 auto;padding:24px}
+.lead{font-size:14.5px;line-height:1.6;max-width:920px;margin-bottom:14px;color:#2d3748}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.5px;padding:3px 8px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:"Plus Jakarta Sans",sans-serif}
+.tag.commercial{background:var(--accent-dim);color:var(--accent-dark);border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(26,67,102,.10);color:#1a4366;border:1px solid rgba(26,67,102,.30)}
+.tag.hero{background:var(--gold-bg);color:var(--accent);border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--accent);font-family:"Plus Jakarta Sans",sans-serif}.cell .v .u{color:var(--accent);font-size:16px}
+.cell .k{font-size:11.5px;color:var(--tert);margin-top:4px;line-height:1.35}
+.slabel{font-size:11px;font-weight:800;letter-spacing:1.2px;color:var(--accent-dark);text-transform:uppercase;margin:22px 0 14px;display:flex;align-items:center;gap:10px;font-family:"Plus Jakarta Sans",sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;transition:box-shadow .2s,border-color .2s}
+.emp:hover{border-color:var(--accent-line);box-shadow:0 4px 14px rgba(172,31,45,.06)}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--border)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);font-size:15px;flex-shrink:0;position:relative;font-family:"Plus Jakarta Sans",sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:800;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;letter-spacing:.2px;font-family:"Plus Jakarta Sans",sans-serif}.emp-title{font-size:12px;color:var(--tert)}
+.emp-owns{font-size:12.5px;margin-bottom:10px;line-height:1.4}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-weight:600}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:800;font-family:"Plus Jakarta Sans",sans-serif}
+.btn{font-family:inherit;font-size:12.5px;font-weight:700;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi);transition:all .15s}
+.btn:hover{border-color:var(--accent-line)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#ffffff}
+.btn.primary:hover{background:var(--accent-dark);border-color:var(--accent-dark);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent;color:var(--accent)}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px;background:rgba(253,248,248,.5)}
+.hire-card:hover{border-color:var(--accent);background:var(--surface)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:700;color:var(--hi);font-family:"Plus Jakarta Sans",sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:60px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent-dark)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:700;color:var(--tert);letter-spacing:.3px;font-family:"Plus Jakarta Sans",sans-serif}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:176px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:"IBM Plex Mono",monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 220px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:260px 1fr;gap:14px}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:700}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12.5px;font-weight:700;color:var(--accent);letter-spacing:.3px;font-family:"Plus Jakarta Sans",sans-serif}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto;color:var(--hi)}
+.donebar{background:var(--surface);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;color:var(--text)}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:800;color:var(--tert);letter-spacing:1px;font-family:"Plus Jakarta Sans",sans-serif}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:700;color:var(--hi);margin-top:2px;font-family:"Plus Jakarta Sans",sans-serif}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface);transition:border-color .15s}
+.wf:hover{border-color:var(--accent-line)}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:13.5px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;letter-spacing:.2px;font-family:"Plus Jakarta Sans",sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:700;text-transform:uppercase}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:200px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:700;color:var(--hi);margin-bottom:6px;font-family:"Plus Jakarta Sans",sans-serif}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 16px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border);font-weight:600}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#ffffff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1200px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="header">
+<div class="logo"><div class="mark">ADI</div>
+<div><div class="htitle">ADI Global Distribution · AI Commercial &amp; Systems Engineering Workforce</div><div class="hsub">NYSE: ADIG · MELVILLE NY · 200 LOCATIONS · 500,000+ SKUs · SNAP ONE &amp; OVRC ECOSYSTEM</div></div></div>
+<div class="badge">Independent concept &nbsp;·&nbsp; <b>illustrative</b></div>
+</header>
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>an ADI Global Distribution commercial dealer acceleration, security takeoff, fire alarm design, pro AV Dante integration, or branch inventory workflow turned into an autonomous team of agents</b>. One track wins dealer loyalty and commercial project volume: it scouts top security integrators and electrical contractors across 200 ADI branch territories, quotes turn-key enterprise 128-camera NDAA video surveillance systems with multi-terabyte NVR storage, structures multi-facility healthcare campus cloud access control tenders, and monitors wholesale competitor pricing across Wesco/Anixter and Graybar. The other track delivers value-added systems design, engineering submittals, and omnichannel branch logistics: it engineers code-compliant NFPA 72 commercial fire alarm systems with automated battery calculation sheets, designs corporate 4K AV-over-IP and Dante network audio distribution systems, calculates 802.3bt PoE++ switch power envelopes for enterprise Cat6A infrastructure, and deploys Control4 / OvrC cloud device management templates for recurring dealer service revenue. Point one at a dealer project specification, a set of architectural floor plans, or an omnichannel branch inventory feed and it runs the loop, then hands back a review-ready output for an ADI Systems Design Manager, VP of Sales, or Branch Operations Director to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial</span> Dealer Pipeline, Video Quoting, Master Tender, Price Intel</span>
+<span><span class="tag operations">Systems Design &amp; Ops</span> NFPA 72 Fire Alarm, Dante Pro AV, PoE++ Budget, OvrC Deployment</span>
+<span><span class="tag hero">Flagship</span> High-Rise Fire Alarm Submittal</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+<div class="foot">Independent concept prototype prepared for a conversation with ADI Global Distribution (NYSE: ADIG, adiglobal.com). It is not affiliated with, endorsed by, or built on ADI Global Distribution or Resideo systems or data. All operators and outputs are illustrative simulations; dealer accounts, branch SKU stock levels, manufacturer volume rebates, battery calculation curves, and bill of materials takeoffs are placeholders. A licensed Systems Engineer (NICET / CTS-D / PSP), ADI Systems Design Team Lead, or Branch Operations Director reviews and approves every commercial quotation, engineering submittal, and procurement order.</div>
+<script>
+const AGENT_ROLES={
+commercial_integrator_tier1_account_scout:{emoji:'🏢',label:'Commercial Security & AV Integrator Account Scout',tools:['analyze_regional_integrator_licensing_and_branch_proximity','save']},
+enterprise_video_surveillance_ndaa_quoting_eng:{emoji:'📹',label:'Enterprise NDAA IP Video & VMS Quoting Engineer',tools:['build_enterprise_camera_storage_and_licensing_quote','save']},
+fire_alarm_life_safety_nfpa72_systems_spec:{emoji:'🚨',label:'NFPA 72 Fire Alarm & Life Safety Systems Specialist',tools:['verify_nfpa72_voltage_drop_and_battery_standby_calcs','save']},
+access_control_cloud_credentials_quoting_spec:{emoji:'🔑',label:'Cloud Access Control & Mobile Credential Solutions Lead',tools:['configure_osdp_readers_poe_power_and_door_hardware_bom','save']},
+commercial_av_dante_matrix_systems_designer:{emoji:'🔊',label:'Pro AV, Dante AoIP & Conference Matrix Systems Designer',tools:['generate_dante_channel_routing_and_acoustic_coverage_map','save']},
+structured_cabling_poe_networking_bom_lead:{emoji:'🔌',label:'Cat6A Structured Cabling & PoE++ Switch Budget Engineer',tools:['calculate_802_3bt_switch_wattage_and_fiber_link_budgets','save']},
+exclusive_brands_snapone_ovrc_solution_spec:{emoji:'🎛️',label:'Snap One, Control4 & OvrC Cloud Management Specialist',tools:['deploy_ovrc_remote_monitoring_and_automation_profiles','save']},
+omnichannel_branch_inventory_logistics_router:{emoji:'🚚',label:'200-Branch Inventory Routing & PAT Locker Logistics Lead',tools:['optimize_same_day_roadie_and_branch_locker_fulfillment','save']},
+dealer_bid_registration_vendor_discount_lead:{emoji:'🏷️',label:'Manufacturer Project Registration & Rebate Specialist',tools:['register_vendor_deal_protection_and_tier_rebate_matrix','save']},
+smart_building_iot_telemetry_ovrc_auditor:{emoji:'📡',label:'Smart Building IoT & Telemetry Health Auditor',tools:['audit_network_switch_packet_loss_and_device_heartbeats','save']},
+writer:{emoji:'✍️',label:'Integrator Project Submittal & Commercial Dossier Writer',tools:['compose','save']},
+reviewer:{emoji:'✅',label:'Principal Systems Design & Code Compliance Reviewer (NICET / CTS-D)',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+const TRACKS=[['commercial','Commercial Distribution & Dealer Acceleration'],['operations','Systems Design, Engineering Takeoffs & Branch Logistics']];
+const WORKFLOWS={
+scout:{name:'Top 250 enterprise security & low-voltage integrator pipeline scout',title:'AI Commercial Integrator Opportunity Scout',mode:'dag',track:'commercial',deliverable:'Top 250 Enterprise Security & Low-Voltage Integrator Target Pipeline List',
+sample:'Identify leading regional low-voltage systems integrators, commercial fire alarm contractors, and enterprise AV installers within 40 miles of key ADI branch hubs (Atlanta, Dallas, Chicago, Los Angeles, Toronto) seeking unified single-source procurement, dedicated project staging, and credit term expansion.',
+desc:'Agents cross-reference state low-voltage licensing databases, security industry rankings (SDM 100, CE Pro), project bid wins, and branch proximity to build high-converting dealer onboarding pipelines.',
+tasks:[{agent:'commercial_integrator_tier1_account_scout',task:'Filter state commercial electrical & low-voltage contractor registries across key metro branch areas.',deps:[]},
+{agent:'dealer_bid_registration_vendor_discount_lead',task:'Evaluate dealer annual equipment spend potential, credit eligibility, and supplier consolidation savings.',deps:[0]},
+{agent:'writer',task:'Compile target commercial integrator executive dossier with customized credit and project registration tiers.',deps:[1]}]},
+quote:{name:'Turn-key 128-camera NDAA enterprise video surveillance & VMS bid proposal',title:'AI Enterprise Video Surveillance Quoting Operator',mode:'sequential',track:'commercial',deliverable:'Turnkey 128-Camera NDAA Enterprise IP Video & VMS Quoting Proposal',
+sample:'Generate a comprehensive equipment bill of materials and pricing proposal for a 128-camera NDAA-compliant commercial logistics warehouse project (4K multisensor exterior domes, AI analytics bullet cameras, dual 64-channel enterprise NVRs with 30-day 4K 15fps RAID-6 storage, and Milestone VMS licensing).',
+desc:'Agents calculate streaming bitrate bandwidth, camera resolution field-of-view coverage, RAID storage requirements, PoE power consumption, and apply tiered contractor discount pricing.',
+tasks:[{agent:'enterprise_video_surveillance_ndaa_quoting_eng',task:'Size 4K camera streams (H.265+ smart codec), RAID-6 storage capacity (192TB raw), and client workstation GPUs.',deps:[]},
+{agent:'structured_cabling_poe_networking_bom_lead',task:'Specify managed 24-port PoE+ network switches, SFP+ 10G fiber uplinks, and Cat6A plenum-rated blue cabling.',deps:[0]},
+{agent:'dealer_bid_registration_vendor_discount_lead',task:'Lock manufacturer special project registration discounts and volume discount margin tiers ($348,500 contract).',deps:[1]},
+{agent:'writer',task:'Assemble customer-facing contractor proposal with equipment cut sheets and warranty terms.',deps:[2]}]},
+tender:{name:'National healthcare campus access control & cloud credentials master tender',title:'AI Master Low-Voltage Project Tender Operator',mode:'dag',track:'commercial',deliverable:'National Healthcare Campus Access Control & Cloud Credentials Master Tender Response',
+sample:'Prepare a master multi-building access control equipment tender for a regional hospital network (48 access-controlled portals across 3 medical pavilions, OSDP encrypted readers, mobile smartphone credentialing, elevator dispatch control, and integrated emergency lockdown buttons).',
+desc:'Agents verify life safety egress compliance (NFPA 101), ADA handicap door operators, UL 294 power supplies with fire alarm disconnect relays, and manufacturer warranty SLAs.',
+tasks:[{agent:'access_control_cloud_credentials_quoting_spec',task:'Map door hardware schedules, electrified mortise locks, request-to-exit PIRs, and cloud controller modules.',deps:[]},
+{agent:'omnichannel_branch_inventory_logistics_router',task:'Structure regional branch staging, phase-by-phase delivery schedules, and 24/7 locker pickup for installation crews.',deps:[]},
+{agent:'dealer_bid_registration_vendor_discount_lead',task:'Structure enterprise master supply agreement ($1.25M campus value) and dealer quarterly rebate matrix.',deps:[0,1]},
+{agent:'writer',task:'Produce formal hospital network master procurement tender response with compliance certifications.',deps:[2]}]},
+radar:{name:'Security & AV wholesale distributor market share & pricing intelligence',title:'AI Low-Voltage Wholesale Market Intelligence',mode:'dag',track:'commercial',deliverable:'Low-Voltage Wholesale Distribution & Competitive Price Benchmark Brief',
+sample:'Monitor wholesale low-voltage marketplace trends, brand portfolio expansions, and contractor pricing differentials between ADI Global Distribution, Wesco / Anixter, Graybar, and ScanSource across surveillance, access control, and commercial audio.',
+desc:'Agents track distributor promotions, supplier line card changes, inventory lead times, and digital e-commerce adoption among electrical contractors and security dealers.',
+tasks:[{agent:'dealer_bid_registration_vendor_discount_lead',task:'Gather competitor distributor published pricing, freight thresholds, and contractor rewards incentives.',deps:[]},
+{agent:'commercial_integrator_tier1_account_scout',task:'Highlight ADI competitive differentiators: 200 local branches, 24/7 PAT lockers, Snap One & Control4 exclusivity, and in-house Systems Design support.',deps:[0]},
+{agent:'writer',task:'Publish quarterly distributor intelligence brief with counter-pricing guidance for branch sales reps.',deps:[1]}]},
+panel_qualification:{name:'Multi-story commercial high-rise fire & life safety NFPA 72 systems design & battery calculation',title:'AI Fire Alarm & Life Safety Systems Design Operator',mode:'dag',track:'operations',tag:'flagship',deliverable:'Multi-Story High-Rise NFPA 72 Addressable Fire Alarm Systems Design Dossier & Battery Calculation Package',
+sample:'Generate a complete, code-compliant NFPA 72 addressable fire alarm system submittal for a 12-story commercial high-rise tower (addressable voice evacuation panel, 140 multi-criteria photo/thermal detectors, 24 NAC booster power supplies, synchronized strobe candela ratings, and emergency 24-hour standby plus 15-minute alarm battery calculations).',
+desc:'Agents audit device loop capacity, strobe voltage drop percentages (maintaining >20.4V end-of-line), elevator recall interlocks, duct smoke shutdown matrices, and output municipal plan review documents.',
+tasks:[{agent:'fire_alarm_life_safety_nfpa72_systems_spec',task:'Calculate SLC signaling line circuit loop loading, NAC voltage drop curves, and ampere-hour secondary battery capacity.',deps:[]},
+{agent:'structured_cabling_poe_networking_bom_lead',task:'Specify FPLP plenum 2-conductor fire alarm wire, survivability-rated pathways, and surge suppression modules.',deps:[]},
+{agent:'reviewer',task:'Audit system calculations against NFPA 72 National Fire Alarm Code, IBC Chapter 9, and UL 864 10th Edition standards.',deps:[0,1]},
+{agent:'writer',task:'Generate stamped fire alarm engineering submittal package with battery curves and riser diagrams.',deps:[2]}]},
+inverter_yield:{name:'Corporate boardroom 4K AV-over-IP & Dante audio acoustic system engineering takeoff',title:'AI Pro AV & Dante System Design Operator',mode:'sequential',track:'operations',deliverable:'Corporate Boardroom 4K AV-over-IP & Dante Network Audio Engineering Takeoff Report',
+sample:'Engineer a complete pro AV conference room technology package for an executive boardroom (4K60 4:4:4 AV-over-IP encoders/decoders, beamforming ceiling microphone array, Dante digital signal processor with AEC acoustic echo cancellation, and Control4 / commercial touch panel integration).',
+desc:'Agents model acoustic room reverberation, microphone polar pick-up patterns, PoE network bandwidth (sub-1Gbps per node), and output wiring diagrams.',
+tasks:[{agent:'commercial_av_dante_matrix_systems_designer',task:'Calculate speaker SPL coverage uniformity, Dante unicast/multicast flow limits, and DSP latency (<3ms).',deps:[]},
+{agent:'exclusive_brands_snapone_ovrc_solution_spec',task:'Integrate Control4 automation touchscreens, commercial lighting relay interfaces, and OvrC remote management.',deps:[0]},
+{agent:'reviewer',task:'Verify video latency (<1 frame), acoustic room speech transmission index (STI > 0.65), and PoE switch power budgets.',deps:[1]},
+{agent:'writer',task:'Produce complete engineering bill of materials, single-line AV riser diagram, and commissioning guide.',deps:[2]}]},
+thermal_simulation:{name:'Enterprise campus structured cabling & PoE++ network power budget calculation',title:'AI Network Infrastructure & PoE Budget Operator',mode:'dag',track:'operations',deliverable:'Campus Structured Cabling & 802.3bt PoE++ Switch Power Budget Strategy',
+sample:'Calculate end-to-end structured cabling topology, rack thermal dissipation, and IEEE 802.3bt Type 4 (90W) PoE power distribution for an enterprise healthcare facility supporting 240 IP cameras, wireless Wi-Fi 7 access points, and smart LED fixtures.',
+desc:'Agents calculate cable bundle thermal rise (TIA-568.2-D standards), patch panel port densities, UPS battery backup runtime during building power loss, and fiber optic attenuation.',
+tasks:[{agent:'structured_cabling_poe_networking_bom_lead',task:'Model switch wattage capacity (740W power supplies), cable bundle temperature rises, and Category 6A shield terminations.',deps:[]},
+{agent:'smart_building_iot_telemetry_ovrc_auditor',task:'Simulate network bandwidth consumption, VLAN segregation for security vs IoT traffic, and QoS priority queues.',deps:[0]},
+{agent:'writer',task:'Produce enterprise network engineering specification, rack elevation diagrams, and thermal cooling requirements.',deps:[1]}]},
+mask_eco:{name:'OvrC cloud remote management deployment & Control4 dealer migration schedule',title:'AI Smart Building & OvrC Deployment Operator',mode:'sequential',track:'operations',deliverable:'OvrC Cloud Remote Management Deployment & Control4 Smart Automation Migration Assessment',
+sample:'Deploy standardized cloud device management profiles across 45 commercial client sites utilizing OvrC Pro hubs, Araknis managed switches, and Control4 processors to enable remote rebooting, automatic ISP failover, and recurring dealer maintenance contracts.',
+desc:'Agents configure automated firmware upgrade schedules, push VPN secure remote access tokens, configure device ping health monitors, and calculate dealer labor cost savings.',
+tasks:[{agent:'exclusive_brands_snapone_ovrc_solution_spec',task:'Build standardized OvrC device templates, site tagging schemas, and automated self-healing reboot scripts.',deps:[]},
+{agent:'smart_building_iot_telemetry_ovrc_auditor',task:'Audit site telemetry data, identify failing wireless access points, and verify redundant cellular gateway failover.',deps:[0]},
+{agent:'writer',task:'Publish dealer executive rollout summary, client-facing service level agreement templates, and ROI metrics.',deps:[1]}]},
+};
+const DTITLE={
+scout:'Top 250 Enterprise Security & Low-Voltage Integrator Target Pipeline List',
+quote:'Turnkey 128-Camera NDAA Enterprise IP Video & VMS Quoting Proposal',
+tender:'National Healthcare Campus Access Control & Cloud Credentials Master Tender Response',
+radar:'Low-Voltage Wholesale Distribution & Competitive Price Benchmark Brief',
+panel_qualification:'Multi-Story High-Rise NFPA 72 Addressable Fire Alarm Systems Design Dossier & Battery Calculation Package',
+inverter_yield:'Corporate Boardroom 4K AV-over-IP & Dante Network Audio Engineering Takeoff Report',
+thermal_simulation:'Campus Structured Cabling & 802.3bt PoE++ Switch Power Budget Strategy',
+mask_eco:'OvrC Cloud Remote Management Deployment & Control4 Smart Automation Migration Assessment'
+};
+const TOOLS={
+analyze_regional_integrator_licensing_and_branch_proximity:()=>'Audited state low-voltage licensing, creditworthiness & branch proximity (under 30 mins).',
+build_enterprise_camera_storage_and_licensing_quote:()=>'Calculated 4K H.265 bitrates, 192TB RAID-6 storage & Milestone VMS channel licensing.',
+verify_nfpa72_voltage_drop_and_battery_standby_calcs:()=>'Verified NFPA 72 end-of-line voltage >20.4V & 24hr standby + 15min alarm battery curves.',
+configure_osdp_readers_poe_power_and_door_hardware_bom:()=>'Mapped OSDP encrypted readers, electrified exit devices, UL 294 power & cloud controllers.',
+generate_dante_channel_routing_and_acoustic_coverage_map:()=>'Simulated ceiling beamforming mic polar patterns, Dante AoIP latency (<2.5ms) & room STI.',
+calculate_802_3bt_switch_wattage_and_fiber_link_budgets:()=>'Calculated 90W PoE++ budgets, cable bundle temperature rise & OM4 fiber attenuation.',
+deploy_ovrc_remote_monitoring_and_automation_profiles:()=>'Configured OvrC Pro automated port power cycling, remote tunnel access & device tagging.',
+optimize_same_day_roadie_and_branch_locker_fulfillment:()=>'Scheduled 200-branch hub cross-docking, 24/7 PAT locker codes & Roadie 4-hour delivery.',
+register_vendor_deal_protection_and_tier_rebate_matrix:()=>'Registered manufacturer project deal protection and secured additional 14% discount tier.',
+audit_network_switch_packet_loss_and_device_heartbeats:()=>'Audited switch telemetry, detected zero packet loss & confirmed redundant ISP failover.',
+compose:()=>'Structured into professional, code-compliant ADI commercial submittal and proposal style.',
+qa_review:()=>'Audited against NFPA 72, IEEE 802.3bt, UL 294, and BICSI standards with PE/NICET stamp.',
+save:()=>'Saved to shared project context for downstream engineering agents.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+const FINAL={
+scout:`TOP 250 ENTERPRISE SECURITY & LOW-VOLTAGE INTEGRATOR TARGET PIPELINE LIST (illustrative)
+Target Regions: Atlanta Hub, Dallas-Fort Worth, Greater Chicago, Southern California, Tri-State NYC
+Data Sources: State Low-Voltage Licensing Boards, SDM 100 integrators, commercial building permits
+
+High-Priority Integrator Targets Identified:
+1. Apex Commercial Security Solutions (Atlanta, GA) - 85 Techs - Spend Potential: $3.4M/yr - Primary Fit: NDAA IP Video & Cloud Access
+2. Lone Star Low Voltage Systems (Dallas, TX) - 120 Techs - Spend Potential: $4.8M/yr - Primary Fit: NFPA 72 Fire Alarm & Structured Cabling
+3. Great Lakes Integrated Technologies (Chicago, IL) - 64 Techs - Spend Potential: $2.6M/yr - Primary Fit: Pro AV, Dante Audio & Control4
+4. Pacific Defense & Life Safety Systems (Irvine, CA) - 95 Techs - Spend Potential: $3.9M/yr - Primary Fit: Enterprise Video Surveillance & OvrC
+
+ADI Value Proposition Delivered:
+• Unified single-source access across 500,000+ SKUs from 1,000+ top brands
+• 24/7 Pick-up Anytime (PAT) locker access at 200 local branches eliminates job-site downtime
+• Exclusive line card access to Snap One, Araknis, Episode, Binary, and Control4
+→ Saved: adi_target_integrator_pipeline, credit_expansion_matrix
+NOTE: illustrative concept for ADI Global Distribution.`,
+
+quote:`TURNKEY 128-CAMERA NDAA ENTERPRISE IP VIDEO & VMS QUOTING PROPOSAL (illustrative)
+Project Reference: Midwest Logistics Distribution Campus (650,000 sq ft Facility)
+Contractor Partner: Industrial Systems Integration Corp (ADI Account: #482910)
+
+Equipment Bill of Materials Summary:
+• 96x 4K NDAA-Compliant IR Outdoor Bullet Cameras with AI Human/Vehicle Classification
+• 24x 4K 180° Panoramic Multi-Sensor Cameras for High-Bay Loading Dock Surveillance
+• 8x 32x Optical Zoom PTZ Cameras with Laser IR Illuminators (300m range)
+• 2x Enterprise 64-Channel Network Video Recorders (192TB Raw Storage, RAID-6, Redundant Power Supplies)
+• 6x 24-Port Gigabit Managed PoE+ Network Switches (370W PoE budget, 10G SFP+ Uplinks)
+• 128x Milestone Corporate Device Channel Camera Licenses + 3-Year Care Plus Software Upgrade Plan
+
+Commercial Pricing & Discount Structure:
+• Standard Equipment List Price (MSRP): $468,750.00
+• ADI Integrator Partner Price (with Project Registration Tier): $348,500.00
+• Net Margin Realized by Dealer: $120,250.00 (25.7% gross margin)
+• Logistics SLA: Staged at ADI Chicago Central Hub, delivered in 3 scheduled job-site drops
+→ Saved: ndaa_video_proposal, bandwidth_storage_calculation
+NOTE: illustrative.`,
+
+tender:`NATIONAL HEALTHCARE CAMPUS ACCESS CONTROL & CLOUD CREDENTIALS MASTER TENDER (illustrative)
+Project Reference: 3-Pavilion Regional Medical Campus (48 Access-Controlled Portals)
+Solicitation Reference: Health System RFP-2026-SEC-09
+
+Architectural Systems Architecture:
+• Field Hardware: OSDP v2.2 Secure Encrypted Smart Card & BLE / NFC Mobile Smartphone Readers
+• Door Locking Hardware: Electrified Fail-Secure Mortise Locksets with Internal Request-to-Exit Switches
+• Power & Life Safety: UL 294 Listed 12V/24V Multi-Voltage Power Supplies with Emergency Fire Alarm Disconnect
+• Cloud Controllers: Mercury-based PoE+ Edge Controllers with 2-Door Interface Modules
+• Elevators: 4-Cab Elevator Destination Dispatch Interface Modules (64 Floors Total)
+
+Delivery & Omnichannel Support Terms:
+• Total Master Supply Agreement Value: $1,250,000.00 across 18-month construction timeline
+• Staging & Pre-Addressing: ADI Melville Engineering Center pre-addresses IP controllers and labels hardware sets by door number
+• Local Branch Backup: Local ADI branch maintains 10% emergency spares inventory in 24/7 PAT lockers
+→ Saved: healthcare_tender_response, door_hardware_schedules
+NOTE: illustrative.`,
+
+radar:`LOW-VOLTAGE WHOLESALE DISTRIBUTION & COMPETITIVE PRICE BENCHMARK BRIEF (illustrative)
+Competitive Landscape: ADI Global Distribution vs Wesco / Anixter, Graybar, and ScanSource
+
+Market Trends & Key Insights:
+1. Video Surveillance: Shift toward NDAA-compliant platforms accelerates. ADI exclusive and authorized lines capture 34% of enterprise bids against Wesco.
+2. Smart Living & Automation: ADI integration of Snap One and Control4 provides proprietary residential and light-commercial ecosystem unmatchable by broadline industrial distributors.
+3. Logistics Convenience: ADI 200 physical branches with 24/7 PAT lockers and 1-hour rush pickup provide a significant contractor advantage over warehouse-only competitors.
+
+Pricing & Rebate Recommendations:
+• Implement automatic contractor tier upgrades for accounts purchasing both security and structured cabling.
+• Expand freight-free thresholds on orders over $500 to drive digital e-commerce adoption on adiglobaldistribution.us.
+→ Saved: wholesale_price_intel, branch_counter_strategy
+NOTE: illustrative.`,
+
+panel_qualification:`MULTI-STORY HIGH-RISE NFPA 72 ADDRESSABLE FIRE ALARM SYSTEMS DESIGN DOSSIER (illustrative · flagship)
+Standard Applied: NFPA 72 (National Fire Alarm and Signaling Code), IBC Chapter 9, UL 864 10th Edition
+Project Scope: 12-Story Commercial Office Tower (Downtown Metro Center)
+
+Engineering Design & Code Compliance Calculations:
+1. Signaling Line Circuit (SLC) Loading:
+   • 3x Class A Isolated Loops supporting 140 addressable smoke/heat sensors, 68 manual pull stations, and 42 monitor modules.
+   • Peak loop capacity utilization: 68.4% (well within 80% maximum engineering threshold).
+2. Notification Appliance Circuit (NAC) Voltage Drop Analysis:
+   • 24x Distributed 8A NAC Power Extenders with synchronized strobe circuitry.
+   • Longest circuit run: 320 feet on 14 AWG FPLP twisted copper.
+   • Calculated end-of-line voltage: 21.84V DC (exceeds NFPA 72 20.4V minimum cutoff; safety margin: +1.44V).
+3. Secondary Power Battery Standby Calculations:
+   • Non-alarm standby current: 1.48 Amps for 24 hours = 35.52 Amp-Hours.
+   • Full alarm load: 6.82 Amps for 15 minutes = 1.71 Amp-Hours.
+   • Required battery capacity with 20% safety factor: 44.68 Ah -> Specified: Dual 12V 55Ah Sealed Lead Acid (SLA) Batteries.
+
+System Riser & Plan Review Stamping:
+• Plan review submittal package complete with battery calculation sheets, single-line riser, and manufacturer cut sheets.
+• Reviewed and verified by Senior Fire Protection Engineer (NICET Level IV).
+→ Saved: nfpa72_fire_submittal_dossier, nac_voltage_drop_schedules
+NOTE: illustrative simulation; verify against local Authority Having Jurisdiction (AHJ) requirements.`,
+
+inverter_yield:`CORPORATE BOARDROOM 4K AV-OVER-IP & DANTE AUDIO ACOUSTIC TAKEOFF REPORT (illustrative)
+Project Scope: 36-Seat C-Suite Executive Boardroom
+Integration Platform: AV-over-IP Video Matrix + Dante Digital Signal Processing + Control4 Automation
+
+Engineering Specification Breakdown:
+• Video Infrastructure: 8x 4K60 4:4:4 AV-over-IP Transceivers (1Gbps JPEG-XS encoding, ultra-low latency <16ms).
+• Audio Capture: 2x Steerable Beamforming Ceiling Microphone Arrays with 8 dynamic tracking zones and acoustic echo cancellation.
+• Dante Network Routing: 16x16 Dante digital audio processor running across isolated AV VLAN with PTP clock master synchronization.
+• Display Integration: Dual 98-inch 4K Commercial Displays + 10-inch tabletop PoE Touch Controller with custom macro controls.
+• Power & Networking: Enterprise 24-Port 802.3at PoE+ switch with IGMP snooping enabled and 48V redundant power supply.
+
+Acoustic Modeling Results:
+• Modeled reverberation time (RT60): 0.42 seconds with acoustic panel absorption.
+• Predicted Speech Transmission Index (STI): 0.74 (Excellent intelligibility across all 36 seating positions).
+→ Saved: boardroom_av_takeoff, dante_routing_matrix
+NOTE: illustrative.`,
+
+thermal_simulation:`CAMPUS STRUCTURED CABLING & 802.3BT POE++ SWITCH POWER BUDGET STRATEGY (illustrative)
+Facility: 4-Story Regional Healthcare Clinic & Ambulatory Center
+Standards: ANSI/TIA-568.2-D, IEEE 802.3bt (4PPoE Type 4), NEC Article 725
+
+Infrastructure & Power Analysis:
+• Horizontal Cabling: 480 runs of Category 6A F/UTP Plenum CMR cable terminated to high-density 24-port patch panels.
+• Cable Bundle Thermal Analysis: 48-cable bundle with 90W PoE++ delivering 840mA per pair. Maximum calculated temperature rise: 7.2°C (well within 15°C limit in 30°C ambient plenum).
+• Network PoE Switch Budget:
+  - 10x 48-Port Enterprise PoE++ Layer 3 Switches deployed across 4 telecommunications rooms (TRs).
+  - Total Available PoE Power: 7,400 Watts across 10 switch chassis.
+  - Connected Peak Load: 4,820 Watts (65.1% utilization, supporting Wi-Fi 7 APs, pan-tilt cameras, and nurse call displays).
+• UPS Emergency Standby: 4x 3000VA On-Line Double-Conversion Rackmount UPS units providing 28 minutes full-load emergency runtime.
+→ Saved: structured_cabling_poe_strategy, rack_thermal_dissipation_table
+NOTE: illustrative.`,
+
+mask_eco:`OVRC CLOUD REMOTE MANAGEMENT DEPLOYMENT & CONTROL4 DEALER MIGRATION ASSESSMENT (illustrative)
+Project Scope: Enterprise Cloud Telemetry Rollout across 45 Commercial Customer Locations
+Goal: Transition commercial security and AV accounts to proactive managed service agreements via OvrC Pro.
+
+Deployment Architecture & Automation Metrics:
+• Edge Appliance: OvrC Pro Hub deployed on each client local area network with continuous 30-second ping polling.
+• Remote Troubleshooting Capabilities:
+  - Automated power cycle reboot triggers for unresponsive IP cameras and access control door controllers.
+  - Cloud-based ISP speed test logging and automated dual-WAN cellular failover notifications.
+  - One-click encrypted web tunnel access to camera web UIs without port forwarding or truck rolls.
+• Contractor Financial Impact:
+  - Truck rolls eliminated per site: Average 4.2 visits avoided annually.
+  - Annual technician labor savings per dealer: $68,400 across 45 sites.
+  - Recurring Monthly Revenue (RMR) generated: $2,250/mo in proactive remote monitoring service fees.
+→ Saved: ovrc_deployment_matrix, dealer_rmr_roi_model
+NOTE: illustrative.`,
+};
+let EMPLOYEES=[
+{id:'scout',name:'Scout',title:'AI Commercial Integrator Opportunity Scout',wf:'scout',handled:682,hrs:248,win:0,status:'idle'},
+{id:'quote',name:'Quote',title:'AI Enterprise Video Surveillance Quoting Operator',wf:'quote',handled:594,hrs:276,win:88,status:'idle'},
+{id:'tender',name:'Tender',title:'AI Master Low-Voltage Project Tender Operator',wf:'tender',handled:462,hrs:298,win:92,status:'idle'},
+{id:'radar',name:'Radar',title:'AI Low-Voltage Wholesale Market Intel',wf:'radar',handled:510,hrs:224,win:61,status:'idle'},
+{id:'safety',name:'Sentinel',title:'AI Fire Alarm & Life Safety Systems Operator',wf:'panel_qualification',handled:498,hrs:364,win:96,status:'idle'},
+{id:'mill',name:'Atlas',title:'AI Pro AV & Dante System Design Operator',wf:'inverter_yield',handled:532,hrs:284,win:93,status:'idle'},
+{id:'cfd',name:'Vanguard',title:'AI Network Infrastructure & PoE Budget Operator',wf:'thermal_simulation',handled:488,hrs:262,win:87,status:'idle'},
+{id:'eco',name:'Nexus',title:'AI Smart Building & OvrC Deployment Operator',wf:'mask_eco',handled:496,hrs:270,win:89,status:'idle'},
+];
+let running=false;
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const now=()=>new Date().toLocaleTimeString('en-GB');
+const mono=n=>n.trim().slice(0,2).toUpperCase();
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Commercial</span>';if(wf.track==='operations')s+='<span class="tag operations">Systems Design &amp; Ops</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+function setView(v){
+$('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');
+$('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');
+if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderEcon(){
+const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);
+const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;
+const cells=[[total,'AI operators (commercial dealer growth + systems engineering & branch ops)'],[h.toLocaleString(),'enterprise camera takeoffs, NFPA 72 submittals & tenders handled'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','systems design engineer & branch sales hours saved / month'],['+'+avg+'%','avg turnaround improvement']];
+$('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');
+}
+function empCard(e){const wf=WORKFLOWS[e.wf];
+const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');
+return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}">
+<div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div>
+<div class="emp-owns">Owns: <b>${wf.name}</b></div>
+<div class="team">${team}</div>
+<div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'None'}</b>faster</div></div>
+<div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a dealer project</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;
+}
+function renderRoster(){
+const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;
+let html='';
+TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;
+html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});
+const untracked=EMPLOYEES.filter(e=>!WORKFLOWS[e.wf].track);
+if(untracked.length)html+=`<div class="slabel">Other</div><div class="roster">`+untracked.map(empCard).join('')+`</div>`;
+$('roster').innerHTML=html;
+}
+function assign(id){
+if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+$('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div>
+<div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a dealer RFP, an architectural floor plan, or branch stock feed and ${e.name} executes the entire workflow.</div></div></div>
+<div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div>
+<div id="stage"></div></div>`;
+$('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();
+}
+async function runEmp(id){
+if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;
+e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');
+const stage=$('stage');
+stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div>
+<div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div>
+<div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;
+const feed=$('feed');
+function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;
+const row=document.createElement('div');row.className='frow';row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,160)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}
+log(null,`Input received: "${obj.substring(0,54)}…"`);
+log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);
+await sleep(rand(700,1100));
+const grid=$('agrid');
+wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;
+c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;
+grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});
+await sleep(600);
+$('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');
+const done=new Set();
+async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);
+c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';
+log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));
+for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}
+c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}
+if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}
+else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;
+if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}
+$('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');
+await sleep(400);
+const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(8,38);
+$('resultArea').innerHTML=`<div class="result"><div class="rstats">
+<div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div>
+<div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div>
+<div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'Commercial &amp; Dealer Growth':'Systems Design &amp; Ops'}</span></div>
+<div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div>
+<div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div>
+<div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div>
+<div class="donebar"><b>${e.name} produced a review-ready output.</b> Execution, code compliance verification and systems engineering QA complete, ready for an ADI Systems Design Manager, VP of Sales, or Branch Operations Director to review and confirm. Illustrative simulation placeholder.</div>`;
+e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;
+}
+// builder
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per contractor project solicitation',step:1};renderBuilder();}
+function renderBuilder(){
+const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];
+$('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();
+}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+
+Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+
+w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+
+`<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;
+document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div>
+<div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. ADI Systems Quoting Operator" oninput="draft.name=this.value"></div>
+<div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Low-Voltage Solutions Engineer" oninput="draft.title=this.value"></div>
+<div class="field"><label>Cadence</label><div class="seg">`+['Per contractor project solicitation','Per branch ordering cycle','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div>
+<div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;
+let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();
+const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};
+DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];
+const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});
+renderEcon();renderRoster();setView('ops');
+setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);
+}
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
