@@ -208,3 +208,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/current-lightning
 https://innvonix-tech-solutions.github.io/ai-workforce/pentagon-technologies
 https://innvonix-tech-solutions.github.io/ai-workforce/rfi-ingredients
 https://innvonix-tech-solutions.github.io/ai-workforce/palomino-labs
+https://innvonix-tech-solutions.github.io/ai-workforce/richelieu
