@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Palomino Labs &mdash; AI Commercial &amp; Interconnect Semiconductor Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#fffcf0;--surface2:#fef08a;--border:#fde047;--accent:#f59e0b;
+--accent-dim:rgba(245,158,11,.10);--accent-line:rgba(245,158,11,.40);--slate:#0b192c;--slate-line:rgba(11,25,44,.32);--text:#0f172a;--hi:#020617;--tert:#64748b;--ok:#0ea5e9;--ok-dim:rgba(14,165,233,.10);--gold:#d97706;--gold-bg:#fffbeb;--gold-line:#fde68a}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:46px;height:34px;border-radius:8px;background:linear-gradient(135deg,#0b192c,#f59e0b);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:14px;letter-spacing:.5px;font-family:Inter,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#d97706}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:900px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#b45309;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(14,165,233,.08);color:#0284c7;border:1px solid rgba(14,165,233,.3)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#d97706}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#b45309;font-size:15px;flex-shrink:0;position:relative;font-family:Inter,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#f59e0b}.btn.primary{background:#d97706;border-color:#d97706;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#d97706;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#d97706}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(14,165,233,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(14,165,233,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#f59e0b}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Inter,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#d97706;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px;font-family:Inter,sans-serif}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:99px;padding:11px 16px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:99px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff;font-weight:700}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5;font-family:Inter,sans-serif}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="header">
+<div class="logo"><div class="mark">PL</div>
+<div><div class="htitle">Palomino Labs &middot; AI Commercial &amp; Interconnect Semiconductor Workforce</div><div class="hsub">AI operators for MicroLED/MicroVCSEL Optical Engines, High-Density Copper Interconnects, PHY Packaging, and Fab Yields</div></div></div>
+<div class="badge">Independent concept &nbsp;&middot;&nbsp; <b>illustrative</b></div>
+</header>
+
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>a 3.2T MicroLED optical interconnect engine design, 224G PAM4 copper backplane signal integrity synthesis, or chiplet PHY energy efficiency qualification workflow turned into an autonomous team of agents</b>. Palomino Laboratories (palominolabs.ai) is an innovator in high-performance AI hardware interconnects, optical packaging, micro-LED/micro-VCSEL optical engines, high-density copper interconnects, and physical-layer data transmission for hyperscale AI data centers and next-generation GPU/TPU clusters. One track drives commercial sourcing &amp; hardware engine relationships: it captures AI Hyperscalers (Microsoft Azure, AWS, Google Cloud, Meta), GPU Server OEMs (NVIDIA, AMD, Supermicro), and High-Speed Switch Vendors (Arista, Cisco, Broadcom), quotes 3.2T MicroVCSEL optical engine supply contracts (150,000 engine modules/year), structures high-density low-latency copper engine proposals, and highlights Palomino's ultra-low power (&lt; 0.8 pJ/bit), MicroLED/MicroVCSEL integration, and high bandwidth density. The other track delivers AI interconnect &amp; optical packaging engineering precision: it designs 3.2T MicroLED optical interconnect engine arrays (3.2 Tbps throughput, BER &lt; 1E-15, optical eye height &gt; 85%, energy efficiency 0.72 pJ/bit at 224 Gbps/lane), synthesizes 224G PAM4 low-loss copper backplane engines (insertion loss &lt; &minus;18 dB at 56 GHz, crosstalk &gt; 42 dB ICR), evaluates chiplet-to-chiplet PHY energy efficiency (0.68 pJ/bit at 105&deg;C die junction), and audits Palomino optical packaging cleanroom lines (coupling efficiency Cpk = 1.91, probe test takt time 10s/engine). Point one at an optical interconnect spec, a copper insertion loss trace or a PHY energy efficiency log and it runs the loop, then hands back a review-ready output for a person to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial &amp; AI Hardware Sourcing</span> find, 3.2T optical quote, copper engine proposal</span>
+<span><span class="tag operations">AI Interconnect &amp; Optical Packaging Eng</span> 3.2T MicroLED Engine, 224G Copper Signal Integrity, Chiplet PHY Efficiency, Palomino Lab Audit</span>
+<span><span class="tag hero">Flagship</span> the deepest example run</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+
+<div class="foot">Independent concept prototype prepared by Innvonix Tech Solutions for a conversation with Palomino Laboratories (palominolabs.ai). It is not affiliated with, endorsed by, or built on Palomino Laboratories systems or data. All operators and outputs are illustrative simulations; MicroLED coupling efficiencies, copper insertion loss dB values, chiplet PHY energy pJ/bit ratings, lab yields and commercial quotes are placeholders. A chief executive officer, VP of engineering, optical packaging cleanroom director or chief interconnect architect reviews and approves every optical schematic, copper signal integrity traveler, PHY test traveler and commercial hardware proposal. This is not a production system and produces no deliverable for a real customer.</div>
+
+<script>
+const AGENT_ROLES={
+researcher:{emoji:'🔎',label:'AI Interconnect, MicroLED/MicroVCSEL & Optical Research',tools:['research','save']},
+prospector:{emoji:'🧲',label:'Hyperscale AI Data Center, GPU & Switch Sourcing',tools:['source_accounts','save']},
+qualifier:{emoji:'🎯',label:'Optical Interconnect, MicroLED & Copper Qualifier',tools:['score_fit','save']},
+optical_interconnect_arch:{emoji:'💡',label:'MicroLED & MicroVCSEL Optical Engine Architect',tools:['design_optical_engine_array','simulate_bit_error_rate_eye_diagram','save']},
+copper_engine_spec:{emoji:'⚡',label:'High-Density Copper & Signal Integrity Spec',tools:['simulate_insertion_loss_crosstalk_db','verify_backplane_eye_opening','save']},
+phy_packaging_lead:{emoji:'🔬',label:'Chiplet-to-Chiplet PHY & Co-Packaged Optics Lead',tools:['audit_energy_efficiency_pj_per_bit','verify_chiplet_coplanarity','save']},
+cleanroom_optical_assembly_eng:{emoji:'🧪',label:'Micro-Assembly, Laser Dicing & Die Attach Lead',tools:['inspect_microled_die_attach_alignment','audit_bump_coplanarity','save']},
+throughput:{emoji:'🤖',label:'Palomino Lab & Automated Wafer Probe Opt',tools:['verify_palomino_die_yield','calculate_takt_time','save']},
+compliance:{emoji:'📋',label:'IEEE 802.3ck/df, OIF-CEI-224G & ISO 9001 Lead',tools:['check_compliance','save']},
+pricing:{emoji:'🧮',label:'Optical Interconnect & Copper Engine Quoting',tools:['build_quote','save']},
+writer:{emoji:'✍️',label:'Interconnect Proposal & Technical Spec Writer',tools:['compose','save']},
+reviewer:{emoji:'✅',label:'QA & Final Palomino Labs Release Reviewer',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+
+const TRACKS=[['commercial','Commercial &amp; AI Hardware Sourcing'],['operations','AI Interconnect &amp; Optical Packaging Eng']];
+
+const WORKFLOWS={
+scout:{name:'AI hyperscale cluster, GPU server & switch OEM discovery',title:'AI Palomino Scout',mode:'dag',track:'commercial',deliverable:'Target AI Hyperscale & GPU Infrastructure Account List',
+sample:'Find AI Hyperscalers (Microsoft Azure, AWS, Google Cloud, Meta), GPU Server OEMs (NVIDIA, AMD, Supermicro), and High-Speed Switch Vendors (Arista, Cisco, Broadcom) needing MicroLED/MicroVCSEL optical engines and copper interconnects.',
+desc:'Agents scan 1.6T/3.2T GPU cluster interconnect roadmaps, chiplet-to-chiplet optical PHY adoption, map VP of Hardware Engineering, Chief Interconnect Architect, score fit, and compile target list.',
+tasks:[{agent:'researcher',task:'Map AI data center 1.6T/3.2T interconnect demand, MicroLED/MicroVCSEL optical engine requirements, and 224G copper backplanes.',deps:[]},
+{agent:'prospector',task:'Source VP of AI Hardware Engineering, Chief Systems Architect, and Head of Optical Interconnect Procurement.',deps:[]},
+{agent:'qualifier',task:'Score fit against Palomino Laboratories capabilities: MicroLED/MicroVCSEL Optical Engines, 224G Copper Interconnects, PHY Packaging.',deps:[0,1]},
+{agent:'writer',task:'Compile the ranked target AI hyperscale & hardware account list with interconnect module projections, physical-layer specs, and commercial strategy.',deps:[2]}]},
+
+optical_engine_volume_quote:{name:'3.2T MicroVCSEL optical engine long-term volume quoting',title:'AI Optical Quoting Estimator',mode:'sequential',track:'commercial',deliverable:'3.2T MicroVCSEL Optical Engine Supply Quote Package',
+sample:'A hyperscale GPU cluster vendor uploaded an RFQ: 3.2T MicroVCSEL optical interconnect engines for AI scale-out fabrics, 150,000 engine modules/year. Calculate MicroVCSEL array fab cost, automated die attach cycle time, volume discount, and delivery SLA.',
+desc:'Agents parse customer 3.2T optical engine RFQ, calculate MicroVCSEL wafer fab cost, automated micro-assembly cycle time, volume discount, and generate quote package.',
+tasks:[{agent:'qualifier',task:'Parse GPU cluster vendor RFQ: 3.2T MicroVCSEL optical interconnect engine, 3.2 Tbps throughput, 150,000 modules/year, 3-year supply contract.',deps:[]},
+{agent:'optical_interconnect_arch',task:'Calculate MicroVCSEL array fab & optical substrate cost: 850nm GaAs micro-VCSEL array, 224 Gbps/lane modulation, sub-mm footprint.',deps:[0]},
+{agent:'throughput',task:'Estimate Palomino cleanroom micro-assembly & automated probe cycle time: high-precision die attach, active optical alignment, 100% BER probe test.',deps:[1]},
+{agent:'pricing',task:'Structure engine pricing model: base $/engine price, sub-pJ energy efficiency premium, volume tier discount (18% for 150,000+ modules/year), and SLA.',deps:[2]},
+{agent:'writer',task:'Produce the 3.2T MicroVCSEL Optical Engine Supply Quote package with eye diagram margin certificates, energy per bit profiles, and delivery SLA.',deps:[3]}]},
+
+copper_backplane_proposal:{name:'High-density low-latency copper engine supply proposal',title:'AI Copper Engine Proposal Architect',mode:'sequential',track:'commercial',deliverable:'224G Copper Backplane Engine Proposal',
+sample:'Structure a multi-year AI hardware proposal supplying low-loss copper interconnect engines for 1.6T/3.2T GPU cluster backplanes to AI server OEMs.',
+desc:'Agents scope GPU server backplane signal integrity requirements, design high-density 224G PAM4 copper interconnect engine, verify IEEE 802.3df compliance, and produce proposal.',
+tasks:[{agent:'qualifier',task:'Parse GPU server OEM RFQ: high-density low-latency copper interconnect engine for 224G PAM4 backplanes in AI server clusters.',deps:[]},
+{agent:'copper_engine_spec',task:'Design copper engine spec: 224G PAM4 signal integrity, insertion loss < -18 dB at 56 GHz, crosstalk ICR > 42 dB, zero reach degradation.',deps:[0]},
+{agent:'compliance',task:'Verify IEEE 802.3df 800G/1.6G Ethernet, OIF-CEI-224G-LR standards, ISO 9001:2015 quality, and RoHS compliance.',deps:[1]},
+{agent:'writer',task:'Produce the 224G Copper Backplane Engine proposal with insertion loss S-parameter charts, eye opening margin plots, and Palomino delivery roadmap.',deps:[2]}]},
+
+radar:{name:'AI interconnect & physical-layer technology competitive intelligence brief',title:'AI Market Intel',mode:'dag',track:'commercial',deliverable:'Competitive Intelligence Brief',
+sample:'How do competing interconnect vendors (Broadcom, Marvell, Celestial AI, Ayar Labs, Lightmatter) compare to Palomino Laboratories in ultra-low power (< 0.8 pJ/bit), MicroLED/MicroVCSEL integration, and bandwidth density?',
+desc:'Agents profile competing global AI interconnect & optical chiplet vendors, compare energy efficiency (pJ/bit) & bandwidth density, analyze Palomino advantages, producing brief.',
+tasks:[{agent:'researcher',task:'Scan AI hardware interconnect market: MicroLED/MicroVCSEL optical engines, 224G copper backplanes, silicon photonics CPO, chiplet PHY.',deps:[]},
+{agent:'prospector',task:'Profile competing vendors: Broadcom Inc, Marvell Technology, Celestial AI, Ayar Labs, Lightmatter.',deps:[]},
+{agent:'optical_interconnect_arch',task:'Compare technology & physical-layer metrics: Palomino Laboratories MicroLED/MicroVCSEL integration + ultra-low power (< 0.72 pJ/bit) + high-density 224G copper vs legacy optical modules.',deps:[0,1]},
+{agent:'writer',task:'Produce competitive intelligence brief highlighting Palomino Laboratories\' physical-layer lead, energy per bit advantage, and AI cluster scaling momentum.',deps:[2]}]},
+
+microled_optical_engine_design:{name:'3.2T MicroLED Optical Interconnect Engine design',title:'AI Optical Interconnect Architect',mode:'sequential',track:'operations',tag:'flagship',deliverable:'MicroLED Optical Engine Release Package',
+sample:'Process a 3.2T GPU-to-GPU interconnect spec: design MicroLED/MicroVCSEL optical array (3.2 Tbps throughput, sub-mm array footprint), simulate signal integrity & bit-error-rate (BER < 1E-15, optical eye height > 85%, energy efficiency 0.72 pJ/bit at 224 Gbps/lane), audit cleanroom die attach alignment (< 0.3 µm alignment accuracy), QA-review, and produce Palomino Laboratories production release traveler.',
+desc:'Agents design 3.2T MicroLED optical interconnect engine array, simulate BER < 1E-15 & 0.72 pJ/bit energy efficiency, audit die attach alignment < 0.3 µm, QA-review, and produce release package.',
+tasks:[{agent:'optical_interconnect_arch',task:'Design 3.2T MicroLED/MicroVCSEL optical engine array: high-density GaAs micro-emitter array, integrated CMOS driver IC, sub-mm silicon carrier.',deps:[]},
+{agent:'optical_interconnect_arch',task:'Simulate optical signal integrity & BER: BER = 3.2E-16 (spec < 1.0E-15); optical eye height = 87.4% (spec > 85.0%); optical power margin = +3.2 dB — PASS.',deps:[0]},
+{agent:'phy_packaging_lead',task:'Audit chiplet PHY energy efficiency & bandwidth density: energy efficiency = 0.72 pJ/bit at 224 Gbps/lane (spec < 0.80 pJ/bit); bandwidth density = 1.6 Tbps/mm² — PASS.',deps:[1]},
+{agent:'cleanroom_optical_assembly_eng',task:'Audit Palomino cleanroom micro-assembly die attach: high-precision flip-chip die attach alignment = 0.22 µm (spec < 0.30 µm); zero die tilting — PASS.',deps:[2]},
+{agent:'throughput',task:'Execute automated optical/electrical probe test: 100% engines tested for BER & optical power; coupling yield = 98.5%; takt time = 10s/engine — PASS.',deps:[3]},
+{agent:'compliance',task:'Verify IEEE 802.3ck/df Ethernet specifications, OIF-CEI-224G-VSR, and ISO 9001:2015 quality management.',deps:[4]},
+{agent:'reviewer',task:'QA-review Palomino release package: verify optical eye diagrams, GDSII substrate layouts, coupling efficiency maps, and lab traveler.',deps:[5]},
+{agent:'writer',task:'Produce the MicroLED Optical Engine Release package with optical eye height charts, energy efficiency curves, and Palomino validation traveler.',deps:[6]}]},
+
+copper_engine_signal_integrity_synthesis:{name:'High-density low-loss copper engine signal integrity synthesis',title:'AI Copper Engine Specialist',mode:'sequential',track:'operations',deliverable:'224G Copper Engine Release Package',
+sample:'Synthesize 224G PAM4 copper backplane engine for GPU server nodes; simulate insertion loss (< -18 dB at 56 GHz) and crosstalk mitigation (> 42 dB ICR), issuing copper interconnect release traveler.',
+desc:'Agents synthesize 224G PAM4 high-density copper engine, simulating insertion loss < -18 dB & crosstalk ICR > 42 dB across GPU backplanes, producing release package.',
+tasks:[{agent:'copper_engine_spec',task:'Synthesize high-density low-loss copper engine for 224G PAM4 GPU cluster backplane interconnects.',deps:[]},
+{agent:'copper_engine_spec',task:'Simulate insertion loss & return loss: insertion loss = -16.4 dB at 56 GHz (spec < -18.0 dB); return loss = -14.2 dB — PASS.',deps:[0]},
+{agent:'copper_engine_spec',task:'Audit crosstalk & backplane eye opening: integrated crosstalk ratio ICR = 44.8 dB (spec > 42.0 dB); PAM4 eye height = 92 mV — PASS.',deps:[1]},
+{agent:'reviewer',task:'QA-review copper engine traveler: verify S-parameter SDD21 plots, TDR impedance profiles, and Palomino traveler.',deps:[2]},
+{agent:'writer',task:'Produce the 224G Copper Engine Release package with S-parameter insertion loss charts, TDR impedance curves, and QA test cert.',deps:[3]}]},
+
+chiplet_phy_energy_efficiency_test:{name:'Chiplet-to-chiplet PHY & energy efficiency test',title:'AI PHY Packaging Specialist',mode:'sequential',track:'operations',deliverable:'Chiplet PHY Energy Certification',
+sample:'Execute high-speed wafer probe testing on chiplet PHY interconnect; measure energy-per-bit (0.68 pJ/bit) and thermal dissipation at 105°C die junction, issuing PHY quality cert.',
+desc:'Agents evaluate chiplet-to-chiplet PHY interconnect energy efficiency & thermal dissipation via high-speed wafer probe, producing quality cert.',
+tasks:[{agent:'phy_packaging_lead',task:'Execute high-speed wafer probe testing on chiplet-to-chiplet PHY interconnect test vehicles.',deps:[]},
+{agent:'phy_packaging_lead',task:'Measure PHY energy-per-bit & latency: energy efficiency = 0.68 pJ/bit (spec < 0.75 pJ/bit); latency = 3.8 ns (spec < 5.0 ns) — PASS.',deps:[0]},
+{agent:'phy_packaging_lead',task:'Audit die junction thermal dissipation: stable performance at 105°C die junction temperature; zero thermal throttling — PASS.',deps:[1]},
+{agent:'writer',task:'Produce the Chiplet PHY Energy Certification with energy-per-bit vs data rate plots, thermal dissipation maps, and QA test cert.',deps:[2]}]},
+
+palomino_lab_yield_audit:{name:'Palomino optical packaging & automated wafer probe yield audit',title:'AI Palomino Lab Test Lead',mode:'sequential',track:'operations',deliverable:'Palomino Lab Packaging & Quality Audit',
+sample:'Audit high-volume MicroLED wafer dicing, pick-and-place micro-assembly, and automated optical/electrical probe lines at Palomino Labs; measure optical coupling efficiency Cpk (1.91), probe test takt time (10s/engine), and issue Palomino lab release traveler.',
+desc:'Agents audit MicroLED wafer dicing, micro-assembly & automated optical probe lines at Palomino Labs, measure Cpk & probe takt time, producing lab audit.',
+tasks:[{agent:'throughput',task:'Audit automated MicroLED wafer dicing, flip-chip micro-assembly, and optical probe lines at Palomino Laboratories cleanroom facility.',deps:[]},
+{agent:'throughput',task:'Optimize 100% automated optical & electrical probe test takt time: reduce BER, optical eye, and power test execution to 10 seconds per engine.',deps:[0]},
+{agent:'cleanroom_optical_assembly_eng',task:'Run Statistical Process Control (SPC): monitor Cpk = 1.91 for optical coupling alignment (0.22 µm ± 0.04 µm) & die shear strength — PASS.',deps:[1]},
+{agent:'writer',task:'Produce the Palomino Lab Packaging & Quality Audit with optical yield logs, IEEE 802.3df certs, and VP of Engineering sign-off.',deps:[2]}]},
+};
+
+const DTITLE={scout:'Target AI Hyperscale & GPU Infrastructure Account List',optical_engine_volume_quote:'3.2T MicroVCSEL Optical Engine Supply Quote Package',copper_backplane_proposal:'224G Copper Backplane Engine Proposal',radar:'Competitive Intelligence Brief',microled_optical_engine_design:'MicroLED Optical Engine Release Package',copper_engine_signal_integrity_synthesis:'224G Copper Engine Release Package',chiplet_phy_energy_efficiency_test:'Chiplet PHY Energy Certification',palomino_lab_yield_audit:'Palomino Lab Packaging & Quality Audit'};
+
+const TOOLS={
+research:()=>'Gathered AI hyperscale clusters, 1.6T/3.2T optical engines, MicroLED/MicroVCSEL, 224G copper backplanes, and chiplet PHY market intel; target accounts ranked.',
+source_accounts:()=>'Sourced VP of AI Hardware Engineering, Chief Systems Architect, and Head of Optical Interconnect Procurement.',
+score_fit:()=>'Scored against Palomino Laboratories capabilities: MicroLED/MicroVCSEL Optical Engines, 224G Copper Interconnects, PHY Packaging.',
+design_optical_engine_array:()=>'Designed 3.2T MicroLED/MicroVCSEL optical engine array: GaAs micro-emitter array, integrated CMOS driver IC, sub-mm silicon carrier.',
+simulate_bit_error_rate_eye_diagram:()=>'Simulated optical signal integrity: BER = 3.2E-16 clean (spec < 1.0E-15), optical eye height = 87.4% (spec > 85.0%), optical margin = +3.2 dB.',
+simulate_insertion_loss_crosstalk_db:()=>'Simulated 224G PAM4 copper engine: insertion loss = -16.4 dB at 56 GHz clean (spec < -18.0 dB), crosstalk ICR = 44.8 dB (spec > 42.0 dB).',
+verify_backplane_eye_opening:()=>'Verified copper backplane PAM4 eye opening: 92 mV eye height clean, zero reach degradation.',
+audit_energy_efficiency_pj_per_bit:()=>'Audited chiplet PHY energy efficiency: 0.72 pJ/bit clean at 224 Gbps/lane (spec < 0.80 pJ/bit), bandwidth density = 1.6 Tbps/mm².',
+verify_chiplet_coplanarity:()=>'Verified chiplet substrate coplanarity: < 1.0 µm coplanarity clean across micro-assembled optical engines.',
+inspect_microled_die_attach_alignment:()=>'Inspected Palomino cleanroom die attach alignment: 0.22 µm clean (spec < 0.30 µm), zero die tilting.',
+audit_bump_coplanarity:()=>'Audited micro-bump coplanarity: < 0.5 µm bump height variation clean across flip-chip interconnects.',
+verify_palomino_die_yield:()=>'Verified Palomino Laboratories optical engine yield: 98.5% first-pass yield clean across production lots.',
+calculate_takt_time:()=>'Calculated takt time: 10 seconds per engine automated optical & electrical probe test.',
+check_compliance:()=>'Checked IEEE 802.3ck/df Ethernet specifications, OIF-CEI-224G, and ISO 9001:2015 standards.',
+build_quote:()=>'Structured optical engine quote: base $/engine price, sub-pJ energy efficiency premium, volume tier discount (18% for 150,000+ modules/year).',
+qa_review:()=>'QA: optical eye diagrams, GDSII substrate layouts, S-parameter SDD21 plots, and lab traveler verified.',
+compose:()=>'Drafted in a clear, executive-ready, AI hardware interconnect-aware technical style.',
+save:()=>'Saved to shared context for downstream agents.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+
+const FINAL={
+scout:`TARGET AI HYPERSCALE & GPU INFRASTRUCTURE ACCOUNT LIST (illustrative)
+
+Scanned AI Hyperscalers, GPU Server OEMs, and High-Speed Switch Vendors.
+
+A-tier (pursue now)
+1. Global AI Cloud Hyperscaler (Redmond WA / Seattle) — 3.2T MicroLED optical engines for AI scale-out fabrics — Palomino fit 99
+2. Leading GPU Server OEM (Santa Clara CA / Austin TX) — 224G PAM4 low-loss copper engines for GPU cluster backplanes — fit 98
+3. Global High-Speed Switch Leader (Santa Clara CA / San Jose) — Chiplet PHY & Co-Packaged Optics (CPO) interconnects — fit 97
+4. AI Accelerator Chipmaker (Santa Clara CA / Austin TX) — MicroVCSEL optical interconnect arrays for TPU/GPU clusters — fit 95
+5. Hyperscale Infrastructure Operator (Menlo Park CA / Ashburn VA) — Low-latency optical interconnect engines — fit 94
+
+Contacts: VP of AI Hardware Engineering, Chief Systems Architect, Head of Optical Interconnect Procurement.
+Technology scope: MicroLED/MicroVCSEL Optical Engines, 224G Copper Interconnects, PHY Packaging.
+
+→ Saved: palomino_target_list, executive_contacts, interconnect_portfolio_matrix
+
+NOTE: illustrative; not affiliated with Palomino Laboratories.`,
+
+optical_engine_volume_quote:`3.2T MICROVCSEL OPTICAL ENGINE SUPPLY QUOTE PACKAGE (illustrative)
+
+Customer: Global Hyperscale AI Data Center Operator.
+Order: 3.2T MicroVCSEL Optical Interconnect Engine Supply Contract (#RFQ-PLABS-2026-37).
+
+Engine specifications & lab audit
+• Engine Model: Palomino 3.2T MicroVCSEL Optical Interconnect Engine (#PLABS-OPTICAL-3.2T)
+• Optical Performance: 3.2 Tbps Throughput; BER = 3.2E-16; Optical Eye Height = 87.4% — PASS
+• Energy Efficiency: 0.72 pJ/bit at 224 Gbps/lane (sub-pJ energy footprint) — PASS
+• Micro-Assembly: Flip-chip alignment accuracy = 0.22 µm at Palomino Laboratories Cleanroom
+
+Commercial summary
+• Quantity: 150,000 Engine Modules / Year (3-Year Long-Term Supply Agreement)
+• Base Price per Engine: $[REDACTED]
+• Volume Tier Discount (18% for 150,000+ modules/year): -$[REDACTED]
+• Net Contract Value: $[REDACTED] (FOB Palomino Laboratories — Delivery in monthly shipments)
+
+→ Saved: palomino_engine_quote, eye_diagram_certificates, energy_per_bit_profiles
+
+NOTE: illustrative; all financial figures redacted.`,
+
+copper_backplane_proposal:`224G COPPER BACKPLANE ENGINE PROPOSAL (illustrative)
+
+Customer: GPU Server OEM & High-Speed Switch Vendor.
+Project: 224G PAM4 High-Density Low-Loss Copper Interconnect Engine (#224G-COPPER-PLABS-2026).
+
+AI cluster backplane requirements & Palomino lead
+• Application: 224G PAM4 Copper Backplane Interconnect for AI GPU/TPU Server Nodes
+• Signal Integrity: Insertion Loss = -16.4 dB at 56 GHz (spec < -18.0 dB); PAM4 Eye Height = 92 mV — PASS
+• Crosstalk & Noise: Integrated Crosstalk Ratio ICR = 44.8 dB (spec > 42.0 dB); zero reach degradation — PASS
+• Quality & Standards: IEEE 802.3df 800G/1.6G Ethernet, OIF-CEI-224G-LR, ISO 9001:2015 — PASS
+
+Program roadmap & manufacturing terms
+• Phase 1: 224G copper engine S-parameter evaluation & backplane trial (Palomino Labs / 2 months)
+• Phase 2: Mass production copper engine supply & GPU server line integration (Palomino Labs / 4 months)
+
+→ Saved: copper_engine_proposal, insertion_loss_sparameter_charts, eye_opening_margin_plots
+
+NOTE: illustrative; all financial figures redacted.`,
+
+radar:`COMPETITIVE INTELLIGENCE BRIEF (illustrative)
+
+Landscape
+• Broadcom Inc: dominant in traditional DSPs and optical components, but higher power consumption per bit
+• Marvell Technology: established optical & retimer supplier, but slower to deploy MicroLED-based sub-pJ optical engines
+• Celestial AI: Photonic Fabric architecture vendor, but relies on proprietary external laser sources and complex alignment
+• Ayar Labs: optical I/O chiplet pioneer, but focused on legacy micro-ring resonators vs Palomino\'s MicroLED/MicroVCSEL precision
+• Lightmatter: optical computing & interconnect startup, but higher footprint density and cost per unit bandwidth
+
+Where Palomino Laboratories wins
+• Sub-pJ Energy Efficiency: MicroLED/MicroVCSEL technology achieving 0.72 pJ/bit at 224 Gbps/lane
+• MicroLED & Copper Dual Capability: integrated solutions for both optical chiplets and 224G copper backplanes
+• High Alignment Precision: flip-chip micro-assembly achieving 0.22 µm optical alignment accuracy
+• IEEE & OIF Compliance: 100% compliant with IEEE 802.3df and OIF-CEI-224G standards
+
+Talk tracks
+1. "Palomino Laboratories MicroLED optical engines achieve 0.72 pJ/bit energy efficiency for 3.2T AI interconnects"
+2. "Our 224G PAM4 copper backplane engines deliver insertion loss < -16.4 dB at 56 GHz"
+3. "We provide 0.22 µm flip-chip alignment accuracy and IEEE 802.3df compliance"
+
+→ Saved: competitive_matrix, technology_benchmarks, sales_talk_tracks
+
+NOTE: illustrative; not affiliated with Palomino Laboratories.`,
+
+microled_optical_engine_design:`MICROLED OPTICAL ENGINE RELEASE PACKAGE (illustrative · flagship)
+
+Module: Palomino 3.2T MicroLED Optical Interconnect Engine (#PLABS-MICROLED-3.2T).
+
+Optical signal integrity, BER, energy efficiency & die attach audit
+• Optical Array: MicroLED/MicroVCSEL GaAs array; 224 Gbps/lane modulation — PASS
+• Signal Integrity: BER = 3.2E-16 (spec < 1.0E-15); optical eye height = 87.4% (spec > 85.0%) — PASS
+• Energy & Density: Energy efficiency = 0.72 pJ/bit (spec < 0.80 pJ/bit); bandwidth density = 1.6 Tbps/mm² — PASS
+• Cleanroom Assembly: Flip-chip alignment accuracy = 0.22 µm (spec < 0.30 µm); zero die tilting — PASS
+
+Palomino lab cleanroom ATE audit
+• Automated Probe Takt Time: 100% engines tested for BER & optical power; yield = 98.5%; takt time = 10s/engine — PASS
+• Standards & Quality: IEEE 802.3ck/df Ethernet, OIF-CEI-224G-VSR, and ISO 9001:2015
+
+Recommendation: Release 3.2T MicroLED optical engine lot for commercial AI hyperscale cluster deployments.
+
+→ Saved: microled_engine_release_package, optical_eye_height_charts, energy_efficiency_curves, lab_traveler
+
+NOTE: illustrative; confirm against Palomino Laboratories product specification.`,
+
+copper_engine_signal_integrity_synthesis:`224G COPPER ENGINE RELEASE PACKAGE (illustrative)
+
+Engine: Palomino 224G PAM4 Copper Backplane Interconnect Engine (#PLABS-COPPER-224G).
+
+Insertion loss, return loss & PAM4 eye height audit
+• Application: 224G PAM4 High-Density Low-Loss Copper GPU Backplane Engine — PASS
+• Insertion Loss: Insertion loss = -16.4 dB at 56 GHz (spec < -18.0 dB); return loss = -14.2 dB — PASS
+• Crosstalk & Eye: Crosstalk ICR = 44.8 dB (spec > 42.0 dB); PAM4 eye height = 92 mV — PASS
+• Physical Structure: Ultra-low-loss twinax copper conductors; precision strain relief — PASS
+
+Status: Certified for high-density 1.6T/3.2T GPU server node backplane mass production.
+
+→ Saved: copper_engine_release_package, sparameter_insertion_loss_charts, tdr_impedance_curves, qa_test_cert
+
+NOTE: illustrative; confirm against Palomino Laboratories copper interconnect spec.`,
+
+chiplet_phy_energy_efficiency_test:`CHIPLET PHY ENERGY CERTIFICATION (illustrative)
+
+Test Vehicle: Palomino Chiplet-to-Chiplet PHY Interconnect (#PLABS-PHY-CHIPLET).
+
+Energy per bit, latency & thermal junction audit
+• Test Architecture: Chiplet-to-Chiplet Physical Layer (PHY) Interconnect — PASS
+• Energy Efficiency: Energy per bit = 0.68 pJ/bit (spec < 0.75 pJ/bit) at 224 Gbps/lane — PASS
+• Transmission Latency: Physical layer latency = 3.8 ns (spec < 5.0 ns) — PASS
+• Thermal Performance: Stable operation at 105°C die junction temperature; zero throttling — PASS
+
+Status: Approved for 3.2T Co-Packaged Optics (CPO) and chiplet-based AI accelerators.
+
+→ Saved: chiplet_phy_energy_cert, energy_per_bit_vs_datarate_plots, thermal_dissipation_maps, qa_test_cert
+
+NOTE: illustrative; confirm against Palomino Laboratories PHY testing standards.`,
+
+palomino_lab_yield_audit:`PALOMINO LAB PACKAGING & QUALITY AUDIT (illustrative)
+
+Audit Scope: Palomino Laboratories Cleanroom & Packaging Lab (#PLABS-LAB-AUDIT-2026).
+
+Validation & cleanroom packaging FAT metrics
+• Automated Packaging Line: MicroLED wafer dicing, flip-chip micro-assembly, and optical probe line
+• Automated Probe Takt Time: 10 seconds per engine (logging 100% BER, optical eye, and power data) — PASS
+• Statistical Process Control: Cpk = 1.91 for optical alignment (0.22 µm ± 0.04 µm) & die shear strength — PASS
+• Lab Optical Yield: 98.5% end-to-end first-pass MicroLED optical engine yield across Palomino lines — PASS
+
+Quality Sign-off: Certified by VP of Engineering & Quality Assurance Director.
+
+→ Saved: palomino_lab_audit, optical_yield_logs, ieee_8023df_certs, lab_signoff
+
+NOTE: illustrative; confirm against Palomino Laboratories quality management records.`,
+};
+
+let EMPLOYEES=[
+{id:'scout',name:'Scout',title:'AI Palomino Scout',wf:'scout',handled:350,hrs:74,win:0,status:'idle'},
+{id:'opticalestimator',name:'Optical-Quoting-Estimator',title:'AI Optical Quoting Estimator',wf:'optical_engine_volume_quote',handled:430,hrs:100,win:64,status:'idle'},
+{id:'copperarchitect',name:'Copper-Engine-Proposal-Arch',title:'AI Copper Engine Proposal Architect',wf:'copper_backplane_proposal',handled:145,hrs:110,win:68,status:'idle'},
+{id:'radar',name:'Radar',title:'AI Market Intel',wf:'radar',handled:175,hrs:44,win:0,status:'idle'},
+{id:'optical_arch',name:'Optical-Interconnect-Architect',title:'AI Optical Interconnect Architect',wf:'microled_optical_engine_design',handled:520,hrs:295,win:86,status:'idle'},
+{id:'copper_spec',name:'Copper-Engine-Specialist',title:'AI Copper Engine Specialist',wf:'copper_engine_signal_integrity_synthesis',handled:380,hrs:200,win:66,status:'idle'},
+{id:'phy_lead',name:'PHY-Packaging-Specialist',title:'AI PHY Packaging Specialist',wf:'chiplet_phy_energy_efficiency_test',handled:340,hrs:180,win:70,status:'idle'},
+{id:'lab_lead',name:'Palomino-Lab-Test-Lead',title:'AI Palomino Lab Test Lead',wf:'palomino_lab_yield_audit',handled:410,hrs:215,win:76,status:'idle'},
+];
+
+let running=false;
+const $=id=>document.getElementById(id);const sleep=ms=>new Promise(r=>setTimeout(r,ms));const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;const now=()=>new Date().toLocaleTimeString('en-GB');const mono=n=>n.trim().slice(0,2).toUpperCase();
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Commercial &amp; AI Hardware Sourcing</span>';if(wf.track==='operations')s+='<span class="tag operations">AI Interconnect &amp; Optical Packaging Eng</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+function setView(v){$('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');$('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});}
+function renderEcon(){const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;const cells=[[total,'AI operators (commercial + engineering)'],[h.toLocaleString(),'optical engine runs, copper designs & quotes handled'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','interconnect & signal integrity engineer hours saved / mo'],['+'+avg+'%','avg turnaround improvement']];$('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');}
+function empCard(e){const wf=WORKFLOWS[e.wf];const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}"><div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div><div class="emp-owns">Owns: <b>${wf.name}</b></div><div class="team">${team}</div><div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'—'}</b>faster</div></div><div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on an optical / copper spec</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;}
+function renderRoster(){const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;let html='';TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});$('roster').innerHTML=html;}
+function assign(id){if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];$('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at an optical interconnect spec, a copper insertion loss trace or a PHY energy efficiency log and ${e.name} runs the whole loop.</div></div></div><div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div><div id="stage"></div></div>`;$('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();}
+async function runEmp(id){if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');const stage=$('stage');stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div><div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div><div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;const feed=$('feed');function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;const row=document.createElement('div');row.className='frow';row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,150)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}log(null,`Input received: "${obj.substring(0,54)}…"`);log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);await sleep(rand(700,1100));const grid=$('agrid');wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});await sleep(600);$('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');const done=new Set();async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}$('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');await sleep(400);const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(6,44);$('resultArea').innerHTML=`<div class="result"><div class="rstats"><div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div><div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div><div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'Commercial & AI Hardware Sourcing':'AI Interconnect & Optical Packaging Eng'}</span></div><div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div><div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div><div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div><div class="donebar"><b>${e.name} produced a review-ready output.</b> Read, adapt and QA complete, ready for a CEO, VP of engineering, optical packaging cleanroom director or chief interconnect architect to confirm against Palomino and IEEE 802.3df specs. Illustrative simulation, not a production deliverable.</div>`;e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;}
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per lot',step:1};renderBuilder();}
+function renderBuilder(){const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];$('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+`<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div><div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. Optical-Interconnect-Architect" oninput="draft.name=this.value"></div><div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Optical Interconnect Architect" oninput="draft.title=this.value"></div><div class="field"><label>Cadence</label><div class="seg">`+['Per lot','Per batch','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div><div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});renderEcon();renderRoster();setView('ops');setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);}
+
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
