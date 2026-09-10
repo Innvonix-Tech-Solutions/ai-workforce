@@ -210,3 +210,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/rfi-ingredients
 https://innvonix-tech-solutions.github.io/ai-workforce/palomino-labs
 https://innvonix-tech-solutions.github.io/ai-workforce/richelieu
 https://innvonix-tech-solutions.github.io/ai-workforce/polar-semiconductor
+https://innvonix-tech-solutions.github.io/ai-workforce/tosoh-smd
