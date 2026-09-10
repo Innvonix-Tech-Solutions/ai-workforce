@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tosoh SMD — AI Commercial &amp; Sputtering Target Engineering Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f8fafc;--surface2:#e2e8f0;--border:#cbd5e1;--accent:#0284c7;
+--accent-dim:rgba(2,132,199,.07);--accent-line:rgba(2,132,199,.30);--slate:#032b56;--slate-line:rgba(3,43,86,.32);--text:#1e293b;--hi:#0f172a;--tert:#64748b;--ok:#16a34a;--ok-dim:rgba(22,163,74,.10);--gold:#a4761b;--gold-bg:#fdf6e6;--gold-line:#e8cf94}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:36px;height:34px;border-radius:8px;background:linear-gradient(135deg,#032b56,#0284c7);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;letter-spacing:.5px}
+.htitle{font-size:15px;font-weight:600;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert)}.badge b{color:var(--accent)}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:600;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.5;max-width:900px;margin-bottom:14px}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.commercial{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(3,43,86,.08);color:var(--slate);border:1px solid var(--slate-line)}
+.tag.hero{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:24px;font-weight:700;color:var(--hi)}.cell .v .u{color:var(--accent)}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px}
+.slabel{font-size:11px;font-weight:600;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert)}
+.emp-owns{font-size:12px;margin-bottom:10px}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:inherit;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#38bdf8}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#38bdf8}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:14px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:600;text-transform:uppercase}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 13px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="logo"><div class="mark">TSMD</div>
+    <div><div class="htitle">Tosoh SMD · AI Commercial &amp; Sputtering Target Engineering Workforce</div><div class="hsub">AI operators that prospect 300mm semiconductor fabs, quote PVD sputtering targets, &amp; audit 6N metallurgical purity</div></div></div>
+  <div class="badge">Independent concept &nbsp;·&nbsp; <b>illustrative</b></div>
+</header>
+<div class="tabs">
+  <button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+  <button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+<div class="main">
+  <div id="view-ops">
+    <div class="lead">Each AI operator is <b>a high-purity sputtering target qualification, 300mm fab PVD metallurgy, or thin-film materials sales workflow turned into an autonomous team of agents</b>. One track closes commercial PVD material contracts: it prospects global 300mm/200mm semiconductor fabs (TSMC, Intel, Samsung, GlobalFoundries), display OEMs (OLED/LCD) &amp; solar PVD buyers, quotes high-purity sputtering targets (Cu 6N, Ta, Ti, Ti-W @ $14,500/target), responds to fab material RFPs with 99.9999% GDMS purity data, and tracks raw metal commodity markets (copper, tantalum, titanium). The other track delivers target metallurgy &amp; PVD quality engineering: it qualifies diffusion-bonded backing plate assemblies, audits GDMS 6N impurity limits &amp; grain orientation, diagnoses cleanroom target erosion &amp; arcing faults, and plans high-purity metal ingot supply chains for Grove City, Ohio manufacturing. Point one at a fab PVD tender, a target drawing spec, or a spent target erosion issue, and it runs the loop, then hands back a review-ready output for metallurgy directors.</div>
+    <div class="legend">
+      <span><span class="tag commercial">Commercial Sales &amp; Fab Partnerships</span> find, quote, tender, win</span>
+      <span><span class="tag operations">Target Metallurgy &amp; PVD Quality</span> qualify, audit, service, supply</span>
+      <span><span class="tag hero">Flagship</span> 300mm Cu 6N target qualification</span>
+    </div>
+    <div class="econ" id="econ"></div>
+    <div id="roster"></div>
+    <div id="runPanel"></div>
+  </div>
+  <div id="view-hire" class="hidden">
+    <div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+    <div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+  </div>
+</div>
+<div class="foot">Independent concept prototype prepared by Innvonix Tech Solutions for a conversation with Tosoh SMD, Inc. It is not affiliated with, endorsed by, or built on Tosoh Corporation internal IT systems or metallurgical patents. All operators, sputtering target quotes, GDMS purity certificates, NDT bond audits, and raw metal supply schedules are illustrative simulations. A qualified metallurgical engineer, fab PVD director, or Vice President of Sales reviews and approves every PVD target proposal, qualification package, and quality certificate. This is an administrative demo tool for presentation calls.</div>
+
+<script>
+const AGENT_ROLES={
+  fab_scout:{emoji:'🏭',label:'Semiconductor Fab & Display Lead Scout',tools:['source_fab_pvd_tenders','save']},
+  pricing:{emoji:'🧮',label:'Sputtering Target Quoting Specialist',tools:['build_target_quote','save']},
+  metallurgist:{emoji:'🔬',label:'High-Purity Target Metallurgical Engineer',tools:['measure_gdms_purity','inspect_ultrasonic_bond','save']},
+  quality_auditor:{emoji:'🛡️',label:'PVD Purity & Microstructure Auditor',tools:['audit_grain_orientation','save']},
+  pvd_service:{emoji:'⚙️',label:'Target Erosion & Backing Plate Specialist',tools:['measure_erosion_depth','disposition_spent_target','save']},
+  metal_supply:{emoji:'📦',label:'High-Purity Ingot & Powder Supply Manager',tools:['plan_raw_metal_ingot_supply','save']},
+  market_intel:{emoji:'🛰️',label:'Thin-Film Deposition Market Specialist',tools:['track_metal_commodities','save']},
+  writer:{emoji:'✍️',label:'Fab Proposal & Metallurgy Spec Writer',tools:['compose','save']},
+  reviewer:{emoji:'✅',label:'Target Metallurgy Director Reviewer',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+const TRACKS=[['commercial','Commercial sales & semiconductor fab PVD partnerships'],['operations','Target metallurgy, PVD quality & Grove City plant ops']];
+const WORKFLOWS={
+  scout:{name:'Global 300mm fab & display PVD contract discovery',title:'AI Fab PVD Scout',mode:'dag',track:'commercial',deliverable:'Target Semiconductor Fab & Display PVD Buyer Lead List',
+    sample:'Discover 300mm semiconductor fabs (TSMC, Intel, Samsung, GlobalFoundries) and OLED display OEMs seeking high-purity Cu, Ta, & Ti PVD sputtering targets.',
+    desc:'Agents scan fab procurement portals, source Directors of Thin-Film Deposition & PVD Materials Buyers, score fit, and build lead list.',
+    tasks:[{agent:'fab_scout',task:'Scan semiconductor fab procurement portals, SEMI supplier networks, and display RFPs for sputtering target tenders.',deps:[]},
+      {agent:'fab_scout',task:'Source VPs of Thin-Film Materials, Fab Module Managers, and PVD Equipment Engineers (Applied Materials, Lam Research).',deps:[]},
+      {agent:'market_intel',task:'Score account fit on 300mm copper interconnects, tantalum barrier layers, 6N purity compliance, & Grove City US supply.',deps:[0,1]},
+      {agent:'writer',task:'Compile the ranked 300mm fab, display OEM, and thin-film solar target lead list.',deps:[2]}]},
+  quote:{name:'High-purity sputtering target & assembly quotation',title:'AI Target Quoting Specialist',mode:'sequential',track:'commercial',deliverable:'Sputtering Target Assembly & Metallurgy Quotation',
+    sample:'A major 300mm semiconductor fab requested a quotation for 500 High-Purity Copper (Cu 6N) target assemblies with diffusion-bonded CuCr backing plates.',
+    desc:'Agents confirm target dimensions, calculate 6N metal weight pricing ($14,500/target), include diffusion bonding fees & refining credits, and issue quote.',
+    tasks:[{agent:'market_intel',task:'Confirm target specs: 500x Cu 6N (99.9999%) targets, 300mm Applied Materials Endura PVD chamber fit, CuCr backing plate.',deps:[]},
+      {agent:'pricing',task:'Calculate high-purity metal ingot pricing ($14,500/target assembly) + $2,100 diffusion bonding fee - spent target scrap credit.',deps:[0]},
+      {agent:'metal_supply',task:'Verify 6N copper ingot stock and Grove City, Ohio vacuum melting & diffusion bonding plant capacity.',deps:[1]},
+      {agent:'writer',task:'Produce the detailed sputtering target assembly quotation and 3-year PVD material supply agreement.',deps:[2]}]},
+  tender:{name:'Semiconductor mega-fab PVD material RFP response',title:'AI Fab RFP Response Engine',mode:'dag',track:'commercial',deliverable:'300mm Fab PVD Sputtering Target Technical Proposal',
+    sample:'Respond to a 300mm semiconductor mega-fab RFP for Tantalum (Ta) & Titanium (Ti) barrier layer sputtering targets with GDMS purity data.',
+    desc:'Agents parse fab PVD specs, detail GDMS impurity limits (<1 ppm total metals), verify ultrasonic NDT bond integrity, and write technical proposal.',
+    tasks:[{agent:'market_intel',task:'Parse mega-fab RFP specs: 300mm Ta & Ti targets, GDMS <0.5 ppm alkali metals, zero arc generation, 99.5% bond coverage.',deps:[]},
+      {agent:'metallurgist',task:'Validate metallurgical grain specs: ASTM grain size <40µm, random crystallographic orientation, & low particle generation.',deps:[0]},
+      {agent:'pricing',task:'Structure volume discount pricing tiers, backing plate re-bonding services, and consignment stock in fab cleanrooms.',deps:[1]},
+      {agent:'writer',task:'Produce the comprehensive 300mm fab PVD technical proposal and GDMS material data package.',deps:[2]}]},
+  radar:{name:'Thin-film deposition & metal commodity market radar',title:'AI Target Market Radar',mode:'dag',track:'commercial',deliverable:'PVD Sputtering Target & Metallurgy Intelligence Brief',
+    sample:'Analyze 300mm advanced node PVD technology shifts (ruthenium interconnects, Co barrier layers) & metal prices (Cu, Ta, Ti, ITO).',
+    desc:'Agents monitor PVD thin-film market trends, profile competing target makers (Honeywell PMT, JX Nippon, Materion), and write intelligence brief.',
+    tasks:[{agent:'market_intel',task:'Track global 300mm fab wafer starts, PVD chamber installations, and advanced packaging interconnect roadmaps.',deps:[]},
+      {agent:'market_intel',task:'Monitor raw metal commodity price indexes: high-purity copper, tantalum powder, titanium sponge, and indium ingot.',deps:[]},
+      {agent:'fab_scout',task:'Profile competitor positions (Honeywell PMT, JX Nippon Mining & Metals, Materion) & highlight Tosoh SMD Grove City advantages.',deps:[0,1]},
+      {agent:'writer',task:'Produce the thin-film deposition market intelligence and target metallurgy positioning brief.',deps:[2]}]},
+  targetonboard:{name:'300mm Cu 6N target qualification & NDT package',title:'AI Target Qualification Specialist',mode:'sequential',track:'operations',tag:'flagship',deliverable:'300mm Cu 6N Sputtering Target Qualification & NDT Package',
+    sample:'Qualify a new High-Purity Copper (Cu 6N) target assembly for a 300mm advanced logic fab (Grove City, OH Plant 1).',
+    desc:'Agents verify GDMS 99.9999% purity analysis, execute C-Scan ultrasonic flaw inspection of diffusion bond, test grain size, and issue package.',
+    tasks:[{agent:'metallurgist',task:'Audit Glow Discharge Mass Spectrometry (GDMS) certificate: verify Cu purity 99.9999% (total metallic impurities <1.0 ppm).',deps:[]},
+      {agent:'metallurgist',task:'Execute C-Scan ultrasonic NDT testing: verify >99.8% diffusion bond coverage between Cu target & CuCr backing plate.',deps:[0]},
+      {agent:'quality_auditor',task:'Measure metallographic grain size (<35µm) and verify EBSD crystallographic texture uniformity across target face.',deps:[1]},
+      {agent:'reviewer',task:'Target Metallurgy Director QA review: approve 300mm Cu 6N sputtering target qualification certificate.',deps:[2]},
+      {agent:'writer',task:'Produce the complete 300mm Cu 6N sputtering target qualification and NDT delivery package.',deps:[3]}]},
+  validatework:{name:'GDMS 6N purity & microstructural quality audit',title:'AI PVD Purity & Microstructure Auditor',mode:'sequential',track:'operations',deliverable:'GDMS 6N Purity & Metallurgical Grain Quality Audit Report',
+    sample:'Audit a production lot of 50 Tantalum (Ta) sputtering targets for 300mm copper barrier PVD processes.',
+    desc:'Agents analyze GDMS trace element analysis, evaluate EBSD grain orientation maps, verify zero ceramic inclusion defects, and issue audit.',
+    tasks:[{agent:'quality_auditor',task:'Audit GDMS trace impurity spectrum: verify Fe <0.1 ppm, Ni <0.05 ppm, U/Th <0.1 ppb (ultra-low alpha emission).',deps:[]},
+      {agent:'quality_auditor',task:'Analyze electron backscatter diffraction (EBSD) maps: verify uniform (111) crystallographic texture for high sputter yield.',deps:[0]},
+      {agent:'reviewer',task:'Review quality audit log against ISO 9001 quality standards and fab PVD particle generation specs.',deps:[1]},
+      {agent:'writer',task:'Produce the GDMS 6N purity and microstructural grain quality audit report.',deps:[2]}]},
+  servicework:{name:'Target erosion & backing plate re-bonding specialist',title:'AI Target Erosion Specialist',mode:'dag',track:'operations',deliverable:'Spent Target Erosion & Backing Plate Re-Bonding Diagnostic',
+    sample:'A 300mm semiconductor customer returned a spent Tantalum target with 78% track erosion depth. Inspect & re-bond.',
+    desc:'Agents inspect target erosion track profile, test backing plate solder/diffusion joint integrity, calculate metal reclamation value, and report.',
+    tasks:[{agent:'pvd_service',task:'Measure target erosion profile: maximum racetrack depth 18.4mm (78% target utilization, ZERO backing plate burn-through).',deps:[]},
+      {agent:'pvd_service',task:'Inspect reusable CuCr backing plate: ultrasonic C-Scan clean, surface demounting, & flatness measurement within 0.05mm.',deps:[0]},
+      {agent:'pvd_service',task:'Calculate spent Ta scrap reclamation credit ($3,400 USD value) & schedule new Ta target diffusion bonding.',deps:[1]},
+      {agent:'writer',task:'Produce the spent target erosion diagnostic and backing plate re-bonding service report.',deps:[2]}]},
+  supplyplanwork:{name:'High-purity raw metal ingot & powder supply plan',title:'AI Metal Ingot Supply Manager',mode:'dag',track:'operations',deliverable:'High-Purity Raw Metal Ingot & Backing Plate Supply Plan',
+    sample:'Audit Grove City plant stock of 6N copper cathodes, electron-beam melted tantalum ingots, & titanium sponge stock.',
+    desc:'Agents audit raw metal inventory across Grove City vaults, monitor refiner lead times, build 90-day production plan, and report.',
+    tasks:[{agent:'metal_supply',task:'Audit raw metal stock: 18,000 kg 6N Cu cathodes, 4,500 kg EB-melted Ta ingots, & 6,000 kg ultra-pure Ti billets.',deps:[]},
+      {agent:'market_intel',task:'Monitor global refiner lead times for ultra-high purity specialty metals and backing plate copper alloys.',deps:[]},
+      {agent:'metal_supply',task:'Build 90-day automated raw metal melting, forging, and machining production schedule for Grove City plant.',deps:[0,1]},
+      {agent:'writer',task:'Produce the high-purity raw metal ingot and backing plate logistics supply plan.',deps:[2]}]},
+};
+const DTITLE={scout:'Target Semiconductor Fab & Display PVD Buyer Lead List',quote:'Sputtering Target Assembly & Metallurgy Quotation',tender:'300mm Fab PVD Sputtering Target Technical Proposal',radar:'PVD Sputtering Target & Metallurgy Intelligence Brief',targetonboard:'300mm Cu 6N Sputtering Target Qualification Package',validatework:'GDMS 6N Purity & Metallurgical Grain Quality Audit Report',servicework:'Spent Target Erosion & Backing Plate Re-Bonding Diagnostic',supplyplanwork:'High-Purity Raw Metal Ingot & Backing Plate Supply Plan'};
+const TOOLS={
+  source_fab_pvd_tenders:()=>'Scanned fab procurement portals: identified 18 active 300mm PVD sputtering target RFPs.',
+  build_target_quote:()=>'Calculated quote: 500x Cu 6N target assemblies @ $14,500/target + $2,100 diffusion bonding fee.',
+  measure_gdms_purity:()=>'Executed GDMS analysis: 99.9999% Cu purity (total metallic impurities 0.68 ppm, PASSED).',
+  inspect_ultrasonic_bond:()=>'Executed ultrasonic C-Scan: 99.9% diffusion bond coverage between target & backing plate.',
+  audit_grain_orientation:()=>'Analyzed EBSD grain map: ASTM grain size 32µm, uniform (111) crystallographic texture (PASSED).',
+  measure_erosion_depth:()=>'Measured erosion depth: 78% target utilization, backing plate fully intact & reusable.',
+  disposition_spent_target:()=>'Calculated spent metal scrap credit: $3,400 USD credit applied to new target order.',
+  plan_raw_metal_ingot_supply:()=>'Audited metal stock: 18,000 kg 6N Cu cathodes on hand; 90-day production plan generated.',
+  track_metal_commodities:()=>'Tracked metal markets: 6N copper and tantalum powder prices stable (+1.2%).',
+  qa_review:()=>'Target Metallurgy Director QA complete: stamped 300mm Cu 6N target qualification package.',
+  compose:()=>'Drafted in a clear, metallurgical-grade, semiconductor PVD compliant style, review-ready.',
+  save:()=>'Saved to shared metallurgical engineering context for sign-off.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+const FINAL={
+scout:`TARGET SEMICONDUCTOR FAB & DISPLAY PVD BUYER LEAD LIST  (illustrative)
+
+Scanned global semiconductor fab procurement portals, SEMI supplier directories, and display RFPs.
+
+Top 300mm Fab & Display Target Opportunities (Pursue Now)
+1. TSMC Fab 18 (Tainan) — 300mm Advanced Node Copper Interconnect Target RFP (2,000 Targets/yr) — Fit Score: 99
+2. Intel Corporation (Chandler, AZ) — Tantalum Barrier Layer PVD Sputtering Targets — Fit Score: 97
+3. Samsung Semiconductor (Taylor, TX) — 300mm Ultra-Pure Titanium PVD Targets — Fit Score: 95
+4. LG Display (Paju) — Large-Format Indium Tin Oxide (ITO) Display Sputtering Targets — Fit Score: 92
+
+Key Buyers: VP Thin-Film Deposition, Director of Fab PVD Materials, Principal Metallurgical Engineer.
+
+→ Saved: fab_target_leads, pvd_material_rfps, fit_scores
+NOTE: illustrative concept simulation.`,
+quote:`SPUTTERING TARGET ASSEMBLY & METALLURGY QUOTATION  (illustrative)
+
+Customer: Global 300mm Logic Semiconductor Fab  |  Plant: Tosoh SMD Grove City, OH
+Target Code: TSMD-CU6N-300MM  |  PVD Tool Fit: Applied Materials Endura PVD Chamber
+
+Commercial Target Volume & Material Breakdown
+• Target Quantity: 500x High-Purity Copper (Cu 6N) Sputtering Target Assemblies
+• Target Metallurgy: 99.9999% Pure Copper (GDMS Metallic Impurities <1.0 ppm)
+• Backing Plate Assembly: High-Strength CuCr Alloy Backing Plate with Vacuum Diffusion Bonding
+• NDT Quality Standard: 100% C-Scan Ultrasonic Bond Inspection (>99.5% Bond Integrity)
+
+Financial Summary (USD)
+• Target Assembly Unit Price: $14,500 USD per Target Assembly
+• Vacuum Diffusion Bonding Fee: $2,100 USD per Assembly
+• Spent Target Scrap Reclamation Credit: -$3,400 USD per Returned Spent Target
+• Total Net Order Value (500 Targets): $6,600,000 USD (3-Year PVD Material Supply Agreement).
+
+→ Saved: sputtering_target_quotation, metallurgy_pricing_matrix, Grove_City_production_schedule
+NOTE: illustrative simulation.`,
+tender:`300MM FAB PVD SPUTTERING TARGET TECHNICAL PROPOSAL  (illustrative)
+
+Tender Ref: FAB-PVD-2026-METALS-04
+Program: 300mm Advanced Node Tantalum (Ta) & Titanium (Ti) PVD Sputtering Targets
+
+Tosoh SMD Technical & Metallurgical Solution
+• Purity Level: 99.999% (5N) to 99.9999% (6N) Ultra-High Purity Metals (GDMS Certified).
+• Microstructural Control: Thermo-mechanically processed grain size <40µm with zero preferential orientation.
+• Bonding Technology: Proprietary solid-state diffusion bonding with >99.8% joint coverage.
+• Defect Performance: Ultra-low particle generation (<0.01 particles/cm² >0.09µm) & zero arcing.
+
+Certifications & Compliance
+• ISO 9001 Certified Plant  |  ISO 14001 Environmental  |  Full GDMS Traceability per Serial Number.
+
+→ Saved: fab_pvd_technical_proposal, gdms_purity_data_sheet, NDT_bond_spec
+NOTE: illustrative simulation.`,
+targetonboard:`300MM CU 6N SPUTTERING TARGET QUALIFICATION PACKAGE  (illustrative · flagship)
+
+Target Serial #: TSMD-CU6N-2026-9042  (Grove City, Ohio Plant 1)
+Customer: 300mm Advanced Logic Semiconductor Fab (Copper Interconnect Metallization)
+
+1. GDMS High-Purity Chemical Analysis
+• Copper Purity: 99.9999% (6N Purity)
+• Trace Metallic Impurities: Fe = 0.12 ppm, Ni = 0.04 ppm, Ag = 0.22 ppm (Total = 0.68 ppm) — PASSED.
+• Alkali & Radioactive Impurities: Na/K <0.05 ppm, U/Th <0.08 ppb — PASSED.
+
+2. Non-Destructive Testing (NDT) & Microstructure Audit
+• Ultrasonic C-Scan Bond Inspection: 99.9% diffusion bond area coverage — PASSED.
+• Metallographic Grain Size: Average grain diameter = 32µm — PASSED.
+• Crystallographic Texture: EBSD confirmed uniform (111) orientation for maximum sputter rate.
+
+3. Target Metallurgy Director Sign-Off
+• Approved by VP Metallurgical Engineering | Tosoh SMD Cert #TSMD-2026-CU6N
+
+→ Saved: target_qualification_package, gdms_purity_certificate, cscan_ultrasonic_report
+NOTE: illustrative; requires target metallurgy director sign-off.`,
+validatework:`GDMS 6N PURITY & METALLURGICAL GRAIN QUALITY AUDIT REPORT  (illustrative)
+
+Production Lot ID: TA-LOT-2026-550  |  Volume: 50x 300mm Tantalum (Ta) Sputtering Targets
+Application: 300mm Copper Diffusion Barrier PVD Layer
+
+Glow Discharge Mass Spectrometry (GDMS) & Grain Audit Findings
+1. GDMS Trace Impurity Analysis
+   • Total Metallic Impurities: 0.42 ppm (Fe <0.08 ppm, Cr <0.03 ppm, Mo <0.05 ppm) — PASSED.
+   • Gas Impurities (O, N, C, H): O = 14 ppm, N = 4 ppm, C = 8 ppm — PASSED.
+2. Microstructural Grain & Orientation Audit
+   • Average Grain Size: 28µm (Specification <45µm) — PASSED.
+   • Crystallographic Orientation: 100% recrystallized, zero residual cold-work strain — PASSED.
+
+Conclusion: Sputtering target lot cleared for 300mm semiconductor fab cleanroom shipment.
+
+→ Saved: gdms_purity_audit_report, ebsd_grain_map, ta_target_certificate
+NOTE: illustrative simulation.`,
+servicework:`SPENT TARGET EROSION & BACKING PLATE RE-BONDING DIAGNOSTIC  (illustrative)
+
+Service Order ID: TSMD-RECLAIM-2026-88
+Customer: 300mm Memory Fab  |  Returned Target: 300mm Tantalum (Ta) Assembly
+
+Target Inspection & Diagnostics
+• Erosion Racetrack Profile: Maximum erosion groove depth = 18.4mm (78% target material utilization).
+• Backing Plate Condition: Reusable CuCr backing plate passed ultrasonic NDT; zero erosion burn-through.
+• Surface Flatness Check: Backing plate deviation <0.03mm across 450mm diameter — CLEARED FOR RE-USE.
+
+Commercial & Recycling Action Executed
+1. Spent Scrap Credit: 4.2 kg residual high-purity Ta metal recovered ($3,400 USD credit issued to customer).
+2. Re-Bonding Schedule: Backing plate demounted, cleaned, and scheduled for new Ta target diffusion bonding.
+
+→ Saved: spent_target_diagnostic_report, backing_plate_cscan, scrap_reclamation_credit
+NOTE: illustrative simulation.`,
+supplyplanwork:`HIGH-PURITY RAW METAL INGOT & BACKING PLATE SUPPLY PLAN  (illustrative)
+
+Scope: Central Metallurgy Warehouse (Tosoh SMD, Grove City, Ohio)
+
+High-Purity Raw Metal Inventory Audit
+• High-Purity 6N Copper Cathodes: 18,000 kg on hand (Sufficient for 6 months production).
+• Electron-Beam Melted Tantalum Ingots: 4,500 kg on hand.
+• Ultra-Pure Titanium Billets (5N): 6,000 kg on hand.
+• CuCr Backing Plate Forgings: 1,200 Backing plate blanks on hand.
+
+Production Schedule Executed
+• Vacuum Melting & Forging: Scheduled 3,000 kg 6N Cu melting run for 300mm target production.
+
+→ Saved: raw_metal_supply_plan, ingot_inventory_log, Grove_City_melting_schedule
+NOTE: illustrative simulation.`,
+};
+let EMPLOYEES=[
+ {id:'scout',name:'Scout',title:'AI Fab PVD Scout',wf:'scout',handled:240,hrs:62,win:0,status:'idle'},
+ {id:'quote',name:'Quote',title:'AI Target Quoting Specialist',wf:'quote',handled:165,hrs:94,win:46,status:'idle'},
+ {id:'tender',name:'Tender',title:'AI Fab RFP Response Engine',wf:'tender',handled:135,hrs:98,win:52,status:'idle'},
+ {id:'radar',name:'Radar',title:'AI Target Market Radar',wf:'radar',handled:185,hrs:42,win:16,status:'idle'},
+ {id:'targetonboard',name:'TargetOnboard',title:'AI Target Qualification Specialist',wf:'targetonboard',handled:330,hrs:230,win:78,status:'idle'},
+ {id:'validate',name:'Validate',title:'AI PVD Purity & Microstructure Auditor',wf:'validatework',handled:210,hrs:120,win:54,status:'idle'},
+ {id:'service',name:'Service',title:'AI Target Erosion Specialist',wf:'servicework',handled:245,hrs:140,win:60,status:'idle'},
+ {id:'supply',name:'Supply',title:'AI Metal Ingot Supply Manager',wf:'supplyplanwork',handled:155,hrs:70,win:0,status:'idle'},
+];
+let running=false;
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const now=()=>new Date().toLocaleTimeString('en-GB');
+const mono=n=>n.trim().slice(0,2).toUpperCase();
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Commercial</span>';if(wf.track==='operations')s+='<span class="tag operations">Target Metallurgy</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+function setView(v){
+  $('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');
+  $('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');
+  if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderEcon(){
+  const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);
+  const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;
+  const cells=[[total,'AI operators (commercial sales + target metallurgy)'],[h.toLocaleString(),'target quotes, GDMS 6N certificates & bond audits'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','metallurgist & sales hours saved / month'],['+'+avg+'%','avg target qualification speed']];
+  $('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');
+}
+function empCard(e){const wf=WORKFLOWS[e.wf];
+  const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');
+  return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}">
+   <div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div>
+   <div class="emp-owns">Owns: <b>${wf.name}</b></div>
+   <div class="team">${team}</div>
+   <div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'—'}</b>faster</div></div>
+   <div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a target / fab RFP</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;
+}
+function renderRoster(){
+  const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;
+  let html='';
+  TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;
+    html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});
+  const untracked=EMPLOYEES.filter(e=>!WORKFLOWS[e.wf].track);
+  if(untracked.length)html+=`<div class="slabel">Other</div><div class="roster">`+untracked.map(empCard).join('')+`</div>`;
+  $('roster').innerHTML=html;
+}
+function assign(id){
+  if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+  $('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div>
+    <div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a fab PVD tender, a sputtering target drawing spec or a spent target erosion issue and ${e.name} runs the whole loop.</div></div></div>
+    <div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div>
+    <div id="stage"></div></div>`;
+  $('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();
+}
+async function runEmp(id){
+  if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+  const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;
+  e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');
+  const stage=$('stage');
+  stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div>
+    <div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div>
+    <div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;
+  const feed=$('feed');
+  function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;
+    const row=document.createElement('div');row.className='frow';row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,150)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}
+  log(null,`Input received: "${obj.substring(0,54)}…"`);
+  log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);
+  await sleep(rand(700,1100));
+  const grid=$('agrid');
+  wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;
+    c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;
+    grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});
+  await sleep(600);
+  $('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');
+  const done=new Set();
+  async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);
+    c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';
+    log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));
+    for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}
+    c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}
+  if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}
+  else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;
+    if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}
+  $('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');
+  await sleep(400);
+  const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(6,44);
+  $('resultArea').innerHTML=`<div class="result"><div class="rstats">
+    <div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div>
+    <div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div>
+    <div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'Commercial sales & semiconductor fab':'Target metallurgy & PVD quality'}</span></div>
+    <div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div>
+    <div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div>
+    <div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div>
+    <div class="donebar"><b>${e.name} produced a review-ready output.</b> Sputtering target quotation, GDMS 6N purity analysis, and diffusion bond audit complete, ready for a metallurgy director or VP of sales to approve. Illustrative simulation.</div>`;
+  e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;
+}
+// builder
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per sputtering target run',step:1};renderBuilder();}
+function renderBuilder(){
+  const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];
+  $('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+  if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();
+}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+
+  Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  $('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+
+    w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+
+    `<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;
+  document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div>
+  <div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. TargetOnboard" oninput="draft.name=this.value"></div>
+  <div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Target Qualification Specialist" oninput="draft.title=this.value"></div>
+  <div class="field"><label>Cadence</label><div class="seg">`+['Per sputtering target run','Per alloy batch','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div>
+  <div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;
+  let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+  else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+  else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();
+  const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};
+  DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];
+  const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});
+  renderEcon();renderRoster();setView('ops');
+  setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);
+}
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
