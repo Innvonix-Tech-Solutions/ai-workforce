@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Richelieu Foods — AI Commercial &amp; Operational Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#ffffff;
+  --surface:#fbf8f9;
+  --surface2:#f7e6ec;
+  --border:#ebd3dc;
+  --accent:#ab0a3d;
+  --accent-light:#c71e54;
+  --accent-dark:#7e072c;
+  --navy-dark:#1b1b1b;
+  --accent-dim:rgba(171,10,61,.08);
+  --accent-line:rgba(171,10,61,.30);
+  --gold:#ab0a3d;
+  --gold-bg:#fdf5f7;
+  --gold-line:#f0bdcc;
+  --text:#1b1b1b;
+  --hi:#1b1b1b;
+  --tert:#63676b;
+  --ok:#16a34a;
+  --ok-dim:rgba(22,163,74,.10);
+  --rich-red:#ab0a3d;
+  --rich-navy:#2b328c;
+}
+body{background:var(--canvas);color:var(--text);font-family:"Plus Jakarta Sans",system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:3px solid #ab0a3d;position:sticky;top:0;background:#1b1b1b;color:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{min-width:42px;height:34px;padding:0 10px;border-radius:6px;background:#ab0a3d;display:flex;align-items:center;justify-content:center;color:#ffffff;font-weight:900;font-size:14px;letter-spacing:1px;white-space:nowrap;overflow:hidden;flex-shrink:0}
+.htitle{font-size:15px;font-weight:800;color:#fff;letter-spacing:.5px;text-transform:uppercase}.hsub{font-size:11px;color:#f7e6ec;margin-top:1px;font-weight:500;letter-spacing:.5px}
+.badge{border:1px solid rgba(171,10,61,.6);border-radius:6px;padding:6px 12px;font-size:11px;color:#f7e6ec;background:rgba(171,10,61,.20)}.badge b{color:#ffffff}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:600;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none;letter-spacing:.3px}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface);border-top:3px solid var(--accent)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:900px;margin-bottom:14px}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.commercial{background:var(--accent-dim);color:var(--accent-dark);border:1px solid var(--accent-line)}
+.tag.operations{background:var(--accent-dim);color:var(--accent-dark);border:1px solid var(--accent-line)}
+.tag.hero{background:var(--gold-bg);color:var(--accent-dark);border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:24px;font-weight:700;color:var(--accent-dark)}.cell .v .u{color:var(--accent)}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--accent-dark);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:"IBM Plex Sans Condensed",sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent-dark);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;letter-spacing:.2px}.emp-title{font-size:12px;color:var(--tert)}
+.emp-owns{font-size:12px;margin-bottom:10px}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:inherit;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:var(--accent-line)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#ffffff}
+.btn.primary:hover{background:var(--accent-dark);border-color:var(--accent-dark);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent;color:var(--accent-dark)}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent-dark)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert);letter-spacing:.3px}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--accent-dark);letter-spacing:.3px}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto;color:var(--hi)}
+.donebar{background:var(--surface);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;color:var(--text)}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent-dark)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:var(--accent-line)}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:14px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;letter-spacing:.3px}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4}.wf .wm{font-size:10px;color:var(--accent-dark);margin-top:8px;font-weight:600;text-transform:uppercase}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 16px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#ffffff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5}
+@media(prefers-rounded-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="header">
+<div class="logo"><div class="mark">RICHELIEU</div>
+<div><div class="htitle">Richelieu Foods · AI Commercial &amp; Operational Workforce</div><div class="hsub">PRIVATE LABEL FROZEN &amp; DELI PIZZA · FREIBERGER GROUP · 160+ YEARS OF CULINARY SCALE</div></div></div>
+<div class="badge">Independent concept &nbsp;·&nbsp; <b>illustrative</b></div>
+</header>
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>a Richelieu Foods private label frozen pizza, retail deli take-and-bake, crust fermentation, or SQF bakery manufacturing workflow turned into an autonomous team of agents</b>. One track wins the work: it finds top 25 national supermarket banners (Kroger, Target, Walmart, Albertsons, Aldi, Costco) seeking high-margin private brand pizza programs, quotes turn-key 12M-unit annual self-rising and Chicago tavern-style frozen pizza co-manufacturing runs across Wheeling, IL and Beaver Dam, WI bakeries, responds to multi-million-dollar fresh deli 16-inch take-and-bake master tenders, and tracks frozen grocery competitor intelligence. The other track delivers food science formulation, bakery operations, and SQF quality systems: it qualifies commercial thin crispy crust pizza lines under SQF Edition 9 &amp; USDA FSIS standards (dough sheeter lamination tolerances 2.1mm ± 0.1mm, automated optical topping weight verification, tunnel oven bottom crispness &gt;8.5/10, -40°F cryogenic spiral dwell time 26 mins, x-ray inspection), optimizes 110-ft continuous indirect gas-fired tunnel oven baking yields (180 pizzas/minute at 28.5% crust moisture), simulates -40°F cryogenic spiral blast freezer air velocity 3D CFD heat transfer dynamics (freezing pies from 85°F to 0°F core in under 24 mins without ice crystallization), and manages master formulation recipe ECOs &amp; automated multi-head depositor recipe parameters. Point one at a private brand RFP, an SQF food safety audit, or a Wheeling oven telemetry feed and it runs the loop, then hands back a review-ready output for a VP of Sales, Director of Operations, or Vice President of Quality to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial</span> find, quote, tender, win</span>
+<span><span class="tag operations">Food Science, Bakery Ops &amp; SQF Quality</span> Line Qual, Tunnel Oven Yield, Cryogenic CFD Thermal, ECO</span>
+<span><span class="tag hero">Flagship</span> the deepest example run</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+<div class="foot">Independent concept prototype prepared for a conversation with Richelieu Foods, Inc. (richelieufoods.com) and the Freiberger Group. It is not affiliated with, endorsed by, or built on Richelieu Foods or Freiberger systems or data. All operators and outputs are illustrative simulations; retail buyer accounts, oven bake curves, BOM ingredient costs, SQF audit records, and MMBR recipes are placeholders. A VP of Sales, Director of Operations, or Vice President of Quality reviews and approves every co-manufacturing quotation, Master Batch Record, SQF validation audit, and formulation change order.</div>
+<script>
+const AGENT_ROLES={
+retail_private_label_pizza_category_lead:{emoji:'🍕',label:'Retail Private Label Pizza & Deli Category Lead',tools:['analyze_iri_nielsen_frozen_pizza_shelf_velocities_and_gaps','save']},
+sqf_edition9_usda_food_safety_auditor:{emoji:'🛡️',label:'SQF Edition 9 & USDA/FDA Food Safety Compliance Auditor',tools:['verify_fsma_pathogen_swabs_ccp_metal_detection_and_haccp','save']},
+culinary_crust_dough_fermentation_r_and_d_spec:{emoji:'🌾',label:'Crust Fermentation & Culinary Pizza R&D Specialist',tools:['formulate_yeast_dough_hydration_rheology_and_oven_spring','save']},
+high_speed_pizza_topping_line_quoting_eng:{emoji:'💻',label:'High-Speed Frozen Pizza Line & Co-Pack Quoting Lead',tools:['build_richelieu_retail_co_pack_volume_manufacturing_quote','save']},
+cheese_sauce_meat_topping_procurement_spec:{emoji:'🧀',label:'Whole Milk Mozzarella, Pepperoni & Sauce Procurement Lead',tools:['verify_block_cheese_commodity_index_and_usda_pork_bom','save']},
+frozen_grocery_category_pricing_intel_spec:{emoji:'📊',label:'Frozen Grocery & Retail Deli Category Pricing Intel Lead',tools:['inspect_retail_promo_circulars_and_private_brand_margins','save']},
+national_supermarket_deli_tender_quoting_eng:{emoji:'🧮',label:'National Supermarket Deli Take-and-Bake Tender Quoting Lead',tools:['build_richelieu_national_supermarket_annual_pizza_tender','save']},
+cryogenic_freezer_cold_chain_logistics_spec:{emoji:'🚚',label:'-40°F Spiral Blast Freezing & Reefer Cold-Chain Logistics Lead',tools:['optimize_sub_zero_fused_pallet_logistics_and_dwell_times','save']},
+culinary_spec_sheet_bom_eco_revision_lead:{emoji:'🔄',label:'Crust Formula & Topping Density Spec ECO Revision Lead',tools:['eval_richelieu_production_eco','save']},
+mes_wheeling_pizza_line_scada_telemetry_spec:{emoji:'🏭',label:'Wheeling & Beaver Dam Plant MES Line Telemetry Specialist',tools:['inspect_continuous_tunnel_oven_and_ultrasonic_slicer_telemetry','save']},
+writer:{emoji:'✍️',label:'Supermarket Private Brand Proposal & Specification Dossier Writer',tools:['compose','save']},
+reviewer:{emoji:'✅',label:'Principal Food Scientist & VP Quality Assurance Reviewer (SQF / PCQI)',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+const TRACKS=[['commercial','Commercial & Sales Activities'],['operations','Food Science, Bakery Ops & SQF Quality']];
+const WORKFLOWS={
+scout:{name:'Top 25 US supermarket & mass merchant private label pizza scout',title:'AI Private Label Grocery Opportunity Scout',mode:'dag',track:'commercial',deliverable:'Target Top 25 US Supermarket & Club Store Private Brand Pizza Pipeline List',
+sample:'Identify Senior Category Manager of Frozen Foods, VP of Private Brands, and Deli Take-and-Bake Merchandising Directors at leading grocery retailers (Kroger, Target Good & Gather, Walmart Great Value, Albertsons Signature Select, Aldi, Costco Kirkland) seeking multi-million-unit private label frozen pizza and deli fresh take-and-bake programs to capture market share from national brands.',
+desc:'Agents track Circana/Nielsen frozen pizza category retail sales, identify tier-1 grocery private label white spaces (tavern-style crispy thin crust, sourdough wood-fired crust), source category merchants, score plant capacity fit, and build the Richelieu pipeline.',
+tasks:[{agent:'retail_private_label_pizza_category_lead',task:'Source top 25 national grocery chains, warehouse club stores, and regional supermarket banners.',deps:[]},
+{agent:'frozen_grocery_category_pricing_intel_spec',task:'Score retail accounts on private brand market share, price gap vs DiGiorno / Red Baron, and promotional cadence.',deps:[0]},
+{agent:'writer',task:'Compile target grocery merchant buyer lead list with key Category Managers and Private Brand VPs.',deps:[1]}]},
+quote:{name:'Turn-key 12M-unit annual self-rising & tavern-style frozen pizza co-manufacturing quote',title:'AI Pizza Co-Manufacturing Quoting Operator',mode:'sequential',track:'commercial',deliverable:'Turnkey 12M-Unit Annual Self-Rising & Tavern-Style Frozen Pizza Co-Manufacturing Quoting Proposal',
+sample:'Generate commercial manufacturing proposal for a 12,000,000-unit annual private label frozen pizza program (6 SKUs across Self-Rising Pepperoni, Supreme, Four Cheese, and Chicago Tavern-Style Thin Crust) for a major national supermarket retailer ($31.8M contract value across Wheeling, IL and Beaver Dam, WI bakeries).',
+desc:'Agents calculate dough batch yields (14-inch crust, 28.5 oz total weight), cheese coverage density (8.2 oz whole milk mozzarella blend), pepperoni shingle count (38 slices/pie), cryogenic spiral blast freezing throughput, corrugated carton logistics, and issue proposal.',
+tasks:[{agent:'cheese_sauce_meat_topping_procurement_spec',task:'Lock CME block cheddar/mozzarella commodity pricing, California vine-ripened tomato paste contracts, and dry-cured pepperoni volume tiers.',deps:[]},
+{agent:'culinary_crust_dough_fermentation_r_and_d_spec',task:'Formulate crust flour protein hydration, yeast fermentation profile, and herb-infused marinara sauce viscosity.',deps:[0]},
+{agent:'high_speed_pizza_topping_line_quoting_eng',task:'Model Wheeling plant high-speed topping lines (180 pizzas/minute), automated cartoning, and palletization ($31,800,000 contract).',deps:[1]},
+{agent:'writer',task:'Produce formal customer-ready Richelieu Foods private brand technical commercial pizza proposal.',deps:[2]}]},
+tender:{name:'National club store fresh deli 16-inch take-and-bake pizza master tender',title:'AI Master Retail Pizza Tender Operator',mode:'dag',track:'commercial',deliverable:'National Club Store Fresh Deli 16-Inch Take-and-Bake Pizza Master Tender Response',
+sample:'Prepare comprehensive annual solicitation tender for a 16-inch fresh deli take-and-bake pizza program (7.5M units annually across 650 club store locations) featuring artisanal proof-in-pan dough, fresh sliced provolone/mozzarella, and modified atmosphere packaging (MAP) with 14-day fresh refrigerated shelf life.',
+desc:'Agents verify SQF Level 3 food safety certification, Freiberger global scale redundancy (11 international bakery facilities), refrigerated cross-dock cold-chain distribution, and guaranteed 99.4% on-time order fulfillment.',
+tasks:[{agent:'mes_wheeling_pizza_line_scada_telemetry_spec',task:'Verify automated dough ball extrusion, rolling sheeters, and MAP gas flushing residual oxygen levels (<0.5% O2).',deps:[]},
+{agent:'cryogenic_freezer_cold_chain_logistics_spec',task:'Structure daily refrigerated delivery to regional grocery distribution centers maintaining 34°F to 38°F cold chain.',deps:[0]},
+{agent:'national_supermarket_deli_tender_quoting_eng',task:'Structure $22.5M multi-distribution-center master co-manufacturing agreement and volume rebate matrix.',deps:[1]},
+{agent:'writer',task:'Generate comprehensive enterprise retail deli pizza master tender response.',deps:[2]}]},
+radar:{name:'Private label frozen pizza & co-packing competitor intelligence',title:'AI Frozen Pizza Market Intelligence',mode:'dag',track:'commercial',deliverable:'Private Label Frozen Pizza & Co-Packing Competitor Intelligence Brief',
+sample:'Analyze North American private label pizza manufacturers (Palermo\'s / Great Lakes Cheese, TNT Crust, Nation Pizza, Schwan\'s Consumer Brands co-pack, Little Lady Foods) vs Richelieu Foods / Freiberger Group.',
+desc:'Agents benchmark bakery line throughput, crust variety innovation (Detroit style, pinsa, tavern thin, gluten-free), dairy procurement scale, and private label market share across US retail channels.',
+tasks:[{agent:'frozen_grocery_category_pricing_intel_spec',task:'Gather competitor retail promotional circular prices, wholesale case costs, and plant expansion intelligence.',deps:[]},
+{agent:'retail_private_label_pizza_category_lead',task:'Highlight Richelieu\'s 160+ year heritage, Freiberger global scale, multi-facility redundancy, and SQF Level 3 food safety.',deps:[0]},
+{agent:'writer',task:'Produce quarterly North American private label pizza market intelligence and competitive positioning brief.',deps:[1]}]},
+panel_qualification:{name:'Chicago tavern-style ultra-thin crispy pizza commercial line qualification & SQF audit',title:'AI Pizza Line Qualification Operator',mode:'dag',track:'operations',tag:'flagship',deliverable:'Chicago Tavern-Style Ultra-Thin Crispy Pizza Commercial Line Qualification & SQF Safety Dossier',
+sample:'Execute comprehensive commercial bakery commissioning and quality validation (dough lamination sheeter thickness tolerances 2.1mm ± 0.1mm, automated optical topping weight verification, tunnel oven bake curves with bottom crust crispness scoring >8.5/10, cryogenic spiral freezer dwell time 26 minutes to core 0°F, and x-ray foreign material inspection) on Wheeling Line 4.',
+desc:'Agents audit USDA meat inspection compliance, moisture migration barriers between sauce and crust, melt-and-stretch cheese testing, and publish commercial production release package.',
+tasks:[{agent:'culinary_crust_dough_fermentation_r_and_d_spec',task:'Simulate dough rheology, starch gelatinization curves, and moisture migration barriers preventing soggy crust.',deps:[]},
+{agent:'sqf_edition9_usda_food_safety_auditor',task:'Verify USDA Food Safety and Inspection Service (FSIS) pathogen prevention, continuous x-ray bone/metal inspection, and allergen sanitation validation.',deps:[]},
+{agent:'cheese_sauce_meat_topping_procurement_spec',task:'Audit whole milk mozzarella melt stretch profile, pepperoni cupping performance, and sauce Brix (13.5 ± 0.5°).',deps:[0,1]},
+{agent:'reviewer',task:'QA official production run logs, thermal oven validation profiles, and SQF Practitioner signed release.',deps:[2]},
+{agent:'writer',task:'Produce complete Richelieu Foods commercial line qualification and quality release dossier.',deps:[3]}]},
+inverter_yield:{name:'Continuous tunnel oven baking yield & crust moisture optimization test',title:'AI Continuous Tunnel Oven Dynamic Test Operator',mode:'sequential',track:'operations',deliverable:'Continuous Tunnel Oven Baking Yield & Crust Moisture Optimization Test Report',
+sample:'Calibrate 110-ft continuous indirect gas-fired tunnel oven (delivering 100% uniform golden-brown crust color across 8-across lane conveyor, target 28.5% finished crust moisture, and zero bottom-crust burning at 180 pizzas/minute).',
+desc:'Agents analyze 5-zone oven temperature profiles (Zone 1 bottom heat 540°F, Zone 5 convection 465°F), exhaust damper airflow velocity, and crust bottom blistering index.',
+tasks:[{agent:'culinary_crust_dough_fermentation_r_and_d_spec',task:'Measure dough leavening oven-spring expansion and moisture loss percentage across 5 temperature zones.',deps:[]},
+{agent:'high_speed_pizza_topping_line_quoting_eng',task:'Perform 100% automated high-speed line speed vs bake time sweeps (3.8 min to 4.5 min bake curves at 10,800 pies/hour).',deps:[0]},
+{agent:'reviewer',task:'QA finished crust texture analyzer crumb firmness and sensory blister distribution.',deps:[1]},
+{agent:'writer',task:'Produce comprehensive continuous tunnel oven efficiency and crust optimization report.',deps:[2]}]},
+thermal_simulation:{name:'Cryogenic spiral blast freezer (-40°F) & air velocity 3D CFD thermal simulation',title:'AI Cryogenic Freezer CFD Thermal Operator',mode:'dag',track:'operations',deliverable:'Cryogenic Spiral Blast Freezer (-40°F) & Air Velocity 3D CFD Thermal Simulation Strategy',
+sample:'Generate automated 3D CFD conjugate heat transfer and turbulent air circulation simulation for a multi-tier spiral blast freezing freezer (-40°F ammonia refrigeration, 1,200 FPM air velocity) freezing 14-inch topped pizzas from 85°F post-sauce temperature to 0°F core in under 24 minutes.',
+desc:'Agents simulate convective heat transfer coefficients across cheese, meat, and dough layers, eliminate thermal dead zones across the 24-tier spiral drum, and prevent ice crystal formation.',
+tasks:[{agent:'cheese_sauce_meat_topping_procurement_spec',task:'Execute 3D Finite Volume CFD thermal freezing transient curves across multi-ingredient pizza assemblies.',deps:[]},
+{agent:'sqf_edition9_usda_food_safety_auditor',task:'Verify rapid chilling compliance (reaching sub-40°F within critical microbial control windows) and evaporator coil defrost timing.',deps:[0,1]},
+{agent:'writer',task:'Produce Richelieu Foods cryogenic freezing optimization strategy and CFD airflow documentation.',deps:[0,1]}]},
+mask_eco:{name:'Pizza recipe formulation ECO & automated topping depositor recipe revision control',title:'AI Bakery Revision Control Operator',mode:'sequential',track:'operations',deliverable:'Pizza Recipe Formulation ECO & Automated Topping Depositor Recipe Revision Assessment',
+sample:'Evaluate ECO-2026-1980 (Deploy Clean-Label Uncured Nitrate-Free Pepperoni & Reduced-Sodium Mozzarella Blend across 4 Retail Private Brand SKUs to Comply with Retailer Healthy Eating Initiative Guidelines).',
+desc:'Agents evaluate water activity Aw impact on shelf life, recalibrate multi-head target weight scale feeders, update enterprise ERP bill of materials, and sync MES batch recipe controllers.',
+tasks:[{agent:'culinary_spec_sheet_bom_eco_revision_lead',task:'Compare nutritional facts panels, sodium reduction metrics (-18%), water activity Aw, and sensory consumer triangle test results.',deps:[]},
+{agent:'mes_wheeling_pizza_line_scada_telemetry_spec',task:'Update plant MES automated weighing feeders, optical vision reject parameters, and inkjet carton coding files.',deps:[0]},
+{agent:'writer',task:'Publish integrated Richelieu Foods formulation ECO cut-over matrix and retail customer technical bulletin.',deps:[1]}]},
+};
+const DTITLE={
+scout:'Target Top 25 US Supermarket & Club Store Private Brand Pizza Pipeline List',
+quote:'Turnkey 12M-Unit Annual Self-Rising & Tavern-Style Frozen Pizza Co-Manufacturing Quoting Proposal',
+tender:'National Club Store Fresh Deli 16-Inch Take-and-Bake Pizza Master Tender Response',
+radar:'Private Label Frozen Pizza & Co-Packing Competitor Intelligence Brief',
+panel_qualification:'Chicago Tavern-Style Ultra-Thin Crispy Pizza Commercial Line Qualification & SQF Safety Dossier',
+inverter_yield:'Continuous Tunnel Oven Baking Yield & Crust Moisture Optimization Test Report',
+thermal_simulation:'Cryogenic Spiral Blast Freezer (-40°F) & Air Velocity 3D CFD Thermal Simulation Strategy',
+mask_eco:'Pizza Recipe Formulation ECO & Automated Topping Depositor Recipe Revision Assessment'
+};
+const TOOLS={
+analyze_iri_nielsen_frozen_pizza_shelf_velocities_and_gaps:()=>'Confirmed Circana/Nielsen shelf turnover rates, retail price gaps & private label white spaces.',
+verify_fsma_pathogen_swabs_ccp_metal_detection_and_haccp:()=>'Audited USDA FSIS continuous inspection, x-ray bone/metal reject & environmental swabs (negative).',
+formulate_yeast_dough_hydration_rheology_and_oven_spring:()=>'Formulated crust flour protein hydration, yeast fermentation profile & sauce moisture barrier.',
+build_richelieu_retail_co_pack_volume_manufacturing_quote:()=>'Modeled Wheeling high-speed topping lines (180 pies/min), carton packaging & cold chain.',
+verify_block_cheese_commodity_index_and_usda_pork_bom:()=>'Locked CME block cheese commodity pricing, tomato paste contracts & dry-cured pepperoni tiers.',
+inspect_retail_promo_circulars_and_private_brand_margins:()=>'Scored supermarket chains on private brand market share, circular promo ads & gross margins.',
+build_richelieu_national_supermarket_annual_pizza_tender:()=>'Structured $22.5M multi-DC annual master co-manufacturing agreement & volume rebate matrix.',
+optimize_sub_zero_fused_pallet_logistics_and_dwell_times:()=>'Structured refrigerated cross-dock delivery to regional DCs maintaining sub-zero and 34-38°F cold chain.',
+eval_richelieu_production_eco:()=>'Extracted nutritional facts panels, sodium reduction metrics (-18%), Aw & sensory triangle test scores.',
+inspect_continuous_tunnel_oven_and_ultrasonic_slicer_telemetry:()=>'Verified automated dough extrusion, sheeter thickness & MAP gas flushing (<0.5% residual O2).',
+compose:()=>'Drafted in a clear, private label food manufacturing, SQF food safety & supermarket buyer-ready style.',
+qa_review:()=>'QA: Verified production run logs, thermal oven validation profiles & SQF Practitioner stamp.',
+save:()=>'Saved to shared context for downstream agents.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+const FINAL={
+scout:`TARGET TOP 25 US SUPERMARKET & CLUB STORE PRIVATE BRAND PIZZA PIPELINE LIST (illustrative)
+Scanned retail grocery categories across tier-1 supermarket banners, warehouse club stores, and regional grocers.
+
+A-Tier Priority Retail Private Brand Pizza Programs:
+1. National Supermarket Chain (2,200 Stores) — Premium Tavern-Style Thin & Crispy Frozen Line (4 SKUs) — Fit Score: 99
+2. Warehouse Club Store Network (600 Locations) — 16-Inch Fresh Deli Take-and-Bake Refrigerated Program — Fit Score: 98
+3. Midwest Grocery Cooperative — Self-Rising Crust Signature Select Private Brand Expansion (6M Units/Yr) — Fit Score: 96
+4. Value Supermarket Discounter — Ultra-Thin Stone-Baked Flatbread & Gluten-Free Cauliflower Crust Line — Fit Score: 95
+
+Key Decision Makers: Senior Category Manager Frozen Foods, VP of Private Brands, Director of Deli Merchandising.
+→ Saved: target_richelieu_retail_accounts, category_gap_analysis, margin_fit_scores
+NOTE: illustrative; not affiliated with Richelieu Foods, Inc. or the Freiberger Group (richelieufoods.com).`,
+quote:`TURNKEY 12M-UNIT ANNUAL SELF-RISING & TAVERN-STYLE FROZEN PIZZA CO-MANUFACTURING QUOTING PROPOSAL (illustrative)
+Client Partner: Premier National Supermarket Retailer (Private Brand Division)
+Scope: 12,000,000 Units/Year Multi-SKU Private Label Frozen Pizza Program (Wheeling, IL & Beaver Dam, WI Bakeries)
+
+Product Formulation & Crust Architecture
+• Self-Rising Crust SKUs: 14-Inch Self-Rising Dough (28.5 oz pie, 8.2 oz whole milk mozzarella blend, 38 pepperoni slices)
+• Tavern-Style Thin Crust SKUs: Ultra-Thin Laminated Crust (19.5 oz pie, spicy marinara, whole milk mozzarella, Italian sausage)
+• Packaging: High-barrier shrink film + retail printed folding carton with tear-strip + corrugated master shipper (12 units/case)
+• Ingredient Sourcing: 100% Real Wisconsin Mozzarella, California Vine-Ripened Tomatoes, USDA Inspected Meats
+
+Manufacturing Economics & Commercial Pricing
+• Co-Manufacturing Unit Price: $2.65 per frozen pizza unit (FOB Wheeling, IL / Beaver Dam, WI)
+• Total Annual Contract Manufacturing Value: $31,800,000.00 across 12 monthly planned production runs
+• Order Lead Time: 3 weeks from EDI purchase order transmission to distribution center delivery
+→ Saved: richelieu_pizza_quote, master_finished_product_bom
+NOTE: illustrative.`,
+tender:`NATIONAL CLUB STORE FRESH DELI 16-INCH TAKE-AND-BAKE PIZZA MASTER TENDER RESPONSE (illustrative)
+RFP Reference: 7,500,000 Units Annual Fresh Deli Take-and-Bake 16-Inch Pizza Master Supply Contract
+
+Scale, Food Safety & Cold-Chain Delivery SLA
+• Global Manufacturing Strength: Backed by Richelieu Foods & Freiberger Group (11 bakery facilities producing 3.5M pizzas/day).
+• Modified Atmosphere Packaging (MAP): Proprietary gas flushing guaranteeing <0.5% residual oxygen for 14-day fresh shelf life.
+• Quality & Food Safety: SQF Edition 9 Level 3 certified with on-site continuous USDA FSIS inspection.
+• Cold-Chain Distribution: Multi-hub refrigerated cross-dock logistics guaranteeing 34°F to 38°F arrival at regional club depots.
+
+Master Commercial Terms
+• Annual Master Value: $22,500,000.00 with quarterly commodity price pass-through indexing on cheese (CME) and flour (KCBT).
+→ Saved: national_club_tender, map_packaging_shelf_life_validation
+NOTE: illustrative.`,
+radar:`PRIVATE LABEL FROZEN PIZZA & CO-PACKING COMPETITOR INTELLIGENCE BRIEF (illustrative)
+US Private Label Pizza Market Drivers
+• National Brand Trade-Down: Inflation driving consumers from $9.50 national brands to $5.99 premium store brands.
+• Crust Innovation Boom: Tavern-style thin crust and Detroit deep dish growing at +18.4% YoY in supermarket frozen aisles.
+
+Richelieu Foods / Freiberger Core Competitive Moats
+• High-Speed Automation: Wheeling & Elk Grove lines run at 180 pizzas/minute with automated ultrasonic cheese depositation.
+• Global Sourcing Power: Joint procurement scale with Südzucker AG providing unbeatable dairy and tomato commodity pricing.
+→ Saved: richelieu_intel_brief, competitive_positioning
+NOTE: illustrative.`,
+panel_qualification:`CHICAGO TAVERN-STYLE ULTRA-THIN CRISPY PIZZA COMMERCIAL LINE QUALIFICATION & SQF SAFETY DOSSIER (illustrative · flagship)
+Testing Standard: SQF Edition 9 Quality Code, USDA FSIS 9 CFR 417, & Customer Private Brand Quality Gold Standard
+Target SKU: 14-Inch Chicago Tavern-Style Thin & Crispy Sausage & Pepperoni Pizza (Line 4 Commercial Scale-Up)
+
+Bakery Commissioning & Analytical Test Results
+• Dough Sheeter Lamination: Automated roller gap measured 2.08mm across 8 web positions (Tolerance 2.1mm ± 0.1mm).
+• Topping Weight Accuracy: Multi-head vision scale verified cheese weight 8.24 oz (±0.15 oz) and meat weight 4.12 oz (±0.10 oz).
+• Tunnel Oven Bake Performance: Continuous 4.2-minute bake achieved 28.4% crust moisture with bottom crispness score 8.8/10.
+• Cryogenic Spiral Freezing: Core pie temperature reduced from 82°F to -2.4°F in 25.4 minutes (Well within microbial window).
+• FSMA / USDA Safety: Dual x-ray inspection detected 0.8mm ferrous, 1.0mm non-ferrous, and 1.2mm stainless steel test wands.
+
+Chief Food Scientist & SQF Practitioner Sign-Off
+• Signed and released by VP of Quality & Plant Operations Director. Certified for full commercial retail production.
+→ Saved: tavern_style_qualification_dossier, tunnel_oven_thermal_profile
+NOTE: illustrative; verify against lot-specific USDA and SQF verification inspection sheets.`,
+inverter_yield:`CONTINUOUS TUNNEL OVEN BAKING YIELD & CRUST MOISTURE OPTIMIZATION TEST REPORT (illustrative)
+Testing Facility: Richelieu Foods Technical Baking Center (Wheeling, Illinois)
+Target Equipment: 110-Foot Continuous Indirect Gas-Fired Tunnel Oven (Capacity: 10,800 pizzas/hour)
+
+Baking Yield & Crust Moisture Analysis
+• Thermal Zone Profile: Zone 1 (540°F), Zone 2 (515°F), Zone 3 (490°F), Zone 4 (480°F), Zone 5 (465°F convection finish).
+• Moisture Uniformity: Finished baked crust moisture held between 28.1% and 28.8% across all 8 conveyor lanes (Zero edge drying).
+• Bottom Blister Distribution: Visual texture analyzer recorded 88% micro-blister coverage, delivering signature tavern crispness.
+• Bake Throughput: Maintained 100% bake completeness at conveyor speed of 24.5 ft/minute (180 finished pies/minute).
+
+Release Status: Certified for commercial high-speed multi-deck tunnel baking.
+→ Saved: richelieu_oven_yield_report, moisture_thermal_curves
+NOTE: illustrative.`,
+thermal_simulation:`CRYOGENIC SPIRAL BLAST FREEZER (-40°F) & AIR VELOCITY 3D CFD THERMAL SIMULATION STRATEGY (illustrative)
+Simulated System: 24-Tier Double-Drum Cryogenic Spiral Blast Freezer (-40.0°F Evaporator Temperature, 1,200 FPM Cross-Flow Air)
+Freezing Assembly: 14-Inch Heavy-Topped Frozen Pizzas (Starting Temp: 85°F post-saucing, Target Core: 0°F)
+
+3D CFD Conjugate Heat Transfer Simulation Results
+• Core Freezing Dwell Time: CFD transient thermal simulation verified pizza core reaches 0.0°F at tier 19 (23.8 minutes dwell).
+• Evaporator Airflow Distribution: Air velocity across all 24 tiers maintained between 1,120 FPM and 1,280 FPM (Zero dead zones).
+• Ice Crystal Minimization: Rapid phase transition through 30°F to 25°F zone completed in 6.4 minutes, preserving crust cellular structure.
+
+Output: Cryogenic freezing profile validated for high-speed frozen pizza manufacturing with zero moisture weeping during thawing.
+→ Saved: richelieu_freezer_cfd_strategy, spiral_freezer_air_velocity_contours
+NOTE: illustrative.`,
+mask_eco:`PIZZA RECIPE FORMULATION ECO & AUTOMATED TOPPING DEPOSITOR RECIPE REVISION ASSESSMENT (illustrative)
+Engineering Change Order: ECO-2026-1980
+Affected Product Line: Private Brand Premium Thin Crust & Self-Rising Pizzas (Master Recipe Rev D -> Rev E)
+
+Change Scope & Nutritional Profile Upgrade
+• Meat & Cheese Optimization: Transitioned to uncured nitrite-free pepperoni and 15% reduced-sodium mozzarella cheese curd.
+• Sodium Reduction: Reduced finished pizza sodium from 780 mg to 640 mg per serving (-17.9% reduction meeting AHA criteria).
+• Sensory Triangle Test: 48-member consumer panel could not detect sensory difference in melt, stretch, or savory flavor (p > 0.45).
+
+Plant Automation & ERP Cut-Over
+• Wheeling & Beaver Dam MES: Multi-head depositor recipe parameters updated; inkjet carton printing updated with new nutritional panels.
+• Customer Regulatory Package: Issued updated USDA FSIS label approvals, master specification sheets, and allergen statements.
+→ Saved: richelieu_eco_matrix, rev_e_production_bulletin
+NOTE: illustrative.`,
+};
+let EMPLOYEES=[
+{id:'scout',name:'Scout',title:'AI Private Label Grocery Opportunity Scout',wf:'scout',handled:716,hrs:262,win:0,status:'idle'},
+{id:'quote',name:'Quote',title:'AI Pizza Co-Manufacturing Quoting Operator',wf:'quote',handled:630,hrs:286,win:86,status:'idle'},
+{id:'tender',name:'Tender',title:'AI Master Retail Pizza Tender Operator',wf:'tender',handled:480,hrs:306,win:91,status:'idle'},
+{id:'radar',name:'Radar',title:'AI Frozen Pizza Market Intel',wf:'radar',handled:528,hrs:236,win:57,status:'idle'},
+{id:'safety',name:'Sentinel',title:'AI Pizza Line Qualification Operator',wf:'panel_qualification',handled:516,hrs:378,win:98,status:'idle'},
+{id:'mill',name:'Atlas',title:'AI Continuous Tunnel Oven Dynamic Test Operator',wf:'inverter_yield',handled:564,hrs:294,win:94,status:'idle'},
+{id:'cfd',name:'Vanguard',title:'AI Cryogenic Freezer CFD Thermal Operator',wf:'thermal_simulation',handled:514,hrs:274,win:85,status:'idle'},
+{id:'eco',name:'Nexus',title:'AI Bakery Revision Operator',wf:'mask_eco',handled:516,hrs:280,win:90,status:'idle'},
+];
+let running=false;
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const now=()=>new Date().toLocaleTimeString('en-GB');
+const mono=n=>n.trim().slice(0,2).toUpperCase();
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Commercial</span>';if(wf.track==='operations')s+='<span class="tag operations">Food Science, Bakery Ops &amp; SQF Quality</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+function setView(v){
+$('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');
+$('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');
+if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderEcon(){
+const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);
+const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;
+const cells=[[total,'AI operators (commercial + bakery ops, food science & SQF quality)'],[h.toLocaleString(),'co-pack proposals, tunnel oven profiles & SQF audit dossiers handled'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','sales VP & plant operations director hours saved / month'],['+'+avg+'%','avg turnaround improvement']];
+$('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');
+}
+function empCard(e){const wf=WORKFLOWS[e.wf];
+const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');
+return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}">
+<div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div>
+<div class="emp-owns">Owns: <b>${wf.name}</b></div>
+<div class="team">${team}</div>
+<div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'—'}</b>faster</div></div>
+<div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a project / RFQ</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;
+}
+function renderRoster(){
+const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;
+let html='';
+TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;
+html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});
+const untracked=EMPLOYEES.filter(e=>!WORKFLOWS[e.wf].track);
+if(untracked.length)html+=`<div class="slabel">Other</div><div class="roster">`+untracked.map(empCard).join('')+`</div>`;
+$('roster').innerHTML=html;
+}
+function assign(id){
+if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+$('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div>
+<div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a private brand RFP, an SQF food safety audit, or a Wheeling oven telemetry feed and ${e.name} runs the whole loop.</div></div></div>
+<div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div>
+<div id="stage"></div></div>`;
+$('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();
+}
+async function runEmp(id){
+if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;
+e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');
+const stage=$('stage');
+stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div>
+<div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div>
+<div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;
+const feed=$('feed');
+function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;
+const row=document.createElement('div');row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,150)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}
+log(null,`Input received: "${obj.substring(0,54)}…"`);
+log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);
+await sleep(rand(700,1100));
+const grid=$('agrid');
+wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;
+c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;
+grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});
+await sleep(600);
+$('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');
+const done=new Set();
+async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);
+c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';
+log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));
+for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}
+c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}
+if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}
+else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;
+if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}
+$('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');
+await sleep(400);
+const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(6,44);
+$('resultArea').innerHTML=`<div class="result"><div class="rstats">
+<div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div>
+<div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div>
+<div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'Commercial & Sales':'Food Science, Bakery Ops & SQF Quality'}</span></div>
+<div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div>
+<div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div>
+<div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div>
+<div class="donebar"><b>${e.name} produced a review-ready output.</b> Execution, analytical baking verification and QA complete, ready for a VP of Sales, Director of Operations, or Vice President of Quality to review and confirm. Illustrative simulation placeholder.</div>`;
+e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;
+}
+// builder
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per retail co-pack solicitation',step:1};renderBuilder();}
+function renderBuilder(){
+const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];
+$('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();
+}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+
+Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+
+w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+
+`<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;
+document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div>
+<div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. Richelieu Pizza Co-Pack Operator" oninput="draft.name=this.value"></div>
+<div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Private Label Bakery Specialist" oninput="draft.title=this.value"></div>
+<div class="field"><label>Cadence</label><div class="seg">`+['Per retail co-pack solicitation','Per production baking cycle','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div>
+<div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;
+let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();
+const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};
+DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];
+const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});
+renderEcon();renderRoster();setView('ops');
+setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);
+}
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
