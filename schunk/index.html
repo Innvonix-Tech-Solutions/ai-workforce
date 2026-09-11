@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schunk Microelectronics &mdash; AI Commercial &amp; Epitaxy Materials Engineering Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Titillium+Web:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f0f6ff;--surface2:#d0e4ff;--border:#9ec5fe;--accent:#007aff;
+--accent-dim:rgba(0,122,255,.10);--accent-line:rgba(0,122,255,.40);--slate:#042452;--slate-line:rgba(4,36,82,.32);--text:#0b1e36;--hi:#041838;--tert:#5a6e85;--ok:#10b981;--ok-dim:rgba(16,185,129,.10);--gold:#d97706;--gold-bg:#fffbeb;--gold-line:#fde68a}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:'Titillium Web',Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:46px;height:34px;border-radius:8px;background:linear-gradient(135deg,#042452,#007aff);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:14px;letter-spacing:.5px;font-family:'Titillium Web',sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#007aff}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:900px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#0056b3;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(16,185,129,.08);color:#059669;border:1px solid rgba(16,185,129,.3)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#007aff}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#004ba0;font-size:15px;flex-shrink:0;position:relative;font-family:'Titillium Web',sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#007aff}.btn.primary{background:#007aff;border-color:#007aff;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#007aff;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#007aff}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(16,185,129,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(16,185,129,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#007aff}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:'Titillium Web',sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#0056b3;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px;font-family:Inter,sans-serif}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input,.field select{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:8px;padding:10px 12px;background:#fff;outline:none}
+.field input:focus{border-color:var(--accent)}
+.seg{display:flex;gap:6px}.seg button{flex:1;padding:9px;font-size:12px;font-weight:600;border:1px solid var(--border);border-radius:8px;background:#fff;cursor:pointer;color:var(--tert)}.seg button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.bnav{display:flex;justify-content:space-between;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
+.foot{max-width:1180px;margin:32px auto 40px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5;font-family:Inter,sans-serif;border-top:1px solid var(--border);padding-top:16px}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">
+    <div class="mark">SCH</div>
+    <div>
+      <div class="htitle">Schunk Microelectronics &mdash; AI Commercial &amp; Epitaxy Materials Engineering Workforce</div>
+      <div class="hsub">High-purity SiC-coated graphite susceptors, MOCVD wafer carriers, CVD SiC coatings &amp; semiconductor component synthesis</div>
+    </div>
+  </div>
+  <div class="badge">Concept demo &middot; <b>Schunk Xycarb Technology</b></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tabA" onclick="setView('ops')">AI Operators Roster</button>
+  <button class="tab" id="tabB" onclick="setView('hire')">+ Compose New AI Operator</button>
+</div>
+
+<div class="main">
+  <div id="view-ops">
+    <div class="lead">
+      <b>Autonomous AI workforce prototype for Schunk Microelectronics:</b> Orchestrating commercial wafer fab sourcing, 200mm/300mm SiC susceptor quoting, high-purity CVD SiC coating synthesis, MOCVD wafer pocket thermal uniformity modeling, and Heuchelheim / Helmond cleanroom yield inspection.
+    </div>
+    
+    <div class="legend">
+      <span><span class="tag commercial">Commercial &amp; Wafer Fab Sourcing</span> Fabs, MOCVD OEMs, RFQs &amp; volume susceptor pricing</span>
+      <span><span class="tag operations">Semiconductor Materials &amp; High-Temp Graphite Engineering</span> CVD SiC coatings, susceptor design, thermal uniformity FEA &amp; CMM yield</span>
+      <span><span class="tag hero">Flagship</span> 300mm SiC-coated susceptor &amp; thermal validation workflow</span>
+    </div>
+
+    <div class="econ" id="econ"></div>
+    <div id="roster"></div>
+    
+    <div id="runPanel"></div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <div class="lead">
+      <b>Compose a custom Schunk AI Operator:</b> Pick a high-purity graphite or CVD coating workflow, assign specialist agents, and deploy to your semiconductor manufacturing roster.
+    </div>
+    <div class="steps" id="bSteps"></div>
+    <div class="emp" style="background:#fff;margin-bottom:20px;padding:20px" id="bBody"></div>
+    <div class="bnav" id="bNav"></div>
+  </div>
+</div>
+
+<div class="foot">
+  Demonstration prototype created for Schunk Microelectronics / Schunk Xycarb Technology by Innvonix Tech Solutions. All metrics, RFQ responses, CVD SiC coating parameters, and susceptor thermal profiles are simulated placeholders for illustrative purposes. Human engineering review required prior to production release.
+</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'Semiconductor Epitaxy & CVD Research', tools: ['research_epitaxy_market', 'save'] },
+  prospector: { emoji: '🧲', label: 'Wafer Fab & MOCVD OEM Sourcing', tools: ['source_wafer_fabs', 'save'] },
+  qualifier: { emoji: '🎯', label: 'SiC-Coated Susceptor RFQ Qualifier', tools: ['score_susceptor_rfq', 'save'] },
+  sic_susceptor_arch: { emoji: '💎', label: 'SiC Susceptor & Thermal Architect', tools: ['design_susceptor_core', 'save'] },
+  cvd_coating_spec: { emoji: '⚛️', label: 'CVD SiC & PyC Coating Specialist', tools: ['synthesize_cvd_sic', 'save'] },
+  epitaxy_wafer_carrier_eng: { emoji: '🔬', label: 'MOCVD Wafer Pocket Thermal Lead', tools: ['simulate_thermal_uniformity', 'save'] },
+  cleanroom_purification_lead: { emoji: '🧪', label: 'High-Purity Graphite Purification Lead', tools: ['audit_graphite_purity', 'save'] },
+  throughput: { emoji: '🤖', label: 'Fab Yield & CMM Inspection Lead', tools: ['inspect_cmm_tolerances', 'save'] },
+  compliance: { emoji: '📋', label: 'ISO 9001, SEMI S2 & EHS Lead', tools: ['verify_iso_semi_compliance', 'save'] },
+  pricing: { emoji: '🧮', label: 'Susceptor & Coating Volume Quoting', tools: ['calculate_susceptor_pricing', 'save'] },
+  writer: { emoji: '✍️', label: 'Semiconductor Tech Spec Writer', tools: ['compose_technical_proposal', 'save'] },
+  reviewer: { emoji: '✅', label: 'QA & Final Schunk Release Reviewer', tools: ['review_schunk_qa', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Epitaxy Fab & MOCVD OEM Sourcing',
+    title: 'Design-Win & Wafer Fab Opportunity Discovery',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Target list of SiC/GaN epitaxy foundries & MOCVD reactor OEMs requiring high-purity SiC-coated graphite susceptors',
+    sample: 'Identify top 25 power semiconductor wafer fabs in US/Europe expanding 200mm/300mm SiC MOCVD lines that need high-purity CVD SiC susceptors.',
+    desc: 'Automated discovery of wafer fabs, MOCVD reactor OEMs (Aixtron, Veeco, Tokyo Electron), and epitaxy foundries.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan semiconductor trade databases & press for SiC/GaN MOCVD fab expansions', deps: [] },
+      { agent: 'prospector', task: 'Source key fab engineering heads, epitaxy process managers & purchasing directors', deps: [0] },
+      { agent: 'qualifier', task: 'Score alignment with Schunk SiC susceptor, PyC coating & high-purity graphite capabilities', deps: [1] }
+    ]
+  },
+  susceptor_volume_quote: {
+    name: '200mm/300mm SiC Susceptor Volume Quoting',
+    title: 'Commercial RFQ Evaluation & Susceptor Pricing Engine',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Commercial quotation & volume pricing tier for 200mm/300mm SiC-coated graphite susceptors',
+    sample: 'Generate volume quotation for 150 units of 300mm SiC-coated graphite susceptors with < 0.1 ppm trace metal purity for SiC power device epitaxy.',
+    desc: 'Evaluates customer RFQs, matches graphite substrate grades & CVD SiC thickness, and calculates multi-tier volume pricing.',
+    tasks: [
+      { agent: 'qualifier', task: 'Parse RFQ engineering specs, pocket count, CTE match & purity requirements', deps: [] },
+      { agent: 'pricing', task: 'Compute raw graphite substrate costs, CVD SiC deposition time, yield buffers & volume discounts', deps: [0] },
+      { agent: 'writer', task: 'Generate formal Schunk Microelectronics commercial proposal with lead times and warranties', deps: [1] }
+    ]
+  },
+  epitaxy_carrier_proposal: {
+    name: 'MOCVD Wafer Carrier Technical Proposal',
+    title: 'Custom Pocket Geometry & MOCVD Carrier Proposal',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Comprehensive technical proposal for custom multi-wafer MOCVD carriers',
+    sample: 'Draft custom technical proposal for 6x150mm GaN-on-Si MOCVD wafer carrier with satellite rotation pockets and 100µm CVD SiC coating.',
+    desc: 'Combines thermal pocket engineering, CTE matching, and ISO/SEMI compliance into a high-win proposal.',
+    tasks: [
+      { agent: 'sic_susceptor_arch', task: 'Design custom wafer pocket rim geometry, pocket relief & satellite rotation clearance', deps: [] },
+      { agent: 'compliance', task: 'Verify cleanroom packaging, SEMI S2 material safety & ISO 9001 trace metal standards', deps: [0] },
+      { agent: 'pricing', task: 'Estimate tooling, CNC precision machining & CVD coating cycle costs', deps: [1] }
+    ]
+  },
+  radar: {
+    name: 'Competitor & Semiconductor Market Intelligence',
+    title: 'High-Purity Graphite & CVD SiC Market Radar',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Competitive intelligence summary on graphite susceptor pricing, CVD coating innovations & fab trends',
+    sample: 'Analyze market positioning and product specs of competing graphite & CVD SiC susceptor manufacturers across Asia and Europe.',
+    desc: 'Monitors competitor patents, pricing trends, and new MOCVD reactor platform introductions.',
+    tasks: [
+      { agent: 'researcher', task: 'Track patent filings for CVD SiC coating stress reduction & pyrolytic graphite sealing', deps: [] },
+      { agent: 'researcher', task: 'Benchmark competing susceptor thermal lifespans in high-temperature MOCVD environments', deps: [] }
+    ]
+  },
+  sic_coated_susceptor_design: {
+    name: '300mm SiC-Coated Graphite Susceptor Design',
+    title: 'High-Purity Graphite Core & CVD SiC Coating Thermal Optimization',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'Complete engineering package for 300mm SiC-coated graphite susceptor with thermal uniformity < 0.8°C at 1,650°C',
+    sample: 'Optimize 300mm SiC-coated graphite susceptor design for 1,650°C SiC MOCVD epitaxy: 120µm CVD SiC layer, ultra-purity graphite substrate, thermal uniformity < 0.8°C.',
+    desc: 'Flagship engineering workflow: integrates high-purity graphite substrate selection, CVD SiC synthesis, multi-zone thermal FEA, purification, and CMM QA sign-off.',
+    tasks: [
+      { agent: 'sic_susceptor_arch', task: 'Model high-purity graphite substrate geometry, pocket topography & thermal expansion profile', deps: [] },
+      { agent: 'cvd_coating_spec', task: 'Configure CVD SiC coating synthesis parameters (MTS precursor, 120µm thickness, stress-free cubic β-phase)', deps: [0] },
+      { agent: 'epitaxy_wafer_carrier_eng', task: 'Simulate multi-zone RF/lamp thermal response in MOCVD chamber at 1,650°C (delta-T < 0.8°C across wafer)', deps: [1] },
+      { agent: 'cleanroom_purification_lead', task: 'Define high-temperature halogen gas purification recipe to guarantee total trace metals < 0.1 ppm', deps: [2] },
+      { agent: 'writer', task: 'Assemble master manufacturing engineering specification and CMM quality control traveler', deps: [3] },
+      { agent: 'reviewer', task: 'Perform final QA verification against Schunk Xycarb zero-defect semiconductor standards', deps: [4] }
+    ]
+  },
+  cvd_sic_layer_synthesis: {
+    name: 'High-Purity CVD SiC Coating Synthesis',
+    title: 'CVD SiC Deposition & PyC Sealing Layer Optimization',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'CVD SiC process synthesis recipe & coating thickness distribution map',
+    sample: 'Synthesize 100µm stoichiometric β-SiC coating recipe on high-density isotropic graphite for harsh chemical vapor epitaxy environments.',
+    desc: 'Optimizes precursor gas flow rates (MTS/H2), chamber pressure, and deposition temperature to eliminate pinholes and micro-cracks.',
+    tasks: [
+      { agent: 'cvd_coating_spec', task: 'Calculate MTS/H2 mass flow ratio & deposition temperature (1,350°C) for uniform β-SiC crystal growth', deps: [] },
+      { agent: 'cleanroom_purification_lead', task: 'Run post-deposition high-temperature chlorine purification to remove residual surface metals', deps: [0] }
+    ]
+  },
+  wafer_pocket_thermal_uniformity_test: {
+    name: 'MOCVD Wafer Pocket Thermal Uniformity Test',
+    title: 'Wafer Pocket Temperature Distribution FEA & Pyrometry Simulation',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'Thermal uniformity FEA simulation report & multi-zone pyrometer calibration matrix',
+    sample: 'Perform thermal FEA simulation for 28-pocket 150mm MOCVD wafer carrier at 1,200°C under high-speed gas foil rotation.',
+    desc: 'Evaluates pocket-to-pocket and intra-pocket temperature gradients to ensure uniform epilayer thickness and alloy stoichiometry.',
+    tasks: [
+      { agent: 'epitaxy_wafer_carrier_eng', task: 'Run 3D FEA thermal transport model under gas foil rotation and inductive heating', deps: [] },
+      { agent: 'throughput', task: 'Verify pocket dimension stability under 1,600°C thermal cycling', deps: [0] }
+    ]
+  },
+  heuchelheim_helmond_yield_audit: {
+    name: 'Heuchelheim & Helmond Plant Yield & Quality Audit',
+    title: 'High-Purity Component Machining & Cleanroom Packaging Audit',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'CMM inspection yield analysis & Class 100 cleanroom packaging compliance certificate',
+    sample: 'Audit precision CNC graphite machining and CVD coating yield across Heuchelheim (Germany) and Helmond (Netherlands) production plants.',
+    desc: 'Monitors CMM dimensional tolerances (± 5µm), surface roughness (Ra < 0.4µm), and ICP-MS trace metal impurity levels across primary manufacturing sites.',
+    tasks: [
+      { agent: 'throughput', task: 'Analyze CMM pocket depth tolerances and laser profilometry surface roughness logs', deps: [] },
+      { agent: 'compliance', task: 'Verify ICP-MS impurity logs (< 0.1 ppm total metals) & Class 10 cleanroom double-bagging protocol', deps: [] },
+      { agent: 'reviewer', task: 'Issue ISO 9001 / ISO 14001 compliance audit certificate for plant shipment sign-off', deps: [0, 1] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'Epitaxy Fab & MOCVD OEM Sourcing Report',
+  susceptor_volume_quote: '200mm/300mm SiC Susceptor Commercial Quotation',
+  epitaxy_carrier_proposal: 'MOCVD Wafer Carrier Technical Proposal',
+  radar: 'High-Purity Graphite & CVD SiC Market Radar Brief',
+  sic_coated_susceptor_design: '300mm SiC-Coated Graphite Susceptor Engineering Package',
+  cvd_sic_layer_synthesis: 'High-Purity CVD SiC Deposition Synthesis Spec',
+  wafer_pocket_thermal_uniformity_test: 'MOCVD Wafer Pocket Thermal Uniformity Report',
+  heuchelheim_helmond_yield_audit: 'Heuchelheim & Helmond Quality & Yield Audit'
+};
+
+const TOOLS = {
+  research_epitaxy_market: () => 'Found 14 new SiC/GaN MOCVD fab expansion projects across North America and Europe requiring high-purity coated graphite.',
+  source_wafer_fabs: () => 'Identified 38 target contacts: Epitaxy Process Managers, VP of Wafer Fab Ops & MOCVD Equipment Directors.',
+  score_susceptor_rfq: () => 'RFQ score = 96/100 (High match for Schunk 300mm SiC-coated graphite susceptor & high-purity PyC specs).',
+  design_susceptor_core: () => 'High-purity isotropic graphite core substrate modeled; CTE matched to CVD SiC coating at 4.6 x 10^-6 /K.',
+  synthesize_cvd_sic: () => 'CVD SiC precursor recipe optimized: MTS ratio 1:6 in H2 carrier gas at 1,350°C, delivering 120µm cubic β-phase SiC layer.',
+  simulate_thermal_uniformity: () => '3D FEA thermal modeling complete: intra-pocket temperature delta = 0.65°C at 1,650°C under 1,000 RPM rotation.',
+  audit_graphite_purity: () => 'High-temperature halogen purification recipe verified: ICP-MS trace metal analysis confirms total impurities < 0.08 ppm.',
+  inspect_cmm_tolerances: () => '3D laser CMM scan passed: pocket depth variation ± 2.8µm across 300mm disk; surface roughness Ra = 0.32µm.',
+  verify_iso_semi_compliance: () => 'SEMI S2, ISO 9001:2015 & ISO 14001 standards validated; cleanroom double-bagging spec approved.',
+  calculate_susceptor_pricing: () => 'Volume pricing computed: 150 units at $4,850/unit ($727,500 total) with 6-week lead time from Helmond plant.',
+  compose_technical_proposal: () => 'Technical spec document & commercial quotation generated with complete thermal FEA plots and warranty terms.',
+  review_schunk_qa: () => 'Final QA sign-off granted by Schunk Microelectronics Chief Materials Engineer.',
+  save: () => 'Data block saved to shared Schunk engineering context.'
+};
+
+const FINAL = {
+  scout: `SCHUNK MICROELECTRONICS — EPITAXY FAB & MOCVD OEM SOURCING REPORT (illustrative)
+
+Target Market Segment: SiC & GaN Power Semiconductor Epitaxy Fabs & MOCVD OEMs (#SCHUNK-SOURCING-2026-Q3).
+
+Key Sourcing Findings & Qualified Opportunities:
+• Identified Fabs: 18 SiC power semiconductor wafer fabs (200mm & 300mm) in US, Germany & Japan expanding MOCVD capacity.
+• MOCVD OEMs: 4 major reactor OEMs (Aixtron, Veeco, TEL, Taiyo Nippon Sanso) introducing high-temperature SiC/GaN platforms.
+• Target Contacts: 42 verified leads (Epitaxy Process Directors, Fab Procurement Leads, Materials Engineers).
+• Estimated Annual Demand: ~2,400 SiC-coated graphite susceptors & 1,200 quartz/graphite furnace components.
+
+Action Item: Initiate technical outreach presenting Schunk high-purity CVD SiC coating lifespans and low outgassing performance.
+
+→ Saved: qualified_fab_leads, mocvd_oem_pipeline, susceptor_market_analysis
+
+NOTE: illustrative; confirm against Schunk Microelectronics commercial BD data.`,
+
+  susceptor_volume_quote: `SCHUNK MICROELECTRONICS — 200MM/300MM SIC SUSCEPTOR QUOTATION (illustrative)
+
+RFQ Reference: #SCHUNK-RFQ-2026-88412 — 300mm SiC-Coated Graphite Susceptor Assembly.
+
+Commercial Quotation & Volume Pricing Breakdown:
+• Product: 300mm High-Purity Isotropic Graphite Susceptor with 120µm CVD SiC Protective Coating.
+• Application: High-Temperature (1,650°C) Silicon Carbide Epitaxy MOCVD Reactors.
+• Purity Specification: Total trace metal content < 0.1 ppm (halogen purified).
+• Volume Pricing:
+  - 10 to 49 units: $5,600 / unit
+  - 50 to 149 units: $5,100 / unit
+  - 150+ units: $4,850 / unit (Total Order: $727,500 for 150 units)
+• Lead Time: 6 weeks ARO (Ships from Helmond, Netherlands cleanroom facility).
+
+Terms & Warranty: 12-month operational warranty against thermal shock delamination or SiC coat erosion.
+
+→ Saved: susceptor_quote_88412, pricing_matrix, helmond_shipment_schedule
+
+NOTE: illustrative; confirm against Schunk Xycarb official sales pricing models.`,
+
+  epitaxy_carrier_proposal: `SCHUNK MICROELECTRONICS — MOCVD WAFER CARRIER TECHNICAL PROPOSAL (illustrative)
+
+Proposal Title: Custom 6x150mm GaN-on-Si MOCVD Wafer Carrier with Satellite Pocket Rotation (#SCHUNK-PROP-7729).
+
+Technical & Engineering Specification:
+• Core Material: High-density fine-grain isotropic graphite substrate (density = 1.84 g/cm³).
+• Surface Coating: 100µm CVD β-SiC encapsulation layer (CTE matched = 4.6 x 10^-6 /K).
+• Pocket Design: 6 pockets for 150mm wafers with gas-foil rotation relief and edge ring chamfers.
+• Thermal Performance: Pocket-to-pocket thermal variation < 0.7°C at 1,200°C operating temp.
+• Cleanroom Packaging: Class 10 cleanroom purified, nitrogen vacuum sealed in double ESD bags.
+
+Compliance: Fully certified under SEMI S2, ISO 9001:2015, and ISO 14001.
+
+→ Saved: mocvd_carrier_proposal, pocket_geometry_dwg, cleanroom_packaging_spec
+
+NOTE: illustrative; confirm against Schunk custom carrier design specifications.`,
+
+  radar: `SCHUNK MICROELECTRONICS — GRAPHITE & CVD SIC COMPETITIVE RADAR BRIEF (illustrative)
+
+Intelligence Scope: High-Purity Graphite Susceptors & CVD SiC Coating Competitors (#SCHUNK-RADAR-2026).
+
+Competitive Landscape Analysis:
+• Competitor Patent Activity: Monitored 12 new patent filings related to gradient PyC/SiC multi-layer coating interfaces.
+• Market Trends: Increasing semiconductor fab transition from 150mm to 200mm/300mm SiC wafers driving demand for larger diameter susceptors with extreme thermal uniformity (< 1.0°C).
+• Price Benchmarking: Schunk CVD SiC susceptors maintain a 25-30% longer lifetime advantage in aggressive H2/HCl etch environments compared to standard commercial offerings.
+
+Strategic Recommendation: Accelerate marketing of Schunk dual-side CVD SiC sealed susceptors for 300mm SiC epitaxy lines.
+
+→ Saved: competitor_patent_matrix, susceptor_lifetime_benchmark, market_share_analysis
+
+NOTE: illustrative; confirm against Schunk market intelligence reports.`,
+
+  sic_coated_susceptor_design: `SCHUNK MICROELECTRONICS — 300MM SIC-COATED GRAPHITE SUSCEPTOR ENGINEERING PACKAGE (illustrative)
+
+Master Engineering Specification (#SCHUNK-ENG-SUSCEPTOR-300MM-2026):
+
+1. High-Purity Graphite Core Substrate:
+   • Material: Isotropic fine-grain synthetic graphite (grain size < 7µm, density = 1.85 g/cm³).
+   • Purification: High-temperature halogen gas treatment reducing total trace impurities (Fe, Ni, Cu, Ti, B) to < 0.08 ppm.
+
+2. CVD SiC Coating Layer:
+   • Process: Chemical Vapor Deposition of stoichiometric cubic β-SiC using MTS (Methyltrichlorosilane) in H2 carrier gas at 1,350°C.
+   • Coating Thickness: 120µm ± 3µm uniform coverage across pocket rims, gas holes, and outer circumference.
+   • Adhesion & Stress: CTE-matched substrate eliminates interface micro-cracking during thermal cycling up to 1,700°C.
+
+3. Thermal Uniformity FEA Simulation:
+   • Operating Environment: 1,650°C MOCVD SiC epilayer growth chamber with RF induction heating.
+   • Simulated Performance: Intra-pocket delta-T = 0.65°C; wafer-to-wafer delta-T = 0.78°C across all 300mm positions.
+
+4. CMM Dimensional Inspection & QA Sign-off:
+   • Pocket Depth: 0.850 mm ± 0.003 mm across 300mm disk.
+   • Flatness: < 12µm total indicator reading (TIR).
+   • QA Release: Certified for immediate fab shipment by Schunk Chief Engineering Director.
+
+→ Saved: master_susceptor_spec_300mm, cvd_sic_deposition_recipe, thermal_fea_plots, cmm_qa_traveler
+
+NOTE: illustrative; confirm against Schunk Xycarb Technology engineering guidelines.`,
+
+  cvd_sic_layer_synthesis: `SCHUNK MICROELECTRONICS — HIGH-PURITY CVD SIC COATING SYNTHESIS SPEC (illustrative)
+
+Synthesis Recipe & Deposition Control (#SCHUNK-CVD-SIC-RECIPE-9042):
+
+Deposition Parameters & Chemical Kinetics:
+• Precursor Chemistry: Methyltrichlorosilane (CH3SiCl3 / MTS) diluted in ultra-pure H2 (99.9999% purity).
+• Deposition Temperature: 1,350°C ± 5°C in graphite-lined cold-wall CVD reactor.
+• Growth Rate: 18 µm/hour controlled stoichiometric growth resulting in 100% single-phase β-SiC.
+• Surface Morphology: Smooth, dense grain structure (Ra < 0.4µm) with zero surface pinholes or nodular defects.
+• Post-Purification: High-temperature chlorine gas leach at 1,450°C to guarantee zero surface iron contamination.
+
+Quality Sign-off: Approved for high-temperature MOCVD susceptor production runs.
+
+→ Saved: cvd_sic_recipe_9042, X_ray_diffraction_phase_plot, sem_surface_micrograph
+
+NOTE: illustrative; confirm against Schunk Helmond plant deposition protocols.`,
+
+  wafer_pocket_thermal_uniformity_test: `SCHUNK MICROELECTRONICS — MOCVD WAFER POCKET THERMAL UNIFORMITY REPORT (illustrative)
+
+FEA Thermal Modeling & Pyrometry Calibration (#SCHUNK-THERMAL-FEA-2026):
+
+Multi-Zone Thermal FEA & Wafer Pocket Results:
+• Test Configuration: 28-pocket 150mm MOCVD carrier for GaN power device epitaxy.
+• Simulated Temperature: 1,200°C under 1,000 RPM gas-foil rotation with top/bottom lamp heating.
+• Intra-Pocket Gradient: Peak-to-peak delta-T = 0.58°C (Specification limit: < 1.0°C).
+• Wafer Bow Impact: Sub-micron thermal stress deformation maintains flat wafer seating throughout 4-hour epilayer growth.
+
+Conclusion: Wafer pocket geometry approved for commercial production release.
+
+→ Saved: thermal_uniformity_report, pyrometer_calibration_matrix, fea_temperature_contours
+
+NOTE: illustrative; confirm against Schunk MOCVD thermal simulation benchmarks.`,
+
+  heuchelheim_helmond_yield_audit: `SCHUNK MICROELECTRONICS — HEUCHELHEIM & HELMOND PLANT QUALITY & YIELD AUDIT (illustrative)
+
+Audit Scope: Precision Machining & Cleanroom Packaging at Heuchelheim (DE) & Helmond (NL) Facilities (#SCHUNK-AUDIT-2026-08).
+
+Manufacturing & Quality Assurance Metrics:
+• CMM Pocket Tolerance: 99.4% first-pass yield on pocket depth (± 5µm tolerance band).
+• CVD SiC Coating Adhesion: Zero delamination or micro-crack defects detected under acoustic microscopy testing across 450 inspect samples.
+• ICP-MS Trace Metal Analysis: Average impurity level = 0.06 ppm total metals (Fe, Cr, Ni, Cu < 0.01 ppm each).
+• Cleanroom Packaging: 100% compliance with Class 10 double-bagging & dry nitrogen purge protocols.
+
+Sign-off Status: ISO 9001:2015 & ISO 14001 audit passed with zero major non-conformances.
+
+→ Saved: heuchelheim_helmond_yield_audit, cmm_inspection_logs, icpms_purity_certificates
+
+NOTE: illustrative; confirm against Schunk Group quality management systems.`
+};
+
+let EMPLOYEES = [
+  { id: 'scout', name: 'AI-Epitaxy-Sourcing-Scout', title: 'AI Fab & MOCVD Sourcing Lead', wf: 'scout', handled: 310, hrs: 68, win: 0, status: 'idle' },
+  { id: 'susceptor_volume_quote', name: 'AI-Susceptor-Quoting-Estimator', title: 'AI Susceptor & Coating Quoting Lead', wf: 'susceptor_volume_quote', handled: 420, hrs: 95, win: 62, status: 'idle' },
+  { id: 'epitaxy_carrier_proposal', name: 'AI-Wafer-Carrier-Proposal-Arch', title: 'AI Carrier Proposal Architect', wf: 'epitaxy_carrier_proposal', handled: 180, hrs: 88, win: 58, status: 'idle' },
+  { id: 'radar', name: 'AI-Graphite-Market-Intel', title: 'AI Market Intelligence Analyst', wf: 'radar', handled: 140, hrs: 38, win: 0, status: 'idle' },
+  { id: 'sic_coated_susceptor_design', name: 'AI-SiC-Susceptor-Architect', title: 'AI SiC Susceptor & Thermal Lead', wf: 'sic_coated_susceptor_design', handled: 490, hrs: 280, win: 84, status: 'idle' },
+  { id: 'cvd_sic_layer_synthesis', name: 'AI-CVD-SiC-Coating-Specialist', title: 'AI CVD SiC Coating Specialist', wf: 'cvd_sic_layer_synthesis', handled: 360, hrs: 190, win: 72, status: 'idle' },
+  { id: 'wafer_pocket_thermal_uniformity_test', name: 'AI-Thermal-Uniformity-Lead', title: 'AI Pocket Thermal Uniformity Lead', wf: 'wafer_pocket_thermal_uniformity_test', handled: 310, hrs: 165, win: 68, status: 'idle' },
+  { id: 'heuchelheim_helmond_yield_audit', name: 'AI-Heuchelheim-Helmond-Audit-Lead', title: 'AI Plant Yield & CMM Quality Lead', wf: 'heuchelheim_helmond_yield_audit', handled: 390, hrs: 210, win: 78, status: 'idle' }
+];
+
+const TRACKS = [
+  ['commercial', 'Commercial & Wafer Fab Sourcing'],
+  ['operations', 'Semiconductor Materials & High-Temp Graphite Engineering']
+];
+
+let running = false;
+const $ = id => document.getElementById(id);
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const rand = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
+const now = () => new Date().toLocaleTimeString('en-GB');
+const mono = n => n.trim().slice(0, 2).toUpperCase();
+
+function toolOut(toolKey) {
+  return TOOLS[toolKey] ? TOOLS[toolKey]() : 'Completed successfully.';
+}
+
+function chips(wf) {
+  let s = '';
+  if (wf.track === 'commercial') s += '<span class="tag commercial">Commercial &amp; Wafer Fab Sourcing</span>';
+  if (wf.track === 'operations') s += '<span class="tag operations">High-Temp Graphite &amp; CVD SiC Eng</span>';
+  if (wf.tag === 'flagship') s += ' <span class="tag hero">Flagship</span>';
+  return s;
+}
+
+function setView(v) {
+  $('view-ops').classList.toggle('hidden', v !== 'ops');
+  $('view-hire').classList.toggle('hidden', v !== 'hire');
+  $('tabA').classList.toggle('active', v === 'ops');
+  $('tabB').classList.toggle('active', v === 'hire');
+  if (v === 'hire') initBuilder();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderEcon() {
+  const total = EMPLOYEES.length, h = EMPLOYEES.reduce((s, e) => s + e.handled, 0), hrs = EMPLOYEES.reduce((s, e) => s + e.hrs, 0);
+  const w = EMPLOYEES.filter(e => e.win > 0);
+  const avg = w.length ? Math.round(w.reduce((s, e) => s + e.win, 0) / w.length) : 0;
+  const cells = [
+    [total, 'AI operators (commercial + engineering)'],
+    [h.toLocaleString(), 'Susceptor designs, CVD SiC runs & RFQs handled'],
+    [hrs.toLocaleString() + '<span class="u"> hrs</span>', 'graphite & thermal engineering hours saved / mo'],
+    ['+' + avg + '%', 'avg turnaround improvement']
+  ];
+  $('econ').innerHTML = cells.map(c => `<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');
+}
+
+function empCard(e) {
+  const wf = WORKFLOWS[e.wf];
+  const team = wf.tasks.map(t => t.agent).filter((v, i, a) => a.indexOf(v) === i).map(r => `<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');
+  return `<div class="emp ${e.status === 'working' ? 'working' : ''} ${wf.tag === 'flagship' ? 'hero' : ''}" id="emp-${e.id}"><div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div><div class="emp-owns">Owns: <b>${wf.name}</b></div><div class="team">${team}</div><div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win > 0 ? ('+' + e.win + '%') : '—'}</b>faster</div></div><div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a susceptor / CVD spec</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;
+}
+
+function renderRoster() {
+  const hire = `<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;
+  let html = '';
+  TRACKS.forEach(([tk, label], gi) => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf].track === tk);
+    if (!list.length) return;
+    html += `<div class="slabel">${label}</div><div class="roster">` + list.map(empCard).join('') + (gi === TRACKS.length - 1 ? hire : '') + `</div>`;
+  });
+  $('roster').innerHTML = html;
+}
+
+function assign(id) {
+  if (running) return;
+  const e = EMPLOYEES.find(x => x.id === id), wf = WORKFLOWS[e.wf];
+  $('runPanel').innerHTML = `<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} &middot; ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a susceptor geometry spec, thermal FEA target, or RFQ and ${e.name} runs the whole loop.</div></div></div><div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div><div id="stage"></div></div>`;
+  $('run').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  $('obj').focus();
+}
+
+async function runEmp(id) {
+  if (running) return;
+  running = true;
+  const e = EMPLOYEES.find(x => x.id === id), wf = WORKFLOWS[e.wf];
+  const obj = ($('obj').value || wf.sample).trim();
+  $('go').disabled = true;
+  e.status = 'working';
+  const card = $('emp-' + e.id);
+  if (card) card.classList.add('working');
+  const stage = $('stage');
+  stage.innerHTML = `<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div><div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div><div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;
+  const feed = $('feed');
+  function log(rk, d) {
+    const r = AGENT_ROLES[rk];
+    const nm = r ? (r.emoji + ' ' + r.label) : '◆ ' + e.name;
+    const row = document.createElement('div');
+    row.className = 'frow';
+    row.innerHTML = `<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0, 150)}</span>`;
+    feed.appendChild(row);
+    feed.scrollTop = feed.scrollHeight;
+  }
+  log(null, `Input received: "${obj.substring(0, 54)}…"`);
+  log(null, `Running the ${wf.name} workflow &middot; ${wf.tasks.length} agents &middot; ${wf.mode.toUpperCase()} mode`);
+  await sleep(rand(700, 1100));
+  const grid = $('agrid');
+  wf.tasks.forEach((t, i) => {
+    const r = AGENT_ROLES[t.agent];
+    const c = document.createElement('div');
+    c.className = 'acard';
+    c.id = 'ac-' + i;
+    c.innerHTML = `<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;
+    grid.appendChild(c);
+    setTimeout(() => c.classList.add('visible'), i * 85);
+  });
+  await sleep(600);
+  $('p1').classList.remove('active');
+  $('p1').classList.add('done');
+  $('p1').querySelector('.dot').textContent = '✓';
+  $('p2').classList.add('active');
+  const done = new Set();
+  async function runOne(i) {
+    const t = wf.tasks[i], r = AGENT_ROLES[t.agent], c = $('ac-' + i), st = $('ast-' + i);
+    c.classList.remove('visible');
+    c.classList.add('running');
+    st.textContent = 'Running…';
+    log(t.agent, t.task.substring(0, 72));
+    await sleep(rand(450, 820));
+    for (const tool of r.tools) {
+      log(t.agent, tool + '( ) → ' + toolOut(tool));
+      await sleep(rand(450, 820));
+    }
+    c.classList.remove('running');
+    c.classList.add('done');
+    st.textContent = 'Done';
+    log(t.agent, 'result saved to shared context');
+    done.add(i);
+  }
+  if (wf.mode === 'sequential') {
+    for (let i = 0; i < wf.tasks.length; i++) await runOne(i);
+  } else {
+    while (done.size < wf.tasks.length) {
+      const ready = wf.tasks.map((t, i) => i).filter(i => !done.has(i) && wf.tasks[i].deps.every(d => done.has(d)));
+      if (!ready.length) break;
+      if (ready.length > 1) await Promise.all(ready.map(runOne));
+      else await runOne(ready[0]);
+    }
+  }
+  $('p2').classList.remove('active');
+  $('p2').classList.add('done');
+  $('p2').querySelector('.dot').textContent = '✓';
+  $('p3').classList.add('active');
+  $('p3').querySelector('.dot').textContent = '✓';
+  $('p3').classList.add('done');
+  await sleep(400);
+  const out = FINAL[e.wf] || 'Review-ready output produced.';
+  const hrsThis = rand(6, 44);
+  $('resultArea').innerHTML = `<div class="result"><div class="rstats"><div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div><div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div><div class="rrow"><span class="k">Track</span><span class="v">${wf.track === 'commercial' ? 'Commercial & Wafer Fab Sourcing' : 'High-Temp Graphite & CVD SiC Eng'}</span></div><div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div><div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div><div class="rout"><div class="rh">Review-ready output &middot; ${DTITLE[e.wf] || 'Output'}</div><div class="rb">${out.replace(/</g, '&lt;')}</div></div></div><div class="donebar"><b>${e.name} produced a review-ready output.</b> Read, adapt and QA complete, ready for a Vice President of Operations, Chief Materials Engineer, or Epitaxy Fab Director to confirm against Schunk Xycarb and SEMI S2 standards. Illustrative simulation, not a production deliverable.</div>`;
+  e.handled += 1;
+  e.status = 'idle';
+  if (card) card.classList.remove('working');
+  renderEcon();
+  renderRoster();
+  running = false;
+}
+
+let draft = {};
+function initBuilder() { draft = { wf: null, mode: null, assign: [], name: '', title: '', cadence: 'Per wafer lot', step: 1 }; renderBuilder(); }
+function renderBuilder() {
+  const steps = [['01', 'Pick a workflow'], ['02', 'Assign the agents'], ['03', 'Name & cadence']];
+  $('bSteps').innerHTML = steps.map((s, i) => `<div class="step ${draft.step === i + 1 ? 'active' : ''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+  if (draft.step === 1) bS1(); else if (draft.step === 2) bS2(); else bS3();
+  bNav();
+}
+function bS1() {
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">` + Object.keys(WORKFLOWS).map(k => {
+    const w = WORKFLOWS[k];
+    return `<div class="wf ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents &middot; ${w.mode}</div></div>`;
+  }).join('') + `</div>`;
+}
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Assign each task to an agent</div>` + w.tasks.map((t, i) => `<div class="task-row"><div class="tn">${i + 1}</div><div class="tt">${t.task}${t.deps.length ? ` <span style="color:var(--tert)">&middot; waits for ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('') + `<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">` + ['sequential', 'dag'].map(m => `<button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (parallel where safe)' : 'Sequential'}</button>`).join('') + `</div></div>`;
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Name & cadence</div><div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. AI-SiC-Susceptor-Architect" oninput="draft.name=this.value"></div><div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI SiC Susceptor & Thermal Lead" oninput="draft.title=this.value"></div><div class="field"><label>Cadence</label><div class="seg">` + ['Per wafer lot', 'Per batch', 'Weekly', 'On-demand'].map(c => `<button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('') + `</div></div><div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name || 'New')}</div><div><div class="emp-name">${draft.name || 'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title || 'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> &middot; ${draft.cadence} &middot; ${draft.mode}</div></div>`;
+}
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right;
+  if (draft.step === 1) right = `<button class="btn primary" ${draft.wf ? '' : 'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+  else right = `<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;
+  $('bNav').innerHTML = left + right;
+}
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  WORKFLOWS[wfId] = { name: w.name, title: w.title, mode: draft.mode || w.mode, track: w.track, tag: w.tag, deliverable: w.deliverable, sample: w.sample, desc: w.desc, tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps })) };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({ id, name, title: draft.title || w.title, wf: wfId, handled: 0, hrs: rand(40, 140), win: 0, status: 'idle' });
+  renderEcon();
+  renderRoster();
+  setView('ops');
+  setTimeout(() => {
+    const c = $('emp-' + id);
+    if (c) {
+      c.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      c.style.boxShadow = '0 0 0 2px var(--accent)';
+      setTimeout(() => c.style.boxShadow = '', 1800);
+    }
+  }, 250);
+}
+
+renderEcon(); renderRoster();
+</script>
+</body>
+</html>
