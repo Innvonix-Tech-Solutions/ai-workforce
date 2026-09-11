@@ -214,3 +214,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/tosoh-smd
 https://innvonix-tech-solutions.github.io/ai-workforce/mgc-pure
 https://innvonix-tech-solutions.github.io/ai-workforce/adi-global
 https://innvonix-tech-solutions.github.io/ai-workforce/american-licorice
+https://innvonix-tech-solutions.github.io/ai-workforce/Bluewave
