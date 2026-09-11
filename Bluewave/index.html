@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlueWave - AI Commercial &amp; Agrivoltaics Operations Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#ffffff;
+  --surface:#f6f8fb;
+  --surface2:#ecf1f7;
+  --border:#d0dce8;
+  --accent:#141c34;
+  --accent-light:#1d2b4e;
+  --accent-dark:#0c1222;
+  --navy-dark:#141c34;
+  --solar-blue:#2b4c7e;
+  --agri-green:#4d7c38;
+  --accent-dim:rgba(20,28,52,.08);
+  --accent-line:rgba(20,28,52,.28);
+  --gold:#141c34;
+  --gold-bg:#eef3f9;
+  --gold-line:#c2d2e5;
+  --text:#1a202c;
+  --hi:#141c34;
+  --tert:#5b697d;
+  --ok:#16a34a;
+  --ok-dim:rgba(22,163,74,.10);
+  --bw-navy:#141c34;
+}
+body{background:var(--canvas);color:var(--text);font-family:"Plus Jakarta Sans",system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:3px solid #141c34;position:sticky;top:0;background:#141c34;color:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:14px}
+.mark{min-width:76px;height:36px;padding:0 12px;border-radius:6px;background:#2b4c7e;display:flex;align-items:center;justify-content:center;color:#ffffff;font-weight:900;font-size:14px;letter-spacing:1px;white-space:nowrap;overflow:hidden;flex-shrink:0}
+.htitle{font-size:15px;font-weight:800;color:#fff;letter-spacing:.4px;text-transform:uppercase}.hsub{font-size:11px;color:#cbd5e1;margin-top:1px;font-weight:500;letter-spacing:.3px}
+.badge{border:1px solid rgba(203,213,225,.4);border-radius:6px;padding:6px 12px;font-size:11px;color:#cbd5e1;background:rgba(43,76,126,.45)}.badge b{color:#ffffff}
+.tabs{max-width:1200px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none;letter-spacing:.3px}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface);border-top:3px solid var(--accent)}
+.main{max-width:1200px;margin:0 auto;padding:24px}
+.lead{font-size:14.5px;line-height:1.6;max-width:920px;margin-bottom:14px;color:#2d3748}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.5px;padding:3px 8px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.commercial{background:var(--accent-dim);color:var(--accent-dark);border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(77,124,56,.12);color:#365926;border:1px solid rgba(77,124,56,.32)}
+.tag.hero{background:var(--gold-bg);color:var(--accent);border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--accent)}.cell .v .u{color:var(--accent);font-size:16px}
+.cell .k{font-size:11.5px;color:var(--tert);margin-top:4px;line-height:1.35}
+.slabel{font-size:11px;font-weight:800;letter-spacing:1.2px;color:var(--accent-dark);text-transform:uppercase;margin:22px 0 14px;display:flex;align-items:center;gap:10px;font-family:"IBM Plex Sans Condensed",sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;transition:box-shadow .2s,border-color .2s}
+.emp:hover{border-color:var(--accent-line);box-shadow:0 4px 14px rgba(20,28,52,.08)}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--border)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:800;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;letter-spacing:.2px}.emp-title{font-size:12px;color:var(--tert)}
+.emp-owns{font-size:12.5px;margin-bottom:10px;line-height:1.4}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-weight:600}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:800}
+.btn{font-family:inherit;font-size:12.5px;font-weight:700;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi);transition:all .15s}
+.btn:hover{border-color:var(--accent-line)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#ffffff}
+.btn.primary:hover{background:var(--accent-dark);border-color:var(--accent-dark);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent;color:var(--accent)}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px;background:rgba(246,248,251,.5)}
+.hire-card:hover{border-color:var(--accent);background:var(--surface)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:700;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:60px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent-dark)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:700;color:var(--tert);letter-spacing:.3px}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:176px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:"IBM Plex Mono",monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 220px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:260px 1fr;gap:14px}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:700}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12.5px;font-weight:700;color:var(--accent);letter-spacing:.3px}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto;color:var(--text)}
+.donebar{background:var(--surface);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;color:var(--text)}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:800;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:700;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface);transition:border-color .15s}
+.wf:hover{border-color:var(--accent-line)}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:13.5px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;letter-spacing:.2px}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:700;text-transform:uppercase}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:200px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:700;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 16px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border);font-weight:600}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#ffffff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1200px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="header">
+<div class="logo"><div class="mark">BLUEWAVE</div>
+<div><div class="htitle">BlueWave · AI Commercial Development &amp; Agrivoltaics Operations Workforce</div><div class="hsub">BOSTON MA · CERTIFIED B CORP · AGRIVOLTAICS &amp; DUAL-USE SOLAR · SMART ASTGU &amp; BESS STORAGE</div></div></div>
+<div class="badge">Independent concept &nbsp;·&nbsp; <b>illustrative</b></div>
+</header>
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>a BlueWave commercial land acquisition, agrivoltaics site engineering, SMART ASTGU dual-use incentive qualification, BESS battery storage dispatch, or community solar offtake workflow turned into an autonomous team of agents</b>. One track originates, finances, and structures community solar and dual-use development: it scouts agricultural landowners, cranberry bogs, and cattle pastures across Massachusetts, Maine, and the Mid-Atlantic, models 20-year land leases with agricultural coexistence agreements, structures utility PPA and corporate offtake master tenders, and benchmarks community solar credit subscriber acquisition costs. The other track delivers agronomic engineering, dual-use solar layout optimization, and B-Corp environmental stewardship: it qualifies projects under Massachusetts DOER SMART Agricultural Solar Tariff Generation Unit (ASTGU) standards (10-ft tracker clearances, 50% solar sunlight transmission models, rotational sheep grazing densities), designs paired lithium-ion battery energy storage systems (BESS), models microclimatic soil moisture retention under elevated panels, and enforces ISO/ASTM engineering change orders for racking and bifacial PV modules. Point one at a parcel GIS boundary, an ISO-NE interconnection cluster study, or an agronomic shading simulation and it runs the loop, then hands back a review-ready output for a Chief Development Officer, VP of Agrivoltaics, or Director of Asset Management to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial</span> Land Acquisition, Dual-Use Lease, Master Offtake, Community Solar Radar</span>
+<span><span class="tag operations">Agrivoltaics Ops &amp; BESS</span> SMART ASTGU Qual, BESS Yield, Agrivoltaic CFD Thermal, Ag Layout ECO</span>
+<span><span class="tag hero">Flagship</span> Massachusetts SMART ASTGU Agrivoltaics &amp; Grazing Qualification</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+<div class="foot">Independent concept prototype prepared for a conversation with BlueWave (bluewave.energy). It is not affiliated with, endorsed by, or built on BlueWave or Axium Infrastructure systems or data. All operators and outputs are illustrative simulations; landowner accounts, agronomic soil yields, SMART ASTGU tariff calculations, BESS battery dispatch schedules, and engineering change orders are placeholders. A licensed Professional Engineer (PE), VP of Development, Director of Agrivoltaics, or Chief Investment Officer reviews and approves every commercial lease, interconnection agreement, and agricultural plan submittal.</div>
+<script>
+const AGENT_ROLES={
+farmland_landowner_origination_scout:{emoji:'🌾',label:'Farmland Landowner & Community Solar Scout',tools:['analyze_gis_farmland_soils_and_three_phase_feeder_capacity','save']},
+agrivoltaic_project_finance_quoting_eng:{emoji:'💰',label:'Agrivoltaic Project Finance & ASTGU Quoting Lead',tools:['build_bluewave_agrivoltaic_smart_adder_pro_forma','save']},
+massachusetts_doer_smart_astgu_compliance_auditor:{emoji:'🛡️',label:'DOER SMART & MDAR Agricultural Plan Compliance Auditor',tools:['verify_astgu_50_percent_sunlight_and_10ft_clearance','save']},
+sheep_grazing_specialty_crop_agronomist:{emoji:'🐑',label:'Rotational Sheep Grazing & Specialty Crop Agronomist',tools:['model_forage_biomass_animal_stocking_and_pollinator_mix','save']},
+bess_battery_storage_dispatch_engineer:{emoji:'🔋',label:'BESS Battery Energy Storage Dispatch Engineer',tools:['optimize_4_hour_lithium_storage_capacity_and_iso_ne_arbitrage','save']},
+community_solar_subscriber_offtake_pricing_spec:{emoji:'📊',label:'Community Solar Offtake & Anchor Tenant Pricing Lead',tools:['benchmark_c_and_i_satellite_offtake_and_credit_discounts','save']},
+iso_ne_interconnection_substation_capacity_router:{emoji:'⚡',label:'ISO-NE Interconnection & Substation Capacity Router',tools:['analyze_substation_thermal_headroom_and_epc_upgrade_costs','save']},
+bcorp_environmental_stewardship_auditor:{emoji:'🌱',label:'Certified B Corp & Dual-Use Ecological Auditor',tools:['audit_carbon_sequestration_topsoil_preservation_and_bcorp_score','save']},
+agrivoltaic_racking_tracker_eco_revision_spec:{emoji:'🔄',label:'Single-Axis Tracker & Ag Racking ECO Revision Lead',tools:['evaluate_elevated_torque_tube_wind_loads_and_tractor_spacing','save']},
+pv_microsite_soil_moisture_scada_telemetry_eng:{emoji:'📡',label:'Soil Moisture & Bifacial Irradiance Telemetry Engineer',tools:['inspect_photosynthetically_active_radiation_par_and_pyranometers','save']},
+writer:{emoji:'✍️',label:'Agrivoltaic Development Dossier & Municipal Submittal Writer',tools:['compose','save']},
+reviewer:{emoji:'✅',label:'Director of Agrivoltaics & Principal Renewable Energy PE',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+const TRACKS=[['commercial','Commercial Land Origination & Community Solar Offtake'],['operations','Agrivoltaics Engineering, BESS Storage & Dual-Use Ops']];
+const WORKFLOWS={
+scout:{name:'Top 50 Northeast agricultural landowner & community solar pipeline scout',title:'AI Farmland Solar Opportunity Scout',mode:'dag',track:'commercial',deliverable:'Top 50 Northeast Agricultural Landowner & Community Solar Pipeline List',
+sample:'Identify commercial dairy farms, hayfields, and specialty agricultural landowners across Massachusetts, Maine, and New York within 1.5 miles of 13.8kV/23kV three-phase utility distribution lines with at least 5 MW hosting capacity, seeking 25-year stable lease income while preserving active farm operations.',
+desc:'Agents cross-reference USDA NRCS prime farmland soil maps, utility hosting capacity portals (National Grid, Eversource, CMP), property tax registries, and agricultural preservation restrictions (APR).',
+tasks:[{agent:'farmland_landowner_origination_scout',task:'Screen GIS parcel databases for agricultural parcels over 35 acres with favorable topography and 3-phase feeder capacity.',deps:[]},
+{agent:'community_solar_subscriber_offtake_pricing_spec',task:'Estimate local community solar net metering credit values, anchor tenant demand, and municipal PILOT tax incentives.',deps:[0]},
+{agent:'writer',task:'Compile target landowner executive pipeline dossier with dual-use agrivoltaic co-location terms and sample lease royalties.',deps:[1]}]},
+quote:{name:'Turn-key 10 MW agrivoltaics + 20 MWh BESS project financial proposal',title:'AI Agrivoltaic Project Finance Quoting Operator',mode:'sequential',track:'commercial',deliverable:'Turnkey 10 MW Agrivoltaics + 20 MWh BESS Project Financial Proposal',
+sample:'Generate a comprehensive financial model and commercial development proposal for a 10 MWdc agrivoltaic solar facility paired with a 5 MW / 20 MWh DC-coupled lithium-iron-phosphate (LFP) battery storage system in Central Massachusetts qualifying for the DOER SMART agrivoltaic adder ($0.06/kWh) and federal ITC energy community bonuses ($24.8M total capital deployment).',
+desc:'Agents model capital expenditures for elevated tracker steel (10-ft clearance), battery cycling degradation curves, wholesale ISO-NE capacity market revenues, and dual-use agricultural management budgets.',
+tasks:[{agent:'iso_ne_interconnection_substation_capacity_router',task:'Model utility interconnection costs, transfer trip protection, and sub-transmission line tap requirements.',deps:[]},
+{agent:'agrivoltaic_project_finance_quoting_eng',task:'Calculate levered IRR, 20-year cash flows, SMART ASTGU tariff adders, and clean energy storage credits ($24,800,000 project).',deps:[0]},
+{agent:'bess_battery_storage_dispatch_engineer',task:'Optimize 4-hour battery daily cycling against ISO-NE day-ahead LMP peak spreads and clean peak energy certificate (CPEC) windows.',deps:[1]},
+{agent:'writer',task:'Produce formal customer-ready BlueWave commercial agrivoltaics and storage investment memorandum.',deps:[2]}]},
+tender:{name:'Municipal utility & corporate anchor buyer long-term agrivoltaic PPA master tender',title:'AI Master Agrivoltaics PPA Tender Operator',mode:'dag',track:'commercial',deliverable:'Municipal Utility & Corporate Anchor Buyer Long-Term Agrivoltaic PPA Master Tender Response',
+sample:'Prepare a master solicitation response for a 20-year Power Purchase Agreement (PPA) and Environmental Attribute Agreement with a regional university consortium and municipal electric department (45,000 MWh annual dual-use solar generation with dedicated local agricultural educational access and B-Corp verified carbon offsets).',
+desc:'Agents structure long-term contract-for-differences (CfD) pricing, verify corporate Scope 2 greenhouse gas reduction claims, document pollinator-friendly seed mix certifications, and formalize social impact commitments.',
+tasks:[{agent:'bcorp_environmental_stewardship_auditor',task:'Document Certified B Corp governance standards, soil carbon sequestration baselines, and local pollinator habitat creation.',deps:[]},
+{agent:'sheep_grazing_specialty_crop_agronomist',task:'Establish partnerships with local sheep farmers for contract grazing and university field research access protocols.',deps:[]},
+{agent:'agrivoltaic_project_finance_quoting_eng',task:'Structure $38,500,000 long-term energy off-take agreement with annual escalation and REC delivery schedules.',deps:[0,1]},
+{agent:'writer',task:'Generate comprehensive enterprise dual-use PPA master tender response with environmental sustainability metrics.',deps:[2]}]},
+radar:{name:'Community solar & dual-use renewable developer competitor intelligence',title:'AI Agrivoltaic Market Intelligence',mode:'dag',track:'commercial',deliverable:'Community Solar & Dual-Use Renewable Developer Competitor Intelligence Brief',
+sample:'Analyze competitive positioning across Northeast community solar and agrivoltaic developers (Nexamp, Clean Energy Collective, Summit Ridge Energy, Cypress Creek Renewables) vs BlueWave.',
+desc:'Agents monitor utility queue filings, municipal zoning board hearing minutes, agricultural tariff adder participation rates, and landowner acquisition royalty rates.',
+tasks:[{agent:'community_solar_subscriber_offtake_pricing_spec',task:'Benchmark competitor subscriber discount rates (10%-15%), cancellation terms, and low-to-moderate income (LMI) participation.',deps:[]},
+{agent:'farmland_landowner_origination_scout',task:'Highlight BlueWave core competitive differentiators: 15+ years of Northeast solar leadership, pioneer of agrivoltaics, and Certified B Corp values.',deps:[0]},
+{agent:'writer',task:'Produce quarterly agrivoltaic market intelligence brief with landowner positioning playbooks for acquisition reps.',deps:[1]}]},
+panel_qualification:{name:'Massachusetts SMART ASTGU dual-use agrivoltaics & rotational grazing qualification',title:'AI SMART ASTGU Qualification Operator',mode:'dag',track:'operations',tag:'flagship',deliverable:'Massachusetts SMART ASTGU Dual-Use Agrivoltaics & Rotational Grazing Qualification Dossier',
+sample:'Execute comprehensive engineering qualification and agricultural plan certification for a 5.8 MW agrivoltaic array across 28 acres of active pasture in Palmer, Massachusetts under DOER SMART ASTGU guidelines (single-axis tracking system with minimum 10-ft torque tube height at horizontal, 24-ft row spacing ensuring >50% sunlight transmission to forage grasses, 65-head rotational Katahdin sheep grazing plan, and zero topsoil stripping).',
+desc:'Agents simulate photosynthetic active radiation (PAR) light distribution, verify tractor turning radius clearances, audit perimeter livestock fencing and livestock watering solar pumps, and prepare MDAR submittal package.',
+tasks:[{agent:'massachusetts_doer_smart_astgu_compliance_auditor',task:'Model ground-level shading indices to verify field receives at least 50% of ambient solar radiation throughout the growing season.',deps:[]},
+{agent:'agrivoltaic_racking_tracker_eco_revision_spec',task:'Verify structural foundation embedment depth and elevated torque tube mechanical stiffness for 10-ft height wind loads.',deps:[]},
+{agent:'sheep_grazing_specialty_crop_agronomist',task:'Formulate 5-year Agricultural Management Plan with UMass Extension protocols, animal stocking rates, and manure nutrient management.',deps:[0,1]},
+{agent:'reviewer',task:'Audit engineering drawings against Massachusetts DOER ASTGU regulations, MDAR guidelines, and NEC 2023 code with PE stamp.',deps:[2]},
+{agent:'writer',task:'Produce complete BlueWave SMART ASTGU agricultural qualification dossier for DOER and local planning board review.',deps:[3]}]},
+inverter_yield:{name:'Single-axis tracker backtracking & ground-albedo bifacial yield optimization test',title:'AI Dual-Use Solar Yield Optimization Operator',mode:'sequential',track:'operations',deliverable:'Single-Axis Tracker Backtracking & Ground-Albedo Bifacial Yield Optimization Test Report',
+sample:'Calibrate smart 3D backtracking algorithms and bifacial gain models on elevated agrivoltaic tracker rows across diverse ground covers (grazed clover pasture albedo 0.22 vs bare soil 0.16) to maximize energy generation without shading under-canopy forage.',
+desc:'Agents analyze pyranometer data, string inverter clipping losses, bifacial rear-side mismatch factors, and agricultural equipment shadow dynamics.',
+tasks:[{agent:'pv_microsite_soil_moisture_scada_telemetry_eng',task:'Map ground albedo coefficients and rear-side irradiance across 8 monitoring stations under varying forage canopy heights.',deps:[]},
+{agent:'iso_ne_interconnection_substation_capacity_router',task:'Model inverter DC-to-AC loading ratio (1.35:1) and simulate high-temperature summer curtailment parameters.',deps:[0]},
+{agent:'reviewer',task:'QA annual P50/P90 generation estimates, bifacial energy gain metrics (+8.4%), and inverter clipping curves.',deps:[1]},
+{agent:'writer',task:'Produce comprehensive tracker optimization and bifacial solar yield report for project equity partners.',deps:[2]}]},
+thermal_simulation:{name:'Agrivoltaic canopy microclimate & soil moisture retention 3D CFD simulation',title:'AI Agrivoltaic Microclimate Simulation Operator',mode:'dag',track:'operations',deliverable:'Agrivoltaic Canopy Microclimate & Soil Moisture Retention 3D CFD Simulation Strategy',
+sample:'Generate automated 3D computational fluid dynamics (CFD) and microclimatic heat transfer simulations for an elevated agrivoltaic canopy during extreme summer drought conditions (95°F ambient, 25 mph wind gusts), evaluating soil evapotranspiration reductions and crop leaf-temperature moderation.',
+desc:'Agents model wind turbulence around elevated panels, ground boundary layer humidity profiles, thermal stress mitigation for grazing livestock, and solar module operating temperature cooling.',
+tasks:[{agent:'pv_microsite_soil_moisture_scada_telemetry_eng',task:'Execute 3D fluid-dynamic boundary layer models of convective heat dissipation between solar panels and vegetated pasture.',deps:[]},
+{agent:'sheep_grazing_specialty_crop_agronomist',task:'Calculate soil moisture retention gains (+22% vs open field) and temperature moderation under panel shade for animal welfare.',deps:[0]},
+{agent:'writer',task:'Produce BlueWave agrivoltaic microclimate optimization strategy and agronomic resilience white paper.',deps:[0,1]}]},
+mask_eco:{name:'Agrivoltaic tracker foundation & tractor corridor ECO revision control',title:'AI Agrivoltaic Design ECO Revision Operator',mode:'sequential',track:'operations',deliverable:'Agrivoltaic Tracker Foundation & Tractor Corridor ECO Revision Assessment',
+sample:'Evaluate Engineering Change Order ECO-2026-AGRI-105 (Increase East-West Tracker Post Spacing from 18 Feet to 24 Feet and Upgrade Foundation Screw Piles to Accommodate 12-Foot Wide Hay Mowing Machinery and 105 mph Wind Gust Load Criteria).',
+desc:'Agents evaluate structural steel poundage impacts, cable trenching rerouting around farm access lanes, foundation pull-out geotechnical capacities, and site plan revisions.',
+tasks:[{agent:'agrivoltaic_racking_tracker_eco_revision_spec',task:'Re-calculate foundation torsional resistance, driven pile embedment depths (14.5 ft), and wind-induced flutter moments.',deps:[]},
+{agent:'massachusetts_doer_smart_astgu_compliance_auditor',task:'Confirm revised tractor corridors maintain DOER agricultural machinery clearance standards and unshaded crop lanes.',deps:[0]},
+{agent:'writer',task:'Publish integrated BlueWave structural ECO release matrix and EPC construction field bulletin.',deps:[1]}]},
+};
+const DTITLE={
+scout:'Top 50 Northeast Agricultural Landowner & Community Solar Pipeline List',
+quote:'Turnkey 10 MW Agrivoltaics + 20 MWh BESS Project Financial Proposal',
+tender:'Municipal Utility & Corporate Anchor Buyer Long-Term Agrivoltaic PPA Master Tender Response',
+radar:'Community Solar & Dual-Use Renewable Developer Competitor Intelligence Brief',
+panel_qualification:'Massachusetts SMART ASTGU Dual-Use Agrivoltaics & Rotational Grazing Qualification Dossier',
+inverter_yield:'Single-Axis Tracker Backtracking & Ground-Albedo Bifacial Yield Optimization Test Report',
+thermal_simulation:'Agrivoltaic Canopy Microclimate & Soil Moisture Retention 3D CFD Simulation Strategy',
+mask_eco:'Agrivoltaic Tracker Foundation & Tractor Corridor ECO Revision Assessment'
+};
+const TOOLS={
+analyze_gis_farmland_soils_and_three_phase_feeder_capacity:()=>'Audited USDA NRCS soil prime farmland status, 3-phase feeder capacity & parcel topography.',
+build_bluewave_agrivoltaic_smart_adder_pro_forma:()=>'Modeled $0.06/kWh SMART agrivoltaic tariff adder, elevated racking capex & 20-yr project cash flows.',
+verify_astgu_50_percent_sunlight_and_10ft_clearance:()=>'Validated 10-ft vertical clearance, >50% sunlight transmission & zero topsoil removal per DOER.',
+model_forage_biomass_animal_stocking_and_pollinator_mix:()=>'Formulated 65-head Katahdin sheep rotational grazing plan, forage biomass & UMass agronomic protocols.',
+optimize_4_hour_lithium_storage_capacity_and_iso_ne_arbitrage:()=>'Optimized 5 MW / 20 MWh LFP storage dispatch against ISO-NE day-ahead LMP peak price spreads.',
+benchmark_c_and_i_satellite_offtake_and_credit_discounts:()=>'Benchmarked 12.5% community solar credit discounts, municipal anchor off-take & LMI quotas.',
+analyze_substation_thermal_headroom_and_epc_upgrade_costs:()=>'Analyzed utility 115kV/13.8kV substation reverse power flow capacity and transfer trip protection.',
+audit_carbon_sequestration_topsoil_preservation_and_bcorp_score:()=>'Audited soil organic carbon sequestration baselines, zero-pesticide buffer zones & B Corp metrics.',
+evaluate_elevated_torque_tube_wind_loads_and_tractor_spacing:()=>'Engineered 24-ft row spacing for 12-ft hay mowers & structural screw pile embedment depths.',
+inspect_photosynthetically_active_radiation_par_and_pyranometers:()=>'Monitored ground-level PAR sensors, soil moisture (+22% vs open field) & bifacial rear irradiance.',
+compose:()=>'Drafted in clear, agrivoltaic engineering, project finance and municipal review-ready style.',
+qa_review:()=>'QA: Verified DOER ASTGU compliance, structural wind calculations & Professional Engineer (PE) stamp.',
+save:()=>'Saved to shared project context for downstream engineering agents.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+const FINAL={
+scout:`TOP 50 NORTHEAST AGRICULTURAL LANDOWNER & COMMUNITY SOLAR PIPELINE LIST (illustrative)
+Scanned agricultural parcels across Massachusetts, Maine, and New York within 1.5 miles of 13.8kV/23kV utility distribution lines.
+
+A-Tier Priority Farmland & Dual-Use Opportunities:
+1. Pioneer Valley Heritage Cattle Farm (Palmer, MA) - 85 Acres - 7.5 MW Solar + 15 MWh BESS - DOER SMART Agrivoltaics Adder Fit: 99
+2. Mid-Coast Maine Blueberry & Forage Pasture (Rockport, ME) - 62 Acres - 4.8 MW Solar + Rotational Sheep Grazing - Fit Score: 98
+3. Central Massachusetts Hay & Specialty Crop Farm (Haverhill, MA) - 110 Acres - 9.2 MW Dual-Use Tracker + 20 MWh Storage - Fit Score: 97
+4. Hudson Valley Apple Orchard & Apiary (Columbia County, NY) - 54 Acres - 5.0 MW Pollinator Agrivoltaics - NYSERDA Dual-Use Fit: 95
+
+Key Decision Makers: Multi-Generation Farm Owners, Agricultural Trust Trustees, Municipal Conservation Commission Chairs.
+→ Saved: target_agrivoltaics_pipeline, landowner_royalty_schedules, three_phase_feeder_maps
+NOTE: illustrative concept for BlueWave (bluewave.energy).`,
+
+quote:`TURNKEY 10 MW AGRIVOLTAICS + 20 MWh BESS PROJECT FINANCIAL PROPOSAL (illustrative)
+Project Name: Palmer Dual-Use Solar & Clean Energy Storage Center (Palmer, Massachusetts)
+Sponsor: BlueWave Agrivoltaics Development Fund / Axium Infrastructure
+
+System Engineering Architecture & Cost Breakdown:
+• Solar Generation Capacity: 10.0 MWdc / 7.5 MWac Elevated Single-Axis Tracking Array (Bifacial TOPCon Modules)
+• Energy Storage System: 5.0 MWac / 20.0 MWh DC-Coupled Lithium Iron Phosphate (LFP) Battery Energy Storage System (BESS)
+• Agrivoltaic Mounting Structure: Custom elevated tracker torque tubes (10.0 ft height at horizontal, 24-ft row-to-row pitch)
+• Agricultural Dual-Use Program: Dedicated pasture for 75-head rotational sheep flock and pollinator-friendly native legume cover
+
+Financial Performance & Revenue Stack:
+• Total Project Capital Expenditure: $24,800,000.00 ($1.72/Wdc solar + $380/kWh storage)
+• Massachusetts SMART ASTGU Revenue: Base tariff $0.152/kWh + Agricultural Adder $0.060/kWh + Storage Adder $0.048/kWh
+• 20-Year Project Levered IRR: 12.8% with 1.38x debt service coverage ratio (DSCR)
+• Community Solar Economic Value: 1,800 local households subscribed at a guaranteed 12.5% electric bill discount
+→ Saved: agrivoltaic_pro_forma, smart_tariff_adder_schedule, bess_revenue_optimization
+NOTE: illustrative.`,
+
+tender:`MUNICIPAL UTILITY & CORPORATE ANCHOR BUYER LONG-TERM AGRIVOLTAIC PPA MASTER TENDER (illustrative)
+Solicitation: 20-Year Renewable Energy & Environmental Attributes Supply Agreement (45,000 MWh/Year)
+Offtaker: Regional Higher Education Consortium & Municipal Light Plant
+
+Energy Generation, Agricultural Preservation & Sustainability SLA:
+• Carbon Offset Commitment: 31,800 metric tons of CO2 avoided annually through regional clean energy generation.
+• Certified B Corp Accountability: Verified adherence to B Lab standards for environmental stewardship and community impact.
+• Agricultural Coexistence Guarantee: 100% of project acreage remains in active agricultural production under UMass Extension oversight.
+• Storage Resilience: 20 MWh BESS provides emergency black-start support and summer peak demand relief to the municipal grid.
+
+Commercial Terms:
+• Master 20-Year Contract Value: $38,500,000.00 with 1.75% annual escalation and guaranteed delivery of Massachusetts Class I RECs.
+→ Saved: agrivoltaic_master_tender, b_corp_impact_pledge, sheep_grazing_agreement
+NOTE: illustrative.`,
+
+radar:`COMMUNITY SOLAR & DUAL-USE RENEWABLE DEVELOPER COMPETITOR INTELLIGENCE BRIEF (illustrative)
+Competitive Landscape: BlueWave vs Nexamp, Summit Ridge Energy, Clean Energy Collective, and Cypress Creek
+
+Regional Market Analysis:
+1. Agrivoltaics Leadership: While competitors face local permitting pushback on traditional ground-mount solar, BlueWave dual-use designs win town approvals by preserving farmland and securing agricultural adders.
+2. Battery Storage Pairing: Over 80% of BlueWave development pipeline incorporates co-located BESS to capture ISO-NE capacity and Clean Peak Energy Certificates.
+3. Landowner Loyalty: BlueWave 15-year Massachusetts track record and B-Corp certification establish trusted long-term farmer relationships.
+
+Strategic Recommendations:
+• Standardize 10-ft elevated tracker designs across New York and Maine markets ahead of upcoming state agrivoltaic incentives.
+• Expand corporate PPA offerings highlighting verified local agricultural and educational co-benefits.
+→ Saved: community_solar_competitor_radar, agrivoltaic_policy_roadmap
+NOTE: illustrative.`,
+
+panel_qualification:`MASSACHUSETTS SMART ASTGU AGRIVOLTAICS & ROTATIONAL GRAZING QUALIFICATION (illustrative · flagship)
+Regulatory Standards: Massachusetts DOER 225 CMR 20.00 (SMART), MDAR ASTGU Guidelines, & UMass Clean Energy Extension
+Target Project: Palmer Agrivoltaic Solar Project (Line 4 Commercial Scale-Up, 5.8 MWdc across 28 Acres)
+
+Agronomic Engineering & Regulatory Test Results:
+• Vertical Height Clearance: Single-axis tracker maintains 10.2 ft clearance at horizontal (DOER minimum: 10.0 ft).
+• Shading & Sunlight Transmission: 3D ray-tracing simulation confirmed ground receives 54.8% of ambient sunlight (Exceeds 50% rule).
+• Tractor Access Corridor: 24.0 ft row spacing accommodates standard 12-ft wide agricultural tractors and hay balers.
+• Rotational Grazing Plan: 65-head Katahdin hair sheep flock managed in 4-paddock rotation; eliminates mechanical mowing.
+• Topsoil Protection: Zero topsoil grading or removal; screw-pile foundations installed with low-impact tracked machinery.
+• Electrical Safety: Inverters and AC disconnects elevated 48 inches above grade with protective physical barriers for livestock.
+
+Chief Development Officer & Principal Engineer Sign-Off:
+• Stamped by Professional Engineer (PE) and certified by Agricultural Extension Specialist. Ready for DOER formal tariff approval.
+→ Saved: smart_astgu_qualification_dossier, par_sunlight_simulation, agricultural_grazing_plan
+NOTE: illustrative simulation; verify against formal DOER SMART ASTGU ruling and MDAR agricultural review letters.`,
+
+inverter_yield:`SINGLE-AXIS TRACKER BACKTRACKING & GROUND-ALBEDO BIFACIAL YIELD OPTIMIZATION TEST (illustrative)
+Testing Facility: BlueWave Agrivoltaics Demonstration Center (Palmer, Massachusetts)
+Target Equipment: Elevated 1P Single-Axis Trackers with Bifacial n-Type TOPCon Solar Modules (DC/AC Ratio: 1.35)
+
+Yield Optimization & Albedo Analysis:
+• Pasture Ground Albedo: Rotational grazing maintained dense clover/grass cover with measured albedo of 0.22 (vs 0.16 bare dirt).
+• Bifacial Energy Gain: Elevated 10-ft tracker height increased rear-side irradiance uniformity, yielding +8.4% additional energy.
+• 3D Smart Backtracking: Custom tracking algorithm eliminated inter-row shading while minimizing shadow footprint on forage grass.
+• Inverter Loading Efficiency: 125 kW string inverters operated at 98.6% weighted CEC efficiency with zero thermal derating.
+
+Release Status: Certified for commercial utility interconnection and performance modeling.
+→ Saved: tracker_yield_report, bifacial_albedo_measurements
+NOTE: illustrative.`,
+
+thermal_simulation:`AGRIVOLTAIC CANOPY MICROCLIMATE & SOIL MOISTURE RETENTION 3D CFD SIMULATION (illustrative)
+Simulated System: 28-Acre Agrivoltaic Array (10-ft Elevated Trackers over Mixed Fescue & Clover Pasture)
+Environmental Conditions: Summer Heat Wave Simulation (95°F Ambient Temperature, 40% Relative Humidity, 18 mph Wind)
+
+3D CFD Microclimate Simulation Results:
+• Soil Moisture Retention: Evapotranspiration rates beneath panels decreased by 28.4%, preserving +22% higher soil moisture.
+• Crop Temperature Moderation: Maximum forage leaf temperature reduced by 6.8°F under panel shade, preventing pasture dormancy.
+• Livestock Thermal Comfort: Temperature-Humidity Index (THI) under panel canopy dropped from 82 (severe stress) to 73 (safe zone).
+• Solar Panel Operating Cooling: Convective cooling from under-canopy vegetation reduced PV module temperature by 2.4°C, boosting efficiency.
+
+Output: Dual-use microclimatic benefits validated for drought resilience and enhanced agricultural forage yields.
+→ Saved: agrivoltaic_cfd_strategy, microclimate_temperature_contours
+NOTE: illustrative.`,
+
+mask_eco:`AGRIVOLTAIC TRACKER FOUNDATION & TRACTOR CORRIDOR ECO REVISION ASSESSMENT (illustrative)
+Engineering Change Order: ECO-2026-AGRI-105
+Affected System: BlueWave Standard Elevated Agrivoltaic Tracker Architecture (Rev C -> Rev D)
+
+Design Changes & Geotechnical Results:
+• Tractor Corridor Expansion: Increased East-West row spacing from 18 ft to 24 ft to accommodate modern 12-ft wide hay mowers.
+• Foundation Pile Upgrade: Deepened screw pile embedment to 14.5 ft to resist higher wind moments on 10-ft elevated torque tubes.
+• Cabling Pathway Protection: Re-routed DC string wiring inside enclosed steel torque tubes to protect against livestock contact.
+• Structural Stress Factor: Finite element analysis verified maximum wind gust survival up to 105 mph (ASCE 7-22 standard).
+
+Permitting & Construction Implementation:
+• Updated EPC civil drawings, MDAR agricultural plan supplements, and structural engineering calculation packages.
+→ Saved: agrivoltaic_eco_matrix, epc_construction_bulletin
+NOTE: illustrative.`,
+};
+let EMPLOYEES=[
+{id:'scout',name:'Scout',title:'AI Farmland Solar Opportunity Scout',wf:'scout',handled:688,hrs:252,win:0,status:'idle'},
+{id:'quote',name:'Quote',title:'AI Agrivoltaic Project Finance Quoting Operator',wf:'quote',handled:604,hrs:278,win:88,status:'idle'},
+{id:'tender',name:'Tender',title:'AI Master Agrivoltaics PPA Tender Operator',wf:'tender',handled:466,hrs:304,win:93,status:'idle'},
+{id:'radar',name:'Radar',title:'AI Agrivoltaic Market Intelligence',wf:'radar',handled:518,hrs:228,win:61,status:'idle'},
+{id:'safety',name:'Sentinel',title:'AI SMART ASTGU Qualification Operator',wf:'panel_qualification',handled:512,hrs:374,win:98,status:'idle'},
+{id:'mill',name:'Atlas',title:'AI Dual-Use Solar Yield Optimization Operator',wf:'inverter_yield',handled:542,hrs:290,win:95,status:'idle'},
+{id:'cfd',name:'Vanguard',title:'AI Agrivoltaic Microclimate Simulation Operator',wf:'thermal_simulation',handled:498,hrs:266,win:87,status:'idle'},
+{id:'eco',name:'Nexus',title:'AI Agrivoltaic Design ECO Revision Operator',wf:'mask_eco',handled:508,hrs:274,win:91,status:'idle'},
+];
+let running=false;
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const now=()=>new Date().toLocaleTimeString('en-GB');
+const mono=n=>n.trim().slice(0,2).toUpperCase();
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Commercial</span>';if(wf.track==='operations')s+='<span class="tag operations">Agrivoltaics Ops &amp; BESS</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+function setView(v){
+$('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');
+$('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');
+if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderEcon(){
+const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);
+const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;
+const cells=[[total,'AI operators (commercial solar development + agrivoltaics engineering & BESS ops)'],[h.toLocaleString(),'dual-use pro formas, DOER ASTGU submittals & PPA tenders handled'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','chief development officer & agrivoltaics director hours saved / month'],['+'+avg+'%','avg turnaround improvement']];
+$('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');
+}
+function empCard(e){const wf=WORKFLOWS[e.wf];
+const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');
+return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}">
+<div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div>
+<div class="emp-owns">Owns: <b>${wf.name}</b></div>
+<div class="team">${team}</div>
+<div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'None'}</b>faster</div></div>
+<div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a solar project</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;
+}
+function renderRoster(){
+const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;
+let html='';
+TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;
+html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});
+const untracked=EMPLOYEES.filter(e=>!WORKFLOWS[e.wf].track);
+if(untracked.length)html+=`<div class="slabel">Other</div><div class="roster">`+untracked.map(empCard).join('')+`</div>`;
+$('roster').innerHTML=html;
+}
+function assign(id){
+if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+$('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div>
+<div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a landowner parcel, a DOER SMART audit, or an agrivoltaic tracker telemetry feed and ${e.name} executes the entire workflow.</div></div></div>
+<div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div>
+<div id="stage"></div></div>`;
+$('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();
+}
+async function runEmp(id){
+if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;
+e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');
+const stage=$('stage');
+stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div>
+<div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div>
+<div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;
+const feed=$('feed');
+function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;
+const row=document.createElement('div');row.className='frow';row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,160)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}
+log(null,`Input received: "${obj.substring(0,54)}…"`);
+log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);
+await sleep(rand(700,1100));
+const grid=$('agrid');
+wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;
+c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;
+grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});
+await sleep(600);
+$('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');
+const done=new Set();
+async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);
+c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';
+log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));
+for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}
+c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}
+if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}
+else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;
+if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}
+$('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');
+await sleep(400);
+const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(8,38);
+$('resultArea').innerHTML=`<div class="result"><div class="rstats">
+<div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div>
+<div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div>
+<div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'Commercial Land &amp; Community Solar':'Agrivoltaics Engineering &amp; BESS'}</span></div>
+<div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div>
+<div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div>
+<div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div>
+<div class="donebar"><b>${e.name} produced a review-ready output.</b> Execution, agrivoltaic engineering verification and QA complete, ready for a Chief Development Officer, VP of Agrivoltaics, or Director of Asset Management to review and confirm. Illustrative simulation placeholder.</div>`;
+e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;
+}
+// builder
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per farmland project solicitation',step:1};renderBuilder();}
+function renderBuilder(){
+const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];
+$('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();
+}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+
+Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+
+w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--tert)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+
+`<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;
+document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div>
+<div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. BlueWave Agrivoltaics Operator" oninput="draft.name=this.value"></div>
+<div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Dual-Use Solar Development Specialist" oninput="draft.title=this.value"></div>
+<div class="field"><label>Cadence</label><div class="seg">`+['Per farmland project solicitation','Per interconnection cluster cycle','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div>
+<div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;
+let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();
+const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};
+DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];
+const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});
+renderEcon();renderRoster();setView('ops');
+setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);
+}
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
