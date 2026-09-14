@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ecoplexus — AI Utility Solar &amp; BESS Infrastructure Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#ffffff;
+  --surface:#f0f4f8;
+  --surface2:#dfebf6;
+  --border:#cbd5e1;
+  --border-subtle:#e2e8f0;
+  --accent:#004b87;
+  --accent-light:#0066b8;
+  --accent-dark:#00335e;
+  --eco-green:#00a859;
+  --eco-teal:#0284c7;
+  --eco-gold:#d97706;
+  --accent-dim:rgba(0,75,135,.08);
+  --accent-line:rgba(0,75,135,.28);
+  --green-dim:rgba(0,168,89,.10);
+  --green-line:rgba(0,168,89,.30);
+  --text:#334155;
+  --text-muted:#64748b;
+  --hi:#0f172a;
+  --ok:#00a859;
+  --ok-dim:rgba(0,168,89,.10);
+}
+body{background:var(--canvas);color:var(--text);font-family:"Plus Jakarta Sans",system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:3px solid var(--eco-green);position:sticky;top:0;background:var(--accent);color:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:14px}
+.mark{min-width:110px;height:36px;padding:0 14px;border-radius:6px;background:#ffffff;display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:900;font-size:15px;letter-spacing:1px;white-space:nowrap;overflow:hidden;flex-shrink:0;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.mark span{color:var(--eco-green)}
+.htitle{font-size:15px;font-weight:800;color:#fff;letter-spacing:.4px;text-transform:uppercase}.hsub{font-size:11px;color:#e2e8f0;margin-top:1px;font-weight:500;letter-spacing:.3px}
+.badge{border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:6px 12px;font-size:11px;color:#e2e8f0;background:rgba(0,51,94,.6)}.badge b{color:#ffffff}
+.tabs{max-width:1200px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:700;color:var(--text-muted);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none;letter-spacing:.3px}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface);border-top:3px solid var(--accent)}
+.main{max-width:1200px;margin:0 auto;padding:24px}
+.lead{font-size:14.5px;line-height:1.6;max-width:920px;margin-bottom:14px;color:#334155}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--text-muted);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.5px;padding:3px 8px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.trackA{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.trackB{background:var(--green-dim);color:#00753e;border:1px solid var(--green-line)}
+.tag.hero{background:rgba(217,119,6,.12);color:var(--eco-gold);border:1px solid var(--eco-gold)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--accent)}.cell .v .u{color:var(--accent);font-size:16px}
+.cell .k{font-size:11.5px;color:var(--text-muted);margin-top:4px;line-height:1.35}
+.slabel{font-size:11px;font-weight:800;letter-spacing:1.2px;color:var(--accent);text-transform:uppercase;margin:22px 0 14px;display:flex;align-items:center;gap:10px;font-family:"IBM Plex Sans Condensed",sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;transition:box-shadow .2s,border-color .2s}
+.emp:hover{border-color:var(--accent-line);box-shadow:0 4px 14px rgba(0,75,135,.10)}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--accent-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:800;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;letter-spacing:.2px}.emp-title{font-size:12px;color:var(--text-muted)}
+.emp-owns{font-size:12.5px;margin-bottom:10px;line-height:1.4}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--text-muted);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-weight:600}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--text-muted)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:800}
+.actions{display:flex;gap:8px}
+.btn{font-family:inherit;font-size:12.5px;font-weight:700;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi);transition:all .15s}
+.btn:hover{border-color:var(--accent-line)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#ffffff}
+.btn.primary:hover{background:var(--accent-dark);border-color:var(--accent-dark);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent;color:var(--accent)}.btn.big{padding:12px 22px;font-size:13.5px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px;background:rgba(240,244,248,.6)}
+.hire-card:hover{border-color:var(--accent);background:var(--surface)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:700;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--text-muted);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--text-muted);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:60px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text-muted);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent-dark)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:700;color:var(--text-muted);letter-spacing:.3px}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(0,168,89,.5);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--text-muted);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--text-muted)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--text-muted)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:176px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:"IBM Plex Mono",monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--text-muted)}.frow .fa{color:var(--hi);font-weight:600}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--text-muted)}.rrow .v{color:var(--hi);font-weight:700}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:800;color:var(--hi);background:var(--surface2)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto;font-family:"IBM Plex Mono",monospace}
+.donebar{background:var(--surface);border:1px solid rgba(0,168,89,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:800;color:var(--text-muted);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:700;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--text-muted);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface);transition:all .15s}
+.wf:hover{border-color:var(--accent-line)}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:14px;font-weight:800;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.wf .wd{font-size:11.5px;color:var(--text-muted);margin-top:5px;line-height:1.4}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:700;text-transform:uppercase}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:700;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 13px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--text-muted);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1200px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--text-muted);line-height:1.5}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="logo"><div class="mark">ECO<span>PLEXUS</span></div>
+    <div><div class="htitle">Ecoplexus AI Workforce</div><div class="hsub">Autonomous multi-agent orchestration for 13+ GW Utility Solar, BESS Storage, and Infrastructure Project Finance</div></div></div>
+  <div class="badge">Independent concept &nbsp;·&nbsp; <b>illustrative</b></div>
+</header>
+<div class="tabs">
+  <button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+  <button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+<div class="main">
+  <div id="view-ops">
+    <div class="lead">Each AI operator below represents a core Ecoplexus utility-scale development workflow turned into an autonomous team of specialist agents. Select any operator to trigger a live run on a sample project.</div>
+    <div class="legend" id="legend"></div>
+    <div class="econ" id="econ"></div>
+    <div id="roster"></div>
+    <div id="runPanel"></div>
+  </div>
+  <div id="view-hire" class="hidden">
+    <div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+    <div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+  </div>
+</div>
+<div class="foot">Independent concept prototype prepared for a conversation with Ecoplexus Inc. (ecoplexus.com). Built in accordance with Ecoplexus brand guidelines (#004B87 Deep Ocean Blue, #00A859 Clean Energy Green, #F0F4F8 Soft Slate, and #0F172A Slate). All operators and outputs are illustrative simulations; grid interconnection study costs, BESS capacity market revenues, IRA tax credit transferability valuations, and utility PPA pricing formulas are placeholders. A licensed Professional Engineer (PE), VP of Utility Development, or Chief Investment Officer (CIO) reviews and approves every infrastructure investment memo and interconnection submittal.</div>
+
+<script>
+const CONFIG={
+  econLabels:["AI operators","utility projects","hours saved / month","avg turnaround cut"],
+  statLabel:"turnaround", statSign:"−", statSuffix:"%",
+  runButton:"Run on a project",
+  runNoun:"project",
+  outputLabel:"Review-ready output",
+  rosterLabel:"Your AI operators",
+  trackLabels:{trackA:"Utility Project Development & Grid Interconnection Engine", trackB:"Commercial PPA Offtake & IPP Asset Operations Engine"},
+  builderCadences:["Per project","Daily batch","Weekly shift","On-demand"],
+};
+
+const AGENT_ROLES={
+  landscout:{emoji:'🗺️',label:'Utility-Scale Land Acquisition & GIS Permitting Scout',tools:['screen_gis_utility_parcels_and_substation_proximity','save']},
+  interconnect:{emoji:'🔌',label:'ISO/RTO Interconnection Queue & Substation Capacity Lead',tools:['evaluate_rto_interconnection_queue_and_network_upgrades','save']},
+  ppaactuary:{emoji:'📈',label:'Utility PPA Financial Modeling & Merchant Curve Lead',tools:['model_20yr_ppa_busbar_cashflow_and_project_irr','save']},
+  bessengineer:{emoji:'🔋',label:'Utility BESS Storage & Revenue Stacking Specialist',tools:['simulate_bess_degradation_and_capacity_market_dispatch','save']},
+  epcprocure:{emoji:'📦',label:'Utility EPC Procurement & FEOC Tariff Compliance Lead',tools:['source_tier1_bifacial_pv_modules_and_bess_enclosures','save']},
+  envpermitting:{emoji:'🌿',label:'NEPA / CEQA Environmental & Wildlife Impact Auditor',tools:['audit_wetland_delineation_and_species_habitat_mitigation','save']},
+  offtakebd:{emoji:'🤝',label:'Utility & Corporate PPA Business Development Lead',tools:['structure_virtual_ppa_offtake_terms_and_utility_rfp','save']},
+  scadaom:{emoji:'📊',label:'13 GW Fleet SCADA Telemetry & Performance Ratio Analyst',tools:['audit_fleet_inverter_clipping_and_transformer_efficiency','save']},
+  taxcredit:{emoji:'💵',label:'IRA Tax Credit Transferability & Energy Community Specialist',tools:['calculate_ira_itc_ptc_adders_and_transferability_discount','save']},
+  gridcurtail:{emoji:'⚡',label:'RTO Nodal LMP & Grid Congestion Risk Specialist',tools:['analyze_locational_marginal_pricing_and_congestion_hedging','save']},
+  writer:{emoji:'✍️',label:'Infrastructure Investment Memo & PPA Proposal Writer',tools:['compose','save']},
+  reviewer:{emoji:'✅',label:'VP of Utility Development & Chief Investment Officer PE',tools:['qa_review','save']},
+};
+
+const RK=Object.keys(AGENT_ROLES);
+const TRACKS=[['trackA','Utility Project Development & Grid Interconnection Engine'],['trackB','Commercial PPA Offtake & IPP Asset Operations Engine']];
+
+const WORKFLOWS={
+  interconnect_queue:{name:'CAISO / PJM 250 MW solar + 100 MW BESS interconnection queue & grid capacity study',title:'AI Interconnection Queue Operator',mode:'dag',track:'trackA',tag:'flagship',deliverable:'CAISO / PJM 250 MW Solar + 100 MW BESS Interconnection Queue & Grid Capacity Study',
+  sample:'Execute comprehensive RTO system impact study for a proposed 250 MWdc solar PV array paired with a 100 MW / 400 MWh utility battery energy storage system connecting to a 230kV transmission substation in CAISO / PJM region.',
+  desc:'Agents analyze thermal overload limits, POI substation transformer capacity, network upgrade cost allocations, and queue position risks.',
+  tasks:[{agent:'interconnect',task:'Evaluate RTO queue study reports, POI 230kV line headroom, and short-circuit ratio (SCR).',deps:[]},
+  {agent:'bessengineer',task:'Configure 100 MW BESS inverter response and fast-frequency response (FFR) grid support curves.',deps:[]},
+  {agent:'ppaactuary',task:'Model network upgrade capex ($14.2M) and interconnection milestone payment schedule.',deps:[0,1]},
+  {agent:'reviewer',task:'Audit electrical single-line diagram (SLD) and RTO Interconnection Agreement (IA) terms.',deps:[2]},
+  {agent:'writer',task:'Produce complete engineering grid interconnection risk report and CIO investment memo.',deps:[3]}]},
+
+  land_permitting:{name:'GIS parcel screening & CEQA/NEPA environmental permitting clearance',title:'AI Land Acquisition & Permitting Operator',mode:'sequential',track:'trackA',deliverable:'GIS Parcel Screening & CEQA/NEPA Environmental Permitting Clearance',
+  sample:'Screen 1,800 contiguous rural acres across Fresno County for a 200 MW utility solar project, evaluating slope topography, wetlands, and endangered species habitat.',
+  desc:'Agents analyze satellite GIS land layers, property tax records, wetland delineations, and cultural resource surveys.',
+  tasks:[{agent:'landscout',task:'Screen 1,800 acres across 12 landowner parcels within 2 miles of 115kV transmission substation.',deps:[]},
+  {agent:'envpermitting',task:'Identify Swainson hawk nesting buffers, vernal pool fairy shrimp habitat, and CEQA mitigation requirements.',deps:[0]},
+  {agent:'reviewer',task:'Audit option-to-lease agreement terms ($1,250/acre/yr) and conditional use permit (CUP) timeline.',deps:[1]},
+  {agent:'writer',task:'Generate complete land control & environmental permitting feasibility dossier for land committee.',deps:[2]}]},
+
+  bess_dispatch:{name:'4-Hour utility BESS capacity market & arbitrage revenue stacking planner',title:'AI Utility BESS Optimization Operator',mode:'dag',track:'trackA',deliverable:'4-Hour Utility BESS Capacity Market & Arbitrage Revenue Stacking Planner',
+  sample:'Optimize economic dispatch strategy for a 100 MW / 400 MWh 4-hour LFP battery storage facility in ERCOT / CAISO to stack wholesale energy arbitrage, resource adequacy, and spinning reserves.',
+  desc:'Agents simulate battery degradation algorithms, state-of-charge (SoC) management, peak hour discharge pricing, and capacity market contracts.',
+  tasks:[{agent:'bessengineer',task:'Simulate 15-year LFP cell capacity fade curves under 1.2 daily equivalent full cycles (EFC).',deps:[]},
+  {agent:'gridcurtail',task:'Model day-ahead vs real-time wholesale LMP spread ($0/MWh mid-day charging vs $185/MWh net peak).',deps:[]},
+  {agent:'ppaactuary',task:'Calculate Resource Adequacy (RA) contract revenue ($8.50/kW-month) + merchant arbitrage IRR.',deps:[0,1]},
+  {agent:'reviewer',task:'Audit battery warranty throughput limits (C-rate 0.5C) and augmentation schedule at Year 7.',deps:[2]},
+  {agent:'writer',task:'Publish complete 15-year BESS revenue stacking model and financial underwriting deck.',deps:[3]}]},
+
+  ira_taxcredit:{name:'IRA tax credit transferability & energy community bonus qualification',title:'AI IRA Tax Credit Structuring Operator',mode:'sequential',track:'trackA',deliverable:'IRA Tax Credit Transferability & Energy Community Bonus Qualification',
+  sample:'Structure Inflation Reduction Act (IRA) Section 48 Investment Tax Credit (ITC) basis for a $320M utility solar + storage asset, qualifying for domestic content and energy community adders.',
+  desc:'Agents audit U.S. steel/iron domestic content certifications, brownfield coal closure proximity, and tax credit transferability market pricing.',
+  tasks:[{agent:'taxcredit',task:'Audit ITC base (30%) + Domestic Content Adder (+10%) + Energy Community Bonus (+10%) = 50% total ITC basis.',deps:[]},
+  {agent:'epcprocure',task:'Verify U.S.-manufactured single-axis trackers and structural steel torque tubes for domestic content threshold.',deps:[0]},
+  {agent:'reviewer',task:'Audit tax equity partnership bridge financing and tax credit transfer sale price ($0.935 per $1.00 credit).',deps:[1]},
+  {agent:'writer',task:'Draft master tax credit transferability memorandum and corporate tax equity pitch deck.',deps:[2]}]},
+
+  utility_ppa:{name:'20-Year utility virtual PPA financial modeling & offtake pricing engine',title:'AI Utility PPA Offtake Operator',mode:'dag',track:'trackB',deliverable:'20-Year Utility Virtual PPA Financial Model & Offtake Pricing Engine',
+  sample:'Formulate a 20-year fixed busbar Power Purchase Agreement (PPA) quote for a 150 MWac solar facility selling power to a Tier-1 electric utility (e.g. PG&E / Duke Energy).',
+  desc:'Agents structure PPA pricing curves ($38.50/MWh fixed), levelized cost of energy (LCOE), debt service coverage ratios (DSCR), and sponsor equity return.',
+  tasks:[{agent:'ppaactuary',task:'Build 20-year project cash flow model; calculate LCOE ($29.40/MWh) and target levered IRR (11.8%).',deps:[]},
+  {agent:'offtakebd',task:'Structure PPA settlement terms (P50 vs P90 annual generation yield, curtailment risk sharing, HUB vs Node).',deps:[]},
+  {agent:'reviewer',task:'Audit project debt financing capacity ($210M term debt at 1.35x DSCR) with syndicate lenders.',deps:[0,1]},
+  {agent:'writer',task:'Generate review-ready utility PPA bid submission package and executive commercial terms sheet.',deps:[2]}]},
+
+  epc_procurement:{name:'Utility-scale Tier-1 module, tracker & central inverter procurement plan',title:'AI EPC Procurement & Supply Chain Operator',mode:'sequential',track:'trackB',deliverable:'Utility-Scale Tier-1 Module, Tracker & Central Inverter Procurement Plan',
+  sample:'Execute bill of materials procurement for a 300 MWdc utility solar project, sourcing 670W+ N-type TOPCon bifacial modules, single-axis trackers, and 4.2 MW central inverters.',
+  desc:'Agents evaluate vendor supply chain origin, Section 301 tariff risk, FEOC entity compliance, and factory delivery schedules.',
+  tasks:[{agent:'epcprocure',task:'Source 447,000 Tier-1 TOPCon bifacial PV modules ($0.195/W) with non-FEOC supply chain certification.',deps:[]},
+  {agent:'interconnect',task:'Confirm 4.2 MW central inverter medium-voltage step-up transformer delivery SLAs match substation COD.',deps:[0]},
+  {agent:'reviewer',task:'Audit master EPC equipment supply contract, liquidated damages terms, and warranty performance bonds.',deps:[1]},
+  {agent:'writer',task:'Publish complete 300 MW utility EPC procurement schedule and equipment delivery matrix.',deps:[2]}]},
+
+  scada_performance:{name:'13 GW fleet SCADA telemetry & performance ratio (PR) optimization',title:'AI SCADA Asset Performance Operator',mode:'dag',track:'trackB',deliverable:'13 GW Fleet SCADA Telemetry & Performance Ratio (PR) Optimization Report',
+  sample:'Analyze real-time SCADA telemetry from 75 operational solar and storage sites (1.4 GW operational / 13 GW pipeline) across the U.S. and Japan, detecting inverter outages and soiling losses.',
+  desc:'Agents process 1-minute SCADA data streams, calculate weather-adjusted Performance Ratio (PR), isolate tracker motor faults, and dispatch O&M crews.',
+  tasks:[{agent:'scadaom',task:'Parse 1-minute SCADA telemetry from 1,200 central inverters; identify 8 inverters operating at reduced PR (76.2% vs 84.5% target).',deps:[]},
+  {agent:'gridcurtail',task:'Differentiate utility grid curtailment events from internal electrical equipment faults.',deps:[]},
+  {agent:'reviewer',task:'Validate annual revenue recovery ($142,000/yr) from immediate field O&M inverter re-commissioning.',deps:[0,1]},
+  {agent:'writer',task:'Generate monthly IPP asset performance summary report for institutional infrastructure fund investors.',deps:[2]}]},
+
+  curtailment_risk:{name:'RTO nodal LMP & grid congestion mitigation strategy',title:'AI Nodal LMP & Congestion Risk Operator',mode:'sequential',track:'trackB',deliverable:'RTO Nodal Locational Marginal Price (LMP) & Congestion Mitigation Strategy',
+  sample:'Evaluate nodal LMP price volatility and transmission congestion risks for a 180 MW solar asset in ERCOT West busbar subject to negative mid-day pricing.',
+  desc:'Agents model nodal congestion basis differential, historical negative pricing frequency, and automated BESS charging schedules during negative price hours.',
+  tasks:[{agent:'gridcurtail',task:'Analyze 3-year historical 15-minute nodal LMP data; identify 410 hours of negative pricing (<$0/MWh).',deps:[]},
+  {agent:'bessengineer',task:'Configure automated BESS charging algorithm to absorb 180 MW solar output during negative LMP periods.',deps:[0]},
+  {agent:'reviewer',task:'Audit financial hedge agreement (basis swap contract) and avoided curtailment economic savings.',deps:[1]},
+  {agent:'writer',task:'Produce nodal congestion risk mitigation strategy and IPP asset yield optimization brief.',deps:[2]}]},
+};
+
+const DTITLE={
+  interconnect_queue:'CAISO / PJM 250 MW Solar + 100 MW BESS Interconnection Queue & Grid Capacity Study',
+  land_permitting:'GIS Parcel Screening & CEQA/NEPA Environmental Permitting Clearance',
+  bess_dispatch:'4-Hour Utility BESS Capacity Market & Arbitrage Revenue Stacking Planner',
+  ira_taxcredit:'IRA Tax Credit Transferability & Energy Community Bonus Qualification',
+  utility_ppa:'20-Year Utility Virtual PPA Financial Model & Offtake Pricing Engine',
+  epc_procurement:'Utility-Scale Tier-1 Module, Tracker & Central Inverter Procurement Plan',
+  scada_performance:'13 GW Fleet SCADA Telemetry & Performance Ratio (PR) Optimization Report',
+  curtailment_risk:'RTO Nodal Locational Marginal Price (LMP) & Congestion Mitigation Strategy',
+};
+
+const TOOLS={
+  screen_gis_utility_parcels_and_substation_proximity:()=>'Screened 1,800 contiguous acres across Fresno County; verified 1.4-mile proximity to 230kV substation.',
+  evaluate_rto_interconnection_queue_and_network_upgrades:()=>'Evaluated CAISO/PJM queue reports; calculated $14.2M network upgrade capex for 230kV POI expansion.',
+  model_20yr_ppa_busbar_cashflow_and_project_irr:()=>'Modeled 20-year cash flows; established $38.50/MWh busbar PPA price delivering 11.8% levered equity IRR.',
+  simulate_bess_degradation_and_capacity_market_dispatch:()=>'Simulated 100MW/400MWh BESS 15-year degradation curve; modeled $8.50/kW-mo Resource Adequacy revenue.',
+  source_tier1_bifacial_pv_modules_and_bess_enclosures:()=>'Sourced 447,000 670W+ TOPCon bifacial modules ($0.195/W) with certified non-FEOC supply chain audit.',
+  audit_wetland_delineation_and_species_habitat_mitigation:()=>'Audited CEQA environmental survey; delineated 14 acres of seasonal wetlands with 100-ft buffer.',
+  structure_virtual_ppa_offtake_terms_and_utility_rfp:()=>'Structured 150MWac Virtual PPA terms with P50 annual yield guarantee (385,000 MWh/yr).',
+  audit_fleet_inverter_clipping_and_transformer_efficiency:()=>'Screened 1,200 central inverters across 1.4 GW operational fleet; isolated 8 units with IGBT thermal derate.',
+  calculate_ira_itc_ptc_adders_and_transferability_discount:()=>'Calculated 50% total ITC basis (30% base + 10% domestic content + 10% energy community); priced credit sale at $0.935.',
+  analyze_locational_marginal_pricing_and_congestion_hedging:()=>'Analyzed 3 years of ERCOT West nodal LMPs; scheduled BESS charging during 410 annual negative pricing hours.',
+  compose:()=>'Drafted in clear, utility-scale renewable development, power market finance and engineering style.',
+  qa_review:()=>'QA: Verified RTO interconnection study limits, IRA tax credit compliance, and Chief Investment Officer sign-off.',
+  save:()=>'Saved to shared enterprise project repository for downstream infrastructure agents.',
+};
+
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+
+const FINAL={
+  interconnect_queue:`CAISO / PJM 250 MW SOLAR + 100 MW BESS INTERCONNECTION QUEUE STUDY (illustrative)
+Project Name: Sierra Horizon Renewable Energy Center (Fresno County, California)
+Capacity: 250 MWdc Solar PV + 100 MW / 400 MWh 4-Hour Battery Energy Storage System (BESS)
+Point of Interconnection (POI): Pacific Gas & Electric (PG&E) 230kV Substation
+
+RTO System Impact & Network Upgrade Analysis:
+• Grid Capacity & Thermal Overload Screening:
+  - 230kV Substation Headroom: 285 MW available thermal capacity during peak solar generation hours.
+  - Short-Circuit Ratio (SCR): SCR measured at 3.82 at POI busbar (Stable weak-grid inverter operating zone).
+• Network Upgrade Capex Allocation:
+  - POI Substation Bay Expansion & Breaker Replacement: $6,800,000.00
+  - System Protection & Telemetry Upgrades: $1,400,000.00
+  - Remote End Transmission Line Reconductoring: $6,000,000.00
+  - Total Estimated Network Upgrade Capex: $14,200,000.00 ($56.80/kW allocated interconnection cost).
+• Interconnection Agreement (IA) Timeline: Phase II System Impact Study complete; IA execution targeted Q3 2026.
+
+Risk & Investment Assessment: Project approved for advancement to full PPA marketing and EPC contracting phase.
+→ Saved: caiso_interconnection_study_report, sld_electrical_single_line, network_upgrade_capex_model
+NOTE: illustrative concept for Ecoplexus (ecoplexus.com).`,
+
+  land_permitting:`GIS PARCEL SCREENING & CEQA/NEPA ENVIRONMENTAL PERMITTING CLEARANCE (illustrative)
+Project Location: Fresno County, California (San Joaquin Valley Solar Zone)
+Total Site Footprint: 1,820 Contiguous Acres across 12 Private Landowner Option Agreements
+
+GIS Land Suitability & Environmental Audit Findings:
+• Topography & Solar Resource: Average ground slope <1.8% (ideal for single-axis tracker positioning); GHI 5.68 kWh/m2/day.
+• Land Option Economics: Option fee $125/acre/year during 3-year development window; $1,350/acre/year during 35-year operational lease.
+• CEQA Environmental Screening Results:
+  - Seasonal Wetland Delineation: 14.2 acres identified along western boundary; 100-foot buffer setback enforced in layout.
+  - Wildlife Habitat Impact: Low impact on San Joaquin kit fox; 120 acres set aside for Swainson hawk foraging habitat mitigation.
+  - Cultural Resources: Zero historical structures or Native American artifacts identified in Phase I Cultural Survey.
+
+Permitting Timeline: Conditional Use Permit (CUP) submittal scheduled for Fresno County Planning Commission in November 2026.
+→ Saved: gis_site_boundary_kml, ceqa_environmental_phase1_report, land_option_agreement_matrix
+NOTE: illustrative.`,
+
+  bess_dispatch:`4-HOUR UTILITY BESS CAPACITY MARKET & ARBITRAGE REVENUE STACKING MODEL (illustrative)
+Asset Profile: 100 MW / 400 MWh 4-Hour Battery Energy Storage System (LFP Lithium Iron Phosphate Enclosures)
+Market Region: CAISO / ERCOT Wholesale Power & Ancillary Service Markets
+
+15-Year Financial & Operational Revenue Stacking Breakdown:
+• Revenue Stream 1: Resource Adequacy (RA) / Capacity Contract:
+  - Utility RA Contract Rate: $8.50 per kW-month ($10,200,000.00 annual fixed capacity revenue).
+• Revenue Stream 2: Wholesale Day-Ahead & Real-Time Energy Arbitrage:
+  - Mid-Day Charging Price (Solar Over-Generation): Average $12.40/MWh.
+  - Net Peak Discharge Price (18:00 to 22:00 Hours): Average $148.50/MWh.
+  - Annual Arbitrage Net Revenue: $6,420,000.00 (based on 1.15 daily equivalent full cycles).
+• Revenue Stream 3: Regulation Up/Down & Spinning Reserves:
+  - Ancillary Service Revenue: $1,850,000.00/year.
+
+Battery Health & Warranty Governance:
+• 15-Year Cell Degradation Model: End of Life (EOL) capacity retention projected at 71.4% at Year 15.
+• BESS Cell Augmentation Schedule: 30 MW / 120 MWh battery container augmentation budgeted at Year 7 ($12.5M).
+→ Saved: bess_15yr_revenue_stacking_model, lfp_cell_degradation_profile, capacity_market_contract_terms
+NOTE: illustrative.`,
+
+  ira_taxcredit:`IRA TAX CREDIT TRANSFERABILITY & ENERGY COMMUNITY BONUS QUALIFICATION (illustrative)
+Project Scope: Sierra Horizon 250 MW Solar + 100 MW BESS Project ($320,000,000.00 Total Capex)
+Tax Credit Framework: Section 48 Investment Tax Credit (ITC) with IRA Adders under Inflation Reduction Act
+
+Tax Credit Calculation & Monetization Matrix:
+• Base Investment Tax Credit (ITC): 30.0% ($96,000,000.00 base credit).
+• Domestic Content Adder: +10.0% ($32,000,000.00 credit) — Certified 100% U.S. steel torque tubes and 45% U.S. equipment costs.
+• Energy Community Bonus: +10.0% ($32,000,000.00 credit) — Site located in Census Tract with retired coal-fired power plant.
+• Total Effective ITC Rate: 50.0% ($160,000,000.00 total tax credit generated).
+
+Transferability Market Sale Structuring:
+• Tax Credit Sale Price: $0.935 per $1.00 of tax credit generated (Monetized net proceeds: $149,600,000.00 cash capital equity).
+• Tax Equity Transferability Buyer: Fortune 50 Institutional Corporate Tax Buyer.
+→ Saved: ira_tax_credit_qualification_dossier, domestic_content_compliance_certificate, tax_credit_transfer_agreement
+NOTE: illustrative.`,
+
+  utility_ppa:`20-YEAR UTILITY VIRTUAL PPA FINANCIAL MODEL & OFFTAKE PRICING ENGINE (illustrative)
+Target Asset: 150 MWac Utility Solar Facility (Central Valley, California)
+Offtaker: Tier-1 Investor-Owned Utility (IOU) / Corporate Technology Buyer
+
+Commercial PPA Pricing & Cash Flow Underwriting:
+• PPA Structure: 20-Year Fixed Busbar Settlement ($38.50 per MWh with 0% escalation).
+• Projected Annual Generation: 385,000 MWh/year (P50 Net Yield) | 348,000 MWh/year (P90 Yield).
+• Annual Gross PPA Revenue: $14,822,500.00/year ($296,450,000.00 total 20-year contract value).
+
+Financial Returns & Capital Structure:
+• Levelized Cost of Energy (LCOE): $29.40/MWh (inclusive of 40% ITC tax credit benefit).
+• Debt Financing: $142,000,000.00 Senior Construction & Term Loan (1.35x minimum DSCR).
+• Sponsor Equity Return: 11.85% Levered Post-Tax IRR (Payback period: 6.2 years).
+→ Saved: ppa_financial_underwriting_model, 20yr_cashflow_waterfall, debt_service_coverage_schedule
+NOTE: illustrative.`,
+
+  epc_procurement:`UTILITY-SCALE TIER-1 MODULE, TRACKER & CENTRAL INVERTER PROCUREMENT PLAN (illustrative)
+Project Footprint: 300 MWdc Utility Solar Facility (Kern County, California)
+Procurement Scope: Master Bill of Materials (BOM) Supply Contracts for PV Modules, Trackers, and Inverters
+
+Equipment Specifications & Vendor Allocation:
+• Bifacial PV Modules:
+  - 447,000x Tier-1 670W N-Type TOPCon Dual-Glass Modules ($0.195/Wdc = $58,500,000.00).
+  - Supply Chain Audit: 100% non-FEOC polysilicon and ingot traceability certified (Section 301 compliant).
+• Single-Axis Tracker Systems:
+  - 3,800x Single-Axis Torque Tube Trackers with 120 mph wind stow algorithm ($0.072/Wdc = $21,600,000.00).
+• Central Inverter Stations:
+  - 60x 4.2 MW Central Inverter Skids with integrated 34.5kV medium-voltage transformers ($14,400,000.00).
+
+Delivery Logistics: Factory shipment scheduled Q1 2027 to align with civil earthworks completion.
+→ Saved: epc_master_bom_procurement_plan, feoc_supply_chain_traceability_dossier, equipment_delivery_schedule
+NOTE: illustrative.`,
+
+  scada_performance:`13 GW FLEET SCADA TELEMETRY & PERFORMANCE RATIO (PR) OPTIMIZATION REPORT (illustrative)
+Monitored IPP Portfolio: 75 Operational Solar & Storage Projects (1,400 MW Operational / 13,000 MW Global Pipeline)
+Telemetry Engine: Ecoplexus 24/7 Real-Time SCADA Operations Center
+
+Fleet Diagnostic Audit Results:
+• Total Generation Monitored (Last 30 Days): 184,500 MWh (Portfolio Fleet Availability: 99.4%).
+• Weather-Adjusted Performance Ratio (PR): Average 83.8% across operational fleet (Target: >82.5%).
+• Anomalous Assets & Corrective Action:
+  - Central Inverter IGBT Outage: Inverter #4 at Kings River 40MW site experienced gate driver trip (-4.2 MW capacity lost).
+  - Tracker Mechanical Dislodgement: Tracker Row 18 at San Joaquin site locked in stow position due to motor fault.
+• Economic Recovery: Immediate O&M dispatch ticket generated; avoided monthly revenue loss estimated at $38,400.00.
+→ Saved: fleet_scada_performance_report, automated_om_dispatch_ticket, inverter_pr_analysis_chart
+NOTE: illustrative.`,
+
+  curtailment_risk:`RTO NODAL LMP & GRID CONGESTION MITIGATION STRATEGY (illustrative)
+Target Facility: 180 MW Solar Asset (ERCOT West / CAISO Substation Busbar)
+Problem Statement: Intermittent transmission congestion causing negative nodal LMPs (-$15.00/MWh to -$45.00/MWh) during peak mid-day solar hours.
+
+Congestion Mitigation & Automated BESS Absorption Strategy:
+• Nodal Price Volatility Analysis: 410 hours of negative mid-day LMPs recorded over prior 12 months (Total potential curtailment revenue loss: $1,280,000.00).
+• Automated BESS Charging Solution:
+  - Programmed 60 MW / 240 MWh co-located battery to initiate automated charging whenever nodal LMP drops below $2.00/MWh.
+  - Absorbed 28,400 MWh of otherwise curtailed solar energy at zero energy cost.
+• Financial Basis Swap Hedging: Executed 5-year ERCOT West-to-North nodal congestion basis swap contract at $3.20/MWh.
+
+Result: Eliminated 94.2% of mid-day grid curtailment losses, improving overall asset annual yield by +4.8%.
+→ Saved: nodal_lmp_congestion_report, bess_automated_charging_protocol, basis_swap_hedging_agreement
+NOTE: illustrative.`,
+};
+
+let EMPLOYEES=[
+  {id:'interconnect_queue',name:'Interconnect Queue',title:'AI Interconnection Queue Operator',wf:'interconnect_queue',handled:780,hrs:295,win:0,status:'idle'},
+  {id:'land_permitting',name:'Land & Permit',title:'AI Land Acquisition & Permitting Operator',wf:'land_permitting',handled:540,hrs:220,win:35,status:'idle'},
+  {id:'bess_dispatch',name:'BESS Stacking',title:'AI Utility BESS Optimization Operator',wf:'bess_dispatch',handled:890,hrs:340,win:48,status:'idle'},
+  {id:'ira_taxcredit',name:'IRA Tax Credit',title:'AI IRA Tax Credit Structuring Operator',wf:'ira_taxcredit',handled:420,hrs:185,win:52,status:'idle'},
+  {id:'utility_ppa',name:'Utility PPA',title:'AI Utility PPA Offtake Operator',wf:'utility_ppa',handled:610,hrs:260,win:40,status:'idle'},
+  {id:'epc_procurement',name:'EPC Procurement',title:'AI EPC Procurement & Supply Chain Operator',wf:'epc_procurement',handled:730,hrs:280,win:30,status:'idle'},
+  {id:'scada_performance',name:'SCADA Fleet',title:'AI SCADA Asset Performance Operator',wf:'scada_performance',handled:960,hrs:390,win:45,status:'idle'},
+  {id:'curtailment_risk',name:'LMP Congestion',title:'AI Nodal LMP & Congestion Risk Operator',wf:'curtailment_risk',handled:380,hrs:165,win:50,status:'idle'},
+];
+
+/* ENGINE (do not edit below this line) */
+let currentView='ops', currentRunWf=null, runRunning=false, buildStep=1, buildWfKey='', buildAssignments={}, buildName='', buildCadence='Daily';
+function $(i){return document.getElementById(i)}
+function tagHtml(t){
+  if(!t)return '';
+  if(t==='flagship')return '<span class="tag hero">Flagship</span>';
+  return `<span class="tag ${t}">${CONFIG.trackLabels[t]||t}</span>`;
+}
+
+function init(){
+  renderEcon(); renderRoster(); renderLegend();
+}
+
+function renderLegend(){
+  const el=$('legend'); if(!el)return;
+  let html='<span><b>Tracks:</b></span>';
+  TRACKS.forEach(([k,v])=>{
+    html+=`<span><span class="tag ${k}">${v}</span></span>`;
+  });
+  html+='<span><span class="tag hero">Flagship</span> Highest ROI</span>';
+  el.innerHTML=html;
+}
+
+function renderEcon(){
+  const el=$('econ'); if(!el)return;
+  const totH=EMPLOYEES.reduce((a,b)=>a+b.hrs,0);
+  const totOps=EMPLOYEES.length;
+  const totHnd=EMPLOYEES.reduce((a,b)=>a+b.handled,0);
+  const wins=EMPLOYEES.filter(e=>e.win>0);
+  const avgWin=wins.length?Math.round(wins.reduce((a,b)=>a+b.win,0)/wins.length):0;
+  
+  el.innerHTML=`
+    <div class="cell"><div class="v">${totOps}</div><div class="k">${CONFIG.econLabels[0]}</div></div>
+    <div class="cell"><div class="v tnum">${totHnd.toLocaleString()}</div><div class="k">${CONFIG.econLabels[1]}</div></div>
+    <div class="cell"><div class="v tnum">${totH.toLocaleString()}<span class="u">h</span></div><div class="k">${CONFIG.econLabels[2]}</div></div>
+    <div class="cell"><div class="v tnum">${CONFIG.statSign}${avgWin}<span class="u">${CONFIG.statSuffix}</span></div><div class="k">${CONFIG.econLabels[3]}</div></div>
+  `;
+}
+
+function renderRoster(){
+  const el=$('roster'); if(!el)return;
+  let html='';
+  
+  TRACKS.forEach(([tKey,tLabel])=>{
+    const emps=EMPLOYEES.filter(e=>WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track===tKey);
+    if(!emps.length)return;
+    html+=`<div class="slabel">${tLabel}</div><div class="roster">`;
+    emps.forEach(e=>{ html+=empCardHtml(e); });
+    html+='</div>';
+  });
+  
+  const unTracked=EMPLOYEES.filter(e=>!WORKFLOWS[e.wf] || !WORKFLOWS[e.wf].track);
+  if(unTracked.length){
+    html+=`<div class="slabel">${CONFIG.rosterLabel}</div><div class="roster">`;
+    unTracked.forEach(e=>{ html+=empCardHtml(e); });
+    html+='</div>';
+  }
+  
+  html+=`<div class="slabel">Expand Workforce</div>
+    <div class="roster">
+      <div class="hire-card" onclick="setView('hire')">
+        <div class="plus">+</div>
+        <div class="h">Add an AI Operator</div>
+        <div class="p">Compose a new specialized workflow team in 3 steps</div>
+      </div>
+    </div>`;
+    
+  el.innerHTML=html;
+}
+
+function empCardHtml(e){
+  const wf=WORKFLOWS[e.wf]||{};
+  const isHero=wf.tag==='flagship';
+  const isWorking=e.status==='working';
+  const teamChips=(wf.tasks||[]).map(t=>`<span class="chip">${AGENT_ROLES[t.agent]?.emoji||'🤖'} ${AGENT_ROLES[t.agent]?.label||t.agent}</span>`).join('');
+  
+  return `
+    <div class="emp ${isHero?'hero':''} ${isWorking?'working':''}" id="emp-${e.id}">
+      <div class="emp-top">
+        <div class="avatar">${e.name.substring(0,2).toUpperCase()}</div>
+        <div>
+          <div class="emp-name">${e.name} ${tagHtml(wf.track)} ${isHero?tagHtml('flagship'):''}</div>
+          <div class="emp-title">${e.title}</div>
+        </div>
+      </div>
+      <div class="emp-owns">Owns: <b>${wf.name||e.wf}</b></div>
+      <div class="team">${teamChips}</div>
+      <div class="emp-stats">
+        <div class="st">Handled<b>${e.handled.toLocaleString()}</b></div>
+        <div class="st">Time Saved<b>${e.hrs}h/mo</b></div>
+        <div class="st">Impact<b>${e.win?CONFIG.statSign+e.win+CONFIG.statSuffix:'—'}</b></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="selectRun('${e.wf}')" ${runRunning?'disabled':''}>${CONFIG.runButton}</button>
+      </div>
+    </div>
+  `;
+}
+
+function setView(v){
+  currentView=v;
+  if(v==='ops'){
+    $('tabA').classList.add('active'); $('tabB').classList.remove('active');
+    $('view-ops').classList.remove('hidden'); $('view-hire').classList.add('hidden');
+  }else{
+    $('tabB').classList.add('active'); $('tabA').classList.remove('active');
+    $('view-hire').classList.remove('hidden'); $('view-ops').classList.add('hidden');
+    initBuilder();
+  }
+}
+
+function selectRun(wfKey){
+  currentRunWf=wfKey;
+  const wf=WORKFLOWS[wfKey];
+  const emp=EMPLOYEES.find(e=>e.wf===wfKey);
+  const panel=$('runPanel'); if(!panel)return;
+  
+  let html=`
+    <div class="run">
+      <div class="run-head">
+        <h3>Live Run Execution: ${wf.title||wf.name}</h3>
+        ${tagHtml(wf.track)} ${wf.tag==='flagship'?tagHtml('flagship'):''}
+      </div>
+      <div class="run-sub">${wf.desc}</div>
+      <div class="run-input">
+        <textarea id="runPrompt">${wf.sample}</textarea>
+        <button class="btn primary big" id="btnStartRun" onclick="startRun('${wfKey}')">Execute Run</button>
+      </div>
+      <div class="phases">
+        <div class="ph active" id="ph-1"><div class="dot">1</div><div class="l">Agent Task DAG</div></div>
+        <div class="ph" id="ph-2"><div class="dot">2</div><div class="l">Streaming Execution</div></div>
+        <div class="ph" id="ph-3"><div class="dot">3</div><div class="l">Produced Deliverable</div></div>
+      </div>
+      <div class="agent-grid" id="agentGrid">
+        ${wf.tasks.map((t,idx)=>`
+          <div class="acard" id="acard-${idx}">
+            <div class="ae">${AGENT_ROLES[t.agent]?.emoji||'🤖'}</div>
+            <div class="ar">${AGENT_ROLES[t.agent]?.label||t.agent}</div>
+            <div class="at">${t.task}</div>
+            <div class="as"><div class="sd"></div><span id="astate-${idx}">Waiting</span></div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="feed" id="runFeed"></div>
+      <div class="result hidden" id="runResult">
+        <div class="rstats">
+          <div class="rrow"><span class="k">Execution Mode</span><span class="v">${wf.mode.toUpperCase()}</span></div>
+          <div class="rrow"><span class="k">Agents Engaged</span><span class="v">${wf.tasks.length}</span></div>
+          <div class="rrow"><span class="k">Est. Time Saved</span><span class="v">4.2 hrs</span></div>
+          <div class="rrow"><span class="k">Human Governance</span><span class="v">CIO Sign-Off</span></div>
+        </div>
+        <div class="rout">
+          <div class="rh">${DTITLE[wfKey]||wf.deliverable||'Deliverable Output'}</div>
+          <div class="rb">${FINAL[wfKey]||'Deliverable generated successfully.'}</div>
+        </div>
+      </div>
+    </div>
+  `;
+  panel.innerHTML=html;
+  panel.scrollIntoView({behavior:'smooth'});
+}
+
+function startRun(wfKey){
+  if(runRunning)return;
+  runRunning=true;
+  const wf=WORKFLOWS[wfKey];
+  const btn=$('btnStartRun'); if(btn)btn.disabled=true;
+  const feed=$('runFeed'); if(feed)feed.innerHTML='';
+  $('runResult').classList.add('hidden');
+  
+  const emp=EMPLOYEES.find(e=>e.wf===wfKey);
+  if(emp){ emp.status='working'; renderRoster(); }
+  
+  let timeStr=()=>new Date().toLocaleTimeString([],{hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  let log=(ag,msg)=>{
+    if(!feed)return;
+    let row=document.createElement('div'); row.className='frow';
+    row.innerHTML=`<span class="ft">${timeStr()}</span><span class="fa">${ag}</span><span class="fd">${msg}</span>`;
+    feed.appendChild(row); feed.scrollTop=feed.scrollHeight;
+  };
+  
+  log('SYSTEM', `Initiating autonomous workflow [${wf.name}] in ${wf.mode.toUpperCase()} mode...`);
+  $('ph-1').classList.remove('active'); $('ph-1').classList.add('done');
+  $('ph-2').classList.add('active');
+  
+  let tasks=wf.tasks;
+  let completed=new Set();
+  
+  function stepRun(){
+    let readyIndices=[];
+    tasks.forEach((t,i)=>{
+      if(!completed.has(i)){
+        let depsMet=(t.deps||[]).every(d=>completed.has(d));
+        if(depsMet) readyIndices.push(i);
+      }
+    });
+    
+    if(readyIndices.length===0){
+      if(completed.size===tasks.length){
+        finishRun();
+      }
+      return;
+    }
+    
+    readyIndices.forEach(idx=>{
+      let t=tasks[idx];
+      let card=$('acard-'+idx);
+      let state=$('astate-'+idx);
+      if(card){ card.classList.add('running','visible'); }
+      if(state) state.innerText='Executing...';
+      
+      let agObj=AGENT_ROLES[t.agent];
+      let agName=agObj?.label||t.agent;
+      log(agName, `Task started: ${t.task}`);
+      
+      setTimeout(()=>{
+        if(agObj && agObj.tools){
+          agObj.tools.forEach(tl=>{ log(agName, `Tool call [${tl}]: ${toolOut(tl)}`); });
+        }
+        if(card){ card.classList.remove('running'); card.classList.add('done'); }
+        if(state) state.innerText='Completed';
+        log(agName, `Task finished.`);
+        completed.add(idx);
+        stepRun();
+      }, 1200);
+    });
+  }
+  
+  function finishRun(){
+    log('SYSTEM', 'All task DAG branches resolved. Rendering final deliverable output.');
+    $('ph-2').classList.remove('active'); $('ph-2').classList.add('done');
+    $('ph-3').classList.add('active','done');
+    $('runResult').classList.remove('hidden');
+    
+    runRunning=false;
+    if(btn)btn.disabled=false;
+    if(emp){ emp.status='idle'; emp.handled++; emp.hrs+=5; renderRoster(); renderEcon(); }
+  }
+  
+  stepRun();
+}
+
+/* BUILDER LOGIC */
+function initBuilder(){
+  buildStep=1; buildWfKey=Object.keys(WORKFLOWS)[0]; buildAssignments={}; buildName=''; buildCadence='Daily';
+  renderBuilder();
+}
+
+function renderBuilder(){
+  const bSteps=$('bSteps'); const bBody=$('bBody'); const bNav=$('bNav');
+  if(!bSteps||!bBody||!bNav)return;
+  
+  bSteps.innerHTML=`
+    <div class="step ${buildStep===1?'active':''}"><div class="n">STEP 1</div><div class="l">Select Workflow</div><div class="d">Choose base motion</div></div>
+    <div class="step ${buildStep===2?'active':''}"><div class="n">STEP 2</div><div class="l">Assign Agents</div><div class="d">Role matching</div></div>
+    <div class="step ${buildStep===3?'active':''}"><div class="n">STEP 3</div><div class="l">Configure &amp; Stand Up</div><div class="d">Cadence &amp; launch</div></div>
+  `;
+  
+  if(buildStep===1){
+    let html='<div class="wf-grid">';
+    Object.keys(WORKFLOWS).forEach(k=>{
+      const wf=WORKFLOWS[k];
+      html+=`
+        <div class="wf ${buildWfKey===k?'sel':''}" onclick="buildWfKey='${k}';renderBuilder();">
+          <div class="wn">${wf.title||wf.name} ${tagHtml(wf.track)}</div>
+          <div class="wd">${wf.desc}</div>
+          <div class="wm">Mode: ${wf.mode} · Tasks: ${wf.tasks.length}</div>
+        </div>
+      `;
+    });
+    html+='</div>';
+    bBody.innerHTML=html;
+    bNav.innerHTML=`<div></div><button class="btn primary" onclick="buildStep=2;renderBuilder();">Next: Assign Agents &rarr;</button>`;
+  }else if(buildStep===2){
+    const wf=WORKFLOWS[buildWfKey];
+    let html=`<div style="margin-bottom:14px;font-size:13px;color:var(--text-muted)">Assign specialist agent roles to each task in <b>${wf.title||wf.name}</b>:</div>`;
+    wf.tasks.forEach((t,idx)=>{
+      const curAg=buildAssignments[idx]||t.agent;
+      html+=`
+        <div class="task-row">
+          <div class="tn">${idx+1}</div>
+          <div class="tt">${t.task}</div>
+          <select onchange="buildAssignments[${idx}]=this.value;">
+            ${RK.map(rk=>`<option value="${rk}" ${curAg===rk?'selected':''}>${AGENT_ROLES[rk].emoji} ${AGENT_ROLES[rk].label}</option>`).join('')}
+          </select>
+        </div>
+      `;
+    });
+    bBody.innerHTML=html;
+    bNav.innerHTML=`
+      <button class="btn" onclick="buildStep=1;renderBuilder();">&larr; Back</button>
+      <button class="btn primary" onclick="buildStep=3;renderBuilder();">Next: Configure &rarr;</button>
+    `;
+  }else if(buildStep===3){
+    const wf=WORKFLOWS[buildWfKey];
+    if(!buildName) buildName=wf.title + ' Operator';
+    bBody.innerHTML=`
+      <div class="field">
+        <label>Operator Name</label>
+        <input type="text" value="${buildName}" onchange="buildName=this.value;">
+      </div>
+      <div class="field">
+        <label>Execution Cadence</label>
+        <div class="seg">
+          ${CONFIG.builderCadences.map(c=>`<button class="${buildCadence===c?'on':''}" onclick="buildCadence='${c}';renderBuilder();">${c}</button>`).join('')}
+        </div>
+      </div>
+    `;
+    bNav.innerHTML=`
+      <button class="btn" onclick="buildStep=2;renderBuilder();">&larr; Back</button>
+      <button class="btn primary" onclick="finalizeBuilder();">Stand Up Operator</button>
+    `;
+  }
+}
+
+function finalizeBuilder(){
+  const wf=WORKFLOWS[buildWfKey];
+  const newId='custom_'+Date.now();
+  const newEmp={
+    id:newId,
+    name:buildName||'Custom Operator',
+    title:`AI ${buildName||'Custom Operator'}`,
+    wf:buildWfKey,
+    handled:0,
+    hrs:140,
+    win:30,
+    status:'idle'
+  };
+  EMPLOYEES.push(newEmp);
+  setView('ops');
+  renderRoster(); renderEcon();
+  selectRun(buildWfKey);
+}
+
+window.onload=init;
+</script>
+</body>
+</html>
