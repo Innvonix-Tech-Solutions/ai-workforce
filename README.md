@@ -217,3 +217,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/american-licorice
 https://innvonix-tech-solutions.github.io/ai-workforce/Bluewave
 https://innvonix-tech-solutions.github.io/ai-workforce/syntiant-corp
 https://innvonix-tech-solutions.github.io/ai-workforce/schunk
+https://innvonix-tech-solutions.github.io/ai-workforce/tigoenergy
