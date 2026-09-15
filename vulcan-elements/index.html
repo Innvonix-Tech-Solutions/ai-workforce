@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vulcan Elements &mdash; AI Commercial &amp; Rare Earth Magnetics Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f9f6f0;--surface2:#eae3d9;--border:#d6cbb8;--accent:#d9531e;
+--accent-dim:rgba(217,83,30,.10);--accent-line:rgba(217,83,30,.40);--slate:#1e2228;--slate-line:rgba(30,34,40,.32);--text:#1a1d20;--hi:#101316;--tert:#605c56;--ok:#10b981;--ok-dim:rgba(16,185,129,.10);--gold:#d97706;--gold-bg:#fffbeb;--gold-line:#fde68a}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:46px;height:34px;border-radius:8px;background:linear-gradient(135deg,#1e2228,#d9531e);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:14px;letter-spacing:.5px;font-family:Inter,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#d9531e}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:900px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#b83e10;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(16,185,129,.08);color:#059669;border:1px solid rgba(16,185,129,.3)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#d9531e}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#b83e10;font-size:15px;flex-shrink:0;position:relative;font-family:Inter,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#d9531e}.btn.primary{background:#d9531e;border-color:#d9531e;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#d9531e;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#d9531e}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(16,185,129,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(16,185,129,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#d9531e}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Inter,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#b83e10;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px;font-family:Inter,sans-serif}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input,.field select{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:8px;padding:10px 12px;background:#fff;outline:none}
+.field input:focus{border-color:var(--accent)}
+.seg{display:flex;gap:6px}.seg button{flex:1;padding:9px;font-size:12px;font-weight:600;border:1px solid var(--border);border-radius:8px;background:#fff;cursor:pointer;color:var(--tert)}.seg button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.bnav{display:flex;justify-content:space-between;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
+.foot{max-width:1180px;margin:32px auto 40px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5;font-family:Inter,sans-serif;border-top:1px solid var(--border);padding-top:16px}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">
+    <div class="mark">VLC</div>
+    <div>
+      <div class="htitle">Vulcan Elements &mdash; AI Commercial &amp; Rare Earth Magnetics Workforce</div>
+      <div class="hsub">Onshoring sintered NdFeB rare earth magnets for U.S. defense systems, electric vehicles &amp; AI robotics</div>
+    </div>
+  </div>
+  <div class="badge">Concept demo &middot; <b>Vulcan Elements</b></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tabA" onclick="setView('ops')">AI Operators Roster</button>
+  <button class="tab" id="tabB" onclick="setView('hire')">+ Compose New AI Operator</button>
+</div>
+
+<div class="main">
+  <div id="view-ops">
+    <div class="lead">
+      <b>Autonomous AI workforce prototype for Vulcan Elements:</b> Orchestrating defense prime sourcing, sintered NdFeB magnet volume quoting, high-temperature Dy-diffusion alloy synthesis, pulse magnetization, DFARS compliance, and Benson / Durham plant yield audits.
+    </div>
+    
+    <div class="legend">
+      <span><span class="tag commercial">Commercial &amp; Defense Sourcing</span> Primes, EV OEMs, RFQs &amp; volume magnet pricing</span>
+      <span><span class="tag operations">Rare Earth Metallurgy &amp; Plant Operations</span> Sintered NdFeB, grain boundary diffusion &amp; FAT compliance</span>
+      <span><span class="tag hero">Flagship</span> Sintered NdFeB magnet design &amp; metallurgical optimization</span>
+    </div>
+
+    <div class="econ" id="econ"></div>
+    <div id="roster"></div>
+    
+    <div id="runPanel"></div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <div class="lead">
+      <b>Compose a custom Vulcan AI Operator:</b> Pick a powder metallurgy, vacuum sintering, or defense qualification workflow, assign specialist agents, and deploy to your magnetics manufacturing roster.
+    </div>
+    <div class="steps" id="bSteps"></div>
+    <div class="emp" style="background:#fff;margin-bottom:20px;padding:20px" id="bBody"></div>
+    <div class="bnav" id="bNav"></div>
+  </div>
+</div>
+
+<div class="foot">
+  Demonstration prototype created for Vulcan Elements by Innvonix Tech Solutions. All metrics, RFQ responses, rare earth alloy compositions, and B-H hysteresis curves are simulated placeholders for illustrative purposes. Human engineering review required prior to production deployment.
+</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'Rare Earth Supply Chain & Defense Research', tools: ['research_rare_earth_supply', 'save'] },
+  prospector: { emoji: '🧲', label: 'Defense Prime Contractor & EV Sourcing', tools: ['source_defense_primes', 'save'] },
+  qualifier: { emoji: '🎯', label: 'Sintered NdFeB Magnet RFQ Qualifier', tools: ['score_magnet_rfq', 'save'] },
+  alloy_metallurgy_arch: { emoji: '🧲', label: 'NdFeB Alloy Composition Architect', tools: ['design_ndfeb_alloy_recipe', 'save'] },
+  sintering_process_spec: { emoji: '🔥', label: 'Vacuum Sintering Process Specialist', tools: ['optimize_vacuum_sintering', 'save'] },
+  magnetization_coating_eng: { emoji: '⚡', label: 'Pulse Magnetization & Coating Lead', tools: ['configure_pulse_magnetizer', 'save'] },
+  powder_metallurgy_sim_lead: { emoji: '🔬', label: 'Gas Jet Milling & Powder Sim Lead', tools: ['simulate_jet_milling', 'save'] },
+  throughput: { emoji: '📊', label: 'Benson & Durham Plant Yield Lead', tools: ['optimize_benson_plant_yield', 'save'] },
+  compliance: { emoji: '📋', label: 'Defense ITAR, DFARS & ISO 9001 Lead', tools: ['verify_itar_dfars_compliance', 'save'] },
+  pricing: { emoji: '🧮', label: 'Rare Earth Alloy & Magnet Quoting', tools: ['calculate_magnet_pricing', 'save'] },
+  writer: { emoji: '✍️', label: 'Defense Magnetics Tech Spec Writer', tools: ['compose_technical_proposal', 'save'] },
+  reviewer: { emoji: '✅', label: 'QA & Final Vulcan Release Reviewer', tools: ['review_vulcan_qa', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Defense Prime & Commercial OEM Sourcing',
+    title: 'Design-Win & Defense Magnet Opportunity Discovery',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Target list of U.S. defense prime contractors (Lockheed, Raytheon, Northrop) & EV OEMs needing domestic sintered NdFeB magnets',
+    sample: 'Identify top 30 U.S. defense missile & drone programs expanding domestic NdFeB magnet procurement under DFARS 252.225-7052.',
+    desc: 'Automated discovery of defense primes, EV motor makers, and AI data center cooling system suppliers.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan DoD defense procurement budgets & domestic rare earth magnet mandates', deps: [] },
+      { agent: 'prospector', task: 'Source VP of Supply Chain, Defense Procurement Heads & Chief Metallurgists', deps: [0] },
+      { agent: 'qualifier', task: 'Score fit with Vulcan sintered NdFeB magnets, high-temp dysprosium-free grades & ITAR compliance', deps: [1] }
+    ]
+  },
+  magnet_volume_quote: {
+    name: 'Sintered NdFeB Magnet Volume Quoting',
+    title: 'Commercial RFQ Evaluation & Magnet Pricing Engine',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Commercial quotation & volume pricing tier for N52/50SH sintered NdFeB magnet blocks and rings',
+    sample: 'Generate volume quotation for 50,000 units of N52 grade sintered NdFeB magnet blocks with Ni-Cu-Ni corrosion plating.',
+    desc: 'Evaluates customer RFQs, matches magnetic energy product (BHmax), operating temperature, and calculates multi-tier volume pricing.',
+    tasks: [
+      { agent: 'qualifier', task: 'Parse RFQ engineering specs for BHmax energy product, operating temp (up to 200°C), and corrosion coating', deps: [] },
+      { agent: 'pricing', task: 'Compute rare earth raw material alloy index, vacuum sintering furnace batch costs, plating & volume discounts', deps: [0] },
+      { agent: 'writer', task: 'Generate formal Vulcan Elements commercial proposal with lead times and domestic supply chain guarantees', deps: [1] }
+    ]
+  },
+  defense_qualification_proposal: {
+    name: 'Defense & ITAR Qualification Proposal',
+    title: 'DFARS 252.225-7052 & Military Spec Qualification Proposal',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Comprehensive technical qualification package for U.S. DoD defense actuator and guidance system magnets',
+    sample: 'Draft technical qualification proposal for Dy-reduced 50UH NdFeB magnets for high-shock missile guidance actuators.',
+    desc: 'Combines heavy-rare-earth reduction metallurgy, DFARS 252.225-7052 domestic origin proof, and ITAR cybersecurity compliance.',
+    tasks: [
+      { agent: 'alloy_metallurgy_arch', task: 'Select Dy-reduced/heavy-rare-earth-free N50UH NdFeB alloy formulation for high-shock defense actuators', deps: [] },
+      { agent: 'compliance', task: 'Verify DFARS 252.225-7052 domestic origin, ITAR registration & NIST SP 800-171 cybersecurity', deps: [0] },
+      { agent: 'pricing', task: 'Estimate FAI tooling, magnetic hysteresis lab testing & defense packaging engineering fees', deps: [1] }
+    ]
+  },
+  radar: {
+    name: 'Rare Earth Oxide & Market Intelligence',
+    title: 'Global REO Pricing & Domestic Magnet Supply Radar',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Market intelligence brief on rare earth oxide (Nd, Pr, Dy, Tb) spot prices and foreign supply chain risks',
+    sample: 'Analyze global Neodymium-Praseodymium (NdPr) oxide price movements and U.S. Defense Production Act Title III grants.',
+    desc: 'Monitors raw material REO pricing, competitor sintering capacities, and U.S. government critical mineral incentives.',
+    tasks: [
+      { agent: 'researcher', task: 'Track global Neodymium (Nd), Praseodymium (Pr), Dysprosium (Dy) and Terbium (Tb) REO price indices', deps: [] },
+      { agent: 'researcher', task: 'Benchmark domestic magnet manufacturing capacities & DoD Title III DPA grant allocations', deps: [] }
+    ]
+  },
+  sintered_ndfeb_magnet_design: {
+    name: 'Sintered NdFeB Magnet Design & Synthesis',
+    title: 'NdFeB Strip Casting, Jet Milling, Vacuum Sintering & Pulse Magnetization',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'Complete engineering package for high-performance N52/50SH sintered NdFeB magnets with BHmax > 50 MGOe',
+    sample: 'Optimize sintered NdFeB magnet manufacturing process for 50 MGOe energy product: strip casting, helium jet milling (d50=2.8µm), vacuum sintering at 1,080°C.',
+    desc: 'Flagship engineering workflow: integrates alloy chemistry formulation, helium jet milling, vacuum liquid-phase sintering, pulse magnetization (> 4.5T), and FAI release.',
+    tasks: [
+      { agent: 'alloy_metallurgy_arch', task: 'Formulate NdFeB strip casting chemistry (Nd2Fe14B + Dy/Tb grain boundary diffusion)', deps: [] },
+      { agent: 'powder_metallurgy_sim_lead', task: 'Simulate helium gas jet milling to yield sub-3µm particle powder size with zero oxidation', deps: [0] },
+      { agent: 'sintering_process_spec', task: 'Configure magnetic-field transverse pressing & liquid-phase vacuum sintering cycle (1,080°C)', deps: [1] },
+      { agent: 'magnetization_coating_eng', task: 'Apply Ni-Cu-Ni or epoxy multi-layer protective coating & high-field pulsed magnetization (> 4.5 Tesla)', deps: [2] },
+      { agent: 'writer', task: 'Assemble master magnet manufacturing traveler, B-H hysteresis curve report & FAI traveler', deps: [3] },
+      { agent: 'reviewer', task: 'Conduct final zero-defect QA review against Vulcan Elements and defense MIL-SPEC standards', deps: [4] }
+    ]
+  },
+  benson_plant_capacity_synthesis: {
+    name: 'Benson 10,000 MT Plant Capacity Synthesis',
+    title: '10,000 Metric Tonne Automated Sintering Furnace & Plant Model',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'Benson manufacturing plant capacity model & automated sintering furnace schedule',
+    sample: 'Synthesize production schedule for Benson 10,000 MT facility: multi-chamber vacuum furnace batch scheduling and jet milling powder flow.',
+    desc: 'Optimizes thermal uniformity (± 2.5°C), multi-chamber vacuum furnace gas flows, and annual 10,000 MT magnet production throughput.',
+    tasks: [
+      { agent: 'sintering_process_spec', task: 'Model multi-chamber vacuum sintering furnace gas flow & thermal uniformity (± 2.5°C)', deps: [] },
+      { agent: 'throughput', task: 'Run plant throughput cycle time simulation for 10,000 metric tonne annual NdFeB magnet production', deps: [0] }
+    ]
+  },
+  pulse_magnetization_coating_audit: {
+    name: 'Pulse Magnetization & Coating Audit',
+    title: 'Helmholtz Coil Surface Flux & Salt Spray Corrosion Testing Audit',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'Surface flux density audit report & 500-hour ASTM B117 salt spray corrosion certificate',
+    sample: 'Audit 4.5 Tesla pulse magnetization flux density and Ni-Cu-Ni multi-layer plating corrosion resistance on N50UH magnet batches.',
+    desc: 'Evaluates surface Gauss flux distribution, coercivity (Hcj), and ASTM B117 salt spray pinhole-free plating durability.',
+    tasks: [
+      { agent: 'magnetization_coating_eng', task: 'Measure surface flux density (Gauss) & 500-hour ASTM B117 salt spray corrosion resistance', deps: [] },
+      { agent: 'compliance', task: 'Verify zero pinhole defects and Class 1 defense environmental durability', deps: [] }
+    ]
+  },
+  durham_pilot_yield_audit: {
+    name: 'Durham Pilot Facility Yield & Metallurgical Audit',
+    title: 'ICP-OES Chemical Purity, B-H Curve Hysteresis & AS9100D Audit',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'ICP-OES metallurgical purity certificate & AS9100D factory acceptance test sign-off',
+    sample: 'Audit Durham pilot plant first-pass sintering yield, ICP-OES trace impurity levels, and B-H curve hysteresis loop metrics.',
+    desc: 'Monitors metallurgical density (> 7.55 g/cm³), trace impurity limits (O2 < 800 ppm), and AS9100D / ISO 9001 quality management compliance.',
+    tasks: [
+      { agent: 'throughput', task: 'Analyze B-H curve hysteresis loop metrics (Br, Hcj, BHmax) and sintering density (> 7.55 g/cm³)', deps: [] },
+      { agent: 'compliance', task: 'Verify DFARS domestic chain of custody & ISO 9001 / AS9100D quality management sign-off', deps: [] },
+      { agent: 'reviewer', task: 'Issue ISO 9001 factory acceptance testing (FAT) shipment release certificate', deps: [0, 1] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'Rare Earth Supply Chain & Defense Sourcing Report',
+  magnet_volume_quote: 'Sintered NdFeB Magnet Commercial Quotation',
+  defense_qualification_proposal: 'Defense & ITAR Magnet Qualification Proposal',
+  radar: 'Rare Earth Oxide & Domestic Magnet Market Radar Brief',
+  sintered_ndfeb_magnet_design: 'High-Performance Sintered NdFeB Magnet Engineering Package',
+  benson_plant_capacity_synthesis: 'Benson 10,000 MT Plant Capacity & Furnace Spec',
+  pulse_magnetization_coating_audit: 'Pulse Magnetization & Protective Coating Audit Report',
+  durham_pilot_yield_audit: 'Durham Pilot Facility Yield & Metallurgical Quality Audit'
+};
+
+const TOOLS = {
+  research_rare_earth_supply: () => 'Found 16 defense procurement mandates and commercial EV programs requiring onshore domestic NdFeB magnets.',
+  source_defense_primes: () => 'Identified 46 key decision-makers: VP of Defense Supply Chain, Missile Systems Metallurgists & Procurement Leads.',
+  score_magnet_rfq: () => 'RFQ evaluation score = 99/100 (Strong match for N52/50SH sintered NdFeB magnet & DFARS domestic origin specs).',
+  design_ndfeb_alloy_recipe: () => 'NdFeB alloy formulation complete: Dy/Tb grain boundary diffusion optimized for 50 MGOe energy product at 180°C.',
+  simulate_jet_milling: () => 'Helium gas jet milling simulation complete: powder particle size distribution d50 = 2.8µm with zero oxygen pickup.',
+  optimize_vacuum_sintering: () => 'Liquid-phase vacuum sintering thermal curve optimized: 1,080°C vacuum soak yields 99.8% theoretical density.',
+  configure_pulse_magnetizer: () => 'Pulse magnetizer pulse network configured: 4.8 Tesla magnetic pulse achieves 100% magnetic saturation.',
+  optimize_benson_plant_yield: () => 'Benson 10,000 MT plant yield model optimized: furnace throughput increased to 94.2% first-pass magnet yield.',
+  verify_itar_dfars_compliance: () => 'DFARS 252.225-7052, ITAR registration & NIST SP 800-171 cybersecurity compliance verified.',
+  calculate_magnet_pricing: () => 'Volume pricing computed: 50,000 N52 sintered magnet blocks at $18.50/unit ($925,000 total) with domestic origin cert.',
+  compose_technical_proposal: () => 'Technical spec package, B-H hysteresis loop curves & DFARS compliance documentation generated.',
+  review_vulcan_qa: () => 'Final QA sign-off granted by Vulcan Elements Chief Metallurgical Officer.',
+  save: () => 'Data block saved to shared Vulcan engineering context.'
+};
+
+const FINAL = {
+  scout: `VULCAN ELEMENTS — RARE EARTH SUPPLY CHAIN & DEFENSE SOURCING REPORT (illustrative)
+
+Target Market Segment: U.S. Defense Primes, Missile/Drone Manufacturers & EV OEMs (#VULCAN-SOURCING-2026-Q3).
+
+Key Sourcing Findings & Qualified Opportunities:
+• Identified Defense Programs: 18 U.S. DoD missile, torpedo, radar & drone programs mandating 100% domestic NdFeB magnets.
+• Commercial OEM Demand: 8 EV drivetrain makers & AI data center pump OEMs seeking U.S.-onshored NdFeB magnet supply.
+• Qualified Contacts: 46 verified leads (VP of Defense Procurement, Chief Metallurgists, Weapon System Program Managers).
+• Estimated Annual Demand: ~4,500 metric tonnes of sintered NdFeB magnet blocks, rings & custom arcs.
+
+Action Item: Initiate technical sales outreach emphasizing Vulcan's 100% domestic U.S. supply chain and DFARS 252.225-7052 compliance.
+
+→ Saved: qualified_defense_leads, commercial_ev_pipeline, rare_earth_demand_analysis
+
+NOTE: illustrative; confirm against Vulcan Elements commercial BD data.`,
+
+  magnet_volume_quote: `VULCAN ELEMENTS — SINTERED NDFEB MAGNET COMMERCIAL QUOTATION (illustrative)
+
+RFQ Reference: #VULCAN-RFQ-2026-55109 — N52 High-Energy Sintered NdFeB Magnet Blocks.
+
+Commercial Quotation & Volume Pricing Breakdown:
+• Product Grade: N52 Sintered Neodymium-Iron-Boron (BHmax = 50-52 MGOe).
+• Protection Coating: Ni-Cu-Ni triple-layer electroplating (500-hour ASTM B117 salt spray rating).
+• Domestic Compliance: 100% U.S. melted, sintered & magnetized (DFARS 252.225-7052 compliant).
+• Volume Pricing:
+  - 5,000 to 19,999 units: $22.50 / unit
+  - 20,000 to 49,999 units: $19.80 / unit
+  - 50,000+ units: $18.50 / unit (Total Order: $925,000 for 50,000 units)
+• Delivery Schedule: Ships from Durham, NC facility (Benson plant ramp allocation included).
+
+Terms & SLA: 100% domestic certification of origin included with Certificate of Conformance (CoC).
+
+→ Saved: magnet_quote_55109, volume_pricing_matrix, durham_shipment_schedule
+
+NOTE: illustrative; confirm against Vulcan Elements official sales pricing models.`,
+
+  defense_qualification_proposal: `VULCAN ELEMENTS — DEFENSE & ITAR MAGNET QUALIFICATION PROPOSAL (illustrative)
+
+Proposal Title: High-Temperature Dy-Reduced N50UH Sintered NdFeB Magnets for Defense Actuators (#VULCAN-PROP-8820).
+
+Technical & Metallurgical Specification:
+• Alloy Composition: Nd2Fe14B with heavy-rare-earth dysprosium grain boundary diffusion (Dy-GBD).
+• Thermal Performance: Remanence (Br) = 1.42 Tesla; Intrinsic Coercivity (Hcj) > 25 kOe at 180°C operating temp.
+• Mechanical Shock Resistance: Survives 15,000 G deceleration force in missile guidance actuators.
+• Defense Compliance: Fully certified under ITAR, DFARS 252.225-7052, and NIST SP 800-171.
+
+Certification Package: First Article Inspection (FAI) report with full B-H hysteresis curve tracing.
+
+→ Saved: defense_qualification_proposal, bh_hysteresis_curves, dfars_origin_certification
+
+NOTE: illustrative; confirm against Vulcan custom defense magnet specifications.`,
+
+  radar: `VULCAN ELEMENTS — RARE EARTH OXIDE & DOMESTIC MAGNET MARKET RADAR BRIEF (illustrative)
+
+Intelligence Scope: Global REO Prices, Foreign Supply Chain Vulnerabilities & U.S. Onshoring (#VULCAN-RADAR-2026).
+
+Competitive & Market Landscape Analysis:
+• REO Price Trends: Neodymium-Praseodymium (NdPr) oxide prices stabilizing; Dy/Tb heavy rare earth premiums driving demand for Dy-reduced grain boundary diffusion.
+• Supply Chain Security: U.S. Defense Department tightening enforcement of foreign magnet bans under 10 U.S.C. 4872.
+• Technological Edge: Vulcan's helium jet milling and vacuum sintering processes achieve 12% higher magnetic energy product (BHmax) with 30% reduced Dy consumption.
+
+Strategic Recommendation: Accelerate Benson 10,000 MT facility buildout to capture defense and EV magnet market share.
+
+→ Saved: reo_price_tracking_matrix, defense_mandate_benchmark, market_share_analysis
+
+NOTE: illustrative; confirm against Vulcan Elements market intelligence reports.`,
+
+  sintered_ndfeb_magnet_design: `VULCAN ELEMENTS — SINTERED NDFEB MAGNET ENGINEERING PACKAGE (illustrative)
+
+Master Engineering Specification (#VULCAN-ENG-NDFEB-50MGOE-2026):
+
+1. Rare Earth Alloy Composition & Strip Casting:
+   • Formulation: Nd26.5 Pr6.0 Dy1.5 Fe-bal B1.0 Co1.5 Ga0.2 (wt%); strip cast thickness = 0.28 mm.
+   • Grain Boundary Diffusion: Dy vapor deposition treatment enhancing coercivity without sacrificing Br.
+
+2. Powder Metallurgy & Vacuum Sintering:
+   • Jet Milling: Helium gas jet milling yielding narrow particle distribution (d50 = 2.8µm, O2 < 600 ppm).
+   • Sintering: Transverse magnetic field alignment (1.8 Tesla) & liquid-phase vacuum sintering at 1,080°C.
+
+3. Pulse Magnetization & Plating:
+   • Magnetization: 4.8 Tesla capacitor-discharge pulse achieving full magnetic saturation (> 99.9%).
+   • Protective Coating: 15µm Ni-Cu-Ni multi-layer plating with zero pinhole defects.
+
+4. B-H Hysteresis Measurement & FAI Release:
+   • Measured Parameters: Br = 1.43 T, Hcb = 10.8 kOe, Hcj = 26.5 kOe, BHmax = 50.8 MGOe.
+   • QA Release: Certified for immediate defense shipment by Vulcan Chief Metallurgical Officer.
+
+→ Saved: master_ndfeb_spec_50mgoe, jet_milling_recipe, bh_curve_report, fat_qa_traveler
+
+NOTE: illustrative; confirm against Vulcan Elements engineering guidelines.`,
+
+  benson_plant_capacity_synthesis: `VULCAN ELEMENTS — BENSON 10,000 MT PLANT CAPACITY SPEC (illustrative)
+
+10,000 Metric Tonne Facility Architecture & Process Model (#VULCAN-BENSON-SPEC-1000):
+
+Plant Infrastructure & Automation Model:
+• Sintering Capacity: 12 multi-chamber continuous vacuum sintering furnaces with ± 2.5°C thermal uniformity.
+• Jet Milling Lines: 6 high-throughput helium gas jet milling loops producing 30 metric tonnes of NdFeB powder daily.
+• Automation Engine: Integrated MES (Manufacturing Execution System) tracking powder batches from REO reduction to final magnet shipment.
+• Environmental Controls: Zero-discharge closed-loop water treatment and nitrogen-recycled glovebox lines.
+
+Quality Sign-off: Approved for Benson, NC 10,000 MT facility construction phase.
+
+→ Saved: benson_plant_spec_1000, furnace_thermal_profile, mes_plant_layout
+
+NOTE: illustrative; confirm against Vulcan Benson plant engineering guidelines.`,
+
+  pulse_magnetization_coating_audit: `VULCAN ELEMENTS — PULSE MAGNETIZATION & COATING AUDIT REPORT (illustrative)
+
+Helmholtz Coil Surface Flux & Salt Spray Inspection (#VULCAN-COATING-AUDIT-2026):
+
+Quality Testing Results:
+• Surface Flux Density: Peak surface field = 5,200 Gauss across 100 sample block magnets (± 1.2% variation).
+• Salt Spray Testing: Zero corrosion or blistering detected after 500 hours of continuous ASTM B117 salt spray exposure.
+• Coating Adhesion: Passed cross-hatch tape test (5B rating) and thermal shock cycling (-40°C to +180°C).
+
+Conclusion: Magnetization and plating processes certified for defense and harsh-environment commercial applications.
+
+→ Saved: coating_audit_report, surface_flux_maps, salt_spray_certificates
+
+NOTE: illustrative; confirm against Vulcan Elements quality testing standards.`,
+
+  durham_pilot_yield_audit: `VULCAN ELEMENTS — DURHAM PILOT FACILITY YIELD & METALLURGICAL AUDIT (illustrative)
+
+Audit Scope: Metallurgical Purity & Quality Assurance at Durham (NC) Pilot Facility (#VULCAN-AUDIT-2026-09).
+
+Manufacturing & Quality Assurance Metrics:
+• First-Pass Sintering Yield: 94.8% yield achieved across 200 furnace runs (density = 7.58 g/cm³).
+• Chemical Purity: ICP-OES chemical analysis confirms oxygen content < 650 ppm and carbon < 350 ppm.
+• Defense Certification: 100% compliant with DFARS 252.225-7052 domestic chain of custody and AS9100D quality standards.
+• FAT Release: Certified for defense prime contractor shipment.
+
+Sign-off Status: ISO 9001 & AS9100D quality audit passed with zero major non-conformances.
+
+→ Saved: durham_pilot_yield_audit, icp_oes_purity_logs, as9100d_compliance_certificates
+
+NOTE: illustrative; confirm against Vulcan Elements quality management systems.`
+};
+
+let EMPLOYEES = [
+  { id: 'scout', name: 'AI-Defense-Sourcing-Scout', title: 'AI Defense & EV Sourcing Lead', wf: 'scout', handled: 365, hrs: 78, win: 0, status: 'idle' },
+  { id: 'magnet_volume_quote', name: 'AI-Magnet-Quoting-Estimator', title: 'AI Magnet Quoting & Pricing Lead', wf: 'magnet_volume_quote', handled: 475, hrs: 110, win: 68, status: 'idle' },
+  { id: 'defense_qualification_proposal', name: 'AI-Defense-Qualification-Arch', title: 'AI Defense Qualification Lead', wf: 'defense_qualification_proposal', handled: 220, hrs: 98, win: 64, status: 'idle' },
+  { id: 'radar', name: 'AI-RareEarth-Market-Intel', title: 'AI Market Intelligence Analyst', wf: 'radar', handled: 170, hrs: 46, win: 0, status: 'idle' },
+  { id: 'sintered_ndfeb_magnet_design', name: 'AI-NdFeB-Metallurgy-Architect', title: 'AI NdFeB Metallurgy Lead', wf: 'sintered_ndfeb_magnet_design', handled: 560, hrs: 320, win: 90, status: 'idle' },
+  { id: 'benson_plant_capacity_synthesis', name: 'AI-Benson-Plant-Specialist', title: 'AI Benson Plant Capacity Lead', wf: 'benson_plant_capacity_synthesis', handled: 395, hrs: 205, win: 74, status: 'idle' },
+  { id: 'pulse_magnetization_coating_audit', name: 'AI-Magnetization-Coating-Lead', title: 'AI Pulse Magnetization Audit Lead', wf: 'pulse_magnetization_coating_audit', handled: 350, hrs: 185, win: 70, status: 'idle' },
+  { id: 'durham_pilot_yield_audit', name: 'AI-Durham-FAT-Audit-Lead', title: 'AI Plant Yield & Quality Lead', wf: 'durham_pilot_yield_audit', handled: 440, hrs: 240, win: 84, status: 'idle' }
+];
+
+const TRACKS = [
+  ['commercial', 'Commercial & Defense Sourcing'],
+  ['operations', 'Rare Earth Metallurgy & Plant Operations']
+];
+
+let running = false;
+const $ = id => document.getElementById(id);
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const rand = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
+const now = () => new Date().toLocaleTimeString('en-GB');
+const mono = n => n.trim().slice(0, 2).toUpperCase();
+
+function toolOut(toolKey) {
+  return TOOLS[toolKey] ? TOOLS[toolKey]() : 'Completed successfully.';
+}
+
+function chips(wf) {
+  let s = '';
+  if (wf.track === 'commercial') s += '<span class="tag commercial">Commercial &amp; Defense Sourcing</span>';
+  if (wf.track === 'operations') s += '<span class="tag operations">Rare Earth Metallurgy</span>';
+  if (wf.tag === 'flagship') s += ' <span class="tag hero">Flagship</span>';
+  return s;
+}
+
+function setView(v) {
+  $('view-ops').classList.toggle('hidden', v !== 'ops');
+  $('view-hire').classList.toggle('hidden', v !== 'hire');
+  $('tabA').classList.toggle('active', v === 'ops');
+  $('tabB').classList.toggle('active', v === 'hire');
+  if (v === 'hire') initBuilder();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderEcon() {
+  const total = EMPLOYEES.length, h = EMPLOYEES.reduce((s, e) => s + e.handled, 0), hrs = EMPLOYEES.reduce((s, e) => s + e.hrs, 0);
+  const w = EMPLOYEES.filter(e => e.win > 0);
+  const avg = w.length ? Math.round(w.reduce((s, e) => s + e.win, 0) / w.length) : 0;
+  const cells = [
+    [total, 'AI operators (commercial + engineering)'],
+    [h.toLocaleString(), 'Magnet designs, Dy-diffusion runs & RFQs handled'],
+    [hrs.toLocaleString() + '<span class="u"> hrs</span>', 'metallurgy & plant engineering hours saved / mo'],
+    ['+' + avg + '%', 'avg turnaround improvement']
+  ];
+  $('econ').innerHTML = cells.map(c => `<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');
+}
+
+function empCard(e) {
+  const wf = WORKFLOWS[e.wf];
+  const team = wf.tasks.map(t => t.agent).filter((v, i, a) => a.indexOf(v) === i).map(r => `<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');
+  return `<div class="emp ${e.status === 'working' ? 'working' : ''} ${wf.tag === 'flagship' ? 'hero' : ''}" id="emp-${e.id}"><div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div><div class="emp-owns">Owns: <b>${wf.name}</b></div><div class="team">${team}</div><div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win > 0 ? ('+' + e.win + '%') : '—'}</b>faster</div></div><div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a magnet / Dy spec</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;
+}
+
+function renderRoster() {
+  const hire = `<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;
+  let html = '';
+  TRACKS.forEach(([tk, label], gi) => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf].track === tk);
+    if (!list.length) return;
+    html += `<div class="slabel">${label}</div><div class="roster">` + list.map(empCard).join('') + (gi === TRACKS.length - 1 ? hire : '') + `</div>`;
+  });
+  $('roster').innerHTML = html;
+}
+
+function assign(id) {
+  if (running) return;
+  const e = EMPLOYEES.find(x => x.id === id), wf = WORKFLOWS[e.wf];
+  $('runPanel').innerHTML = `<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} &middot; ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a magnet metallurgy spec, Dy-diffusion target, or RFQ and ${e.name} runs the whole loop.</div></div></div><div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div><div id="stage"></div></div>`;
+  $('run').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  $('obj').focus();
+}
+
+async function runEmp(id) {
+  if (running) return;
+  running = true;
+  const e = EMPLOYEES.find(x => x.id === id), wf = WORKFLOWS[e.wf];
+  const obj = ($('obj').value || wf.sample).trim();
+  $('go').disabled = true;
+  e.status = 'working';
+  const card = $('emp-' + e.id);
+  if (card) card.classList.add('working');
+  const stage = $('stage');
+  stage.innerHTML = `<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div><div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div><div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;
+  const feed = $('feed');
+  function log(rk, d) {
+    const r = AGENT_ROLES[rk];
+    const nm = r ? (r.emoji + ' ' + r.label) : '◆ ' + e.name;
+    const row = document.createElement('div');
+    row.className = 'frow';
+    row.innerHTML = `<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0, 150)}</span>`;
+    feed.appendChild(row);
+    feed.scrollTop = feed.scrollHeight;
+  }
+  log(null, `Input received: "${obj.substring(0, 54)}…"`);
+  log(null, `Running the ${wf.name} workflow &middot; ${wf.tasks.length} agents &middot; ${wf.mode.toUpperCase()} mode`);
+  await sleep(rand(700, 1100));
+  const grid = $('agrid');
+  wf.tasks.forEach((t, i) => {
+    const r = AGENT_ROLES[t.agent];
+    const c = document.createElement('div');
+    c.className = 'acard';
+    c.id = 'ac-' + i;
+    c.innerHTML = `<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;
+    grid.appendChild(c);
+    setTimeout(() => c.classList.add('visible'), i * 85);
+  });
+  await sleep(600);
+  $('p1').classList.remove('active');
+  $('p1').classList.add('done');
+  $('p1').querySelector('.dot').textContent = '✓';
+  $('p2').classList.add('active');
+  const done = new Set();
+  async function runOne(i) {
+    const t = wf.tasks[i], r = AGENT_ROLES[t.agent], c = $('ac-' + i), st = $('ast-' + i);
+    c.classList.remove('visible');
+    c.classList.add('running');
+    st.textContent = 'Running…';
+    log(t.agent, t.task.substring(0, 72));
+    await sleep(rand(450, 820));
+    for (const tool of r.tools) {
+      log(t.agent, tool + '( ) → ' + toolOut(tool));
+      await sleep(rand(450, 820));
+    }
+    c.classList.remove('running');
+    c.classList.add('done');
+    st.textContent = 'Done';
+    log(t.agent, 'result saved to shared context');
+    done.add(i);
+  }
+  if (wf.mode === 'sequential') {
+    for (let i = 0; i < wf.tasks.length; i++) await runOne(i);
+  } else {
+    while (done.size < wf.tasks.length) {
+      const ready = wf.tasks.map((t, i) => i).filter(i => !done.has(i) && wf.tasks[i].deps.every(d => done.has(d)));
+      if (!ready.length) break;
+      if (ready.length > 1) await Promise.all(ready.map(runOne));
+      else await runOne(ready[0]);
+    }
+  }
+  $('p2').classList.remove('active');
+  $('p2').classList.add('done');
+  $('p2').querySelector('.dot').textContent = '✓';
+  $('p3').classList.add('active');
+  $('p3').querySelector('.dot').textContent = '✓';
+  $('p3').classList.add('done');
+  await sleep(400);
+  const out = FINAL[e.wf] || 'Review-ready output produced.';
+  const hrsThis = rand(6, 44);
+  $('resultArea').innerHTML = `<div class="result"><div class="rstats"><div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div><div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div><div class="rrow"><span class="k">Track</span><span class="v">${wf.track === 'commercial' ? 'Commercial & Defense Sourcing' : 'Rare Earth Metallurgy'}</span></div><div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div><div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div><div class="rout"><div class="rh">Review-ready output &middot; ${DTITLE[e.wf] || 'Output'}</div><div class="rb">${out.replace(/</g, '&lt;')}</div></div></div><div class="donebar"><b>${e.name} produced a review-ready output.</b> Read, adapt and QA complete, ready for a Chief Metallurgical Officer, Plant Director, or Defense Procurement Officer to confirm against Vulcan Elements and DFARS standards. Illustrative simulation, not a production deliverable.</div>`;
+  e.handled += 1;
+  e.status = 'idle';
+  if (card) card.classList.remove('working');
+  renderEcon();
+  renderRoster();
+  running = false;
+}
+
+let draft = {};
+function initBuilder() { draft = { wf: null, mode: null, assign: [], name: '', title: '', cadence: 'Per furnace heat', step: 1 }; renderBuilder(); }
+function renderBuilder() {
+  const steps = [['01', 'Pick a workflow'], ['02', 'Assign the agents'], ['03', 'Name & cadence']];
+  $('bSteps').innerHTML = steps.map((s, i) => `<div class="step ${draft.step === i + 1 ? 'active' : ''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+  if (draft.step === 1) bS1(); else if (draft.step === 2) bS2(); else bS3();
+  bNav();
+}
+function bS1() {
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">` + Object.keys(WORKFLOWS).map(k => {
+    const w = WORKFLOWS[k];
+    return `<div class="wf ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents &middot; ${w.mode}</div></div>`;
+  }).join('') + `</div>`;
+}
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Assign each task to an agent</div>` + w.tasks.map((t, i) => `<div class="task-row"><div class="tn">${i + 1}</div><div class="tt">${t.task}${t.deps.length ? ` <span style="color:var(--tert)">&middot; waits for ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('') + `<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">` + ['sequential', 'dag'].map(m => `<button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (parallel where safe)' : 'Sequential'}</button>`).join('') + `</div></div>`;
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Name & cadence</div><div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. AI-NdFeB-Metallurgy-Architect" oninput="draft.name=this.value"></div><div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI NdFeB Metallurgy Lead" oninput="draft.title=this.value"></div><div class="field"><label>Cadence</label><div class="seg">` + ['Per furnace heat', 'Per batch', 'Weekly', 'On-demand'].map(c => `<button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('') + `</div></div><div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name || 'New')}</div><div><div class="emp-name">${draft.name || 'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title || 'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> &middot; ${draft.cadence} &middot; ${draft.mode}</div></div>`;
+}
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right;
+  if (draft.step === 1) right = `<button class="btn primary" ${draft.wf ? '' : 'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+  else right = `<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;
+  $('bNav').innerHTML = left + right;
+}
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  WORKFLOWS[wfId] = { name: w.name, title: w.title, mode: draft.mode || w.mode, track: w.track, tag: w.tag, deliverable: w.deliverable, sample: w.sample, desc: w.desc, tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps })) };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({ id, name, title: draft.title || w.title, wf: wfId, handled: 0, hrs: rand(40, 140), win: 0, status: 'idle' });
+  renderEcon();
+  renderRoster();
+  setView('ops');
+  setTimeout(() => {
+    const c = $('emp-' + id);
+    if (c) {
+      c.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      c.style.boxShadow = '0 0 0 2px var(--accent)';
+      setTimeout(() => c.style.boxShadow = '', 1800);
+    }
+  }, 250);
+}
+
+renderEcon(); renderRoster();
+</script>
+</body>
+</html>
