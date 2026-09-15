@@ -222,3 +222,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/darigold
 https://innvonix-tech-solutions.github.io/ai-workforce/ecoplexus
 https://innvonix-tech-solutions.github.io/ai-workforce/rarebeauty
 https://innvonix-tech-solutions.github.io/ai-workforce/brooks-automation
+https://innvonix-tech-solutions.github.io/ai-workforce/vulcan-elements
