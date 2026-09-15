@@ -220,3 +220,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/schunk
 https://innvonix-tech-solutions.github.io/ai-workforce/tigoenergy
 https://innvonix-tech-solutions.github.io/ai-workforce/darigold
 https://innvonix-tech-solutions.github.io/ai-workforce/ecoplexus
+https://innvonix-tech-solutions.github.io/ai-workforce/rarebeauty
