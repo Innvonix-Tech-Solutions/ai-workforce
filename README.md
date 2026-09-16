@@ -231,3 +231,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/intuitivemachine
 https://innvonix-tech-solutions.github.io/ai-workforce/irresistible-foods
 https://innvonix-tech-solutions.github.io/ai-workforce/lassonde-pappas
 https://innvonix-tech-solutions.github.io/ai-workforce/pharmavite
+https://innvonix-tech-solutions.github.io/ai-workforce/novolex
