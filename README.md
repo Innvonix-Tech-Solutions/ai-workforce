@@ -233,3 +233,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/lassonde-pappas
 https://innvonix-tech-solutions.github.io/ai-workforce/pharmavite
 https://innvonix-tech-solutions.github.io/ai-workforce/novolex
 https://innvonix-tech-solutions.github.io/ai-workforce/redwood
+https://innvonix-tech-solutions.github.io/ai-workforce/lawrence-semiconductor
