@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Redwood Materials â€” Enterprise Closed-Loop Battery Supply Chain AI Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#ffffff;
+  --surface:#f4f6f4;
+  --surface2:#e2ebe2;
+  --border:#cbdad0;
+  --border-subtle:#e2ece4;
+  --accent:#990000;
+  --accent-light:#cc0000;
+  --accent-dark:#590000;
+  --redwood-red:#990000;
+  --redwood-green:#15803d;
+  --redwood-copper:#b45309;
+  --accent-dim:rgba(153,0,0,.08);
+  --accent-line:rgba(153,0,0,.28);
+  --green-dim:rgba(21,128,61,.10);
+  --green-line:rgba(21,128,61,.30);
+  --copper-dim:rgba(180,83,9,.10);
+  --copper-line:rgba(180,83,9,.30);
+  --text:#2c3a30;
+  --text-muted:#5e7264;
+  --hi:#102116;
+  --ok:#990000;
+  --ok-dim:rgba(153,0,0,.10);
+}
+body{background:var(--canvas);color:var(--text);font-family:"Plus Jakarta Sans",system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:3px solid var(--redwood-copper);position:sticky;top:0;background:var(--accent);color:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:14px}
+.mark{min-width:150px;height:38px;padding:0 14px;border-radius:6px;background:#ffffff;display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:900;font-size:14px;letter-spacing:1px;white-space:nowrap;overflow:hidden;flex-shrink:0;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.mark span{color:var(--redwood-copper)}
+.htitle{font-size:15px;font-weight:800;color:#fff;letter-spacing:.4px;text-transform:uppercase}.hsub{font-size:11px;color:#e2ebe2;margin-top:1px;font-weight:500;letter-spacing:.3px}
+.badge{border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:6px 12px;font-size:11px;color:#e2ebe2;background:rgba(89,0,0,.6)}.badge b{color:#ffffff}
+.tabs{max-width:1200px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:700;color:var(--text-muted);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none;letter-spacing:.3px}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface);border-top:3px solid var(--accent)}
+.main{max-width:1200px;margin:0 auto;padding:24px}
+.lead{font-size:14.5px;line-height:1.6;max-width:920px;margin-bottom:14px;color:#2c3a30}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--text-muted);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.5px;padding:3px 8px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.trackA{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.trackB{background:var(--green-dim);color:#15803d;border:1px solid var(--green-line)}
+.tag.hero{background:rgba(153,0,0,.12);color:var(--redwood-red);border:1px solid var(--redwood-red)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--accent)}.cell .v .u{color:var(--accent);font-size:16px}
+.cell .k{font-size:11.5px;color:var(--text-muted);margin-top:4px;line-height:1.35}
+.slabel{font-size:11px;font-weight:800;letter-spacing:1.2px;color:var(--accent);text-transform:uppercase;margin:22px 0 14px;display:flex;align-items:center;gap:10px;font-family:"IBM Plex Sans Condensed",sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;transition:box-shadow .2s,border-color .2s}
+.emp:hover{border-color:var(--accent-line);box-shadow:0 4px 14px rgba(153,0,0,.10)}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--accent-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:800;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;letter-spacing:.2px}.emp-title{font-size:12px;color:var(--text-muted)}
+.emp-owns{font-size:12.5px;margin-bottom:10px;line-height:1.4}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--text-muted);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-weight:600}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--text-muted)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:800}
+.actions{display:flex;gap:8px}
+.btn{font-family:inherit;font-size:12.5px;font-weight:700;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi);transition:all .15s}
+.btn:hover{border-color:var(--accent-line)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#ffffff}
+.btn.primary:hover{background:var(--accent-dark);border-color:var(--accent-dark);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent;color:var(--accent)}.btn.big{padding:12px 22px;font-size:13.5px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px;background:rgba(244,246,244,.6)}
+.hire-card:hover{border-color:var(--accent);background:var(--surface)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:700;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--text-muted);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--text-muted);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:60px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text-muted);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent-dark)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:700;color:var(--text-muted);letter-spacing:.3px}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(153,0,0,.5);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--text-muted);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--text-muted)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--text-muted)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:176px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:"IBM Plex Mono",monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.ts{color:var(--text-muted)}.an{font-weight:600;color:var(--accent)}.msg{color:var(--hi)}
+.result{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px}
+.rstats{display:flex;gap:18px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.rrow{font-size:11.5px;color:var(--text-muted)}.rrow .k{display:block}.rrow .v{font-size:14px;font-weight:800;color:var(--hi)}
+.rh{font-size:12px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.rb{font-size:12.5px;line-height:1.55;color:var(--hi);white-space:pre-wrap;font-family:"IBM Plex Mono",monospace;background:var(--surface);padding:12px;border-radius:8px;border:1px solid var(--border-subtle)}
+.foot{max-width:1200px;margin:20px auto 40px;padding:0 24px;font-size:11px;color:var(--text-muted);line-height:1.5}
+.steps{display:flex;gap:12px;margin-bottom:20px}
+.step-item{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px;font-size:12px}
+.step-item.active{border-color:var(--accent);background:#fff}
+.bnav{display:flex;justify-content:space-between;margin-top:20px}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">
+    <div class="mark">REDWOOD <span>MATERIALS</span></div>
+    <div>
+      <div class="htitle">REDWOOD MATERIALS - ENTERPRISE AI WORKFORCE</div>
+      <div class="hsub">Hydrometallurgy Recycling &bull; Cathode CAM &bull; Anode Copper Foil &bull; Panasonic &bull; Ford &bull; Toyota</div>
+    </div>
+  </div>
+  <div class="badge">
+    Enterprise Operations Console &bull; <b>8 Operators | 12 Specialist Agents</b>
+  </div>
+</header>
+
+<div class="tabs">
+  <button class="tab active" id="tabA" onclick="setView('ops')">AI Workforce Roster</button>
+  <button class="tab" id="tabB" onclick="setView('hire')">Workflow Builder</button>
+</div>
+
+<main class="main">
+  <div id="view-ops">
+    <p class="lead">
+      <b>Redwood Materials, Inc.</b> (founded by Tesla co-founder JB Straubel) is building a closed-loop domestic supply chain for electric vehicle (EV) batteries. Operating major material campuses in Northern Nevada and South Carolina, this AI Workforce prototype orchestrates hydrometallurgical extraction (>95% recovery of lithium, nickel, cobalt, copper), ultra-thin anode copper foil electroplating, Cathode Active Material (CAM) synthesis, gigafactory battery scrap logistics, and OEM off-take fulfillment for Panasonic, Ford, Toyota, and Volvo.
+    </p>
+
+    <div class="legend">
+      <span><span class="tag trackA">Track 1: Hydrometallurgical Recycling, Cathode &amp; Anode Production</span> Hydrometallurgy, ultra-thin copper foil, CAM synthesis &amp; EPA chemical safety</span>
+      <span><span class="tag trackB">Track 2: OEM Supply Chain, Circular Off-Take &amp; Compliance</span> Automaker off-take, battery passports, carbon footprint LCA &amp; campus expansion</span>
+      <span><span class="tag hero">Flagship Workflow</span> Closed-Loop Cathode Active Material Production Surge</span>
+    </div>
+
+    <div class="econ" id="econGrid"></div>
+
+    <div class="slabel">OPERATOR ROSTER &amp; ASSIGNED SPECIALIST TEAMS</div>
+    <div class="roster" id="rosterGrid"></div>
+
+    <div id="runPanel" style="margin-top:24px;"></div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+    <div class="steps" id="bSteps"></div>
+    <div id="bBody"></div>
+    <div class="bnav" id="bNav"></div>
+  </div>
+</main>
+
+<div class="foot">Independent concept prototype prepared for a conversation with Redwood Materials, Inc. (redwoodmaterials.com). Built in accordance with Redwood Materials brand guidelines (#990000 Redwood Crimson, #B45309 Anode Copper, #15803D Circular Green, and #102116 Charcoal Slate). All operators and outputs are illustrative simulations; hydrometallurgical leaching yields, cathode precursor calcination temperatures, battery passport traceability logs, and EPA chemical safety clearances are placeholders. A licensed Chief Operations Officer, VP of Materials &amp; Refining, or Director of Environmental Safety reviews and approves every manufacturing plan.</div>
+
+<script>
+const CONFIG={
+  econLabels:["AI operators","battery campuses","hours saved / month","avg turnaround cut"],
+  statLabel:"turnaround", statSign:"-", statSuffix:"%",
+  runButton:"Run operational workflow",
+  runNoun:"workflow",
+  outputLabel:"Review-ready deliverable",
+  rosterLabel:"Your AI operators",
+  trackLabels:{trackA:"Hydrometallurgical Recycling, Cathode & Anode Production", trackB:"OEM Supply Chain, Circular Off-Take & Compliance"},
+  builderCadences:["Per surge","Daily batch","Weekly shift","On-demand"],
+};
+
+const AGENT_ROLES={
+  hydromet:{emoji:'\u{267B}',label:'Hydrometallurgical Metals Extraction Specialist',tools:['optimize_lithium_nickel_cobalt_hydrometallurgical_leaching','save']},
+  cathodecam:{emoji:'\u{26A1}',label:'Cathode Active Material (CAM) Synthesis Lead',tools:['control_cam_precursor_precipitation_and_calcination','save']},
+  anodefoil:{emoji:'\u{1F525}',label:'Ultra-Thin Anode Copper Foil Electroplating Engineer',tools:['monitor_copper_foil_electroplating_thickness_and_tensile_strength','save']},
+  scraplog:{emoji:'\u{1F68A}',label:'Gigafactory Battery Scrap & Module Logistics Lead',tools:['route_ev_battery_scrap_and_spent_pack_logistics','save']},
+  chempurity:{emoji:'\u{1F9EA}',label:'Battery-Grade Chemical Purity & Assay Analyst',tools:['assay_recycled_lithium_carbonate_and_nickel_sulfate_purity','save']},
+  hazardsafety:{emoji:'\u{1F6E1}',label:'EPA & OSHA Chemical Hazard Safety Compliance Lead',tools:['audit_hydromet_acid_scrubbers_and_worker_ppe_protocols','save']},
+  oemdemand:{emoji:'\u{1F697}',label:'Automaker EV Battery Material Off-Take Lead',tools:['forecast_panasonic_ford_and_toyota_cathode_demand','save']},
+  traceability:{emoji:'\u{1F4F1}',label:'Battery Passport & Circular Material Traceability Specialist',tools:['verify_closed_loop_recycled_content_and_battery_passports','save']},
+  campusbuild:{emoji:'\u{1F3ED}',label:'Battery Campus Expansion & Gigafactory Scaling Lead',tools:['balance_nevada_and_south_carolina_campus_capacities','save']},
+  esgcarbon:{emoji:'\u{1F343}',label:'Carbon Footprint & LCA Environmental Impact Analyst',tools:['model_co2_reduction_versus_virgin_mined_battery_materials','save']},
+  writer:{emoji:'\u{270D}',label:'Technical Battery Material Brief & OEM Pitch Copywriter',tools:['compose','save']},
+  reviewer:{emoji:'\u{2705}',label:'Executive Operations & Metallurgy Quality Auditor',tools:['qa_review','save']},
+};
+
+const RK=Object.keys(AGENT_ROLES);
+const TRACKS=[['trackA','Hydrometallurgical Recycling, Cathode & Anode Production'],['trackB','OEM Supply Chain, Circular Off-Take & Compliance']];
+
+const WORKFLOWS={
+  closed_loop_cathode_surge:{name:'Closed-Loop Cathode Active Material Production Surge',title:'AI Cathode Material Operations Lead',mode:'dag',track:'trackA',tag:'flagship',deliverable:'Closed-Loop Cathode Active Material Production Surge Dossier',
+  sample:'Initiate closed-loop Cathode Active Material (CAM) production surge at Northern Nevada Battery Campus. Process gigafactory battery scrap, execute hydrometallurgical extraction (>95% Ni/Co/Li recovery), refine battery-grade nickel sulfate and lithium carbonate, synthesize high-nickel NMC precursor, verify battery passport recycled content, and deliver off-take shipments to Panasonic Energy.',
+  desc:'Agents route battery scrap transport, optimize hydrometallurgical acid leaching, verify 99.9% metal purity assays, control CAM precursor calcination, and fulfill OEM off-take contracts.',
+  tasks:[{agent:'scraplog',task:'Receive and shred 1,200 tons of EV battery manufacturing scrap and spent battery modules.',deps:[]},
+  {agent:'hydromet',task:'Execute hydrometallurgical acid leaching and solvent extraction for >95% lithium, nickel, and cobalt recovery.',deps:[0]},
+  {agent:'chempurity',task:'Assay battery-grade nickel sulfate and lithium carbonate purity via ICP-OES spectroscopy.',deps:[1]},
+  {agent:'cathodecam',task:'Synthesize high-nickel NMC cathode active material precursor and control 900Â°C calcination kilns.',deps:[2]},
+  {agent:'traceability',task:'Generate EU/US compliant battery passports confirming 85%+ recycled content provenance.',deps:[3]},
+  {agent:'oemdemand',task:'Schedule contract off-take shipments to Panasonic Energy gigafactory and Ford battery plants.',deps:[4]},
+  {agent:'reviewer',task:'Audit cathode electrochemical capacity (195 mAh/g), tap density, and VP Operations sign-off.',deps:[4,5]},
+  {agent:'writer',task:'Publish enterprise closed-loop cathode production surge bulletin and executive briefing.',deps:[6]}]},
+
+  anode_copper_foil:{name:'Ultra-Thin Anode Copper Foil Manufacturing & Plating',title:'AI Anode Copper Foil Engineering Lead',mode:'sequential',track:'trackA',deliverable:'Ultra-Thin Anode Copper Foil Manufacturing & Plating Plan',
+  sample:'Scale continuous electroplating lines for ultra-thin 6-micron anode copper foil supporting high-energy density EV battery cells.',
+  desc:'Agents monitor copper dissolution tanks, drum electrodeposition current density, foil thickness uniformity, and tensile elongation testing.',
+  tasks:[{agent:'anodefoil',task:'Monitor continuous copper electrodeposition drums producing 6-micron high-tensile anode copper foil.',deps:[]},
+  {agent:'chempurity',task:'Assay copper electrolyte bath purity and organic leveling additive concentrations.',deps:[0]},
+  {agent:'oemdemand',task:'Align copper foil master roll width and slitting specs for Toyota and Panasonic cell assembly.',deps:[1]},
+  {agent:'hazardsafety',task:'Audit acid mist exhaust scrubbers, copper sulfate wastewater treatment, and OSHA safety.',deps:[2]},
+  {agent:'writer',task:'Generate ultra-thin anode copper foil production report and OEM technical data sheet.',deps:[3]}]},
+
+  hydromet_recycling:{name:'Hydrometallurgical Lithium & Nickel Recovery Audit',title:'AI Hydromet Recycling Auditor',mode:'dag',track:'trackA',deliverable:'Hydrometallurgical Lithium & Nickel Recovery Audit Report',
+  sample:'Audit closed-loop hydrometallurgical leaching efficiency and chemical reagent consumption at Nevada Recycling Campus.',
+  desc:'Agents evaluate sulfuric acid leaching kinetics, solvent extraction separation factors, lithium hydroxide crystallization, and wastewater zero-liquid-discharge.',
+  tasks:[{agent:'hydromet',task:'Optimize continuous multi-stage counter-current leaching for black mass battery powder.',deps:[]},
+  {agent:'chempurity',task:'Measure solvent extraction co-extraction rates and impurities (copper, iron, aluminum limits <5 ppm).',deps:[]},
+  {agent:'hazardsafety',task:'Audit chemical containment berms, gas scrubbers, and zero-liquid-discharge (ZLD) water recycling.',deps:[0,1]},
+  {agent:'reviewer',task:'Issue formal hydrometallurgical recovery rating (>95.4% metal recovery) and executive audit certificate.',deps:[2]},
+  {agent:'writer',task:'Produce hydrometallurgical technical audit dossier and metallurgy team briefing.',deps:[3]}]},
+
+  oem_offtake_partner:{name:'Panasonic & Ford Off-Take Supply Chain Alignment',title:'AI OEM Off-Take Partner Lead',mode:'sequential',track:'trackB',deliverable:'Panasonic & Ford Off-Take Supply Chain Alignment Dossier',
+  sample:'Align multi-year cathode active material (CAM) and copper foil supply agreements with Panasonic Energy and Ford Motor Company.',
+  desc:'Agents model multi-gigawatt-hour cell manufacturing demand, track Inflation Reduction Act (IRA) domestic content qualification, and map logistics delivery schedules.',
+  tasks:[{agent:'oemdemand',task:'Forecast 5-year cathode and anode material demand schedules for Panasonic and Ford gigafactories.',deps:[]},
+  {agent:'traceability',task:'Verify IRA 30D tax credit domestic material sourcing requirements (50%+ North American content).',deps:[0]},
+  {agent:'campusbuild',task:'Balance material allocation between Northern Nevada and South Carolina Battery Campuses.',deps:[1]},
+  {agent:'esgcarbon',task:'Model life-cycle assessment (LCA) carbon footprint savings for OEM partner sustainability disclosures.',deps:[2]},
+  {agent:'reviewer',task:'Audit commercial supply contract SLAs, penalty clauses, and executive partner sign-off.',deps:[3]},
+  {agent:'writer',task:'Publish OEM off-take supply chain alignment playbook and executive customer deck.',deps:[4]}]},
+
+  epa_hazard_safety:{name:'Chemical Hazard & Environmental Health Compliance Audit',title:'AI EPA & OSHA Safety Auditor',mode:'dag',track:'trackA',deliverable:'Chemical Hazard & Environmental Health Compliance Audit Report',
+  sample:'Execute comprehensive EPA Title V air quality, OSHA process safety management (PSM), and chemical hazard audit across battery refining plants.',
+  desc:'Agents audit acid scrubber emissions, chemical transfer piping integrity, thermal runaway prevention during battery shredding, and industrial hygiene logs.',
+  tasks:[{agent:'hazardsafety',task:'Verify continuous CEMS stack monitoring for SOx and NOx scrubbers on hydrometallurgical digestion tanks.',deps:[]},
+  {agent:'hydromet',task:'Audit inert gas blanketing and water deluge systems in primary battery mechanical shredding halls.',deps:[]},
+  {agent:'chempurity',task:'Test industrial hygiene air quality samples for nickel, cobalt, and lithium dust exposure levels.',deps:[0,1]},
+  {agent:'reviewer',task:'Issue formal EPA/OSHA compliance audit clearance certificate and EHS management dossier.',deps:[2]}]},
+
+  sc_campus_expansion:{name:'South Carolina Battery Campus Phase 1 Scaling',title:'AI Campus Expansion Project Lead',mode:'sequential',track:'trackA',deliverable:'South Carolina Battery Campus Phase 1 Scaling Plan',
+  sample:'Accelerate Phase 1 construction and equipment commissioning at Redwood\'s $3.5B South Carolina Battery Materials Campus in Ridgeville SC.',
+  desc:'Agents balance cathode precursor precipitation lines, anode foil drum installation, utility interconnects, and local workforce onboarding.',
+  tasks:[{agent:'campusbuild',task:'Track Ridgeville SC campus site civil engineering, high-voltage power grid interconnects, and building steel.',deps:[]},
+  {agent:'cathodecam',task:'Commission Phase 1 continuous cathode active material precursor reactor tanks and calcination kilns.',deps:[0]},
+  {agent:'anodefoil',task:'Install copper foil electroplating drums and automated slitting/rewinding lines.',deps:[1]},
+  {agent:'writer',task:'Generate South Carolina Campus Phase 1 commissioning report and investor milestone briefing.',deps:[2]}]},
+
+  lithium_nickel_purity:{name:'Battery-Grade Recycled Lithium Carbonate Refining',title:'AI Recycled Lithium Refining Lead',mode:'dag',track:'trackA',deliverable:'Battery-Grade Recycled Lithium Carbonate Refining Plan',
+  sample:'Refine recycled crude lithium liquor into high-purity battery-grade lithium carbonate (99.5% Li2CO3) for cathode synthesis.',
+  desc:'Agents optimize sodium carbonate precipitation, hot water washing of lithium crystals, micronization, and trace impurity ICP screening.',
+  tasks:[{agent:'chempurity',task:'Monitor lithium carbonate crystallization temperature (95Â°C) and sodium wash efficiency.',deps:[]},
+  {agent:'hydromet',task:'Recycle mother liquor filtrate back to primary hydrometallurgical leaching circuit to eliminate lithium loss.',deps:[]},
+  {agent:'cathodecam',task:'Verify micronized lithium carbonate particle size (D50 <5 microns) for CAM kiln blending.',deps:[0,1]},
+  {agent:'reviewer',task:'Verify battery-grade chemical specification compliance (Li2CO3 >99.5%, Na <100 ppm, Fe <5 ppm).',deps:[2]}]},
+
+  circular_carbon_margin:{name:'Closed-Loop Battery Material Carbon & Cost Analytics',title:'AI Circular Supply Chain Margin Lead',mode:'dag',track:'trackB',deliverable:'Closed-Loop Battery Material Carbon & Cost Analytics Report',
+  sample:'Evaluate CO2 emissions reduction (80%+ vs. virgin mining) and unit production economics across recycled cathode and anode foils.',
+  desc:'Agents calculate life-cycle greenhouse gas savings, analyze chemical reagent cost drivers, optimize freight logistics, and draft commercial decks.',
+  tasks:[{agent:'esgcarbon',task:'Calculate cradle-to-gate LCA CO2 equivalent savings per ton of recycled cathode material.',deps:[]},
+  {agent:'oemdemand',task:'Analyze price competitiveness against imported Asian battery component benchmarks.',deps:[]},
+  {agent:'traceability',task:'Validate circular material mass-balance accounting for regulatory ESG audits.',deps:[0,1]},
+  {agent:'writer',task:'Generate commercial sustainability finance report and executive board briefing.',deps:[2]}]},
+};
+
+const DTITLE={
+  closed_loop_cathode_surge:'Closed-Loop Cathode Active Material Production Surge Dossier',
+  anode_copper_foil:'Ultra-Thin Anode Copper Foil Manufacturing & Plating Plan',
+  hydromet_recycling:'Hydrometallurgical Lithium & Nickel Recovery Audit Report',
+  oem_offtake_partner:'Panasonic & Ford Off-Take Supply Chain Alignment Dossier',
+  epa_hazard_safety:'Chemical Hazard & Environmental Health Compliance Audit Report',
+  sc_campus_expansion:'South Carolina Battery Campus Phase 1 Scaling Plan',
+  lithium_nickel_purity:'Battery-Grade Recycled Lithium Carbonate Refining Plan',
+  circular_carbon_margin:'Closed-Loop Battery Material Carbon & Cost Analytics Report',
+};
+
+const TOOLS={
+  optimize_lithium_nickel_cobalt_hydrometallurgical_leaching:()=>'Achieved 95.8% metal recovery efficiency across lithium, nickel, cobalt, and copper in continuous hydrometallurgical leaching.',
+  control_cam_precursor_precipitation_and_calcination:()=>'Controlled 900Â°C calcination kilns; produced high-nickel NMC cathode active material with 195 mAh/g capacity.',
+  monitor_copper_foil_electroplating_thickness_and_tensile_strength:()=>'Monitored continuous 6-micron electroplating drums; verified uniform thickness (+/- 0.2 microns) and high tensile strength.',
+  route_ev_battery_scrap_and_spent_pack_logistics:()=>'Routed 1,200 tons of gigafactory scrap and spent EV battery packs into mechanical shredding halls with zero thermal events.',
+  assay_recycled_lithium_carbonate_and_nickel_sulfate_purity:()=>'Assayed battery-grade nickel sulfate and lithium carbonate (>99.5% purity) via ICP-OES spectroscopy.',
+  audit_hydromet_acid_scrubbers_and_worker_ppe_protocols:()=>'Audited SOx/NOx exhaust scrubbers and ZLD water treatment; 100% EPA air quality and OSHA compliance.',
+  forecast_panasonic_ford_and_toyota_cathode_demand:()=>'Forecasted 5-year CAM and copper foil demand for Panasonic, Ford, and Toyota; secured 100% off-take fulfillment.',
+  verify_closed_loop_recycled_content_and_battery_passports:()=>'Verified battery passport provenance confirming 85%+ recycled material content for US IRA tax credit compliance.',
+  balance_nevada_and_south_carolina_campus_capacities:()=>'Balanced production scaling across Northern Nevada and Ridgeville SC Battery Campuses.',
+  model_co2_reduction_versus_virgin_mined_battery_materials:()=>'Modeled life-cycle LCA CO2 reduction; demonstrated 80%+ emissions reduction versus traditional virgin mined battery metals.',
+  compose:()=>'Drafted in executive battery materials engineering, hydrometallurgical refining, and closed-loop supply chain style.',
+  qa_review:()=>'QA: Verified cathode capacity assays, EPA chemical safety records, and VP Materials sign-off.',
+  save:()=>'Saved to central Redwood Materials enterprise battery supply chain repository.',
+};
+
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+
+const FINAL={
+  closed_loop_cathode_surge:`CLOSED-LOOP CATHODE ACTIVE MATERIAL SURGE DOSSIER (illustrative)
+Enterprise Entity: Redwood Materials, Inc. (Founded by JB Straubel)
+Primary Material Campuses: Northern Nevada & South Carolina Battery Materials Campuses
+Key Automaker Partners: Panasonic Energy, Ford Motor Company, Toyota, Volvo Cars
+
+Closed-Loop Battery Material Execution Summary:
+â€¢ Battery Scrap Recycling & Hydrometallurgy:
+  - Scrap Processing: Processed 1,200 tons of Gigafactory scrap and spent EV battery packs.
+  - Hydrometallurgical Extraction: Achieved 95.8% recovery for lithium, nickel, cobalt, and copper.
+â€¢ Cathode Active Material (CAM) Precursor Synthesis:
+  - Precursor Calcination: High-nickel NMC precursor synthesized and calcined at 900Â°C.
+  - Electrochemical Quality: Specific discharge capacity verified at 195 mAh/g with tap density >2.4 g/cmÂ³.
+â€¢ Anode Copper Foil & OEM Off-Take Delivery:
+  - Ultra-Thin Anode Foil: Produced 6-micron high-tensile electroplated copper foil rolls.
+  - Panasonic Off-Take: Dispatched off-take shipments to Panasonic Energy gigafactory in Sparks, NV.
+â€¢ Environmental Compliance & Battery Passports:
+  - Carbon Reduction: 82% lower CO2 footprint than traditional virgin mined battery raw materials.
+  - Battery Passports: Issued US/EU compliant digital battery passports verifying 85%+ recycled provenance.
+
+Operational Status: Closed-loop cathode production surge executed with 99.8% material purity SLA.
+â†’ Saved: cathode_surge_log, hydromet_recovery_sheet, battery_passport_dossier
+NOTE: illustrative concept for Redwood Materials, Inc. (redwoodmaterials.com).`,
+
+  anode_copper_foil:`ULTRA-THIN ANODE COPPER FOIL MANUFACTURING PLAN (illustrative)
+Component Focus: Ultra-Thin Anode Copper Foil (6-Micron Thickness)
+Manufacturing Facility: Northern Nevada Battery Materials Campus (McCarran, NV)
+
+Anode Copper Foil Execution:
+â€¢ Continuous Electrodeposition Plating:
+  - Drum Plating Speed: Electrodeposited 6-micron copper foil at high current density with zero pinhole defects.
+  - Tensile Strength: Tensile strength exceeded 350 MPa, preventing tearing during high-speed battery cell winding.
+â€¢ Chemical Bath Assay & Recycling:
+  - Electrolyte Purity: Automated copper sulfate bath purification maintained iron and lead impurities <2 ppm.
+
+Commercial Clearance: Approved for Panasonic and Toyota lithium-ion battery cell manufacturing.
+â†’ Saved: copper_foil_production_dossier, electroplating_bath_assay, foil_tensile_test_report
+NOTE: illustrative concept for Redwood Materials, Inc.`,
+
+  hydromet_recycling:`HYDROMETALLURGICAL LITHIUM & NICKEL RECOVERY REPORT (illustrative)
+Refining Focus: Closed-Loop Hydrometallurgical Extraction & Solvent Separation
+Recycling Campus: Nevada Battery Materials Leaching Facility
+
+Hydrometallurgical Extraction Execution:
+â€¢ Multi-Stage Leaching Kinetics:
+  - Black Mass Leaching: Counter-current acid leaching extracted 96.2% of nickel and 95.4% of lithium.
+  - Solvent Extraction (SX): High-selectivity organic extractants isolated cobalt and nickel with >99.9% purity.
+â€¢ Environmental & Water Neutralization:
+  - Zero-Liquid-Discharge (ZLD): Recycled 98% of process water back to primary leaching circuits.
+
+Regulatory Clearance: Issued 100% clean hydrometallurgical recovery audit certificate.
+â†’ Saved: hydromet_recovery_dossier, solvent_extraction_assay, zld_water_recycling_log
+NOTE: illustrative concept for Redwood Materials, Inc.`,
+
+  oem_offtake_partner:`PANASONIC & FORD OFF-TAKE SUPPLY CHAIN DOSSIER (illustrative)
+OEM Partners: Panasonic Energy & Ford Motor Company
+Supply Scope: Cathode Active Materials (CAM) & Anode Copper Foil Multi-Year Off-Take
+
+Automaker Supply Chain Execution:
+â€¢ Off-Take Volume Allocation:
+  - Panasonic Supply: Allocated 20 GWh equivalent cathode material for Nevada gigafactory production.
+  - Ford Electric Vehicles: Scheduled battery-grade recycled copper foil shipments for BlueOval SK plants.
+â€¢ IRA Domestic Content Qualification:
+  - 30D Tax Credit Verification: Certified 100% North American processing and 85%+ recycled material provenance.
+
+Executive Clearance: Multi-year OEM off-take supply contracts locked with zero allocation deficits.
+â†’ Saved: oem_offtake_alignment_dossier, ira_compliance_certificate, gigafactory_delivery_schedule
+NOTE: illustrative concept for Redwood Materials, Inc.`,
+
+  epa_hazard_safety:`EPA & OSHA CHEMICAL SAFETY AUDIT REPORT (illustrative)
+Safety Scope: Chemical Hazard Controls, Process Safety Management (PSM), and EHS
+Campus Audited: Northern Nevada Refining & Hydrometallurgical Complex
+
+Environmental & Industrial Hygiene Execution:
+â€¢ Air Emission Scrubbers & CEMS Tracking:
+  - Gas Scrubbers: Acid gas mist scrubbers maintained SOx and NOx emissions at <2% of EPA permitted limits.
+  - Thermal Runaway Protection: Nitrogen purge and deluge systems protected shredder halls.
+â€¢ Industrial Hygiene Air Sampling:
+  - Airborne Dust Monitoring: Personal air samplers confirmed nickel and cobalt dust levels below OSHA PEL.
+
+Compliance Rating: Issued 100% clean EPA Title V and OSHA chemical safety compliance audit.
+â†’ Saved: epa_chemical_safety_dossier, cems_air_emissions_log, industrial_hygiene_report
+NOTE: illustrative concept for Redwood Materials, Inc.`,
+
+  sc_campus_expansion:`SOUTH CAROLINA BATTERY CAMPUS PHASE 1 PLAN (illustrative)
+Campus Location: Ridgeville, South Carolina ($3.5 Billion Battery Materials Campus)
+Phase 1 Scope: Cathode Active Material Precursor Precipitation & Copper Foil Drums
+
+Campus Expansion Execution:
+â€¢ Site Infrastructure & Power Interconnect:
+  - High-Voltage Substation: Commissioned 230 kV power interconnect and 100 MW solar array feed.
+  - Steel & Cleanrooms: Completed 1.2 million sq. ft. cathode synthesis and cleanroom enclosure.
+â€¢ Equipment Commissioning:
+  - Precursor Reactors: Hydrodynamic testing completed on 80,000-liter precipitation reactor tanks.
+
+Engineering Clearance: Ridgeville SC Campus Phase 1 cleared for initial equipment dry runs.
+â†’ Saved: sc_campus_expansion_dossier, power_substation_commissioning, cathode_reactor_log
+NOTE: illustrative concept for Redwood Materials, Inc.`,
+
+  lithium_nickel_purity:`RECYCLED LITHIUM CARBONATE REFINING DOSSIER (illustrative)
+Chemical Refining: Battery-Grade Recycled Lithium Carbonate (Li2CO3 >99.5%)
+Process Technology: Hot-Water Crystallization & Micronization
+
+Chemical Refining Execution:
+â€¢ Lithium Carbonate Precipitation & Washing:
+  - Precipitation Temp: Sodium carbonate precipitation executed at 95Â°C for coarse crystal formation.
+  - Impurity Washing: Multi-stage deionized water washing reduced sodium levels to <80 ppm.
+â€¢ Battery-Grade Certification:
+  - ICP-MS Screening: Confirmed Li2CO3 purity of 99.58% with iron and heavy metals <3 ppm.
+
+Metallurgy Clearance: Battery-grade recycled lithium carbonate approved for CAM synthesis.
+â†’ Saved: lithium_refining_dossier, icpms_purity_certificate, micronization_particle_analysis
+NOTE: illustrative concept for Redwood Materials, Inc.`,
+
+  circular_carbon_margin:`CLOSED-LOOP BATTERY CARBON & COST REPORT (illustrative)
+Sustainability Scope: Life-Cycle Assessment (LCA) & Closed-Loop Unit Economics
+Material Lines: Recycled Cathode Active Materials (CAM) & Recycled Anode Copper Foil
+
+Circular Economy & LCA Execution:
+â€¢ Life-Cycle CO2 Footprint Reduction:
+  - LCA CO2 Savings: Verified 82.4% reduction in greenhouse gas emissions vs. virgin mined nickel/lithium.
+  - Water Savings: Saved 80% more water per ton of battery material produced versus mining.
+â€¢ Unit Cost Competitiveness:
+  - Production Cost: Closed-loop recycling achieved 18% lower cost per kg than imported virgin CAM.
+
+Commercial Guidance: Published carbon footprint LCA whitepaper for OEM partner ESG reports.
+â†’ Saved: circular_carbon_margin_dossier, lca_emissions_report, unit_cost_benchmark_matrix
+NOTE: illustrative concept for Redwood Materials, Inc.`,
+};
+
+let EMPLOYEES=[
+  {id:'closed_loop_cathode_surge',name:'Marcus Straubel-Vance',title:'VP of Battery Materials & Closed-Loop Ops',wf:'closed_loop_cathode_surge',handled:1820,hrs:630,win:28,status:'idle'},
+  {id:'anode_copper_foil',name:'Elena Rostova',title:'Director of Ultra-Thin Anode Copper Foil',wf:'anode_copper_foil',handled:1240,hrs:460,win:32,status:'idle'},
+  {id:'hydromet_recycling',name:'David Chen',title:'Head of Hydrometallurgical Metals Recovery',wf:'hydromet_recycling',handled:960,hrs:380,win:24,status:'idle'},
+  {id:'oem_offtake_partner',name:'Sarah Jenkins',title:'Director of Automaker Battery Partnerships',wf:'oem_offtake_partner',handled:810,hrs:330,win:29,status:'idle'},
+  {id:'epa_hazard_safety',name:'Dr. Aris Thorne',title:'Quality Assurance & Chemical Safety Director',wf:'epa_hazard_safety',handled:2210,hrs:740,win:0,status:'idle'},
+  {id:'sc_campus_expansion',name:'Camilla DeLuca',title:'Senior Gigafactory Scrap & Campus Manager',wf:'sc_campus_expansion',handled:1380,hrs:490,win:39,status:'idle'},
+  {id:'lithium_nickel_purity',name:'Jackson Briggs',title:'Director of Chemical Refining & Metallurgy',wf:'lithium_nickel_purity',handled:710,hrs:290,win:18,status:'idle'},
+  {id:'circular_carbon_margin',name:'Hannah Lindqvist',title:'Director of Commercial Supply Chain Finance',wf:'circular_carbon_margin',handled:1020,hrs:430,win:26,status:'idle'},
+];
+
+/* ENGINE CODE */
+let currentView='ops', currentRunWf=null, runRunning=false, buildStep=1, buildWfKey='', buildAssignments={}, buildName='', buildCadence='Daily batch';
+function $(i){return document.getElementById(i)}
+function tagHtml(t){
+  if(!t)return '';
+  if(t==='flagship')return '<span class="tag hero">Flagship</span>';
+  return `<span class="tag ${t}">${CONFIG.trackLabels[t]||t}</span>`;
+}
+
+function init(){
+  renderEcon(); renderRoster(); renderLegend(); selectRun('closed_loop_cathode_surge');
+}
+
+function renderLegend(){
+  // Handled inline in HTML
+}
+
+function renderEcon(){
+  const el=$('econGrid'); if(!el)return;
+  const vals=[EMPLOYEES.length, "2", "3,750", "52%"];
+  el.innerHTML=CONFIG.econLabels.map((l,i)=>`
+    <div class="cell">
+      <div class="v">${vals[i]}</div>
+      <div class="k">${l}</div>
+    </div>
+  `).join('');
+}
+
+function renderRoster(){
+  const el=$('rosterGrid'); if(!el)return;
+  let html=EMPLOYEES.map(empCardHtml).join('');
+  html+=`
+    <div class="hire-card" onclick="setView('hire')">
+      <div class="plus">+</div>
+      <div class="h">Stand Up New AI Operator</div>
+      <div class="p">Compose a new specialized operational workflow team in 3 steps</div>
+    </div>`;
+  el.innerHTML=html;
+}
+
+function empCardHtml(e){
+  const wf=WORKFLOWS[e.wf]||{};
+  const isHero=wf.tag==='flagship';
+  const isWorking=e.status==='working';
+  const teamChips=(wf.tasks||[]).map(t=>`<span class="chip">${AGENT_ROLES[t.agent]?.emoji||'\u{1F916}'} ${AGENT_ROLES[t.agent]?.label||t.agent}</span>`).join('');
+  
+  return `
+    <div class="emp ${isHero?'hero':''} ${isWorking?'working':''}" id="emp-${e.id}">
+      <div class="emp-top">
+        <div class="avatar">${e.name.substring(0,2).toUpperCase()}</div>
+        <div>
+          <div class="emp-name">${e.name} ${tagHtml(wf.track)} ${isHero?tagHtml('flagship'):''}</div>
+          <div class="emp-title">${e.title}</div>
+        </div>
+      </div>
+      <div class="emp-owns">Owns: <b>${wf.name||e.wf}</b></div>
+      <div class="team">${teamChips}</div>
+      <div class="emp-stats">
+        <div class="st">Handled<b>${e.handled.toLocaleString()}</b></div>
+        <div class="st">Time Saved<b>${e.hrs}h/mo</b></div>
+        <div class="st">Impact<b>${e.win?CONFIG.statSign+e.win+CONFIG.statSuffix:'-'}</b></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="selectRun('${e.wf}')" ${runRunning?'disabled':''}>${CONFIG.runButton}</button>
+      </div>
+    </div>
+  `;
+}
+
+function setView(v){
+  currentView=v;
+  if(v==='ops'){
+    $('tabA').classList.add('active'); $('tabB').classList.remove('active');
+    $('view-ops').classList.remove('hidden'); $('view-hire').classList.add('hidden');
+  }else{
+    $('tabB').classList.add('active'); $('tabA').classList.remove('active');
+    $('view-hire').classList.remove('hidden'); $('view-ops').classList.add('hidden');
+    initBuilder();
+  }
+}
+
+function selectRun(wfKey){
+  currentRunWf=wfKey;
+  const wf=WORKFLOWS[wfKey];
+  const emp=EMPLOYEES.find(e=>e.wf===wfKey);
+  const panel=$('runPanel'); if(!panel)return;
+  
+  let html=`
+    <div class="run">
+      <div class="run-head">
+        <h3 style="font-size:16px;font-weight:800;color:var(--hi);">Live Run Execution: ${wf.title||wf.name}</h3>
+        ${tagHtml(wf.track)} ${wf.tag==='flagship'?tagHtml('flagship'):''}
+      </div>
+      <div class="run-sub">${wf.desc}</div>
+      <div class="run-input">
+        <textarea id="runPrompt">${wf.sample}</textarea>
+        <button class="btn primary big" id="btnStartRun" onclick="startRun('${wfKey}')">Execute Run</button>
+      </div>
+      <div class="phases">
+        <div class="ph active" id="ph-1"><div class="dot">1</div><div class="l">Agent Task DAG</div></div>
+        <div class="ph" id="ph-2"><div class="dot">2</div><div class="l">Streaming Execution</div></div>
+        <div class="ph" id="ph-3"><div class="dot">3</div><div class="l">Produced Deliverable</div></div>
+      </div>
+      <div class="agent-grid" id="agentGrid">
+        ${wf.tasks.map((t,idx)=>`
+          <div class="acard" id="acard-${idx}">
+            <div class="ae">${AGENT_ROLES[t.agent]?.emoji||'\u{1F916}'}</div>
+            <div class="ar">${AGENT_ROLES[t.agent]?.label||t.agent}</div>
+            <div class="at">${t.task}</div>
+            <div class="as"><div class="sd"></div><span id="astate-${idx}">Waiting</span></div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="feed" id="runFeed"></div>
+      <div class="result hidden" id="runResult">
+        <div class="rstats">
+          <div class="rrow"><span class="k">Execution Mode</span><span class="v">${wf.mode.toUpperCase()}</span></div>
+          <div class="rrow"><span class="k">Agents Engaged</span><span class="v">${wf.tasks.length}</span></div>
+          <div class="rrow"><span class="k">Est. Time Saved</span><span class="v">6.1 hrs</span></div>
+          <div class="rrow"><span class="k">Human Governance</span><span class="v">VP Battery Materials</span></div>
+        </div>
+        <div class="rout">
+          <div class="rh">${DTITLE[wfKey]||wf.deliverable||'Deliverable Output'}</div>
+          <div class="rb">${FINAL[wfKey]||'Deliverable generated successfully.'}</div>
+        </div>
+      </div>
+    </div>
+  `;
+  panel.innerHTML=html;
+  panel.scrollIntoView({behavior:'smooth'});
+}
+
+function startRun(wfKey){
+  if(runRunning)return;
+  runRunning=true;
+  const wf=WORKFLOWS[wfKey];
+  const btn=$('btnStartRun'); if(btn)btn.disabled=true;
+  const feed=$('runFeed'); if(feed)feed.innerHTML='';
+  $('runResult').classList.add('hidden');
+  
+  const emp=EMPLOYEES.find(e=>e.wf===wfKey);
+  if(emp){ emp.status='working'; renderRoster(); }
+  
+  let timeStr=()=>new Date().toLocaleTimeString([],{hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  let log=(ag,msg)=>{
+    if(!feed)return;
+    let row=document.createElement('div'); row.className='frow';
+    row.innerHTML=`<span class="ts">${timeStr()}</span><span class="an">[${ag}]</span><span class="msg">${msg}</span>`;
+    feed.appendChild(row); feed.scrollTop=feed.scrollHeight;
+  };
+  
+  log('SYSTEM', `Initiating autonomous workflow [${wf.name}] in ${wf.mode.toUpperCase()} mode...`);
+  $('ph-1').classList.remove('active'); $('ph-1').classList.add('done');
+  $('ph-2').classList.add('active');
+  
+  let tasks=wf.tasks;
+  let completed=new Set();
+  
+  function stepRun(){
+    let readyIndices=[];
+    tasks.forEach((t,i)=>{
+      if(!completed.has(i)){
+        let depsMet=(t.deps||[]).every(d=>completed.has(d));
+        if(depsMet) readyIndices.push(i);
+      }
+    });
+    
+    if(readyIndices.length===0){
+      if(completed.size===tasks.length){
+        finishRun();
+      }
+      return;
+    }
+    
+    readyIndices.forEach(idx=>{
+      let t=tasks[idx];
+      let card=$('acard-'+idx);
+      let state=$('astate-'+idx);
+      if(card){ card.classList.add('running','visible'); }
+      if(state) state.innerText='Executing...';
+      
+      let agObj=AGENT_ROLES[t.agent];
+      let agName=agObj?.label||t.agent;
+      log(agName, `Task started: ${t.task}`);
+      
+      setTimeout(()=>{
+        let outStr=toolOut(agObj?.tools?.[0]||'save');
+        log(agName, `Finished task: ${outStr}`);
+        completed.add(idx);
+        if(card){ card.classList.remove('running'); card.classList.add('done'); }
+        if(state) state.innerText='Done';
+        stepRun();
+      }, 900 + Math.random()*400);
+    });
+  }
+  
+  function finishRun(){
+    log('SYSTEM', 'All task dependencies completed. Generating final deliverable...');
+    $('ph-2').classList.remove('active'); $('ph-2').classList.add('done');
+    $('ph-3').classList.add('done');
+    
+    setTimeout(()=>{
+      $('runResult').classList.remove('hidden');
+      if(btn)btn.disabled=false;
+      runRunning=false;
+      if(emp){ emp.status='idle'; renderRoster(); }
+    }, 600);
+  }
+  
+  stepRun();
+}
+
+/* BUILDER CODE */
+function initBuilder(){
+  buildStep=1; buildWfKey=Object.keys(WORKFLOWS)[0]; buildAssignments={}; buildName=''; buildCadence='Daily batch';
+  renderBuilder();
+}
+
+function renderBuilder(){
+  const stepsEl=$('bSteps'); const bodyEl=$('bBody'); const navEl=$('bNav');
+  if(!stepsEl||!bodyEl||!navEl)return;
+  
+  stepsEl.innerHTML=`
+    <div class="step-item ${buildStep===1?'active':''}"><b>Step 1</b>: Select Workflow</div>
+    <div class="step-item ${buildStep===2?'active':''}"><b>Step 2</b>: Assign Agents</div>
+    <div class="step-item ${buildStep===3?'active':''}"><b>Step 3</b>: Name &amp; Launch</div>
+  `;
+  
+  if(buildStep===1){
+    bodyEl.innerHTML=`
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--hi);">Choose a base workflow template:</div>
+      <div class="wf-grid">
+        ${Object.keys(WORKFLOWS).map(k=>{
+          const w=WORKFLOWS[k];
+          return `
+            <div class="wcard" style="${buildWfKey===k?'border-color:var(--accent);background:#fff;':''}" onclick="buildWfKey='${k}';renderBuilder();">
+              <div class="wcard-title"><span>${w.name}</span> ${w.tag==='flagship'?tagHtml('flagship'):''}</div>
+              <div class="wcard-desc">${w.desc}</div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+    navEl.innerHTML=`<div></div><button class="btn primary" onclick="buildStep=2;renderBuilder();">Next: Assign Agents &rarr;</button>`;
+  } else if(buildStep===2){
+    const wf=WORKFLOWS[buildWfKey];
+    bodyEl.innerHTML=`
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--hi);">Assign specialist agents to each task in [${wf.name}]:</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        ${wf.tasks.map((t,idx)=>{
+          const currentAg=buildAssignments[idx]||t.agent;
+          return `
+            <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px;display:flex;justify-content:space-between;align-items:center;">
+              <div style="max-width:60%;">
+                <div style="font-size:12.5px;font-weight:700;color:var(--hi);">Task ${idx+1}: ${t.task}</div>
+                <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Default agent: ${t.agent}</div>
+              </div>
+              <select style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:12px;" onchange="buildAssignments[${idx}]=this.value;">
+                ${RK.map(rk=>`<option value="${rk}" ${currentAg===rk?'selected':''}>${AGENT_ROLES[rk].emoji} ${AGENT_ROLES[rk].label}</option>`).join('')}
+              </select>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+    navEl.innerHTML=`
+      <button class="btn ghost" onclick="buildStep=1;renderBuilder();">&larr; Back</button>
+      <button class="btn primary" onclick="buildStep=3;renderBuilder();">Next: Name Operator &rarr;</button>
+    `;
+  } else if(buildStep===3){
+    const wf=WORKFLOWS[buildWfKey];
+    if(!buildName) buildName=wf.title || "Custom AI Operator";
+    bodyEl.innerHTML=`
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--hi);">Finalize Operator Profile:</div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px;max-width:560px;">
+        <div style="margin-bottom:14px;">
+          <label style="display:block;font-size:11.5px;font-weight:700;color:var(--text-muted);margin-bottom:5px;text-transform:uppercase;">Operator Name &amp; Role Title</label>
+          <input type="text" value="${buildName}" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:13px;" oninput="buildName=this.value;">
+        </div>
+        <div style="margin-bottom:14px;">
+          <label style="display:block;font-size:11.5px;font-weight:700;color:var(--text-muted);margin-bottom:5px;text-transform:uppercase;">Execution Cadence</label>
+          <select style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:13px;" onchange="buildCadence=this.value;">
+            ${CONFIG.builderCadences.map(c=>`<option value="${c}" ${buildCadence===c?'selected':''}>${c}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+    `;
+    navEl.innerHTML=`
+      <button class="btn ghost" onclick="buildStep=2;renderBuilder();">&larr; Back</button>
+      <button class="btn primary" onclick="finishBuilder();">Deploy Operator &rarr;</button>
+    `;
+  }
+}
+
+function finishBuilder(){
+  const wf=WORKFLOWS[buildWfKey];
+  const newEmp={
+    id:'custom_'+Date.now(),
+    name:buildName||'Custom Operator',
+    title:'AI Custom Operational Lead',
+    wf:buildWfKey,
+    handled:1,
+    hrs:120,
+    win:15,
+    status:'idle'
+  };
+  EMPLOYEES.push(newEmp);
+  renderRoster();
+  setView('ops');
+  selectRun(buildWfKey);
+  alert(`Operator [${newEmp.name}] deployed successfully.`);
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
