@@ -226,3 +226,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/vulcan-elements
 https://innvonix-tech-solutions.github.io/ai-workforce/tower-semiconductor
 https://innvonix-tech-solutions.github.io/ai-workforce/converge
 https://innvonix-tech-solutions.github.io/ai-workforce/tarte
+https://innvonix-tech-solutions.github.io/ai-workforce/group14
