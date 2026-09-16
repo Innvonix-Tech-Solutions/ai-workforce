@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novolex â€” Global Packaging Manufacturing &amp; NOES Operational AI Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#ffffff;
+  --surface:#f4f6f8;
+  --surface2:#e1e7ed;
+  --border:#cad4df;
+  --border-subtle:#e2e8f0;
+  --accent:#003366;
+  --accent-light:#0055a5;
+  --accent-dark:#001f3f;
+  --novo-blue:#003366;
+  --novo-gold:#d97706;
+  --novo-green:#15803d;
+  --accent-dim:rgba(0,51,102,.08);
+  --accent-line:rgba(0,51,102,.28);
+  --gold-dim:rgba(217,119,6,.10);
+  --gold-line:rgba(217,119,6,.30);
+  --green-dim:rgba(21,128,61,.10);
+  --green-line:rgba(21,128,61,.30);
+  --text:#2c3e50;
+  --text-muted:#5e7285;
+  --hi:#101a24;
+  --ok:#003366;
+  --ok-dim:rgba(0,51,102,.10);
+}
+body{background:var(--canvas);color:var(--text);font-family:"Plus Jakarta Sans",system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:3px solid var(--novo-gold);position:sticky;top:0;background:var(--accent);color:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:14px}
+.mark{min-width:140px;height:38px;padding:0 14px;border-radius:6px;background:#ffffff;display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:900;font-size:14px;letter-spacing:1px;white-space:nowrap;overflow:hidden;flex-shrink:0;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.mark span{color:var(--novo-gold)}
+.htitle{font-size:15px;font-weight:800;color:#fff;letter-spacing:.4px;text-transform:uppercase}.hsub{font-size:11px;color:#e1e7ed;margin-top:1px;font-weight:500;letter-spacing:.3px}
+.badge{border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:6px 12px;font-size:11px;color:#e1e7ed;background:rgba(0,31,63,.6)}.badge b{color:#ffffff}
+.tabs{max-width:1200px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:700;color:var(--text-muted);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none;letter-spacing:.3px}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface);border-top:3px solid var(--accent)}
+.main{max-width:1200px;margin:0 auto;padding:24px}
+.lead{font-size:14.5px;line-height:1.6;max-width:920px;margin-bottom:14px;color:#2c3e50}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--text-muted);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.5px;padding:3px 8px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.trackA{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.trackB{background:var(--green-dim);color:#15803d;border:1px solid var(--green-line)}
+.tag.hero{background:rgba(0,51,102,.12);color:var(--novo-blue);border:1px solid var(--novo-blue)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--accent)}.cell .v .u{color:var(--accent);font-size:16px}
+.cell .k{font-size:11.5px;color:var(--text-muted);margin-top:4px;line-height:1.35}
+.slabel{font-size:11px;font-weight:800;letter-spacing:1.2px;color:var(--accent);text-transform:uppercase;margin:22px 0 14px;display:flex;align-items:center;gap:10px;font-family:"IBM Plex Sans Condensed",sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;transition:box-shadow .2s,border-color .2s}
+.emp:hover{border-color:var(--accent-line);box-shadow:0 4px 14px rgba(0,51,102,.10)}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--accent-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:800;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;letter-spacing:.2px}.emp-title{font-size:12px;color:var(--text-muted)}
+.emp-owns{font-size:12.5px;margin-bottom:10px;line-height:1.4}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--text-muted);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-weight:600}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--text-muted)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:800}
+.actions{display:flex;gap:8px}
+.btn{font-family:inherit;font-size:12.5px;font-weight:700;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi);transition:all .15s}
+.btn:hover{border-color:var(--accent-line)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#ffffff}
+.btn.primary:hover{background:var(--accent-dark);border-color:var(--accent-dark);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent;color:var(--accent)}.btn.big{padding:12px 22px;font-size:13.5px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px;background:rgba(244,246,248,.6)}
+.hire-card:hover{border-color:var(--accent);background:var(--surface)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:700;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--text-muted);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--text-muted);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:60px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text-muted);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent-dark)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:700;color:var(--text-muted);letter-spacing:.3px}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(0,51,102,.5);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--text-muted);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--text-muted)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--text-muted)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:176px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:"IBM Plex Mono",monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.ts{color:var(--text-muted)}.an{font-weight:600;color:var(--accent)}.msg{color:var(--hi)}
+.result{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px}
+.rstats{display:flex;gap:18px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.rrow{font-size:11.5px;color:var(--text-muted)}.rrow .k{display:block}.rrow .v{font-size:14px;font-weight:800;color:var(--hi)}
+.rh{font-size:12px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.rb{font-size:12.5px;line-height:1.55;color:var(--hi);white-space:pre-wrap;font-family:"IBM Plex Mono",monospace;background:var(--surface);padding:12px;border-radius:8px;border:1px solid var(--border-subtle)}
+.foot{max-width:1200px;margin:20px auto 40px;padding:0 24px;font-size:11px;color:var(--text-muted);line-height:1.5}
+.steps{display:flex;gap:12px;margin-bottom:20px}
+.step-item{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px;font-size:12px}
+.step-item.active{border-color:var(--accent);background:#fff}
+.bnav{display:flex;justify-content:space-between;margin-top:20px}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">
+    <div class="mark">NOVO<span>LEX</span></div>
+    <div>
+      <div class="htitle">NOVOLEX â€” GLOBAL PACKAGING ENTERPRISE AI WORKFORCE</div>
+      <div class="hsub">Duro Bag â€¢ Bagcraft â€¢ Eco-Products â€¢ Waddington â€¢ Hilex Poly â€¢ Pactiv Evergreen â€¢ NOES System</div>
+    </div>
+  </div>
+  <div class="badge">
+    Enterprise Operations Console â€¢ <b>8 Operators | 12 Specialist Agents</b>
+  </div>
+</header>
+
+<div class="tabs">
+  <button class="tab active" id="tabA" onclick="setView('ops')">AI Workforce Roster</button>
+  <button class="tab" id="tabB" onclick="setView('hire')">Workflow Builder</button>
+</div>
+
+<main class="main">
+  <div id="view-ops">
+    <p class="lead">
+      <b>Novolex</b> operates as a global leader in food, beverage, grocery, and specialty packaging solutions across 100+ manufacturing plants. Unified by the <b>Novolex Operational Excellence System (N.O.E.S.)</b>, this AI Workforce prototype orchestrates high-speed paper bag converting, PCR resin film recycling, BPI compostable Eco-Products innovation, Pactiv Evergreen M&amp;A integration, and hub-and-spoke distribution logistics.
+    </p>
+
+    <div class="legend">
+      <span><span class="tag trackA">Track 1: Plant Converting, Polymer/Pulp Sourcing &amp; NOES Ops</span> NOES plant OEE, bag converting, PCR resin recycling &amp; thermoforming</span>
+      <span><span class="tag trackB">Track 2: Sustainable Eco-Products, Retail &amp; Supply Chain</span> BPI compostability, M&amp;A ERP integration &amp; 100-mile hub distribution</span>
+      <span><span class="tag hero">Flagship Workflow</span> NOES Enterprise Multi-Plant Optimization Surge</span>
+    </div>
+
+    <div class="econ" id="econGrid"></div>
+
+    <div class="slabel">OPERATOR ROSTER &amp; ASSIGNED SPECIALIST TEAMS</div>
+    <div class="roster" id="rosterGrid"></div>
+
+    <div id="runPanel" style="margin-top:24px;"></div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+    <div class="steps" id="bSteps"></div>
+    <div id="bBody"></div>
+    <div class="bnav" id="bNav"></div>
+  </div>
+</main>
+
+<div class="foot">Independent concept prototype prepared for a conversation with Novolex (novolex.com). Built in accordance with Novolex brand guidelines (#003366 Novolex Navy, #D97706 Warm Amber, #15803d Sustainability Green, and #101A24 Slate). All operators and outputs are illustrative simulations; NOES OEE benchmarks, paper converting speeds, BPI compostability ASTM D6400 certifications, and PCR film recycling yields are placeholders. A licensed Chief Operating Officer, VP of Global Manufacturing, or Director of Quality &amp; Sustainability reviews and approves every operational plan.</div>
+
+<script>
+const CONFIG={
+  econLabels:["AI operators","manufacturing plants","hours saved / month","avg turnaround cut"],
+  statLabel:"turnaround", statSign:"-", statSuffix:"%",
+  runButton:"Run operational workflow",
+  runNoun:"workflow",
+  outputLabel:"Review-ready deliverable",
+  rosterLabel:"Your AI operators",
+  trackLabels:{trackA:"Plant Converting, Polymer/Pulp Sourcing & NOES Ops", trackB:"Sustainable Eco-Products, Retail & Supply Chain"},
+  builderCadences:["Per surge","Daily route","Weekly shift","On-demand"],
+};
+
+const AGENT_ROLES={
+  noesengine:{emoji:'\u{1F3ED}',label:'NOES Plant Operations & Continuous Improvement Lead',tools:['optimize_plant_oee_and_noes_operational_excellence','save']},
+  bagconvert:{emoji:'\u{1F6CD}',label:'High-Speed Paper & Film Bag Converting Specialist',tools:['balance_duro_bag_and_bagcraft_converting_lines','save']},
+  polypulp:{emoji:'\u{1F332}',label:'Resin, PCR & Virgin Pulp Procurement Risk Agent',tools:['forecast_hdpe_ldpe_pcr_and_kraft_paper_spot_prices','save']},
+  fdapackqa:{emoji:'\u{1F6E1}',label:'FDA Food-Contact & Heavy Metal Packaging QA Lead',tools:['audit_fda_food_contact_migratables_and_pfas_compliance','save']},
+  thermoform:{emoji:'\u{1F966}',label:'Rigid Thermoforming & Molded Fiber Engineering Lead',tools:['optimize_wna_thermoforming_cycle_times_and_trim_scrap','save']},
+  recycledfilm:{emoji:'\u{267B}',label:'PCR Film Recycling & Circular Economy Automation Lead',tools:['monitor_hilex_poly_post_consumer_film_recycling','save']},
+  compostable:{emoji:'\u{1F343}',label:'Eco-Products Compostability & BPI Compliance Agent',tools:['audit_astm_d6400_compostability_and_bpi_certifications','save']},
+  demandfs:{emoji:'\u{1F4C8}',label:'Foodservice & Grocery Store POS Demand Sensing Lead',tools:['analyze_retailer_packaging_scanner_data_and_seasonal_surge','save']},
+  mbrandin:{emoji:'\u{1F91D}',label:'M&A Brand Acquisition & Shared ERP Integrator',tools:['integrate_acquired_plant_master_data_and_edi_networks','save']},
+  distroopt:{emoji:'\u{1F69A}',label:'Hub-and-Spoke Distribution & Fleet Freight Optimizer',tools:['optimize_100_mile_hub_distribution_and_truckload_cube','save']},
+  writer:{emoji:'\u{270D}',label:'Packaging Commercialization & Retailer Pitch Copywriter',tools:['compose','save']},
+  reviewer:{emoji:'\u{2705}',label:'Executive Operations & Regulatory Compliance Auditor',tools:['qa_review','save']},
+};
+
+const RK=Object.keys(AGENT_ROLES);
+const TRACKS=[['trackA','Plant Converting, Polymer/Pulp Sourcing & NOES Ops'],['trackB','Sustainable Eco-Products, Retail & Supply Chain']];
+
+const WORKFLOWS={
+  noes_operational_excellence:{name:'NOES Enterprise Multi-Plant Optimization Surge',title:'AI NOES Global Operations Lead',mode:'dag',track:'trackA',tag:'flagship',deliverable:'NOES Enterprise Multi-Plant Optimization Surge Dossier',
+  sample:'Initiate Novolex Operational Excellence System (N.O.E.S.) continuous improvement surge across 100+ manufacturing plants. Balance paper bag converting, PCR resin film extrusion, and thermoforming lines; optimize 100-mile hub-and-spoke distributor shipments; and audit FDA food-contact safety compliance.',
+  desc:'Agents process retail scanner spikes, balance high-speed paper converting lines, monitor PCR film recycling yields, optimize hub delivery fleets, and audit NOES safety.',
+  tasks:[{agent:'demandfs',task:'Analyze POS scanner demand data across foodservice, grocery, and retail distribution channels.',deps:[]},
+  {agent:'noesengine',task:'Execute NOES lean manufacturing scorecards and balance OEE across paper, plastic, and fiber plants.',deps:[]},
+  {agent:'bagconvert',task:'Optimize Duro Bag and Bagcraft high-speed paper bag converting lines to 850 bags per minute.',deps:[0,1]},
+  {agent:'distroopt',task:'Re-sequence fleet truckloads within Novolex 100-mile hub-and-spoke distributor networks.',deps:[2]},
+  {agent:'polypulp',task:'Lock in virgin unbleached Kraft paper pulp and post-consumer recycled (PCR) resin contracts.',deps:[1]},
+  {agent:'fdapackqa',task:'Audit FDA 21 CFR 176.170 paper food-contact compliance and heavy metal migration limits.',deps:[2]},
+  {agent:'reviewer',task:'Audit global NOES safety benchmarks, plant labor efficiency, and executive sign-off.',deps:[3,4,5]},
+  {agent:'writer',task:'Publish enterprise NOES operational excellence bulletin and executive summary.',deps:[6]}]},
+
+  duro_bag_converting:{name:'Duro Bag & Bagcraft High-Speed Converting Surge',title:'AI Duro Bag Converting Lead',mode:'sequential',track:'trackA',deliverable:'Duro Bag & Bagcraft High-Speed Converting Plan',
+  sample:'Align high-speed paper bag tubers and bottomers across Duro Bag facilities targeting Q4 grocery and holiday shopping surges.',
+  desc:'Agents schedule Kraft paper roll slitting, water-based flexographic printing, handle insertion, and FDA food-contact adhesive quality checks.',
+  tasks:[{agent:'bagconvert',task:'Monitor high-speed paper bag converting lines and automated twisted-paper handle applicators.',deps:[]},
+  {agent:'noesengine',task:'Eliminate setup scrap and optimize web tension control on multi-wall paper bag machines.',deps:[0]},
+  {agent:'polypulp',task:'Verify unbleached Kraft paper roll inventory and soy-based printing ink supplies.',deps:[1]},
+  {agent:'fdapackqa',task:'Audit food-contact adhesive paste purity and grease-resistance fluorochemical-free barriers.',deps:[2]},
+  {agent:'writer',task:'Generate Duro Bag converting scaling dossier and retail grocery partner briefing.',deps:[3]}]},
+
+  eco_products_compostable:{name:'Eco-Products BPI Compostable Packaging Expansion',title:'AI Eco-Products Sustainability Lead',mode:'dag',track:'trackB',deliverable:'Eco-Products BPI Compostable Packaging Expansion Dossier',
+  sample:'Expand Eco-Products plant production for plant-based PLA cold cups, sugarcane molded fiber containers, and compostable cutlery.',
+  desc:'Agents verify ASTM D6400 and ASTM D6868 industrial compostability standards, audit BPI certifications, lock in sugarcane bagasse pulp, and optimize retail sales decks.',
+  tasks:[{agent:'compostable',task:'Audit BPI (Biodegradable Products Institute) certification requirements and ASTM D6400 testing.',deps:[]},
+  {agent:'demandfs',task:'Forecast university, corporate cafeteria, and municipal foodservice demand for compostables.',deps:[]},
+  {agent:'polypulp',task:'Lock in renewable sugarcane bagasse pulp, bamboo fiber, and plant-based PLA resin supply.',deps:[0,1]},
+  {agent:'writer',task:'Generate Eco-Products sustainability whitepaper and commercial foodservice proposal.',deps:[2]},
+  {agent:'reviewer',task:'Verify zero-PFAS molded fiber compliance and corporate ESG sustainability audit.',deps:[3]}]},
+
+  pactiv_evergreen_onboard:{name:'Pactiv Evergreen M&A Shared Services Integration',title:'AI Pactiv Evergreen M&A Operator',mode:'sequential',track:'trackB',deliverable:'Pactiv Evergreen M&A Shared Services Integration Playbook',
+  sample:'Execute 100-day M&A shared services integration for Pactiv Evergreen manufacturing plants into Novolex NOES system.',
+  desc:'Agents consolidate SAP ERP vendor master data, harmonize EDI customer order processing, integrate 100-mile hub distribution, and standardize quality systems.',
+  tasks:[{agent:'mbrandin',task:'Migrate 2,400 vendor master records, chart of accounts, and EDI customer connections into Novolex SAP.',deps:[]},
+  {agent:'noesengine',task:'Deploy NOES lean continuous improvement scorecards across acquired Pactiv Evergreen facilities.',deps:[0]},
+  {agent:'distroopt',task:'Consolidate regional distribution centers and optimize combined freight truckload routing.',deps:[1]},
+  {agent:'fdapackqa',task:'Standardize FDA food-contact compliance certifications across all combined packaging lines.',deps:[2]},
+  {agent:'reviewer',task:'Audit financial M&A synergy targets ($150M savings), internal controls, and executive sign-off.',deps:[3]},
+  {agent:'writer',task:'Publish complete 100-day Pactiv Evergreen integration playbook and executive briefing.',deps:[4]}]},
+
+  fda_food_packaging_qa:{name:'Multi-Facility FDA Food-Contact & PFAS Removal Audit',title:'AI Food Packaging Compliance Auditor',mode:'dag',track:'trackA',deliverable:'Multi-Facility FDA Food-Contact & PFAS Removal Audit Report',
+  sample:'Execute comprehensive FDA food-contact safety audit and PFAS-free chemical barrier audit across all 100+ Novolex packaging plants.',
+  desc:'Agents audit FDA 21 CFR food-contact migratables, verify fluorine-free oil & grease resistance (OGR) coatings, and issue quality clearance certificates.',
+  tasks:[{agent:'fdapackqa',task:'Verify total fluorine analytical testing (<100 ppm) for PFAS-free paper food containers.',deps:[]},
+  {agent:'noesengine',task:'Audit food safety GMPs, SQF Level 3 plant sanitation, and HACCP pest management logs.',deps:[]},
+  {agent:'polypulp',task:'Validate supplier Certificates of Analysis (CoA) for virgin paper pulp and virgin food-grade resins.',deps:[0,1]},
+  {agent:'reviewer',task:'Issue formal FDA food-contact compliance certification and regulatory audit dossier.',deps:[2]}]},
+
+  recycling_pcr_resin:{name:'Hilex Poly Closed-Loop PCR Recycling & Pellets',title:'AI PCR Film Recycling Lead',mode:'sequential',track:'trackA',deliverable:'Hilex Poly Closed-Loop PCR Recycling & Pellets Dossier',
+  sample:'Optimize post-consumer plastic film recycling centers to convert returned grocery bags into high-quality PCR resin pellets.',
+  desc:'Agents monitor optical film sorting, wash line friction tanks, twin-screw compounding extruders, and PCR resin pellet melt flow index.',
+  tasks:[{agent:'recycledfilm',task:'Monitor post-consumer retail plastic film wash line throughput and optical color sorters.',deps:[]},
+  {agent:'polypulp',task:'Blend recycled PCR pellets with virgin HDPE to meet 40% PCR recycled-content retail bag specs.',deps:[0]},
+  {agent:'noesengine',task:'Track extruder melt flow index (MFI), filter screen pack pressure, and pelletizing yield.',deps:[1]},
+  {agent:'writer',task:'Produce Hilex Poly circular economy sustainability report and retailer PCR audit dossier.',deps:[2]}]},
+
+  wna_thermoforming_ops:{name:'Waddington Thermoforming & Molded Fiber Engineering',title:'AI Thermoforming Engineering Lead',mode:'dag',track:'trackA',deliverable:'Waddington Thermoforming & Molded Fiber Engineering Plan',
+  sample:'Optimize high-speed rigid thermoforming and molded fiber bowl tooling at Waddington North America (WNA) packaging plants.',
+  desc:'Agents optimize sheet extrusion gauge control, thermoforming mold vacuum cycle times, trim scrap regrind, and BPI compostable fiber pressing.',
+  tasks:[{agent:'thermoform',task:'Optimize PET and polypropylene thermoforming machine cycle times (28 cycles/min) and mold cooling.',deps:[]},
+  {agent:'noesengine',task:'Reduce edge trim scrap rate to <4% and route regrind directly back to sheet extruders.',deps:[]},
+  {agent:'compostable',task:'Audit molded sugarcane fiber bowl press temperatures (>190Â°C) and water-repellent barrier specs.',deps:[0,1]},
+  {agent:'reviewer',task:'Verify rigid package stackability load strength, rim snap closure tolerances, and OEE benchmarks.',deps:[2]}]},
+
+  bagcraft_foodservice_margin:{name:'Foodservice & Grocery Packaging Freight Margin Analytics',title:'AI Packaging Margin Analytics Operator',mode:'dag',track:'trackB',deliverable:'Foodservice & Grocery Packaging Freight Margin Analytics Report',
+  sample:'Evaluate SKU-level profitability, freight cube utilization, and raw material cost pass-through across 39,000 packaging SKUs.',
+  desc:'Agents model gross-to-net price realization, analyze resin and pulp cost index escalators, optimize freight pallet cubing, and draft executive briefs.',
+  tasks:[{agent:'distroopt',task:'Optimize pallet pattern stacking and trailer cube utilization, increasing truckload density by 14.5%.',deps:[]},
+  {agent:'demandfs',task:'Correlate resin market price movements (ICIS index) with customer contract pricing adjustments.',deps:[]},
+  {agent:'polypulp',task:'Model raw material cost pass-through formulas for large contract foodservice accounts.',deps:[0,1]},
+  {agent:'writer',task:'Generate executive commercial finance report and quarterly packaging margin guidance.',deps:[2]}]},
+};
+
+const DTITLE={
+  noes_operational_excellence:'NOES Enterprise Multi-Plant Optimization Surge Dossier',
+  duro_bag_converting:'Duro Bag & Bagcraft High-Speed Converting Plan',
+  eco_products_compostable:'Eco-Products BPI Compostable Packaging Expansion Dossier',
+  pactiv_evergreen_onboard:'Pactiv Evergreen M&A Shared Services Integration Playbook',
+  fda_food_packaging_qa:'Multi-Facility FDA Food-Contact & PFAS Removal Audit Report',
+  recycling_pcr_resin:'Hilex Poly Closed-Loop PCR Recycling & Pellets Dossier',
+  wna_thermoforming_ops:'Waddington Thermoforming & Molded Fiber Engineering Plan',
+  bagcraft_foodservice_margin:'Foodservice & Grocery Packaging Freight Margin Analytics Report',
+};
+
+const TOOLS={
+  optimize_plant_oee_and_noes_operational_excellence:()=>'Deployed NOES lean scorecards across 100+ plants; boosted overall equipment effectiveness (OEE) by +4.8% enterprise-wide.',
+  balance_duro_bag_and_bagcraft_converting_lines:()=>'Balanced paper bag converting tubers to 850 bags/min; reduced setup scrap by 14.2% across Duro Bag & Bagcraft plants.',
+  forecast_hdpe_ldpe_pcr_and_kraft_paper_spot_prices:()=>'Locked in virgin Kraft pulp and PCR resin contracts, saving $4.2M against benchmark spot market spikes.',
+  audit_fda_food_contact_migratables_and_pfas_compliance:()=>'Audited fluorine-free paper food containers; verified <100 ppm total fluorine and 100% FDA 21 CFR compliance.',
+  optimize_wna_thermoforming_cycle_times_and_trim_scrap:()=>'Optimized WNA thermoforming lines to 28 cycles/min; cut edge trim scrap to <3.8% with closed-loop regrind.',
+  monitor_hilex_poly_post_consumer_film_recycling:()=>'Monitored Hilex Poly recycling wash lines; produced 18 million lbs of high-purity PCR resin pellets for 40% PCR bags.',
+  audit_astm_d6400_compostability_and_bpi_certifications:()=>'Audited ASTM D6400 industrial compostability test logs; secured 100% BPI certification clearance for Eco-Products lines.',
+  analyze_retailer_packaging_scanner_data_and_seasonal_surge:()=>'Analyzed POS scanner demand across 12,000 retail doors; updated automated packaging replenishment triggers.',
+  integrate_acquired_plant_master_data_and_edi_networks:()=>'Migrated acquired Pactiv Evergreen plant master data and 2,400 EDI connections into Novolex SAP ERP.',
+  optimize_100_mile_hub_distribution_and_truckload_cube:()=>'Optimized 100-mile hub-and-spoke distribution routes; increased trailer freight cube density by 14.5%.',
+  compose:()=>'Drafted in executive global packaging manufacturing, NOES operational excellence, and sustainability compliance style.',
+  qa_review:()=>'QA: Verified FDA food-contact safety logs, BPI compostability standards, and VP Global Manufacturing sign-off.',
+  save:()=>'Saved to central Novolex global packaging enterprise operational repository.',
+};
+
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+
+const FINAL={
+  noes_operational_excellence:`NOES ENTERPRISE MULTI-PLANT OPTIMIZATION SURGE DOSSIER (illustrative)
+Enterprise Entity: Novolex (Duro Bag â€¢ Bagcraft â€¢ Eco-Products â€¢ WNA â€¢ Hilex Poly â€¢ Pactiv Evergreen)
+Manufacturing Network: 100+ Global Plants across North America and Europe
+Operational Framework: Novolex Operational Excellence System (N.O.E.S.)
+
+Global Multi-Plant Surge Execution Summary:
+â€¢ NOES Lean Manufacturing & OEE Optimization:
+  - Enterprise OEE Rating: Improved overall equipment effectiveness across 100+ plants from 83.2% to 88.0%.
+  - Scrap Reduction: Cut paper web converting and extrusion startup scrap by 14.2%.
+â€¢ High-Speed Bag Converting & Thermoforming:
+  - Duro Bag & Bagcraft Tubers: Operated continuous paper bag converting lines at 850 bags/minute.
+  - WNA Rigid Thermoforming: Thermoforming cycle speeds optimized to 28 cycles/minute with 3.8% scrap.
+â€¢ Eco-Products & Circular Economy Infrastructure:
+  - BPI Compostable Lines: Produced 14 million BPI-certified sugarcane molded fiber packaging units.
+  - Hilex Poly Recycling: Processed 18 million lbs of post-consumer film into high-purity PCR resin.
+â€¢ Hub-and-Spoke Logistics & Freight Optimization:
+  - Distribution Network: 100-mile hub logistics re-routed, improving trailer freight cube by 14.5%.
+â€¢ FDA Food Safety & Executive Governance:
+  - PFAS-Free Compliance: 100% verification of fluorine-free oil & grease resistant paper barriers.
+  - Executive Sign-off: Approved by VP of Global Manufacturing and Quality & Sustainability Director.
+
+Operational Status: NOES enterprise surge executed with 99.7% customer order fulfillment SLA.
+â†’ Saved: noes_enterprise_surge_log, plant_oee_scorecard_sheet, fda_pfas_compliance_certificate
+NOTE: illustrative concept for Novolex (novolex.com).`,
+
+  duro_bag_converting:`DURO BAG & BAGCRAFT HIGH-SPEED CONVERTING PLAN (illustrative)
+Brand Portfolio: Duro BagÂ® & BagcraftÂ® Packaging
+Converting Facilities: Multi-Plant Paper Bag Operations
+
+High-Speed Paper Converting Execution:
+â€¢ Paper Tubing & Bottoming Automation:
+  - Converting Line Speed: High-speed tubers achieved 850 bags/minute with automated handle insertion.
+  - Web Tension Control: Automatic tension adjustment eliminated paper web tears during high-speed runs.
+â€¢ Raw Material & Food-Contact Compliance:
+  - Kraft Paper Sourcing: Secured 45,000 tons of 100% recycled unbleached Kraft paper rolls.
+  - FDA Food-Contact Adhesives: Verified 100% compliance with FDA 21 CFR 176.170 specifications.
+
+Commercial Clearance: Approved for nationwide grocery and retail bag delivery.
+â†’ Saved: duro_bag_converting_dossier, kraft_paper_inventory_log, fda_adhesive_purity_file
+NOTE: illustrative concept for Novolex.`,
+
+  eco_products_compostable:`ECO-PRODUCTS BPI COMPOSTABLE PACKAGING DOSSIER (illustrative)
+Sustainable Brand: Eco-ProductsÂ® & VegwareÂ®
+Material Substrates: Sugarcane Bagasse Molded Fiber, Plant-Based PLA, Bamboo Fiber
+
+Compostability & Sustainability Execution:
+â€¢ ASTM & BPI Certification Compliance:
+  - Industrial Compostability: 100% of product lines passed ASTM D6400 and ASTM D6868 lab disintegration testing.
+  - BPI Seal Verification: Certified zero-PFAS molded fiber bowls for commercial composters.
+â€¢ Supply Chain & Customer Rollout:
+  - Bagasse Pulp Procurement: Contracted 28,000 tons of renewable sugarcane bagasse pulp.
+  - Foodservice Demand: Supplied 850 university and corporate cafeteria sustainability accounts.
+
+Sustainability Clearance: Issued 100% BPI compostability compliance certification.
+â†’ Saved: eco_products_compostability_dossier, bpi_certification_file, zero_pfas_lab_report
+NOTE: illustrative concept for Novolex.`,
+
+  pactiv_evergreen_onboard:`PACTIV EVERGREEN M&A SHARED SERVICES PLAYBOOK (illustrative)
+Acquisition Program: Novolex 100-Day M&A Integration Playbook
+Acquired Entity: Pactiv Evergreen Packaging Facilities (100+ Combined Plants)
+
+Shared Services Integration Execution:
+â€¢ SAP ERP & EDI Network Integration:
+  - Master Data Migration: Consolidated 2,400 vendor records into Novolex enterprise SAP ERP.
+  - EDI Connectivity: Harmonized 1,800 retail and foodservice customer EDI order portals.
+â€¢ NOES Standardization & Freight Synergy:
+  - NOES System Deployment: Implemented NOES lean scorecards across all acquired packaging lines.
+  - Synergy Savings: Realized $38M in annualized freight and procurement cost synergies.
+
+Integration Clearance: Pactiv Evergreen plants fully integrated into Novolex operational platform.
+â†’ Saved: pactiv_evergreen_integration_dossier, sap_edi_mapping_file, noes_plant_deployment_sheet
+NOTE: illustrative concept for Novolex.`,
+
+  fda_food_packaging_qa:`MULTI-FACILITY FDA FOOD-CONTACT AUDIT REPORT (illustrative)
+Audit Focus: FDA 21 CFR Food-Contact Safety & Total Fluorine (PFAS) Screening
+Plants Audited: 100+ Novolex Packaging Manufacturing Facilities
+
+Food Safety & Regulatory Compliance Execution:
+â€¢ Total Fluorine & PFAS Removal Screening:
+  - Analytical Testing: Validated total fluorine levels <100 ppm across all paper food packaging lines.
+  - Oil & Grease Barrier: Approved bio-based wax and starch barrier coatings for grease resistance.
+â€¢ SQF & HACCP Plant Audits:
+  - Plant Certification: 100% of packaging facilities maintained SQF Level 3 food safety certification.
+
+Compliance Rating: Issued 100% clean FDA food-contact safety compliance audit certificate.
+â†’ Saved: fda_food_packaging_audit_dossier, pfas_analytical_test_results, sqf_level3_certificates
+NOTE: illustrative concept for Novolex.`,
+
+  recycling_pcr_resin:`HILEX POLY CLOSED-LOOP PCR RECYCLING DOSSIER (illustrative)
+Circular Infrastructure: Hilex PolyÂ® Plastic Film Recycling Centers
+Recycling Capacity: World-Class Post-Consumer Recycled (PCR) Film Processing
+
+Closed-Loop Recycling Execution:
+â€¢ Film Processing & Pelletizing:
+  - Recycling Wash Lines: Processed 18 million lbs of post-consumer retail carryout bags.
+  - Extrusion compounding: Twin-screw extruders produced high-purity HDPE PCR resin pellets.
+â€¢ Circular Bag Manufacturing:
+  - PCR Blending: Blended 40% PCR resin into new Hilex Poly retail carryout bags.
+  - Carbon Reduction: Reduced virgin resin carbon footprint by 32% per million bags produced.
+
+Circular Economy Clearance: Certified closed-loop PCR recycling performance for retail partners.
+â†’ Saved: hilex_poly_recycling_dossier, pcr_pellet_mfi_certificate, carbon_footprint_reduction_log
+NOTE: illustrative concept for Novolex.`,
+
+  wna_thermoforming_ops:`WADDINGTON THERMOFORMING & MOLDED FIBER PLAN (illustrative)
+Rigid Packaging Brand: Waddington North Americaâ„¢ (WNA) & Waddington Europeâ„¢
+Manufacturing Technologies: PET/PP Thermoforming & Sugarcane Molded Fiber Pressing
+
+Engineering & Bottleneck Execution:
+â€¢ High-Speed Thermoforming Automation:
+  - Machine Cycle Speed: Optimized thermoformers to 28 cycles/minute for rigid food containers.
+  - Scrap Regrind: Re-routed 96.2% of edge trim scrap directly back into sheet extrusion hoppers.
+â€¢ Molded Fiber Thermal Pressing:
+  - Fiber Pressing: Heated mold presses (>190Â°C) produced 120,000 compostable fiber bowls daily.
+
+Engineering Clearance: Tooling and cycle times optimized for peak rigid packaging output.
+â†’ Saved: wna_thermoforming_dossier, edge_trim_regrind_log, stackability_load_test_report
+NOTE: illustrative concept for Novolex.`,
+
+  bagcraft_foodservice_margin:`FOODSERVICE & GROCERY PACKAGING FREIGHT MARGIN REPORT (illustrative)
+Commercial Scope: 39,000 Packaging SKUs across Foodservice, Grocery, and Industrial Markets
+Logistics Network: 100-Mile Hub-and-Spoke Distribution Network
+
+Freight & Commercial Margin Execution:
+â€¢ Trailer Cube Density & Freight Savings:
+  - Pallet Cubing: Re-patterned case palletization, increasing truckload freight cube utilization to 94.8%.
+  - Transport Savings: Saved $2.4M in annual inter-regional freight transit expenses.
+â€¢ Raw Material Index Price Pass-Through:
+  - Price Escalators: Triggered resin ICIS index and Kraft pulp price adjustment clauses for major accounts.
+
+Financial Guidance: Delivered Q4 packaging margin optimization strategy to executive board.
+â†’ Saved: packaging_margin_analytics_dossier, trailer_cube_optimization_log, raw_material_index_clause
+NOTE: illustrative concept for Novolex.`,
+};
+
+let EMPLOYEES=[
+  {id:'noes_operational_excellence',name:'Marcus Novak-Vance',title:'VP of Global Manufacturing & NOES Excellence',wf:'noes_operational_excellence',handled:1680,hrs:580,win:24,status:'idle'},
+  {id:'duro_bag_converting',name:'Elena Rostova',title:'Director of Paper Bag Converting & Duro Ops',wf:'duro_bag_converting',handled:1120,hrs:420,win:29,status:'idle'},
+  {id:'eco_products_compostable',name:'David Chen',title:'Head of Eco-Products & Sustainable Materials R&D',wf:'eco_products_compostable',handled:890,hrs:340,win:20,status:'idle'},
+  {id:'pactiv_evergreen_onboard',name:'Sarah Jenkins',title:'Director of M&A Integration & Shared Services',wf:'pactiv_evergreen_onboard',handled:720,hrs:290,win:26,status:'idle'},
+  {id:'fda_food_packaging_qa',name:'Dr. Aris Thorne',title:'Quality Assurance & Food-Contact Safety Director',wf:'fda_food_packaging_qa',handled:2040,hrs:680,win:0,status:'idle'},
+  {id:'recycling_pcr_resin',name:'Camilla DeLuca',title:'Senior Polymer Procurement & PCR Recycling Manager',wf:'recycling_pcr_resin',handled:1260,hrs:450,win:36,status:'idle'},
+  {id:'wna_thermoforming_ops',name:'Jackson Briggs',title:'Director of Thermoforming & Rigid Packaging',wf:'wna_thermoforming_ops',handled:630,hrs:250,win:15,status:'idle'},
+  {id:'bagcraft_foodservice_margin',name:'Hannah Lindqvist',title:'Director of Commercial Finance & Freight Margin',wf:'bagcraft_foodservice_margin',handled:940,hrs:390,win:22,status:'idle'},
+];
+
+/* ENGINE CODE */
+let currentView='ops', currentRunWf=null, runRunning=false, buildStep=1, buildWfKey='', buildAssignments={}, buildName='', buildCadence='Daily route';
+function $(i){return document.getElementById(i)}
+function tagHtml(t){
+  if(!t)return '';
+  if(t==='flagship')return '<span class="tag hero">Flagship</span>';
+  return `<span class="tag ${t}">${CONFIG.trackLabels[t]||t}</span>`;
+}
+
+function init(){
+  renderEcon(); renderRoster(); renderLegend(); selectRun('noes_operational_excellence');
+}
+
+function renderLegend(){
+  // Handled inline in HTML
+}
+
+function renderEcon(){
+  const el=$('econGrid'); if(!el)return;
+  const vals=[EMPLOYEES.length, "100+", "3,400", "48%"];
+  el.innerHTML=CONFIG.econLabels.map((l,i)=>`
+    <div class="cell">
+      <div class="v">${vals[i]}</div>
+      <div class="k">${l}</div>
+    </div>
+  `).join('');
+}
+
+function renderRoster(){
+  const el=$('rosterGrid'); if(!el)return;
+  let html=EMPLOYEES.map(empCardHtml).join('');
+  html+=`
+    <div class="hire-card" onclick="setView('hire')">
+      <div class="plus">+</div>
+      <div class="h">Stand Up New AI Operator</div>
+      <div class="p">Compose a new specialized operational workflow team in 3 steps</div>
+    </div>`;
+  el.innerHTML=html;
+}
+
+function empCardHtml(e){
+  const wf=WORKFLOWS[e.wf]||{};
+  const isHero=wf.tag==='flagship';
+  const isWorking=e.status==='working';
+  const teamChips=(wf.tasks||[]).map(t=>`<span class="chip">${AGENT_ROLES[t.agent]?.emoji||'\u{1F916}'} ${AGENT_ROLES[t.agent]?.label||t.agent}</span>`).join('');
+  
+  return `
+    <div class="emp ${isHero?'hero':''} ${isWorking?'working':''}" id="emp-${e.id}">
+      <div class="emp-top">
+        <div class="avatar">${e.name.substring(0,2).toUpperCase()}</div>
+        <div>
+          <div class="emp-name">${e.name} ${tagHtml(wf.track)} ${isHero?tagHtml('flagship'):''}</div>
+          <div class="emp-title">${e.title}</div>
+        </div>
+      </div>
+      <div class="emp-owns">Owns: <b>${wf.name||e.wf}</b></div>
+      <div class="team">${teamChips}</div>
+      <div class="emp-stats">
+        <div class="st">Handled<b>${e.handled.toLocaleString()}</b></div>
+        <div class="st">Time Saved<b>${e.hrs}h/mo</b></div>
+        <div class="st">Impact<b>${e.win?CONFIG.statSign+e.win+CONFIG.statSuffix:'-'}</b></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="selectRun('${e.wf}')" ${runRunning?'disabled':''}>${CONFIG.runButton}</button>
+      </div>
+    </div>
+  `;
+}
+
+function setView(v){
+  currentView=v;
+  if(v==='ops'){
+    $('tabA').classList.add('active'); $('tabB').classList.remove('active');
+    $('view-ops').classList.remove('hidden'); $('view-hire').classList.add('hidden');
+  }else{
+    $('tabB').classList.add('active'); $('tabA').classList.remove('active');
+    $('view-hire').classList.remove('hidden'); $('view-ops').classList.add('hidden');
+    initBuilder();
+  }
+}
+
+function selectRun(wfKey){
+  currentRunWf=wfKey;
+  const wf=WORKFLOWS[wfKey];
+  const emp=EMPLOYEES.find(e=>e.wf===wfKey);
+  const panel=$('runPanel'); if(!panel)return;
+  
+  let html=`
+    <div class="run">
+      <div class="run-head">
+        <h3 style="font-size:16px;font-weight:800;color:var(--hi);">Live Run Execution: ${wf.title||wf.name}</h3>
+        ${tagHtml(wf.track)} ${wf.tag==='flagship'?tagHtml('flagship'):''}
+      </div>
+      <div class="run-sub">${wf.desc}</div>
+      <div class="run-input">
+        <textarea id="runPrompt">${wf.sample}</textarea>
+        <button class="btn primary big" id="btnStartRun" onclick="startRun('${wfKey}')">Execute Run</button>
+      </div>
+      <div class="phases">
+        <div class="ph active" id="ph-1"><div class="dot">1</div><div class="l">Agent Task DAG</div></div>
+        <div class="ph" id="ph-2"><div class="dot">2</div><div class="l">Streaming Execution</div></div>
+        <div class="ph" id="ph-3"><div class="dot">3</div><div class="l">Produced Deliverable</div></div>
+      </div>
+      <div class="agent-grid" id="agentGrid">
+        ${wf.tasks.map((t,idx)=>`
+          <div class="acard" id="acard-${idx}">
+            <div class="ae">${AGENT_ROLES[t.agent]?.emoji||'\u{1F916}'}</div>
+            <div class="ar">${AGENT_ROLES[t.agent]?.label||t.agent}</div>
+            <div class="at">${t.task}</div>
+            <div class="as"><div class="sd"></div><span id="astate-${idx}">Waiting</span></div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="feed" id="runFeed"></div>
+      <div class="result hidden" id="runResult">
+        <div class="rstats">
+          <div class="rrow"><span class="k">Execution Mode</span><span class="v">${wf.mode.toUpperCase()}</span></div>
+          <div class="rrow"><span class="k">Agents Engaged</span><span class="v">${wf.tasks.length}</span></div>
+          <div class="rrow"><span class="k">Est. Time Saved</span><span class="v">5.6 hrs</span></div>
+          <div class="rrow"><span class="k">Human Governance</span><span class="v">VP Global Mfg</span></div>
+        </div>
+        <div class="rout">
+          <div class="rh">${DTITLE[wfKey]||wf.deliverable||'Deliverable Output'}</div>
+          <div class="rb">${FINAL[wfKey]||'Deliverable generated successfully.'}</div>
+        </div>
+      </div>
+    </div>
+  `;
+  panel.innerHTML=html;
+  panel.scrollIntoView({behavior:'smooth'});
+}
+
+function startRun(wfKey){
+  if(runRunning)return;
+  runRunning=true;
+  const wf=WORKFLOWS[wfKey];
+  const btn=$('btnStartRun'); if(btn)btn.disabled=true;
+  const feed=$('runFeed'); if(feed)feed.innerHTML='';
+  $('runResult').classList.add('hidden');
+  
+  const emp=EMPLOYEES.find(e=>e.wf===wfKey);
+  if(emp){ emp.status='working'; renderRoster(); }
+  
+  let timeStr=()=>new Date().toLocaleTimeString([],{hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  let log=(ag,msg)=>{
+    if(!feed)return;
+    let row=document.createElement('div'); row.className='frow';
+    row.innerHTML=`<span class="ts">${timeStr()}</span><span class="an">[${ag}]</span><span class="msg">${msg}</span>`;
+    feed.appendChild(row); feed.scrollTop=feed.scrollHeight;
+  };
+  
+  log('SYSTEM', `Initiating autonomous workflow [${wf.name}] in ${wf.mode.toUpperCase()} mode...`);
+  $('ph-1').classList.remove('active'); $('ph-1').classList.add('done');
+  $('ph-2').classList.add('active');
+  
+  let tasks=wf.tasks;
+  let completed=new Set();
+  
+  function stepRun(){
+    let readyIndices=[];
+    tasks.forEach((t,i)=>{
+      if(!completed.has(i)){
+        let depsMet=(t.deps||[]).every(d=>completed.has(d));
+        if(depsMet) readyIndices.push(i);
+      }
+    });
+    
+    if(readyIndices.length===0){
+      if(completed.size===tasks.length){
+        finishRun();
+      }
+      return;
+    }
+    
+    readyIndices.forEach(idx=>{
+      let t=tasks[idx];
+      let card=$('acard-'+idx);
+      let state=$('astate-'+idx);
+      if(card){ card.classList.add('running','visible'); }
+      if(state) state.innerText='Executing...';
+      
+      let agObj=AGENT_ROLES[t.agent];
+      let agName=agObj?.label||t.agent;
+      log(agName, `Task started: ${t.task}`);
+      
+      setTimeout(()=>{
+        let outStr=toolOut(agObj?.tools?.[0]||'save');
+        log(agName, `Finished task: ${outStr}`);
+        completed.add(idx);
+        if(card){ card.classList.remove('running'); card.classList.add('done'); }
+        if(state) state.innerText='Done';
+        stepRun();
+      }, 900 + Math.random()*400);
+    });
+  }
+  
+  function finishRun(){
+    log('SYSTEM', 'All task dependencies completed. Generating final deliverable...');
+    $('ph-2').classList.remove('active'); $('ph-2').classList.add('done');
+    $('ph-3').classList.add('done');
+    
+    setTimeout(()=>{
+      $('runResult').classList.remove('hidden');
+      if(btn)btn.disabled=false;
+      runRunning=false;
+      if(emp){ emp.status='idle'; renderRoster(); }
+    }, 600);
+  }
+  
+  stepRun();
+}
+
+/* BUILDER CODE */
+function initBuilder(){
+  buildStep=1; buildWfKey=Object.keys(WORKFLOWS)[0]; buildAssignments={}; buildName=''; buildCadence='Daily route';
+  renderBuilder();
+}
+
+function renderBuilder(){
+  const stepsEl=$('bSteps'); const bodyEl=$('bBody'); const navEl=$('bNav');
+  if(!stepsEl||!bodyEl||!navEl)return;
+  
+  stepsEl.innerHTML=`
+    <div class="step-item ${buildStep===1?'active':''}"><b>Step 1</b>: Select Workflow</div>
+    <div class="step-item ${buildStep===2?'active':''}"><b>Step 2</b>: Assign Agents</div>
+    <div class="step-item ${buildStep===3?'active':''}"><b>Step 3</b>: Name &amp; Launch</div>
+  `;
+  
+  if(buildStep===1){
+    bodyEl.innerHTML=`
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--hi);">Choose a base workflow template:</div>
+      <div class="wf-grid">
+        ${Object.keys(WORKFLOWS).map(k=>{
+          const w=WORKFLOWS[k];
+          return `
+            <div class="wcard" style="${buildWfKey===k?'border-color:var(--accent);background:#fff;':''}" onclick="buildWfKey='${k}';renderBuilder();">
+              <div class="wcard-title"><span>${w.name}</span> ${w.tag==='flagship'?tagHtml('flagship'):''}</div>
+              <div class="wcard-desc">${w.desc}</div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+    navEl.innerHTML=`<div></div><button class="btn primary" onclick="buildStep=2;renderBuilder();">Next: Assign Agents &rarr;</button>`;
+  } else if(buildStep===2){
+    const wf=WORKFLOWS[buildWfKey];
+    bodyEl.innerHTML=`
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--hi);">Assign specialist agents to each task in [${wf.name}]:</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        ${wf.tasks.map((t,idx)=>{
+          const currentAg=buildAssignments[idx]||t.agent;
+          return `
+            <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px;display:flex;justify-content:space-between;align-items:center;">
+              <div style="max-width:60%;">
+                <div style="font-size:12.5px;font-weight:700;color:var(--hi);">Task ${idx+1}: ${t.task}</div>
+                <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Default agent: ${t.agent}</div>
+              </div>
+              <select style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:12px;" onchange="buildAssignments[${idx}]=this.value;">
+                ${RK.map(rk=>`<option value="${rk}" ${currentAg===rk?'selected':''}>${AGENT_ROLES[rk].emoji} ${AGENT_ROLES[rk].label}</option>`).join('')}
+              </select>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+    navEl.innerHTML=`
+      <button class="btn ghost" onclick="buildStep=1;renderBuilder();">&larr; Back</button>
+      <button class="btn primary" onclick="buildStep=3;renderBuilder();">Next: Name Operator &rarr;</button>
+    `;
+  } else if(buildStep===3){
+    const wf=WORKFLOWS[buildWfKey];
+    if(!buildName) buildName=wf.title || "Custom AI Operator";
+    bodyEl.innerHTML=`
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--hi);">Finalize Operator Profile:</div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px;max-width:560px;">
+        <div style="margin-bottom:14px;">
+          <label style="display:block;font-size:11.5px;font-weight:700;color:var(--text-muted);margin-bottom:5px;text-transform:uppercase;">Operator Name &amp; Role Title</label>
+          <input type="text" value="${buildName}" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:13px;" oninput="buildName=this.value;">
+        </div>
+        <div style="margin-bottom:14px;">
+          <label style="display:block;font-size:11.5px;font-weight:700;color:var(--text-muted);margin-bottom:5px;text-transform:uppercase;">Execution Cadence</label>
+          <select style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:13px;" onchange="buildCadence=this.value;">
+            ${CONFIG.builderCadences.map(c=>`<option value="${c}" ${buildCadence===c?'selected':''}>${c}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+    `;
+    navEl.innerHTML=`
+      <button class="btn ghost" onclick="buildStep=2;renderBuilder();">&larr; Back</button>
+      <button class="btn primary" onclick="finishBuilder();">Deploy Operator &rarr;</button>
+    `;
+  }
+}
+
+function finishBuilder(){
+  const wf=WORKFLOWS[buildWfKey];
+  const newEmp={
+    id:'custom_'+Date.now(),
+    name:buildName||'Custom Operator',
+    title:'AI Custom Operational Lead',
+    wf:buildWfKey,
+    handled:1,
+    hrs:120,
+    win:15,
+    status:'idle'
+  };
+  EMPLOYEES.push(newEmp);
+  renderRoster();
+  setView('ops');
+  selectRun(buildWfKey);
+  alert(`Operator [${newEmp.name}] deployed successfully.`);
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
