@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pharmavite â€” Enterprise Dietary Supplement Manufacturing &amp; Quality AI Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#ffffff;
+  --surface:#f4f7f6;
+  --surface2:#e1e9e6;
+  --border:#cad8d3;
+  --border-subtle:#e2ece8;
+  --accent:#006644;
+  --accent-light:#008e5f;
+  --accent-dark:#00402b;
+  --pharma-green:#006644;
+  --pharma-gold:#d97706;
+  --pharma-blue:#0284c7;
+  --accent-dim:rgba(0,102,68,.08);
+  --accent-line:rgba(0,102,68,.28);
+  --gold-dim:rgba(217,119,6,.10);
+  --gold-line:rgba(217,119,6,.30);
+  --blue-dim:rgba(2,132,199,.10);
+  --blue-line:rgba(2,132,199,.30);
+  --text:#2c3a36;
+  --text-muted:#5e726c;
+  --hi:#10211c;
+  --ok:#006644;
+  --ok-dim:rgba(0,102,68,.10);
+}
+body{background:var(--canvas);color:var(--text);font-family:"Plus Jakarta Sans",system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:3px solid var(--pharma-gold);position:sticky;top:0;background:var(--accent);color:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:14px}
+.mark{min-width:150px;height:38px;padding:0 14px;border-radius:6px;background:#ffffff;display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:900;font-size:14px;letter-spacing:1px;white-space:nowrap;overflow:hidden;flex-shrink:0;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.mark span{color:var(--pharma-gold)}
+.htitle{font-size:15px;font-weight:800;color:#fff;letter-spacing:.4px;text-transform:uppercase}.hsub{font-size:11px;color:#e1e9e6;margin-top:1px;font-weight:500;letter-spacing:.3px}
+.badge{border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:6px 12px;font-size:11px;color:#e1e9e6;background:rgba(0,64,43,.6)}.badge b{color:#ffffff}
+.tabs{max-width:1200px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:700;color:var(--text-muted);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none;letter-spacing:.3px}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface);border-top:3px solid var(--accent)}
+.main{max-width:1200px;margin:0 auto;padding:24px}
+.lead{font-size:14.5px;line-height:1.6;max-width:920px;margin-bottom:14px;color:#2c3a36}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--text-muted);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.5px;padding:3px 8px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.trackA{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.trackB{background:var(--blue-dim);color:#0284c7;border:1px solid var(--blue-line)}
+.tag.hero{background:rgba(0,102,68,.12);color:var(--pharma-green);border:1px solid var(--pharma-green)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--accent)}.cell .v .u{color:var(--accent);font-size:16px}
+.cell .k{font-size:11.5px;color:var(--text-muted);margin-top:4px;line-height:1.35}
+.slabel{font-size:11px;font-weight:800;letter-spacing:1.2px;color:var(--accent);text-transform:uppercase;margin:22px 0 14px;display:flex;align-items:center;gap:10px;font-family:"IBM Plex Sans Condensed",sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;transition:box-shadow .2s,border-color .2s}
+.emp:hover{border-color:var(--accent-line);box-shadow:0 4px 14px rgba(0,102,68,.10)}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--accent-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:800;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;letter-spacing:.2px}.emp-title{font-size:12px;color:var(--text-muted)}
+.emp-owns{font-size:12.5px;margin-bottom:10px;line-height:1.4}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--text-muted);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-weight:600}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--text-muted)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:800}
+.actions{display:flex;gap:8px}
+.btn{font-family:inherit;font-size:12.5px;font-weight:700;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi);transition:all .15s}
+.btn:hover{border-color:var(--accent-line)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#ffffff}
+.btn.primary:hover{background:var(--accent-dark);border-color:var(--accent-dark);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent;color:var(--accent)}.btn.big{padding:12px 22px;font-size:13.5px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px;background:rgba(244,247,246,.6)}
+.hire-card:hover{border-color:var(--accent);background:var(--surface)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:700;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--text-muted);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--text-muted);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:60px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text-muted);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent-dark)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:700;color:var(--text-muted);letter-spacing:.3px}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(0,102,68,.5);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--text-muted);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--text-muted)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--text-muted)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:176px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:"IBM Plex Mono",monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.ts{color:var(--text-muted)}.an{font-weight:600;color:var(--accent)}.msg{color:var(--hi)}
+.result{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px}
+.rstats{display:flex;gap:18px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.rrow{font-size:11.5px;color:var(--text-muted)}.rrow .k{display:block}.rrow .v{font-size:14px;font-weight:800;color:var(--hi)}
+.rh{font-size:12px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.rb{font-size:12.5px;line-height:1.55;color:var(--hi);white-space:pre-wrap;font-family:"IBM Plex Mono",monospace;background:var(--surface);padding:12px;border-radius:8px;border:1px solid var(--border-subtle)}
+.foot{max-width:1200px;margin:20px auto 40px;padding:0 24px;font-size:11px;color:var(--text-muted);line-height:1.5}
+.steps{display:flex;gap:12px;margin-bottom:20px}
+.step-item{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px;font-size:12px}
+.step-item.active{border-color:var(--accent);background:#fff}
+.bnav{display:flex;justify-content:space-between;margin-top:20px}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">
+    <div class="mark">PHARMA<span>VITE</span></div>
+    <div>
+      <div class="htitle">PHARMAVITE LLC - ENTERPRISE AI WORKFORCE</div>
+      <div class="hsub">Nature Made &bull; MegaFood &bull; Bonafide Health &bull; Uqora &bull; Nurish &bull; Otsuka Group</div>
+    </div>
+  </div>
+  <div class="badge">
+    Enterprise Operations Console &bull; <b>8 Operators | 12 Specialist Agents</b>
+  </div>
+</header>
+
+<div class="tabs">
+  <button class="tab active" id="tabA" onclick="setView('ops')">AI Workforce Roster</button>
+  <button class="tab" id="tabB" onclick="setView('hire')">Workflow Builder</button>
+</div>
+
+<main class="main">
+  <div id="view-ops">
+    <p class="lead">
+      <b>Pharmavite LLC</b> (a subsidiary of Otsuka Pharmaceutical) is the pioneer and leader in dietary supplements, vitamins, and minerals, led by its flagship brand <b>Nature Made</b> (the #1 Pharmacist Recommended Vitamin Brand with USP verification). This AI Workforce prototype orchestrates cGMP 21 CFR Part 111 quality compliance, starchless gummy molding at the new $250M New Albany OH hub, tablet/softgel compression in Opelika AL &amp; San Fernando CA, and DTC subscription fulfillment for Nurish, Bonafide, and Uqora.
+    </p>
+
+    <div class="legend">
+      <span><span class="tag trackA">Track 1: Dietary Supplement Manufacturing, Gummy Ops &amp; Quality</span> Starchless gummy molding, softgel compression, cGMP Part 111 &amp; USP audits</span>
+      <span><span class="tag trackB">Track 2: Retail Pharmacy, Subscription Sensing &amp; Regulatory</span> Pharmacy POS scanner sensing, Nurish DTC customization &amp; trade promotion</span>
+      <span><span class="tag hero">Flagship Workflow</span> Nature Made USP-Verified Enterprise Production Surge</span>
+    </div>
+
+    <div class="econ" id="econGrid"></div>
+
+    <div class="slabel">OPERATOR ROSTER &amp; ASSIGNED SPECIALIST TEAMS</div>
+    <div class="roster" id="rosterGrid"></div>
+
+    <div id="runPanel" style="margin-top:24px;"></div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+    <div class="steps" id="bSteps"></div>
+    <div id="bBody"></div>
+    <div class="bnav" id="bNav"></div>
+  </div>
+</main>
+
+<div class="foot">Independent concept prototype prepared for a conversation with Pharmavite LLC (pharmavite.com). Built in accordance with Pharmavite brand guidelines (#006644 Nature Made Green, #D97706 Harvest Amber, #0284C7 Otsuka Blue, and #10211C Slate). All operators and outputs are illustrative simulations; cGMP batch records, USP disintegration test times, pectin gelation temperatures, and FDA 21 CFR Part 111 compliance certificates are placeholders. A licensed Chief Quality Officer, VP of Supply Chain, or Director of Regulatory Affairs reviews and approves every manufacturing protocol.</div>
+
+<script>
+const CONFIG={
+  econLabels:["AI operators","manufacturing hubs","hours saved / month","avg turnaround cut"],
+  statLabel:"turnaround", statSign:"-", statSuffix:"%",
+  runButton:"Run operational workflow",
+  runNoun:"workflow",
+  outputLabel:"Review-ready deliverable",
+  rosterLabel:"Your AI operators",
+  trackLabels:{trackA:"Dietary Supplement Manufacturing, Gummy Ops & Quality", trackB:"Retail Pharmacy, Subscription Sensing & Regulatory"},
+  builderCadences:["Per surge","Daily batch","Weekly shift","On-demand"],
+};
+
+const AGENT_ROLES={
+  cgmpaudit:{emoji:'\u{1F6E1}',label:'cGMP 21 CFR Part 111 & USP Quality Audit Specialist',tools:['audit_cgmp_batch_records_and_usp_disintegration_tests','save']},
+  gummyflow:{emoji:'\u{1F36C}',label:'Starchless Gummy Molding & Pectin Gelation Scheduler',tools:['balance_gummy_cooking_depositing_and_oil_coating_lines','save']},
+  rawsourcing:{emoji:'\u{1F9EA}',label:'Vitamin, Mineral & Botanical Raw Material Procurement Agent',tools:['forecast_vitamin_c_d3_zinc_and_botanical_extract_spot_prices','save']},
+  softgeltech:{emoji:'\u{1F48A}',label:'Softgel Encapsulation & Compression Process Engineer',tools:['optimize_rotary_die_softgel_encapsulation_and_tumble_drying','save']},
+  cleanroomqa:{emoji:'\u{1F97C}',label:'Cleanroom Environmental & Microbiological Assurance Lead',tools:['monitor_cleanroom_air_filtration_and_microbial_assay_swabs','save']},
+  packseal:{emoji:'\u{1F4E6}',label:'High-Speed Bottle Packaging & Induction Seal Auditor',tools:['audit_bottle_filling_count_accuracy_and_induction_seals','save']},
+  pharmacypos:{emoji:'\u{1F4C8}',label:'Pharmacy Retail POS Scanner & Store Demand Sensing Lead',tools:['analyze_walgreens_cvs_and_walmart_vitamin_scanner_lift','save']},
+  personalized:{emoji:'\u{1F4CB}',label:'Personalized Nurish Subscription & DTC Analytics Specialist',tools:['optimize_nurish_custom_daily_pack_assembly_and_dtc_fulfillment','save']},
+  mbrandin:{emoji:'\u{1F91D}',label:'M&A Brand Acquisition & Shared Services Integrator',tools:['integrate_bonafide_and_uqora_erp_master_data_and_edi','save']},
+  tradeopt:{emoji:'\u{1F4B2}',label:'Retail Trade Promotion & Gross-to-Net Margin Optimizer',tools:['evaluate_pharmacy_bogo_promotions_and_shelf_placement_roi','save']},
+  writer:{emoji:'\u{270D}',label:'Scientific Clinical Brief & Retail Commercial Copywriter',tools:['compose','save']},
+  reviewer:{emoji:'\u{2705}',label:'Executive Operations & FDA Structure-Function Reviewer',tools:['qa_review','save']},
+};
+
+const RK=Object.keys(AGENT_ROLES);
+const TRACKS=[['trackA','Dietary Supplement Manufacturing, Gummy Ops & Quality'],['trackB','Retail Pharmacy, Subscription Sensing & Regulatory']];
+
+const WORKFLOWS={
+  nature_made_usp_surge:{name:'Nature Made USP-Verified Enterprise Production Surge',title:'AI Nature Made Operations Lead',mode:'dag',track:'trackA',tag:'flagship',deliverable:'Nature Made USP-Verified Enterprise Production Surge Dossier',
+  sample:'Initiate enterprise production surge for Nature Made USP-verified Vitamin C, D3, Fish Oil softgels, and Immunity Gummies across New Albany OH, Opelika AL, and San Fernando CA facilities. Balance gummy depositing and rotary softgel encapsulation, verify USP disintegration and potency assays, optimize retail pharmacy shipments, and audit cGMP Part 111 batch records.',
+  desc:'Agents process retail scanner spikes, balance high-speed gummy and softgel lines, audit USP assay certificates, optimize pharmacy drop shipments, and verify FDA compliance.',
+  tasks:[{agent:'pharmacypos',task:'Analyze POS store scanner sales lift across Walgreens, CVS, Walmart, Target, and Amazon.',deps:[]},
+  {agent:'gummyflow',task:'Schedule starchless gummy depositing and pectin gelation lines at New Albany OH facility.',deps:[]},
+  {agent:'softgeltech',task:'Optimize rotary die softgel encapsulation and tumble drying for Fish Oil at Opelika AL plant.',deps:[0,1]},
+  {agent:'rawsourcing',task:'Lock in USP-grade Ascorbic Acid (Vitamin C), Cholecalciferol (D3), and Omega-3 oil futures.',deps:[1]},
+  {agent:'cgmpaudit',task:'Audit 21 CFR Part 111 batch records, USP dissolution testing, and heavy metal ICP-MS assays.',deps:[2,3]},
+  {agent:'tradeopt',task:'Track retail pharmacy BOGO promotional spend ROI and endcap display compliance.',deps:[0]},
+  {agent:'reviewer',task:'Verify FDA structure-function claim substantiation, USP seal audit, and executive sign-off.',deps:[4,5]},
+  {agent:'writer',task:'Publish enterprise Nature Made USP production surge bulletin and executive summary.',deps:[6]}]},
+
+  gummy_innovation_hub:{name:'New Albany Gummy Innovation Hub & Starchless Molding',title:'AI Gummy Hub Operations Lead',mode:'sequential',track:'trackA',deliverable:'New Albany Gummy Innovation Hub & Starchless Molding Plan',
+  sample:'Optimize high-speed starchless gummy molding and flavor infusion at Pharmavite\'s new $250M New Albany OH facility.',
+  desc:'Agents monitor pectin-gelatin syrup cooking, automated color/flavor metering, demolding air knives, and mineral oil polishing.',
+  tasks:[{agent:'gummyflow',task:'Monitor continuous pectin syrup cooking (240Â°F) and servo-driven depositor nozzle precision.',deps:[]},
+  {agent:'cleanroomqa',task:'Verify ISO Class 7 cleanroom air exchange rates, humidity control (30% RH), and swab assays.',deps:[0]},
+  {agent:'rawsourcing',task:'Lock in organic tapioca syrup, fruit juice concentrates, and natural berry flavor extracts.',deps:[1]},
+  {agent:'cgmpaudit',task:'Perform active vitamin potency degradation testing and bottle seal hermetic checks.',deps:[2]},
+  {agent:'writer',task:'Generate New Albany Gummy Innovation Hub operational report and commercial launch brief.',deps:[3]}]},
+
+  megafood_wholefood:{name:'MegaFood Organic Whole-Food Botanical Sourcing & Assay',title:'AI MegaFood Sourcing Lead',mode:'dag',track:'trackA',deliverable:'MegaFood Organic Whole-Food Botanical Sourcing & Assay Dossier',
+  sample:'Verify farm-fresh organic food sourcing, slow-batch nutrient drying, and Non-GMO Project verification for MegaFood supplements.',
+  desc:'Agents audit farm partner organic certifications, slow refractance-window drying temperatures, pesticide residue screening, and whole-food assay sheets.',
+  tasks:[{agent:'rawsourcing',task:'Contract organic farm harvests for broccoli, cranberry, turmeric, and brown rice whole foods.',deps:[]},
+  {agent:'cgmpaudit',task:'Verify 125+ herbicide and pesticide screening tests via LC-MS/MS laboratory instrumentation.',deps:[]},
+  {agent:'cleanroomqa',task:'Audit gentle low-heat drying process to preserve active food-bound vitamins and enzymes.',deps:[0,1]},
+  {agent:'writer',task:'Produce MegaFood farm-to-supplement traceability report and retailer marketing slick.',deps:[2]},
+  {agent:'reviewer',task:'Audit Non-GMO Project Verified, Certified B Corp, and Glyphosate Residue Free certifications.',deps:[3]}]},
+
+  bonafide_uqora_onboard:{name:'Bonafide & Uqora Women\'s Health DTC Integration',title:'AI Women\'s Health Brand Operator',mode:'sequential',track:'trackB',deliverable:'Bonafide & Uqora Women\'s Health DTC Integration Playbook',
+  sample:'Execute 90-day shared services and DTC subscription integration for acquired Bonafide Health and Uqora brand assets.',
+  desc:'Agents consolidate Shopify DTC customer portals, integrate automated daily pouch packaging, optimize recurring subscription replenishment, and audit packaging seals.',
+  tasks:[{agent:'mbrandin',task:'Migrate Bonafide and Uqora customer master files, Shopify billing API, and ERP master data.',deps:[]},
+  {agent:'personalized',task:'Optimize automated daily blister pack and pouch assembly for recurring monthly subscriptions.',deps:[0]},
+  {agent:'tradeopt',task:'Harmonize DTC digital marketing spend with retail pharmacy distribution expansion.',deps:[1]},
+  {agent:'packseal',task:'Audit tamper-evident bottle induction seals and moisture-barrier blister foil packaging.',deps:[2]},
+  {agent:'reviewer',task:'Validate clinical trial substantiation for menopause symptom relief and urinary tract health.',deps:[3]},
+  {agent:'writer',task:'Publish complete 90-day Women\'s Health DTC integration playbook and executive briefing.',deps:[4]}]},
+
+  cgmp_fda_compliance:{name:'Multi-Site cGMP 21 CFR Part 111 & USP Verification Audit',title:'AI cGMP Quality Assurance Auditor',mode:'dag',track:'trackA',deliverable:'Multi-Site cGMP 21 CFR Part 111 & USP Verification Audit Report',
+  sample:'Execute comprehensive 21 CFR Part 111 cGMP and USP verification quality audit across all Pharmavite manufacturing sites.',
+  desc:'Agents audit master manufacturing records (MMR), batch production records (BPR), raw material ID testing via FT-NIR, and USP dissolution times.',
+  tasks:[{agent:'cgmpaudit',task:'Verify 100% raw material identity testing using Fourier-Transform Near-Infrared (FT-NIR) spectroscopy.',deps:[]},
+  {agent:'cleanroomqa',task:'Audit HVAC HEPA filter differential pressures, water-for-injection (WFI) loops, and micro swabs.',deps:[]},
+  {agent:'rawsourcing',task:'Audit supplier Certificates of Analysis (CoA) for heavy metals (lead, cadmium, arsenic, mercury).',deps:[0,1]},
+  {agent:'reviewer',task:'Issue formal cGMP 21 CFR Part 111 compliance certification and USP verification endorsement.',deps:[2]}]},
+
+  botanical_vitamin_sourcing:{name:'Global Botanical Extract & Vitamin Raw Material Risk',title:'AI Botanical Sourcing Specialist',mode:'sequential',track:'trackA',deliverable:'Global Botanical Extract & Vitamin Raw Material Risk Dossier',
+  sample:'Secure long-term global supply agreements for active Vitamin D3, B-Complex, Magnesium, and Elderberry botanical extracts.',
+  desc:'Agents contract raw vitamin synthesis sources, audit wild-harvest botanical sustainability, track international ocean freight, and audit lab assays.',
+  tasks:[{agent:'rawsourcing',task:'Contract USP-grade Vitamin D3, B12, Zinc Picolinate, and Sambucus Elderberry extracts.',deps:[]},
+  {agent:'softgeltech',task:'Verify raw oil solubility, particle mesh size, and suspension stability for softgel formulations.',deps:[0]},
+  {agent:'cleanroomqa',task:'Audit raw material quarantine storage humidity and light-sensitive active degradation.',deps:[1]},
+  {agent:'writer',task:'Produce annual raw material procurement risk report and global commodity pricing outlook.',deps:[2]}]},
+
+  softgel_tablet_processing:{name:'Opelika & San Fernando Softgel Compression Optimization',title:'AI Softgel Processing Engineering Lead',mode:'dag',track:'trackA',deliverable:'Opelika & San Fernando Softgel Compression Optimization Plan',
+  sample:'Optimize high-speed rotary die softgel encapsulation and tablet compression presses at Opelika AL and San Fernando CA facilities.',
+  desc:'Agents monitor gelatin ribbon thickness, die pocket fill weight accuracy, tumble dryer moisture reduction, and automated bottle counter speeds.',
+  tasks:[{agent:'softgeltech',task:'Optimize rotary die softgel encapsulation speed to 120,000 softgels/hour with <0.4% fill weight variance.',deps:[]},
+  {agent:'packseal',task:'Balance high-speed electronic slat bottle counters (300 bottles/min) and induction sealer wattage.',deps:[]},
+  {agent:'cgmpaudit',task:'Audit tablet friability, hardness testing (>15 kp), and USP disintegration times (<30 minutes).',deps:[0,1]},
+  {agent:'reviewer',task:'Verify overall equipment effectiveness (OEE >89%), batch yield reconciliation, and engineering sign-off.',deps:[2]}]},
+
+  pharmacy_retail_margin:{name:'Retail Pharmacy Trade Promotion & Subscription Margin Analytics',title:'AI Supplement Margin Analytics Operator',mode:'dag',track:'trackB',deliverable:'Retail Pharmacy Trade Promotion & Subscription Margin Analytics Report',
+  sample:'Evaluate SKU profitability, retail pharmacy trade promotional allowances, and DTC subscription unit economics across Nature Made and Nurish.',
+  desc:'Agents model gross-to-net price realization, analyze pharmacy BOGO promotional lift, evaluate Nurish subscription retention LTV, and draft executive briefs.',
+  tasks:[{agent:'tradeopt',task:'Calculate net margin realization per bottle across Walgreens, CVS, Walmart, and Amazon sales channels.',deps:[]},
+  {agent:'pharmacypos',task:'Correlate retailer circular promotions with POS scanner unit sales lift during Q1 New Year Wellness surge.',deps:[]},
+  {agent:'personalized',task:'Model Nurish personalized vitamin subscription customer acquisition cost (CAC) and LTV retention.',deps:[0,1]},
+  {agent:'writer',task:'Generate executive commercial finance report and quarterly customer trade margin guidance.',deps:[2]}]},
+};
+
+const DTITLE={
+  nature_made_usp_surge:'Nature Made USP-Verified Enterprise Production Surge Dossier',
+  gummy_innovation_hub:'New Albany Gummy Innovation Hub & Starchless Molding Plan',
+  megafood_wholefood:'MegaFood Organic Whole-Food Botanical Sourcing & Assay Dossier',
+  bonafide_uqora_onboard:'Bonafide & Uqora Women\'s Health DTC Integration Playbook',
+  cgmp_fda_compliance:'Multi-Site cGMP 21 CFR Part 111 & USP Verification Audit Report',
+  botanical_vitamin_sourcing:'Global Botanical Extract & Vitamin Raw Material Risk Dossier',
+  softgel_tablet_processing:'Opelika & San Fernando Softgel Compression Optimization Plan',
+  pharmacy_retail_margin:'Retail Pharmacy Trade Promotion & Subscription Margin Analytics Report',
+};
+
+const TOOLS={
+  audit_cgmp_batch_records_and_usp_disintegration_tests:()=>'Audited 21 CFR Part 111 batch records and USP disintegration tests (<22 mins); 100% quality compliance.',
+  balance_gummy_cooking_depositing_and_oil_coating_lines:()=>'Balanced New Albany starchless gummy molding lines to 450 gummies/min; zero nozzle clogging.',
+  forecast_vitamin_c_d3_zinc_and_botanical_extract_spot_prices:()=>'Locked in USP-grade Vitamin C, D3, and Zinc raw material contracts, saving $2.4M against market spot price spikes.',
+  optimize_rotary_die_softgel_encapsulation_and_tumble_drying:()=>'Optimized rotary die encapsulation at Opelika AL to 120,000 softgels/hr with <0.4% fill weight variance.',
+  monitor_cleanroom_air_filtration_and_microbial_assay_swabs:()=>'Monitored ISO Class 7 cleanroom air filtration and microbial swabs; zero environmental contamination.',
+  audit_bottle_filling_count_accuracy_and_induction_seals:()=>'Audited bottle filling counters (300 bottles/min) and induction seals; zero seal integrity failures.',
+  analyze_walgreens_cvs_and_walmart_vitamin_scanner_lift:()=>'Analyzed POS scanner demand across 15,000 pharmacy doors; updated automated store replenishment triggers.',
+  optimize_nurish_custom_daily_pack_assembly_and_dtc_fulfillment:()=>'Optimized Nurish automated daily pack pouch assembly; achieved 99.8% error-free DTC subscription delivery.',
+  integrate_bonafide_and_uqora_erp_master_data_and_edi:()=>'Migrated Bonafide and Uqora customer master files and Shopify subscription APIs into Pharmavite SAP ERP.',
+  evaluate_pharmacy_bogo_promotions_and_shelf_placement_roi:()=>'Evaluated pharmacy BOGO promotional allowances across Walgreens and CVS; increased gross-to-net ROI by 14.8%.',
+  compose:()=>'Drafted in executive dietary supplement manufacturing, cGMP quality systems, and FDA regulatory style.',
+  qa_review:()=>'QA: Verified USP seal verification standards, 21 CFR Part 111 compliance, and Chief Quality Officer sign-off.',
+  save:()=>'Saved to central Pharmavite enterprise supplement operations repository.',
+};
+
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+
+const FINAL={
+  nature_made_usp_surge:`NATURE MADE USP-VERIFIED ENTERPRISE PRODUCTION SURGE DOSSIER (illustrative)
+Enterprise Entity: Pharmavite LLC (Subsidiary of Otsuka Pharmaceutical)
+Flagship Brand: Nature Made (R) (#1 Pharmacist Recommended Vitamin Brand)
+Manufacturing Hubs: New Albany (OH), Opelika (AL), San Fernando & Valencia (CA)
+
+Enterprise Surge Execution Summary:
+* Pharmacy Retail POS Demand Sensing:
+  - POS Scanner Lift Analysis: Nature Made Vitamin C 1000mg & D3 2000IU demand spiked +280% during Wellness Surge.
+  - Replenishment Triggers: Automated shipment orders dispatched to Walgreens, CVS, Walmart, and Target distribution hubs.
+* Multi-Site Manufacturing & Gummy Innovation:
+  - New Albany Gummy Hub: Starchless pectin gummy lines ran continuously at 450 units/minute with 94.2% OEE.
+  - Opelika Softgel Plant: Rotary die encapsulation produced 14.5 million Omega-3 Fish Oil softgels.
+* cGMP 21 CFR Part 111 & USP Quality Audit:
+  - USP Verification Seal: 100% of batch samples passed USP potency, heavy metal ICP-MS, and disintegration testing.
+  - cGMP Clearance: Master manufacturing records verified with zero quality deviation notices.
+* Commercial Trade & Executive Governance:
+  - Trade Spend ROI: Pharmacy BOGO promotional spend optimization increased net margin realization by 14.8%.
+  - Executive Sign-off: Approved by VP of Global Operations and Chief Quality Assurance Officer.
+
+Operational Status: Nature Made production surge executed with 99.8% pharmacy order fill rate.
+-> Saved: nature_made_surge_log, usp_assay_verification_sheet, cgmp_part111_certificate
+NOTE: illustrative concept for Pharmavite LLC (pharmavite.com).`,
+
+  gummy_innovation_hub:`NEW ALBANY GUMMY INNOVATION HUB PLAN (illustrative)
+Innovation Center: New Albany (OH) $250M Gummy Manufacturing & R&D Hub
+Production Technology: High-Speed Starchless Pectin Depositing & Molding
+
+Gummy Manufacturing Execution:
+* Syrup Cooking & Depositing Precision:
+  - Syrup Cooking Temp: Pectin-gelatin slurry cooked at precisely 240Â°F with automated flavor metering.
+  - Depositor Line Speed: Servo-driven nozzles deposited 450 gummies/minute into silicone starchless molds.
+* Cleanroom Environment & Potency Assurance:
+  - Humidity Control: Maintained strict 30% RH curing room humidity for rapid pectin setting.
+  - Active Potency: 100% retention verified for Vitamin C and Zinc active ingredients post-curing.
+
+Operational Clearance: Approved for high-speed commercial gummy production runs.
+-> Saved: gummy_hub_operational_dossier, starchless_molding_log, cleanroom_rh_assay
+NOTE: illustrative concept for Pharmavite LLC.`,
+
+  megafood_wholefood:`MEGAFOOD ORGANIC WHOLE-FOOD SOURCING DOSSIER (illustrative)
+Brand Portfolio: MegaFood (R) (Whole-Food Dietary Supplements & Multitamins)
+Quality Assurance: Certified B Corp & Non-GMO Project Verified Standards
+
+Whole-Food Sourcing Execution:
+* Farm Partner Procurement:
+  - Organic Harvest Sourcing: Secured organic broccoli, cranberry, and turmeric from certified farm partners.
+  - Slow Refractance Drying: Low-temperature drying preserved active plant enzymes and food-bound vitamins.
+* LC-MS/MS Laboratory Assay:
+  - Pesticide Screening: Tested for 125+ herbicides and pesticides via LC-MS/MS; zero residues detected.
+
+Brand Clearance: Certified for MegaFood whole-food supplement manufacturing.
+-> Saved: megafood_sourcing_dossier, organic_farm_certificates, pesticide_lcms_report
+NOTE: illustrative concept for Pharmavite LLC.`,
+
+  bonafide_uqora_onboard:`BONAFIDE & UQORA WOMEN'S HEALTH DTC PLAYBOOK (illustrative)
+Brand Portfolio: Bonafide Health (R) (Menopause Solutions) & Uqora (R) (Urinary Tract Health)
+DTC Platform: Shopify Plus APIs & Automated Daily Pouch Packaging
+
+Women's Health Integration Execution:
+* DTC Subscription & ERP Alignment:
+  - Master Data Migration: Integrated 850,000 active subscriber records into Pharmavite SAP ERP.
+  - Fulfillment Speed: Automated blister packaging lines achieved 99.8% error-free same-day DTC dispatch.
+* Clinical Substantiation & Quality Assurance:
+  - Clinical Review: Verified double-blind clinical trial evidence for non-prescription menopause relief.
+
+Integration Clearance: Brands fully integrated into Pharmavite shared enterprise engine.
+-> Saved: womens_health_integration_dossier, shopify_erp_api_mapping, packaging_seal_log
+NOTE: illustrative concept for Pharmavite LLC.`,
+
+  cgmp_fda_compliance:`MULTI-SITE cGMP 21 CFR PART 111 AUDIT REPORT (illustrative)
+Regulatory Focus: FDA 21 CFR Part 111 Dietary Supplement cGMP & USP Verification
+Facilities Audited: Opelika (AL), New Albany (OH), San Fernando & Valencia (CA)
+
+cGMP Quality Audit Execution:
+* FT-NIR Raw Material Identity Testing:
+  - Identity Testing: 100% of raw vitamin powders verified via FT-NIR spectroscopy prior to batch release.
+  - Heavy Metal Screening: ICP-MS testing confirmed lead, arsenic, cadmium, and mercury well below USP limits.
+* Water Systems & Cleanroom HVAC:
+  - WFI Water Loops: Continuous TOC monitoring verified USP Purified Water standards across all plants.
+
+Compliance Rating: Issued 100% clean cGMP 21 CFR Part 111 audit certification.
+-> Saved: cgmp_part111_audit_dossier, ftnir_identity_test_results, usp_water_toc_log
+NOTE: illustrative concept for Pharmavite LLC.`,
+
+  botanical_vitamin_sourcing:`GLOBAL BOTANICAL & VITAMIN RAW MATERIAL DOSSIER (illustrative)
+Raw Materials: Active Vitamin D3, Ascorbic Acid, Zinc Picolinate, Sambucus Elderberry
+Supply Chain Scope: Global Vitamin Synthesis & Botanical Harvest Contracting
+
+Raw Material Procurement Execution:
+* Contract Hedging & Inventory Security:
+  - Volume Contracts: Secured 12-month supply reserves of USP-grade Vitamin D3 and C.
+  - Botanical Quality: Verified 10:1 extract concentration ratios for European elderberry batches.
+* Softgel Oil Solubility & Mesh Testing:
+  - Dissolution Testing: Verified raw material oil suspension stability for softgel die filling.
+
+Procurement Clearance: Secured 100% of annual raw vitamin material requirements.
+-> Saved: raw_material_sourcing_dossier, elderberry_assay_certificate, global_freight_log
+NOTE: illustrative concept for Pharmavite LLC.`,
+
+  softgel_tablet_processing:`OPELIKA & SAN FERNANDO SOFTGEL PLAN (illustrative)
+Processing Engineering: Rotary Die Softgel Encapsulation & High-Speed Tablet Presses
+Plants: Opelika (AL) and San Fernando (CA) Facilities
+
+Encapsulation & Bottling Execution:
+* Rotary Die Softgel Encapsulation:
+  - Line Speed: Encapsulated 120,000 Fish Oil softgels/hour with <0.4% fill weight variance.
+  - Tumble Drying: Reduced gelatin shell moisture content to <8% in climate-controlled tumble dryers.
+* High-Speed Bottle Packaging:
+  - Electronic Counters: Electronic slat counters operated at 300 bottles/minute with induction cap sealing.
+
+Engineering Clearance: Softgel and tablet production lines optimized for maximum annual output.
+-> Saved: softgel_compression_dossier, tumble_dryer_moisture_log, bottle_counter_oee_report
+NOTE: illustrative concept for Pharmavite LLC.`,
+
+  pharmacy_retail_margin:`RETAIL PHARMACY & SUBSCRIPTION MARGIN REPORT (illustrative)
+Commercial Scope: Nature Made (R), Nurish (R), MegaFood (R), Bonafide (R), Uqora (R)
+Retail Channels: Walgreens, CVS, Walmart, Target, Amazon, and DTC Subscriptions
+
+Trade Spend & Unit Economics Execution:
+* Retail Pharmacy Margin Realization:
+  - Net Realization: Calculated net margin per bottle across pharmacy BOGO promotion events.
+  - Promotion Optimization: Shifted $1.2M in trade spend to high-converting pharmacy endcap features.
+* DTC Subscription LTV & CAC:
+  - Nurish Unit Economics: Modeled 14-month subscriber retention LTV, increasing DTC channel margin by +18.4%.
+
+Financial Guidance: Delivered Q4 commercial finance strategy to executive leadership.
+-> Saved: supplement_margin_analytics_dossier, pharmacy_bogo_roi_file, nurish_ltv_cac_matrix
+NOTE: illustrative concept for Pharmavite LLC.`,
+};
+
+let EMPLOYEES=[
+  {id:'nature_made_usp_surge',name:'Marcus Burdick-Vance',title:'VP of Global Operations & Quality Systems',wf:'nature_made_usp_surge',handled:1740,hrs:610,win:26,status:'idle'},
+  {id:'gummy_innovation_hub',name:'Elena Rostova',title:'Director of New Albany Gummy & Molding Ops',wf:'gummy_innovation_hub',handled:1190,hrs:440,win:31,status:'idle'},
+  {id:'megafood_wholefood',name:'David Chen',title:'Head of Whole-Food Sourcing & MegaFood Ops',wf:'megafood_wholefood',handled:920,hrs:360,win:22,status:'idle'},
+  {id:'bonafide_uqora_onboard',name:'Sarah Jenkins',title:'Director of Women\'s Health & DTC Subscription',wf:'bonafide_uqora_onboard',handled:780,hrs:310,win:27,status:'idle'},
+  {id:'cgmp_fda_compliance',name:'Dr. Aris Thorne',title:'Chief Quality Assurance & FDA Regulatory Lead',wf:'cgmp_fda_compliance',handled:2150,hrs:710,win:0,status:'idle'},
+  {id:'botanical_vitamin_sourcing',name:'Camilla DeLuca',title:'Senior Raw Material & Procurement Manager',wf:'botanical_vitamin_sourcing',handled:1310,hrs:470,win:38,status:'idle'},
+  {id:'softgel_tablet_processing',name:'Jackson Briggs',title:'Director of Opelika & San Fernando Plant Eng',wf:'softgel_tablet_processing',handled:670,hrs:270,win:16,status:'idle'},
+  {id:'pharmacy_retail_margin',name:'Hannah Lindqvist',title:'Director of Commercial Finance & Trade Ops',wf:'pharmacy_retail_margin',handled:980,hrs:410,win:24,status:'idle'},
+];
+
+/* ENGINE CODE */
+let currentView='ops', currentRunWf=null, runRunning=false, buildStep=1, buildWfKey='', buildAssignments={}, buildName='', buildCadence='Daily batch';
+function $(i){return document.getElementById(i)}
+function tagHtml(t){
+  if(!t)return '';
+  if(t==='flagship')return '<span class="tag hero">Flagship</span>';
+  return `<span class="tag ${t}">${CONFIG.trackLabels[t]||t}</span>`;
+}
+
+function init(){
+  renderEcon(); renderRoster(); renderLegend(); selectRun('nature_made_usp_surge');
+}
+
+function renderLegend(){
+  // Handled inline in HTML
+}
+
+function renderEcon(){
+  const el=$('econGrid'); if(!el)return;
+  const vals=[EMPLOYEES.length, "4", "3,580", "50%"];
+  el.innerHTML=CONFIG.econLabels.map((l,i)=>`
+    <div class="cell">
+      <div class="v">${vals[i]}</div>
+      <div class="k">${l}</div>
+    </div>
+  `).join('');
+}
+
+function renderRoster(){
+  const el=$('rosterGrid'); if(!el)return;
+  let html=EMPLOYEES.map(empCardHtml).join('');
+  html+=`
+    <div class="hire-card" onclick="setView('hire')">
+      <div class="plus">+</div>
+      <div class="h">Stand Up New AI Operator</div>
+      <div class="p">Compose a new specialized operational workflow team in 3 steps</div>
+    </div>`;
+  el.innerHTML=html;
+}
+
+function empCardHtml(e){
+  const wf=WORKFLOWS[e.wf]||{};
+  const isHero=wf.tag==='flagship';
+  const isWorking=e.status==='working';
+  const teamChips=(wf.tasks||[]).map(t=>`<span class="chip">${AGENT_ROLES[t.agent]?.emoji||'\u{1F916}'} ${AGENT_ROLES[t.agent]?.label||t.agent}</span>`).join('');
+  
+  return `
+    <div class="emp ${isHero?'hero':''} ${isWorking?'working':''}" id="emp-${e.id}">
+      <div class="emp-top">
+        <div class="avatar">${e.name.substring(0,2).toUpperCase()}</div>
+        <div>
+          <div class="emp-name">${e.name} ${tagHtml(wf.track)} ${isHero?tagHtml('flagship'):''}</div>
+          <div class="emp-title">${e.title}</div>
+        </div>
+      </div>
+      <div class="emp-owns">Owns: <b>${wf.name||e.wf}</b></div>
+      <div class="team">${teamChips}</div>
+      <div class="emp-stats">
+        <div class="st">Handled<b>${e.handled.toLocaleString()}</b></div>
+        <div class="st">Time Saved<b>${e.hrs}h/mo</b></div>
+        <div class="st">Impact<b>${e.win?CONFIG.statSign+e.win+CONFIG.statSuffix:'-'}</b></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="selectRun('${e.wf}')" ${runRunning?'disabled':''}>${CONFIG.runButton}</button>
+      </div>
+    </div>
+  `;
+}
+
+function setView(v){
+  currentView=v;
+  if(v==='ops'){
+    $('tabA').classList.add('active'); $('tabB').classList.remove('active');
+    $('view-ops').classList.remove('hidden'); $('view-hire').classList.add('hidden');
+  }else{
+    $('tabB').classList.add('active'); $('tabA').classList.remove('active');
+    $('view-hire').classList.remove('hidden'); $('view-ops').classList.add('hidden');
+    initBuilder();
+  }
+}
+
+function selectRun(wfKey){
+  currentRunWf=wfKey;
+  const wf=WORKFLOWS[wfKey];
+  const emp=EMPLOYEES.find(e=>e.wf===wfKey);
+  const panel=$('runPanel'); if(!panel)return;
+  
+  let html=`
+    <div class="run">
+      <div class="run-head">
+        <h3 style="font-size:16px;font-weight:800;color:var(--hi);">Live Run Execution: ${wf.title||wf.name}</h3>
+        ${tagHtml(wf.track)} ${wf.tag==='flagship'?tagHtml('flagship'):''}
+      </div>
+      <div class="run-sub">${wf.desc}</div>
+      <div class="run-input">
+        <textarea id="runPrompt">${wf.sample}</textarea>
+        <button class="btn primary big" id="btnStartRun" onclick="startRun('${wfKey}')">Execute Run</button>
+      </div>
+      <div class="phases">
+        <div class="ph active" id="ph-1"><div class="dot">1</div><div class="l">Agent Task DAG</div></div>
+        <div class="ph" id="ph-2"><div class="dot">2</div><div class="l">Streaming Execution</div></div>
+        <div class="ph" id="ph-3"><div class="dot">3</div><div class="l">Produced Deliverable</div></div>
+      </div>
+      <div class="agent-grid" id="agentGrid">
+        ${wf.tasks.map((t,idx)=>`
+          <div class="acard" id="acard-${idx}">
+            <div class="ae">${AGENT_ROLES[t.agent]?.emoji||'\u{1F916}'}</div>
+            <div class="ar">${AGENT_ROLES[t.agent]?.label||t.agent}</div>
+            <div class="at">${t.task}</div>
+            <div class="as"><div class="sd"></div><span id="astate-${idx}">Waiting</span></div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="feed" id="runFeed"></div>
+      <div class="result hidden" id="runResult">
+        <div class="rstats">
+          <div class="rrow"><span class="k">Execution Mode</span><span class="v">${wf.mode.toUpperCase()}</span></div>
+          <div class="rrow"><span class="k">Agents Engaged</span><span class="v">${wf.tasks.length}</span></div>
+          <div class="rrow"><span class="k">Est. Time Saved</span><span class="v">5.8 hrs</span></div>
+          <div class="rrow"><span class="k">Human Governance</span><span class="v">Chief Quality Officer</span></div>
+        </div>
+        <div class="rout">
+          <div class="rh">${DTITLE[wfKey]||wf.deliverable||'Deliverable Output'}</div>
+          <div class="rb">${FINAL[wfKey]||'Deliverable generated successfully.'}</div>
+        </div>
+      </div>
+    </div>
+  `;
+  panel.innerHTML=html;
+  panel.scrollIntoView({behavior:'smooth'});
+}
+
+function startRun(wfKey){
+  if(runRunning)return;
+  runRunning=true;
+  const wf=WORKFLOWS[wfKey];
+  const btn=$('btnStartRun'); if(btn)btn.disabled=true;
+  const feed=$('runFeed'); if(feed)feed.innerHTML='';
+  $('runResult').classList.add('hidden');
+  
+  const emp=EMPLOYEES.find(e=>e.wf===wfKey);
+  if(emp){ emp.status='working'; renderRoster(); }
+  
+  let timeStr=()=>new Date().toLocaleTimeString([],{hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  let log=(ag,msg)=>{
+    if(!feed)return;
+    let row=document.createElement('div'); row.className='frow';
+    row.innerHTML=`<span class="ts">${timeStr()}</span><span class="an">[${ag}]</span><span class="msg">${msg}</span>`;
+    feed.appendChild(row); feed.scrollTop=feed.scrollHeight;
+  };
+  
+  log('SYSTEM', `Initiating autonomous workflow [${wf.name}] in ${wf.mode.toUpperCase()} mode...`);
+  $('ph-1').classList.remove('active'); $('ph-1').classList.add('done');
+  $('ph-2').classList.add('active');
+  
+  let tasks=wf.tasks;
+  let completed=new Set();
+  
+  function stepRun(){
+    let readyIndices=[];
+    tasks.forEach((t,i)=>{
+      if(!completed.has(i)){
+        let depsMet=(t.deps||[]).every(d=>completed.has(d));
+        if(depsMet) readyIndices.push(i);
+      }
+    });
+    
+    if(readyIndices.length===0){
+      if(completed.size===tasks.length){
+        finishRun();
+      }
+      return;
+    }
+    
+    readyIndices.forEach(idx=>{
+      let t=tasks[idx];
+      let card=$('acard-'+idx);
+      let state=$('astate-'+idx);
+      if(card){ card.classList.add('running','visible'); }
+      if(state) state.innerText='Executing...';
+      
+      let agObj=AGENT_ROLES[t.agent];
+      let agName=agObj?.label||t.agent;
+      log(agName, `Task started: ${t.task}`);
+      
+      setTimeout(()=>{
+        let outStr=toolOut(agObj?.tools?.[0]||'save');
+        log(agName, `Finished task: ${outStr}`);
+        completed.add(idx);
+        if(card){ card.classList.remove('running'); card.classList.add('done'); }
+        if(state) state.innerText='Done';
+        stepRun();
+      }, 900 + Math.random()*400);
+    });
+  }
+  
+  function finishRun(){
+    log('SYSTEM', 'All task dependencies completed. Generating final deliverable...');
+    $('ph-2').classList.remove('active'); $('ph-2').classList.add('done');
+    $('ph-3').classList.add('done');
+    
+    setTimeout(()=>{
+      $('runResult').classList.remove('hidden');
+      if(btn)btn.disabled=false;
+      runRunning=false;
+      if(emp){ emp.status='idle'; renderRoster(); }
+    }, 600);
+  }
+  
+  stepRun();
+}
+
+/* BUILDER CODE */
+function initBuilder(){
+  buildStep=1; buildWfKey=Object.keys(WORKFLOWS)[0]; buildAssignments={}; buildName=''; buildCadence='Daily batch';
+  renderBuilder();
+}
+
+function renderBuilder(){
+  const stepsEl=$('bSteps'); const bodyEl=$('bBody'); const navEl=$('bNav');
+  if(!stepsEl||!bodyEl||!navEl)return;
+  
+  stepsEl.innerHTML=`
+    <div class="step-item ${buildStep===1?'active':''}"><b>Step 1</b>: Select Workflow</div>
+    <div class="step-item ${buildStep===2?'active':''}"><b>Step 2</b>: Assign Agents</div>
+    <div class="step-item ${buildStep===3?'active':''}"><b>Step 3</b>: Name &amp; Launch</div>
+  `;
+  
+  if(buildStep===1){
+    bodyEl.innerHTML=`
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--hi);">Choose a base workflow template:</div>
+      <div class="wf-grid">
+        ${Object.keys(WORKFLOWS).map(k=>{
+          const w=WORKFLOWS[k];
+          return `
+            <div class="wcard" style="${buildWfKey===k?'border-color:var(--accent);background:#fff;':''}" onclick="buildWfKey='${k}';renderBuilder();">
+              <div class="wcard-title"><span>${w.name}</span> ${w.tag==='flagship'?tagHtml('flagship'):''}</div>
+              <div class="wcard-desc">${w.desc}</div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+    navEl.innerHTML=`<div></div><button class="btn primary" onclick="buildStep=2;renderBuilder();">Next: Assign Agents &rarr;</button>`;
+  } else if(buildStep===2){
+    const wf=WORKFLOWS[buildWfKey];
+    bodyEl.innerHTML=`
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--hi);">Assign specialist agents to each task in [${wf.name}]:</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        ${wf.tasks.map((t,idx)=>{
+          const currentAg=buildAssignments[idx]||t.agent;
+          return `
+            <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px;display:flex;justify-content:space-between;align-items:center;">
+              <div style="max-width:60%;">
+                <div style="font-size:12.5px;font-weight:700;color:var(--hi);">Task ${idx+1}: ${t.task}</div>
+                <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Default agent: ${t.agent}</div>
+              </div>
+              <select style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:12px;" onchange="buildAssignments[${idx}]=this.value;">
+                ${RK.map(rk=>`<option value="${rk}" ${currentAg===rk?'selected':''}>${AGENT_ROLES[rk].emoji} ${AGENT_ROLES[rk].label}</option>`).join('')}
+              </select>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+    navEl.innerHTML=`
+      <button class="btn ghost" onclick="buildStep=1;renderBuilder();">&larr; Back</button>
+      <button class="btn primary" onclick="buildStep=3;renderBuilder();">Next: Name Operator &rarr;</button>
+    `;
+  } else if(buildStep===3){
+    const wf=WORKFLOWS[buildWfKey];
+    if(!buildName) buildName=wf.title || "Custom AI Operator";
+    bodyEl.innerHTML=`
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px;color:var(--hi);">Finalize Operator Profile:</div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px;max-width:560px;">
+        <div style="margin-bottom:14px;">
+          <label style="display:block;font-size:11.5px;font-weight:700;color:var(--text-muted);margin-bottom:5px;text-transform:uppercase;">Operator Name &amp; Role Title</label>
+          <input type="text" value="${buildName}" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:13px;" oninput="buildName=this.value;">
+        </div>
+        <div style="margin-bottom:14px;">
+          <label style="display:block;font-size:11.5px;font-weight:700;color:var(--text-muted);margin-bottom:5px;text-transform:uppercase;">Execution Cadence</label>
+          <select style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:13px;" onchange="buildCadence=this.value;">
+            ${CONFIG.builderCadences.map(c=>`<option value="${c}" ${buildCadence===c?'selected':''}>${c}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+    `;
+    navEl.innerHTML=`
+      <button class="btn ghost" onclick="buildStep=2;renderBuilder();">&larr; Back</button>
+      <button class="btn primary" onclick="finishBuilder();">Deploy Operator &rarr;</button>
+    `;
+  }
+}
+
+function finishBuilder(){
+  const wf=WORKFLOWS[buildWfKey];
+  const newEmp={
+    id:'custom_'+Date.now(),
+    name:buildName||'Custom Operator',
+    title:'AI Custom Operational Lead',
+    wf:buildWfKey,
+    handled:1,
+    hrs:120,
+    win:15,
+    status:'idle'
+  };
+  EMPLOYEES.push(newEmp);
+  renderRoster();
+  setView('ops');
+  selectRun(buildWfKey);
+  alert(`Operator [${newEmp.name}] deployed successfully.`);
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
