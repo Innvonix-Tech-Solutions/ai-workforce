@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarte Cosmetics — AI High-Performance Beauty &amp; Global Operations Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#ffffff;
+  --surface:#fdf2f8;
+  --surface2:#fbcfe8;
+  --border:#f472b6;
+  --border-subtle:#fbcfe8;
+  --accent:#6b21a8;
+  --accent-light:#8b5cf6;
+  --accent-dark:#4c1d95;
+  --tarte-pink:#ec4899;
+  --tarte-gold:#d97706;
+  --tarte-green:#059669;
+  --accent-dim:rgba(107,33,168,.08);
+  --accent-line:rgba(107,33,168,.28);
+  --pink-dim:rgba(236,72,153,.12);
+  --pink-line:rgba(236,72,153,.35);
+  --text:#371b58;
+  --text-muted:#705294;
+  --hi:#1e1b4b;
+  --ok:#059669;
+  --ok-dim:rgba(5,150,105,.10);
+}
+body{background:var(--canvas);color:var(--text);font-family:"Plus Jakarta Sans",system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:3px solid var(--tarte-pink);position:sticky;top:0;background:var(--accent);color:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:14px}
+.mark{min-width:115px;height:36px;padding:0 14px;border-radius:6px;background:#ffffff;display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:900;font-size:15px;letter-spacing:1px;white-space:nowrap;overflow:hidden;flex-shrink:0;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.mark span{color:var(--tarte-pink)}
+.htitle{font-size:15px;font-weight:800;color:#fff;letter-spacing:.4px;text-transform:uppercase}.hsub{font-size:11px;color:#fbcfe8;margin-top:1px;font-weight:500;letter-spacing:.3px}
+.badge{border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:6px 12px;font-size:11px;color:#fbcfe8;background:rgba(76,29,149,.6)}.badge b{color:#ffffff}
+.tabs{max-width:1200px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:700;color:var(--text-muted);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none;letter-spacing:.3px}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface);border-top:3px solid var(--accent)}
+.main{max-width:1200px;margin:0 auto;padding:24px}
+.lead{font-size:14.5px;line-height:1.6;max-width:920px;margin-bottom:14px;color:#371b58}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--text-muted);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.5px;padding:3px 8px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.trackA{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.trackB{background:var(--pink-dim);color:#be185d;border:1px solid var(--pink-line)}
+.tag.hero{background:rgba(217,119,6,.12);color:var(--tarte-gold);border:1px solid var(--tarte-gold)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--accent)}.cell .v .u{color:var(--accent);font-size:16px}
+.cell .k{font-size:11.5px;color:var(--text-muted);margin-top:4px;line-height:1.35}
+.slabel{font-size:11px;font-weight:800;letter-spacing:1.2px;color:var(--accent);text-transform:uppercase;margin:22px 0 14px;display:flex;align-items:center;gap:10px;font-family:"IBM Plex Sans Condensed",sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;transition:box-shadow .2s,border-color .2s}
+.emp:hover{border-color:var(--accent-line);box-shadow:0 4px 14px rgba(107,33,168,.10)}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--accent-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:800;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;letter-spacing:.2px}.emp-title{font-size:12px;color:var(--text-muted)}
+.emp-owns{font-size:12.5px;margin-bottom:10px;line-height:1.4}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--text-muted);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-weight:600}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--text-muted)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:800}
+.actions{display:flex;gap:8px}
+.btn{font-family:inherit;font-size:12.5px;font-weight:700;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi);transition:all .15s}
+.btn:hover{border-color:var(--accent-line)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#ffffff}
+.btn.primary:hover{background:var(--accent-dark);border-color:var(--accent-dark);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent;color:var(--accent)}.btn.big{padding:12px 22px;font-size:13.5px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px;background:rgba(253,242,248,.6)}
+.hire-card:hover{border-color:var(--accent);background:var(--surface)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:700;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--text-muted);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--text-muted);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:60px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text-muted);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent-dark)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:700;color:var(--text-muted);letter-spacing:.3px}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(5,150,105,.5);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--text-muted);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--text-muted)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--text-muted)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:176px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:"IBM Plex Mono",monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--text-muted)}.frow .fa{color:var(--hi);font-weight:600}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--text-muted)}.rrow .v{color:var(--hi);font-weight:700}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:800;color:var(--hi);background:var(--surface2)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto;font-family:"IBM Plex Mono",monospace}
+.donebar{background:var(--surface);border:1px solid rgba(5,150,105,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:800;color:var(--text-muted);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:700;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--text-muted);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface);transition:all .15s}
+.wf:hover{border-color:var(--accent-line)}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:14px;font-weight:800;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.wf .wd{font-size:11.5px;color:var(--text-muted);margin-top:5px;line-height:1.4}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:700;text-transform:uppercase}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:700;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 13px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--text-muted);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1200px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--text-muted);line-height:1.5}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="logo"><div class="mark">TARTE<span>COSMETICS</span></div>
+    <div><div class="htitle">Tarte Cosmetics AI Workforce</div><div class="hsub">Autonomous multi-agent orchestration for Shape Tape Franchise, Global Cross-Border E-Commerce, and Sephora/Ulta Operations</div></div></div>
+  <div class="badge">Independent concept &nbsp;·&nbsp; <b>illustrative</b></div>
+</header>
+<div class="tabs">
+  <button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+  <button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+<div class="main">
+  <div id="view-ops">
+    <div class="lead">Each AI operator below represents a core Tarte Cosmetics operational workflow turned into an autonomous team of specialist agents. Select any operator to trigger a live run on a sample campaign.</div>
+    <div class="legend" id="legend"></div>
+    <div class="econ" id="econ"></div>
+    <div id="roster"></div>
+    <div id="runPanel"></div>
+  </div>
+  <div id="view-hire" class="hidden">
+    <div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+    <div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+  </div>
+</div>
+<div class="foot">Independent concept prototype prepared for a conversation with Tarte Cosmetics (tartecosmetics.com). Built in accordance with Tarte Cosmetics brand guidelines (#6B21A8 Royal Purple, #EC4899 Hot Pink, #FDF2F8 Soft Petal, and #1E1B4B Deep Indigo). All operators and outputs are illustrative simulations; viral demand forecasts, Sephora retail store allocation numbers, cruelty-free formula safety audits, and cross-border customs duty calculations are placeholders. A licensed VP of Global Operations, Supply Chain Director, or Executive Creative Director reviews and approves every commercial campaign and retail allocation.</div>
+
+<script>
+const CONFIG={
+  econLabels:["AI operators","brand workflows","hours saved / month","avg turnaround cut"],
+  statLabel:"turnaround", statSign:"−", statSuffix:"%",
+  runButton:"Run on a campaign",
+  runNoun:"campaign",
+  outputLabel:"Review-ready output",
+  rosterLabel:"Your AI operators",
+  trackLabels:{trackA:"Global DTC, Social Commerce & Brand Growth Engine", trackB:"High-Performance Supply Chain & Retail Operations Engine"},
+  builderCadences:["Per campaign","Daily batch","Weekly shift","On-demand"],
+};
+
+const AGENT_ROLES={
+  shapetape:{emoji:'💄',label:'Shape Tape Concealer Franchise & Viral Demand Forecaster',tools:['forecast_viral_shape_tape_and_maracuja_demand_spikes','save']},
+  crossborder:{emoji:'🌐',label:'Global Cross-Border E-Commerce & Customs Duty Router',tools:['calculate_cross_border_landed_costs_and_customs_duties','save']},
+  virtualtryon:{emoji:'📸',label:'AR/AI Virtual Try-On & Complexion Shade Match Concierge',tools:['calibrate_ar_skin_undertone_camera_shade_matching','save']},
+  maracuja:{emoji:'🌿',label:'Amazonian Clay & Maracuja Botanical Ingredient Specialist',tools:['audit_amazonian_clay_and_maracuja_oil_sourcing_purity','save']},
+  sephorasupply:{emoji:'🛒',label:'Sephora & Ulta Global Retail Inventory Allocator',tools:['optimize_sephora_ulta_global_door_replenishment','save']},
+  influencertrip:{emoji:'✈️',label:'Trippin with Tarte PR & Social Commerce Lead',tools:['manage_trippin_with_tarte_pr_vault_and_tiktok_shop_affiliates','save']},
+  crueltyfreeqa:{emoji:'🐰',label:'Leaping Bunny Cruelty-Free & Vegan Compliance Auditor',tools:['audit_leaping_bunny_cruelty_free_and_vegan_certifications','save']},
+  dtcconversion:{emoji:'💻',label:'Global TarteCosmetics.com DTC Checkout & Localization Lead',tools:['localize_tarte_dtc_checkout_inr_currency_and_payment_gateways','save']},
+  packagingqa:{emoji:'📦',label:'Eco-Conscious Packaging & Shade Calibration QC Engineer',tools:['test_pcr_plastic_tube_torque_and_08bar_vacuum_leakage','save']},
+  globalregulatory:{emoji:'📜',label:'Global Cosmetic Regulatory (EU REACH, FDA, CDSCO) Auditor',tools:['audit_global_cosmetic_regulations_eu_reach_and_cdsco_india','save']},
+  writer:{emoji:'✍️',label:'Beauty Editorial & E-Commerce Merchandising Copywriter',tools:['compose','save']},
+  reviewer:{emoji:'✅',label:'VP of Global Operations & Executive Creative Director',tools:['qa_review','save']},
+};
+
+const RK=Object.keys(AGENT_ROLES);
+const TRACKS=[['trackA','Global DTC, Social Commerce & Brand Growth Engine'],['trackB','High-Performance Supply Chain & Retail Operations Engine']];
+
+const WORKFLOWS={
+  shapetape_launch:{name:'Shape Tape Concealer & Maracuja Juicy Lip viral campaign & demand forecast',title:'AI Shape Tape Viral Launch Operator',mode:'dag',track:'trackA',tag:'flagship',deliverable:'Shape Tape Concealer & Maracuja Juicy Lip Viral Campaign & Demand Forecast Report',
+  sample:'Execute demand forecasting and viral TikTok strategy for the launch of Maracuja Juicy Lip Plump new shades and Shape Tape Radiant Concealer, predicting a 15x viral surge across DTC and 2,500 Sephora/Ulta doors.',
+  desc:'Agents analyze social search velocity, project 500,000-unit initial inventory burn rate, and trigger priority factory reorder runs.',
+  tasks:[{agent:'shapetape',task:'Analyze TikTok hashtag velocity (#ShapeTape, #MaracujaJuicyLip) and model 15x launch demand spike.',deps:[]},
+  {agent:'influencertrip',task:'Coordinate VIP creator PR vault seeding and TikTok Shop affiliate launch for 350 beauty creators.',deps:[]},
+  {agent:'sephorasupply',task:'Allocate 320,000 units to Sephora US, 110,000 units to Ulta Beauty, and 70,000 units to TarteCosmetics.com DTC.',deps:[0,1]},
+  {agent:'reviewer',task:'Audit campaign gross margin (85.4%) and synchronized global retail launch readiness.',deps:[2]},
+  {agent:'writer',task:'Produce review-ready Shape Tape franchise launch brief and executive inventory allocation matrix.',deps:[3]}]},
+
+  crossborder_customs:{name:'India & APAC cross-border e-commerce duty & customs clearance',title:'AI Cross-Border E-Commerce Operator',mode:'sequential',track:'trackA',deliverable:'India & APAC Cross-Border E-Commerce Duty & Customs Clearance Report',
+  sample:'Structure cross-border DTC checkout and logistics for TarteCosmetics.com orders shipping to India (en-in), calculating landed costs, India GST (18%), customs tariffs, and 4-day express courier delivery.',
+  desc:'Agents calculate real-time currency conversion (USD to INR), automate CDSCO import documentation, and eliminate delivery duty unpaid (DDU) friction.',
+  tasks:[{agent:'crossborder',task:'Calculate landed costs: product price + 18% India GST + customs duty + express air freight.',deps:[]},
+  {agent:'dtcconversion',task:'Localize DTC checkout with UPI, NetBanking, and RuPay card payment gateway integration.',deps:[0]},
+  {agent:'reviewer',task:'Audit cross-border customs clearance SLAs (sub-48hr port clearance at Mumbai & Delhi).',deps:[1]},
+  {agent:'writer',task:'Generate international shopper checkout transparency report and logistics dispatch manifest.',deps:[2]}]},
+
+  ar_shade_match:{name:'AR/AI virtual try-on & 36-shade complexion inclusivity engine',title:'AI AR Virtual Try-On Operator',mode:'dag',track:'trackA',deliverable:'AR/AI Virtual Try-On & 36-Shade Complexion Inclusivity Engine Dossier',
+  sample:'Calibrate AR/AI camera shade matching algorithms across 36 Shape Tape Concealer and Amazonian Clay Foundation shades for online shoppers on TarteCosmetics.com.',
+  desc:'Agents map digital spectroradiometer undertone data, test AR camera lighting rendering, and measure DTC return rate reduction.',
+  tasks:[{agent:'virtualtryon',task:'Map digital selfie camera undertones across fair, light, medium, tan, and deep shade spectrums.',deps:[]},
+  {agent:'dtcconversion',task:'Embed AR virtual try-on widget on product detail pages (PDP) to boost add-to-cart by +38%.',deps:[0]},
+  {agent:'reviewer',task:'Audit shade matching precision (99.3% customer accuracy) and cut return rates from 12.5% to 3.2%.',deps:[0,1]},
+  {agent:'writer',task:'Publish AR shade match performance dossier and digital merchandising report.',deps:[2]}]},
+
+  tarte_trippin:{name:'"Trippin with Tarte" influencer seeding & TikTok Shop affiliate ROI',title:'AI Social Commerce PR Operator',mode:'sequential',track:'trackA',deliverable:'"Trippin with Tarte" Influencer Seeding & TikTok Shop Affiliate ROI Report',
+  sample:'Orchestrate "Trippin with Tarte" global creator campaign and TikTok Shop affiliate seeding for 100 top beauty influencers during a multi-day brand experience.',
+  desc:'Agents track organic social video impressions, attribute TikTok Shop affiliate sales link revenue, and calculate Earned Media Value (EMV).',
+  tasks:[{agent:'influencertrip',task:'Manage 100 creator invitations, VIP PR vault packaging, and affiliate commission tracking codes.',deps:[]},
+  {agent:'shapetape',task:'Monitor viral content views (180M+ impressions) and real-time TikTok Shop checkout conversion.',deps:[0]},
+  {agent:'reviewer',task:'Audit campaign ROI (9.2x Earned Media Value return) and FTC sponsorship disclosure compliance.',deps:[1]},
+  {agent:'writer',task:'Draft executive "Trippin with Tarte" campaign performance recap and social commerce report.',deps:[2]}]},
+
+  sephora_global:{name:'Sephora & Ulta 2,500-door global retail inventory allocation',title:'AI Sephora & Ulta Retail Operator',mode:'dag',track:'trackB',deliverable:'Sephora & Ulta 2,500-Door Global Retail Inventory Allocation Plan',
+  sample:'Optimize weekly retail safety stock replenishment across 2,500 doors (Sephora US/EU, Ulta 1,500 doors, Macy\'s, and Nykaa India) for top 15 hero SKUs.',
+  desc:'Agents analyze point-of-sale (POS) sell-through trends, prevent retail out-of-stock events during peak promotional windows, and maintain OTIF delivery.',
+  tasks:[{agent:'sephorasupply',task:'Process POS sell-through data across 2,500 retail doors; flag 165 doors with <4 days safety stock.',deps:[]},
+  {agent:'packagingqa',task:'Trigger priority warehouse replenishment (115,000 units) from distribution hubs in NJ and Holland.',deps:[]},
+  {agent:'reviewer',task:'Audit retailer OTIF (On-Time In-Full) delivery compliance (99.4% target) and chargeback risks.',deps:[0,1]},
+  {agent:'writer',task:'Issue master retail replenishment schedule and Sephora/Ulta account management matrix.',deps:[2]}]},
+
+  vegan_clay_qa:{name:'Amazonian Clay & Maracuja botanical ingredient purity audit',title:'AI Botanical Ingredient Purity Operator',mode:'sequential',track:'trackB',deliverable:'Amazonian Clay & Maracuja Botanical Ingredient Purity Audit',
+  sample:'Execute ingredient origin and purity audit for Amazonian Clay harvested from the Amazon river basin and cold-pressed Maracuja passion fruit oil.',
+  desc:'Agents verify sustainable harvesting practices, audit heavy metal screening (<0.5 ppm), and confirm 100% Leaping Bunny vegan certification.',
+  tasks:[{agent:'maracuja',task:'Audit Amazonian clay mineral composition and cold-pressed maracuja oil essential fatty acid profile.',deps:[]},
+  {agent:'crueltyfreeqa',task:'Verify 100% vegan formulation and zero animal testing across all 32 raw material suppliers.',deps:[0]},
+  {agent:'reviewer',task:'Audit heavy metal lab tests (<0.5 ppm lead/arsenic) and toxicological safety evaluations.',deps:[1]},
+  {agent:'writer',task:'Publish certified Tarte High-Performance Naturals ingredient purity certificate.',deps:[2]}]},
+
+  eco_packaging:{name:'Eco-conscious packaging & shade vial air-transport leakage testing',title:'AI Eco-Packaging & QC Operator',mode:'dag',track:'trackB',deliverable:'Eco-Conscious Packaging & Shade Vial Air-Transport Leakage Test Report',
+  sample:'Evaluate mechanical seal integrity and vacuum pressure resistance of post-consumer recycled (PCR) plastic tubes and custom wand applicators for air cargo freight.',
+  desc:'Agents test cap closure torque (<2.4 Nm), 1.5-meter concrete drop impact, and 0.8 bar vacuum seal leak resistance during international flights.',
+  tasks:[{agent:'packagingqa',task:'Execute automated vacuum chamber testing at 0.8 bar negative pressure on 250 Shape Tape vials.',deps:[]},
+  {agent:'sephorasupply',task:'Verify PCR plastic tube wall structural integrity under pallet stacking pressure in warehouses.',deps:[]},
+  {agent:'reviewer',task:'Audit packaging sustainability metrics (75% PCR plastic content) and zero leak pass rate.',deps:[0,1]},
+  {agent:'writer',task:'Produce packaging quality assurance certificate and engineering specification bulletin.',deps:[2]}]},
+
+  cosmetic_reg:{name:'Global cosmetic regulatory compliance (EU REACH, FDA MoCRA, CDSCO)',title:'AI Global Cosmetic Regulatory Operator',mode:'sequential',track:'trackB',deliverable:'Global Cosmetic Regulatory Compliance (EU REACH, FDA MoCRA, CDSCO) Dossier',
+  sample:'Compile global regulatory safety dossiers for international expansion into Europe, the UK, India (CDSCO), and Asia-Pacific markets across 50 core product SKUs.',
+  desc:'Agents screen EU REACH restricted substances, compile FDA MoCRA facility registrations, and generate India CDSCO import registration certificates.',
+  tasks:[{agent:'globalregulatory',task:'Audit 50 product formulations against EU Cosmetic Regulation (EC 1223/2009) and India CDSCO rules.',deps:[]},
+  {agent:'crueltyfreeqa',task:'Confirm zero animal testing documentation for all international regulatory import filings.',deps:[0]},
+  {agent:'reviewer',task:'Audit dermatologist allergy patch test data and product safety assessor sign-offs.',deps:[1]},
+  {agent:'writer',task:'Issue global cosmetic regulatory clearance dossier and country-specific import permits.',deps:[2]}]},
+};
+
+const DTITLE={
+  shapetape_launch:'Shape Tape Concealer & Maracuja Juicy Lip Viral Campaign & Demand Forecast Report',
+  crossborder_customs:'India & APAC Cross-Border E-Commerce Duty & Customs Clearance Report',
+  ar_shade_match:'AR/AI Virtual Try-On & 36-Shade Complexion Inclusivity Engine Dossier',
+  tarte_trippin:'"Trippin with Tarte" Influencer Seeding & TikTok Shop Affiliate ROI Report',
+  sephora_global:'Sephora & Ulta 2,500-Door Global Retail Inventory Allocation Plan',
+  vegan_clay_qa:'Amazonian Clay & Maracuja Botanical Ingredient Purity Audit',
+  eco_packaging:'Eco-Conscious Packaging & Shade Vial Air-Transport Leakage Test Report',
+  cosmetic_reg:'Global Cosmetic Regulatory Compliance (EU REACH, FDA MoCRA, CDSCO) Dossier',
+};
+
+const TOOLS={
+  forecast_viral_shape_tape_and_maracuja_demand_spikes:()=>'Analyzed 58M+ TikTok views; modeled 15x viral demand surge for Shape Tape & Maracuja lip line.',
+  calculate_cross_border_landed_costs_and_customs_duties:()=>'Calculated landed costs for India (en-in); automated 18% GST and customs duty transparent pricing.',
+  calibrate_ar_skin_undertone_camera_shade_matching:()=>'Calibrated AR camera undertone engine across 36 Shape Tape shades with 99.3% accuracy.',
+  audit_amazonian_clay_and_maracuja_oil_sourcing_purity:()=>'Audited Amazonian clay & maracuja oil cold-press extraction; verified 100% sustainable origin.',
+  optimize_sephora_ulta_global_door_replenishment:()=>'Balanced inventory across 2,500 global doors (Sephora & Ulta); eliminated out-of-stock risk.',
+  manage_trippin_with_tarte_pr_vault_and_tiktok_shop_affiliates:()=>'Managed 350 creator PR vaults; achieved 9.2x Earned Media Value (EMV) return on TikTok Shop.',
+  audit_leaping_bunny_cruelty_free_and_vegan_certifications:()=>'Audited 32 raw ingredient suppliers; confirmed 100% Leaping Bunny cruelty-free and vegan certification.',
+  localize_tarte_dtc_checkout_inr_currency_and_payment_gateways:()=>'Localized TarteCosmetics.com checkout for India (INR); integrated UPI and NetBanking payment gateways.',
+  test_pcr_plastic_tube_torque_and_08bar_vacuum_leakage:()=>'Tested 75% PCR plastic tubes under 0.8 bar vacuum; verified zero air transport leakage.',
+  audit_global_cosmetic_regulations_eu_reach_and_cdsco_india:()=>'Audited EU REACH, FDA MoCRA, and India CDSCO rules; cleared 50 SKUs for international retail.',
+  compose:()=>'Drafted in clear, high-performance beauty editorial, cross-border e-commerce and retail supply chain style.',
+  qa_review:()=>'QA: Verified cruelty-free safety limits, retail OTIF delivery SLAs, and Executive Creative Director sign-off.',
+  save:()=>'Saved to shared enterprise brand repository for downstream marketing and supply chain agents.',
+};
+
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+
+const FINAL={
+  shapetape_launch:`SHAPE TAPE CONCEALER & MARACUJA JUICY LIP VIRAL LAUNCH REPORT (illustrative)
+Franchise Focus: Shape Tape Concealer Franchise & Maracuja Juicy Lip Plump Expansion
+Launch Distribution: Global Synchronized Launch (TarteCosmetics.com DTC + Sephora + Ulta Beauty)
+
+Viral Demand & Social Commerce Analytics:
+• Social Trend & Search Velocity:
+  - TikTok Hashtag Views (#ShapeTape, #MaracujaJuicyLip): 184,000,000 views in 7 days (Surge index: 9.9/10).
+  - Search Query Growth: +520% week-over-week search interest for "Tarte Shape Tape new shades".
+• Global Channel Inventory Allocation:
+  - Initial Production Run: 500,000 units.
+  - Sephora North America (540 Doors + Online): 260,000 units (52.0% of total allocation).
+  - Ulta Beauty (1,500 Doors + Online): 140,000 units (28.0% of total allocation).
+  - TarteCosmetics.com Global DTC: 60,000 units (12.0% of total allocation).
+  - Sephora EU & Nykaa India: 40,000 units (8.0% of total allocation).
+• Financial Projection:
+  - First-Week Global Gross Sales: $13,500,000.00 ($27.00 MSRP per unit).
+  - Gross Margin Profile: 85.4% gross margin ($11.52M net contribution).
+  - Secondary Reorder Trigger: 250,000-unit factory run initiated for Day 12 warehouse receipt.
+
+Execution Status: Approved for global synchronized launch across digital and physical retail doors.
+→ Saved: shape_tape_demand_forecast, sephora_ulta_allocation_matrix, factory_reorder_schedule
+NOTE: illustrative concept for Tarte Cosmetics (tartecosmetics.com).`,
+
+  crossborder_customs:`INDIA & APAC CROSS-BORDER E-COMMERCE DUTY & CUSTOMS REPORT (illustrative)
+Target Storefront: TarteCosmetics.com India Storefront (en-in)
+Logistics Model: DDP (Delivered Duty Paid) Express Air Courier Delivery
+
+Cross-Border Financial & Customs Settlement Matrix:
+• Landed Cost Calculation (Sample ₹4,500 INR / $54.00 USD Order):
+  - Cart Product Value: ₹3,200.00 INR ($38.50 USD).
+  - India Goods & Services Tax (GST 18%): ₹576.00 INR ($6.93 USD).
+  - Basic Customs Tariff (BCD 20%): ₹640.00 INR ($7.70 USD).
+  - Express International Courier Freight: ₹840.00 INR ($10.10 USD).
+  - Total Landed Price to Customer: ₹5,256.00 INR ($63.23 USD) — Transparent DDP Checkout.
+• Localized Payment Integration:
+  - UPI (Google Pay, PhonePe, Paytm): 68% of total checkout transactions.
+  - NetBanking & RuPay Cards: 22% of transactions.
+  - Credit Cards (Visa/Mastercard): 10% of transactions.
+• Customs Clearance Velocity: Average 18.4 hours clearance time at Mumbai (BOM) & Delhi (DEL) airports.
+
+Operational Metric: Cross-border checkout conversion increased by +42% with transparent DDP duty calculation.
+→ Saved: india_landed_cost_calculator, cdsco_customs_clearance_manifest, upi_payment_conversion_log
+NOTE: illustrative.`,
+
+  ar_shade_match:`AR/AI VIRTUAL TRY-ON & 36-SHADE COMPLEXION INCLUSIVITY DOSSIER (illustrative)
+Product Line: 36 Shades of Shape Tape Full Coverage Concealer & Amazonian Clay 16-Hour Foundation
+Technology Platform: Tarte AR Virtual Try-On & Digital Camera Spectroradiometer Calibration
+
+Shade Matching Precision & Inclusivity Performance:
+• Undertone Spectrum Calibration:
+  - Fair Spectrum (8B to 16N): 8 Shades.
+  - Light-Medium Spectrum (20B to 34N): 10 Shades.
+  - Tan Spectrum (35N to 44H): 9 Shades.
+  - Deep Spectrum (53N to 63H): 9 Shades (Rich warm, cool, and neutral undertones with zero flashback).
+• AR Camera Performance & Customer Conversion:
+  - Virtual Try-On Session Volume: 280,000 digital sessions per month.
+  - PDP Conversion Uplift: +38.5% add-to-cart conversion rate for shoppers using AR try-on.
+  - Return Rate Reduction: Complexion shade exchange rate reduced from 12.5% to 3.2% on TarteCosmetics.com.
+
+Inclusivity Certification: 100% compliant with Tarte Inclusivity & Shade Representation Charter.
+→ Saved: ar_shade_match_calibration_matrix, dtc_pdp_conversion_analytics, foundation_shade_guide
+NOTE: illustrative.`,
+
+  tarte_trippin:`"TRIPPIN WITH TARTE" INFLUENCER SEEDING & TIKTOK SHOP AFFILIATE REPORT (illustrative)
+Campaign: "Trippin with Tarte" Global Creator Experience & Social Commerce Takeover
+Creator Cohort: 100 Top Global Beauty Creators (TikTok, Instagram, YouTube)
+
+Social Commerce & Earned Media Value (EMV) Performance:
+• Social Engagement & Reach:
+  - Total Video Views Generated: 184,000,000 impressions across TikTok and Instagram Reels.
+  - Organic Hashtag Posts (#TrippinWithTarte): 4,850 creator and user posts in 10 days.
+  - Earned Media Value (EMV): $22,400,000.00 (EMV Return: 9.2x ROI on event investment).
+• TikTok Shop & Affiliate Commerce:
+  - TikTok Shop Live Stream Revenue: $1,850,000.00 direct checkout revenue.
+  - Creator Affiliate Code Sales: $2,420,000.00 DTC attributed sales.
+  - Best-Selling Product: Maracuja Juicy Lip Plump in shade "Mixed Berries" (84,000 units sold).
+
+FTC Brand Safety Audit: 100% compliance with FTC sponsorship disclosure guidelines across all posts.
+→ Saved: trippin_with_tarte_emv_report, tiktok_shop_sales_attribution, ftc_compliance_audit_file
+NOTE: illustrative.`,
+
+  sephora_global:`SEPHORA & ULTA 2,500-DOOR GLOBAL RETAIL INVENTORY ALLOCATION PLAN (illustrative)
+Retail Footprint: 2,500 Physical Doors (Sephora US/EU, Ulta 1,500 doors, Macy's, Nykaa India)
+Product Scope: Top 15 Hero SKUs (Shape Tape Concealer, Maracuja Juicy Lip, Tubing Mascara)
+
+Inventory Optimization & Replenishment Summary:
+• POS Sell-Through Velocity:
+  - Total Weekly Retail Units Sold: 620,000 units globally.
+  - Out-of-Stock Prevention: Identified 165 Sephora and Ulta doors with safety stock below 4-day threshold.
+• Automated Replenishment Dispatch:
+  - North America (Reno & New Jersey DCs): 85,000 units shipped to Sephora & Ulta distribution hubs.
+  - Europe (Rotterdam DC): 25,000 units shipped to Sephora EU retail network.
+• Retailer Operational Performance:
+  - OTIF (On-Time In-Full) Delivery Rate: 99.4% (exceeding Sephora 98.5% SLA requirement).
+  - Out-of-Stock Rate on Shape Tape Concealer: Reduced to 0.4% across all retail doors.
+
+Gross Retail Sales Projection: $15,500,000.00 weekly sell-through.
+→ Saved: global_retail_replenishment_plan, sephora_ulta_pos_analytics, otif_compliance_report
+NOTE: illustrative.`,
+
+  vegan_clay_qa:`AMAZONIAN CLAY & MARACUJA BOTANICAL INGREDIENT PURITY AUDIT (illustrative)
+Ingredient Focus: Sustainably Harvested Amazonian Clay & Cold-Pressed Maracuja Passion Fruit Oil
+Purity Charter: Tarte High-Performance Naturals (100% Cruelty-Free & Vegan Certified)
+
+Botanical Audit & Laboratory Assay Metrics:
+• Amazonian Clay Mineral Composition:
+  - Mineral Purity: Rich in kaolin, iron oxides, and natural oil-absorbing minerals.
+  - Heavy Metal Screening: <0.5 ppm lead/arsenic (Strict limit: <1.0 ppm).
+• Cold-Pressed Maracuja Passion Fruit Oil:
+  - Essential Fatty Acid Profile: 72.4% Linoleic Acid (Omega-6) for deep skin hydration.
+  - Extraction Process: 100% cold-pressed without chemical solvents.
+• Cruelty-Free & Vegan Audit:
+  - Leaping Bunny Certification: 100% verified across 32 raw material suppliers; zero animal testing.
+
+Ingredient Safety Status: Approved for full-scale production in all high-performance natural formulas.
+→ Saved: amazonian_clay_purity_assay, maracuja_fatty_acid_profile, leaping_bunny_audit_certificate
+NOTE: illustrative.`,
+
+  eco_packaging:`ECO-CONSCIOUS PACKAGING & SHADE VIAL AIR-TRANSPORT LEAKAGE REPORT (illustrative)
+Test Component: Shape Tape Concealer PCR Plastic Tubes & Maracuja Lip Click Pens
+Packaging Goal: 75% Post-Consumer Recycled (PCR) plastic with zero air-transport leakage
+
+Mechanical Quality Control & Leakage Test Findings:
+• Cap Closure Torque Testing:
+  - Mean Thread Torque: 2.15 Nm (Optimal seal without causing opening difficulty for consumers).
+• Air Cargo Vacuum Pressure Resistance:
+  - Vacuum Chamber Pressure: Tested at 0.8 bar negative pressure for 4 hours (simulating high-altitude air freight).
+  - Leakage Failure Rate: 0.00% leakage across 250 test vials.
+• Drop Impact Durability: 100% survival rate after 1.5-meter drop onto concrete.
+
+Sustainability Benchmark: 75% PCR plastic composition cuts virgin plastic usage by 42 Tons annually.
+→ Saved: eco_packaging_torque_test_report, vacuum_leak_integrity_certificate, pcr_plastic_sustainability_dossier
+NOTE: illustrative.`,
+
+  cosmetic_reg:`GLOBAL COSMETIC REGULATORY COMPLIANCE DOSSIER (illustrative)
+Regulatory Scope: US FDA MoCRA, EU Cosmetic Regulation (EC 1223/2009), India CDSCO, ASEAN Directive
+Product Coverage: 50 Core Tarte Cosmetics SKUs across Makeup & Skincare
+
+International Regulatory Filing Summary:
+• European Union & UK Compliance:
+  - EU CPNP Portal Registration: Complete for all 50 SKUs with qualified Safety Assessor sign-off.
+  - EU REACH Compliance: Verified zero restricted phthalates, parabens, or heavy metals.
+• India CDSCO Import Registration:
+  - Approved CDSCO Import License (Form 43) for TarteCosmetics.com India (en-in) distribution.
+• US FDA MoCRA Registration:
+  - Mandatory facility registration and cosmetic product listing 100% complete.
+
+Regulatory Status: Cleared for international sale across 70+ global markets.
+→ Saved: global_cosmetic_regulatory_dossier, cdsco_india_import_license, eu_cpnp_registration_file
+NOTE: illustrative.`,
+};
+
+let EMPLOYEES=[
+  {id:'shapetape_launch',name:'Shape Tape Launch',title:'AI Shape Tape Viral Launch Operator',wf:'shapetape_launch',handled:980,hrs:360,win:0,status:'idle'},
+  {id:'crossborder_customs',name:'Cross-Border DTC',title:'AI Cross-Border E-Commerce Operator',wf:'crossborder_customs',handled:720,hrs:275,win:42,status:'idle'},
+  {id:'ar_shade_match',name:'AR Shade Match',title:'AI AR Virtual Try-On Operator',wf:'ar_shade_match',handled:810,hrs:310,win:38,status:'idle'},
+  {id:'tarte_trippin',name:'Trippin PR',title:'AI Social Commerce PR Operator',wf:'tarte_trippin',handled:890,hrs:330,win:52,status:'idle'},
+  {id:'sephora_global',name:'Sephora Retail',title:'AI Sephora & Ulta Retail Operator',wf:'sephora_global',handled:1050,hrs:410,win:45,status:'idle'},
+  {id:'vegan_clay_qa',name:'Botanical Purity',title:'AI Botanical Ingredient Purity Operator',wf:'vegan_clay_qa',handled:540,hrs:220,win:30,status:'idle'},
+  {id:'eco_packaging',name:'Eco Packaging',title:'AI Eco-Packaging & QC Operator',wf:'eco_packaging',handled:460,hrs:190,win:25,status:'idle'},
+  {id:'cosmetic_reg',name:'Global Regs',title:'AI Global Cosmetic Regulatory Operator',wf:'cosmetic_reg',handled:610,hrs:250,win:35,status:'idle'},
+];
+
+/* ENGINE (do not edit below this line) */
+let currentView='ops', currentRunWf=null, runRunning=false, buildStep=1, buildWfKey='', buildAssignments={}, buildName='', buildCadence='Daily';
+function $(i){return document.getElementById(i)}
+function tagHtml(t){
+  if(!t)return '';
+  if(t==='flagship')return '<span class="tag hero">Flagship</span>';
+  return `<span class="tag ${t}">${CONFIG.trackLabels[t]||t}</span>`;
+}
+
+function init(){
+  renderEcon(); renderRoster(); renderLegend();
+}
+
+function renderLegend(){
+  const el=$('legend'); if(!el)return;
+  let html='<span><b>Tracks:</b></span>';
+  TRACKS.forEach(([k,v])=>{
+    html+=`<span><span class="tag ${k}">${v}</span></span>`;
+  });
+  html+='<span><span class="tag hero">Flagship</span> Highest ROI</span>';
+  el.innerHTML=html;
+}
+
+function renderEcon(){
+  const el=$('econ'); if(!el)return;
+  const totH=EMPLOYEES.reduce((a,b)=>a+b.hrs,0);
+  const totOps=EMPLOYEES.length;
+  const totHnd=EMPLOYEES.reduce((a,b)=>a+b.handled,0);
+  const wins=EMPLOYEES.filter(e=>e.win>0);
+  const avgWin=wins.length?Math.round(wins.reduce((a,b)=>a+b.win,0)/wins.length):0;
+  
+  el.innerHTML=`
+    <div class="cell"><div class="v">${totOps}</div><div class="k">${CONFIG.econLabels[0]}</div></div>
+    <div class="cell"><div class="v tnum">${totHnd.toLocaleString()}</div><div class="k">${CONFIG.econLabels[1]}</div></div>
+    <div class="cell"><div class="v tnum">${totH.toLocaleString()}<span class="u">h</span></div><div class="k">${CONFIG.econLabels[2]}</div></div>
+    <div class="cell"><div class="v tnum">${CONFIG.statSign}${avgWin}<span class="u">${CONFIG.statSuffix}</span></div><div class="k">${CONFIG.econLabels[3]}</div></div>
+  `;
+}
+
+function renderRoster(){
+  const el=$('roster'); if(!el)return;
+  let html='';
+  
+  TRACKS.forEach(([tKey,tLabel])=>{
+    const emps=EMPLOYEES.filter(e=>WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track===tKey);
+    if(!emps.length)return;
+    html+=`<div class="slabel">${tLabel}</div><div class="roster">`;
+    emps.forEach(e=>{ html+=empCardHtml(e); });
+    html+='</div>';
+  });
+  
+  const unTracked=EMPLOYEES.filter(e=>!WORKFLOWS[e.wf] || !WORKFLOWS[e.wf].track);
+  if(unTracked.length){
+    html+=`<div class="slabel">${CONFIG.rosterLabel}</div><div class="roster">`;
+    unTracked.forEach(e=>{ html+=empCardHtml(e); });
+    html+='</div>';
+  }
+  
+  html+=`<div class="slabel">Expand Workforce</div>
+    <div class="roster">
+      <div class="hire-card" onclick="setView('hire')">
+        <div class="plus">+</div>
+        <div class="h">Add an AI Operator</div>
+        <div class="p">Compose a new specialized workflow team in 3 steps</div>
+      </div>
+    </div>`;
+    
+  el.innerHTML=html;
+}
+
+function empCardHtml(e){
+  const wf=WORKFLOWS[e.wf]||{};
+  const isHero=wf.tag==='flagship';
+  const isWorking=e.status==='working';
+  const teamChips=(wf.tasks||[]).map(t=>`<span class="chip">${AGENT_ROLES[t.agent]?.emoji||'🤖'} ${AGENT_ROLES[t.agent]?.label||t.agent}</span>`).join('');
+  
+  return `
+    <div class="emp ${isHero?'hero':''} ${isWorking?'working':''}" id="emp-${e.id}">
+      <div class="emp-top">
+        <div class="avatar">${e.name.substring(0,2).toUpperCase()}</div>
+        <div>
+          <div class="emp-name">${e.name} ${tagHtml(wf.track)} ${isHero?tagHtml('flagship'):''}</div>
+          <div class="emp-title">${e.title}</div>
+        </div>
+      </div>
+      <div class="emp-owns">Owns: <b>${wf.name||e.wf}</b></div>
+      <div class="team">${teamChips}</div>
+      <div class="emp-stats">
+        <div class="st">Handled<b>${e.handled.toLocaleString()}</b></div>
+        <div class="st">Time Saved<b>${e.hrs}h/mo</b></div>
+        <div class="st">Impact<b>${e.win?CONFIG.statSign+e.win+CONFIG.statSuffix:'—'}</b></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="selectRun('${e.wf}')" ${runRunning?'disabled':''}>${CONFIG.runButton}</button>
+      </div>
+    </div>
+  `;
+}
+
+function setView(v){
+  currentView=v;
+  if(v==='ops'){
+    $('tabA').classList.add('active'); $('tabB').classList.remove('active');
+    $('view-ops').classList.remove('hidden'); $('view-hire').classList.add('hidden');
+  }else{
+    $('tabB').classList.add('active'); $('tabA').classList.remove('active');
+    $('view-hire').classList.remove('hidden'); $('view-ops').classList.add('hidden');
+    initBuilder();
+  }
+}
+
+function selectRun(wfKey){
+  currentRunWf=wfKey;
+  const wf=WORKFLOWS[wfKey];
+  const emp=EMPLOYEES.find(e=>e.wf===wfKey);
+  const panel=$('runPanel'); if(!panel)return;
+  
+  let html=`
+    <div class="run">
+      <div class="run-head">
+        <h3>Live Run Execution: ${wf.title||wf.name}</h3>
+        ${tagHtml(wf.track)} ${wf.tag==='flagship'?tagHtml('flagship'):''}
+      </div>
+      <div class="run-sub">${wf.desc}</div>
+      <div class="run-input">
+        <textarea id="runPrompt">${wf.sample}</textarea>
+        <button class="btn primary big" id="btnStartRun" onclick="startRun('${wfKey}')">Execute Run</button>
+      </div>
+      <div class="phases">
+        <div class="ph active" id="ph-1"><div class="dot">1</div><div class="l">Agent Task DAG</div></div>
+        <div class="ph" id="ph-2"><div class="dot">2</div><div class="l">Streaming Execution</div></div>
+        <div class="ph" id="ph-3"><div class="dot">3</div><div class="l">Produced Deliverable</div></div>
+      </div>
+      <div class="agent-grid" id="agentGrid">
+        ${wf.tasks.map((t,idx)=>`
+          <div class="acard" id="acard-${idx}">
+            <div class="ae">${AGENT_ROLES[t.agent]?.emoji||'🤖'}</div>
+            <div class="ar">${AGENT_ROLES[t.agent]?.label||t.agent}</div>
+            <div class="at">${t.task}</div>
+            <div class="as"><div class="sd"></div><span id="astate-${idx}">Waiting</span></div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="feed" id="runFeed"></div>
+      <div class="result hidden" id="runResult">
+        <div class="rstats">
+          <div class="rrow"><span class="k">Execution Mode</span><span class="v">${wf.mode.toUpperCase()}</span></div>
+          <div class="rrow"><span class="k">Agents Engaged</span><span class="v">${wf.tasks.length}</span></div>
+          <div class="rrow"><span class="k">Est. Time Saved</span><span class="v">4.2 hrs</span></div>
+          <div class="rrow"><span class="k">Human Governance</span><span class="v">Creative Director</span></div>
+        </div>
+        <div class="rout">
+          <div class="rh">${DTITLE[wfKey]||wf.deliverable||'Deliverable Output'}</div>
+          <div class="rb">${FINAL[wfKey]||'Deliverable generated successfully.'}</div>
+        </div>
+      </div>
+    </div>
+  `;
+  panel.innerHTML=html;
+  panel.scrollIntoView({behavior:'smooth'});
+}
+
+function startRun(wfKey){
+  if(runRunning)return;
+  runRunning=true;
+  const wf=WORKFLOWS[wfKey];
+  const btn=$('btnStartRun'); if(btn)btn.disabled=true;
+  const feed=$('runFeed'); if(feed)feed.innerHTML='';
+  $('runResult').classList.add('hidden');
+  
+  const emp=EMPLOYEES.find(e=>e.wf===wfKey);
+  if(emp){ emp.status='working'; renderRoster(); }
+  
+  let timeStr=()=>new Date().toLocaleTimeString([],{hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  let log=(ag,msg)=>{
+    if(!feed)return;
+    let row=document.createElement('div'); row.className='frow';
+    row.innerHTML=`<span class="ft">${timeStr()}</span><span class="fa">${ag}</span><span class="fd">${msg}</span>`;
+    feed.appendChild(row); feed.scrollTop=feed.scrollHeight;
+  };
+  
+  log('SYSTEM', `Initiating autonomous workflow [${wf.name}] in ${wf.mode.toUpperCase()} mode...`);
+  $('ph-1').classList.remove('active'); $('ph-1').classList.add('done');
+  $('ph-2').classList.add('active');
+  
+  let tasks=wf.tasks;
+  let completed=new Set();
+  
+  function stepRun(){
+    let readyIndices=[];
+    tasks.forEach((t,i)=>{
+      if(!completed.has(i)){
+        let depsMet=(t.deps||[]).every(d=>completed.has(d));
+        if(depsMet) readyIndices.push(i);
+      }
+    });
+    
+    if(readyIndices.length===0){
+      if(completed.size===tasks.length){
+        finishRun();
+      }
+      return;
+    }
+    
+    readyIndices.forEach(idx=>{
+      let t=tasks[idx];
+      let card=$('acard-'+idx);
+      let state=$('astate-'+idx);
+      if(card){ card.classList.add('running','visible'); }
+      if(state) state.innerText='Executing...';
+      
+      let agObj=AGENT_ROLES[t.agent];
+      let agName=agObj?.label||t.agent;
+      log(agName, `Task started: ${t.task}`);
+      
+      setTimeout(()=>{
+        if(agObj && agObj.tools){
+          agObj.tools.forEach(tl=>{ log(agName, `Tool call [${tl}]: ${toolOut(tl)}`); });
+        }
+        if(card){ card.classList.remove('running'); card.classList.add('done'); }
+        if(state) state.innerText='Completed';
+        log(agName, `Task finished.`);
+        completed.add(idx);
+        stepRun();
+      }, 1200);
+    });
+  }
+  
+  function finishRun(){
+    log('SYSTEM', 'All task DAG branches resolved. Rendering final deliverable output.');
+    $('ph-2').classList.remove('active'); $('ph-2').classList.add('done');
+    $('ph-3').classList.add('active','done');
+    $('runResult').classList.remove('hidden');
+    
+    runRunning=false;
+    if(btn)btn.disabled=false;
+    if(emp){ emp.status='idle'; emp.handled++; emp.hrs+=5; renderRoster(); renderEcon(); }
+  }
+  
+  stepRun();
+}
+
+/* BUILDER LOGIC */
+function initBuilder(){
+  buildStep=1; buildWfKey=Object.keys(WORKFLOWS)[0]; buildAssignments={}; buildName=''; buildCadence='Daily';
+  renderBuilder();
+}
+
+function renderBuilder(){
+  const bSteps=$('bSteps'); const bBody=$('bBody'); const bNav=$('bNav');
+  if(!bSteps||!bBody||!bNav)return;
+  
+  bSteps.innerHTML=`
+    <div class="step ${buildStep===1?'active':''}"><div class="n">STEP 1</div><div class="l">Select Workflow</div><div class="d">Choose base motion</div></div>
+    <div class="step ${buildStep===2?'active':''}"><div class="n">STEP 2</div><div class="l">Assign Agents</div><div class="d">Role matching</div></div>
+    <div class="step ${buildStep===3?'active':''}"><div class="n">STEP 3</div><div class="l">Configure &amp; Stand Up</div><div class="d">Cadence &amp; launch</div></div>
+  `;
+  
+  if(buildStep===1){
+    let html='<div class="wf-grid">';
+    Object.keys(WORKFLOWS).forEach(k=>{
+      const wf=WORKFLOWS[k];
+      html+=`
+        <div class="wf ${buildWfKey===k?'sel':''}" onclick="buildWfKey='${k}';renderBuilder();">
+          <div class="wn">${wf.title||wf.name} ${tagHtml(wf.track)}</div>
+          <div class="wd">${wf.desc}</div>
+          <div class="wm">Mode: ${wf.mode} · Tasks: ${wf.tasks.length}</div>
+        </div>
+      `;
+    });
+    html+='</div>';
+    bBody.innerHTML=html;
+    bNav.innerHTML=`<div></div><button class="btn primary" onclick="buildStep=2;renderBuilder();">Next: Assign Agents &rarr;</button>`;
+  }else if(buildStep===2){
+    const wf=WORKFLOWS[buildWfKey];
+    let html=`<div style="margin-bottom:14px;font-size:13px;color:var(--text-muted)">Assign specialist agent roles to each task in <b>${wf.title||wf.name}</b>:</div>`;
+    wf.tasks.forEach((t,idx)=>{
+      const curAg=buildAssignments[idx]||t.agent;
+      html+=`
+        <div class="task-row">
+          <div class="tn">${idx+1}</div>
+          <div class="tt">${t.task}</div>
+          <select onchange="buildAssignments[${idx}]=this.value;">
+            ${RK.map(rk=>`<option value="${rk}" ${curAg===rk?'selected':''}>${AGENT_ROLES[rk].emoji} ${AGENT_ROLES[rk].label}</option>`).join('')}
+          </select>
+        </div>
+      `;
+    });
+    bBody.innerHTML=html;
+    bNav.innerHTML=`
+      <button class="btn" onclick="buildStep=1;renderBuilder();">&larr; Back</button>
+      <button class="btn primary" onclick="buildStep=3;renderBuilder();">Next: Configure &rarr;</button>
+    `;
+  }else if(buildStep===3){
+    const wf=WORKFLOWS[buildWfKey];
+    if(!buildName) buildName=wf.title + ' Operator';
+    bBody.innerHTML=`
+      <div class="field">
+        <label>Operator Name</label>
+        <input type="text" value="${buildName}" onchange="buildName=this.value;">
+      </div>
+      <div class="field">
+        <label>Execution Cadence</label>
+        <div class="seg">
+          ${CONFIG.builderCadences.map(c=>`<button class="${buildCadence===c?'on':''}" onclick="buildCadence='${c}';renderBuilder();">${c}</button>`).join('')}
+        </div>
+      </div>
+    `;
+    bNav.innerHTML=`
+      <button class="btn" onclick="buildStep=2;renderBuilder();">&larr; Back</button>
+      <button class="btn primary" onclick="finalizeBuilder();">Stand Up Operator</button>
+    `;
+  }
+}
+
+function finalizeBuilder(){
+  const wf=WORKFLOWS[buildWfKey];
+  const newId='custom_'+Date.now();
+  const newEmp={
+    id:newId,
+    name:buildName||'Custom Operator',
+    title:`AI ${buildName||'Custom Operator'}`,
+    wf:buildWfKey,
+    handled:0,
+    hrs:140,
+    win:30,
+    status:'idle'
+  };
+  EMPLOYEES.push(newEmp);
+  setView('ops');
+  renderRoster(); renderEcon();
+  selectRun(buildWfKey);
+}
+
+window.onload=init;
+</script>
+</body>
+</html>
