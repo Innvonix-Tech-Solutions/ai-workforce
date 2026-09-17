@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mastery Gradebook — CES-LINKS prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FAFAF7;
+    --paper-raised: #FFFFFF;
+    --ink: #1B1F1D;
+    --ink-soft: #5B615C;
+    --rule: #D8D4C8;
+    --primary: #1F3A3D;
+    --primary-soft: #2E4F52;
+    --gold: #B8862F;
+    --mastered: #3F7A5E;
+    --developing: #B8862F;
+    --emerging: #B0503A;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #14181A;
+      --paper-raised: #1C2224;
+      --ink: #EDEFEA;
+      --ink-soft: #A3ABA5;
+      --rule: #34403E;
+      --primary: #6FA8A0;
+      --primary-soft: #8CC0B8;
+      --gold: #D9A94D;
+      --mastered: #5FAE84;
+      --developing: #D9A94D;
+      --emerging: #D07A5F;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #14181A;
+    --paper-raised: #1C2224;
+    --ink: #EDEFEA;
+    --ink-soft: #A3ABA5;
+    --rule: #34403E;
+    --primary: #6FA8A0;
+    --primary-soft: #8CC0B8;
+    --gold: #D9A94D;
+    --mastered: #5FAE84;
+    --developing: #D9A94D;
+    --emerging: #D07A5F;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Space Grotesk', system-ui, -apple-system, Segoe UI, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, .display {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .frame { max-width: 1080px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  header.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    padding-bottom: 18px;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+  }
+  header.top .brand { font-size: 13px; color: var(--ink-soft); }
+  header.top h1 { font-size: clamp(24px, 4vw, 32px); }
+  header.top .meta { font-size: 13px; color: var(--ink-soft); margin-top: 4px; }
+
+  nav.tabs {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 22px;
+    border-bottom: 1px solid var(--rule);
+  }
+  nav.tabs button {
+    font-family: inherit;
+    font-size: 14px;
+    background: none;
+    border: none;
+    color: var(--ink-soft);
+    padding: 10px 16px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+  nav.tabs button.active {
+    color: var(--ink);
+    border-bottom: 2px solid var(--primary);
+    font-weight: 500;
+  }
+
+  .layout { display: grid; grid-template-columns: 200px 1fr; gap: 28px; }
+  @media (max-width: 700px) { .layout { grid-template-columns: 1fr; } }
+
+  .roster { border-right: 1px solid var(--rule); padding-right: 20px; }
+  @media (max-width: 700px) { .roster { border-right: none; border-bottom: 1px solid var(--rule); padding-right: 0; padding-bottom: 16px; } }
+  .roster h3 { font-size: 12px; text-transform: none; color: var(--ink-soft); font-family: inherit; font-weight: 500; margin-bottom: 10px; }
+  .roster ul { list-style: none; margin: 0; padding: 0; }
+  .roster li button {
+    width: 100%; text-align: left; background: none; border: none;
+    font-family: inherit; font-size: 14px; color: var(--ink);
+    padding: 7px 8px; cursor: pointer; border-radius: 4px;
+  }
+  .roster li button:hover { background: var(--paper-raised); }
+  .roster li button.active { background: var(--primary); color: var(--paper); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--rule); }
+  thead th { color: var(--ink-soft); font-weight: 500; font-size: 12px; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody tr:hover { background: var(--paper-raised); }
+
+  .scroll-x { overflow-x: auto; }
+
+  .standard-block { margin-bottom: 26px; }
+  .standard-block h3 { font-size: 15px; margin-bottom: 2px; }
+  .standard-block .code { color: var(--ink-soft); font-size: 12.5px; margin-bottom: 12px; }
+
+  .bar-row { display: grid; grid-template-columns: 140px 1fr 46px; align-items: center; gap: 12px; padding: 6px 0; }
+  .bar-row .name { font-size: 13.5px; }
+  .bar-track { height: 8px; background: var(--rule); border-radius: 2px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 2px; }
+  .bar-row .pct { font-size: 12.5px; text-align: right; font-variant-numeric: tabular-nums; color: var(--ink-soft); }
+
+  .legend { display: flex; gap: 18px; font-size: 12px; color: var(--ink-soft); margin-bottom: 18px; flex-wrap: wrap; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+
+  .assist-grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+  .assist-card {
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 18px;
+  }
+  .assist-card h3 { font-size: 15px; margin-bottom: 12px; }
+  .btn {
+    font-family: inherit; font-size: 13.5px; cursor: pointer;
+    background: var(--primary); color: var(--paper); border: none;
+    padding: 9px 16px; border-radius: 4px;
+  }
+  .btn.secondary { background: none; border: 1px solid var(--rule); color: var(--ink); }
+  .btn:disabled { opacity: 0.5; cursor: default; }
+
+  .draft-box { margin-top: 14px; }
+  .draft-flag {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11.5px; color: var(--emerging);
+    border: 1px solid var(--emerging); border-radius: 3px;
+    padding: 3px 8px; margin-bottom: 10px;
+  }
+  .draft-flag.approved { color: var(--mastered); border-color: var(--mastered); }
+  textarea {
+    width: 100%; min-height: 110px; font-family: inherit; font-size: 13.5px;
+    color: var(--ink); background: var(--paper); border: 1px solid var(--rule);
+    border-radius: 4px; padding: 10px; resize: vertical; line-height: 1.5;
+  }
+  .actions { display: flex; gap: 10px; margin-top: 10px; }
+
+  footer.note {
+    margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--rule);
+    font-size: 12.5px; color: var(--ink-soft); line-height: 1.6;
+  }
+  footer.note strong { color: var(--ink); }
+</style>
+</head>
+<body>
+<div class="frame">
+
+  <header class="top">
+    <div>
+      <div class="brand">CES-LINKS · prototype</div>
+      <h1>Mastery Gradebook</h1>
+      <div class="meta" id="classMeta">Grade 5 ELA, Room 204</div>
+    </div>
+    <div class="meta" id="dateMeta"></div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="gradebook">Gradebook</button>
+    <button class="tab-btn" data-tab="mastery">Mastery by standard</button>
+    <button class="tab-btn" data-tab="assist">Progress notes</button>
+  </nav>
+
+  <div class="layout">
+    <aside class="roster">
+      <h3>Students</h3>
+      <ul id="rosterList"></ul>
+    </aside>
+
+    <main>
+      <section id="panel-gradebook">
+        <div class="scroll-x">
+          <table>
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th id="a0h" class="num"></th>
+                <th id="a1h" class="num"></th>
+                <th id="a2h" class="num"></th>
+                <th id="a3h" class="num"></th>
+              </tr>
+            </thead>
+            <tbody id="gradebookBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="panel-mastery" style="display:none;">
+        <div class="legend">
+          <span><i style="background:var(--mastered)"></i>Meeting (80%+)</span>
+          <span><i style="background:var(--developing)"></i>Developing (60–79%)</span>
+          <span><i style="background:var(--emerging)"></i>Emerging (below 60%)</span>
+        </div>
+        <div id="masteryBlocks"></div>
+      </section>
+
+      <section id="panel-assist" style="display:none;">
+        <div class="assist-grid">
+          <div class="assist-card">
+            <h3>Draft a progress note</h3>
+            <p style="font-size:13.5px; color:var(--ink-soft); margin-top:-6px;">
+              Selected student: <strong id="assistName" style="color:var(--ink)"></strong>
+            </p>
+            <button class="btn" id="draftBtn">Draft note with AI</button>
+            <div class="draft-box" id="draftBox" style="display:none;">
+              <div class="draft-flag" id="draftFlag">⚠ AI-drafted — needs teacher review before sending</div>
+              <textarea id="draftText"></textarea>
+              <div class="actions">
+                <button class="btn secondary" id="regenBtn">Redraft</button>
+                <button class="btn" id="approveBtn">Approve &amp; mark reviewed</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="note">
+    <strong>Why this prototype:</strong> it models the initial-release slice of the CES-LINKS platform —
+    curriculum standards, assessments, and gradebook — as one connected data model instead of separate
+    tools. The progress-note feature is a small, honest stand-in for "AI-assisted, human-reviewed" workflows:
+    it generates a draft from real gradebook data client-side and requires an explicit review step before
+    it's marked approved, rather than presenting AI output as final.
+    <br><br>
+    <strong>What this is, and isn't:</strong> this is a scoped, in-memory UI concept — no backend, no auth,
+    no persistence, no tests. It's meant to demonstrate product and interaction thinking, not a system design.
+    <br><br>
+    <strong>At production scale, I'd change:</strong>
+    <br>· Standards as a versioned, shared reference table (state adoption cycles change over time) rather than
+    strings baked into assignment records, so historical mastery data stays valid after a standards revision.
+    <br>· Every score and note change written to an append-only audit log — who changed what, when, and whether
+    an AI draft was involved — both for FERPA-style accountability and for debugging disputed grades.
+    <br>· The AI-review step enforced server-side, not just in the UI: a note can't be marked "sent" without a
+    reviewed_by and reviewed_at field set, so the safeguard survives a client bug or a bypassed frontend.
+    <br>· Role-based access (teacher sees their roster; admin sees the school; family portal sees only their
+    own student) as a first-class authorization layer, not a UI filter — this is the seam most likely to leak
+    student data across the seven stakeholder portals if it's an afterthought.
+    <br>· Mastery calculations moved from client-side averages to a scheduled job or event-driven pipeline once
+    assignment volume grows, so the gradebook stays fast and the mastery view doesn't recompute on every load.
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  const students = ["Amara Diallo", "Leo Nakamura", "Priya Raman", "Owen Fitzgerald", "Sofia Reyes", "Marcus Webb"];
+
+  const standards = [
+    { code: "ELA.RL.5.1", label: "Cite textual evidence to support inference", assignments: [0, 1] },
+    { code: "ELA.W.5.3",  label: "Write narratives with clear event sequence", assignments: [2, 3] }
+  ];
+
+  const assignmentNames = ["Reading Check 1", "Reading Check 2", "Narrative Draft", "Narrative Final"];
+
+  // seeded pseudo-random-ish but fixed scores so it reads as real data
+  const scores = {
+    "Amara Diallo":    [92, 88, 81, 90],
+    "Leo Nakamura":    [74, 69, 58, 65],
+    "Priya Raman":     [96, 94, 89, 93],
+    "Owen Fitzgerald": [55, 61, 48, 52],
+    "Sofia Reyes":     [83, 79, 76, 84],
+    "Marcus Webb":     [67, 72, 70, 66]
+  };
+
+  let selectedStudent = students[0];
+
+  const rosterList = document.getElementById('rosterList');
+  const gradebookBody = document.getElementById('gradebookBody');
+  const masteryBlocks = document.getElementById('masteryBlocks');
+  const assistName = document.getElementById('assistName');
+  const dateMeta = document.getElementById('dateMeta');
+
+  dateMeta.textContent = new Date().toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' });
+  ['a0h','a1h','a2h','a3h'].forEach((id, i) => { document.getElementById(id).textContent = assignmentNames[i]; });
+
+  function renderRoster() {
+    rosterList.innerHTML = '';
+    students.forEach(name => {
+      const li = document.createElement('li');
+      const btn = document.createElement('button');
+      btn.textContent = name;
+      if (name === selectedStudent) btn.classList.add('active');
+      btn.addEventListener('click', () => { selectedStudent = name; render(); });
+      li.appendChild(btn);
+      rosterList.appendChild(li);
+    });
+  }
+
+  function renderGradebook() {
+    gradebookBody.innerHTML = '';
+    students.forEach(name => {
+      const tr = document.createElement('tr');
+      let cells = `<td>${name}</td>`;
+      scores[name].forEach(s => { cells += `<td class="num">${s}</td>`; });
+      tr.innerHTML = cells;
+      gradebookBody.appendChild(tr);
+    });
+  }
+
+  function masteryFor(name, standard) {
+    const vals = standard.assignments.map(i => scores[name][i]);
+    return Math.round(vals.reduce((a, b) => a + b, 0) / vals.length);
+  }
+
+  function bandColor(pct) {
+    if (pct >= 80) return 'var(--mastered)';
+    if (pct >= 60) return 'var(--developing)';
+    return 'var(--emerging)';
+  }
+
+  function renderMastery() {
+    masteryBlocks.innerHTML = '';
+    standards.forEach(standard => {
+      const block = document.createElement('div');
+      block.className = 'standard-block';
+      block.innerHTML = `<h3>${standard.label}</h3><div class="code">${standard.code}</div>`;
+      students.forEach(name => {
+        const pct = masteryFor(name, standard);
+        const row = document.createElement('div');
+        row.className = 'bar-row';
+        row.innerHTML = `
+          <div class="name">${name}</div>
+          <div class="bar-track"><div class="bar-fill" style="width:${pct}%; background:${bandColor(pct)}"></div></div>
+          <div class="pct">${pct}%</div>
+        `;
+        block.appendChild(row);
+      });
+      masteryBlocks.appendChild(block);
+    });
+  }
+
+  function draftNoteFor(name) {
+    const parts = standards.map(st => {
+      const pct = masteryFor(name, st);
+      const band = pct >= 80 ? 'is meeting' : pct >= 60 ? 'is developing toward' : 'needs continued support to reach';
+      return `${band} the standard "${st.label}" (${pct}% average across related assessments)`;
+    });
+    const first = name.split(' ')[0];
+    return `${first} ${parts[0]}, and ${parts[1]}. Suggested next step: pair upcoming practice with ` +
+           `targeted feedback on the lower-scoring standard, and check in again after the next assessment cycle.`;
+  }
+
+  function renderAssist() {
+    assistName.textContent = selectedStudent;
+    document.getElementById('draftBox').style.display = 'none';
+  }
+
+  function render() {
+    renderRoster();
+    renderGradebook();
+    renderMastery();
+    renderAssist();
+  }
+
+  // tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      ['gradebook','mastery','assist'].forEach(t => {
+        document.getElementById('panel-' + t).style.display = (t === btn.dataset.tab) ? '' : 'none';
+      });
+    });
+  });
+
+  // AI assist interactions
+  document.getElementById('draftBtn').addEventListener('click', () => {
+    document.getElementById('draftBox').style.display = '';
+    document.getElementById('draftText').value = draftNoteFor(selectedStudent);
+    document.getElementById('draftFlag').textContent = '⚠ AI-drafted — needs teacher review before sending';
+    document.getElementById('draftFlag').classList.remove('approved');
+  });
+  document.getElementById('regenBtn').addEventListener('click', () => {
+    document.getElementById('draftText').value = draftNoteFor(selectedStudent);
+    document.getElementById('draftFlag').textContent = '⚠ AI-drafted — needs teacher review before sending';
+    document.getElementById('draftFlag').classList.remove('approved');
+  });
+  document.getElementById('approveBtn').addEventListener('click', () => {
+    document.getElementById('draftFlag').textContent = '✓ Reviewed and approved by teacher';
+    document.getElementById('draftFlag').classList.add('approved');
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
