@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plus Power &mdash; Autonomous AI Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#fff;
+  --surface:#f4f7fa;
+  --surface2:#e6edf3;
+  --border:#d5e2ec;
+  --accent:#33b5e5; /* Plus Power Electric Sky Blue / Cyan */
+  --accent-dim:rgba(51,181,229,.10);
+  --accent-line:rgba(51,181,229,.35);
+  --text:#1c2d42;
+  --hi:#0b2341; /* Plus Power Deep Navy */
+  --tert:#5a6e85;
+  --ok:#10b981;
+  --ok-dim:rgba(16,185,129,.10);
+  --gold:#d97706;
+  --gold-bg:#fffbe3;
+  --gold-line:#fcd34d
+}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:3px solid var(--accent);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:14px}
+.mark-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;width:30px;height:30px;padding:2px}
+.mark-grid div{border-radius:2px}
+.sq-navy{background:var(--hi)}
+.sq-cyan{background:var(--accent)}
+.logo-text{display:flex;flex-direction:column}
+.logo-title{font-size:17px;font-weight:800;letter-spacing:.8px;color:var(--hi);line-height:1.1;text-transform:uppercase}
+.logo-title span{color:var(--accent)}
+.logo-sub{font-size:11px;font-weight:600;color:var(--tert);letter-spacing:.3px;margin-top:2px}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);background:var(--surface)}.badge b{color:var(--hi)}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:940px;margin-bottom:16px;color:var(--text)}.lead b{color:var(--hi)}
+.banner-stats{display:flex;gap:20px;padding:12px 18px;background:var(--surface);border-left:4px solid var(--accent);border-radius:8px;margin-bottom:20px;font-size:12px;color:var(--tert)}
+.banner-stats b{color:var(--hi);font-size:13px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.trackA{background:var(--accent-dim);color:var(--hi);border:1px solid var(--accent-line)}
+.tag.trackB{background:rgba(11,35,65,.07);color:var(--hi);border:1px solid rgba(11,35,65,.25)}
+.tag.hero{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:24px;font-weight:800;color:var(--hi)}.cell .v .u{color:var(--accent)}
+.cell .k{font-size:11px;font-weight:600;color:var(--tert);margin-top:4px}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:#fff;border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--hi);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert)}
+.emp-owns{font-size:12px;margin-bottom:10px}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:inherit;font-size:12.5px;font-weight:700;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:var(--accent)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:700;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--hi);background:var(--accent)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(16,185,129,.5);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:700;color:var(--hi);background:var(--surface)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(16,185,129,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:var(--accent)}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:14px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:700;text-transform:uppercase}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 13px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="logo">
+    <div class="mark-grid">
+      <div class="sq-navy"></div>
+      <div class="sq-cyan"></div>
+      <div class="sq-navy"></div>
+      <div class="sq-navy"></div>
+    </div>
+    <div class="logo-text">
+      <div class="logo-title">PLUS <span>POWER</span></div>
+      <div class="logo-sub">Transforming the Electric Grid &nbsp;&bull;&nbsp; Autonomous BESS Operations Platform</div>
+    </div>
+  </div>
+  <div class="badge">Independent concept &nbsp;&middot;&nbsp; <b>illustrative</b></div>
+</header>
+<div class="tabs">
+  <button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+  <button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+<div class="main">
+  <div id="view-ops">
+    <div class="lead">Plus Power develops, owns, and operates utility-scale battery energy storage systems that enable a more efficient and reliable electric grid. This prototype demonstrates an <b>autonomous AI workforce</b> designed to accelerate ISO grid interconnection queues, automate day-ahead market bidding, optimize battery degradation against revenue stacking, and streamline utility tolling compliance.</div>
+    
+    <div class="banner-stats">
+      <div><b>11+ GW</b> in development</div>
+      <div>&bull;</div>
+      <div><b>20+</b> U.S. states</div>
+      <div>&bull;</div>
+      <div><b>1,800 / 4,750 MW / MWh</b> operating &amp; in construction</div>
+      <div>&bull;</div>
+      <div><b>America's Largest</b> grid-forming BESS performance</div>
+    </div>
+
+    <div class="legend" id="legend"></div>
+    <div class="econ" id="econ"></div>
+    <div id="roster"></div>
+    <div id="runPanel"></div>
+  </div>
+  <div id="view-hire" class="hidden">
+    <div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+    <div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+  </div>
+</div>
+<div class="foot">Independent AI workforce prototype prepared for Plus Power, LLC. Illustrative scenario modeling only. Not affiliated with or endorsed by Plus Power, LLC. Human-in-the-loop oversight is enforced across all grid dispatch, capital expenditure, and safety compliance workflows.</div>
+
+<script>
+/* ==================================================================
+   FILL: CONFIG
+   ================================================================== */
+const CONFIG={
+  econLabels:["AI operators","tasks handled","hours saved / month","avg turnaround cut"],
+  statLabel:"turnaround", statSign:"\u{2212}", statSuffix:"%",
+  runButton:"Execute Grid Dispatch",
+  runNoun:"project & market dispatch",
+  outputLabel:"Executive & ISO Review-Ready Output",
+  rosterLabel:"Plus Power BESS AI Workforce",
+  trackLabels:{trackA:"Development & Interconnection Track", trackB:"Market Operations & Asset Track"},
+  builderCadences:["Per dispatch event","Real-time / 5-min","Daily auction","On-demand"],
+};
+
+/* ==================================================================
+   FILL: AGENT_ROLES (12 specialist agents)
+   ================================================================== */
+const AGENT_ROLES={
+  interconnect:{emoji:'\u{26A1}',label:'Interconnection Queue Specialist',tools:['queue_study_save','grid_impact_save']},
+  besseng:{emoji:'\u{1F50B}',label:'BESS Engineering Specialist',tools:['bess_design_save','thermal_model_save']},
+  offtake:{emoji:'\u{1F4C3}',label:'Tolling & Offtake Analyst',tools:['tolling_model_save','revenue_stack_save']},
+  permitting:{emoji:'\u{1F33F}',label:'Environmental & Permitting Lead',tools:['nepa_audit_save','nfpa_safety_save']},
+  epctracker:{emoji:'\u{1F3D7}',label:'EPC & Substation Procurement Manager',tools:['epc_milestone_save','supply_chain_save']},
+  markettrader:{emoji:'\u{1F4CA}',label:'Real-Time Energy Trader',tools:['iso_bid_save','arbitrage_opt_save']},
+  socoptimizer:{emoji:'\u{1F4C9}',label:'State of Charge & Degradation AI',tools:['soc_dispatch_save','degradation_save']},
+  safetyfire:{emoji:'\u{1F6A8}',label:'BESS Safety & Thermal Monitoring',tools:['thermal_telemetry_save','hazmat_protocol_save']},
+  gisland:{emoji:'\u{1F5FA}',label:'Land & GIS Site Evaluator',tools:['gis_siting_save','land_lease_save']},
+  esgtax:{emoji:'\u{1F4B0}',label:'IRA Tax Credit & ESG Auditor',tools:['itc_calculator_save','domestic_content_save']},
+  writer:{emoji:'\u{270D}',label:'Workforce Technical Writer',tools:['doc_gen_save','memo_format_save']},
+  reviewer:{emoji:'\u{1F6E1}',label:'Senior Engineering & Investment Reviewer',tools:['qa_approval_save','gate_review_save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+
+/* ==================================================================
+   FILL: WORKFLOWS (8 workflows)
+   ================================================================== */
+const WORKFLOWS={
+  bess_interconnection_queue:{
+    name:'Standalone BESS Interconnection Surge',
+    title:'BESS Interconnection Operator',
+    mode:'dag',
+    track:'trackA',
+    tag:'flagship',
+    deliverable:'500MW / 2000MWh Standalone BESS Interconnection Assessment',
+    sample:'Evaluate 500MW / 2000MWh standalone BESS interconnection application at the ERCOT 345kV West Texas POI, including system impact study review, thermal constraints, and NEPA permitting schedule.',
+    desc:'Multi-agent execution evaluating transmission substation headroom, thermal impact, battery chemistry sizing, permitting requirements, and executive risk approval.',
+    tasks:[
+      {agent:'gisland',task:'Assess 345kV substation feeder capacity, parcel topography, and transmission line headroom.',deps:[]},
+      {agent:'interconnect',task:'Analyze ISO interconnection queue position and system impact study thermal constraint models.',deps:[0]},
+      {agent:'besseng',task:'Size 4-hour LFP battery storage system, inverter ratings, and HVAC thermal cooling loads.',deps:[1]},
+      {agent:'permitting',task:'Audit NEPA environmental requirements and local AHJ zoning/conditional use permits.',deps:[0]},
+      {agent:'writer',task:'Compile comprehensive BESS Interconnection & Facility Study Report.',deps:[2,3]},
+      {agent:'reviewer',task:'Conduct Stage-Gate Investment Review and sign off on interconnection agreement approval.',deps:[4]}
+    ]
+  },
+  market_arbitrage_dispatch:{
+    name:'Day-Ahead & Real-Time Ancillary Bidding',
+    title:'Wholesale Market Bidding Operator',
+    mode:'sequential',
+    track:'trackB',
+    deliverable:'Automated ISO Wholesale Market Bidding & Dispatch Schedule',
+    sample:'Generate 24-hour day-ahead market bids for 250MW BESS facility in CAISO, co-optimizing energy arbitrage with Regulation Up/Down and Spinning Reserves.',
+    desc:'Real-time trading agents model LMP price spreads, state-of-charge limits, and thermal safety metrics to maximize wholesale revenue.',
+    tasks:[
+      {agent:'markettrader',task:'Forecast 24-hour LMP price spreads and bid into CAISO ancillary service auctions.',deps:[]},
+      {agent:'socoptimizer',task:'Co-optimize charge/discharge timing to prevent excessive battery degradation.',deps:[0]},
+      {agent:'safetyfire',task:'Verify thermal SCADA limits and HVAC cooling headroom prior to high C-rate dispatch.',deps:[1]},
+      {agent:'reviewer',task:'Validate automated dispatch algorithm parameters against risk committee limits.',deps:[2]}
+    ]
+  },
+  tolling_ppa_revenue:{
+    name:'Utility Tolling PPA & Revenue Stacking',
+    title:'Tolling & Offtake Structuring Operator',
+    mode:'dag',
+    track:'trackA',
+    deliverable:'20-Year Utility Capacity Tolling PPA & Revenue Model',
+    sample:'Structure a 15-year capacity tolling agreement for a 300MW BESS project with an electric utility, modeling fixed monthly capacity payments and IRA tax credits.',
+    desc:'Offtake specialists and tax auditors model guaranteed capacity payments, availability liquidated damages, and investment tax credits.',
+    tasks:[
+      {agent:'offtake',task:'Model fixed monthly capacity tolling terms and availability guarantee penalty structures.',deps:[]},
+      {agent:'esgtax',task:'Calculate 50% Investment Tax Credit monetization schedule including IRA energy community adders.',deps:[]},
+      {agent:'writer',task:'Draft utility PPA term sheet and revenue distribution sensitivity tables.',deps:[0,1]},
+      {agent:'reviewer',task:'Review project IRR, debt service coverage ratio (DSCR), and commercial agreement risk.',deps:[2]}
+    ]
+  },
+  nfpa_bess_fire_safety:{
+    name:'NFPA 855 Safety & Deflagration Control',
+    title:'BESS Safety & NFPA Compliance Operator',
+    mode:'sequential',
+    track:'trackB',
+    deliverable:'NFPA 855 Fire Hazard Analysis & Emergency Response Plan',
+    sample:'Perform safety hazard mitigation study for a 400MWh battery enclosure facility, verifying deflagration venting, gas detection, and emergency isolation.',
+    desc:'Safety engineers and permitting leads audit thermal runaway containment protocols for local Authorities Having Jurisdiction (AHJ).',
+    tasks:[
+      {agent:'safetyfire',task:'Simulate cell thermal runaway off-gas propagation and deflagration explosion venting requirements.',deps:[]},
+      {agent:'besseng',task:'Validate container fire suppression systems, water deluge barriers, and BMS isolation triggers.',deps:[0]},
+      {agent:'permitting',task:'Align safety documentation with NFPA 855 and local fire department HAZMAT protocols.',deps:[1]},
+      {agent:'writer',task:'Publish Emergency Response Plan & AHJ Safety Compliance Certificate.',deps:[2]}
+    ]
+  },
+  epc_substation_procurement:{
+    name:'HV Substation & Transformer Tracking',
+    title:'HV Substation & EPC Tracker Operator',
+    mode:'sequential',
+    track:'trackA',
+    deliverable:'HV Substation Construction & GSU Transformer Tracker',
+    sample:'Monitor EPC procurement for a 345kV/34.5kV main power transformer (GSU) and high-voltage breaker installation schedule.',
+    desc:'Procurement specialists track long-lead equipment delivery dates, factory acceptance testing, and balance-of-plant milestones.',
+    tasks:[
+      {agent:'epctracker',task:'Audit 52-week lead time timeline for 345kV generator step-up (GSU) transformer manufacturing.',deps:[]},
+      {agent:'gisland',task:'Verify substation pad grading, foundations, and high-voltage dead-end structure delivery.',deps:[0]},
+      {agent:'writer',task:'Produce EPC Milestone & Critical Path Progress Report for lenders.',deps:[1]},
+      {agent:'reviewer',task:'Approve EPC contractor milestone payments against verified field completion.',deps:[2]}
+    ]
+  },
+  ira_itc_monetization:{
+    name:'IRA Investment Tax Credit Monetization',
+    title:'IRA Tax Credit Monetization Operator',
+    mode:'dag',
+    track:'trackA',
+    deliverable:'Inflation Reduction Act (IRA) Standalone BESS Tax Credit File',
+    sample:'Audit domestic content certification and energy community eligibility for a new $250M energy storage asset to secure 50% total ITC.',
+    desc:'Tax auditors and offtake specialists verify domestic steel, iron, and manufactured battery cell content for maximum tax credit monetization.',
+    tasks:[
+      {agent:'esgtax',task:'Audit Tier-1 battery manufacturer bill-of-materials for IRA domestic content thresholds.',deps:[]},
+      {agent:'offtake',task:'Evaluate brownfield/coal closure census tract data for 10% Energy Community bonus adder.',deps:[]},
+      {agent:'writer',task:'Draft formal Tax Counsel Reliance Memorandum and ITC Transferability File.',deps:[0,1]},
+      {agent:'reviewer',task:'Conduct tax compliance review prior to tax equity partnership closing.',deps:[2]}
+    ]
+  },
+  degradation_soc_balancing:{
+    name:'Cell Health & Multi-Day SOC Optimization',
+    title:'Battery Degradation & SOC Operator',
+    mode:'sequential',
+    track:'trackB',
+    deliverable:'20-Year Cell Health & Revenue Maximization Strategy',
+    sample:'Simulate 20-year capacity retention for an LFP battery fleet under high-frequency arbitrage cycling versus calendar aging.',
+    desc:'SOC optimization engineers model cell degradation costs against spot market revenue to prolong battery asset lifetime.',
+    tasks:[
+      {agent:'socoptimizer',task:'Model electrochemical lithium inventory loss and SEI layer growth under daily 1.5 C-rate cycles.',deps:[]},
+      {agent:'markettrader',task:'Calculate net profit margin after subtracting cell degradation wear-and-tear costs per MWh.',deps:[0]},
+      {agent:'besseng',task:'Adjust BMS SOC operating window (15%-85%) and liquid cooling setpoints.',deps:[1]},
+      {agent:'reviewer',task:'Approve long-term warranty compliance dispatch limits.',deps:[2]}
+    ]
+  },
+  grid_reliability_contingency:{
+    name:'Grid Emergency & Black Start Response',
+    title:'Grid Contingency & Response Operator',
+    mode:'dag',
+    track:'trackB',
+    deliverable:'Grid Emergency Rapid Frequency Response Audit Log',
+    sample:'Execute sub-second primary frequency response during an unexpected 2GW generator trip on the regional power grid.',
+    desc:'Autonomous agents detect grid frequency drops, trigger sub-second battery response, and report performance to the grid operator.',
+    tasks:[
+      {agent:'interconnect',task:'Detect 59.8 Hz grid frequency sag and trigger droop curve response at point of interconnection.',deps:[]},
+      {agent:'markettrader',task:'Log millisecond response telemetry for ISO ancillary service performance clearing.',deps:[0]},
+      {agent:'safetyfire',task:'Monitor inverter thermal headroom during 100% rated power discharge event.',deps:[0]},
+      {agent:'writer',task:'Generate Automated ISO Frequency Response Performance Audit Log.',deps:[1,2]}
+    ]
+  }
+};
+
+/* ==================================================================
+   FILL: DTITLE
+   ================================================================== */
+const DTITLE={
+  bess_interconnection_queue:'500MW / 2000MWh Standalone BESS Interconnection Assessment',
+  market_arbitrage_dispatch:'Automated ISO Wholesale Market Bidding & Dispatch Schedule',
+  tolling_ppa_revenue:'20-Year Utility Capacity Tolling PPA & Revenue Model',
+  nfpa_bess_fire_safety:'NFPA 855 Fire Hazard Analysis & Emergency Response Plan',
+  epc_substation_procurement:'HV Substation Construction & GSU Transformer Tracker',
+  ira_itc_monetization:'Inflation Reduction Act (IRA) Standalone BESS Tax Credit File',
+  degradation_soc_balancing:'20-Year Cell Health & Revenue Maximization Strategy',
+  grid_reliability_contingency:'Grid Emergency Rapid Frequency Response Audit Log'
+};
+
+/* ==================================================================
+   FILL: TOOLS (24 tools)
+   ================================================================== */
+const TOOLS={
+  queue_study_save:()=>'Analyzed ISO interconnection queue data and system impact study cost allocations.',
+  grid_impact_save:()=>'Modeled POI (Point of Interconnection) thermal capacity and voltage stability limits.',
+  bess_design_save:()=>'Optimized LFP battery container sizing, PCS inverter capacity, and duration rating.',
+  thermal_model_save:()=>'Simulated HVAC cooling loads and liquid cold-plate thermal management efficiency.',
+  tolling_model_save:()=>'Structured capacity tolling agreement metrics with guaranteed availability thresholds.',
+  revenue_stack_save:()=>'Calculated stacked revenue streams across day-ahead energy, RRS, RegUp/RegDn, and capacity markets.',
+  nepa_audit_save:()=>'Evaluated NEPA environmental assessment requirements and local AHJ zoning permits.',
+  nfpa_safety_save:()=>'Cross-referenced NFPA 855 stationary energy storage fire safety regulations.',
+  epc_milestone_save:()=>'Tracked EPC balance of plant (BOP) construction milestones and high-voltage transformer lead times.',
+  supply_chain_save:()=>'Audited Tier-1 battery cell delivery schedules and factory acceptance testing (FAT) logs.',
+  iso_bid_save:()=>'Generated 5-minute automated bidding curves for ERCOT/CAISO market clearing prices.',
+  arbitrage_opt_save:()=>'Identified peak peak-to-trough price spreads for maximum energy arbitrage profit.',
+  soc_dispatch_save:()=>'Scheduled state-of-charge charge/discharge cycles within 10% to 90% SOC operating limits.',
+  degradation_save:()=>'Simulated electrochemical lithium plating and capacity retention over 20-year project life.',
+  thermal_telemetry_save:()=>'Streamed 24/7 SCADA thermal telemetry, off-gas sensor readings, and BMS cell voltages.',
+  hazmat_protocol_save:()=>'Validated automated deflagration venting and emergency response isolation protocols.',
+  gis_siting_save:()=>'Filtered 200-acre parcels within 1 mile of 345kV transmission substations.',
+  land_lease_save:()=>'Drafted long-term option-to-lease agreements with local landowners and mineral rights owners.',
+  itc_calculator_save:()=>'Calculated 30% base Investment Tax Credit plus 10% Energy Community and 10% Domestic Content adders.',
+  domestic_content_save:()=>'Audited domestic steel, iron, and manufactured component percentage certifications for IRA compliance.',
+  doc_gen_save:()=>'Compiled comprehensive engineering design memos and regulatory submission filings.',
+  memo_format_save:()=>'Formatted executive investment committee memos and stakeholder presentation briefs.',
+  qa_approval_save:()=>'Verified mathematical rigor, grid safety compliance, and financial model integrity.',
+  gate_review_save:()=>'Signed off on project stage-gate progression and investment committee submission.'
+};
+
+/* ==================================================================
+   FILL: FINAL (Domain-authentic deliverables)
+   ================================================================== */
+const FINAL={
+  bess_interconnection_queue:
+`PLUS POWER AUTONOMOUS BESS INTERCONNECTION & GRID IMPACT ASSESSMENT
+PROJECT: Sierra Estrella Energy Storage (500MW / 2000MWh Standalone BESS)
+LOCATION: West Texas ERCOT 345kV Substation POI
+DATE: September 17, 2026 | STATUS: STAGE-GATE APPROVED
+
+1. TRANSMISSION POI & SUBSTATION SITES:
+   - Target POI: 345kV Transmission Substation (Feeder Capacity: 650MW headroom).
+   - Distance to Substation: 0.4 miles (Gen-Tie line length minimal; overhead 345kV single-circuit).
+   - Parcel Footprint: 85 contiguous acres acquired under 30-year lease option.
+
+2. SYSTEM IMPACT STUDY & THERMAL CONSTRAINTS:
+   - ERCOT Interconnection Queue Position: Active Tier-1 Status.
+   - Network Upgrade Allocation: $4.2M (Direct assignment breaker additions + telemetry SCADA upgrades).
+   - Thermal Contingency Analysis: N-1 transmission line outage model shows zero curtailment up to 520MW export.
+
+3. BESS ENGINEERING & THERMAL SPECIFICATIONS:
+   - Chemistry: High-density Lithium Iron Phosphate (LFP) prismatic cell architecture.
+   - Enclosure System: Modular IP55 liquid-cooled outdoor battery energy storage enclosures.
+   - Power Conversion System (PCS): 250x 2.0MW bi-directional central inverters (1500V DC rated).
+   - Duration Rating: 4.0 Hours continuous at rated power (2,000 MWh total usable capacity).
+
+4. PERMITTING & AHJ COMPLIANCE:
+   - NEPA Status: Categorical Exclusion (CX) confirmed for non-federal land site.
+   - County Zoning: Conditional Use Permit (CUP) passed unanimous planning commission review.
+   - EHS & Fire Code: Fully compliant with NFPA 855 (2023 edition) and IFC Chapter 12.
+
+5. INVESTMENT COMMITTEE RECOMMENDATION:
+   - Capital Expenditure (CapEx): $285,000,000 ($142.50 / kWh installed).
+   - Stage-Gate Outcome: APPROVED to execute Interconnection Agreement (IA) and advance to EPC bidding.
+
+NOTE: Illustrative automated deliverable generated by Plus Power AI Workforce.`,
+
+  market_arbitrage_dispatch:
+`PLUS POWER AUTOMATED WHOLESALE MARKET DISPATCH & ANCILLARY BIDDING
+ASSET: Kapolei Energy Storage Facility (250MW / 1000MWh BESS)
+MARKET ISO: CAISO / ERCOT Regional Market Co-Optimization
+DISPATCH DATE: September 17, 2026 | AUCTION: DAY-AHEAD & REAL-TIME DISPATCH
+
+1. MARKET BIDDING STRATEGY SUMMARY:
+   - BESS Capacity: 250MW / 1,000MWh (4-hour duration).
+   - Co-Optimization Allocation: 60% Energy Arbitrage | 25% Regulation Up/Down | 15% Responsive Reserve (RRS).
+
+2. 24-HOUR OPTIMIZED DISPATCH SCHEDULE:
+   - 01:00 - 05:00 (Off-Peak Charge): 200MW charge rate @ $18.40/MWh average LMP.
+   - 06:00 - 15:00 (Ancillary Standby): Bid 100MW Regulation Up + 100MW Reg Down @ $32.50/MW-hr clearing price.
+   - 17:00 - 21:00 (Super-Peak Discharge): 250MW discharge rate @ $184.20/MWh average LMP.
+   - Daily Revenue Gross Spread: $148,600 / day.
+
+3. STATE OF CHARGE & THERMAL TELEMETRY:
+   - Target SOC Operating Band: 12% Min / 92% Max (Preserving long-term warranty C-rate limits).
+   - Maximum Cell Temperature: 28.4Â°C (HVAC liquid cold plates operational at 85% cooling power).
+
+4. RISK COMMITTEE COMPLIANCE:
+   - Real-time automated dispatch override enabled. Zero safety parameter exceptions detected.
+
+NOTE: Illustrative automated deliverable generated by Plus Power AI Workforce.`,
+
+  tolling_ppa_revenue:
+`PLUS POWER UTILITY TOLLING PPA & REVENUE STACKING FINANCIAL MODEL
+PROJECT: Anacacho Energy Storage (300MW / 1200MWh BESS)
+COUNTERPARTY: Tier-1 Regional Electric Utility
+TERM: 20-Year Capacity Tolling Agreement | STAGE: COMMERCIAL APPROVAL
+
+1. COMMERCIAL TOLLING STRUCTURE:
+   - Fixed Monthly Capacity Payment: $11.75 / kW-month ($42.3M annualized fixed revenue).
+   - Utility Offtaker Dispatch Rights: 365 equivalent full cycles per year (1.0 C-rate daily).
+   - Guaranteed Equivalent Availability (EAF): 98.0% per billing cycle.
+   - Heat Rate / Round-Trip Efficiency (RTE) Guarantee: 86.5% DC-to-AC net efficiency.
+
+2. IRA TAX CREDIT MONETIZATION:
+   - Base Investment Tax Credit (ITC): 30.0%
+   - Energy Community Bonus Adder: +10.0% (Qualifying brownfield/energy census tract).
+   - Domestic Content Adder: +10.0% (Tier-1 U.S. manufactured battery enclosures & steel structures).
+   - Total ITC Secured: 50.0% of eligible basis ($115M tax equity monetization).
+
+3. FINANCIAL RETURNS & DSCR:
+   - Project Unlevered IRR: 14.8%
+   - Levered IRR: 19.2%
+   - Debt Service Coverage Ratio (DSCR): 1.45x minimum / 1.62x average.
+
+NOTE: Illustrative automated deliverable generated by Plus Power AI Workforce.`,
+
+  nfpa_bess_fire_safety:
+`PLUS POWER NFPA 855 FIRE HAZARD MITIGATION & AHJ EMERGENCY PLAN
+FACILITY: Rodeo Energy Storage Center (400MWh Outdoor BESS Compound)
+SAFETY REGULATION: NFPA 855 (2023) / IFC 2024 / UL 9540A
+DOCUMENT CONTROL: EHS-BESS-2026-09 | STATUS: APPROVED BY AHJ FIRE MARSHAL
+
+1. THERMAL RUNAWAY & DEFLAGRATION MITIGATION:
+   - Cell-Level Testing: UL 9540A unit and installation level test reports verified zero cell-to-cell propagation.
+   - Gas Detection: Multi-sensor off-gas detection (H2, CO, VOC) triggers BMS system trip < 2.0 seconds.
+   - Deflagration Venting: NFPA 68 compliant explosion relief panels installed on all enclosure rooftops.
+
+2. FIRE SUPPRESSION & ISOLATION:
+   - Primary Suppression: Novec 1230 total flooding gaseous agent within individual battery modules.
+   - Secondary Mitigation: Integrated dry-pipe water deluge system with external 4-inch Storz fire department connections.
+   - Spacing & Setbacks: 10-foot perimeter separation between battery enclosures; 25-foot buffer to property line.
+
+3. AHJ & FIRST RESPONDER TRAINING:
+   - Local Fire Department HAZMAT Briefing completed with 24/7 remote SCADA emergency shutdown controls.
+
+NOTE: Illustrative automated deliverable generated by Plus Power AI Workforce.`,
+
+  epc_substation_procurement:
+`PLUS POWER HV SUBSTATION CONSTRUCTION & GSU TRANSFORMER MILESTONE TRACKER
+PROJECT: Superstition Energy Storage (200MW / 800MWh BESS)
+CONTRACTOR: Lead EPC Balance-of-Plant (BOP) Partner
+DATE: September 17, 2026 | COMPLETION STATUS: ON SCHEDULE (64% COMPLETE)
+
+1. HIGH-VOLTAGE CRITICAL EQUIPMENT MILESTONES:
+   - Main Power Transformer (345kV/34.5kV 230MVA GSU): Manufactured, Factory Acceptance Test (FAT) PASSED.
+   - Transformer Delivery & Rigging: On site at Substation Pad A; oil filling and vacuum processing underway.
+   - 345kV SF6 Circuit Breakers: Installed and pressure-tested; high-pot testing scheduled for Oct 4.
+
+2. CIVIL & BALANCE-OF-PLANT (BOP) WORKS:
+   - Battery Container Foundation Pads: 100% concrete poured and cured.
+   - Cable Trenching & 34.5kV Collector Lines: 88% pulled and terminated.
+   - Substation Control Enclosure: Structure erected; SCADA RTU racks powered.
+
+3. CRITICAL PATH & LENDER PAYMENTS:
+   - Milestone #4 (Substation GSU Transformer Delivery) VERIFIED.
+   - Milestone Payment Release: $14.2M approved for EPC contractor disbursement.
+
+NOTE: Illustrative automated deliverable generated by Plus Power AI Workforce.`,
+
+  ira_itc_monetization:
+`PLUS POWER INFLATION REDUCTION ACT (IRA) BESS TAX CREDIT FILE
+ASSET PORTFOLIO: North American Standalone BESS Growth Portfolio ($450M Total Capital Basis)
+TAX COUNSEL FILING: SECTION 48 STANDALONE ENERGY STORAGE CREDIT
+DATE: September 17, 2026 | VERIFICATION: TAX EQUITY RELIANCE MEMO APPROVED
+
+1. TAX CREDIT ELIGIBILITY BREAKDOWN:
+   - Base Section 48 ITC (Wage & Apprenticeship Compliance): 30.0%
+   - Energy Community Adder (Qualified Energy Census Tract): +10.0%
+   - Domestic Content Bonus Adder (Notice 2023-38 Compliant): +10.0%
+   - Combined Total ITC Basis: 50.0% ($225,000,000 Monetized Value).
+
+2. DOMESTIC CONTENT AUDIT FINDINGS:
+   - Steel & Iron Structural Components: 100% U.S. Melted and Poured (Substation structures, racks, container shells).
+   - Manufactured Products Threshold: 55.4% domestic content cost ratio achieved (Exceeds 55% IRA requirement).
+
+3. TRANSFERABILITY & CLOSING STATUS:
+   - Section 6418 Direct Transferability Agreement executed with corporate tax equity partner.
+
+NOTE: Illustrative automated deliverable generated by Plus Power AI Workforce.`,
+
+  degradation_soc_balancing:
+`PLUS POWER 20-YEAR BATTERY DEGRADATION & SOC OPTIMIZATION STRATEGY
+FLEET: Standalone BESS Assets (ERCOT / CAISO / ISO-NE)
+SYSTEM CHEMISTRY: Lithium Iron Phosphate (LFP) Prismatic Modules
+DATE: September 17, 2026 | TARGET LIFETIME: 20 YEARS (80% SOH RETENTION)
+
+1. ELECTROCHEMICAL DEGRADATION MODELING:
+   - Capacity Degradation Rate: 1.42% per year under baseline 1.2 C-rate daily cycling.
+   - Solid Electrolyte Interphase (SEI) Growth: Primary capacity loss driver during high-temperature summer peaks.
+   - 10-Year Retained State of Health (SOH): 86.4% (Exceeds 80% warranty threshold without cell augmentation).
+
+2. DISPATCH PARAMETER CALIBRATION:
+   - Recommended SOC Operating Window: 10% to 90% (Restricting 0-10% and 90-100% extreme SOC operation).
+   - Max C-Rate Ceiling: 1.0 C continuous charge / 1.25 C pulse discharge.
+   - Thermal Cooling Target: Maintain active liquid cooling loop at 23.0Â°C +/- 2.0Â°C during heavy discharge cycles.
+
+3. FINANCIAL DEGRADATION COST MATRIX:
+   - Degradation Marginal Cost: $14.20 per throughput MWh.
+   - Market Bidding Threshold: Automated trading algorithm blocks dispatch when LMP spread is < $22.05/MWh.
+
+NOTE: Illustrative automated deliverable generated by Plus Power AI Workforce.`,
+
+  grid_reliability_contingency:
+`PLUS POWER GRID EMERGENCY RAPID FREQUENCY RESPONSE AUDIT LOG
+EVENT LOCATION: ERCOT Regional Transmission Grid (West Texas Substation POI)
+EVENT TYPE: Under-Frequency Load Shedding (UFLS) Prevention / Generator Trip
+TIMESTAMP: September 17, 2026 - 14:22:04.118 CST | STATUS: SUCCESSFUL GRID STABILIZATION
+
+1. FREQUENCY DEVIATION SCENARIO:
+   - Grid Nominal Frequency: 60.000 Hz
+   - Event Trigger: Unexpected loss of 2,100MW nuclear unit.
+   - Grid Frequency Nadir: Dropped to 59.782 Hz within 450 milliseconds.
+
+2. BESS DISPATCH RESPONSE TELEMETRY:
+   - Inverter Frequency Detection Time: 18 milliseconds post-event.
+   - Power Injection Ramp: 0 MW to 300 MW full output in 84 milliseconds (Droop slope = 5%).
+   - Response Duration: Sustained 300MW discharge for 12.5 minutes until spinning gas units synchronized.
+
+3. GRID OPERATOR CLEARING & REVENUE LOG:
+   - Fast Frequency Response (FFR) Compliance Score: 100.0% (Zero performance penalty).
+   - Estimated ISO Ancillary Clearing Payment: $38,400 for emergency response event.
+
+NOTE: Illustrative automated deliverable generated by Plus Power AI Workforce.`
+};
+
+/* ==================================================================
+   FILL: EMPLOYEES (8 operators)
+   ================================================================== */
+const EMPLOYEES=[
+  {name:'BESS Interconnection Operator',title:'Grid Interconnection & Siting Team',wf:'bess_interconnection_queue',handled:124,hrs:42,win:'6-mo Queue Speedup'},
+  {name:'Wholesale Market Bidding Operator',title:'Real-Time Trading & Dispatch Team',wf:'market_arbitrage_dispatch',handled:2140,hrs:15,win:'+26% Revenue Uplift'},
+  {name:'Tolling & Offtake Structuring Operator',title:'Commercial Origination Team',wf:'tolling_ppa_revenue',handled:56,hrs:34,win:'$210M Tolling PPA'},
+  {name:'BESS Safety & NFPA Compliance Operator',title:'EHS & Thermal Safety Team',wf:'nfpa_bess_fire_safety',handled:110,hrs:22,win:'100% AHJ Compliance'},
+  {name:'HV Substation & EPC Tracker Operator',title:'Construction & Procurement Team',wf:'epc_substation_procurement',handled:88,hrs:28,win:'Zero Substation Delay'},
+  {name:'IRA Tax Credit Monetization Operator',title:'Project Finance & Tax Team',wf:'ira_itc_monetization',handled:72,hrs:36,win:'50% Total ITC Secured'},
+  {name:'Battery Degradation & SOC Operator',title:'Asset Management & Engineering',wf:'degradation_soc_balancing',handled:510,hrs:18,win:'-20% Cell Degradation'},
+  {name:'Grid Contingency & Response Operator',title:'24/7 Operations & Reliability',wf:'grid_reliability_contingency',handled:380,hrs:16,win:'100ms Response Time'}
+];
+
+/* ==================================================================
+   ENGINE (do not edit below this line)
+   ================================================================== */
+let curWfKey=Object.keys(WORKFLOWS)[0];
+let isRunning=false;
+let buildStep=1;
+let buildWfSel=Object.keys(WORKFLOWS)[0];
+let buildTasks=[];
+
+function init(){
+  renderLegend();
+  renderEcon();
+  renderRoster();
+  selectRunWorkflow(curWfKey);
+  renderBuilder();
+}
+
+function setView(v){
+  document.getElementById('view-ops').classList.toggle('hidden',v!=='ops');
+  document.getElementById('view-hire').classList.toggle('hidden',v!=='hire');
+  document.getElementById('tabA').classList.toggle('active',v==='ops');
+  document.getElementById('tabB').classList.toggle('active',v==='hire');
+}
+
+function renderLegend(){
+  const tracks={};
+  Object.values(WORKFLOWS).forEach(w=>{
+    if(w.track) tracks[w.track]=true;
+  });
+  let h='<span><b>Tracks:</b></span>';
+  if(Object.keys(tracks).length>0){
+    Object.keys(tracks).forEach(t=>{
+      const lbl=CONFIG.trackLabels[t]||t;
+      h+=`<span><span class="tag ${t}">${lbl}</span></span>`;
+    });
+  }
+  h+=`<span><span class="tag hero">Flagship</span></span>`;
+  document.getElementById('legend').innerHTML=h;
+}
+
+function renderEcon(){
+  const totalOps=EMPLOYEES.length;
+  const totalHandled=EMPLOYEES.reduce((a,b)=>a+b.handled,0);
+  const totalHrs=EMPLOYEES.reduce((a,b)=>a+b.hrs,0);
+  const avgTurnaround=Math.round(EMPLOYEES.reduce((a,b)=>a+parseInt(b.win||'0'),0)/totalOps)||65;
+  const labels=CONFIG.econLabels;
+  document.getElementById('econ').innerHTML=`
+    <div class="cell"><div class="v">${totalOps}</div><div class="k">${labels[0]}</div></div>
+    <div class="cell"><div class="v">${totalHandled.toLocaleString()}</div><div class="k">${labels[1]}</div></div>
+    <div class="cell"><div class="v">${totalHrs.toLocaleString()}<span class="u">h</span></div><div class="k">${labels[2]}</div></div>
+    <div class="cell"><div class="v">${CONFIG.statSign}${avgTurnaround}${CONFIG.statSuffix}</div><div class="k">${labels[3]}</div></div>
+  `;
+}
+
+function renderRoster(){
+  let h=`<div class="slabel">${CONFIG.rosterLabel||'AI Operators'}</div><div class="roster">`;
+  EMPLOYEES.forEach((emp,idx)=>{
+    const wf=WORKFLOWS[emp.wf];
+    const isHero=wf&&wf.tag==='flagship';
+    const trackTag=wf&&wf.track?`<span class="tag ${wf.track}">${CONFIG.trackLabels[wf.track]||wf.track}</span>`:'';
+    const heroTag=isHero?`<span class="tag hero">Flagship</span>`:'';
+    const agentList=wf?wf.tasks.map(t=>AGENT_ROLES[t.agent]?`${AGENT_ROLES[t.agent].emoji} ${AGENT_ROLES[t.agent].label}`:t.agent):[];
+    const uniqueAgents=[...new Set(agentList)];
+
+    h+=`
+      <div class="emp ${isHero?'hero':''}" id="emp-${emp.wf}">
+        <div class="emp-top">
+          <div class="avatar">${emp.name.substr(0,2).toUpperCase()}</div>
+          <div>
+            <div class="emp-name">${emp.name} ${heroTag} ${trackTag}</div>
+            <div class="emp-title">${emp.title}</div>
+          </div>
+        </div>
+        <div class="emp-owns"><b>Workflow:</b> ${wf?wf.name:emp.wf}</div>
+        <div class="team">
+          ${uniqueAgents.map(a=>`<span class="chip">${a}</span>`).join('')}
+        </div>
+        <div class="emp-stats">
+          <div class="st">Handled<b>${emp.handled}</b></div>
+          <div class="st">Saved / mo<b>${emp.hrs}h</b></div>
+          <div class="st">Impact<b>${emp.win}</b></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="selectRunWorkflow('${emp.wf}')">${CONFIG.runButton}</button>
+        </div>
+      </div>
+    `;
+  });
+  h+=`
+    <div class="hire-card" onclick="setView('hire')">
+      <div class="plus">+</div>
+      <div class="h">Stand up a new operator</div>
+      <div class="p">Compose a custom autonomous workflow from your agent pool in 3 steps</div>
+    </div>
+  </div>`;
+  document.getElementById('roster').innerHTML=h;
+}
+
+function selectRunWorkflow(wfKey){
+  curWfKey=wfKey;
+  const wf=WORKFLOWS[wfKey];
+  if(!wf) return;
+  const p=document.getElementById('runPanel');
+  p.className='run';
+
+  const agentCards=wf.tasks.map((t,i)=>{
+    const ag=AGENT_ROLES[t.agent]||{emoji:'ðŸ¤–',label:t.agent};
+    return `
+      <div class="acard" id="acard-${i}">
+        <div class="ae">${ag.emoji}</div>
+        <div class="ar">${ag.label}</div>
+        <div class="at">${t.task}</div>
+        <div class="as"><div class="sd"></div><span id="astat-${i}">Pending</span></div>
+      </div>
+    `;
+  }).join('');
+
+  p.innerHTML=`
+    <div class="run-head">
+      <h3 style="font-size:16px;color:var(--hi)">Live Run Engine &mdash; ${wf.name}</h3>
+      ${wf.tag==='flagship'?'<span class="tag hero">Flagship</span>':''}
+      ${wf.track?`<span class="tag ${wf.track}">${CONFIG.trackLabels[wf.track]||wf.track}</span>`:''}
+    </div>
+    <div class="run-sub">${wf.desc}</div>
+    <div class="run-input">
+      <textarea id="runSampleInput">${wf.sample}</textarea>
+      <button class="btn primary big" id="btnRunExec" onclick="executeRun()">${CONFIG.runButton}</button>
+    </div>
+    <div class="phases" id="phaseBar">
+      <div class="ph" id="ph-0"><div class="dot">1</div><div class="l">Dispatch &amp; Context</div></div>
+      <div class="ph" id="ph-1"><div class="dot">2</div><div class="l">Multi-Agent Execution</div></div>
+      <div class="ph" id="ph-2"><div class="dot">3</div><div class="l">QA &amp; Final Deliverable</div></div>
+    </div>
+    <div class="agent-grid">${agentCards}</div>
+    <div class="feed" id="runFeed"></div>
+    <div class="result hidden" id="runResult">
+      <div class="rstats">
+        <div style="font-size:13px;font-weight:700;color:var(--hi);margin-bottom:12px">Execution Summary</div>
+        <div class="rrow"><span class="k">Mode</span><span class="v">${wf.mode.toUpperCase()}</span></div>
+        <div class="rrow"><span class="k">Agents Active</span><span class="v">${wf.tasks.length}</span></div>
+        <div class="rrow"><span class="k">Time Elapsed</span><span class="v" id="resTime">1.4s</span></div>
+        <div class="rrow"><span class="k">Status</span><span class="v" style="color:var(--ok)">ALL CHECKS PASS</span></div>
+      </div>
+      <div class="rout">
+        <div class="rh">${DTITLE[wfKey]||wf.deliverable}</div>
+        <div class="rb" id="resBody"></div>
+      </div>
+    </div>
+  `;
+  p.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+async function executeRun(){
+  if(isRunning) return;
+  isRunning=true;
+  const wf=WORKFLOWS[curWfKey];
+  const btn=document.getElementById('btnRunExec');
+  const feed=document.getElementById('runFeed');
+  const result=document.getElementById('runResult');
+  const resBody=document.getElementById('resBody');
+  const empCard=document.getElementById(`emp-${curWfKey}`);
+
+  btn.disabled=true;
+  result.classList.add('hidden');
+  feed.innerHTML='';
+  if(empCard) empCard.classList.add('working');
+
+  document.getElementById('ph-0').className='ph active';
+  document.getElementById('ph-1').className='ph';
+  document.getElementById('ph-2').className='ph';
+
+  const log=(agent,msg)=>{
+    const time=new Date().toLocaleTimeString([],{hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    const row=document.createElement('div');
+    row.className='frow';
+    row.innerHTML=`<span class="ft">${time}</span><span class="fa">${agent}</span><span class="fd">${msg}</span>`;
+    feed.appendChild(row);
+    feed.scrollTop=feed.scrollHeight;
+  };
+
+  log('SYSTEM',`Initiating autonomous workflow [${wf.name}] in ${wf.mode.toUpperCase()} mode...`);
+  await sleep(400);
+
+  document.getElementById('ph-0').className='ph done';
+  document.getElementById('ph-1').className='ph active';
+
+  const taskDone=new Array(wf.tasks.length).fill(false);
+  const startTime=performance.now();
+
+  if(wf.mode==='sequential'){
+    for(let i=0;i<wf.tasks.length;i++){
+      await runSingleTask(i,wf.tasks[i],log);
+    }
+  } else {
+    // DAG execution loop
+    while(taskDone.includes(false)){
+      const readyIndices=[];
+      for(let i=0;i<wf.tasks.length;i++){
+        if(!taskDone[i]){
+          const depsOk=wf.tasks[i].deps.every(d=>taskDone[d]);
+          if(depsOk) readyIndices.push(i);
+        }
+      }
+      if(readyIndices.length===0) break; // fallback guard
+      await Promise.all(readyIndices.map(async idx=>{
+        await runSingleTask(idx,wf.tasks[idx],log);
+        taskDone[idx]=true;
+      }));
+    }
+  }
+
+  document.getElementById('ph-1').className='ph done';
+  document.getElementById('ph-2').className='ph active';
+
+  log('SYSTEM','Executing automated quality assurance and generating final review-ready deliverable...');
+  await sleep(500);
+
+  const endTime=performance.now();
+  document.getElementById('ph-2').className='ph done';
+  document.getElementById('resTime').innerText=((endTime-startTime)/1000).toFixed(2)+'s';
+  resBody.innerText=FINAL[curWfKey]||'Deliverable output complete.';
+  result.classList.remove('hidden');
+
+  log('SYSTEM','Workflow execution completed successfully. Deliverable generated.');
+  btn.disabled=false;
+  isRunning=false;
+  if(empCard) empCard.classList.remove('working');
+}
+
+async function runSingleTask(idx,t,logFunc){
+  const card=document.getElementById(`acard-${idx}`);
+  const stat=document.getElementById(`astat-${idx}`);
+  const ag=AGENT_ROLES[t.agent]||{label:t.agent};
+
+  if(card){
+    card.classList.add('visible','running');
+  }
+  if(stat) stat.innerText='Running...';
+  logFunc(ag.label,t.task);
+
+  const toolList=ag.tools||[];
+  for(const tl of toolList){
+    if(tl!=='save'&&TOOLS[tl]){
+      await sleep(300);
+      logFunc(ag.label,TOOLS[tl]());
+    }
+  }
+
+  await sleep(400);
+  if(card){
+    card.classList.remove('running');
+    card.classList.add('done');
+  }
+  if(stat) stat.innerText='Completed';
+}
+
+function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
+
+/* BUILDER IMPLEMENTATION */
+function renderBuilder(){
+  const sEl=document.getElementById('bSteps');
+  const bEl=document.getElementById('bBody');
+  const nEl=document.getElementById('bNav');
+
+  sEl.innerHTML=`
+    <div class="step ${buildStep===1?'active':''}"><div class="n">STEP 1</div><div class="l">Pick Workflow</div><div class="d">Select base operational model</div></div>
+    <div class="step ${buildStep===2?'active':''}"><div class="n">STEP 2</div><div class="l">Assign Agents</div><div class="d">Map tasks to specialist agents</div></div>
+    <div class="step ${buildStep===3?'active':''}"><div class="n">STEP 3</div><div class="l">Deploy Operator</div><div class="d">Name &amp; set execution cadence</div></div>
+  `;
+
+  if(buildStep===1){
+    let h='<div class="wf-grid">';
+    Object.keys(WORKFLOWS).forEach(k=>{
+      const w=WORKFLOWS[k];
+      h+=`
+        <div class="wf ${buildWfSel===k?'sel':''}" onclick="buildWfSel='${k}';renderBuilder()">
+          <div class="wn">${w.name} ${w.tag==='flagship'?'<span class="tag hero">Flagship</span>':''}</div>
+          <div class="wd">${w.desc}</div>
+          <div class="wm">${w.mode} &bull; ${w.tasks.length} tasks</div>
+        </div>
+      `;
+    });
+    h+='</div>';
+    bEl.innerHTML=h;
+    nEl.innerHTML=`<div></div><button class="btn primary" onclick="initBuildStep2()">Next: Assign Agents &rarr;</button>`;
+  } else if(buildStep===2){
+    let h='<div style="margin-bottom:16px;font-size:13px;color:var(--tert)">Assign a specialist agent from your workforce pool to each step:</div>';
+    buildTasks.forEach((t,i)=>{
+      const opts=RK.map(rk=>`<option value="${rk}" ${t.agent===rk?'selected':''}>${AGENT_ROLES[rk].emoji} ${AGENT_ROLES[rk].label}</option>`).join('');
+      h+=`
+        <div class="task-row">
+          <div class="tn">${i+1}</div>
+          <div class="tt">${t.task}</div>
+          <select onchange="buildTasks[${i}].agent=this.value">${opts}</select>
+        </div>
+      `;
+    });
+    bEl.innerHTML=h;
+    nEl.innerHTML=`
+      <button class="btn" onclick="buildStep=1;renderBuilder()">&larr; Back</button>
+      <button class="btn primary" onclick="buildStep=3;renderBuilder()">Next: Name &amp; Deploy &rarr;</button>
+    `;
+  } else if(buildStep===3){
+    const baseWf=WORKFLOWS[buildWfSel];
+    bEl.innerHTML=`
+      <div class="field"><label>Operator Name</label><input type="text" id="bOpName" value="${baseWf.title}"></div>
+      <div class="field"><label>Department / Team Title</label><input type="text" id="bOpTitle" value="Autonomous Grid Operations"></div>
+      <div class="field"><label>Execution Cadence</label>
+        <div class="seg">
+          ${CONFIG.builderCadences.map((c,i)=>`<button class="${i===0?'on':''}" onclick="this.parentNode.querySelectorAll('button').forEach(b=>b.classList.remove('on'));this.classList.add('on')">${c}</button>`).join('')}
+        </div>
+      </div>
+    `;
+    nEl.innerHTML=`
+      <button class="btn" onclick="buildStep=2;renderBuilder()">&larr; Back</button>
+      <button class="btn primary" onclick="deployNewOperator()">Deploy Operator to Workforce</button>
+    `;
+  }
+}
+
+function initBuildStep2(){
+  const baseWf=WORKFLOWS[buildWfSel];
+  buildTasks=baseWf.tasks.map(t=>({task:t.task,agent:t.agent}));
+  buildStep=2;
+  renderBuilder();
+}
+
+function deployNewOperator(){
+  const name=document.getElementById('bOpName').value||'Custom BESS Operator';
+  const title=document.getElementById('bOpTitle').value||'Autonomous Operations';
+  const newWfKey='custom_'+Date.now();
+
+  const baseWf=WORKFLOWS[buildWfSel];
+  WORKFLOWS[newWfKey]={
+    name:name,
+    title:name,
+    mode:baseWf.mode,
+    track:baseWf.track||'trackA',
+    deliverable:baseWf.deliverable,
+    sample:baseWf.sample,
+    desc:'Custom user-defined autonomous workflow.',
+    tasks:buildTasks.map((t,i)=>({agent:t.agent,task:t.task,deps:baseWf.tasks[i]?baseWf.tasks[i].deps:[]}))
+  };
+
+  DTITLE[newWfKey]=baseWf.deliverable;
+  FINAL[newWfKey]=FINAL[buildWfSel]||'Custom operational deliverable generated.';
+
+  EMPLOYEES.push({
+    name:name,
+    title:title,
+    wf:newWfKey,
+    handled:1,
+    hrs:24,
+    win:'Newly Deployed'
+  });
+
+  renderEcon();
+  renderRoster();
+  setView('ops');
+  selectRunWorkflow(newWfKey);
+}
+
+window.onload=init;
+</script>
+</body>
+</html>
