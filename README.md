@@ -239,3 +239,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/soligent
 https://innvonix-tech-solutions.github.io/ai-workforce/asna-global
 https://innvonix-tech-solutions.github.io/ai-workforce/epc
 https://innvonix-tech-solutions.github.io/ai-workforce/alphacore
+https://innvonix-tech-solutions.github.io/ai-workforce/rohner
