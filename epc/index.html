@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Efficient Power Conversion (EPC) &mdash; AI Commercial &amp; Semiconductor Power Engineering Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f0f6fc;--surface2:#d4e6f7;--border:#9ec5fe;--accent:#0082c8;
+--accent-dim:rgba(0,130,200,.10);--accent-line:rgba(0,130,200,.40);--slate:#0a2540;--slate-line:rgba(10,37,64,.32);--text:#08172a;--hi:#030d1a;--tert:#566a82;--ok:#10b981;--ok-dim:rgba(16,185,129,.10);--gold:#d97706;--gold-bg:#fffbeb;--gold-line:#fde68a}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:46px;height:34px;border-radius:8px;background:linear-gradient(135deg,#0a2540,#0082c8);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:14px;letter-spacing:.5px;font-family:Inter,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#0082c8}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:900px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#00629b;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(16,185,129,.08);color:#059669;border:1px solid rgba(16,185,129,.3)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#0082c8}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#00629b;font-size:15px;flex-shrink:0;position:relative;font-family:Inter,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#0082c8}.btn.primary{background:#0082c8;border-color:#0082c8;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#0082c8;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#0082c8}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(16,185,129,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(16,185,129,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#0082c8}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Inter,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#00629b;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px;font-family:Inter,sans-serif}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input,.field select{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:8px;padding:10px 12px;background:#fff;outline:none}
+.field input:focus{border-color:var(--accent)}
+.seg{display:flex;gap:6px}.seg button{flex:1;padding:9px;font-size:12px;font-weight:600;border:1px solid var(--border);border-radius:8px;background:#fff;cursor:pointer;color:var(--tert)}.seg button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.bnav{display:flex;justify-content:space-between;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
+.foot{max-width:1180px;margin:32px auto 40px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5;font-family:Inter,sans-serif;border-top:1px solid var(--border);padding-top:16px}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">
+    <div class="mark">EPC</div>
+    <div>
+      <div class="htitle">Efficient Power Conversion (EPC) &mdash; AI Commercial &amp; Semiconductor Power Engineering Workforce</div>
+      <div class="hsub">eGaN&reg; FETs, GaN Power ICs, 48V AI Server Power Conversion &amp; Automotive LiDAR Drivers</div>
+    </div>
+  </div>
+  <div class="badge">Concept demo &middot; <b>Efficient Power Conversion Corporation (EPC)</b></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tabA" onclick="setView('ops')">AI Operators Roster</button>
+  <button class="tab" id="tabB" onclick="setView('hire')">+ Compose New AI Operator</button>
+</div>
+
+<div class="main">
+  <div id="view-ops">
+    <div class="lead">
+      <b>Autonomous AI workforce prototype for Efficient Power Conversion Corporation (EPC):</b> Orchestrating AI data center &amp; automotive account sourcing, eGaN&reg; FET volume quoting, 48V-to-12V LLC converter architecture, high-speed LiDAR laser drivers, AEC-Q101 qualification, and fab yield ATE testing.
+    </div>
+    
+    <div class="legend">
+      <span><span class="tag commercial">Commercial &amp; eGaN Sourcing</span> Fabs, AI server OEMs, automotive tier-1s, RFQs &amp; volume pricing</span>
+      <span><span class="tag operations">GaN Engineering &amp; Fab Yield Ops</span> eGaN FET design, LLC power topology, thermal FEA, AEC-Q101 &amp; ATE QA</span>
+      <span><span class="tag hero">Flagship</span> eGaN&reg; FET &amp; Integrated GaN Power IC Design</span>
+    </div>
+
+    <div class="econ" id="econ"></div>
+    <div id="roster"></div>
+    
+    <div id="runPanel"></div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <div class="lead">
+      <b>Compose a custom EPC AI Operator:</b> Pick an eGaN&reg; FET architecture, 48V LLC power conversion topology, or high-speed LiDAR laser driver workflow, assign specialist agents, and deploy to your power electronics roster.
+    </div>
+    <div class="steps" id="bSteps"></div>
+    <div class="emp" style="background:#fff;margin-bottom:20px;padding:20px" id="bBody"></div>
+    <div class="bnav" id="bNav"></div>
+  </div>
+</div>
+
+<div class="foot">
+  Demonstration prototype created for Efficient Power Conversion Corporation (EPC) by Innvonix Tech Solutions. All metrics, RFQ responses, FEA thermal simulations, and wafer probe yield figures are simulated placeholders for illustrative purposes. Human power systems engineering review required prior to production silicon deployment.
+</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'eGaN Power & High-Frequency GaN Research', tools: ['research_gan_power_markets', 'save'] },
+  prospector: { emoji: '🧲', label: 'AI Data Center, Automotive & LiDAR OEM Sourcing', tools: ['source_power_oem_accounts', 'save'] },
+  qualifier: { emoji: '🎯', label: 'eGaN FET & Power IC RFQ Qualifier', tools: ['score_egan_rfq', 'save'] },
+  egan_fet_architect: { emoji: '⚡', label: 'eGaN FET & GaN Power IC Architect', tools: ['architect_egan_power_ic', 'save'] },
+  datacenter_power_spec: { emoji: '🖥️', label: '48V AI Server Power Conversion Specialist', tools: ['design_48v_llc_converter', 'save'] },
+  lidar_driver_eng: { emoji: '📡', label: 'High-Speed LiDAR & Laser Driver Lead', tools: ['synthesize_lidar_laser_driver', 'save'] },
+  gan_reliability_sim_lead: { emoji: '🔬', label: 'GaN Qualification & Reliability FEA Lead', tools: ['run_gan_thermal_reliability_fea', 'save'] },
+  throughput: { emoji: '📊', label: 'Fab Yield & Automated ATE Test Lead', tools: ['analyze_ate_yield_and_wafer_probe', 'save'] },
+  compliance: { emoji: '📋', label: 'AEC-Q101, Space-Qual & ISO 9001 Lead', tools: ['verify_aec_q101_and_space_specs', 'save'] },
+  pricing: { emoji: '🧮', label: 'eGaN Wafer & Discrete FET Volume Quoting', tools: ['calculate_egan_pricing', 'save'] },
+  writer: { emoji: '✍️', label: 'Power Conversion Tech Spec Writer', tools: ['compose_power_proposal', 'save'] },
+  reviewer: { emoji: '✅', label: 'QA & Final EPC Release Reviewer', tools: ['review_epc_qa', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+
+const WORKFLOWS = {
+  scout: {
+    name: 'AI Data Center & Automotive eGaN Sourcing',
+    title: 'Design-Win & Semiconductor Power Opportunity Discovery',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Target list of AI data center server OEMs, 800V EV traction inverter tier-1s & high-speed LiDAR suppliers needing eGaN FETs',
+    sample: 'Identify top 25 AI data center rack power manufacturers upgrading 48V-to-12V LLC power stages with eGaN FETs.',
+    desc: 'Automated discovery of AI server power OEMs, automotive tier-1s, and high-frequency LiDAR sensor builders.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan AI data center 48V power architecture, 800V EV traction, and high-speed LiDAR sensor expansions', deps: [] },
+      { agent: 'prospector', task: 'Source VP of Power Systems Engineering, AI Data Center Hardware Leads & Automotive Tier-1 Procurement', deps: [0] },
+      { agent: 'qualifier', task: 'Score fit with EPC eGaN FETs, GaN Power ICs & EPC9143 LLC evaluation modules', deps: [1] }
+    ]
+  },
+  egan_volume_quote: {
+    name: 'eGaN FET & Power IC Volume Quoting',
+    title: 'Commercial RFQ Evaluation & Discrete eGaN FET Pricing Engine',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Commercial quotation & volume pricing tier for EPC eGaN FETs and monolithically integrated GaN Power ICs',
+    sample: 'Generate volume quotation for 100,000 units of EPC2302 eGaN FETs (100V, 1.4 mΩ) for AI server power modules.',
+    desc: 'Evaluates customer RFQs, selects eGaN FET part numbers, calculates die yield pricing, and sets volume tiers.',
+    tasks: [
+      { agent: 'qualifier', task: 'Parse RFQ specs for operating voltage (48V to 80V), RDS(on) targets (< 1.5 mΩ), frequency (1 MHz to 5 MHz) & package footprint', deps: [] },
+      { agent: 'pricing', task: 'Compute eGaN wafer fabrication costs, CSP die tape-and-reel packaging, ATE test screening & volume tier discounts', deps: [0] },
+      { agent: 'writer', task: 'Generate formal EPC commercial proposal with lead times, tape-and-reel reel quantities, and AEC-Q101 CoC certificates', deps: [1] }
+    ]
+  },
+  datacenter_48v_proposal: {
+    name: '48V AI Server Power Conversion Proposal',
+    title: 'High-Density 48V-to-12V LLC Converter Architecture Proposal',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Comprehensive technical proposal for 48V AI data center rack power supplies featuring 98% efficiency LLC converters',
+    sample: 'Draft technical proposal for 48V AI accelerator power module utilizing eGaN FETs in a 5 MHz LLC topology.',
+    desc: 'Combines 98% efficiency LLC converter design, Open Rack V3 (ORv3) specs, and 5000 W/in³ power density into a winning proposal.',
+    tasks: [
+      { agent: 'datacenter_power_spec', task: 'Configure 48V-to-12V LLC resonant converter architecture using EPC2302 eGaN FETs achieving 98% efficiency', deps: [] },
+      { agent: 'compliance', task: 'Verify Open Rack V3 (ORv3) server specs, thermal derating & high-density power density (> 5000 W/in³)', deps: [0] },
+      { agent: 'pricing', task: 'Estimate volume bill of materials (BOM), magnetic transformer integration costs & 100k-unit volume discounts', deps: [1] }
+    ]
+  },
+  radar: {
+    name: 'GaN Semiconductor & Power Market Radar',
+    title: 'Gallium Nitride (GaN) vs Silicon/SiC Competitive Intelligence',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Competitive intelligence summary on GaN-on-Si wafer costs, RDS(on) figure-of-merit & monolithically integrated driver patents',
+    sample: 'Analyze market positioning and figure-of-merit performance of competing GaN and SiC power chipmakers.',
+    desc: 'Monitors competitor patent filings, switching figure-of-merit (QG x RDS(on)), and 800V automotive inverter adoption.',
+    tasks: [
+      { agent: 'researcher', task: 'Track competitor patent filings in GaN-on-Si wafer epitaxy, monolithically integrated gate drivers & cascode topology', deps: [] },
+      { agent: 'researcher', task: 'Benchmark competing SiC MOSFETs and silicon Superjunction FETs against eGaN figure-of-merit (QG x RDS(on))', deps: [] }
+    ]
+  },
+  egan_fet_power_ic_design: {
+    name: 'eGaN FET & Integrated GaN Power IC Design',
+    title: 'Monolithic GaN Power Stage, Thermal FEA & ATE Yield Package',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'Complete semiconductor design package for integrated eGaN Power IC with non-linear thermal FEA and wafer probe ATE program',
+    sample: 'Design monolithically integrated eGaN Power IC with half-bridge power stage, gate driver, thermal shutdown, and 5 MHz switching capability.',
+    desc: 'Flagship engineering workflow: integrates monolithic GaN layout, electro-thermal FEA, 48V AI server module design, ATE wafer probe QA, and FAI sign-off.',
+    tasks: [
+      { agent: 'egan_fet_architect', task: 'Design monolithically integrated eGaN Power IC with half-bridge power stage, gate driver & level shifter', deps: [] },
+      { agent: 'gan_reliability_sim_lead', task: 'Run non-linear electro-thermal FEA modeling for junction temperatures up to 150°C and gate oxide stress', deps: [0] },
+      { agent: 'datacenter_power_spec', task: 'Integrate into high-density 48V AI accelerator power module with 5 MHz switching capability', deps: [1] },
+      { agent: 'throughput', task: 'Optimize wafer probe test patterns, automated ATE yield binning & automated optical inspection (AOI)', deps: [2] },
+      { agent: 'writer', task: 'Assemble EPC master datasheet, GaN thermal layout app note & tape-and-reel manufacturing traveler', deps: [3] },
+      { agent: 'reviewer', task: 'Conduct final zero-defect QA sign-off against EPC semiconductor quality standards and AEC-Q101 guidelines', deps: [4] }
+    ]
+  },
+  lidar_pulse_driver_synthesis: {
+    name: 'High-Speed Automotive LiDAR Driver Synthesis',
+    title: 'Sub-Nanosecond Pulse Laser Driver & FEA Thermal Model',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'High-speed LiDAR laser driver design spec & 1.2 ns pulse rise-time ATE validation model',
+    sample: 'Synthesize sub-nanosecond pulse laser driver using EPC2218 eGaN FETs for long-range autonomous vehicle LiDAR sensors.',
+    desc: 'Optimizes peak pulse current (100A), 1.2 ns rise-time, parasitic inductance (< 100 pH), and wafer-level CSP packaging.',
+    tasks: [
+      { agent: 'lidar_driver_eng', task: 'Synthesize sub-nanosecond pulse laser driver circuit using EPC2218 eGaN FETs for Automotive LiDAR distance sensing', deps: [] },
+      { agent: 'throughput', task: 'Run high-speed pulse rise-time (< 1.2 ns) ATE screening simulation for 100A peak current laser pulse drivers', deps: [0] }
+    ]
+  },
+  gan_thermal_reliability_audit: {
+    name: 'GaN Thermal Reliability & AEC-Q101 Audit',
+    title: 'HTRB Electro-Thermal Stress Analysis & AEC-Q101 / Space Qualification',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'HTRB electro-thermal stress test report & AEC-Q101 / MIL-STD-883 rad-hard qualification certificate',
+    sample: 'Perform HTRB stress analysis and thermal cycling (-55°C to +150°C) on automotive-qualified eGaN FETs.',
+    desc: 'Evaluates high-temperature reverse bias (HTRB), gate oxide stress, AEC-Q101 qualification, and space radiation hardness (rad-hard).',
+    tasks: [
+      { agent: 'gan_reliability_sim_lead', task: 'Perform high-temperature reverse bias (HTRB) and thermal shock reliability audit (-55°C to +150°C)', deps: [] },
+      { agent: 'compliance', task: 'Verify AEC-Q101 automotive qualification criteria & MIL-STD-883 space radiation hardness (rad-hard) standards', deps: [] }
+    ]
+  },
+  fab_testing_yield_audit: {
+    name: 'eGaN Wafer Probe & ATE Test Yield Audit',
+    title: 'Wafer Parametric RDS(on) Mapping, BVDSS Breakdown & IATF 16949 Audit',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'Wafer parametric RDS(on) mapping report & IATF 16949 / ISO 9001 quality certificate',
+    sample: 'Audit 200mm eGaN wafer probe parametric yield, RDS(on) uniformity across die, and ATE breakdown voltage screening.',
+    desc: 'Monitors wafer probe parametric yield (> 97.8%), RDS(on) die mapping, BVDSS breakdown testing, and IATF 16949 compliance.',
+    tasks: [
+      { agent: 'throughput', task: 'Analyze 200mm eGaN wafer probe parametric yield, RDS(on) wafer maps & drain-source breakdown voltage (BVDSS)', deps: [] },
+      { agent: 'compliance', task: 'Verify ISO 9001:2015 and IATF 16949 automotive quality management system compliance', deps: [] },
+      { agent: 'reviewer', task: 'Issue factory acceptance testing (FAT) wafer lot release release certificate', deps: [0, 1] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'AI Data Center & Automotive eGaN Sourcing Report',
+  egan_volume_quote: 'eGaN FET & Power IC Commercial Quotation',
+  datacenter_48v_proposal: '48V AI Server Power Conversion Proposal',
+  radar: 'GaN Semiconductor & Power Market Radar Brief',
+  egan_fet_power_ic_design: 'eGaN FET & Integrated GaN Power IC Engineering Package',
+  lidar_pulse_driver_synthesis: 'High-Speed Automotive LiDAR Laser Driver Spec',
+  gan_thermal_reliability_audit: 'GaN Thermal Reliability & AEC-Q101 Audit Report',
+  fab_testing_yield_audit: 'eGaN Wafer Probe & ATE Test Yield Audit'
+};
+
+const TOOLS = {
+  research_gan_power_markets: () => 'Identified 28 AI data center and 800V EV traction expansion programs requiring eGaN FETs.',
+  source_power_oem_accounts: () => 'Found 62 key decision-makers: VP of Power Electronics, Hardware Leads & Automotive Procurement Managers.',
+  score_egan_rfq: () => 'RFQ evaluation score = 98/100 (Strong match for EPC2302 eGaN FET & EPC9143 LLC topology).',
+  architect_egan_power_ic: () => 'Monolithic eGaN Power IC architecture complete: half-bridge power stage & driver integrated, 5 MHz switching.',
+  design_48v_llc_converter: () => '48V-to-12V LLC converter configured: 98.2% peak efficiency achieved with 5000 W/in³ power density.',
+  synthesize_lidar_laser_driver: () => 'High-speed laser driver synthesized: sub-nanosecond pulse rise-time (< 1.1 ns) with 100A peak pulse current.',
+  run_gan_thermal_reliability_fea: () => 'Electro-thermal FEA simulation complete: max junction temperature = 118°C; HTRB stress passed.',
+  analyze_ate_yield_and_wafer_probe: () => 'Wafer probe ATE analysis complete: parametric yield = 98.4%; RDS(on) uniformity verified across 200mm wafer.',
+  verify_aec_q101_and_space_specs: () => 'AEC-Q101 automotive qualification and MIL-STD-883 space rad-hard compliance verified.',
+  calculate_egan_pricing: () => 'Volume pricing computed: 100,000 EPC2302 eGaN FETs at $1.85/unit ($185,000 total) with tape-and-reel CoC.',
+  compose_power_proposal: () => 'Technical power proposal package, thermal layout app note & tape-and-reel traveler generated.',
+  review_epc_qa: () => 'Final QA release sign-off granted by EPC Chief Power Engineer.',
+  save: () => 'Data block saved to shared EPC engineering context.'
+};
+
+const FINAL = {
+  scout: `EFFICIENT POWER CONVERSION (EPC) — AI DATA CENTER & AUTOMOTIVE eGAN SOURCING REPORT (illustrative)
+
+Target Market Segment: AI Data Center Server Power, 800V EV Traction & Automotive LiDAR (#EPC-SOURCING-2026-Q3).
+
+Key Sourcing Findings & Qualified Opportunities:
+• AI Server OEMs: 18 leading 48V-to-12V AI accelerator power module builders upgrading to eGaN FETs for 98% efficiency.
+• Automotive Tier-1s: 8 top-tier autonomous driving LiDAR manufacturers specifying sub-nanosecond laser drivers.
+• Qualified Contacts: 62 verified leads (VP of Power Engineering, Hardware Leads, Automotive Procurement Managers).
+• Estimated Annual Demand: ~2.4M EPC discrete eGaN FETs, 450k monolithically integrated GaN Power ICs.
+
+Action Item: Initiate technical sales outreach highlighting EPC9143 LLC evaluation boards and eGaN switching figure-of-merit.
+
+→ Saved: qualified_power_leads, ai_server_oem_pipeline, egan_market_analysis
+
+NOTE: illustrative; confirm against Efficient Power Conversion Corporation (EPC) commercial BD data.`,
+
+  egan_volume_quote: `EFFICIENT POWER CONVERSION (EPC) — eGAN FET & POWER IC COMMERCIAL QUOTATION (illustrative)
+
+RFQ Reference: #EPC-RFQ-2026-88021 — EPC2302 Discrete eGaN FETs & Integrated Power ICs.
+
+Commercial Quotation & Volume Pricing Breakdown:
+• Device Part Number: EPC2302 Enhancement-Mode GaN-on-Si FET (100V, 1.4 mΩ, 100A peak).
+• Package Type: Wafer-level Chip-Scale Package (CSP die footprint: 2.2mm x 1.2mm).
+• Electrical Rating: 5 MHz max switching frequency, 150°C operating junction temperature.
+• Volume Pricing:
+  - 10,000 to 49,999 units: $2.40 / unit
+  - 50,000 to 99,999 units: $2.10 / unit
+  - 100,000+ units: $1.85 / unit (Total Order: $185,000 for 100,000 units)
+• Delivery Schedule: Ships in standard tape-and-reel (4-week lead time).
+
+SLA & Quality: Full AEC-Q101 Certificate of Conformance (CoC) and trace wafer lot origin cert.
+
+→ Saved: egan_quote_88021, volume_pricing_matrix, epc_shipment_schedule
+
+NOTE: illustrative; confirm against Efficient Power Conversion Corporation (EPC) official sales pricing models.`,
+
+  datacenter_48v_proposal: `EFFICIENT POWER CONVERSION (EPC) — 48V AI SERVER POWER CONVERSION PROPOSAL (illustrative)
+
+Proposal Title: 48V-to-12V LLC Converter Architecture for AI Acceleration Racks (#EPC-PROP-4412).
+
+Technical & Engineering Specification:
+• Power Topology: 48V resonant LLC converter utilizing EPC2302 eGaN FETs in primary and secondary synchronous rectification.
+• Power Density & Efficiency: Peak conversion efficiency = 98.2%; power density > 5200 W/in³.
+• Standards Compliance: Fully compliant with Open Rack V3 (ORv3) server specs and OCP AI accelerator busways.
+• Thermal Management: Integrated PCB copper pour heat sinking with < 35°C thermal rise at full 1.2 kW load.
+
+Compliance: Certified under ISO 9001:2015 and ORv3 power delivery guidelines.
+
+→ Saved: datacenter_48v_proposal, llc_efficiency_curves, thermal_layout_drawing
+
+NOTE: illustrative; confirm against EPC custom power module specifications.`,
+
+  radar: `EFFICIENT POWER CONVERSION (EPC) — GAN SEMICONDUCTOR & POWER MARKET RADAR BRIEF (illustrative)
+
+Intelligence Scope: Gallium Nitride (GaN) vs Silicon/SiC Power Semiconductors (#EPC-RADAR-2026).
+
+Competitive Landscape Analysis:
+• Competitor Patent Activity: Monitored 22 patent filings in monolithic GaN gate driver integration and cascode topologies.
+• Market Trends: Rapid migration of AI server power supplies from Silicon MOSFETs to eGaN FETs due to 10x lower gate charge (QG).
+• Figure-of-Merit Benchmarking: EPC eGaN FETs achieve a 4.2x superior QG x RDS(on) switching figure-of-merit vs SiC MOSFETs at 100V.
+
+Strategic Recommendation: Accelerate marketing of EPC9143 demo boards and monolithically integrated GaN ICs to Tier-1 automotive and server clients.
+
+→ Saved: competitor_patent_matrix, figure_of_merit_benchmark, market_share_analysis
+
+NOTE: illustrative; confirm against Efficient Power Conversion Corporation (EPC) market intelligence reports.`,
+
+  egan_fet_power_ic_design: `EFFICIENT POWER CONVERSION (EPC) — eGAN FET & INTEGRATED GAN POWER IC PACKAGE (illustrative)
+
+Master Semiconductor Engineering Specification (#EPC-ENG-EGAN-POWERIC-2026):
+
+1. Monolithic eGaN Power IC Architecture:
+   • Integrated Circuit: Monolithic GaN power stage combining half-bridge eGaN FETs, gate drivers & level shifters.
+   • Operating Rating: 100V breakdown voltage, 5 MHz max switching frequency, 1.4 mΩ RDS(on).
+
+2. Non-Linear Electro-Thermal FEA:
+   • Thermal Dissipation: Max junction temperature TJ = 118°C under 1.2 kW continuous output power.
+   • Gate Oxide Reliability: Zero threshold voltage shift verified after 1,000 hours of HTRB stress.
+
+3. 48V AI Server Module Integration:
+   • High-Density Integration: Sub-centimeter form factor for 48V direct-to-CPU voltage regulator modules (VRM).
+
+4. Wafer Probe ATE & QA Sign-off:
+   • Parametric Yield: 98.4% first-pass wafer probe yield across 200mm eGaN wafer lots.
+   • QA Release: Certified for immediate production release by EPC Chief Power Engineer.
+
+→ Saved: master_egan_spec_2302, thermal_fea_plots, power_ic_schematic, ate_wafer_traveler
+
+NOTE: illustrative; confirm against Efficient Power Conversion Corporation (EPC) engineering guidelines.`,
+
+  lidar_pulse_driver_synthesis: `EFFICIENT POWER CONVERSION (EPC) — HIGH-SPEED AUTOMOTIVE LIDAR LASER DRIVER SPEC (illustrative)
+
+Laser Driver Synthesis & Dynamic Model (#EPC-LIDAR-SPEC-9918):
+
+Circuit Performance Metrics:
+• Driver Topology: EPC2218 eGaN FET configured as high-current sub-nanosecond pulse driver for laser diodes.
+• Pulse Characteristics: Peak current = 100A; pulse rise-time = 1.1 ns; pulse width = 2.5 ns.
+• Inductance Optimization: Circuit parasitic loop inductance engineered < 85 pH via wafer-level CSP packaging.
+• ATE Validation: Passed 100% pulse rise-time and peak current ATE screening tests.
+
+Quality Sign-off: Approved for automotive Tier-1 autonomous LiDAR sensor production lines.
+
+→ Saved: lidar_driver_spec_9918, pulse_risetime_oscillogram, parasitic_inductance_plot
+
+NOTE: illustrative; confirm against EPC automotive LiDAR driver guidelines.`,
+
+  gan_thermal_reliability_audit: `EFFICIENT POWER CONVERSION (EPC) — GAN THERMAL RELIABILITY & AEC-Q101 AUDIT (illustrative)
+
+HTRB & Environmental Qualification Audit (#EPC-RELIABILITY-AUDIT-2026):
+
+Reliability & Stress Test Results:
+• HTRB Testing: 1,000 hours at 150°C under 80% rated breakdown voltage (VDS = 80V); zero parametric drift.
+• Thermal Cycling: 1,000 cycles from -55°C to +150°C; zero solder joint micro-cracking or die delamination.
+• Automotive Qualification: Fully certified under AEC-Q101 stress test qualification for automotive discrete semiconductors.
+• Space Rad-Hard Rating: Passed MIL-STD-883 total ionizing dose (TID) radiation testing up to 500 krad(Si).
+
+Conclusion: eGaN FET family fully cleared for automotive powertrain and satellite space applications.
+
+→ Saved: htrb_test_report, aec_q101_qualification_cert, space_radhard_data
+
+NOTE: illustrative; confirm against Efficient Power Conversion Corporation (EPC) reliability standards.`,
+
+  fab_testing_yield_audit: `EFFICIENT POWER CONVERSION (EPC) — eGAN WAFER PROBE & ATE TEST YIELD AUDIT (illustrative)
+
+Audit Scope: 200mm eGaN Wafer Fabrication & Parametric ATE Screening (#EPC-AUDIT-2026-09).
+
+Manufacturing & Quality Assurance Metrics:
+• Wafer Parametric Yield: 98.4% first-pass yield across 200mm eGaN-on-Si wafer lots.
+• RDS(on) Uniformity: Die-to-die RDS(on) variation maintained within ± 2.5% of nominal 1.4 mΩ specification.
+• Breakdown Voltage (BVDSS): 100% ATE screening passed with BVDSS breakdown > 120V.
+• Quality Systems: Fully compliant with ISO 9001:2015 and IATF 16949 automotive QMS standards.
+
+Sign-off Status: Factory Acceptance Testing (FAT) wafer lot release approved with zero open non-conformances.
+
+→ Saved: egan_wafer_yield_audit, rds_die_maps, iatf16949_certificates
+
+NOTE: illustrative; confirm against Efficient Power Conversion Corporation (EPC) quality management systems.`
+};
+
+let EMPLOYEES = [
+  { id: 'scout', name: 'AI-eGaN-Sourcing-Scout', title: 'AI Data Center & Automotive Sourcing Lead', wf: 'scout', handled: 380, hrs: 82, win: 0, status: 'idle' },
+  { id: 'egan_volume_quote', name: 'AI-eGaN-Quoting-Estimator', title: 'AI eGaN FET Quoting Lead', wf: 'egan_volume_quote', handled: 490, hrs: 112, win: 68, status: 'idle' },
+  { id: 'datacenter_48v_proposal', name: 'AI-48V-ServerPower-Proposal-Arch', title: 'AI 48V Server Power Proposal Lead', wf: 'datacenter_48v_proposal', handled: 240, hrs: 104, win: 64, status: 'idle' },
+  { id: 'radar', name: 'AI-GaN-Market-Intel', title: 'AI GaN Semiconductor Intelligence Lead', wf: 'radar', handled: 185, hrs: 48, win: 0, status: 'idle' },
+  { id: 'egan_fet_power_ic_design', name: 'AI-eGaN-PowerIC-Architect', title: 'AI eGaN FET & Power IC Design Lead', wf: 'egan_fet_power_ic_design', handled: 580, hrs: 340, win: 92, status: 'idle' },
+  { id: 'lidar_pulse_driver_synthesis', name: 'AI-LiDAR-LaserDriver-Lead', title: 'AI High-Speed LiDAR Driver Lead', wf: 'lidar_pulse_driver_synthesis', handled: 410, hrs: 215, win: 76, status: 'idle' },
+  { id: 'gan_thermal_reliability_audit', name: 'AI-GaN-Reliability-Audit-Lead', title: 'AI GaN Thermal Reliability Lead', wf: 'gan_thermal_reliability_audit', handled: 360, hrs: 195, win: 70, status: 'idle' },
+  { id: 'fab_testing_yield_audit', name: 'AI-WaferATE-Yield-Lead', title: 'AI Wafer Probe & ATE Yield Lead', wf: 'fab_testing_yield_audit', handled: 450, hrs: 245, win: 86, status: 'idle' }
+];
+
+const TRACKS = [
+  ['commercial', 'Commercial & eGaN Sourcing'],
+  ['operations', 'GaN Engineering & Fab Yield Ops']
+];
+
+let running = false;
+const $ = id => document.getElementById(id);
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const rand = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
+const now = () => new Date().toLocaleTimeString('en-GB');
+const mono = n => n.trim().slice(0, 2).toUpperCase();
+
+function toolOut(toolKey) {
+  return TOOLS[toolKey] ? TOOLS[toolKey]() : 'Completed successfully.';
+}
+
+function chips(wf) {
+  let s = '';
+  if (wf.track === 'commercial') s += '<span class="tag commercial">Commercial &amp; eGaN Sourcing</span>';
+  if (wf.track === 'operations') s += '<span class="tag operations">GaN Eng &amp; Fab Yield</span>';
+  if (wf.tag === 'flagship') s += ' <span class="tag hero">Flagship</span>';
+  return s;
+}
+
+function setView(v) {
+  $('view-ops').classList.toggle('hidden', v !== 'ops');
+  $('view-hire').classList.toggle('hidden', v !== 'hire');
+  $('tabA').classList.toggle('active', v === 'ops');
+  $('tabB').classList.toggle('active', v === 'hire');
+  if (v === 'hire') initBuilder();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderEcon() {
+  const total = EMPLOYEES.length, h = EMPLOYEES.reduce((s, e) => s + e.handled, 0), hrs = EMPLOYEES.reduce((s, e) => s + e.hrs, 0);
+  const w = EMPLOYEES.filter(e => e.win > 0);
+  const avg = w.length ? Math.round(w.reduce((s, e) => s + e.win, 0) / w.length) : 0;
+  const cells = [
+    [total, 'AI operators (commercial + engineering)'],
+    [h.toLocaleString(), 'eGaN designs, 48V FEA runs & RFQs handled'],
+    [hrs.toLocaleString() + '<span class="u"> hrs</span>', 'power engineering hours saved / mo'],
+    ['+' + avg + '%', 'avg turnaround improvement']
+  ];
+  $('econ').innerHTML = cells.map(c => `<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');
+}
+
+function empCard(e) {
+  const wf = WORKFLOWS[e.wf];
+  const team = wf.tasks.map(t => t.agent).filter((v, i, a) => a.indexOf(v) === i).map(r => `<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');
+  return `<div class="emp ${e.status === 'working' ? 'working' : ''} ${wf.tag === 'flagship' ? 'hero' : ''}" id="emp-${e.id}"><div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div><div class="emp-owns">Owns: <b>${wf.name}</b></div><div class="team">${team}</div><div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win > 0 ? ('+' + e.win + '%') : '—'}</b>faster</div></div><div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on an eGaN / FEA spec</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;
+}
+
+function renderRoster() {
+  const hire = `<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;
+  let html = '';
+  TRACKS.forEach(([tk, label], gi) => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf].track === tk);
+    if (!list.length) return;
+    html += `<div class="slabel">${label}</div><div class="roster">` + list.map(empCard).join('') + (gi === TRACKS.length - 1 ? hire : '') + `</div>`;
+  });
+  $('roster').innerHTML = html;
+}
+
+function assign(id) {
+  if (running) return;
+  const e = EMPLOYEES.find(x => x.id === id), wf = WORKFLOWS[e.wf];
+  $('runPanel').innerHTML = `<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} &middot; ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at an eGaN FET spec, FEA target, or RFQ and ${e.name} runs the whole loop.</div></div></div><div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div><div id="stage"></div></div>`;
+  $('run').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  $('obj').focus();
+}
+
+async function runEmp(id) {
+  if (running) return;
+  running = true;
+  const e = EMPLOYEES.find(x => x.id === id), wf = WORKFLOWS[e.wf];
+  const obj = ($('obj').value || wf.sample).trim();
+  $('go').disabled = true;
+  e.status = 'working';
+  const card = $('emp-' + e.id);
+  if (card) card.classList.add('working');
+  const stage = $('stage');
+  stage.innerHTML = `<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div><div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div><div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;
+  const feed = $('feed');
+  function log(rk, d) {
+    const r = AGENT_ROLES[rk];
+    const nm = r ? (r.emoji + ' ' + r.label) : '◆ ' + e.name;
+    const row = document.createElement('div');
+    row.className = 'frow';
+    row.innerHTML = `<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0, 150)}</span>`;
+    feed.appendChild(row);
+    feed.scrollTop = feed.scrollHeight;
+  }
+  log(null, `Input received: "${obj.substring(0, 54)}…"`);
+  log(null, `Running the ${wf.name} workflow &middot; ${wf.tasks.length} agents &middot; ${wf.mode.toUpperCase()} mode`);
+  await sleep(rand(700, 1100));
+  const grid = $('agrid');
+  wf.tasks.forEach((t, i) => {
+    const r = AGENT_ROLES[t.agent];
+    const c = document.createElement('div');
+    c.className = 'acard';
+    c.id = 'ac-' + i;
+    c.innerHTML = `<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;
+    grid.appendChild(c);
+    setTimeout(() => c.classList.add('visible'), i * 85);
+  });
+  await sleep(600);
+  $('p1').classList.remove('active');
+  $('p1').classList.add('done');
+  $('p1').querySelector('.dot').textContent = '✓';
+  $('p2').classList.add('active');
+  const done = new Set();
+  async function runOne(i) {
+    const t = wf.tasks[i], r = AGENT_ROLES[t.agent], c = $('ac-' + i), st = $('ast-' + i);
+    c.classList.remove('visible');
+    c.classList.add('running');
+    st.textContent = 'Running…';
+    log(t.agent, t.task.substring(0, 72));
+    await sleep(rand(450, 820));
+    for (const tool of r.tools) {
+      log(t.agent, tool + '( ) → ' + toolOut(tool));
+      await sleep(rand(450, 820));
+    }
+    c.classList.remove('running');
+    c.classList.add('done');
+    st.textContent = 'Done';
+    log(t.agent, 'result saved to shared context');
+    done.add(i);
+  }
+  if (wf.mode === 'sequential') {
+    for (let i = 0; i < wf.tasks.length; i++) await runOne(i);
+  } else {
+    while (done.size < wf.tasks.length) {
+      const ready = wf.tasks.map((t, i) => i).filter(i => !done.has(i) && wf.tasks[i].deps.every(d => done.has(d)));
+      if (!ready.length) break;
+      if (ready.length > 1) await Promise.all(ready.map(runOne));
+      else await runOne(ready[0]);
+    }
+  }
+  $('p2').classList.remove('active');
+  $('p2').classList.add('done');
+  $('p2').querySelector('.dot').textContent = '✓';
+  $('p3').classList.add('active');
+  $('p3').querySelector('.dot').textContent = '✓';
+  $('p3').classList.add('done');
+  await sleep(400);
+  const out = FINAL[e.wf] || 'Review-ready output produced.';
+  const hrsThis = rand(6, 44);
+  $('resultArea').innerHTML = `<div class="result"><div class="rstats"><div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div><div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div><div class="rrow"><span class="k">Track</span><span class="v">${wf.track === 'commercial' ? 'Commercial & eGaN Sourcing' : 'GaN Eng & Fab Yield'}</span></div><div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div><div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div><div class="rout"><div class="rh">Review-ready output &middot; ${DTITLE[e.wf] || 'Output'}</div><div class="rb">${out.replace(/</g, '&lt;')}</div></div></div><div class="donebar"><b>${e.name} produced a review-ready output.</b> Read, adapt and QA complete, ready for a Chief Power Systems Engineer, AI Data Center Lead, or Automotive Tier-1 Director to confirm against EPC and AEC-Q101 standards. Illustrative simulation, not a production deliverable.</div>`;
+  e.handled += 1;
+  e.status = 'idle';
+  if (card) card.classList.remove('working');
+  renderEcon();
+  renderRoster();
+  running = false;
+}
+
+let draft = {};
+function initBuilder() { draft = { wf: null, mode: null, assign: [], name: '', title: '', cadence: 'Per wafer lot', step: 1 }; renderBuilder(); }
+function renderBuilder() {
+  const steps = [['01', 'Pick a workflow'], ['02', 'Assign the agents'], ['03', 'Name & cadence']];
+  $('bSteps').innerHTML = steps.map((s, i) => `<div class="step ${draft.step === i + 1 ? 'active' : ''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+  if (draft.step === 1) bS1(); else if (draft.step === 2) bS2(); else bS3();
+  bNav();
+}
+function bS1() {
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">` + Object.keys(WORKFLOWS).map(k => {
+    const w = WORKFLOWS[k];
+    return `<div class="wf ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents &middot; ${w.mode}</div></div>`;
+  }).join('') + `</div>`;
+}
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Assign each task to an agent</div>` + w.tasks.map((t, i) => `<div class="task-row"><div class="tn">${i + 1}</div><div class="tt">${t.task}${t.deps.length ? ` <span style="color:var(--tert)">&middot; waits for ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('') + `<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">` + ['sequential', 'dag'].map(m => `<button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (parallel where safe)' : 'Sequential'}</button>`).join('') + `</div></div>`;
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Name & cadence</div><div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. AI-eGaN-PowerIC-Architect" oninput="draft.name=this.value"></div><div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI eGaN FET & Power IC Design Lead" oninput="draft.title=this.value"></div><div class="field"><label>Cadence</label><div class="seg">` + ['Per wafer lot', 'Per design run', 'Weekly', 'On-demand'].map(c => `<button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('') + `</div></div><div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name || 'New')}</div><div><div class="emp-name">${draft.name || 'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title || 'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> &middot; ${draft.cadence} &middot; ${draft.mode}</div></div>`;
+}
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right;
+  if (draft.step === 1) right = `<button class="btn primary" ${draft.wf ? '' : 'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+  else right = `<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;
+  $('bNav').innerHTML = left + right;
+}
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  WORKFLOWS[wfId] = { name: w.name, title: w.title, mode: draft.mode || w.mode, track: w.track, tag: w.tag, deliverable: w.deliverable, sample: w.sample, desc: w.desc, tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps })) };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({ id, name, title: draft.title || w.title, wf: wfId, handled: 0, hrs: rand(40, 140), win: 0, status: 'idle' });
+  renderEcon();
+  renderRoster();
+  setView('ops');
+  setTimeout(() => {
+    const c = $('emp-' + id);
+    if (c) {
+      c.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      c.style.boxShadow = '0 0 0 2px var(--accent)';
+      setTimeout(() => c.style.boxShadow = '', 1800);
+    }
+  }, 250);
+}
+
+renderEcon(); renderRoster();
+</script>
+</body>
+</html>
