@@ -241,3 +241,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/epc
 https://innvonix-tech-solutions.github.io/ai-workforce/alphacore
 https://innvonix-tech-solutions.github.io/ai-workforce/rohner
 https://innvonix-tech-solutions.github.io/ai-workforce/standards-gradebook
+https://innvonix-tech-solutions.github.io/ai-workforce/crossbar
