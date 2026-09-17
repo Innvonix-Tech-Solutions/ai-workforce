@@ -237,3 +237,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/lawrence-semiconductor
 https://innvonix-tech-solutions.github.io/ai-workforce/pluspower
 https://innvonix-tech-solutions.github.io/ai-workforce/soligent
 https://innvonix-tech-solutions.github.io/ai-workforce/asna-global
+https://innvonix-tech-solutions.github.io/ai-workforce/epc
