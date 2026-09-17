@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WESCO International &mdash; Autonomous AI Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#fff;
+  --surface:#f4f7fb;
+  --surface2:#e6edf5;
+  --border:#d1deec;
+  --accent:#004080; /* WESCO Executive Deep Blue */
+  --accent-dim:rgba(0,64,128,.08);
+  --accent-line:rgba(0,64,128,.30);
+  --text:#1a2634;
+  --hi:#0a1626;
+  --tert:#56687e;
+  --ok:#10b981;
+  --ok-dim:rgba(16,185,129,.10);
+  --gold:#d97706;
+  --gold-bg:#fffbe3;
+  --gold-line:#fcd34d
+}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:3px solid var(--accent);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#002855);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px}
+.htitle{font-size:16px;font-weight:800;color:var(--hi);letter-spacing:.3px}.hsub{font-size:11px;font-weight:600;color:var(--tert);margin-top:1px}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);background:var(--surface)}.badge b{color:var(--accent)}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:940px;margin-bottom:14px;color:var(--text)}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.trackA{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.trackB{background:rgba(10,22,38,.07);color:var(--hi);border:1px solid rgba(10,22,38,.25)}
+.tag.hero{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:24px;font-weight:800;color:var(--hi)}.cell .v .u{color:var(--accent)}
+.cell .k{font-size:11px;font-weight:600;color:var(--tert);margin-top:4px}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:#fff;border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert)}
+.emp-owns{font-size:12px;margin-bottom:10px}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:inherit;font-size:12.5px;font-weight:700;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:var(--accent)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:700;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--hi);background:var(--accent)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(16,185,129,.5);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:700;color:var(--hi);background:var(--surface)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(16,185,129,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:var(--accent)}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:14px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:700;text-transform:uppercase}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 13px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border)}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="logo">
+    <div class="mark">&#x26A1;</div>
+    <div>
+      <div class="htitle">WESCO International &nbsp;&bull;&nbsp; Global Supply Chain &amp; Logistics Platform</div>
+      <div class="hsub">Multi-Agent Autonomous Workforce for Electrical, Communications &amp; Utility Infrastructure</div>
+    </div>
+  </div>
+  <div class="badge">Independent concept &nbsp;&middot;&nbsp; <b>illustrative</b></div>
+</header>
+<div class="tabs">
+  <button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+  <button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+<div class="main">
+  <div id="view-ops">
+    <div class="lead">WESCO International is a Fortune 500 global leader in B2B distribution, logistics services, and supply chain solutions. This prototype demonstrates an <b>autonomous AI workforce</b> engineered to streamline hyperscale data center kitting, automate industrial plant VMI, accelerate electric utility grid modernization, and mobilize emergency storm restoration logistics.</div>
+
+    <div class="legend" id="legend"></div>
+    <div class="econ" id="econ"></div>
+    <div id="roster"></div>
+    <div id="runPanel"></div>
+  </div>
+  <div id="view-hire" class="hidden">
+    <div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+    <div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+  </div>
+</div>
+<div class="foot">Independent AI workforce prototype prepared for WESCO International, Inc. Illustrative scenario modeling only. Not affiliated with or endorsed by WESCO International, Inc. Human-in-the-loop governance is maintained across all executive contracts, utility allocations, and emergency dispatches.</div>
+
+<script>
+/* ==================================================================
+   FILL: CONFIG
+   ================================================================== */
+const CONFIG={
+  econLabels:["AI operators","tasks handled","hours saved / month","avg turnaround cut"],
+  statLabel:"turnaround", statSign:"\u{2212}", statSuffix:"%",
+  runButton:"Execute Global Workflow",
+  runNoun:"global supply chain order",
+  outputLabel:"Executive & Operations Review-Ready Output",
+  rosterLabel:"WESCO Global Supply Chain AI Workforce",
+  trackLabels:{trackA:"Industrial & Enterprise Supply Chain (EES & CSS)", trackB:"Utility Grid & Broadband Solutions (UBS)"},
+  builderCadences:["Per enterprise order","Real-time / Instant","Daily shift","On-demand"],
+};
+
+/* ==================================================================
+   FILL: AGENT_ROLES (12 specialist agents)
+   ================================================================== */
+const AGENT_ROLES={
+  eescatalog:{emoji:'\u{26A1}',label:'Electrical & Automation Specialist',tools:['switchgear_spec_save','mro_catalog_save']},
+  datacenterspec:{emoji:'\u{1F5A5}',label:'Data Center & Fiber Lead',tools:['fiber_staging_save','rack_config_save']},
+  utilitygrid:{emoji:'\u{1F50C}',label:'Utility Grid & Transformer Specialist',tools:['grid_hardware_save','transformer_alloc_save']},
+  vmiinventory:{emoji:'\u{1F4E6}',label:'VMI & Warehouse Logistics Lead',tools:['vmi_audit_save','warehouse_route_save']},
+  epcbom:{emoji:'\u{1F4B2}',label:'EPC Project Sourcing & Quote Engine',tools:['epc_quote_save','rebate_stack_save']},
+  broadband5g:{emoji:'\u{1F4E1}',label:'Broadband & 5G Infrastructure Engineer',tools:['ftth_design_save','osp_cable_save']},
+  stormrestor:{emoji:'\u{1F6A8}',label:'Emergency Storm Restoration Controller',tools:['storm_dispatch_save','emergency_logistics_save']},
+  esgsustain:{emoji:'\u{1F33F}',label:'ESG & Carbon Reduction Analyst',tools:['esg_audit_save','carbon_calc_save']},
+  supplierqa:{emoji:'\u{1F6E1}',label:'Vendor Compliance & Quality Assurance',tools:['vendor_audit_save','compliance_gate_save']},
+  smartbuilding:{emoji:'\u{1F3E2}',label:'Smart Building & Security Systems AI',tools:['smart_building_save','poe_lighting_save']},
+  writer:{emoji:'\u{270D}',label:'Workforce Technical Writer',tools:['rfp_proposal_save','sla_contract_save']},
+  reviewer:{emoji:'\u{1F50D}',label:'Senior Executive & Supply Chain Reviewer',tools:['executive_signoff_save','risk_review_save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+
+/* ==================================================================
+   FILL: WORKFLOWS (8 workflows)
+   ================================================================== */
+const WORKFLOWS={
+  datacenter_hyperscale_kitting:{
+    name:'Hyperscale Data Center Fiber & Power Kitting Surge',
+    title:'Data Center Hyperscale Kitting Operator',
+    mode:'dag',
+    track:'trackA',
+    tag:'flagship',
+    deliverable:'100MW Hyperscale Data Center Supply Chain & Kitting Proposal',
+    sample:'Coordinate 100MW hyperscale data center expansion in Virginia, structuring pre-terminated MPO fiber optic trunks, server rack integration, 4160V medium-voltage switchgear, UPS systems, and staged VMI delivery.',
+    desc:'Multi-agent execution integrating Anixter CSS fiber packaging, EES power distribution, multi-node warehouse staging, and executive procurement approval.',
+    tasks:[
+      {agent:'datacenterspec',task:'Configure high-density MPO fiber trunks, server racks, and busway power distribution for 100MW hyperscale buildout.',deps:[]},
+      {agent:'eescatalog',task:'Source 4160V medium-voltage switchgear, UPS systems, and industrial power cables.',deps:[0]},
+      {agent:'vmiinventory',task:'Stage pre-assembled rack kits and reserve dedicated bay space at regional Anixter CSS hub.',deps:[1]},
+      {agent:'epcbom',task:'Generate multi-vendor consolidated BOM quote with project milestone pricing.',deps:[2]},
+      {agent:'writer',task:'Compile Hyperscale Data Center Supply Chain Procurement & Kitting Proposal.',deps:[3]},
+      {agent:'reviewer',task:'Conduct executive risk review and approve $45M procurement contract.',deps:[4]}
+    ]
+  },
+  utility_grid_modernization:{
+    name:'Electric Utility Grid Modernization & Transformer Allocation',
+    title:'Utility Grid Modernization Operator',
+    mode:'sequential',
+    track:'trackB',
+    deliverable:'Utility Grid Hardware Procurement & Allocation Package',
+    sample:'Structure a multi-year $140M grid modernization hardware agreement for a regional electric utility, supplying 34.5kV step-down transformers, reclosers, and smart grid sensors.',
+    desc:'Utility specialists and vendor compliance leads audit Buy America Act certifications, structure volume pricing, and allocate transformer production slots.',
+    tasks:[
+      {agent:'utilitygrid',task:'Allocate 34.5kV step-down transformers, reclosers, and smart grid sensors for investor-owned utility (IOU).',deps:[]},
+      {agent:'supplierqa',task:'Verify Buy America Act compliance and factory acceptance test (FAT) reports from transformer OEMs.',deps:[0]},
+      {agent:'epcbom',task:'Structure multi-year utility blanket purchase agreement with locked volume pricing.',deps:[1]},
+      {agent:'writer',task:'Publish Utility Grid Hardware Procurement & Allocation Submittal Package.',deps:[2]}
+    ]
+  },
+  industrial_vmi_plant_optimization:{
+    name:'Industrial Plant VMI & MRO Inventory Optimization',
+    title:'Industrial Plant VMI Operator',
+    mode:'dag',
+    track:'trackA',
+    deliverable:'Industrial VMI Service Level Agreement & Cost Audit',
+    sample:'Implement Vendor Managed Inventory (VMI) across 5 automotive assembly plants, consolidating 12,000 MRO SKUs and setting up automated RFID bin replenishment.',
+    desc:'Logistics leads and electrical specialists audit plant MRO inventory, consolidate vendors, and deploy automated RFID bin replenishment.',
+    tasks:[
+      {agent:'vmiinventory',task:'Audit 12,000 SKU MRO inventory bins across 5 automotive manufacturing plants.',deps:[]},
+      {agent:'eescatalog',task:'Consolidate duplicate motor control centers, drives, and cabling vendors.',deps:[0]},
+      {agent:'writer',task:'Draft Vendor Managed Inventory (VMI) Service Level Agreement & Cost Savings Audit.',deps:[1]},
+      {agent:'reviewer',task:'Approve VMI contract execution and automated RFID bin replenishment setup.',deps:[2]}
+    ]
+  },
+  storm_restoration_grid_dispatch:{
+    name:'Emergency Hurricane & Storm Restoration Dispatch',
+    title:'Emergency Storm Restoration Operator',
+    mode:'sequential',
+    track:'trackB',
+    deliverable:'24/7 Emergency Storm Dispatch Telemetry & Priority Manifest',
+    sample:'Activate emergency storm restoration protocol following Category 4 hurricane landfall, dispatching 500 distribution transformers, 2,000 utility poles, and 50 miles of conductor.',
+    desc:'Storm controllers and utility specialists stage emergency yards, mobilize dedicated flatbed charter fleets, and issue real-time restoration manifests.',
+    tasks:[
+      {agent:'stormrestor',task:'Activate emergency storm staging protocol for Category 4 hurricane response.',deps:[]},
+      {agent:'utilitygrid',task:'Dispatch 500 distribution transformers, 2,000 utility poles, and 50 miles of conductor wire.',deps:[0]},
+      {agent:'writer',task:'Generate 24/7 Storm Response Telemetry Log & Utility Priority Dispatch Alert.',deps:[1]},
+      {agent:'reviewer',task:'Authorize emergency charter freight and staging yard leases.',deps:[2]}
+    ]
+  },
+  broadband_5g_ftth_rollout:{
+    name:'Broadband FTTH & 5G Small Cell Deployment Logistics',
+    title:'Broadband & 5G Deployment Operator',
+    mode:'sequential',
+    track:'trackB',
+    deliverable:'Statewide Broadband & 5G Infrastructure Deployment Schedule',
+    sample:'Manage supply chain logistics for a statewide Fiber-to-the-Home (FTTH) rollout and 5G small cell network expansion across 12 counties.',
+    desc:'Broadband engineers and logistics managers package outside plant (OSP) cable reels, splice enclosures, and mobile jobsite contractor trailers.',
+    tasks:[
+      {agent:'broadband5g',task:'Design outside plant (OSP) fiber cable reels, splice closures, and 5G small cell hardware kits.',deps:[]},
+      {agent:'vmiinventory',task:'Establish mobile jobsite trailer inventory for fiber splicing contractor crews.',deps:[0]},
+      {agent:'writer',task:'Issue Statewide Broadband & 5G Infrastructure Deployment Schedule.',deps:[1]}
+    ]
+  },
+  smart_building_poe_security:{
+    name:'Smart Building PoE Lighting & Security Integration',
+    title:'Smart Building Systems Operator',
+    mode:'sequential',
+    track:'trackA',
+    deliverable:'Smart Building Systems Integration Architecture Package',
+    sample:'Specify and supply integrated Power-over-Ethernet (PoE) LED lighting, IP video surveillance, and building automation hardware for a 40-story commercial tower.',
+    desc:'Smart building AI and data center leads calculate PoE switch power budgets, integrate BAS protocols, and validate system warranties.',
+    tasks:[
+      {agent:'smartbuilding',task:'Integrate Power-over-Ethernet (PoE) LED fixtures, IP security cameras, and access control hardware.',deps:[]},
+      {agent:'datacenterspec',task:'Verify Category 6A structured cabling bandwidth and PoE switch power budgets.',deps:[0]},
+      {agent:'writer',task:'Draft Smart Building Integration Architecture & Engineering Specification.',deps:[1]},
+      {agent:'reviewer',task:'Validate building automation interoperability and system warranty.',deps:[2]}
+    ]
+  },
+  esg_decarbonization_retrofit:{
+    name:'Industrial ESG & Decarbonization Energy Audit',
+    title:'Industrial ESG Decarbonization Operator',
+    mode:'sequential',
+    track:'trackA',
+    deliverable:'Industrial Decarbonization ROI & Carbon Offsets Report',
+    sample:'Conduct comprehensive energy retrofit audit for a 500,000 sq ft industrial fulfillment center, replacing high-bay lighting with LED/VFD systems and rooftop solar.',
+    desc:'ESG analysts and electrical specialists compute energy kilowatt savings, utility rebates, and carbon reduction metrics.',
+    tasks:[
+      {agent:'esgsustain',task:'Audit 500,000 sq ft distribution center lighting and motor energy consumption.',deps:[]},
+      {agent:'eescatalog',task:'Specify high-efficiency LED industrial fixtures, VFD motor drives, and solar rooftop tie-in.',deps:[0]},
+      {agent:'writer',task:'Publish Decarbonization ROI Report & Carbon Offsets Certification File.',deps:[1]},
+      {agent:'reviewer',task:'Approve ESG energy rebate submittal and ROI guarantee.',deps:[2]}
+    ]
+  },
+  global_epc_supply_chain_rfp:{
+    name:'Global Industrial EPC Mega-Project Supply Chain RFP',
+    title:'Global Industrial EPC Sourcing Operator',
+    mode:'sequential',
+    track:'trackB',
+    deliverable:'Multi-National EPC Supply Chain Proposal & Master Agreement',
+    sample:'Respond to a $120M global EPC supply chain RFP for an international LNG export terminal, coordinating bulk electrical, explosion-proof gear, and dual-sourcing.',
+    desc:'Sourcing engines and vendor QA auditors evaluate NEMA/IEC compliance, negotiate global master pricing, and structure dual-sourcing contingencies.',
+    tasks:[
+      {agent:'epcbom',task:'Evaluate $120M global EPC project RFP for LNG export facility electrical bulk procurement.',deps:[]},
+      {agent:'supplierqa',task:'Audit global vendor compliance, NEMA/IEC ratings, and dual-sourcing contingencies.',deps:[0]},
+      {agent:'writer',task:'Compile Multi-National EPC Supply Chain Proposal & Master Services Agreement.',deps:[1]}
+    ]
+  }
+};
+
+/* ==================================================================
+   FILL: DTITLE
+   ================================================================== */
+const DTITLE={
+  datacenter_hyperscale_kitting:'100MW Hyperscale Data Center Supply Chain Proposal',
+  utility_grid_modernization:'Utility Grid Hardware Procurement & Allocation Package',
+  industrial_vmi_plant_optimization:'Industrial VMI Service Level Agreement & Cost Audit',
+  storm_restoration_grid_dispatch:'24/7 Emergency Storm Dispatch Telemetry & Priority Manifest',
+  broadband_5g_ftth_rollout:'Statewide Broadband & 5G Infrastructure Deployment Schedule',
+  smart_building_poe_security:'Smart Building Systems Integration Architecture Package',
+  esg_decarbonization_retrofit:'Industrial Decarbonization ROI & Carbon Offsets Report',
+  global_epc_supply_chain_rfp:'Multi-National EPC Supply Chain Proposal & Master Agreement'
+};
+
+/* ==================================================================
+   FILL: TOOLS (24 tools)
+   ================================================================== */
+const TOOLS={
+  switchgear_spec_save:()=>'Specified 4160V NEMA 3R outdoor switchgear with vacuum circuit breakers.',
+  mro_catalog_save:()=>'Consolidated 1,400 MRO motor drive SKUs to Tier-1 standardized automation platform.',
+  fiber_staging_save:()=>'Configured 144-core pre-terminated MPO/MTP fiber optic trunk assemblies.',
+  rack_config_save:()=>'Staged 45U server racks with dual 60A 3-phase intelligent rack PDUs.',
+  grid_hardware_save:()=>'Allocated 34.5kV step-down distribution transformers and oil-immersed reclosers.',
+  transformer_alloc_save:()=>'Locked factory production slots for 120 MVA main substation power transformers.',
+  vmi_audit_save:()=>'Audited 12,000 MRO SKU bin locations and configured automated RFID sensor triggers.',
+  warehouse_route_save:()=>'Routed inventory across Chicago, Dallas, and Richmond distribution hubs.',
+  epc_quote_save:()=>'Generated $45M consolidated project BOM quote with milestone billing.',
+  rebate_stack_save:()=>'Applied tier-1 manufacturer volume rebates yielding 4.2% margin expansion.',
+  ftth_design_save:()=>'Designed 288-count OSP armored fiber cables and IP68 underground splice vaults.',
+  osp_cable_save:()=>'Reserved 50,000 ft continuous fiber reels for 5G small cell backhaul.',
+  storm_dispatch_save:()=>'Mobilized emergency staging yard within 4 hours of hurricane warning.',
+  emergency_logistics_save:()=>'Dispatched 40 flatbeds carrying utility poles, cross-arms, and transformers.',
+  esg_audit_save:()=>'Calculated 2.4M kWh annual energy reduction across facility lighting loads.',
+  carbon_calc_save:()=>'Certified 4,200 metric tons annual CO2 equivalent reduction.',
+  vendor_audit_save:()=>'Verified Buy America Act manufacturing origin certificates for utility procurement.',
+  compliance_gate_save:()=>'Signed off on NEMA/IEC explosion-proof ratings for LNG hazmat zones.',
+  smart_building_save:()=>'Configured PoE lighting nodes with integrated occupancy and daylight harvesting sensors.',
+  poe_lighting_save:()=>'Calculated 90W per port Type 4 PoE switch power delivery budgets.',
+  rfp_proposal_save:()=>'Compiled 140-page master EPC supply chain proposal and SLA schedule.',
+  sla_contract_save:()=>'Drafted 99.5% on-time delivery SLA guarantee with KPI penalty caps.',
+  executive_signoff_save:()=>'Approved $45M contract execution following risk committee review.',
+  risk_review_save:()=>'Validated global supply chain dual-sourcing contingency paths.'
+};
+
+/* ==================================================================
+   FILL: FINAL (Domain-authentic deliverables)
+   ================================================================== */
+const FINAL={
+  datacenter_hyperscale_kitting:
+`WESCO INTERNATIONAL HYPERSCALE DATA CENTER SUPPLY CHAIN PROPOSAL
+PROJECT: Northern Virginia 100MW Data Center Expansion (Hyperscale Cloud Operator)
+PROPOSAL REF: WESCO-CSS-2026-9941 | DATE: September 17, 2026 | STATUS: EXECUTIVE APPROVED
+
+1. STRUCTURED CABLING & FIBER OPTIC PACKAGING (Anixter CSS Division):
+   - MPO/MTP Fiber Trunk Cables: 2,400x 144-Core OM5 Multimode pre-terminated assemblies.
+   - Server Enclosures: 1,200x 45U High-Density Server Racks with integrated cable management.
+   - Power Distribution Units (PDUs): 2,400x 60A 3-Phase Intelligent Networked Rack PDUs.
+
+2. MEDIUM-VOLTAGE & ELECTRICAL POWER INFRASTRUCTURE (EES Division):
+   - Switchgear: 12x 4160V NEMA 3R Outdoor Metal-Clad Switchgear lineups with vacuum breakers.
+   - Uninterruptible Power Supply (UPS): 8x 2.5MW Modular Double-Conversion Li-Ion UPS Systems.
+   - Electrical Busway: 15,000 ft 3200A Overhead Copper Power Busway with plug-in tap-off boxes.
+
+3. LOGISTICS & KITTING FULFILLMENT:
+   - Staging Hub: WESCO Anixter Richmond Mega-Distribution Hub.
+   - Kitting Method: Pre-assembled "Rack-in-a-Box" kits delivered in scheduled just-in-time waves.
+   - Total Contract Value: $45,200,000.00 USD.
+
+NOTE: Illustrative automated deliverable generated by WESCO AI Workforce.`,
+
+  utility_grid_modernization:
+`WESCO UTILITY GRID HARDWARE PROCUREMENT & ALLOCATION PACKAGE
+CUSTOMER: Regional Investor-Owned Electric Utility (IOU)
+CONTRACT TYPE: 3-Year Master Blanket Purchase Agreement ($140M Total Value)
+DOCUMENT REF: WESCO-UBS-2026-4401 | DATE: September 17, 2026 | COMPLIANCE: BUY AMERICA ACT
+
+1. GRID HARDWARE ALLOCATION SUMMARY:
+   - Step-Down Distribution Transformers: 4,500x 34.5kV Pad-Mounted Transformers (50kVA to 2500kVA).
+   - Smart Reclosers & Switches: 350x 38kV Vacuum Reclosers with integrated SCADA controls.
+   - Overhead Conductor & Hardware: 1,200 miles Aluminum Conductor Steel Reinforced (ACSR) wire.
+
+2. OEM COMPLIANCE & MANUFACTURING RESERVATION:
+   - Domestic Origin: 100% Buy America Act compliant manufacturing certification.
+   - Production Slot Reservation: Guaranteed 16-week delivery SLA versus 52-week industry average.
+
+NOTE: Illustrative automated deliverable generated by WESCO AI Workforce.`,
+
+  industrial_vmi_plant_optimization:
+`WESCO INDUSTRIAL PLANT VMI SERVICE LEVEL AGREEMENT & COST AUDIT
+CUSTOMER: Global Automotive Manufacturing Group (5 U.S. Assembly Plants)
+SERVICE PROGRAM: WESCO Integrated Supply / Vendor Managed Inventory (VMI)
+DATE: September 17, 2026 | SAVINGS TARGET: $3.8M ANNUAL SAVINGS
+
+1. MRO INVENTORY CONSOLIDATION:
+   - SKU Rationalization: Reduced 12,000 active MRO SKUs to 6,800 standardized high-turn items.
+   - Vendor Reduction: Consolidated 140 separate electrical/automation vendors into 1 WESCO contract.
+   - Automated Replenishment: Deployed 450 RFID smart bins and optical sensor point-of-use lockers.
+
+2. FINANCIAL & CARRYING COST IMPACT:
+   - Inventory Carrying Cost Cut: -22.4% reduction ($3.8M net annualized savings).
+   - Stockout Prevention SLA: Guaranteed 99.8% plant line-up availability.
+
+NOTE: Illustrative automated deliverable generated by WESCO AI Workforce.`,
+
+  storm_restoration_grid_dispatch:
+`WESCO 24/7 EMERGENCY STORM RESTORATION DISPATCH TELEMETRY
+EVENT: Category 4 Hurricane Landfall Staging Protocol
+UTILITY PARTNER: Gulf Coast Electric Utility Network
+DISPATCH TIMESTAMP: September 17, 2026 - 18:15:00 EST | STATUS: YARD ACTIVE
+
+1. STAGING YARD FREIGHT MOBILIZATION:
+   - Primary Emergency Yard: Staging Area Bravo (Mobile, AL).
+   - Dedicated Fleet: 40 Air-Ride Flatbeds mobilized under emergency charter agreement.
+
+2. DISPATCHED EMERGENCY INVENTORY MANIFEST:
+   - Distribution Transformers: 500 Unit Mix (Pole-mount & Pad-mount emergency stock).
+   - Utility Poles: 2,000 Class 2 Wood & Composite Utility Poles.
+   - Conductor & Hardware: 50 miles #2 ACSR conductor wire, cross-arms, and insulators.
+   - Response Lead Time: First 12 flatbeds arrived at staging yard within 3 hours 45 minutes.
+
+NOTE: Illustrative automated deliverable generated by WESCO AI Workforce.`,
+
+  broadband_5g_ftth_rollout:
+`WESCO STATEWIDE BROADBAND & 5G INFRASTRUCTURE DEPLOYMENT SCHEDULE
+PROJECT: Statewide Fiber-to-the-Home (FTTH) & 5G Small Cell Network Expansion
+CONTRACTOR: Regional Telecommunications EPC Network
+SCOPE: 12 Counties / 100,000 Miles Fiber Optic OSP Deployment
+
+1. OUTSIDE PLANT (OSP) HARDWARE PACKAGE:
+   - Armored Fiber Optic Cable: 15,000 Reels (288-Count Armored Single-Mode Fiber).
+   - Splice Closures & Terminals: 8,500 Hermetically Sealed IP68 Underground Splice Vaults.
+   - 5G Small Cell Mounting Kits: 1,200 Utility Pole Small Cell Attachment Assemblies.
+
+2. MOBILE CONTRACTOR LOGISTICS TRAILERS:
+   - Mobile Trailers: 24 Custom WESCO Supply Trailers deployed directly to fiber crew staging sites.
+
+NOTE: Illustrative automated deliverable generated by WESCO AI Workforce.`,
+
+  smart_building_poe_security:
+`WESCO SMART BUILDING SYSTEMS INTEGRATION ARCHITECTURE PACKAGE
+PROJECT: 40-Story Metropolitan Commercial Office Tower
+SYSTEMS INTEGRATED: PoE LED Lighting, Access Control & IP Video Security
+DATE: September 17, 2026 | ENERGY SAVINGS: -35% VERSUS TRADITIONAL BUILDING
+
+1. POWER-OVER-ETHERNET (PoE) LIGHTING & SENSORS:
+   - Fixtures: 6,500 PoE-driven LED Architectural Luminaires (90W Type 4 PoE).
+   - Sensor Density: Integrated occupancy, daylight harvesting, and Bluetooth beaconing.
+
+2. IP PHYSICAL SECURITY (Anixter CSS Platform):
+   - Surveillance: 480x 4K IP Dome Cameras with AI analytics.
+   - Access Control: 180x Encrypted Smart Card Reader Access Doors.
+
+NOTE: Illustrative automated deliverable generated by WESCO AI Workforce.`,
+
+  esg_decarbonization_retrofit:
+`WESCO INDUSTRIAL DECARBONIZATION ROI & CARBON OFFSETS REPORT
+FACILITY: 500,000 Sq Ft Regional Distribution & Logistics Center
+PROGRAM: WESCO Green Energy Efficiency & Decarbonization Audit
+ANNUAL CO2 REDUCTION: 4,200 METRIC TONS CO2e | SIMPLE PAYBACK: 2.1 YEARS
+
+1. ENERGY RETROFIT MEASURES EXECUTED:
+   - Lighting Upgrade: Replaced 1,400 Metal Halide fixtures with High-Bay Smart LED Systems (-64% kWh).
+   - Motor & Drive Upgrade: Installed 85 Variable Frequency Drives (VFDs) on conveyor motors.
+   - Rooftop Solar Tie-In: Integrated 1.2MW DC rooftop solar array with plant power switchgear.
+
+2. UTILITY REBATE & INCENTIVE MONETIZATION:
+   - Utility Cash Rebate Secured: $340,000 direct utility energy efficiency rebate.
+
+NOTE: Illustrative automated deliverable generated by WESCO AI Workforce.`,
+
+  global_epc_supply_chain_rfp:
+`WESCO MULTI-NATIONAL EPC SUPPLY CHAIN PROPOSAL & MASTER AGREEMENT
+PROJECT: International LNG Export Terminal Construction Project ($120M Supply Package)
+CONTRACTOR: Global Industrial EPC Consortium
+DOCUMENT REF: WESCO-EPC-2026-8800 | STATUS: PROPOSAL SUBMITTED
+
+1. BULK ELECTRICAL & HAZMAT HARDWARE PACKAGE:
+   - Explosion-Proof Electrical: NEMA 7/9 & IECEx certified junction boxes, glands, and switches.
+   - Heavy Industrial Cable: 4.5 Million feet armored IEEE 1580 marine/offshore cable.
+
+2. GLOBAL DUAL-SOURCING & RISK MITIGATION:
+   - Dual-Sourced Supply Chain: Primary manufacturing in North America; secondary backup in Europe.
+   - Customs & Logistics: Port-of-entry bonded warehousing and site-specific delivery staging.
+
+NOTE: Illustrative automated deliverable generated by WESCO AI Workforce.`
+};
+
+/* ==================================================================
+   FILL: EMPLOYEES (8 operators)
+   ================================================================== */
+const EMPLOYEES=[
+  {name:'Data Center Hyperscale Kitting Operator',title:'Communications & Security Solutions (CSS)',wf:'datacenter_hyperscale_kitting',handled:184,hrs:48,win:'21-day Kitting Lead Time'},
+  {name:'Utility Grid Modernization Operator',title:'Utility & Broadband Solutions (UBS)',wf:'utility_grid_modernization',handled:320,hrs:36,win:'$140M Utility Blanket'},
+  {name:'Industrial Plant VMI Operator',title:'Electrical & Electronic Solutions (EES)',wf:'industrial_vmi_plant_optimization',handled:1420,hrs:28,win:'-22% Inventory Carrying Cost'},
+  {name:'Emergency Storm Restoration Operator',title:'24/7 Emergency Utility Operations',wf:'storm_restoration_grid_dispatch',handled:86,hrs:12,win:'4-hr Yard Dispatch'},
+  {name:'Broadband & 5G Deployment Operator',title:'Broadband Infrastructure Team',wf:'broadband_5g_ftth_rollout',handled:850,hrs:24,win:'100k Miles Fiber Deployed'},
+  {name:'Smart Building Systems Operator',title:'Smart Buildings & IoT Integration',wf:'smart_building_poe_security',handled:210,hrs:18,win:'-35% Energy Consumption'},
+  {name:'Industrial ESG Decarbonization Operator',title:'Sustainability & Energy Solutions',wf:'esg_decarbonization_retrofit',handled:165,hrs:30,win:'4,200 Tons CO2 Reduced'},
+  {name:'Global Industrial EPC Sourcing Operator',title:'Global EPC Project Procurement',wf:'global_epc_supply_chain_rfp',handled:48,hrs:54,win:'$120M Contract Won'}
+];
+
+/* ==================================================================
+   ENGINE (do not edit below this line)
+   ================================================================== */
+let curWfKey=Object.keys(WORKFLOWS)[0];
+let isRunning=false;
+let buildStep=1;
+let buildWfSel=Object.keys(WORKFLOWS)[0];
+let buildTasks=[];
+
+function init(){
+  renderLegend();
+  renderEcon();
+  renderRoster();
+  selectRunWorkflow(curWfKey);
+  renderBuilder();
+}
+
+function setView(v){
+  document.getElementById('view-ops').classList.toggle('hidden',v!=='ops');
+  document.getElementById('view-hire').classList.toggle('hidden',v!=='hire');
+  document.getElementById('tabA').classList.toggle('active',v==='ops');
+  document.getElementById('tabB').classList.toggle('active',v==='hire');
+}
+
+function renderLegend(){
+  const tracks={};
+  Object.values(WORKFLOWS).forEach(w=>{
+    if(w.track) tracks[w.track]=true;
+  });
+  let h='<span><b>Tracks:</b></span>';
+  if(Object.keys(tracks).length>0){
+    Object.keys(tracks).forEach(t=>{
+      const lbl=CONFIG.trackLabels[t]||t;
+      h+=`<span><span class="tag ${t}">${lbl}</span></span>`;
+    });
+  }
+  h+=`<span><span class="tag hero">Flagship</span></span>`;
+  document.getElementById('legend').innerHTML=h;
+}
+
+function renderEcon(){
+  const totalOps=EMPLOYEES.length;
+  const totalHandled=EMPLOYEES.reduce((a,b)=>a+b.handled,0);
+  const totalHrs=EMPLOYEES.reduce((a,b)=>a+b.hrs,0);
+  const avgTurnaround=Math.round(EMPLOYEES.reduce((a,b)=>a+parseInt(b.win||'0'),0)/totalOps)||65;
+  const labels=CONFIG.econLabels;
+  document.getElementById('econ').innerHTML=`
+    <div class="cell"><div class="v">${totalOps}</div><div class="k">${labels[0]}</div></div>
+    <div class="cell"><div class="v">${totalHandled.toLocaleString()}</div><div class="k">${labels[1]}</div></div>
+    <div class="cell"><div class="v">${totalHrs.toLocaleString()}<span class="u">h</span></div><div class="k">${labels[2]}</div></div>
+    <div class="cell"><div class="v">${CONFIG.statSign}${avgTurnaround}${CONFIG.statSuffix}</div><div class="k">${labels[3]}</div></div>
+  `;
+}
+
+function renderRoster(){
+  let h=`<div class="slabel">${CONFIG.rosterLabel||'AI Operators'}</div><div class="roster">`;
+  EMPLOYEES.forEach((emp,idx)=>{
+    const wf=WORKFLOWS[emp.wf];
+    const isHero=wf&&wf.tag==='flagship';
+    const trackTag=wf&&wf.track?`<span class="tag ${wf.track}">${CONFIG.trackLabels[wf.track]||wf.track}</span>`:'';
+    const heroTag=isHero?`<span class="tag hero">Flagship</span>`:'';
+    const agentList=wf?wf.tasks.map(t=>AGENT_ROLES[t.agent]?`${AGENT_ROLES[t.agent].emoji} ${AGENT_ROLES[t.agent].label}`:t.agent):[];
+    const uniqueAgents=[...new Set(agentList)];
+
+    h+=`
+      <div class="emp ${isHero?'hero':''}" id="emp-${emp.wf}">
+        <div class="emp-top">
+          <div class="avatar">${emp.name.substr(0,2).toUpperCase()}</div>
+          <div>
+            <div class="emp-name">${emp.name} ${heroTag} ${trackTag}</div>
+            <div class="emp-title">${emp.title}</div>
+          </div>
+        </div>
+        <div class="emp-owns"><b>Workflow:</b> ${wf?wf.name:emp.wf}</div>
+        <div class="team">
+          ${uniqueAgents.map(a=>`<span class="chip">${a}</span>`).join('')}
+        </div>
+        <div class="emp-stats">
+          <div class="st">Handled<b>${emp.handled}</b></div>
+          <div class="st">Saved / mo<b>${emp.hrs}h</b></div>
+          <div class="st">Impact<b>${emp.win}</b></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="selectRunWorkflow('${emp.wf}')">${CONFIG.runButton}</button>
+        </div>
+      </div>
+    `;
+  });
+  h+=`
+    <div class="hire-card" onclick="setView('hire')">
+      <div class="plus">+</div>
+      <div class="h">Stand up a new operator</div>
+      <div class="p">Compose a custom autonomous workflow from your agent pool in 3 steps</div>
+    </div>
+  </div>`;
+  document.getElementById('roster').innerHTML=h;
+}
+
+function selectRunWorkflow(wfKey){
+  curWfKey=wfKey;
+  const wf=WORKFLOWS[wfKey];
+  if(!wf) return;
+  const p=document.getElementById('runPanel');
+  p.className='run';
+
+  const agentCards=wf.tasks.map((t,i)=>{
+    const ag=AGENT_ROLES[t.agent]||{emoji:'ðŸ¤–',label:t.agent};
+    return `
+      <div class="acard" id="acard-${i}">
+        <div class="ae">${ag.emoji}</div>
+        <div class="ar">${ag.label}</div>
+        <div class="at">${t.task}</div>
+        <div class="as"><div class="sd"></div><span id="astat-${i}">Pending</span></div>
+      </div>
+    `;
+  }).join('');
+
+  p.innerHTML=`
+    <div class="run-head">
+      <h3 style="font-size:16px;color:var(--hi)">Live Run Engine &mdash; ${wf.name}</h3>
+      ${wf.tag==='flagship'?'<span class="tag hero">Flagship</span>':''}
+      ${wf.track?`<span class="tag ${wf.track}">${CONFIG.trackLabels[wf.track]||wf.track}</span>`:''}
+    </div>
+    <div class="run-sub">${wf.desc}</div>
+    <div class="run-input">
+      <textarea id="runSampleInput">${wf.sample}</textarea>
+      <button class="btn primary big" id="btnRunExec" onclick="executeRun()">${CONFIG.runButton}</button>
+    </div>
+    <div class="phases" id="phaseBar">
+      <div class="ph" id="ph-0"><div class="dot">1</div><div class="l">Dispatch &amp; Context</div></div>
+      <div class="ph" id="ph-1"><div class="dot">2</div><div class="l">Multi-Agent Execution</div></div>
+      <div class="ph" id="ph-2"><div class="dot">3</div><div class="l">QA &amp; Final Deliverable</div></div>
+    </div>
+    <div class="agent-grid">${agentCards}</div>
+    <div class="feed" id="runFeed"></div>
+    <div class="result hidden" id="runResult">
+      <div class="rstats">
+        <div style="font-size:13px;font-weight:700;color:var(--hi);margin-bottom:12px">Execution Summary</div>
+        <div class="rrow"><span class="k">Mode</span><span class="v">${wf.mode.toUpperCase()}</span></div>
+        <div class="rrow"><span class="k">Agents Active</span><span class="v">${wf.tasks.length}</span></div>
+        <div class="rrow"><span class="k">Time Elapsed</span><span class="v" id="resTime">1.4s</span></div>
+        <div class="rrow"><span class="k">Status</span><span class="v" style="color:var(--ok)">ALL CHECKS PASS</span></div>
+      </div>
+      <div class="rout">
+        <div class="rh">${DTITLE[wfKey]||wf.deliverable}</div>
+        <div class="rb" id="resBody"></div>
+      </div>
+    </div>
+  `;
+  p.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+async function executeRun(){
+  if(isRunning) return;
+  isRunning=true;
+  const wf=WORKFLOWS[curWfKey];
+  const btn=document.getElementById('btnRunExec');
+  const feed=document.getElementById('runFeed');
+  const result=document.getElementById('runResult');
+  const resBody=document.getElementById('resBody');
+  const empCard=document.getElementById(`emp-${curWfKey}`);
+
+  btn.disabled=true;
+  result.classList.add('hidden');
+  feed.innerHTML='';
+  if(empCard) empCard.classList.add('working');
+
+  document.getElementById('ph-0').className='ph active';
+  document.getElementById('ph-1').className='ph';
+  document.getElementById('ph-2').className='ph';
+
+  const log=(agent,msg)=>{
+    const time=new Date().toLocaleTimeString([],{hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    const row=document.createElement('div');
+    row.className='frow';
+    row.innerHTML=`<span class="ft">${time}</span><span class="fa">${agent}</span><span class="fd">${msg}</span>`;
+    feed.appendChild(row);
+    feed.scrollTop=feed.scrollHeight;
+  };
+
+  log('SYSTEM',`Initiating autonomous workflow [${wf.name}] in ${wf.mode.toUpperCase()} mode...`);
+  await sleep(400);
+
+  document.getElementById('ph-0').className='ph done';
+  document.getElementById('ph-1').className='ph active';
+
+  const taskDone=new Array(wf.tasks.length).fill(false);
+  const startTime=performance.now();
+
+  if(wf.mode==='sequential'){
+    for(let i=0;i<wf.tasks.length;i++){
+      await runSingleTask(i,wf.tasks[i],log);
+    }
+  } else {
+    // DAG execution loop
+    while(taskDone.includes(false)){
+      const readyIndices=[];
+      for(let i=0;i<wf.tasks.length;i++){
+        if(!taskDone[i]){
+          const depsOk=wf.tasks[i].deps.every(d=>taskDone[d]);
+          if(depsOk) readyIndices.push(i);
+        }
+      }
+      if(readyIndices.length===0) break; // fallback guard
+      await Promise.all(readyIndices.map(async idx=>{
+        await runSingleTask(idx,wf.tasks[idx],log);
+        taskDone[idx]=true;
+      }));
+    }
+  }
+
+  document.getElementById('ph-1').className='ph done';
+  document.getElementById('ph-2').className='ph active';
+
+  log('SYSTEM','Executing automated quality assurance and generating final review-ready deliverable...');
+  await sleep(500);
+
+  const endTime=performance.now();
+  document.getElementById('ph-2').className='ph done';
+  document.getElementById('resTime').innerText=((endTime-startTime)/1000).toFixed(2)+'s';
+  resBody.innerText=FINAL[curWfKey]||'Deliverable output complete.';
+  result.classList.remove('hidden');
+
+  log('SYSTEM','Workflow execution completed successfully. Deliverable generated.');
+  btn.disabled=false;
+  isRunning=false;
+  if(empCard) empCard.classList.remove('working');
+}
+
+async function runSingleTask(idx,t,logFunc){
+  const card=document.getElementById(`acard-${idx}`);
+  const stat=document.getElementById(`astat-${idx}`);
+  const ag=AGENT_ROLES[t.agent]||{label:t.agent};
+
+  if(card){
+    card.classList.add('visible','running');
+  }
+  if(stat) stat.innerText='Running...';
+  logFunc(ag.label,t.task);
+
+  const toolList=ag.tools||[];
+  for(const tl of toolList){
+    if(tl!=='save'&&TOOLS[tl]){
+      await sleep(300);
+      logFunc(ag.label,TOOLS[tl]());
+    }
+  }
+
+  await sleep(400);
+  if(card){
+    card.classList.remove('running');
+    card.classList.add('done');
+  }
+  if(stat) stat.innerText='Completed';
+}
+
+function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
+
+/* BUILDER IMPLEMENTATION */
+function renderBuilder(){
+  const sEl=document.getElementById('bSteps');
+  const bEl=document.getElementById('bBody');
+  const nEl=document.getElementById('bNav');
+
+  sEl.innerHTML=`
+    <div class="step ${buildStep===1?'active':''}"><div class="n">STEP 1</div><div class="l">Pick Workflow</div><div class="d">Select base operational model</div></div>
+    <div class="step ${buildStep===2?'active':''}"><div class="n">STEP 2</div><div class="l">Assign Agents</div><div class="d">Map tasks to specialist agents</div></div>
+    <div class="step ${buildStep===3?'active':''}"><div class="n">STEP 3</div><div class="l">Deploy Operator</div><div class="d">Name &amp; set execution cadence</div></div>
+  `;
+
+  if(buildStep===1){
+    let h='<div class="wf-grid">';
+    Object.keys(WORKFLOWS).forEach(k=>{
+      const w=WORKFLOWS[k];
+      h+=`
+        <div class="wf ${buildWfSel===k?'sel':''}" onclick="buildWfSel='${k}';renderBuilder()">
+          <div class="wn">${w.name} ${w.tag==='flagship'?'<span class="tag hero">Flagship</span>':''}</div>
+          <div class="wd">${w.desc}</div>
+          <div class="wm">${w.mode} &bull; ${w.tasks.length} tasks</div>
+        </div>
+      `;
+    });
+    h+='</div>';
+    bEl.innerHTML=h;
+    nEl.innerHTML=`<div></div><button class="btn primary" onclick="initBuildStep2()">Next: Assign Agents &rarr;</button>`;
+  } else if(buildStep===2){
+    let h='<div style="margin-bottom:16px;font-size:13px;color:var(--tert)">Assign a specialist agent from your workforce pool to each step:</div>';
+    buildTasks.forEach((t,i)=>{
+      const opts=RK.map(rk=>`<option value="${rk}" ${t.agent===rk?'selected':''}>${AGENT_ROLES[rk].emoji} ${AGENT_ROLES[rk].label}</option>`).join('');
+      h+=`
+        <div class="task-row">
+          <div class="tn">${i+1}</div>
+          <div class="tt">${t.task}</div>
+          <select onchange="buildTasks[${i}].agent=this.value">${opts}</select>
+        </div>
+      `;
+    });
+    bEl.innerHTML=h;
+    nEl.innerHTML=`
+      <button class="btn" onclick="buildStep=1;renderBuilder()">&larr; Back</button>
+      <button class="btn primary" onclick="buildStep=3;renderBuilder()">Next: Name &amp; Deploy &rarr;</button>
+    `;
+  } else if(buildStep===3){
+    const baseWf=WORKFLOWS[buildWfSel];
+    bEl.innerHTML=`
+      <div class="field"><label>Operator Name</label><input type="text" id="bOpName" value="${baseWf.title}"></div>
+      <div class="field"><label>Department / Team Title</label><input type="text" id="bOpTitle" value="Global Supply Chain Operations"></div>
+      <div class="field"><label>Execution Cadence</label>
+        <div class="seg">
+          ${CONFIG.builderCadences.map((c,i)=>`<button class="${i===0?'on':''}" onclick="this.parentNode.querySelectorAll('button').forEach(b=>b.classList.remove('on'));this.classList.add('on')">${c}</button>`).join('')}
+        </div>
+      </div>
+    `;
+    nEl.innerHTML=`
+      <button class="btn" onclick="buildStep=2;renderBuilder()">&larr; Back</button>
+      <button class="btn primary" onclick="deployNewOperator()">Deploy Operator to Workforce</button>
+    `;
+  }
+}
+
+function initBuildStep2(){
+  const baseWf=WORKFLOWS[buildWfSel];
+  buildTasks=baseWf.tasks.map(t=>({task:t.task,agent:t.agent}));
+  buildStep=2;
+  renderBuilder();
+}
+
+function deployNewOperator(){
+  const name=document.getElementById('bOpName').value||'Custom WESCO Operator';
+  const title=document.getElementById('bOpTitle').value||'Autonomous Global Logistics';
+  const newWfKey='custom_'+Date.now();
+
+  const baseWf=WORKFLOWS[buildWfSel];
+  WORKFLOWS[newWfKey]={
+    name:name,
+    title:name,
+    mode:baseWf.mode,
+    track:baseWf.track||'trackA',
+    deliverable:baseWf.deliverable,
+    sample:baseWf.sample,
+    desc:'Custom user-defined autonomous workflow.',
+    tasks:buildTasks.map((t,i)=>({agent:t.agent,task:t.task,deps:baseWf.tasks[i]?baseWf.tasks[i].deps:[]}))
+  };
+
+  DTITLE[newWfKey]=baseWf.deliverable;
+  FINAL[newWfKey]=FINAL[buildWfSel]||'Custom operational deliverable generated.';
+
+  EMPLOYEES.push({
+    name:name,
+    title:title,
+    wf:newWfKey,
+    handled:1,
+    hrs:24,
+    win:'Newly Deployed'
+  });
+
+  renderEcon();
+  renderRoster();
+  setView('ops');
+  selectRunWorkflow(newWfKey);
+}
+
+window.onload=init;
+</script>
+</body>
+</html>
