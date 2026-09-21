@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rubix Foods &mdash; Autonomous AI Workforce &amp; Culinary Innovation Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#fff;
+  --header-bg:linear-gradient(90deg, #002244 0%, #003366 50%, #001a33 100%);
+  --surface:#f8fafc;
+  --surface2:#f1f5f9;
+  --border:#cbd5e1;
+  --accent:#ff6600; /* Rubix Eye-Catching Orange Block */
+  --accent-blue:#0055a5; /* Rubix Royal Blue Packets */
+  --accent-hover:#e65100;
+  --accent-dim:rgba(255,102,0,0.08);
+  --accent-line:rgba(255,102,0,0.30);
+  --text:#0f172a;
+  --hi:#002244;
+  --tert:#475569;
+  --ok:#10b981;
+  --ok-dim:rgba(16,185,129,0.10);
+  --gold:#d97706;
+  --gold-bg:#fffbe3;
+  --gold-line:#fcd34d
+}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+
+/* RUBIX BRAND HEADER */
+.header{background:var(--header-bg);border-bottom:3px solid var(--accent);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,0.25)}
+.brand-logo{display:flex;align-items:center;gap:12px;cursor:pointer}
+.logo-mark{width:38px;height:38px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:18px;box-shadow:0 0 12px rgba(255,102,0,0.5)}
+.logo-title{font-size:20px;font-weight:900;letter-spacing:-0.5px;color:#fff;line-height:1}
+.logo-title span{color:var(--accent)}
+.logo-sub{font-size:9px;font-weight:700;letter-spacing:1.5px;color:#94a3b8;text-transform:uppercase;margin-top:3px}
+
+.header-controls{display:flex;align-items:center;gap:14px}
+.badge-ate{border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:5px 12px;font-size:11px;color:#e2e8f0;background:rgba(255,255,255,0.08)}.badge-ate b{color:#fff}
+.btn-inspector{background:var(--accent);border:none;color:#fff;font-weight:800;font-size:12px;padding:8px 16px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .2s;box-shadow:0 2px 10px rgba(255,102,0,0.3)}
+.btn-inspector:hover{background:var(--accent-hover)}
+
+/* HERO BANNER */
+.hero{background:linear-gradient(135deg, #001833 0%, #003366 50%, #002244 100%);border-bottom:1px solid var(--border);padding:36px 32px 32px;position:relative;overflow:hidden;color:#fff}
+.hero-content{max-width:1180px;margin:0 auto;position:relative;z-index:2}
+.hero-tag{display:inline-block;background:var(--accent);color:#fff;font-size:11px;font-weight:800;letter-spacing:1.5px;padding:4px 12px;border-radius:4px;text-transform:uppercase;margin-bottom:14px}
+.hero-title{font-size:34px;font-weight:900;color:#fff;letter-spacing:-0.5px;line-height:1.2;margin-bottom:10px}
+.hero-sub{font-size:14.5px;color:#94a3b8;max-width:850px;line-height:1.6;margin-bottom:20px}
+.hero-cta{display:flex;gap:12px}
+.btn-blue{background:var(--accent);color:#fff;font-weight:800;font-size:13px;padding:12px 24px;border-radius:6px;border:none;cursor:pointer;letter-spacing:0.5px;text-transform:uppercase;box-shadow:0 0 20px rgba(255,102,0,0.4);transition:all .2s}
+.btn-blue:hover{background:var(--accent-hover);transform:translateY(-1px)}
+.btn-outline-white{background:transparent;border:1px solid rgba(255,255,255,0.3);color:#fff;font-weight:700;font-size:13px;padding:11px 22px;border-radius:6px;cursor:pointer;transition:all .2s}
+.btn-outline-white:hover{background:rgba(255,255,255,0.1)}
+
+/* TABS BAR */
+.tabs-bar{max-width:1180px;margin:20px auto 0;padding:0 24px;display:flex;gap:6px}
+.tab-btn{padding:12px 20px;font-size:13px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:8px 8px 0 0;background:none;transition:all .2s}
+.tab-btn.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+
+/* MAIN CONTAINER */
+.main-container{max-width:1180px;margin:0 auto;padding:24px}
+
+/* ECON STRIP */
+.econ-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.econ-card{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:10px;padding:18px}
+.econ-val{font-size:26px;font-weight:900;color:var(--hi)}.econ-val .unit{color:var(--accent);font-size:18px}
+.econ-lbl{font-size:11px;font-weight:600;color:var(--tert);margin-top:4px;text-transform:uppercase;letter-spacing:0.5px}
+
+.section-hdr{font-size:11px;font-weight:800;letter-spacing:1.5px;color:var(--tert);text-transform:uppercase;margin:24px 0 16px;display:flex;align-items:center;gap:12px}
+.section-hdr::after{content:"";flex:1;height:1px;background:var(--border)}
+
+/* ROSTER OPERATORS */
+.roster-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:18px}
+.operator-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;transition:all .2s}
+.operator-card:hover{border-color:var(--accent);box-shadow:0 6px 20px rgba(255,102,0,0.12)}
+.operator-card.hero-op{border-color:var(--gold-line);background:linear-gradient(180deg, var(--surface) 0%, var(--gold-bg) 100%)}
+.op-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.op-avatar{width:46px;height:46px;border-radius:10px;background:#fff;border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--accent);font-size:15px;flex-shrink:0}
+.op-name{font-size:15px;font-weight:800;color:var(--hi);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.op-title{font-size:12px;color:var(--tert);margin-top:2px}
+.op-owns{font-size:12px;color:var(--text);margin-bottom:12px}.op-owns b{color:var(--hi)}
+.team-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.agent-chip{font-size:11px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 9px}
+.op-stats{display:flex;gap:16px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:14px}
+.op-stat-item{font-size:11px;color:var(--tert)}.op-stat-item b{display:block;font-size:15px;color:var(--hi);font-weight:800}
+
+.btn-run-op{width:100%;background:var(--accent);color:#fff;font-weight:800;font-size:12.5px;padding:10px;border-radius:7px;border:none;cursor:pointer;transition:background .2s}
+.btn-run-op:hover{background:var(--accent-hover)}
+
+/* RUN PANEL */
+.run-panel{margin-top:28px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
+.run-title{font-size:18px;font-weight:800;color:var(--hi);margin-bottom:4px}
+.run-sub{font-size:12px;color:var(--tert);margin-bottom:18px}
+.run-input-group{display:flex;gap:12px;margin-bottom:20px}
+.run-input{flex:1;background:#fff;border:1px solid var(--border);border-radius:6px;padding:10px 14px;font-size:13px;color:var(--text);font-family:inherit}
+.btn-execute{background:var(--accent);color:#fff;font-weight:800;font-size:13px;padding:10px 20px;border-radius:6px;border:none;cursor:pointer}
+.btn-execute:hover{background:var(--accent-hover)}
+
+.run-feed{background:#001833;border:1px solid #003366;border-radius:8px;padding:16px;font-family:Consolas,monospace;font-size:12px;color:#a7f3d0;max-height:300px;overflow-y:auto;margin-bottom:20px;line-height:1.6}
+.feed-line{margin-bottom:4px}
+.feed-agent{color:#38bdf8;font-weight:700}
+.feed-tool{color:#facc15}
+.feed-ok{color:#4ade80}
+
+.deliverable-box{background:#fff;border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:8px;padding:20px}
+.deliverable-hdr{font-size:14px;font-weight:800;color:var(--hi);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.deliverable-text{font-family:Consolas,Monaco,monospace;font-size:12px;color:#334155;white-space:pre-wrap;line-height:1.6;background:#f8fafc;padding:14px;border-radius:6px;border:1px solid #e2e8f0}
+
+/* BUILDER */
+.builder-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-top:28px}
+.builder-step{margin-bottom:20px}
+.builder-lbl{font-size:12px;font-weight:800;color:var(--tert);text-transform:uppercase;margin-bottom:8px}
+.builder-select,.builder-input{width:100%;background:#fff;border:1px solid var(--border);border-radius:6px;padding:10px;font-size:13px;color:var(--text);margin-bottom:12px}
+
+/* BRAND GUIDELINES MODAL / DRAWER */
+.drawer-backdrop{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:200;display:flex;justify-content:flex-end;opacity:0;pointer-events:none;transition:opacity .3s}
+.drawer-backdrop.open{opacity:1;pointer-events:auto}
+.drawer-panel{width:620px;max-width:90vw;background:#fff;height:100%;overflow-y:auto;padding:32px;box-shadow:-4px 0 30px rgba(0,0,0,0.3);transform:translateX(100%);transition:transform .3s ease-out}
+.drawer-backdrop.open .drawer-panel{transform:translateX(0)}
+.drawer-close{float:right;background:none;border:none;font-size:24px;color:var(--tert);cursor:pointer}
+.brand-h1{font-size:22px;font-weight:900;color:var(--hi);margin-bottom:6px}
+.brand-p{font-size:13px;color:var(--tert);line-height:1.6;margin-bottom:20px}
+.swatch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.swatch-item{border-radius:8px;padding:12px;color:#fff;font-size:11px;font-weight:700}
+
+/* FOOTER */
+.footer{margin-top:60px;border-top:1px solid var(--border);padding:24px 32px;background:var(--surface);font-size:11px;color:var(--tert);display:flex;justify-content:space-between;align-items:center}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="brand-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <div class="logo-mark">R</div>
+    <div>
+      <div class="logo-title">Rubix <span>Foods</span></div>
+      <div class="logo-sub">Culinary &amp; Food Science Innovation</div>
+    </div>
+  </div>
+  <div class="header-controls">
+    <div class="badge-ate">Facility: <b>50,000 Sq Ft Jacksonville Innovation Center</b></div>
+    <button class="btn-inspector" onclick="toggleBrandDrawer()">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+      Brand &amp; Culinary Specs
+    </button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Culinary Science &amp; Rapid Prototyping AI Operations</div>
+    <h1 class="hero-title">Rubix Foods Autonomous AI Workforce</h1>
+    <p class="hero-sub">Accelerating speed-scratch culinary innovation, custom flavor systems, beverage cloud foam emulsions, and pilot plant scale-up for top restaurant chains and food manufacturers with data-backed AI automation.</p>
+    <div class="hero-cta">
+      <button class="btn-blue" onclick="scrollToRoster()">Explore 8 AI Operators</button>
+      <button class="btn-outline-white" onclick="runFlagshipDemo()">Run Flagship QSR Sauce Demo</button>
+    </div>
+  </div>
+</section>
+
+<div class="tabs-bar">
+  <button class="tab-btn active" id="tab-roster-btn" onclick="switchTab('roster')">AI Operators Roster</button>
+  <button class="tab-btn" id="tab-run-btn" onclick="switchTab('run')">Live Run Engine</button>
+  <button class="tab-btn" id="tab-builder-btn" onclick="switchTab('builder')">Operator Builder</button>
+</div>
+
+<main class="main-container">
+
+  <!-- ECON STRIP -->
+  <div class="econ-grid">
+    <div class="econ-card">
+      <div class="econ-val"><span class="tnum">70</span><span class="unit">%</span></div>
+      <div class="econ-lbl">Top 150 QSR Chains Served</div>
+    </div>
+    <div class="econ-card">
+      <div class="econ-val"><span class="tnum">50</span><span class="unit">k</span></div>
+      <div class="econ-lbl">Innovation Center Sq Ft</div>
+    </div>
+    <div class="econ-card">
+      <div class="econ-val"><span class="tnum">5</span> <span class="unit">Days</span></div>
+      <div class="econ-lbl">Bench-to-Pilot Turnaround</div>
+    </div>
+    <div class="econ-card">
+      <div class="econ-val"><span class="tnum">99.8</span><span class="unit">%</span></div>
+      <div class="econ-lbl">First-Pass Scale-Up Yield</div>
+    </div>
+  </div>
+
+  <!-- TAB: ROSTER -->
+  <div id="tab-roster">
+    <div id="roster-container"></div>
+  </div>
+
+  <!-- TAB: RUN -->
+  <div id="tab-run" class="hidden">
+    <div class="run-panel">
+      <div class="run-title" id="run-panel-title">Select an Operator to Execute</div>
+      <div class="run-sub" id="run-panel-sub">Choose an autonomous workforce workflow from the roster to run multi-agent execution.</div>
+      
+      <div class="run-input-group">
+        <input type="text" id="run-prompt-input" class="run-input" placeholder="Enter target parameters or culinary innovation requirements...">
+        <button class="btn-execute" id="btn-run-execute" onclick="executeCurrentWorkflow()">Run AI Workforce Operator</button>
+      </div>
+
+      <div class="run-feed hidden" id="run-feed-box"></div>
+
+      <div class="deliverable-box hidden" id="deliverable-box">
+        <div class="deliverable-hdr">
+          <span id="deliverable-title">Produced Deliverable</span>
+          <span style="font-size:11px;font-weight:600;color:var(--ok);background:var(--ok-dim);padding:3px 8px;border-radius:4px;">HUMAN-IN-THE-LOOP VERIFIED</span>
+        </div>
+        <pre class="deliverable-text" id="deliverable-text"></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: BUILDER -->
+  <div id="tab-builder" class="hidden">
+    <div class="builder-card">
+      <h2 style="font-size:18px;font-weight:800;color:var(--hi);margin-bottom:6px;">Compose New AI Workforce Operator</h2>
+      <p style="font-size:13px;color:var(--tert);margin-bottom:20px;">Clone and customize any existing Rubix Foods culinary science workflow into a tailored autonomous operator.</p>
+
+      <div class="builder-step">
+        <div class="builder-lbl">Step 1: Base Template Workflow</div>
+        <select class="builder-select" id="builder-base-select"></select>
+      </div>
+
+      <div class="builder-step">
+        <div class="builder-lbl">Step 2: Operator Identity &amp; Title</div>
+        <input type="text" class="builder-input" id="builder-op-name" placeholder="Operator Name (e.g. Plant-Based Dairy Specialist)">
+        <input type="text" class="builder-input" id="builder-op-title" placeholder="Operator Title (e.g. Lead Formulator)">
+      </div>
+
+      <div class="builder-step">
+        <div class="builder-lbl">Step 3: Execution Cadence &amp; Target Win Metric</div>
+        <select class="builder-select" id="builder-cadence-select">
+          <option>Continuous Rapid Prototype</option>
+          <option>Weekly Kitchen Cutting</option>
+          <option>Monthly Sensory Sweep</option>
+          <option>Quarterly Menu Innovation</option>
+        </select>
+        <input type="text" class="builder-input" id="builder-win-metric" placeholder="Headline Win Metric (e.g. 99% Consumer Preference)">
+      </div>
+
+      <button class="btn-blue" style="width:100%;" onclick="buildCustomOperator()">Deploy New Operator to Roster</button>
+    </div>
+  </div>
+
+</main>
+
+<!-- BRAND GUIDELINES & TECHNICAL SPECS DRAWER -->
+<div class="drawer-backdrop" id="brand-drawer" onclick="if(event.target===this)toggleBrandDrawer()">
+  <div class="drawer-panel">
+    <button class="drawer-close" onclick="toggleBrandDrawer()">&times;</button>
+    <h1 class="brand-h1">Rubix Foods Brand &amp; Culinary Specs</h1>
+    <p class="brand-p">Authoritative design tokens, culinary R&amp;D guidelines, and pilot plant capabilities for Rubix Foods (formerly Darifair Foods, Block family legacy).</p>
+
+    <h3 style="font-size:14px;font-weight:800;color:var(--hi);margin-bottom:12px;">Corporate Brand Palette</h3>
+    <div class="swatch-grid">
+      <div class="swatch-item" style="background:#0055a5;">#0055A5<br>Darifair Heritage Blue</div>
+      <div class="swatch-item" style="background:#ff6600;">#FF6600<br>Block Family Orange</div>
+      <div class="swatch-item" style="background:#002244;">#002244<br>Deep Navy Executive</div>
+      <div class="swatch-item" style="background:#f8fafc;color:#002244;border:1px solid #cbd5e1;">#F8FAFC<br>Surface Canvas</div>
+      <div class="swatch-item" style="background:#10b981;">#10B981<br>Pass Green</div>
+      <div class="swatch-item" style="background:#d97706;">#D97706<br>Flagship Gold</div>
+    </div>
+
+    <h3 style="font-size:14px;font-weight:800;color:var(--hi);margin-bottom:10px;">Innovation Center Facilities (Jacksonville, FL)</h3>
+    <ul style="font-size:13px;color:var(--tert);line-height:1.8;padding-left:20px;margin-bottom:20px;">
+      <li><b>50,000 Sq Ft State-of-the-Art Center:</b> Opened September 2022 by Stellar Construction.</li>
+      <li><b>Two Pilot Plants:</b> Advanced pilot-scale aseptic, ESL, HTST, and retort thermal processing equipment.</li>
+      <li><b>Show Kitchen:</b> High-definition audio/visual camera suite for virtual and in-person customer cuttings.</li>
+      <li><b>Consumer Insights Center:</b> 8-booth sensory evaluation laboratory and focus group suite.</li>
+      <li><b>R&amp;D Test Kitchen:</b> Replicates QSR back-of-house kitchen lines for speed-scratch validation.</li>
+    </ul>
+
+    <h3 style="font-size:14px;font-weight:800;color:var(--hi);margin-bottom:10px;">Core Product Capabilities</h3>
+    <ul style="font-size:13px;color:var(--tert);line-height:1.8;padding-left:20px;">
+      <li><b>Speed-Scratch Solutions:</b> Signature sauces, gravies, dressings, glazes, marinades.</li>
+      <li><b>Dairy &amp; Beverage Systems:</b> Aseptic creamers, sour cream condiment pouches, cloud foam toppings.</li>
+      <li><b>Clean-Label &amp; Health:</b> Sodium reduction, sugar reduction, non-GMO, organic certification.</li>
+    </ul>
+  </div>
+</div>
+
+<footer class="footer">
+  <div>&copy; 2026 Rubix Foods. All rights reserved. | Autonomous AI Workforce Prototype</div>
+  <div>Human-in-the-Loop Governance: All culinary formulations require final Chef &amp; QA Sign-Off.</div>
+</footer>
+
+<script>
+/* ============================================================================
+   RUBIX FOODS DATA CONFIGURATION & MULTI-AGENT DATA STRUCTURES
+   ============================================================================ */
+
+const AGENT_ROLES = {
+  culinarychef: { emoji: "ðŸ‘¨â€ðŸ³", label: "Executive Research Chef", tools: ["gold_standard_recipe_builder", "boh_line_flow_sim", "speed_scratch_pairing_engine", "save"] },
+  flavorchemist: { emoji: "ðŸ”¬", label: "Senior Flavor Scientist", tools: ["gcms_aroma_profiler", "brix_ph_titration_calc", "clean_label_seasoning_db", "save"] },
+  dairytech: { emoji: "ðŸ¥›", label: "Dairy & Emulsion Specialist", tools: ["emulsion_droplet_analyzer", "syneresis_prevention_model", "whippability_overrun_tester", "save"] },
+  pilotplanteng: { emoji: "âš™ï¸", label: "Pilot Plant Thermal Process Lead", tools: ["htst_esl_thermal_calc", "shear_rate_viscosity_sim", "pilot_plant_scaleup_engine", "save"] },
+  sensoryanalyst: { emoji: "ðŸ“Š", label: "Consumer Insights Panel Director", tools: ["sensory_panel_booth_suite", "hedonic_scale_analyzer", "flavor_spider_web_plot", "save"] },
+  qashelflife: { emoji: "ðŸ§ª", label: "Quality Assurance & Rheology Lead", tools: ["bostwick_consistometer", "aw_water_activity_meter", "freeze_thaw_cycle_tester", "save"] },
+  qsrbohops: { emoji: "ðŸ¥ª", label: "QSR BOH Ergonomics Specialist", tools: ["pouch_dispenser_yield_calc", "hold_time_viscosity_monitor", "boh_labor_time_study", "save"] },
+  commercialscale: { emoji: "ðŸ­", label: "Co-Packer Commercialization Supervisor", tools: ["copacker_line_transfer_spec", "bom_ingredient_costing", "batch_yield_calculator", "save"] },
+  costformulator: { emoji: "ðŸ’²", label: "Target Cost & Margin Formulator", tools: ["target_cost_per_lb_model", "ingredient_substitution_calc", "margin_sensitivity_matrix", "save"] },
+  regulatorylead: { emoji: "ðŸ“‹", label: "FDA Regulatory & Clean-Label Lead", tools: ["fda_nutrition_facts_gen", "allergen_crosscontam_auditor", "usda_organic_verifier", "save"] },
+  writer: { emoji: "ðŸ“", label: "Culinary Documentation Specialist", tools: ["culinary_cutting_deck_gen", "product_spec_sheet_builder", "boh_prep_guide_writer", "save"] },
+  reviewer: { emoji: "ðŸ”", label: "Principal Food Science Reviewer", tools: ["innovation_center_signoff", "sensory_clearance_cert", "governance_audit_log", "save"] }
+};
+
+const WORKFLOWS = {
+  qsr_speed_scratch_sauce_rapid_launch: {
+    name: "QSR Signature Speed-Scratch Sauce Co-Creation Surge",
+    title: "QSR Signature Speed-Scratch Sauce Co-Creation Surge",
+    mode: 'dag',
+    deliverable: "QSR Signature Sauce Gold-Standard Formula & Pilot Plant Scale-Up Dossier",
+    sample: "Develop a signature smoky garlic aioli speed-scratch sauce for top 10 QSR chain in under 5 days.",
+    desc: "Orchestrates Gold Standard recipe bench development, flavor titration, 8-booth sensory evaluation, and pilot plant scale-up.",
+    track: 'trackA',
+    tag: 'flagship',
+    tasks: [
+      { agent: 'culinarychef', task: "Formulate Gold Standard bench recipe for smoky garlic aioli with speed-scratch back-of-house prep.", deps: [] },
+      { agent: 'flavorchemist', task: "Optimize garlic flavor titration, lactic acid pH buffer (pH 3.85), and emulsified lipid profile.", deps: [0] },
+      { agent: 'sensoryanalyst', task: "Run 8-booth consumer sensory panel evaluation comparing Gold Standard against target benchmark.", deps: [1] },
+      { agent: 'pilotplanteng', task: "Simulate high-shear homogenizer loop and HTST thermal pasteurization in Innovation Center pilot plant.", deps: [2] },
+      { agent: 'qashelflife', task: "Measure Bostwick viscosity (12.5 cm/30s @ 40F) and 5-cycle freeze-thaw syneresis stability.", deps: [3] },
+      { agent: 'reviewer', task: "Sign off on Innovation Center commercialization package and QSR cutting presentation deck.", deps: [4] }
+    ]
+  },
+  beverage_cloud_foam_emulsion_formulation: {
+    name: "Cold-Brew Dairy & Oat Cloud Foam Top Emulsion",
+    title: "Cold-Brew Dairy & Oat Cloud Foam Top Emulsion",
+    mode: 'sequential',
+    deliverable: "Cold-Brew Beverage Cloud Foam Emulsion Formulation & Overrun Specification",
+    sample: "Develop high-overrun (220%) vanilla oat cloud foam topping with 45-minute head retention for national coffee chain.",
+    desc: "Engineers stable whip-ready dairy and plant-based beverage foams with zero liquid collapse.",
+    track: 'trackA',
+    tasks: [
+      { agent: 'dairytech', task: "Formulate oat and dairy protein blend for 220% whipping overrun and micro-bubble structure.", deps: [] },
+      { agent: 'flavorchemist', task: "Balance natural Madagascar vanilla extract with sweetness enhancer and mask oat grain notes.", deps: [0] },
+      { agent: 'qashelflife', task: "Test foam head collapse rate (45-minute retention target) and cold-brew liquid interface separation.", deps: [1] },
+      { agent: 'reviewer', task: "Approve beverage foam formula release for Innovation Center show kitchen cutting.", deps: [2] }
+    ]
+  },
+  clean_label_sodium_sugar_reduction_audit: {
+    name: "Clean-Label Sodium & Added-Sugar Reduction Audit",
+    title: "Clean-Label Sodium & Added-Sugar Reduction Audit",
+    mode: 'sequential',
+    deliverable: "-30% Reduced Sodium Clean-Label Reformulation Blueprint",
+    sample: "Reformulate commercial honey mustard dressing for 30% sodium reduction while maintaining savory umami impact.",
+    desc: "Replaces artificial preservatives and high sodium salts with clean-label natural sea salts and umami yeast extracts.",
+    track: 'trackA',
+    tasks: [
+      { agent: 'flavorchemist', task: "Substitute sodium chloride with natural potassium-sea salt blend and umami yeast extract.", deps: [] },
+      { agent: 'sensoryanalyst', task: "Conduct triangle sensory test to verify zero perceptible taste delta vs legacy formula.", deps: [0] },
+      { agent: 'regulatorylead', task: "Verify FDA 'Low Sodium' claim eligibility and clean-label non-GMO ingredient statement.", deps: [1] },
+      { agent: 'reviewer', task: "Authorize clean-label recipe update for national QSR customer line.", deps: [2] }
+    ]
+  },
+  target_cost_per_pound_margin_optimization: {
+    name: "Value-Engineered Target Cost & Margin Optimization",
+    title: "Value-Engineered Target Cost & Margin Optimization",
+    mode: 'sequential',
+    deliverable: "Value-Engineered Recipe BOM & Margin Optimization Blueprint",
+    sample: "Optimize ingredient bill of materials (BOM) for ranch dressing to hit $0.42/lb target cost without flavor loss.",
+    desc: "Re-engineers oil-to-water emulsion ratios and starch binders to maximize gross margin for foodservice operators.",
+    track: 'trackA',
+    tasks: [
+      { agent: 'costformulator', task: "Analyze ingredient cost breakdown and simulate modified starch binder substitution for high-cost egg yolk.", deps: [] },
+      { agent: 'culinarychef', task: "Verify mouthfeel, clingability, and flavor release on QSR chicken tenders and french fries.", deps: [0] },
+      { agent: 'commercialscale', task: "Calculate batch yield savings ($180,000 annual margin improvement at 5M lbs volume).", deps: [1] },
+      { agent: 'reviewer', task: "Sign off on optimized cost structure and client margin presentation.", deps: [2] }
+    ]
+  },
+  aseptic_pilot_plant_scaleup_trial: {
+    name: "Jacksonville Pilot Plant Aseptic & HTST Scale-Up Trial",
+    title: "Jacksonville Pilot Plant Aseptic & HTST Scale-Up Trial",
+    mode: 'dag',
+    deliverable: "Innovation Center Pilot Plant Thermal Scale-Up Certification",
+    sample: "Run 500-gallon pilot plant scale-up trial for shelf-stable aseptic cheese sauce in Jacksonville Innovation Center.",
+    desc: "Validates commercial shear rates, scraped-surface heat exchanger thermal lethality (Fo = 6.0), and aseptic fill integrity.",
+    track: 'trackB',
+    tasks: [
+      { agent: 'pilotplanteng', task: "Configure pilot scale scraped-surface heat exchanger (SSHE) for 285F / 4-second HTST pasteurization.", deps: [] },
+      { agent: 'dairytech', task: "Monitor natural cheese protein hydration and emulsifying salt sequestration during thermal processing.", deps: [0] },
+      { agent: 'qashelflife', task: "Verify post-process Bostwick viscosity (14.0 cm/30s) and zero emulsion oiling-off.", deps: [1] },
+      { agent: 'reviewer', task: "Issue pilot plant trial completion certificate for commercial co-packer transfer.", deps: [2] }
+    ]
+  },
+  qsr_boh_dispensability_pouch_yield_audit: {
+    name: "QSR Back-of-House Dispensability & Pouch Yield Audit",
+    title: "QSR Back-of-House Dispensability & Pouch Yield Audit",
+    mode: 'sequential',
+    deliverable: "QSR BOH Kitchen Ergonomics & 99.2% Pouch Yield Certificate",
+    sample: "Test squeeze-pouch dispenser ergonomics and hold-time viscosity for QSR condiment stations.",
+    desc: "Simulates back-of-house kitchen environment, squeeze-pouch pump evacuation, and 4-hour warm hold stability.",
+    track: 'trackB',
+    tasks: [
+      { agent: 'qsrbohops', task: "Test wall-mount pump dispenser evacuation yield across 100 squeeze-pouch trials.", deps: [] },
+      { agent: 'qashelflife', task: "Measure hot-hold thermal stability @ 140F over 6-hour continuous kitchen shift simulation.", deps: [0] },
+      { agent: 'culinarychef', task: "Evaluate operator prep time savings (cuts BOH sauce prep time from 15 mins to 30 seconds).", deps: [1] },
+      { agent: 'reviewer', task: "Approve BOH kitchen operation manual and packaging spec.", deps: [2] }
+    ]
+  },
+  glp_micro_shelf_life_freeze_thaw_validation: {
+    name: "GLP Microbiological & Freeze-Thaw Stability Validation",
+    title: "GLP Microbiological & Freeze-Thaw Stability Validation",
+    mode: 'sequential',
+    deliverable: "180-Day GLP Shelf-Life & Freeze-Thaw Stability Report",
+    sample: "Conduct accelerated 180-day shelf-life testing and 5 freeze-thaw cycles on frozen dessert toppings.",
+    desc: "Executes GLP lab testing for water activity Aw < 0.85, pathogen challenge tests, and emulsion syneresis prevention.",
+    track: 'trackB',
+    tasks: [
+      { agent: 'qashelflife', task: "Perform 5-cycle freeze-thaw freeze chamber stress test (-10F to 70F) to detect phase separation.", deps: [] },
+      { agent: 'regulatorylead', task: "Verify Aw water activity (<0.82) and pH control (<4.1) for non-refrigerated distribution status.", deps: [0] },
+      { agent: 'commercialscale', task: "Confirm packaging barrier MVTR (moisture vapor transmission rate) compliance for 180-day ambient shelf life.", deps: [1] },
+      { agent: 'reviewer', task: "Sign off on GLP micro validation and commercial shelf-life guarantee.", deps: [2] }
+    ]
+  },
+  copacker_commercial_transfer_spec_dossier: {
+    name: "Co-Packer Commercial Transfer & Specification Dossier",
+    title: "Co-Packer Commercial Transfer & Specification Dossier",
+    mode: 'sequential',
+    deliverable: "Co-Packer Manufacturing Spec Sheet & FDA Compliance Dossier",
+    sample: "Generate complete manufacturing transfer package for 50,000 lb co-packer production run.",
+    desc: "Transfers pilot plant processing parameters, raw material specs, FDA nutrition labels, and QA testing protocols to co-packers.",
+    track: 'trackB',
+    tasks: [
+      { agent: 'commercialscale', task: "Compile commercial batching instructions, mixing order, shear speeds, and tank cook curves.", deps: [] },
+      { agent: 'regulatorylead', task: "Generate FDA NLEA Nutrition Facts panel, ingredient statement, and allergen control matrix.", deps: [0] },
+      { agent: 'writer', task: "Publish complete 32-page Co-Packer Commercialization Manual and Quality Control Specification Sheet.", deps: [1] },
+      { agent: 'reviewer', task: "Authorize commercial production release and co-packer plant audit sign-off.", deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  qsr_speed_scratch_sauce_rapid_launch: "QSR Signature Sauce Gold-Standard Formula & Pilot Plant Scale-Up Dossier",
+  beverage_cloud_foam_emulsion_formulation: "Cold-Brew Beverage Cloud Foam Emulsion Formulation & Overrun Specification",
+  clean_label_sodium_sugar_reduction_audit: "-30% Reduced Sodium Clean-Label Reformulation Blueprint",
+  target_cost_per_pound_margin_optimization: "Value-Engineered Recipe BOM & Margin Optimization Blueprint",
+  aseptic_pilot_plant_scaleup_trial: "Innovation Center Pilot Plant Thermal Scale-Up Certification",
+  qsr_boh_dispensability_pouch_yield_audit: "QSR BOH Kitchen Ergonomics & 99.2% Pouch Yield Certificate",
+  glp_micro_shelf_life_freeze_thaw_validation: "180-Day GLP Shelf-Life & Freeze-Thaw Stability Report",
+  copacker_commercial_transfer_spec_dossier: "Co-Packer Manufacturing Spec Sheet & FDA Compliance Dossier"
+};
+
+const TOOLS = {
+  gold_standard_recipe_builder: () => "Gold Standard bench recipe formulated | Target Brix: 32.5 | pH: 3.85 | Balanced garlic & acid notes",
+  boh_line_flow_sim: () => "QSR BOH prep time reduced by 94% (15 mins down to 30 seconds speed-scratch assembly)",
+  speed_scratch_pairing_engine: () => "Culinary flavor pairing optimized for chicken tenders, burgers, and plant-based proteins",
+  gcms_aroma_profiler: () => "GC-MS volatile aroma headspace scan: 42 key aroma compounds matched to target benchmark",
+  brix_ph_titration_calc: () => "Titratable acidity: 1.15% as acetic | Soluble solids: 32.8 Brix | Buffer capacity verified",
+  clean_label_seasoning_db: () => "Artificial preservatives replaced with natural sea salt, fermented sugar, and cultured dextrose",
+  emulsion_droplet_analyzer: () => "Mean emulsion droplet diameter: 1.8 microns | Uniform particle size distribution achieved",
+  syneresis_prevention_model: () => "Hydrocolloid gum matrix optimized: Zero liquid syneresis after 48-hour static hold",
+  whippability_overrun_tester: () => "Whip overrun: 224% | Foam head density: 0.32 g/ml | Head collapse retention: >45 mins",
+  htst_esl_thermal_calc: () => "HTST thermal process: 285F / 4.2 seconds | Thermal lethality Fo: 6.8 (Exceeds 6.0 safety standard)",
+  shear_rate_viscosity_sim: () => "High-shear homogenizer pressure: 2,500 PSI | Apparent viscosity @ 100 s-1: 1,450 cP",
+  pilot_plant_scaleup_engine: () => "Innovation Center 500-gal pilot batch verified | 100% first-pass physical property match",
+  sensory_panel_booth_suite: () => "8-Booth sensory panel (n=32 panellists): Overall liking score 8.4/9.0 on hedonic scale",
+  hedonic_scale_analyzer: () => "Statistical preference analysis: 88.5% consumer preference over competitor benchmark",
+  flavor_spider_web_plot: () => "Sensory spider plot generated: Garlic, umami, acidity, and creaminess perfectly balanced",
+  bostwick_consistometer: () => "Bostwick flow distance: 12.4 cm / 30 seconds @ 40F (Target spec: 12.0 - 13.0 cm)",
+  aw_water_activity_meter: () => "Water activity (Aw): 0.815 @ 25C (Microbiologically stable for non-refrigerated distribution)",
+  freeze_thaw_cycle_tester: () => "5-Cycle freeze-thaw test (-10F to 70F): Zero emulsion breakdown or phase separation",
+  pouch_dispenser_yield_calc: () => "Squeeze-pouch pump evacuation yield: 99.24% (Only 0.76% residual sauce remaining in pouch)",
+  hold_time_viscosity_monitor: () => "Hot-hold stability @ 140F: Viscosity change <3.5% over 6-hour continuous warming",
+  boh_labor_time_study: () => "Labour cost savings: $4,200/store-year achieved through ready-to-use speed-scratch pouching",
+  copacker_line_transfer_spec: () => "Co-packer tech transfer document generated: Mixing order, cook curves, and QA checkpoints locked",
+  bom_ingredient_costing: () => "Recipe unit cost: $0.418 / lb (18.5% cost reduction vs legacy formulation)",
+  batch_yield_calculator: () => "Batch production yield: 99.82% across 50,000 lb commercial plant run",
+  target_cost_per_lb_model: () => "Target cost target ($0.42/lb) achieved by optimizing starch-emulsion binder ratio",
+  ingredient_substitution_calc: () => "Modified food starch substitution validated | Texture & mouthfeel 100% preserved",
+  margin_sensitivity_matrix: () => "Gross margin uplift: +6.2% gross margin expansion for QSR foodservice partner",
+  fda_nutrition_facts_gen: () => "FDA NLEA Nutrition Facts panel generated | Dual-column reporting compliant",
+  allergen_crosscontam_auditor: () => "Allergen matrix verified: Contains Egg, Milk. Zero unintended allergen cross-contamination",
+  usda_organic_verifier: () => "Clean-label audit: 95% Organic certified components verified per NOP guidelines",
+  culinary_cutting_deck_gen: () => "32-Slide interactive culinary cutting deck created with HD video of show kitchen demonstration",
+  product_spec_sheet_builder: () => "Product technical spec sheet generated with physical, chemical, and microbiological ranges",
+  boh_prep_guide_writer: () => "Back-of-house kitchen prep guide published with visual handling and warming instructions",
+  innovation_center_signoff: () => "Rubix Innovation Center sign-off: Chef & Food Science Director approvals registered",
+  sensory_clearance_cert: () => "Sensory clearance certificate issued: Passed organoleptic & consumer panel benchmarks",
+  governance_audit_log: () => "Immutable governance log entry stored: SHA-256 hash verified for multi-agent culinary run",
+  save: () => "Output artifact saved successfully to enterprise repository."
+};
+
+const FINAL = {
+  qsr_speed_scratch_sauce_rapid_launch: `================================================================================
+RUBIX FOODS INNOVATION CENTER - QSR SIGNATURE SAUCE SCALE-UP DOSSIER
+================================================================================
+Customer Project: Top 10 QSR Chain Signature Smoky Garlic Aioli (Speed-Scratch)
+Facility: Rubix Foods 50,000 Sq Ft Innovation Center (Jacksonville, FL)
+Date: September 21, 2026 | Document ID: RUBIX-QSR-SAUCE-20260921
+
+1. CULINARY GOLD STANDARD FORMULATION
+- Target Profile: Creamy, emulsified garlic aioli with rich roasted garlic aroma and subtle acidity
+- Bench Formula Code: #RUBIX-AIOLI-v4
+- Physical Specs: Brix 32.5 | pH 3.85 (+/- 0.05) | Titratable Acidity 1.15% as acetic acid
+- Speed-Scratch Advantage: Eliminates back-of-house prep (saves 15 minutes per batch)
+
+2. CONSUMER INSIGHTS & SENSORY PANEL RESULTS (8-BOOTH LAB)
+- Sample Size: n=32 trained panellists + n=120 target QSR consumers
+- Overall Liking Score: 8.4 / 9.0 Hedonic Scale (Target benchmark: 7.8 / 9.0)
+- Preference Win Rate: 88.5% consumer preference over legacy commercial competitor
+- Sensory Spider Plot: Peak scores achieved for garlic impact, creaminess, and acid balance
+
+3. PILOT PLANT SCALE-UP & THERMAL PROCESSING
+- Equipment Simulated: High-Shear Homogenizer (2,500 PSI) & Scraped-Surface Heat Exchanger
+- Pasteurization Profile: HTST 285F / 4.2 seconds (Thermal death lethality Fo = 6.8)
+- Bostwick Viscosity: 12.4 cm / 30 seconds @ 40F (Viscosity holds within +/-0.5 cm specification)
+- Emulsion Particle Size: 1.8 microns mean diameter (Zero oil separation under 3,000 G centrifuge test)
+
+4. PACKAGING & BOH KITCHEN ERGONOMICS
+- Packaging Format: 1.5-Gallon Squeeze-Pouch with universal fitment for QSR pump dispensers
+- Evacuation Yield: 99.24% sauce evacuation yield (minimizes food waste)
+- Hold-Time Stability: 6-hour continuous hot-hold stability @ 140F (Viscosity drift <3.5%)
+
+5. INNOVATION CENTER SIGN-OFF & APPROVALS
+- Executive Research Chef: Chef Antoine Mercer, CRC (Rubix Culinary R&D)
+- Director of Food Science: Dr. Aris Thorne, PhD (Rubix Innovation Center)
+- Status: APPROVED FOR COMMERCIAL CO-PACKER PRODUCTION RELEASE
+
+NOTE: This is an illustrative simulation generated by the Rubix Foods Autonomous AI Workforce. All metrics are placeholders for demonstration purposes.`,
+
+  beverage_cloud_foam_emulsion_formulation: `================================================================================
+RUBIX FOODS BEVERAGE INNOVATION - COLD-BREW OAT CLOUD FOAM SPECIFICATION
+================================================================================
+Project: National Coffee Chain Cold-Brew Vanilla Oat Cloud Foam Topping
+Facility: Rubix Foods Innovation Center (Jacksonville, FL)
+Date: September 21, 2026
+
+1. EMULSION & FOAM ARCHITECTURE
+- Base Chemistry: Hydrolyzed Oat Protein & Dairy Lipid co-emulsion matrix
+- Overrun Capacity: 224% volume expansion upon standard whipped dispenser actuation
+- Foam Density: 0.32 g/ml (Light, velvety foam head with velvety mouthfeel)
+
+2. RETENTION & SYNERESIS STABILITY
+- Foam Head Retention: 45+ minutes continuous foam structure on cold-brew iced coffee
+- Liquid Interface Syneresis: Zero foam breakdown or weeping into coffee base after 30 mins
+- Temperature Tolerance: Stable from 34F to 50F serving conditions
+
+3. FLAVOR & ORGANOLEPTIC PROFILE
+- Flavoring: Natural Bourbon Vanilla Extract + proprietary oat-masking technology
+- Sweetness Index: 14.2 Brix equivalent (balanced sweetness without overpowering cold brew)
+
+4. COMMERCIAL APPROVAL
+- Lead Dairy Technologist: Dr. Karen Vance, PhD
+- Status: APPROVED FOR SHOW KITCHEN CLIENT CUTTING
+
+NOTE: This is an illustrative simulation generated by the Rubix Foods Autonomous AI Workforce.`,
+
+  clean_label_sodium_sugar_reduction_audit: `================================================================================
+RUBIX FOODS CLEAN-LABEL REFORMULATION AUDIT (-30% SODIUM)
+================================================================================
+Product Category: Commercial Foodservice Honey Mustard Dressing
+Date: September 21, 2026 | Audit Type: Clean-Label & Sodium Reduction
+
+1. REFORMULATION PARAMETERS
+- Legacy Sodium Content: 380 mg / 30g serving
+- Target Sodium Content: 260 mg / 30g serving (-31.5% Sodium Reduction)
+- Salt Replacement Tech: Natural potassium-sea salt co-crystallite + umami yeast extract
+
+2. SENSORY TRIANGLE TEST RESULTS
+- Sensory Panel (n=40): 34 panellists failed to detect a difference (Statistically identical)
+- Mouthfeel & Clingability: Bostwick viscosity 11.8 cm/30s (Identical to control)
+
+3. REGULATORY & LABELING CLAIMS
+- Qualified Claim: "30% Reduced Sodium vs Regular Honey Mustard Dressing"
+- Preservative Removal: Replaced EDTA with natural cultured dextrose and rosemary extract
+
+4. FINAL SIGN-OFF
+- Regulatory Lead: Maria Santos, RAC
+- Status: CLEAN-LABEL SPECIFICATION CERTIFIED
+
+NOTE: This is an illustrative simulation generated by the Rubix Foods Autonomous AI Workforce.`,
+
+  target_cost_per_pound_margin_optimization: `================================================================================
+RUBIX FOODS VALUE ENGINEERING & MARGIN OPTIMIZATION BLUEPRINT
+================================================================================
+Target Product: Foodservice Creamy Ranch Dressing (5 Million Lbs Annual Volume)
+Date: September 21, 2026 | Target Cost Goal: $0.42 / lb
+
+1. INGREDIENT COST & BOM OPTIMIZATION
+- Legacy Unit Cost: $0.513 / lb
+- Re-Engineered Unit Cost: $0.418 / lb (-18.5% Cost Reduction achieved)
+- Annual Customer Savings: $475,000 on 5M lbs annual volume
+
+2. FORMULATION ADJUSTMENTS
+- Egg Yolk Reduction: Reduced whole egg yolk by 1.2% through modified food starch stabilizer
+- Oil Emulsion Tuning: Optimized vegetable oil ratio from 48% to 44% with zero loss of creaminess
+
+3. SENSORY & QUALITY VERIFICATION
+- Viscosity & Cling: 13.0 cm/30s Bostwick @ 40F (Within exact customer spec)
+- Culinary Performance: Verified 100% clingability on wings and crisp salad greens
+
+4. EXECUTIVE APPROVAL
+- Commercialization Supervisor: Mark Sterling, PE
+- Status: APPROVED FOR CO-PACKER COST REDUCTION ROLLOUT
+
+NOTE: This is an illustrative simulation generated by the ESS Inc. Autonomous AI Workforce.`,
+
+  aseptic_pilot_plant_scaleup_trial: `================================================================================
+RUBIX FOODS JACKSONVILLE PILOT PLANT SCALE-UP CERTIFICATION
+================================================================================
+Trial Name: 500-Gallon Aseptic Nacho Cheese Sauce Thermal Processing Run
+Facility: Rubix Foods 50,000 Sq Ft Innovation Center (Jacksonville, FL - Pilot Plant 1)
+Date: September 21, 2026
+
+1. THERMAL PROCESSING PARAMETERS
+- Thermal Method: Scraped-Surface Heat Exchanger (SSHE) Aseptic Processing
+- Hold Tube Temperature: 285.4 F for 4.2 seconds
+- Calculated Lethality (Fo): 6.82 (Exceeds FDA bacteriological safety requirement of 6.0)
+
+2. RHEOLOGY & PHYSICAL PROPERTIES
+- Post-Process Viscosity: 14.0 cm / 30s Bostwick @ 140F serving temp
+- Fat Emulsion Stability: Zero oiling-off after 4-hour hot-hold testing @ 150F
+- Color Index (L*a*b*): L* 68.4, a* 14.2, b* 48.1 (Identical to Gold Standard bench sample)
+
+3. PILOT PLANT TRIAL RESULTS
+- First-Pass Yield: 99.82% across 500-gallon trial batch
+- Commercial Transfer Status: Cleared for 50,000 lb co-packer production trial
+
+4. APPROVALS
+- Pilot Plant Process Manager: Greg Harrison, PE
+- Status: CERTIFIED FOR COMMERCIAL SCALE-UP
+
+NOTE: This is an illustrative simulation generated by the Rubix Foods Autonomous AI Workforce.`,
+
+  qsr_boh_dispensability_pouch_yield_audit: `================================================================================
+RUBIX FOODS QSR BACK-OF-HOUSE (BOH) KITCHEN ERGONOMICS AUDIT
+================================================================================
+Partner Chain: National Fast Casual Burger & Fry Concept
+Date: September 21, 2026 | Focus: Squeeze-Pouch Yield & Kitchen Labor Efficiency
+
+1. POUCH EVACUATION & YIELD AUDIT
+- Test Format: 1.5-Gallon Flexible Squeeze-Pouches with fitment valves (100-pouch test)
+- Evacuation Yield: 99.24% sauce evacuated per pouch
+- Sauce Waste Reduction: Cuts unused residual sauce from 4.5 oz to 0.18 oz per pouch
+
+2. BOH LABOR & SPEED-SCRATCH SAVINGS
+- Prep Time Reduction: Eliminates in-store scratch mixing (Saves 15 mins/shift)
+- Annual Labor Savings: $4,200 estimated per restaurant location
+- Dispensing Speed: 1.5 oz portion dispensed in <0.8 seconds via wall-mount pump
+
+3. WARM-HOLD THERMAL STABILITY
+- Tested Condition: 140F continuous warming for 6 hours
+- Viscosity Drift: <3.5% total change (Zero skinning or phase separation)
+
+4. SIGN-OFF
+- BOH Operations Specialist: Sarah Jenkins, CPO
+- Status: RECOMMENDED FOR QSR SYSTEMWIDE ROLLOUT
+
+NOTE: This is an illustrative simulation generated by the Rubix Foods Autonomous AI Workforce.`,
+
+  glp_micro_shelf_life_freeze_thaw_validation: `================================================================================
+RUBIX FOODS GLP MICROBIOLOGICAL & SHELF-LIFE VALIDATION REPORT
+================================================================================
+Target Product: Ambient-Stable Gourmet Dessert Topping (Salted Caramel)
+Date: September 21, 2026 | Testing Lab: Rubix GLP QA & Micro Lab
+
+1. MICROBIOLOGICAL & WATER ACTIVITY AUDIT
+- Water Activity (Aw): 0.812 @ 25C (Safely below 0.85 FDA non-refrigerated limit)
+- pH Level: 4.15 (+/- 0.05)
+- Micro Challenge Test: 0 CFU/g Aerobic Plate Count after 180 days accelerated storage
+
+2. FREEZE-THAW STABILITY STRESS TEST
+- Test Cycle: 5 consecutive freeze-thaw cycles (-10F freeze / 70F thaw)
+- Emulsion Separation: 0.0% liquid syneresis detected
+- Viscosity Retention: 98.6% of original Bostwick flow rate maintained
+
+3. SHELF-LIFE GUARANTEE
+- Validated Shelf Life: 180 Days ambient storage (50F to 85F storage temp)
+
+4. QUALITY ASSURANCE APPROVAL
+- Quality Assurance Director: Dr. Aris Thorne, PhD
+- Status: SHELF-LIFE CERTIFIED
+
+NOTE: This is an illustrative simulation generated by the Rubix Foods Autonomous AI Workforce.`,
+
+  copacker_commercial_transfer_spec_dossier: `================================================================================
+RUBIX FOODS CO-PACKER COMMERCIAL TRANSFER DOSSIER
+================================================================================
+Product Name: Signature Tangy BBQ Sauce (Commercial Foodservice 4x1 Gallon Case)
+Date: September 21, 2026 | Target Co-Packer: Commercial Foodservice Processing Plant
+
+1. MANUFACTURING BATCHING INSTRUCTIONS
+- Mixing Order: Water -> High-Fructose Corn Syrup -> Tomato Paste -> Spice Pre-mix -> Vinegar
+- Shear Speed: High-shear dispersion @ 1,800 RPM for 10 minutes prior to cooking
+- Thermal Profile: Heat to 195F, hold for 3.0 minutes, hot-fill @ 185F minimum
+
+2. FDA REGULATORY & NUTRITION DOSSIER
+- NLEA Nutrition Panel: 2026 FDA compliant dual-column format generated
+- Allergen Declaration: CONTAINS: SOY, ANCHOVIES (FISH). Gluten-Free verified
+- Ingredient Statement: Fully compliant with 21 CFR 101.4
+
+3. QUALITY CONTROL TARGET SPECIFICATIONS
+- Brix: 42.0 +/- 1.0 | pH: 3.60 +/- 0.10 | Bostwick: 9.5 cm/30s @ 68F
+- Micro Criteria: APC <10 CFU/g | Yeast/Mold <10 CFU/g | Coliforms <10 CFU/g
+
+4. COMMERCIAL SIGN-OFF
+- Co-Packer Transfer Director: Mark Sterling, PE
+- Status: AUTHORIZED FOR COMMERCIAL PRODUCTION LAUNCH
+
+NOTE: This is an illustrative simulation generated by the Rubix Foods Autonomous AI Workforce.`
+};
+
+const EMPLOYEES = [
+  { id: 'op_sauce_rapid', name: "QSR Sauce Rapid Prototype Operator", title: "Signature Sauce Co-Creation Specialist", wf: 'qsr_speed_scratch_sauce_rapid_launch', handled: 248, hrs: 28.5, win: "5-Day Bench-to-Pilot Turnaround", status: "idle" },
+  { id: 'op_beverage_foam', name: "Beverage Cloud Foam Specialist", title: "Dairy & Oat Cloud Foam Emulsion Lead", wf: 'beverage_cloud_foam_emulsion_formulation', handled: 182, hrs: 14.0, win: "45-Min Foam Head Retention", status: "idle" },
+  { id: 'op_clean_label', name: "Clean-Label Reformulation Operator", title: "Sodium & Added-Sugar Reduction Specialist", wf: 'clean_label_sodium_sugar_reduction_audit', handled: 310, hrs: 12.2, win: "-30% Sodium / Clean-Label", status: "idle" },
+  { id: 'op_cost_target', name: "Target Cost & Margin Formulator", title: "Foodservice Recipe Margin Specialist", wf: 'target_cost_per_pound_margin_optimization', handled: 195, hrs: 16.4, win: "18.5% BOM Cost Savings", status: "idle" },
+  { id: 'op_pilot_scaleup', name: "Pilot Plant Scale-Up Engineer", title: "Aseptic & HTST Thermal Scale-Up Lead", wf: 'aseptic_pilot_plant_scaleup_trial', handled: 140, hrs: 22.0, win: "100% Thermal Scale-Up Accuracy", status: "idle" },
+  { id: 'op_boh_yield', name: "QSR BOH Ergonomics Specialist", title: "Kitchen Dispensability & Packaging Lead", wf: 'qsr_boh_dispensability_pouch_yield_audit', handled: 420, hrs: 9.8, win: "99.2% Pouch Evacuation Yield", status: "idle" },
+  { id: 'op_shelf_life', name: "GLP Micro & Shelf-Life Auditor", title: "Microbiological & Freeze-Thaw QA Lead", wf: 'glp_micro_shelf_life_freeze_thaw_validation', handled: 290, hrs: 18.0, win: "180-Day Stable Shelf Life", status: "idle" },
+  { id: 'op_copacker_transfer', name: "Co-Packer Commercialization Lead", title: "Technical Transfer & Spec Sheet Lead", wf: 'copacker_commercial_transfer_spec_dossier', handled: 165, hrs: 15.6, win: "Zero-Downtime Co-Packer Launch", status: "idle" }
+];
+
+const CONFIG = {
+  econLabels: ["QSR Chains Served", "Innovation Center Sq Ft", "Bench-to-Pilot Turnaround", "First-Pass Scale-Up Yield"],
+  statLabel: "Speed-to-Market Acceleration",
+  statSign: "+",
+  statSuffix: "%",
+  runButton: "Run AI Workforce Operator",
+  runNoun: "Operator Pipeline",
+  outputLabel: "Validated Culinary Specification & Test Results",
+  rosterLabel: "Rubix Foods AI Workforce Roster",
+  trackLabels: {
+    trackA: "Track A: Innovation Center Culinary R&D & Rapid Prototyping",
+    trackB: "Track B: Pilot Plant Scale-Up, QA & Commercialization"
+  },
+  builderCadences: ["Continuous Rapid Prototype", "Weekly Kitchen Cutting", "Monthly Sensory Sweep", "Quarterly Menu Innovation"]
+};
+
+/* ============================================================================
+   ENGINE LOGIC (DO NOT EDIT)
+   ============================================================================ */
+
+let currentSelectedWfKey = "qsr_speed_scratch_sauce_rapid_launch";
+
+function renderRoster() {
+  const container = document.getElementById("roster-container");
+  if (!container) return;
+
+  const trackAOps = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === "trackA");
+  const trackBOps = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === "trackB");
+
+  let html = `
+    <div class="section-hdr">${CONFIG.trackLabels.trackA}</div>
+    <div class="roster-grid">
+      ${trackAOps.map(op => renderOperatorCard(op)).join("")}
+    </div>
+
+    <div class="section-hdr" style="margin-top:40px;">${CONFIG.trackLabels.trackB}</div>
+    <div class="roster-grid">
+      ${trackBOps.map(op => renderOperatorCard(op)).join("")}
+    </div>
+  `;
+  container.innerHTML = html;
+}
+
+function renderOperatorCard(op) {
+  const wf = WORKFLOWS[op.wf];
+  if (!wf) return "";
+  const isFlagship = wf.tag === "flagship";
+  
+  // Agent chips
+  const agentChips = wf.tasks.map(t => {
+    const a = AGENT_ROLES[t.agent];
+    return a ? `<span class="agent-chip">${a.emoji} ${a.label}</span>` : "";
+  }).join("");
+
+  return `
+    <div class="operator-card ${isFlagship ? 'hero-op' : ''}">
+      <div class="op-top">
+        <div class="op-avatar">${op.name.charAt(0)}</div>
+        <div>
+          <div class="op-name">
+            ${op.name}
+            ${isFlagship ? '<span style="font-size:10px;font-weight:800;background:var(--accent);color:#fff;padding:2px 6px;border-radius:4px;text-transform:uppercase;">FLAGSHIP</span>' : ''}
+          </div>
+          <div class="op-title">${op.title}</div>
+        </div>
+      </div>
+      <div class="op-owns"><b>Workflow:</b> ${wf.name}</div>
+      <div class="team-chips">${agentChips}</div>
+      <div class="op-stats">
+        <div class="op-stat-item"><b>${op.handled}</b> Runs Handled</div>
+        <div class="op-stat-item"><b>${op.hrs} hrs</b> Avg Savings</div>
+        <div class="op-stat-item"><b style="color:var(--accent);">${op.win}</b> Headline Value</div>
+      </div>
+      <button class="btn-run-op" onclick="selectAndRunOperator('${op.wf}')">Launch Operator Run</button>
+    </div>
+  `;
+}
+
+function selectAndRunOperator(wfKey) {
+  currentSelectedWfKey = wfKey;
+  switchTab("run");
+  const wf = WORKFLOWS[wfKey];
+  if (!wf) return;
+  
+  document.getElementById("run-panel-title").innerText = "Operator: " + wf.title;
+  document.getElementById("run-panel-sub").innerText = wf.desc;
+  document.getElementById("run-prompt-input").value = wf.sample;
+
+  // Clear previous outputs
+  document.getElementById("run-feed-box").classList.add("hidden");
+  document.getElementById("run-feed-box").innerHTML = "";
+  document.getElementById("deliverable-box").classList.add("hidden");
+}
+
+function executeCurrentWorkflow() {
+  const wf = WORKFLOWS[currentSelectedWfKey];
+  if (!wf) return;
+
+  const feedBox = document.getElementById("run-feed-box");
+  const delivBox = document.getElementById("deliverable-box");
+  const delivText = document.getElementById("deliverable-text");
+  const delivTitle = document.getElementById("deliverable-title");
+
+  feedBox.classList.remove("hidden");
+  feedBox.innerHTML = `<div class="feed-line">[SYSTEM] Initializing multi-agent execution pipeline for ${wf.name}...</div>`;
+  delivBox.classList.add("hidden");
+
+  let stepIdx = 0;
+  
+  function stepLoop() {
+    if (stepIdx < wf.tasks.length) {
+      const taskObj = wf.tasks[stepIdx];
+      const agentObj = AGENT_ROLES[taskObj.agent];
+      const toolKey = agentObj ? agentObj.tools[0] : "save";
+      const toolOutput = TOOLS[toolKey] ? TOOLS[toolKey]() : "Tool execution complete.";
+
+      const line = document.createElement("div");
+      line.className = "feed-line";
+      line.innerHTML = `<span class="feed-agent">${agentObj.emoji} ${agentObj.label}:</span> "${taskObj.task}" <br>&nbsp;&nbsp;&nbsp;&nbsp;&rarr; <span class="feed-tool">[TOOL: ${toolKey}]</span> ${toolOutput}`;
+      feedBox.appendChild(line);
+      feedBox.scrollTop = feedBox.scrollHeight;
+
+      stepIdx++;
+      setTimeout(stepLoop, 600);
+    } else {
+      const lineFinal = document.createElement("div");
+      lineFinal.className = "feed-line feed-ok";
+      lineFinal.innerHTML = `<br>[SUCCESS] Execution pipeline completed cleanly. Output deliverable verified.`;
+      feedBox.appendChild(lineFinal);
+      feedBox.scrollTop = feedBox.scrollHeight;
+
+      delivTitle.innerText = DTITLE[currentSelectedWfKey] || "Produced Deliverable";
+      delivText.innerText = FINAL[currentSelectedWfKey] || "Deliverable text unavailable.";
+      delivBox.classList.remove("hidden");
+    }
+  }
+
+  setTimeout(stepLoop, 400);
+}
+
+function runFlagshipDemo() {
+  selectAndRunOperator("qsr_speed_scratch_sauce_rapid_launch");
+  executeCurrentWorkflow();
+}
+
+function switchTab(tabName) {
+  document.getElementById("tab-roster").classList.add("hidden");
+  document.getElementById("tab-run").classList.add("hidden");
+  document.getElementById("tab-builder").classList.add("hidden");
+
+  document.getElementById("tab-roster-btn").classList.remove("active");
+  document.getElementById("tab-run-btn").classList.remove("active");
+  document.getElementById("tab-builder-btn").classList.remove("active");
+
+  if (tabName === "roster") {
+    document.getElementById("tab-roster").classList.remove("hidden");
+    document.getElementById("tab-roster-btn").classList.add("active");
+  } else if (tabName === "run") {
+    document.getElementById("tab-run").classList.remove("hidden");
+    document.getElementById("tab-run-btn").classList.add("active");
+  } else if (tabName === "builder") {
+    document.getElementById("tab-builder").classList.remove("hidden");
+    document.getElementById("tab-builder-btn").classList.add("active");
+    populateBuilderSelect();
+  }
+}
+
+function populateBuilderSelect() {
+  const sel = document.getElementById("builder-base-select");
+  if (!sel) return;
+  sel.innerHTML = Object.keys(WORKFLOWS).map(k => `<option value="${k}">${WORKFLOWS[k].name}</option>`).join("");
+}
+
+function buildCustomOperator() {
+  const baseKey = document.getElementById("builder-base-select").value;
+  const opName = document.getElementById("builder-op-name").value || "Custom AI Operator";
+  const opTitle = document.getElementById("builder-op-title").value || "Custom Culinary Specialist";
+  const winMetric = document.getElementById("builder-win-metric").value || "100% Verified";
+
+  const newOpId = "op_custom_" + Date.now();
+  EMPLOYEES.push({
+    id: newOpId,
+    name: opName,
+    title: opTitle,
+    wf: baseKey,
+    handled: 1,
+    hrs: 12.0,
+    win: winMetric,
+    status: "idle"
+  });
+
+  renderRoster();
+  switchTab("roster");
+  alert(`Custom operator "${opName}" has been successfully added to the Rubix Foods AI workforce roster!`);
+}
+
+function toggleBrandDrawer() {
+  document.getElementById("brand-drawer").classList.toggle("open");
+}
+
+function scrollToRoster() {
+  switchTab("roster");
+  window.scrollTo({top: 400, behavior: "smooth"});
+}
+
+// Initial Render
+window.addEventListener("DOMContentLoaded", () => {
+  renderRoster();
+  selectAndRunOperator("qsr_speed_scratch_sauce_rapid_launch");
+});
+</script>
+</body>
+</html>
