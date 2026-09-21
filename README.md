@@ -248,3 +248,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/hourglass
 https://innvonix-tech-solutions.github.io/ai-workforce/continentalserves
 https://innvonix-tech-solutions.github.io/ai-workforce/elevate
 https://innvonix-tech-solutions.github.io/ai-workforce/essinc
+https://innvonix-tech-solutions.github.io/ai-workforce/rubix
