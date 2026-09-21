@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESS Inc. &mdash; Autonomous AI Workforce &amp; LDES Iron Flow Guidelines</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#fff;
+  --header-bg:linear-gradient(90deg, #022c36 0%, #003b46 50%, #00252e 100%);
+  --surface:#f0f7f7;
+  --surface2:#e2eded;
+  --border:#bcd0d0;
+  --accent:#00a896; /* ESS Clean Tech Teal */
+  --accent-hover:#008678;
+  --accent-dim:rgba(0,168,150,0.08);
+  --accent-line:rgba(0,168,150,0.30);
+  --text:#0f172a;
+  --hi:#022c36;
+  --tert:#475569;
+  --ok:#10b981;
+  --ok-dim:rgba(16,185,129,0.10);
+  --gold:#d97706;
+  --gold-bg:#fffbe3;
+  --gold-line:#fcd34d
+}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+
+/* ESS BRAND HEADER */
+.header{background:var(--header-bg);border-bottom:3px solid var(--accent);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,0.25)}
+.brand-logo{display:flex;align-items:center;gap:12px;cursor:pointer}
+.logo-mark{width:38px;height:38px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:18px;box-shadow:0 0 12px rgba(0,168,150,0.5)}
+.logo-title{font-size:20px;font-weight:900;letter-spacing:-0.5px;color:#fff;line-height:1}
+.logo-title span{color:var(--accent)}
+.logo-sub{font-size:9px;font-weight:700;letter-spacing:1.5px;color:#94a3b8;text-transform:uppercase;margin-top:3px}
+
+.header-controls{display:flex;align-items:center;gap:14px}
+.badge-ate{border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:5px 12px;font-size:11px;color:#e2e8f0;background:rgba(255,255,255,0.08)}.badge-ate b{color:#fff}
+.btn-inspector{background:var(--accent);border:none;color:#fff;font-weight:800;font-size:12px;padding:8px 16px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .2s;box-shadow:0 2px 10px rgba(0,168,150,0.3)}
+.btn-inspector:hover{background:var(--accent-hover)}
+
+/* HERO BANNER */
+.hero{background:linear-gradient(135deg, #011d24 0%, #003b46 50%, #01232b 100%);border-bottom:1px solid var(--border);padding:36px 32px 32px;position:relative;overflow:hidden;color:#fff}
+.hero-content{max-width:1180px;margin:0 auto;position:relative;z-index:2}
+.hero-tag{display:inline-block;background:var(--accent);color:#fff;font-size:11px;font-weight:800;letter-spacing:1.5px;padding:4px 12px;border-radius:4px;text-transform:uppercase;margin-bottom:14px}
+.hero-title{font-size:34px;font-weight:900;color:#fff;letter-spacing:-0.5px;line-height:1.2;margin-bottom:10px}
+.hero-sub{font-size:14.5px;color:#94a3b8;max-width:850px;line-height:1.6;margin-bottom:20px}
+.hero-cta{display:flex;gap:12px}
+.btn-blue{background:var(--accent);color:#fff;font-weight:800;font-size:13px;padding:12px 24px;border-radius:6px;border:none;cursor:pointer;letter-spacing:0.5px;text-transform:uppercase;box-shadow:0 0 20px rgba(0,168,150,0.4);transition:all .2s}
+.btn-blue:hover{background:var(--accent-hover);transform:translateY(-1px)}
+.btn-outline-white{background:transparent;border:1px solid rgba(255,255,255,0.3);color:#fff;font-weight:700;font-size:13px;padding:11px 22px;border-radius:6px;cursor:pointer;transition:all .2s}
+.btn-outline-white:hover{background:rgba(255,255,255,0.1)}
+
+/* TABS BAR */
+.tabs-bar{max-width:1180px;margin:20px auto 0;padding:0 24px;display:flex;gap:6px}
+.tab-btn{padding:12px 20px;font-size:13px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:8px 8px 0 0;background:none;transition:all .2s}
+.tab-btn.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+
+/* MAIN CONTAINER */
+.main-container{max-width:1180px;margin:0 auto;padding:24px}
+
+/* ECON STRIP */
+.econ-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.econ-card{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:10px;padding:18px}
+.econ-val{font-size:26px;font-weight:900;color:var(--hi)}.econ-val .unit{color:var(--accent);font-size:18px}
+.econ-lbl{font-size:11px;font-weight:600;color:var(--tert);margin-top:4px;text-transform:uppercase;letter-spacing:0.5px}
+
+.section-hdr{font-size:11px;font-weight:800;letter-spacing:1.5px;color:var(--tert);text-transform:uppercase;margin:24px 0 16px;display:flex;align-items:center;gap:12px}
+.section-hdr::after{content:"";flex:1;height:1px;background:var(--border)}
+
+/* ROSTER OPERATORS */
+.roster-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:18px}
+.operator-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;transition:all .2s}
+.operator-card:hover{border-color:var(--accent);box-shadow:0 6px 20px rgba(0,168,150,0.12)}
+.operator-card.hero-op{border-color:var(--gold-line);background:linear-gradient(180deg, var(--surface) 0%, var(--gold-bg) 100%)}
+.op-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.op-avatar{width:46px;height:46px;border-radius:10px;background:#fff;border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--accent);font-size:15px;flex-shrink:0}
+.op-name{font-size:15px;font-weight:800;color:var(--hi);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.op-title{font-size:12px;color:var(--tert);margin-top:2px}
+.op-owns{font-size:12px;color:var(--text);margin-bottom:12px}.op-owns b{color:var(--hi)}
+.team-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.agent-chip{font-size:11px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 9px}
+.op-stats{display:flex;gap:16px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:14px}
+.op-stat-item{font-size:11px;color:var(--tert)}.op-stat-item b{display:block;font-size:15px;color:var(--hi);font-weight:800}
+
+.btn-run-op{width:100%;background:var(--accent);color:#fff;font-weight:800;font-size:12.5px;padding:10px;border-radius:7px;border:none;cursor:pointer;transition:background .2s}
+.btn-run-op:hover{background:var(--accent-hover)}
+
+/* RUN PANEL */
+.run-panel{margin-top:28px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
+.run-title{font-size:18px;font-weight:800;color:var(--hi);margin-bottom:4px}
+.run-sub{font-size:12px;color:var(--tert);margin-bottom:18px}
+.run-input-group{display:flex;gap:12px;margin-bottom:20px}
+.run-input{flex:1;background:#fff;border:1px solid var(--border);border-radius:6px;padding:10px 14px;font-size:13px;color:var(--text);font-family:inherit}
+.btn-execute{background:var(--accent);color:#fff;font-weight:800;font-size:13px;padding:10px 20px;border-radius:6px;border:none;cursor:pointer}
+.btn-execute:hover{background:var(--accent-hover)}
+
+.run-feed{background:#011d24;border:1px solid #003b46;border-radius:8px;padding:16px;font-family:Consolas,monospace;font-size:12px;color:#a7f3d0;max-height:300px;overflow-y:auto;margin-bottom:20px;line-height:1.6}
+.feed-line{margin-bottom:4px}
+.feed-agent{color:#38bdf8;font-weight:700}
+.feed-tool{color:#facc15}
+.feed-ok{color:#4ade80}
+
+.deliverable-box{background:#fff;border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:8px;padding:20px}
+.deliverable-hdr{font-size:14px;font-weight:800;color:var(--hi);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.deliverable-text{font-family:Consolas,Monaco,monospace;font-size:12px;color:#334155;white-space:pre-wrap;line-height:1.6;background:#f8fafc;padding:14px;border-radius:6px;border:1px solid #e2e8f0}
+
+/* BUILDER */
+.builder-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-top:28px}
+.builder-step{margin-bottom:20px}
+.builder-lbl{font-size:12px;font-weight:800;color:var(--tert);text-transform:uppercase;margin-bottom:8px}
+.builder-select,.builder-input{width:100%;background:#fff;border:1px solid var(--border);border-radius:6px;padding:10px;font-size:13px;color:var(--text);margin-bottom:12px}
+
+/* BRAND GUIDELINES MODAL / DRAWER */
+.drawer-backdrop{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:200;display:flex;justify-content:flex-end;opacity:0;pointer-events:none;transition:opacity .3s}
+.drawer-backdrop.open{opacity:1;pointer-events:auto}
+.drawer-panel{width:620px;max-width:90vw;background:#fff;height:100%;overflow-y:auto;padding:32px;box-shadow:-4px 0 30px rgba(0,0,0,0.3);transform:translateX(100%);transition:transform .3s ease-out}
+.drawer-backdrop.open .drawer-panel{transform:translateX(0)}
+.drawer-close{float:right;background:none;border:none;font-size:24px;color:var(--tert);cursor:pointer}
+.brand-h1{font-size:22px;font-weight:900;color:var(--hi);margin-bottom:6px}
+.brand-p{font-size:13px;color:var(--tert);line-height:1.6;margin-bottom:20px}
+.swatch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.swatch-item{border-radius:8px;padding:12px;color:#fff;font-size:11px;font-weight:700}
+
+/* FOOTER */
+.footer{margin-top:60px;border-top:1px solid var(--border);padding:24px 32px;background:var(--surface);font-size:11px;color:var(--tert);display:flex;justify-content:space-between;align-items:center}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="brand-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <div class="logo-mark">ESS</div>
+    <div>
+      <div class="logo-title">ESS <span>Tech</span></div>
+      <div class="logo-sub">Iron Flow LDES &amp; Utility Storage</div>
+    </div>
+  </div>
+  <div class="header-controls">
+    <div class="badge-ate">System Rating: <b>UL 9540A &amp; IEEE 693 Certified</b></div>
+    <button class="btn-inspector" onclick="toggleBrandDrawer()">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+      Brand &amp; System Specs
+    </button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Long-Duration Energy Storage (LDES) AI Operations</div>
+    <h1 class="hero-title">ESS Inc. Autonomous AI Workforce</h1>
+    <p class="hero-sub">Empowering utility-scale LDES deployment, iron flow battery electrochemistry management, Energy Center&trade; &amp; Energy Warehouse&trade; microgrids, and sub-nanoamp electrolyte diagnostics with safe, zero-thermal-runaway AI automation.</p>
+    <div class="hero-cta">
+      <button class="btn-blue" onclick="scrollToRoster()">Explore 8 AI Operators</button>
+      <button class="btn-outline-white" onclick="runFlagshipDemo()">Run Flagship Utility Surge Demo</button>
+    </div>
+  </div>
+</section>
+
+<div class="tabs-bar">
+  <button class="tab-btn active" id="tab-roster-btn" onclick="switchTab('roster')">AI Operators Roster</button>
+  <button class="tab-btn" id="tab-run-btn" onclick="switchTab('run')">Live Run Engine</button>
+  <button class="tab-btn" id="tab-builder-btn" onclick="switchTab('builder')">Operator Builder</button>
+</div>
+
+<main class="main-container">
+
+  <!-- ECON STRIP -->
+  <div class="econ-grid">
+    <div class="econ-card">
+      <div class="econ-val"><span class="tnum">1.2</span> <span class="unit">GWh</span></div>
+      <div class="econ-lbl">Long-Duration Storage Capacity</div>
+    </div>
+    <div class="econ-card">
+      <div class="econ-val">$<span class="tnum">142.5</span><span class="unit">M</span></div>
+      <div class="econ-lbl">Annual OPEX Savings</div>
+    </div>
+    <div class="econ-card">
+      <div class="econ-val"><span class="tnum">57.1</span><span class="unit">%</span></div>
+      <div class="econ-lbl">LCOS Reduction vs Lithium</div>
+    </div>
+    <div class="econ-card">
+      <div class="econ-val"><span class="tnum">100</span><span class="unit">%</span></div>
+      <div class="econ-lbl">Safety Risk Elimination</div>
+    </div>
+  </div>
+
+  <!-- TAB: ROSTER -->
+  <div id="tab-roster">
+    <div id="roster-container"></div>
+  </div>
+
+  <!-- TAB: RUN -->
+  <div id="tab-run" class="hidden">
+    <div class="run-panel">
+      <div class="run-title" id="run-panel-title">Select an Operator to Execute</div>
+      <div class="run-sub" id="run-panel-sub">Choose an autonomous workforce workflow from the roster to run multi-agent execution.</div>
+      
+      <div class="run-input-group">
+        <input type="text" id="run-prompt-input" class="run-input" placeholder="Enter target parameters or utility dispatch requirements...">
+        <button class="btn-execute" id="btn-run-execute" onclick="executeCurrentWorkflow()">Run AI Workforce Operator</button>
+      </div>
+
+      <div class="run-feed hidden" id="run-feed-box"></div>
+
+      <div class="deliverable-box hidden" id="deliverable-box">
+        <div class="deliverable-hdr">
+          <span id="deliverable-title">Produced Deliverable</span>
+          <span style="font-size:11px;font-weight:600;color:var(--ok);background:var(--ok-dim);padding:3px 8px;border-radius:4px;">HUMAN-IN-THE-LOOP VERIFIED</span>
+        </div>
+        <pre class="deliverable-text" id="deliverable-text"></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: BUILDER -->
+  <div id="tab-builder" class="hidden">
+    <div class="builder-card">
+      <h2 style="font-size:18px;font-weight:800;color:var(--hi);margin-bottom:6px;">Compose New AI Workforce Operator</h2>
+      <p style="font-size:13px;color:var(--tert);margin-bottom:20px;">Clone and customize any existing ESS Inc. iron flow workflow into a tailored autonomous operator.</p>
+
+      <div class="builder-step">
+        <div class="builder-lbl">Step 1: Base Template Workflow</div>
+        <select class="builder-select" id="builder-base-select"></select>
+      </div>
+
+      <div class="builder-step">
+        <div class="builder-lbl">Step 2: Operator Identity &amp; Title</div>
+        <input type="text" class="builder-input" id="builder-op-name" placeholder="Operator Name (e.g. Microgrid Dispatch Controller)">
+        <input type="text" class="builder-input" id="builder-op-title" placeholder="Operator Title (e.g. Lead Energy Warehouse Dispatcher)">
+      </div>
+
+      <div class="builder-step">
+        <div class="builder-lbl">Step 3: Execution Cadence &amp; Target Win Metric</div>
+        <select class="builder-select" id="builder-cadence-select">
+          <option>Continuous Real-Time</option>
+          <option>Day-Ahead Dispatch</option>
+          <option>Weekly Health Audit</option>
+          <option>Monthly Fleet Optimization</option>
+        </select>
+        <input type="text" class="builder-input" id="builder-win-metric" placeholder="Headline Win Metric (e.g. 99.9% Uptime Sign-Off)">
+      </div>
+
+      <button class="btn-blue" style="width:100%;" onclick="buildCustomOperator()">Deploy New Operator to Roster</button>
+    </div>
+  </div>
+
+</main>
+
+<!-- BRAND GUIDELINES & TECHNICAL SPECS DRAWER -->
+<div class="drawer-backdrop" id="brand-drawer" onclick="if(event.target===this)toggleBrandDrawer()">
+  <div class="drawer-panel">
+    <button class="drawer-close" onclick="toggleBrandDrawer()">&times;</button>
+    <h1 class="brand-h1">ESS Inc. Brand &amp; Technical System Specs</h1>
+    <p class="brand-p">Authoritative design tokens, iron flow battery electrochemistry guidelines, and regulatory compliance standards for ESS Tech, Inc. (NYSE: GWH).</p>
+
+    <h3 style="font-size:14px;font-weight:800;color:var(--hi);margin-bottom:12px;">Corporate Brand Palette</h3>
+    <div class="swatch-grid">
+      <div class="swatch-item" style="background:#003b46;">#003B46<br>Iron Flow Teal</div>
+      <div class="swatch-item" style="background:#00a896;">#00A896<br>Clean Tech Accent</div>
+      <div class="swatch-item" style="background:#022c36;">#022C36<br>Deep Utility Slate</div>
+      <div class="swatch-item" style="background:#f0f7f7;color:#022c36;border:1px solid #bcd0d0;">#F0F7F7<br>Surface Canvas</div>
+      <div class="swatch-item" style="background:#10b981;">#10B981<br>Zero-Fade Green</div>
+      <div class="swatch-item" style="background:#d97706;">#D97706<br>Flagship Gold</div>
+    </div>
+
+    <h3 style="font-size:14px;font-weight:800;color:var(--hi);margin-bottom:10px;">Core Product Architectures</h3>
+    <ul style="font-size:13px;color:var(--tert);line-height:1.8;padding-left:20px;margin-bottom:20px;">
+      <li><b>Energy Center&trade;:</b> Utility-scale modular "battery-in-a-building" starting at 3 MW / 12+ hours duration up to 100MW+.</li>
+      <li><b>Energy Warehouse&trade;:</b> Containerized 75 kW / 500 kWh 10-hour turn-key LDES unit for microgrids &amp; C&amp;I solar integration.</li>
+      <li><b>All-Iron Flow Chemistry:</b> Non-toxic, non-flammable electrolyte using iron, salt, and water. Zero thermal runaway risk.</li>
+      <li><b>Operational Lifespan:</b> 25-year service life with 0% capacity degradation over 20,000 cycles without cell replacement.</li>
+    </ul>
+
+    <h3 style="font-size:14px;font-weight:800;color:var(--hi);margin-bottom:10px;">Regulatory &amp; Safety Accreditations</h3>
+    <ul style="font-size:13px;color:var(--tert);line-height:1.8;padding-left:20px;">
+      <li><b>UL 9540 &amp; UL 9540A:</b> Thermal runaway safety verification (no fire risk).</li>
+      <li><b>IEEE 693:</b> High seismic zone rating (0.5g ZPA shake-table certified).</li>
+      <li><b>Inflation Reduction Act (IRA):</b> 40%+ direct tax credits (Domestic Content bonus eligible).</li>
+    </ul>
+  </div>
+</div>
+
+<footer class="footer">
+  <div>&copy; 2026 ESS Tech, Inc. All rights reserved. | Autonomous AI Workforce Prototype</div>
+  <div>Human-in-the-Loop Governance: All AI recommendations require final engineer approval.</div>
+</footer>
+
+<script>
+/* ============================================================================
+   ESS INC. DATA CONFIGURATION & MULTI-AGENT DATA STRUCTURES
+   ============================================================================ */
+
+const AGENT_ROLES = {
+  ironflowchemist: { emoji: "ðŸ§ª", label: "Iron Flow Electrochemist", tools: ["chem_valance_sensor", "ph_electrolyte_balancing", "h2_suppression_control", "save"] },
+  ldesarchitect: { emoji: "âš¡", label: "LDES Utility System Architect", tools: ["stack_sizing_engine", "hydraulic_manifold_calc", "grid_interconnect_sim", "save"] },
+  bmsanalytics: { emoji: "ðŸ”‹", label: "BMS & Membrane Health Specialist", tools: ["soc_soh_telemetry", "pump_flow_optimizer", "hydraulic_pressure_monitor", "save"] },
+  microgrideng: { emoji: "ðŸ­", label: "Energy Warehouse Microgrid Engineer", tools: ["solar_storage_pairing", "container_thermal_sim", "peak_shaving_calc", "save"] },
+  gridreliability: { emoji: "ðŸŒ", label: "Utility Grid Support & Capacity Lead", tools: ["caiso_bidding_model", "duck_curve_mitigator", "frequency_response_sim", "save"] },
+  safetyesg: { emoji: "ðŸ›¡ï¸", label: "Safety & Life Cycle Assessment Auditor", tools: ["ul9540a_safety_auditor", "ieee693_seismic_checker", "lca_carbon_footprint", "save"] },
+  foundryops: { emoji: "âš™ï¸", label: "Flow Stack Assembly & QA Supervisor", tools: ["cell_stack_inspection", "membrane_seal_tester", "bipolar_plate_qa", "save"] },
+  epccommissioning: { emoji: "ðŸ—ï¸", label: "EPC Site Commissioning Lead", tools: ["sat_flushing_protocol", "modbus_scada_mapper", "grid_interconnect_signoff", "save"] },
+  costmodeler: { emoji: "ðŸ“Š", label: "LCOS & IRA Tax Credit Modeler", tools: ["lcos_calculator", "ira_itc_tax_auditor", "capex_opex_20yr_model", "save"] },
+  predictivemaint: { emoji: "ðŸ”§", label: "Fleet Predictive Diagnostics Engine", tools: ["pump_vibration_analyzer", "valve_actuation_telemetry", "heat_exchanger_diagnostics", "save"] },
+  writer: { emoji: "ðŸ“", label: "Technical Documentation Lead", tools: ["rfp_proposal_builder", "utility_interconnect_doc", "executive_summary_gen", "save"] },
+  reviewer: { emoji: "ðŸ”", label: "Principal LDES Compliance Reviewer", tools: ["ldes_compliance_checker", "principal_engineer_signoff", "governance_audit_log", "save"] }
+};
+
+const WORKFLOWS = {
+  energy_center_100mw_utility_dispatch_surge: {
+    name: "Energy Centerâ„¢ 100MW / 1.2GWh Utility LDES Dispatch Surge",
+    title: "Energy Centerâ„¢ 100MW / 1.2GWh Utility LDES Dispatch Surge",
+    mode: 'dag',
+    deliverable: "100MW / 12-Hour Energy Center Utility Dispatch & CAISO Bidding Sign-Off",
+    sample: "Run 100MW / 1.2GWh Energy Center dispatch optimization for CAISO day-ahead capacity market and 12-hour solar firming.",
+    desc: "Orchestrates stack hydraulic sizing, Fe2+/Fe3+ valence balancing, BMS pump optimization, and CAISO capacity bidding for 12-hour LDES.",
+    track: 'trackA',
+    tag: 'flagship',
+    tasks: [
+      { agent: 'ironflowchemist', task: "Analyze electrolyte Fe2+/Fe3+ valence state, pH buffer stability, and hydrogen mitigation protocols.", deps: [] },
+      { agent: 'ldesarchitect', task: "Size 3MW modular battery building blocks, hydraulic manifold piping, and 12-hour storage stack layout.", deps: [0] },
+      { agent: 'bmsanalytics', task: "Calculate optimal electrolyte pump flow rates and membrane hydraulic pressure differentials for 100MW discharge.", deps: [1] },
+      { agent: 'gridreliability', task: "Model CAISO/PJM day-ahead capacity market bidding, duck-curve solar firming, and spinning reserves.", deps: [2] },
+      { agent: 'safetyesg', task: "Verify UL 9540A zero thermal runaway compliance, non-flammable water chemistry, and IEEE 693 seismic certification.", deps: [3] },
+      { agent: 'reviewer', task: "Perform principal engineer sign-off on 100MW Energy Center dispatch package and governance audit log.", deps: [4] }
+    ]
+  },
+  iron_flow_electrolyte_health_rebalance: {
+    name: "Iron Flow Electrolyte Chemistry & Rebalancing Audit",
+    title: "Iron Flow Electrolyte Chemistry & Rebalancing Audit",
+    mode: 'sequential',
+    deliverable: "Electrolyte Valence & pH Health Optimization Report",
+    sample: "Perform continuous electrolyte health audit for 25MW battery field and execute active proton/Fe3+ rebalancing.",
+    desc: "Monitors iron salt state, prevents plating imbalances, and maintains 0% capacity degradation over 20,000 cycles.",
+    track: 'trackA',
+    tasks: [
+      { agent: 'ironflowchemist', task: "Measure Fe2+/Fe3+ ratio and salt concentration across 16 electrolyte storage tanks.", deps: [] },
+      { agent: 'bmsanalytics', task: "Adjust variable-speed electrolyte pumps to equalize state of charge across cell stack arrays.", deps: [0] },
+      { agent: 'predictivemaint', task: "Check electrolyte heater loop and heat exchanger thermal performance.", deps: [1] },
+      { agent: 'reviewer', task: "Sign off on chemical rebalancing parameter log and zero-degradation warranty report.", deps: [2] }
+    ]
+  },
+  ul9540a_ieee693_seismic_safety_audit: {
+    name: "UL 9540A & IEEE 693 Seismic Safety Compliance",
+    title: "UL 9540A & IEEE 693 Seismic Safety Compliance",
+    mode: 'sequential',
+    deliverable: "UL 9540A Non-Flammability & IEEE 693 High Seismic Certification Package",
+    sample: "Generate safety certification dossier for 50MW Energy Center installation in seismic zone 4.",
+    desc: "Validates non-toxic, non-flammable iron/salt/water safety profile and seismic structural endurance.",
+    track: 'trackA',
+    tasks: [
+      { agent: 'safetyesg', task: "Audit UL 9540A thermal runaway prevention data and non-flammable water-based electrolyte safety.", deps: [] },
+      { agent: 'ldesarchitect', task: "Verify IEEE 693 high seismic shake-table test models for containerized and building stack frames.", deps: [0] },
+      { agent: 'writer', task: "Compile safety disclosure document and environmental impact assessment (LCA carbon footprint).", deps: [1] },
+      { agent: 'reviewer', task: "Review and approve utility interconnection safety filings.", deps: [2] }
+    ]
+  },
+  lcos_financial_itc_roi_optimizer: {
+    name: "20-Year LCOS & Inflation Reduction Act (IRA) ITC Modeler",
+    title: "20-Year LCOS & Inflation Reduction Act (IRA) ITC Modeler",
+    mode: 'sequential',
+    deliverable: "20-Year LCOS & 40%+ IRA ITC Financial ROI Blueprint",
+    sample: "Calculate LCOS for 100MW / 10-hour LDES system vs Lithium-ion over 25-year operational lifecycle.",
+    desc: "Demonstrates $0.042/kWh LCOS with zero cell replacement costs and 40%+ IRA Investment Tax Credits.",
+    track: 'trackA',
+    tasks: [
+      { agent: 'costmodeler', task: "Compute 20-year Levelized Cost of Storage (LCOS) incorporating 0% capacity fade and zero augmentation costs.", deps: [] },
+      { agent: 'gridreliability', task: "Project stacked revenue streams from energy arbitrage, capacity firming, and frequency regulation.", deps: [0] },
+      { agent: 'writer', task: "Generate executive financial proposal detailing 40% domestic content IRA ITC tax credit qualifying items.", deps: [1] },
+      { agent: 'reviewer', task: "Validate financial model assumptions and sign off on utility proposal submission.", deps: [2] }
+    ]
+  },
+  energy_warehouse_75kw_microgrid_deploy: {
+    name: "Energy Warehouseâ„¢ 75kW/500kWh Microgrid Deployment",
+    title: "Energy Warehouseâ„¢ 75kW/500kWh Microgrid Deployment",
+    mode: 'dag',
+    deliverable: "Energy Warehouse 75kW/500kWh Microgrid Commissioning Sign-Off",
+    sample: "Deploy containerized Energy Warehouse for 1.5MW commercial solar microgrid with 10-hour evening discharge.",
+    desc: "Engineers containerized iron flow system integration, solar pairing, and microgrid islanding capability.",
+    track: 'trackB',
+    tasks: [
+      { agent: 'microgrideng', task: "Model solar-plus-storage integration, 75kW inverter pairing, and 500kWh 10-hour discharge curve.", deps: [] },
+      { agent: 'epccommissioning', task: "Execute factory acceptance testing (FAT) and container hydraulic pressure checks.", deps: [0] },
+      { agent: 'bmsanalytics', task: "Verify Modbus TCP/IP telemetry interface between Energy Warehouse BMS and microgrid controller.", deps: [1] },
+      { agent: 'reviewer', task: "Approve turn-key microgrid commissioning certificate.", deps: [2] }
+    ]
+  },
+  fleet_predictive_pump_valve_diagnostics: {
+    name: "Global LDES Fleet Predictive Maintenance Audit",
+    title: "Global LDES Fleet Predictive Maintenance Audit",
+    mode: 'sequential',
+    deliverable: "Fleet Pump & Hydraulic Valve Predictive Maintenance Report",
+    sample: "Run real-time predictive telemetry audit across 200+ deployed Energy Warehouse and Energy Center units.",
+    desc: "Analyzes pump vibration, flow rate drift, and valve actuation curves to prevent field downtime.",
+    track: 'trackB',
+    tasks: [
+      { agent: 'predictivemaint', task: "Analyze fast Fourier transform (FFT) vibration spectrum from positive displacement electrolyte pumps.", deps: [] },
+      { agent: 'bmsanalytics', task: "Cross-reference pump flow telemetry with cell stack differential pressure to detect micro-clogging.", deps: [0] },
+      { agent: 'epccommissioning', task: "Dispatch automated maintenance ticket and replacement gasket/valve checklist to field engineers.", deps: [1] },
+      { agent: 'reviewer', task: "Sign off on fleet availability SLA metrics (99.8% target uptime).", deps: [2] }
+    ]
+  },
+  flow_stack_manufacturing_qa_audit: {
+    name: "Automated Iron Flow Cell Stack Assembly & QA Inspection",
+    title: "Automated Iron Flow Cell Stack Assembly & QA Inspection",
+    mode: 'sequential',
+    deliverable: "Flow Stack Assembly QA & Automated Membrane Seal Certification",
+    sample: "Perform factory automation QA on 500-cell iron flow stack production line.",
+    desc: "Inspects proton exchange membranes, titanium electrodes, and automated robotic stack bolt torqueing.",
+    track: 'trackB',
+    tasks: [
+      { agent: 'foundryops', task: "Audit vision system scan of membrane gasket alignment and bipolar plate surface flatness.", deps: [] },
+      { agent: 'ironflowchemist', task: "Verify catalyst coating integrity on titanium mesh electrodes.", deps: [0] },
+      { agent: 'safetyesg', task: "Conduct pneumatic pressure decay leak check on assembled cell stack.", deps: [1] },
+      { agent: 'reviewer', task: "Approve batch manufacturing release certificate for stack lot #ESS-2026-0921.", deps: [2] }
+    ]
+  },
+  epc_site_interconnection_commissioning: {
+    name: "EPC Site Acceptance Testing (SAT) & SCADA Sign-Off",
+    title: "EPC Site Acceptance Testing (SAT) & SCADA Sign-Off",
+    mode: 'sequential',
+    deliverable: "EPC Site Acceptance Testing (SAT) & Utility Interconnection Dossier",
+    sample: "Conduct final on-site commissioning and utility SCADA handshake for 20MW municipal LDES plant.",
+    desc: "Flushes electrolyte lines, verifies grid frequency response within <100ms, and signs off SAT.",
+    track: 'trackB',
+    tasks: [
+      { agent: 'epccommissioning', task: "Perform DI water flush and initial iron/salt/water electrolyte charge into 40,000-gallon storage tanks.", deps: [] },
+      { agent: 'microgrideng', task: "Test utility grid interconnect safety relays and bi-directional inverter response.", deps: [0] },
+      { agent: 'writer', task: "Compile EPC site acceptance testing (SAT) package and utility permission to operate (PTO) paperwork.", deps: [1] },
+      { agent: 'reviewer', task: "Provide final sign-off on EPC project handover and commercial operation date (COD).", deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  energy_center_100mw_utility_dispatch_surge: "100MW / 1.2GWh Energy Center Utility Dispatch & CAISO Bidding Sign-Off",
+  iron_flow_electrolyte_health_rebalance: "Electrolyte Valence & pH Health Optimization Report",
+  ul9540a_ieee693_seismic_safety_audit: "UL 9540A Non-Flammability & IEEE 693 High Seismic Certification Package",
+  lcos_financial_itc_roi_optimizer: "20-Year LCOS & 40%+ IRA ITC Financial ROI Blueprint",
+  energy_warehouse_75kw_microgrid_deploy: "Energy Warehouse 75kW/500kWh Microgrid Commissioning Sign-Off",
+  fleet_predictive_pump_valve_diagnostics: "Fleet Pump & Hydraulic Valve Predictive Maintenance Report",
+  flow_stack_manufacturing_qa_audit: "Flow Stack Assembly QA & Automated Membrane Seal Certification",
+  epc_site_interconnection_commissioning: "EPC Site Acceptance Testing (SAT) & Utility Interconnection Dossier"
+};
+
+const TOOLS = {
+  chem_valance_sensor: () => "Fe2+/Fe3+ balance: 99.4% optimal | pH buffer: 2.15 | H2 evolution rate: <0.01 ml/Ah",
+  ph_electrolyte_balancing: () => "Proton pump rebalance active | Electrolyte SG: 1.24 | Zero iron hydroxide precipitation",
+  h2_suppression_control: () => "Auxiliary catalytic recombiner engaged | Hydrogen partial pressure: <0.02% (safe threshold 4.0%)",
+  stack_sizing_engine: () => "Energy Center layout: 32x 3.125MW building modules | Total capacity: 100MW / 1,200MWh (12hr)",
+  hydraulic_manifold_calc: () => "Electrolyte distribution header: 12-inch CPVC | Flow rate: 4,800 GPM @ 28 PSI pressure drop",
+  grid_interconnect_sim: () => "Substation step-up: 13.8kV to 230kV | Bi-directional inverter efficiency: 98.2%",
+  soc_soh_telemetry: () => "System State of Charge (SOC): 94.2% | State of Health (SOH): 100.0% (0% capacity fade)",
+  pump_flow_optimizer: () => "Variable frequency drive (VFD) pump speed: 1,450 RPM | Volumetric efficiency: 97.8%",
+  hydraulic_pressure_monitor: () => "Cell stack delta P: 4.2 PSI | Membrane differential pressure within +/-0.3 PSI specification",
+  solar_storage_pairing: () => "1.5MW Solar PV paired with 75kW/500kWh Energy Warehouse | 100% solar self-consumption achieved",
+  container_thermal_sim: () => "Ambient range: -10C to +50C | Internal electrolyte temp: 31.4C (HVAC active cooling required: NONE)",
+  peak_shaving_calc: () => "Facility peak demand reduced from 1,850 kW to 1,200 kW | Monthly demand charge savings: $14,250",
+  caiso_bidding_model: () => "Day-ahead spinning reserve bid cleared @ $18.40/MW-hr | 12-hour discharge block: 17:00-05:00",
+  duck_curve_mitigator: () => "Evening solar ramp absorption: 120 MWh stored @ peak solar yield | Discharged during peak net-load",
+  frequency_response_sim: () => "Primary frequency response reaction time: <85ms | Ramp rate: 10MW/second",
+  ul9540a_safety_auditor: () => "UL 9540A thermal runaway risk: ZERO | Fire suppression system required: NONE (Water-based)",
+  ieee693_seismic_checker: () => "IEEE 693 High Seismic Level (0.5g ZPA) verified | Zero structural or electrolyte leak risk",
+  lca_carbon_footprint: () => "Cradle-to-grave CO2 footprint: 34 kg CO2e/kWh (62% lower than Lithium-ion NMC)",
+  cell_stack_inspection: () => "Robotic bolt torque scan: 18.5 Nm +/-0.2 Nm across 120 tie rods | Zero stack seal deflection",
+  membrane_seal_tester: () => "Automated vision inspection: Membrane gasket seal concentricity 99.98% accurate",
+  bipolar_plate_qa: () => "Titanium electrode contact resistance: 0.12 mOhm-cm2 | Contact pressure uniform",
+  sat_flushing_protocol: () => "DI water flush completed | Hydraulic loop conductivity: <0.5 uS/cm | Electrolyte fill ready",
+  modbus_scada_mapper: () => "Modbus TCP/IP registers mapped: 1,024 tags online | DNP3 utility gateway latency: 12ms",
+  grid_interconnect_signoff: () => "Protection relay trip test passed | Anti-islanding scheme verified per IEEE 1547",
+  lcos_calculator: () => "Levelized Cost of Storage (LCOS): $0.042/kWh @ 20-year operational life (20,000 cycles)",
+  ira_itc_tax_auditor: () => "IRA Investment Tax Credit (ITC) qualification: 30% Base + 10% Domestic Content = 40% Total ITC",
+  capex_opex_20yr_model: () => "20-Year CAPEX: $240/kWh | Annual OPEX: $3.50/kW-yr | Zero battery augmentation expense",
+  pump_vibration_analyzer: () => "Positive displacement pump vibration FFT: 0.8 mm/s RMS (Well within ISO 10816 Class I normal zone)",
+  valve_actuation_telemetry: () => "Flow control valve response time: 340ms | Zero seat leakage detected across 50,000 cycles",
+  heat_exchanger_diagnostics: () => "Plate heat exchanger fouling factor: 0.0001 m2-K/W | Thermal transfer efficiency: 96.4%",
+  rfp_proposal_builder: () => "Utility RFP proposal generated: 48 pages with LCOS analysis, single-line diagram, and warranty terms",
+  utility_interconnect_doc: () => "Interconnection request filed with utility | System impact study (SIS) data package complete",
+  executive_summary_gen: () => "Executive summary synthesized: LDES ROI, non-flammable safety profile, and IRA tax incentives",
+  ldes_compliance_checker: () => "Compliance check: UL 9540, IEEE 693, NFPA 855, and CE mark requirements fully satisfied",
+  principal_engineer_signoff: () => "Principal LDES Systems Engineer sign-off recorded: GWH-SIGN-2026-0921-APPROVED",
+  governance_audit_log: () => "Immutable governance log entry stored: SHA-256 hash verified for multi-agent dispatch run",
+  save: () => "Output artifact saved successfully to enterprise repository."
+};
+
+const FINAL = {
+  energy_center_100mw_utility_dispatch_surge: `================================================================================
+ESS INC. (NYSE: GWH) - ENERGY CENTERâ„¢ 100MW / 1.2GWh UTILITY DISPATCH SIGN-OFF
+================================================================================
+Project: Desert Southwest Solar-Plus-Storage Capacity Firming (100MW / 12-Hour LDES)
+Technology: ESS Iron Flow Battery (Iron, Salt, Water non-toxic chemistry)
+Date: September 21, 2026 | Document ID: ESS-EC-100MW-DISPATCH-20260921
+
+1. SYSTEM ARCHITECTURE & HYDRAULIC SIZING
+- System Configuration: 32x 3.125MW / 37.5MWh modular Energy Center building blocks
+- Power & Energy Sizing: 100 MW continuous discharge rating for 12.0 hours (1,200 MWh total)
+- Electrolyte Volume: 4.2 Million Gallons of non-toxic iron/salt/water chemistry across central tanks
+- Hydraulic Piping: 12-inch CPVC distribution headers with redundant 4,800 GPM VFD pumps
+
+2. ELECTROLYTE CHEMISTRY & BALANCE MONITORING
+- Valence State: Fe2+ / Fe3+ ratio maintained at 99.4% optimal equilibrium
+- pH Stability: Buffered at 2.15; auxiliary catalytic hydrogen recombiner active (<0.02% H2)
+- Capacity Fade Expectation: 0.0% over 20-year operating life (20,000+ deep discharge cycles)
+
+3. GRID INTEGRATION & CAISO DAY-AHEAD MARKET BIDDING
+- CAISO Market Bidding: Cleared 100MW day-ahead spinning reserve @ $18.40/MW-hr
+- Solar Firming Profile: Absorbs 120MWh peak midday solar curtailment (11:00-15:00)
+- Discharge Block: 12-hour continuous discharge (17:00-05:00) mitigating CAISO duck curve peak
+- Response Time: Primary frequency response reaction <85ms; ramp rate 10MW/sec
+
+4. SAFETY & REGULATORY COMPLIANCE
+- UL 9540A Thermal Runaway Risk: ZERO (Water-based electrolyte; non-flammable & non-explosive)
+- Fire Suppression Required: NONE required under NFPA 855 for non-hazardous water chemistry
+- IEEE 693 Seismic Rating: Certified for High Seismic Level (0.5g ZPA) structural acceleration
+
+5. GOVERNANCE & PRINCIPAL ENGINEER APPROVAL
+- Lead System Architect: Dr. Marcus Vance, PE (ESS Energy Center Systems)
+- Principal Review Status: APPROVED (Digital Signature Hash: 0x9f82...7a10)
+
+NOTE: This is an illustrative simulation generated by the ESS Inc. Autonomous AI Workforce. All metrics are placeholders for demonstration purposes.`,
+
+  iron_flow_electrolyte_health_rebalance: `================================================================================
+ESS INC. ELECTROLYTE CHEMISTRY & REBALANCING HEALTH OPTIMIZATION REPORT
+================================================================================
+Target Facility: 25MW / 250MWh Utility Storage Field (Block B-4)
+Date: September 21, 2026 | Audit Cycle: Continuous Automated 24/7 Monitoring
+
+1. CHEMICAL ANALYSIS & VALENCE BALANCE
+- Active Electrolyte Solution: Aqueous Iron Chloride (FeCl2 / FeCl3) + Sodium Chloride buffer
+- Fe2+/Fe3+ Valence Ratio: 99.4% optimal (Target >98.0%)
+- Hydrogen Evolution Rate: <0.01 ml/Ah (Catalytic recombiners running at 12% capacity)
+- Iron Hydroxide Precipitation Risk: ZERO (pH held firmly at 2.15 +/- 0.05)
+
+2. PUMP HYDRAULICS & SOC EQUALIZATION
+- Variable Speed Drives: Pump speed automatically tuned to 1,450 RPM across 16 storage tanks
+- Hydraulic Delta P: 4.2 PSI across 500-cell stack array (Nominal range: 3.8 - 4.5 PSI)
+- State of Charge (SOC) Variance across Stacks: <0.4% maximum deviation
+
+3. LIFECYCLE DEGRADATION PROJECTION
+- Measured Capacity Degradation: 0.00% after 4,120 full equivalent cycles
+- 20-Year Warranted SOH Status: 100.0% HEALTHY (No lithium-style cell augmentation required)
+
+4. ACTION ITEMS & APPROVALS
+- Active Proton Rebalance: Complete (0.8 L DI water automated make-up added)
+- Maintenance Status: All 16 hydraulic loops operating within nominal thresholds
+
+NOTE: This is an illustrative simulation generated by the ESS Inc. Autonomous AI Workforce.`,
+
+  ul9540a_ieee693_seismic_safety_audit: `================================================================================
+ESS INC. SAFETY & SEISMIC COMPLIANCE CERTIFICATION DOSSIER
+================================================================================
+Target Installation: Energy Centerâ„¢ 50MW / 500MWh Installation (Seismic Zone 4)
+Standards Evaluated: UL 9540, UL 9540A, IEEE 693, NFPA 855, OSHA 1910
+Date: September 21, 2026
+
+1. UL 9540A THERMAL RUNAWAY & FIRE RISK ASSESSMENT
+- Technology Chemistry: Earth-abundant Iron, Salt, and Water (100% water-based electrolyte)
+- Thermal Runaway Test Result: NO THERMAL RUNAWAY POSSIBLE (Non-flammable electrolyte)
+- Off-Gassing Analysis: Zero toxic or explosive gases (CO, HF, HCN) under extreme overcharge
+- NFPA 855 Setback Waiver: Qualified for reduced hazard separation distances
+
+2. IEEE 693 HIGH SEISMIC SHAKE-TABLE AUDIT
+- Seismic Rating: High Seismic Level (0.5g Zero Period Acceleration / ZPA)
+- Structural Frame Integrity: Stress analysis confirms 3.2x safety factor on stack tie-rods
+- Piping Flexibility: Flexible elastomeric expansion joints isolate CPVC manifolds from ground motion
+
+3. ENVIRONMENTAL & LIFE CYCLE ASSESSMENT (LCA)
+- Cradle-to-Grave Carbon Footprint: 34 kg CO2e/kWh (62% reduction vs Lithium-ion NMC)
+- End-of-Life Recyclability: 100% recyclable (Iron salts and CPVC components fully recoverable)
+
+4. COMPLIANCE SIGN-OFF
+- ESS Safety Director: Elena Rostova, CSP
+- Certification Status: FULLY COMPLIANT
+
+NOTE: This is an illustrative simulation generated by the ESS Inc. Autonomous AI Workforce.`,
+
+  lcos_financial_itc_roi_optimizer: `================================================================================
+ESS INC. 20-YEAR LCOS & INFLATION REDUCTION ACT (IRA) FINANCIAL BLUEPRINT
+================================================================================
+Project: 100MW / 10-Hour Utility LDES Asset Comparison (ESS Iron Flow vs Li-ion LFP)
+Date: September 21, 2026 | Financial Model Version: LCOS-v4.2-2026
+
+1. LEVELIZED COST OF STORAGE (LCOS) SUMMARY
+- ESS Iron Flow LCOS: $0.042 / kWh
+- Lithium-Ion LFP LCOS: $0.098 / kWh
+- Net LCOS Advantage: 57.1% LCOS Reduction with ESS Iron Flow Technology
+
+2. 20-YEAR CAPEX & OPEX COMPARISON
+- Initial Turn-Key CAPEX: ESS $240/kWh vs Li-Ion $290/kWh
+- 10-Year Cell Augmentation Expense: ESS $0.00 vs Li-Ion $115/kWh (Li-ion degrades 2.5%/yr)
+- Annual O&M Cost: ESS $3.50/kW-yr (Simple pump/filter service) vs Li-Ion $8.20/kW-yr
+- Useful Operating Life: ESS 25 Years (20,000+ cycles) vs Li-Ion 10 Years (4,000 cycles)
+
+3. INFLATION REDUCTION ACT (IRA) INVESTMENT TAX CREDIT (ITC)
+- Base Section 48 ITC: 30% Tax Credit
+- Domestic Content Bonus: +10% Tax Credit (US Manufactured Iron Flow Cell Stacks & Tanks)
+- Total Qualified IRA ITC: 40% Direct Cash Grant / Tax Credit ($96,000,000 tax benefit)
+
+4. EXECUTIVE RECOMMENDATION
+- Net Present Value (NPV @ 7% WACC): $142,500,000 favorable over Lithium-Ion
+- Internal Rate of Return (IRR): 22.4% with 4.1-year payback period
+
+NOTE: This is an illustrative simulation generated by the ESS Inc. Autonomous AI Workforce.`,
+
+  energy_warehouse_75kw_microgrid_deploy: `================================================================================
+ESS INC. ENERGY WAREHOUSEâ„¢ 75kW/500kWh MICROGRID COMMISSIONING SIGN-OFF
+================================================================================
+Deployment Location: Commercial & Industrial Manufacturing Facility (California)
+System Asset: Containerized Energy Warehouseâ„¢ (75kW Power / 500kWh Energy, 10-Hour)
+Date: September 21, 2026
+
+1. SOLAR-PLUS-STORAGE INTEGRATION
+- Paired PV Solar Array: 1.5 MW Commercial Rooftop & Ground-Mount Solar
+- Operating Strategy: 100% midday solar clip absorption (500kWh stored daily)
+- Evening Discharge Window: 10-hour continuous discharge (17:00 to 03:00)
+- Facility Demand Peak Reduction: Shaved 650 kW peak demand, saving $14,250/month
+
+2. CONTAINER & ENVIRONMENT PERFORMANCE
+- Form Factor: 40-foot standard ISO shipping container design
+- Ambient Operating Temperature Range: Tested from -10C to +50C with 0% HVAC degradation
+- Internal Electrolyte Loop Temperature: Stable at 31.4C (Passive thermal mass)
+
+3. SCADA & CONTROLLER HANDSHAKE
+- Communication Protocol: Modbus TCP/IP to Facility Energy Management System (FMS)
+- Islanding Switching Time: Seamless microgrid transfer <100ms on grid outage
+
+4. FINAL COMMISSIONING CERTIFICATION
+- Lead Field Commissioning Engineer: David Chen, PE
+- Status: APPROVED FOR COMMERCIAL OPERATION
+
+NOTE: This is an illustrative simulation generated by the ESS Inc. Autonomous AI Workforce.`,
+
+  fleet_predictive_pump_valve_diagnostics: `================================================================================
+ESS INC. GLOBAL LDES FLEET PREDICTIVE MAINTENANCE TELEMETRY REPORT
+================================================================================
+Fleet Scope: 200+ Deployed Energy Warehouse & Energy Center Units Worldwide
+Monitoring Period: Q3 2026 Telemetry Sweep | Total Energy Delivered: 480 GWh
+Date: September 21, 2026
+
+1. PUMP HEALTH & VIBRATION FFT SPECTRUM
+- Positive Displacement Electrolyte Pumps Analyzed: 840 units
+- Vibration Spectrum (FFT): Mean 0.8 mm/s RMS (Normal operating band: <2.5 mm/s RMS)
+- Flagged Units for Proactive Seal Refresh: 2 units (EW-S/N-1042, EW-S/N-1189)
+
+2. HYDRAULIC VALVE ACTUATION & DELTA P
+- Flow Control Valve Actuation Cycles: 50,000+ operations per unit
+- Mean Valve Response Time: 340ms (Nominal specification <500ms)
+- Membrane Delta P Drift: 0.00% anomaly rate across 99.8% of cell stacks
+
+3. FLEET AVAILABILITY & SLA METRICS
+- Fleet Operational Availability: 99.84% (Exceeds 99.5% contract SLA)
+- Unplanned Maintenance Outage Rate: 0.02%
+- Proactive Field Dispatch Ticket: Ticket #ESS-PRED-8821 dispatched for seal inspection
+
+NOTE: This is an illustrative simulation generated by the ESS Inc. Autonomous AI Workforce.`,
+
+  flow_stack_manufacturing_qa_audit: `================================================================================
+ESS INC. FACTORY CELL STACK ASSEMBLY & QA RELEASE CERTIFICATE
+================================================================================
+Manufacturing Site: ESS Wilsonville Automated Manufacturing Facility (Oregon, USA)
+Stack Production Lot: #ESS-2026-0921 (500-Cell High-Density Iron Flow Stacks)
+Date: September 21, 2026
+
+1. AUTOMATED VISION & DIMENSIONAL INSPECTION
+- Proton Exchange Membrane Alignment: 99.98% concentricity compliance
+- Bipolar Plate Flatness: <0.02 mm deviation across 1,200mm plate length
+- Titanium Mesh Catalyst Coating: Uniform 15.2 ug/cm2 noble catalyst distribution
+
+2. ROBOTIC TORQUE & PNEUMATIC LEAK TESTING
+- Stack Tie-Rod Torque: 18.5 Nm +/- 0.2 Nm verified across 120 tie-rods per stack
+- Pneumatic Pressure Decay Leak Check: 0.000 PSI drop over 15 minutes @ 15 PSI test pressure
+- Electrical Contact Resistance: 0.12 mOhm-cm2 (Exceeds conductivity target)
+
+3. FACTORY QUALITY ACCEPTANCE
+- Lot Yield: 99.94% (499 of 500 stacks passed first-pass inspection)
+- Quality Supervisor: Marcus Vance, Quality Director
+- Release Status: CERTIFIED FOR CONTAINERIZED ASSEMBLY
+
+NOTE: This is an illustrative simulation generated by the ESS Inc. Autonomous AI Workforce.`,
+
+  epc_site_interconnection_commissioning: `================================================================================
+ESS INC. EPC SITE ACCEPTANCE TESTING (SAT) & INTERCONNECTION DOSSIER
+================================================================================
+Project: 20MW / 200MWh Municipal LDES Substation Plant
+EPC Partner: Global Clean Energy Engineering & Construction
+Date: September 21, 2026
+
+1. HYDRAULIC LOOP PURGING & ELECTROLYTE CHARGING
+- DI Water Loop Flush: Conducted 72-hour circulation; final conductivity 0.3 uS/cm
+- Electrolyte Charge Volume: 840,000 Gallons iron/salt/water loaded into primary tanks
+- Initial Chemical Conditioning: Fe2+ valence verified at 99.5% prior to grid connection
+
+2. INTERCONNECTION & PROTECTION RELAY TESTING
+- Utility Protection Handshake: Tested 3-phase fault trip relays (IEEE 1547 compliant)
+- Anti-Islanding Trip Response: Trip verified in 42ms upon simulated utility loss
+- SCADA Mapping: 1,024 Modbus TCP/IP registers verified with utility control center
+
+3. COMMERCIAL OPERATION DATE (COD) SIGN-OFF
+- Commissioning Lead: Sarah Jenkins, Lead EPC Field Manager
+- Utility Inspector: Municipal Power Authority Interconnection Lead
+- Project Status: GRANTED PERMISSION TO OPERATE (PTO) - COD ACTIVE
+
+NOTE: This is an illustrative simulation generated by the ESS Inc. Autonomous AI Workforce.`
+};
+
+const EMPLOYEES = [
+  { id: "op_energy_center", name: "Utility LDES Dispatch Operator", title: "Energy Centerâ„¢ 100MW Grid Dispatch Specialist", wf: 'energy_center_100mw_utility_dispatch_surge', handled: 142, hrs: 18.4, win: "12-Hr LDES Grid Firming", status: "idle" },
+  { id: "op_electrolyte", name: "Electrolyte Rebalancing Operator", title: "Iron Flow Chemistry & pH Optimization Lead", wf: 'iron_flow_electrolyte_health_rebalance', handled: 389, hrs: 9.6, win: "0% Capacity Degradation", status: "idle" },
+  { id: "op_safety_audit", name: "Safety & Seismic Compliance Auditor", title: "UL 9540A & IEEE 693 Safety Audit Lead", wf: 'ul9540a_ieee693_seismic_safety_audit', handled: 94, hrs: 24.1, win: "UL 9540A Zero Thermal Runaway", status: "idle" },
+  { id: "op_lcos_model", name: "LCOS & IRA Tax Financial Modeler", title: "20-Yr LCOS & IRA Tax Incentive Architect", wf: 'lcos_financial_itc_roi_optimizer', handled: 215, hrs: 14.2, win: "$0.042/kWh LCOS vs $0.098 Li-Ion", status: "idle" },
+  { id: "op_microgrid", name: "Energy Warehouse Microgrid Specialist", title: "75kW/500kWh Microgrid Integration Lead", wf: 'energy_warehouse_75kw_microgrid_deploy', handled: 176, hrs: 12.8, win: "100% Non-Toxic Microgrid", status: "idle" },
+  { id: "op_fleet_diag", name: "Fleet Predictive Diagnostics Operator", title: "Global LDES Fleet Telemetry & Maintenance Lead", wf: 'fleet_predictive_pump_valve_diagnostics', handled: 512, hrs: 7.5, win: "99.8% Fleet Availability", status: "idle" },
+  { id: "op_stack_qa", name: "Flow Stack Assembly QA Inspector", title: "Automated Stack Assembly & Membrane QA Lead", wf: 'flow_stack_manufacturing_qa_audit', handled: 310, hrs: 11.0, win: "99.94% Flow Cell Yield", status: "idle" },
+  { id: "op_epc_sat", name: "EPC Site Commissioning Operator", title: "Site Acceptance Testing & SCADA Sign-Off Lead", wf: 'epc_site_interconnection_commissioning', handled: 128, hrs: 16.3, win: "14-Day SAT Acceleration", status: "idle" }
+];
+
+const CONFIG = {
+  econLabels: ["Long-Duration Storage Capacity", "Annual OPEX Savings", "LCOS Reduction vs Lithium", "Safety Risk Elimination"],
+  statLabel: "Iron Flow Fleet Reliability Uplift",
+  statSign: "+",
+  statSuffix: "%",
+  runButton: "Run AI Workforce Operator",
+  runNoun: "Operator Pipeline",
+  outputLabel: "Validated LDES Output & Executive Summary",
+  rosterLabel: "ESS Inc. AI Workforce Roster",
+  trackLabels: {
+    trackA: "Track A: Utility-Scale Energy Centerâ„¢ & LDES Grid Firming",
+    trackB: "Track B: Energy Warehouseâ„¢ Microgrids & Field Fleet Operations"
+  },
+  builderCadences: ["Continuous Real-Time", "Day-Ahead Dispatch", "Weekly Health Audit", "Monthly Fleet Optimization"]
+};
+
+/* ============================================================================
+   ENGINE LOGIC (DO NOT EDIT)
+   ============================================================================ */
+
+let currentSelectedWfKey = "energy_center_100mw_utility_dispatch_surge";
+
+function renderRoster() {
+  const container = document.getElementById("roster-container");
+  if (!container) return;
+
+  const trackAOps = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === "trackA");
+  const trackBOps = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === "trackB");
+
+  let html = `
+    <div class="section-hdr">${CONFIG.trackLabels.trackA}</div>
+    <div class="roster-grid">
+      ${trackAOps.map(op => renderOperatorCard(op)).join("")}
+    </div>
+
+    <div class="section-hdr" style="margin-top:40px;">${CONFIG.trackLabels.trackB}</div>
+    <div class="roster-grid">
+      ${trackBOps.map(op => renderOperatorCard(op)).join("")}
+    </div>
+  `;
+  container.innerHTML = html;
+}
+
+function renderOperatorCard(op) {
+  const wf = WORKFLOWS[op.wf];
+  if (!wf) return "";
+  const isFlagship = wf.tag === "flagship";
+  
+  // Agent chips
+  const agentChips = wf.tasks.map(t => {
+    const a = AGENT_ROLES[t.agent];
+    return a ? `<span class="agent-chip">${a.emoji} ${a.label}</span>` : "";
+  }).join("");
+
+  return `
+    <div class="operator-card ${isFlagship ? 'hero-op' : ''}">
+      <div class="op-top">
+        <div class="op-avatar">${op.name.charAt(0)}</div>
+        <div>
+          <div class="op-name">
+            ${op.name}
+            ${isFlagship ? '<span style="font-size:10px;font-weight:800;background:var(--accent);color:#fff;padding:2px 6px;border-radius:4px;text-transform:uppercase;">FLAGSHIP</span>' : ''}
+          </div>
+          <div class="op-title">${op.title}</div>
+        </div>
+      </div>
+      <div class="op-owns"><b>Workflow:</b> ${wf.name}</div>
+      <div class="team-chips">${agentChips}</div>
+      <div class="op-stats">
+        <div class="op-stat-item"><b>${op.handled}</b> Runs Handled</div>
+        <div class="op-stat-item"><b>${op.hrs} hrs</b> Avg Savings</div>
+        <div class="op-stat-item"><b style="color:var(--accent);">${op.win}</b> Headline Value</div>
+      </div>
+      <button class="btn-run-op" onclick="selectAndRunOperator('${op.wf}')">Launch Operator Run</button>
+    </div>
+  `;
+}
+
+function selectAndRunOperator(wfKey) {
+  currentSelectedWfKey = wfKey;
+  switchTab("run");
+  const wf = WORKFLOWS[wfKey];
+  if (!wf) return;
+  
+  document.getElementById("run-panel-title").innerText = "Operator: " + wf.title;
+  document.getElementById("run-panel-sub").innerText = wf.desc;
+  document.getElementById("run-prompt-input").value = wf.sample;
+
+  // Clear previous outputs
+  document.getElementById("run-feed-box").classList.add("hidden");
+  document.getElementById("run-feed-box").innerHTML = "";
+  document.getElementById("deliverable-box").classList.add("hidden");
+}
+
+function executeCurrentWorkflow() {
+  const wf = WORKFLOWS[currentSelectedWfKey];
+  if (!wf) return;
+
+  const feedBox = document.getElementById("run-feed-box");
+  const delivBox = document.getElementById("deliverable-box");
+  const delivText = document.getElementById("deliverable-text");
+  const delivTitle = document.getElementById("deliverable-title");
+
+  feedBox.classList.remove("hidden");
+  feedBox.innerHTML = `<div class="feed-line">[SYSTEM] Initializing multi-agent dispatch execution engine for ${wf.name}...</div>`;
+  delivBox.classList.add("hidden");
+
+  let stepIdx = 0;
+  
+  function stepLoop() {
+    if (stepIdx < wf.tasks.length) {
+      const taskObj = wf.tasks[stepIdx];
+      const agentObj = AGENT_ROLES[taskObj.agent];
+      const toolKey = agentObj ? agentObj.tools[0] : "save";
+      const toolOutput = TOOLS[toolKey] ? TOOLS[toolKey]() : "Tool execution complete.";
+
+      const line = document.createElement("div");
+      line.className = "feed-line";
+      line.innerHTML = `<span class="feed-agent">${agentObj.emoji} ${agentObj.label}:</span> "${taskObj.task}" <br>&nbsp;&nbsp;&nbsp;&nbsp;&rarr; <span class="feed-tool">[TOOL: ${toolKey}]</span> ${toolOutput}`;
+      feedBox.appendChild(line);
+      feedBox.scrollTop = feedBox.scrollHeight;
+
+      stepIdx++;
+      setTimeout(stepLoop, 600);
+    } else {
+      const lineFinal = document.createElement("div");
+      lineFinal.className = "feed-line feed-ok";
+      lineFinal.innerHTML = `<br>[SUCCESS] Execution pipeline completed cleanly. Output artifact generated and verified.`;
+      feedBox.appendChild(lineFinal);
+      feedBox.scrollTop = feedBox.scrollHeight;
+
+      delivTitle.innerText = DTITLE[currentSelectedWfKey] || "Produced Deliverable";
+      delivText.innerText = FINAL[currentSelectedWfKey] || "Deliverable text unavailable.";
+      delivBox.classList.remove("hidden");
+    }
+  }
+
+  setTimeout(stepLoop, 400);
+}
+
+function runFlagshipDemo() {
+  selectAndRunOperator("energy_center_100mw_utility_dispatch_surge");
+  executeCurrentWorkflow();
+}
+
+function switchTab(tabName) {
+  document.getElementById("tab-roster").classList.add("hidden");
+  document.getElementById("tab-run").classList.add("hidden");
+  document.getElementById("tab-builder").classList.add("hidden");
+
+  document.getElementById("tab-roster-btn").classList.remove("active");
+  document.getElementById("tab-run-btn").classList.remove("active");
+  document.getElementById("tab-builder-btn").classList.remove("active");
+
+  if (tabName === "roster") {
+    document.getElementById("tab-roster").classList.remove("hidden");
+    document.getElementById("tab-roster-btn").classList.add("active");
+  } else if (tabName === "run") {
+    document.getElementById("tab-run").classList.remove("hidden");
+    document.getElementById("tab-run-btn").classList.add("active");
+  } else if (tabName === "builder") {
+    document.getElementById("tab-builder").classList.remove("hidden");
+    document.getElementById("tab-builder-btn").classList.add("active");
+    populateBuilderSelect();
+  }
+}
+
+function populateBuilderSelect() {
+  const sel = document.getElementById("builder-base-select");
+  if (!sel) return;
+  sel.innerHTML = Object.keys(WORKFLOWS).map(k => `<option value="${k}">${WORKFLOWS[k].name}</option>`).join("");
+}
+
+function buildCustomOperator() {
+  const baseKey = document.getElementById("builder-base-select").value;
+  const opName = document.getElementById("builder-op-name").value || "Custom AI Operator";
+  const opTitle = document.getElementById("builder-op-title").value || "Custom LDES Specialist";
+  const winMetric = document.getElementById("builder-win-metric").value || "100% Verified";
+
+  const newOpId = "op_custom_" + Date.now();
+  EMPLOYEES.push({
+    id: newOpId,
+    name: opName,
+    title: opTitle,
+    wf: baseKey,
+    handled: 1,
+    hrs: 12.0,
+    win: winMetric,
+    status: "idle"
+  });
+
+  renderRoster();
+  switchTab("roster");
+  alert(`Custom operator "${opName}" has been successfully added to the ESS Inc. AI workforce roster!`);
+}
+
+function toggleBrandDrawer() {
+  document.getElementById("brand-drawer").classList.toggle("open");
+}
+
+function scrollToRoster() {
+  switchTab("roster");
+  window.scrollTo({top: 400, behavior: "smooth"});
+}
+
+// Initial Render
+window.addEventListener("DOMContentLoaded", () => {
+  renderRoster();
+  selectAndRunOperator("energy_center_100mw_utility_dispatch_surge");
+});
+</script>
+</body>
+</html>
