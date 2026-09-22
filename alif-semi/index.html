@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alif Semi Console — AI Edge MCU &amp; Fusion Processor Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060b14;
+  --surface:#0f1726;
+  --surface-2:#192438;
+  --surface-3:#283754;
+  --border:#283754;
+  --border-soft:#111a2b;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --muted-2:#64748b;
+  --accent:#0052cc;
+  --accent-dim:rgba(0,82,204,0.15);
+  --accent-line:rgba(0,82,204,0.38);
+  --accent2:#00c8ff;
+  --accent2-bg:rgba(0,200,255,0.08);
+  --accent3:#7c3aed;
+  --danger:#ef4444;
+  --ok:#10b981;
+  --font-display:'Rajdhani',sans-serif;
+  --font-body:'Work Sans',sans-serif;
+  --font-mono:'Roboto Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 88% -8%, rgba(0,82,204,0.14), transparent 55%),
+    radial-gradient(900px 480px at 5% 5%, rgba(0,200,255,0.07), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+a{color:var(--accent);}
+::selection{background:rgba(0,82,204,0.28);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+.hidden{display:none!important;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:24px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:44px;height:42px;border-radius:8px;
+  background:linear-gradient(135deg,#00398a,#0052cc);
+  border:1px solid var(--accent-line);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:var(--font-mono);font-weight:800;font-size:11px;
+  box-shadow:0 0 18px rgba(0,82,204,0.35);
+}
+.mark-name{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:0.02em;color:#fff;}
+.mark-sub{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px;}
+
+.line-readout{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent2);
+  background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:8px 14px;display:flex;align-items:center;gap:10px;
+}
+.line-readout .dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);box-shadow:0 0 10px var(--accent2);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.tabs{display:flex;gap:8px;margin-top:20px;border-bottom:1px solid var(--border-soft);}
+.tab-btn{
+  background:transparent;border:none;color:var(--muted);padding:10px 18px;font-family:var(--font-body);
+  font-size:13.5px;font-weight:600;cursor:pointer;border-radius:8px 8px 0 0;transition:all 0.15s ease;
+}
+.tab-btn:hover{color:var(--text);background:var(--surface-2);}
+.tab-btn.active{color:var(--accent2);background:var(--surface);border:1px solid var(--border);border-bottom-color:var(--surface);}
+
+.hero{padding:36px 0 28px;display:grid;grid-template-columns:1.15fr 0.85fr;gap:40px;align-items:center;}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:24px 0 18px;}}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;color:var(--accent2);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent2);}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(30px,4vw,42px);line-height:1.08;letter-spacing:-0.005em;margin:0 0 14px;color:#fff;}
+h1 span{color:var(--accent2);background:linear-gradient(90deg,#00c8ff,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.lead{color:var(--muted);font-size:15px;max-width:55ch;margin:0 0 22px;line-height:1.6;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:var(--font-body);font-weight:600;font-size:13.5px;border-radius:6px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--accent2);color:#060b14;border-color:var(--accent2);font-weight:700;}
+.btn-primary:hover{background:#38bdf8;box-shadow:0 0 16px rgba(0,200,255,0.35);}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+
+/* Alif Ensemble & Ethos-U55 Silicon Graphic Card */
+.wafer{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:18px 18px 14px;box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+.wafer-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+.wafer-title{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em;}
+.wafer-val{font-family:var(--font-mono);font-size:12px;color:var(--accent2);font-weight:600;}
+svg.wafermap{width:100%;height:210px;display:block;}
+.wafer-outline{fill:none;stroke:var(--border);stroke-width:1.5;}
+.wafer-grid-line{stroke:var(--border-soft);stroke-width:0.5;stroke-dasharray:2 2;}
+.wafer-foot{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+
+.econ{border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:760px){.econ{grid-template-columns:repeat(2,1fr);}}
+.econ-item{padding:6px 18px;border-left:1px solid var(--border-soft);}
+.econ-item:first-child{border-left:none;padding-left:0;}
+@media(max-width:760px){.econ-item:nth-child(2n+1){border-left:none;padding-left:0;}}
+.econ-num{font-family:var(--font-display);font-weight:700;font-size:28px;color:#fff;}
+.econ-num small{font-size:14px;color:var(--accent2);font-weight:700;}
+.econ-label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+section{padding:36px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.section-title{font-family:var(--font-display);font-weight:700;font-size:24px;color:#fff;}
+.section-sub{color:var(--muted);font-size:13.5px;max-width:62ch;margin-top:4px;}
+.track-label{font-family:var(--font-mono);font-size:11px;color:var(--accent2);text-transform:uppercase;letter-spacing:.1em;margin:28px 0 14px;padding-top:10px;border-top:1px dashed var(--border-soft);}
+.track-label:first-of-type{border-top:none;padding-top:0;margin-top:6px;}
+
+.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+@media(max-width:760px){.roster{grid-template-columns:1fr;}}
+.op-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;transition:all .15s ease;}
+.op-card:hover{border-color:var(--accent-line);transform:translateY(-2px);}
+.op-card.flagship{border-color:var(--accent2);background:linear-gradient(180deg,rgba(0,200,255,0.08),var(--surface));}
+.op-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.op-name{font-family:var(--font-display);font-weight:700;font-size:18px;color:#fff;}
+.op-role{font-size:12.5px;color:var(--muted);margin-top:2px;}
+.flag-chip{font-family:var(--font-mono);font-size:10px;color:var(--accent2);border:1px solid var(--accent2);background:var(--accent2-bg);border-radius:20px;padding:2px 8px;white-space:nowrap;}
+.op-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+.op-stats{display:flex;gap:18px;margin-top:2px;}
+.op-stat{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.op-stat b{color:var(--accent2);font-size:14px;display:block;font-family:var(--font-body);font-weight:600;}
+.op-agents{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.chip{font-size:11px;background:var(--surface-3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;color:var(--text);}
+.op-actions{display:flex;gap:10px;margin-top:6px;}
+.run-btn{flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:600;font-size:13px;border-radius:6px;padding:10px;cursor:pointer;transition:all 0.15s ease;}
+.run-btn:hover{border-color:var(--accent2);color:var(--accent2);background:var(--accent2-bg);}
+
+.run-panel{background:var(--surface);border:1px solid var(--accent-line);border-radius:12px;padding:24px;margin-top:24px;display:none;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+.run-panel.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.run-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.run-head h3{font-family:var(--font-display);font-size:20px;margin:0;color:#fff;}
+.run-head .meta{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.close-run{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:6px 12px;cursor:pointer;font-size:12px;}
+.close-run:hover{color:var(--text);border-color:var(--accent2);}
+
+.feed{background:var(--bg);border:1px solid var(--border-soft);border-radius:8px;padding:16px;height:260px;overflow-y:auto;font-family:var(--font-mono);font-size:12px;display:flex;flex-direction:column;gap:8px;}
+.feed-line{display:flex;gap:10px;align-items:flex-start;opacity:0;animation:appear .3s ease forwards;}
+@keyframes appear{to{opacity:1;}}
+.feed-line .tag{color:var(--accent2);white-space:nowrap;}
+.feed-line .txt{color:var(--muted);}
+.feed-line.done .tag{color:var(--accent);}
+.feed-line.done .txt{color:var(--text);}
+
+.progress-row{display:flex;gap:6px;margin:16px 0 8px;flex-wrap:wrap;}
+.pstep{flex:1;min-width:64px;height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;position:relative;}
+.pstep.active{background:var(--accent-dim);}
+.pstep.complete{background:var(--accent);box-shadow:0 0 8px var(--accent);}
+
+.deliverable{margin-top:20px;background:var(--surface-2);border:1px solid var(--accent-line);border-radius:8px;padding:18px 20px;display:none;}
+.deliverable.show{display:block;animation:fadein .3s ease;}
+.deliverable h4{font-family:var(--font-display);font-size:17px;margin:0 0 12px;color:var(--accent);}
+.deliverable pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:12.5px;color:var(--text);margin:0;line-height:1.65;}
+.note{font-size:11px;color:var(--muted-2);margin-top:12px;font-style:italic;}
+
+/* BUILDER STYLING (DYNEX FUNCTIONAL FLOW) */
+.steps-bar{display:flex;gap:10px;margin-bottom:24px;}
+.step-item{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);}
+.step-item.active{border-color:var(--accent2);background:var(--surface-3);}
+.step-item .step-num{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--muted-2);}
+.step-item.active .step-num{color:var(--accent2);}
+.step-item .step-lbl{font-size:13.5px;font-weight:600;color:var(--text);margin-top:2px;}
+
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.wf-card{border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;background:var(--surface-2);transition:all 0.15s ease;}
+.wf-card:hover{border-color:var(--accent2);}
+.wf-card.sel{border-color:var(--accent2);background:rgba(0,200,255,0.08);}
+.wf-title{font-family:var(--font-display);font-weight:700;font-size:16px;color:#fff;}
+.wf-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45;}
+.wf-meta{font-family:var(--font-mono);font-size:10.5px;color:var(--accent2);margin-top:8px;font-weight:600;text-transform:uppercase;}
+
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);margin-bottom:10px;}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--accent2);flex-shrink:0;}
+.task-row .tt{flex:1;font-size:13px;color:var(--text);}
+.task-row select{font-family:var(--font-body);font-size:12.5px;border:1px solid var(--border);border-radius:6px;padding:8px 10px;background:var(--surface);color:var(--text);outline:none;min-width:210px;}
+.task-row select:focus{border-color:var(--accent2);}
+
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.field input{width:100%;font-family:var(--font-body);font-size:13.5px;border:1px solid var(--border);border-radius:8px;padding:11px 13px;background:var(--surface-2);color:var(--text);outline:none;}
+.field input:focus{border-color:var(--accent2);}
+
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.seg button{font-family:var(--font-body);font-size:12.5px;padding:9px 16px;border:none;background:var(--surface-2);color:var(--muted);cursor:pointer;border-right:1px solid var(--border);}
+.seg button:last-child{border-right:none;}
+.seg button.on{background:var(--accent2);color:#060b14;font-weight:700;}
+
+.bnav{display:flex;justify-content:space-between;margin-top:24px;}
+
+footer{border-top:1px solid var(--border-soft);padding:30px 0 44px;}
+.foot-note{font-size:12px;color:var(--muted-2);max-width:85ch;line-height:1.6;}
+.foot-note strong{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark-row">
+      <div class="mark">
+        <div class="mark-badge">ALIF</div>
+        <div>
+          <div class="mark-name">Alif Semi Console</div>
+          <div class="mark-sub">Alif Semiconductor (alifsemi.com) · Ensemble®, Balletto® &amp; Crescendo</div>
+        </div>
+      </div>
+      <div class="line-readout">
+        <span class="dot"></span>
+        <span id="lineTxt">San Jose, CA &amp; Fab Partners · Ensemble E7 &amp; Ethos-U55 Active</span>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tabA" onclick="setView('ops')">The AI Workforce Roster</button>
+      <button class="tab-btn" id="tabB" onclick="setView('hire')">+ Add an AI Operator</button>
+    </div>
+  </header>
+
+  <div id="view-ops">
+    <section class="hero" style="padding-bottom:10px;">
+      <div>
+        <div class="eyebrow">Scalable Edge AI Microcontrollers &amp; Fusion Processors</div>
+        <h1>Eight operators to run Alif Semi's <span>ensemble-to-ethos-npu</span> loop</h1>
+        <p class="lead">Each operator below is a real Alif Semiconductor workflow — analyzing 3D CAD multi-core MCU silicon floorplans, Ensemble E7 Arm Cortex-M55 + Ethos-U55 microNPU TOPS/Watt efficiency curves, and Balletto BLE 5.3 RF link budgets, scrubbing 500-line PSA Certified &amp; ISO 9001 silicon BOMs for MRAM non-volatile memory and Secure Enclave RoT pinouts, configuring AppoKit SDK AI model quantization and aiPM™ power domain code, and auditing ISO 9001 quality releases — handed to a team of specialist AI agents that works it end-to-end.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('roster-section').scrollIntoView({behavior:'smooth'})">View the Roster</button>
+          <button class="btn btn-ghost" onclick="runOperator('ensemble_dfm')">Run Flagship Operator</button>
+        </div>
+      </div>
+
+      <div class="wafer">
+        <div class="wafer-top">
+          <span class="wafer-title">Alif Silicon Telemetry &amp; NPU Yield</span>
+          <span class="wafer-val" id="yieldVal">800x NPU Speedup PASS</span>
+        </div>
+        <svg class="wafermap" viewBox="0 0 220 210" preserveAspectRatio="xMidYMid meet">
+          <circle class="wafer-outline" cx="110" cy="105" r="92"></circle>
+          <line class="wafer-grid-line" x1="20" y1="105" x2="200" y2="105"></line>
+          <line class="wafer-grid-line" x1="110" y1="15" x2="110" y2="195"></line>
+          <g id="dieGrid"></g>
+        </svg>
+        <div class="wafer-foot">
+          <span>San Jose Fab Line · Lot ALIF-2609-E7</span>
+          <span id="binVal">Pass: PSA Certified Level 2</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="econ">
+      <div class="econ-item">
+        <div class="econ-num">800<small>x</small></div>
+        <div class="econ-label">ML inference speedup via Arm Ethos-U55 microNPU</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">aiPM™<small> Tech</small></div>
+        <div class="econ-label">Autonomous intelligent Power Management for ultra-low standby</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">36<small> hrs</small></div>
+        <div class="econ-label">Median silicon DFM &amp; AppoKit ML model setup hours returned</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">8<small>/8</small></div>
+        <div class="econ-label">Workflows covered, silicon DFM through PSA Level 2 release</div>
+      </div>
+    </div>
+
+    <section id="roster-section">
+      <div class="section-head">
+        <div>
+          <div class="section-title">The AI Workforce Roster</div>
+          <div class="section-sub">Grouped into Commercial &amp; Edge AI OEM Tenders and Silicon Engineering &amp; Operations tracks. Click run on any operator to watch its agent team execute in real time.</div>
+        </div>
+      </div>
+
+      <div id="rosterContainer"></div>
+    </section>
+
+    <!-- Run Panel -->
+    <div class="run-panel" id="runPanel">
+      <div class="run-head">
+        <div>
+          <h3 id="runTitle">Running Operator...</h3>
+          <div class="meta" id="runSub">Simulated multi-agent execution feed</div>
+        </div>
+        <button class="close-run" onclick="closeRun()">✕ Close View</button>
+      </div>
+      <div class="progress-row" id="progressRow"></div>
+      <div class="feed" id="feedArea"></div>
+      <div class="deliverable" id="deliverableBox">
+        <h4 id="delivTitle">Review-Ready Output</h4>
+        <pre id="delivCode"></pre>
+        <div class="note">Human-in-the-loop oversight active. Outputs verified by Alif Semiconductor senior silicon architecture team. Illustrative simulation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="section-title">Add an AI Operator</div>
+          <div class="section-sub">Stand up a new AI operator in three steps: pick the workflow, assign each task to an agent via dropdown, then name it and set cadence.</div>
+        </div>
+      </div>
+
+      <div class="steps-bar" id="bSteps"></div>
+      <div id="bBody"></div>
+      <div class="bnav" id="bNav"></div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="foot-note">
+      <strong>Independent Concept Prototype</strong> prepared for a conversation with <strong>Alif Semiconductor (alifsemi.com)</strong>. It is not affiliated with, endorsed by, or built on Alif Semiconductor systems or data. All operators, Ensemble E7 floorplans, Ethos-U55 NPU benchmarks, and PSA Certified audits are illustrative simulations. A licensed silicon architect, embedded ML engineer, or security manager reviews and approves every chip selection, firmware build, and security release.
+    </div>
+  </footer>
+</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'Smart Home, Wearables & Industrial Predictive Maintenance Intelligence', tools: ['research_alif_tenders', 'save'] },
+  silicon_eng: { emoji: '🔬', label: 'Alif Ensemble Cortex-M55 & Ethos-U55 MicroNPU Systems Engineer', tools: ['analyze_silicon_floorplan', 'save'] },
+  rf_wireless_spec: { emoji: '⚡', label: 'Balletto BLE 5.3, 802.15.4 & Auracast Wireless Integration Specialist', tools: ['design_rf_link', 'save'] },
+  security_scrubber: { emoji: '📑', label: 'PSA Certified Level 2, SESIP Level 3 & Secure Enclave RoT Specialist', tools: ['scrub_alif_bom', 'save'] },
+  cost_eng: { emoji: '🧮', label: 'Ensemble E7 Fusion Processor, MRAM & BGA Packaging Costing Specialist', tools: ['calc_silicon_cost', 'save'] },
+  cloud_architect: { emoji: '☁️', label: 'Alif Cloud Edge AI Telemetry & OTA Firmware SCADA Architect', tools: ['configure_alif_cloud', 'save'] },
+  quality_auditor: { emoji: '🛡️', label: 'ISO 9001:2015, ISO 14001 & aiPM Power Domain Quality Auditor', tools: ['audit_silicon_quality', 'save'] },
+  supply_planner: { emoji: '📦', label: '22nm FDX Wafers, Substrate Interposers & BGA Package Stock Planner', tools: ['plan_wafer_spares', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'OEM Smart Home & Industrial Edge AI Enterprise RFP Solution Writer', tools: ['compose_doc', 'save'] },
+  qa_reviewer: { emoji: '✅', label: 'Senior Edge AI Silicon Architecture & NPU Optimization Reviewer', tools: ['qa_review', 'save'] },
+  prospector: { emoji: '🧲', label: 'VP Semiconductor Engineering & Edge AI System Director Prospector', tools: ['source_alif_accounts', 'save'] },
+  firmware_spec: { emoji: '⚙️', label: 'AppoKit SDK, CMSIS-NN & Arm Ethos-U55 NPU Firmware Specialist', tools: ['program_appokit_sdk', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+const TRACKS = [
+  { key: 'commercial', title: 'Commercial & Edge AI OEM Tenders' },
+  { key: 'operations', title: 'Silicon Engineering & Edge AI Operations' }
+];
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Smart Home, Industrial Wearable & Medical Edge AI Scouting',
+    title: 'AI Semiconductor Growth Scout',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Smart Home & Wearable Edge AI Opportunity Dossier',
+    desc: 'Maps Tier-1 smart appliance OEMs (LG, Samsung), wearable health monitoring builders (Garmin, Oura), and industrial predictive maintenance sensor makers.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan smart watch vision/voice MCU RFPs, industrial vibration ML bids, and Matter smart lock BLE tenders.', deps: [] },
+      { agent: 'prospector', task: 'Source VP Semiconductor Engineering, Chief Edge AI Architects, and Wearable System Engineering Directors.', deps: [] },
+      { agent: 'silicon_eng', task: 'Score fit on Alif Ensemble E7 fusion processors, Balletto BLE 5.3 microNPUs, and Crescendo cellular IoT chips.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce target Edge AI MCU prospect dossier.', deps: [2] }
+    ]
+  },
+  quote: {
+    name: 'Custom Ensemble E7 & Balletto BLE 5.3 Fusion Processor Quoting',
+    title: 'AI Silicon Cost Specialist',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Alif Ensemble E7 & Balletto Silicon System Quote Package',
+    desc: 'Models Ensemble E7 dual Cortex-M55 + Ethos-U55 microNPU, 13.5MB SRAM, 5.5MB MRAM, 2D GPU, and AppoKit SDK developer tools.',
+    tasks: [
+      { agent: 'silicon_eng', task: 'Review NPU clock rate (500 MHz), MRAM non-volatile storage (5.5MB), aiPM standby current (<1 µA), and BGA package ball count.', deps: [] },
+      { agent: 'cost_eng', task: 'Model 22nm FDX wafer foundry costs, substrate interposer, MRAM IP licensing, and AppoKit SDK enterprise support.', deps: [0] },
+      { agent: 'supply_planner', task: 'Verify 22nm wafer allocation at GlobalFoundries, BGA substrate reserves, and San Jose lab inventory.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Assemble formal Alif Ensemble E7 & Balletto Silicon System Quote Package.', deps: [2] }
+    ]
+  },
+  tender: {
+    name: 'Global OEM Edge AI & Automotive IoT RFP Response',
+    title: 'AI Fusion Processor Solution Specialist',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Global OEM Edge AI & Automotive IoT RFP Response Package',
+    desc: 'Audits ISO 9001:2015 quality standards, PSA Certified Level 2 / SESIP Level 3 security, Arm SystemReady certification, and 10-year longevity SLAs.',
+    tasks: [
+      { agent: 'researcher', task: 'Parse wearable biometric ML latency rules, smart city camera privacy limits, and hardware Root of Trust mandates.', deps: [] },
+      { agent: 'quality_auditor', task: 'Verify ISO 9001:2015, PSA Certified Level 2 credentials, SESIP Level 3 certificates, and fab partner credentials.', deps: [0] },
+      { agent: 'cost_eng', task: 'Structure global OEM silicon supply schedule backed by Alif Semiconductor multi-foundry network.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce formal Global OEM Edge AI & Automotive IoT RFP response package.', deps: [2] }
+    ]
+  },
+  intel: {
+    name: 'Global Edge AI Microcontroller & Ethos-U55 NPU Radar',
+    title: 'AI Microcontroller Market Intelligence',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Global Edge AI MCU & MicroNPU Market Intelligence Brief',
+    desc: 'Tracks Arm Cortex-M55 + Ethos-U55 adoption vs legacy MCUs, Matter 1.2 protocol growth, and Balletto BLE audio Auracast market expansion.',
+    tasks: [
+      { agent: 'researcher', task: 'Monitor global 32-bit MCU capex, battery-powered Edge AI model parameter growth, and AppoKit SDK updates.', deps: [] },
+      { agent: 'silicon_eng', task: 'Benchmark Alif aiPM™ dynamic power management 10x battery life extension against standard ARM Cortex-M4/M7 MCUs.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile strategic Edge AI microcontroller market intelligence brief.', deps: [0, 1] }
+    ]
+  },
+  ensemble_dfm: {
+    name: 'Ensemble E7 Cortex-M55 + Ethos-U55 Silicon DFM Scrub',
+    title: 'AI Silicon Systems DFM Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'Ensemble E7 Silicon DFM & MicroNPU Review Package',
+    desc: 'Audits 3D CAD silicon floorplans, Cortex-M55 + Ethos-U55 interconnect bus congestion, MRAM read/write endurance, and aiPM™ power domain gating.',
+    tasks: [
+      { agent: 'silicon_eng', task: 'Analyze Ensemble E7 multi-core silicon floorplan; verifies 800x NPU inference speedup on Mobilenet-V2 image classification.', deps: [] },
+      { agent: 'rf_wireless_spec', task: 'Verify Balletto BLE 5.3 + 802.15.4 co-existence and +10 dBm TX power output with zero RF interference.', deps: [0] },
+      { agent: 'firmware_spec', task: 'Configure AppoKit SDK CMSIS-NN kernels and aiPM™ autonomous power domain transition code.', deps: [1] },
+      { agent: 'quality_auditor', task: 'Audit ISO 9001:2015 thermal dissipation, MRAM 10-year retention at 105°C, and PSA Certified Level 2 RoT checklist.', deps: [2] },
+      { agent: 'reviewer', task: 'QA silicon engineering & NPU optimization findings and compile customer technical package.', deps: [3] },
+      { agent: 'proposal_writer', task: 'Produce final Ensemble E7 Silicon DFM & MicroNPU Review Package.', deps: [4] }
+    ]
+  },
+  appokit_setup: {
+    name: 'AppoKit SDK AI Model Quantization & aiPM™ Power Code Setup',
+    title: 'AI Edge ML & Firmware Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'AppoKit SDK AI Model & aiPM Power Code Setup Package',
+    desc: 'Quantizes TensorFlow Lite for Microcontrollers (TFLM) models for Ethos-U55 NPU, programs CMSIS-NN, and deploys aiPM™ power gating firmware.',
+    tasks: [
+      { agent: 'firmware_spec', task: 'Compile INT8 quantized vision model for Ethos-U55 NPU; achieves 15 ms latency at 12 mW peak power.', deps: [] },
+      { agent: 'cloud_architect', task: 'Connect Alif cloud edge telemetry portal API for real-time MCU power draw, NPU utilization, and OTA firmware updates.', deps: [0] },
+      { agent: 'reviewer', task: 'Verify zero accuracy loss on 100,000-sample keyword spotting & face detection dry run.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce AppoKit SDK AI Model & aiPM Power Code Setup Package.', deps: [2] }
+    ]
+  },
+  psa_security_audit: {
+    name: 'PSA Certified Level 2 & Secure Enclave RoT Compliance Audit',
+    title: 'AI Silicon Security & Quality Auditor',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'PSA Certified Level 2 & Secure Enclave Quality Release',
+    desc: 'Audits Secure Enclave hardware Root of Trust (RoT), AES-256 / ECC crypto engines, secure boot keys, and SESIP Level 3 evaluation criteria.',
+    tasks: [
+      { agent: 'quality_auditor', task: 'Audit San Jose lab Secure Enclave tamper resistance, side-channel attack mitigation, and PSA Level 2 certificate.', deps: [] },
+      { agent: 'security_scrubber', task: 'Verify 100% Certificate of Conformance (CoC) for MRAM secure key storage and lifecycle state transitions.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile PSA Certified Level 2 & Secure Enclave Quality Release Brief.', deps: [0, 1] }
+    ]
+  },
+  silicon_spares_plan: {
+    name: 'MRAM Wafer Wafers, Ethos-U55 Cores & BGA Package Stock Plan',
+    title: 'AI Silicon Hardware & Wafer Planner',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'Ensemble & Balletto Silicon Wafer Safety Stock Plan',
+    desc: 'Secures 22nm FDX MRAM wafers, substrate interposers, WLCSP/BGA packages, and evaluation kit boards for global OEM delivery.',
+    tasks: [
+      { agent: 'supply_planner', task: 'Evaluate 22nm wafer fabrication lead times and 90-day critical MCU die buffer in San Jose warehouse.', deps: [] },
+      { agent: 'security_scrubber', task: 'Execute raw material Certificate of Analysis (CoA) audit for substrate copper purity and mold compound reliability.', deps: [] },
+      { agent: 'cost_eng', task: 'Structure strategic silicon wafer inventory buffer to support Tier-1 smart home production ramp schedules.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce Ensemble & Balletto Silicon Wafer Safety Stock Plan.', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'Smart Home & Wearable Edge AI Opportunity Dossier',
+  quote: 'Alif Ensemble E7 & Balletto Silicon System Quote Package',
+  tender: 'Global OEM Edge AI & Automotive IoT RFP Response Package',
+  intel: 'Global Edge AI MCU & MicroNPU Market Intelligence Brief',
+  ensemble_dfm: 'Ensemble E7 Silicon DFM & MicroNPU Review Package',
+  appokit_setup: 'AppoKit SDK AI Model & aiPM Power Code Setup Package',
+  psa_security_audit: 'PSA Certified Level 2 & Secure Enclave Quality Release',
+  silicon_spares_plan: 'Ensemble & Balletto Silicon Wafer Safety Stock Plan'
+};
+
+const TOOLS = {
+  research_alif_tenders: () => 'Scanned smart watch vision MCU solicitations, industrial vibration ML RFPs, and Matter smart lock bids.',
+  source_alif_accounts: () => 'Sourced verified VP Semiconductor Engineering and Edge AI System Directors; deduped CRM.',
+  analyze_silicon_floorplan: () => 'Analyzed Ensemble E7 silicon floorplan; verified 800x NPU speedup on Mobilenet-V2 at 12 mW power consumption.',
+  design_rf_link: () => 'Designed Balletto BLE 5.3 RF matching network; verified +10 dBm TX output and 100-meter line-of-sight range.',
+  scrub_alif_bom: () => 'Scrubbed 500-line silicon BOM; verified 100% PSA Certified Level 2, MRAM 10-year retention, and Arm SystemReady specs.',
+  calc_silicon_cost: () => 'Calculated Ensemble E7 fusion processor, Balletto BLE MCU, MRAM IP, and BGA package margins.',
+  configure_alif_cloud: () => 'Configured Alif cloud edge telemetry portal API for real-time MCU power draw, NPU load, and secure OTA updates.',
+  audit_silicon_quality: () => 'Audited aiPM dynamic power gating, Secure Enclave RoT tamper resistance, and MRAM read endurance (PASS).',
+  plan_wafer_spares: () => 'Cross-referenced 22nm FDX wafer lead times; secured 90-day material buffer in San Jose warehouse.',
+  program_appokit_sdk: () => 'Programmed AppoKit SDK CMSIS-NN kernels, TFLM model quantization, and aiPM power state firmware.',
+  compose_doc: () => 'Compiled Edge AI microcontroller and fusion processor metrics into clear, review-ready technical documentation.',
+  qa_review: () => 'Audited report completeness and checked ISO 9001 / PSA Level 2 standards; ready for Alif Semi VP Engineering sign-off.',
+  save: () => 'Saved deliverable artifact to shared project repository.'
+};
+
+function toolOut(t) { return (TOOLS[t] || (() => 'Executed successfully.'))(); }
+
+const FINAL = {
+  scout: `SMART HOME & WEARABLE EDGE AI OPPORTUNITY DOSSIER (illustrative)
+Target Sector: Smart Home Appliances, Health Wearables, Industrial Predictive Maintenance, Smart Cities
+Target Location: San Jose, CA, Pleasanton, Dallas, Bristol UK & Global System Integrators
+
+A-Tier Qualified Enterprise Opportunities:
+1. LG Electronics — Next-Gen Smart Home Appliance Vision & Voice — Fit Score: 99/100
+   • Key Contacts: VP Smart Home Engineering, Director of Embedded AI
+   • Requirement: Alif Ensemble E7 Fusion Processor with Arm Cortex-M55 + Ethos-U55 MicroNPU
+2. Garmin International — Ultra-Low Power GPS & Biometric Smartwatch — Fit Score: 97/100
+   • Key Contacts: Chief Wearable Hardware Architect, Lead Firmware Engineer
+   • Requirement: Alif Balletto BLE 5.3 + Auracast Wireless MCU with On-Device AI Acceleration
+3. SKF Industrial — Wireless Machine Vibration Anomaly Sensor — Fit Score: 95/100
+   • Key Contacts: Director of Predictive Maintenance Solutions, Lead Sensor Engineer
+   • Requirement: Alif Ensemble E1 Ultra-Low Power Edge AI Microcontroller with aiPM™
+
+Strategic Positioning:
+Highlight Alif Semiconductor pioneering integration of Arm Cortex-M55 and Ethos-U55 microNPU, aiPM™ dynamic power management for 10x battery life, PSA Certified Level 2 security, and San Jose headquarters.
+
+NOTE: Illustrative simulation prepared for Alif Semiconductor (alifsemi.com).`,
+
+  quote: `ALIF ENSEMBLE E7 & BALLETTO SILICON SYSTEM QUOTE PACKAGE (illustrative)
+Customer: LG Electronics / Smart Home Program
+Program: Alif Ensemble E7 Fusion Processor (100,000 Units Production Ramp)
+Specifications: Dual Cortex-M55, Ethos-U55 NPU (256 GOPs), 13.5MB SRAM, 5.5MB MRAM, BGA-289
+
+Commercial Breakdown:
+• Alif Ensemble E7 Fusion Processor ICs (100,000 Units @ $8.50): $850,000.00
+• AppoKit SDK Enterprise Developer Licenses & CMSIS-NN Optimization: $25,000.00
+• Alif Ensemble E7 Evaluation Kits & Camera Sensor Expansion Boards (10 Kits): $4,500.00
+• Technical Support & Field Application Engineering Commissioning: $18,500.00
+
+Performance Return:
+• ML Acceleration: 800x Speedup for On-Device Vision & Voice Keyword Spotting
+• Power Reduction: 90% Energy Savings vs Traditional Dual-Chip MCU + External Accelerator
+• Security: PSA Certified Level 2 Hardware Root of Trust (RoT) with Secure Enclave
+
+Turnaround Time: 8 Weeks to Mass Production Wafer Shipments
+
+NOTE: Illustrative simulation; pricing figures are placeholders.`,
+
+  tender: `GLOBAL OEM EDGE AI & AUTOMOTIVE IOT RFP RESPONSE PACKAGE (illustrative)
+Tender ID: US-CA-SILICON-ALIF-2026-31
+Scope: Scalable 32-bit Microcontrollers, MicroNPUs & Wireless Fusion Processors
+
+Quality & Performance Verification:
+• Quality Management System: ISO 9001:2015 & ISO 14001 Certified Fab & Packaging Facilities
+• Security Standard: 100% PSA Certified Level 2 & SESIP Level 3 Secure Enclave RoT
+• System Architecture: Arm SystemReady Certified Architecture with CMSIS-NN Acceleration
+• Product Longevity: 10-Year Guaranteed Silicon Availability Program for Industrial & Automotive
+
+Technical Offer:
+• Global market leader in low-power Edge AI microcontrollers and multi-core fusion processors.
+
+NOTE: Illustrative simulation; confirm against RFP specifications.`,
+
+  intel: `GLOBAL EDGE AI MCU & MICRONPU MARKET INTELLIGENCE BRIEF (illustrative)
+Focus: Ensemble E7 Performance, Ethos-U55 NPU Benchmarks & Balletto BLE Wireless
+
+Key Insights:
+1. The MicroNPU Shift: Legacy Cortex-M4/M7 MCUs are incapable of real-time computer vision or deep neural networks without draining batteries; Ethos-U55 microNPUs deliver 800x inference speedups at milliwatt power levels.
+2. aiPM™ Power Management Advantage: Alif's autonomous power management dynamically isolates unused memory banks and CPU cores, reducing sleep currents to microamps.
+3. Alif Silicon Platform Advantage:
+   - Industry-leading integration: CPU, microNPU, MRAM, SRAM, 2D GPU, and BLE 5.3 in a single die.
+   - Robust software ecosystem backed by AppoKit SDK, TensorFlow Lite for Microcontrollers, and CMSIS-NN.
+
+NOTE: Illustrative simulation.`,
+
+  ensemble_dfm: `ENSEMBLE E7 SILICON DFM & MICRONPU REVIEW PACKAGE (illustrative · flagship)
+Program: Smart Home Appliance & Wearable Edge AI Fusion Processor
+Factory: San Jose Headquarters & Fab Partner Line
+
+Silicon Engineering Findings:
+1. MicroNPU Inference Acceleration: Benchmarked Ethos-U55 microNPU running 224x224 Mobilenet-V2 at 500 MHz; verified 15 ms latency at 12 mW peak operating power.
+2. MRAM Non-Volatile Memory: Verified 5.5MB MRAM read/write access speed and 10-year retention at 105°C junction temperature.
+3. aiPM™ Power Domain Gating: Modeled 12 distinct power domains; verified seamless sub-microsecond wake-up from standby to full NPU execution.
+
+Quality & Security Audit:
+• Security Audit: PSA Certified Level 2 Secure Enclave Root of Trust tamper resistance verified.
+• Quality Rating: ISO 9001:2015 and Arm SystemReady compliance cleared.
+
+Summary:
+ Alif Ensemble E7 fusion processor silicon design approved for tape-out and mass production.
+
+NOTE: Illustrative simulation; review with Alif Semiconductor engineering team.`,
+
+  appokit_setup: `APPOKIT SDK AI MODEL & AIPM POWER CODE SETUP PACKAGE (illustrative)
+Program: AppoKit SDK TFLM Model Quantization & aiPM Firmware
+
+System Setup Configuration:
+• Model Quantization: Quantized FP32 vision model to INT8 for Ethos-U55 NPU with zero accuracy loss
+• aiPM Power Management: Written firmware routines to power down 10 memory banks during idle periods
+• Telemetry Integration: Connected Alif cloud edge portal API for real-time power draw and NPU load tracking
+
+Outcome: AppoKit SDK firmware and Ethos-U55 NPU pipeline validated for enterprise smart appliance deployment.
+
+NOTE: Illustrative simulation.`,
+
+  psa_security_audit: `PSA CERTIFIED LEVEL 2 & SECURE ENCLAVE QUALITY RELEASE (illustrative)
+Production Silicon: Alif Ensemble E7 & Balletto Wireless MCU (#ALIF-SIL-2026-22)
+Compliance Standard: PSA Certified Level 2 / SESIP Level 3 / Arm SystemReady / ISO 9001
+
+Audit Checklist Results:
+• Hardware Root of Trust (RoT) Test: Verified isolated Secure Enclave key isolation and side-channel protection - PASS
+• Secure Boot Verification: Verified cryptographic signature validation before executing main flash code - PASS
+• MRAM Key Storage: Tested AES-256 hardware accelerator key generation under voltage fluctuation - PASS
+
+Outcome: PSA Certified Level 2 & Secure Enclave Quality Release Approved. Certificate of Compliance issued.
+
+NOTE: Illustrative simulation.`,
+
+  silicon_spares_plan: `ENSEMBLE & BALLETTO SILICON WAFER SAFETY STOCK PLAN (illustrative)
+Scope: San Jose Central Silicon Depot & Fab Warehouses
+
+Supply Strategy Breakdown:
+• 22nm FDX Wafers: 90-day supply of processed Ensemble E7 & Balletto dies in wafer bank
+• BGA Substrates: 100,000 high-density multi-layer BGA packages in reserve
+• Evaluation Boards: 250 AppoKit SDK development kits ready for immediate OEM engineering samples
+
+Outcome: Alif Semiconductor silicon wafer and package inventory clear for continuous global OEM volume ramp.
+
+NOTE: Illustrative simulation.`
+};
+
+let EMPLOYEES = [
+  { id: 'scout', name: 'Scout', title: 'AI Semiconductor Scout', wf: 'scout', handled: 280, hrs: 88, win: 60, status: 'idle' },
+  { id: 'quote', name: 'Quote', title: 'AI Silicon Cost Specialist', wf: 'quote', handled: 370, hrs: 165, win: 82, status: 'idle' },
+  { id: 'tender', name: 'Tender', title: 'AI Fusion Processor Specialist', wf: 'tender', handled: 190, hrs: 130, win: 72, status: 'idle' },
+  { id: 'intel', name: 'Radar', title: 'AI Microcontroller Intelligence', wf: 'intel', handled: 220, hrs: 74, win: 50, status: 'idle' },
+  { id: 'ensemble_dfm', name: 'EnsembleE7EthosNPUDFM', title: 'AI Silicon Systems DFM Specialist', wf: 'ensemble_dfm', handled: 560, hrs: 320, win: 99, status: 'idle' },
+  { id: 'appokit_setup', name: 'AppoKitSDKFirmwareSetup', title: 'AI Edge ML & Firmware Specialist', wf: 'appokit_setup', handled: 340, hrs: 155, win: 78, status: 'idle' },
+  { id: 'psa_security_audit', name: 'PSALevel2SecurityAudit', title: 'AI Silicon Security & Quality Auditor', wf: 'psa_security_audit', handled: 480, hrs: 195, win: 92, status: 'idle' },
+  { id: 'silicon_spares_plan', name: 'SupplyPlanner', title: 'AI Silicon Hardware & Wafer Planner', wf: 'silicon_spares_plan', handled: 300, hrs: 115, win: 0, status: 'idle' }
+];
+
+/* Render Functions */
+function drawWaferGrid() {
+  const grid = document.getElementById("dieGrid");
+  let rects = '';
+  for (let x = -8; x <= 8; x++) {
+    for (let y = -8; y <= 8; y++) {
+      if (x*x + y*y <= 60) {
+        const px = 110 + x * 10 - 4;
+        const py = 105 + y * 10 - 4;
+        const pass = (Math.abs(x*y) % 8 !== 3);
+        const fill = pass ? 'rgba(0, 82, 204, 0.45)' : 'rgba(0, 200, 255, 0.6)';
+        rects += `<rect x="${px}" y="${py}" width="8" height="8" rx="1.5" fill="${fill}"></rect>`;
+      }
+    }
+  }
+  grid.innerHTML = rects;
+}
+
+function renderRoster() {
+  const container = document.getElementById("rosterContainer");
+  let html = '';
+  TRACKS.forEach(tr => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === tr.key);
+    if (!list.length) return;
+    html += `<div class="track-label">${tr.title}</div><div class="roster">`;
+    html += list.map(empCard).join('');
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+}
+
+function empCard(e) {
+  const wf = WORKFLOWS[e.wf] || {};
+  const isFlag = wf.tag === 'flagship';
+  const team = (wf.tasks || []).map(t => t.agent).filter((v, i, a) => a.indexOf(v) === i).map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  return `
+    <div class="op-card ${isFlag ? 'flagship' : ''}" id="emp-${e.id}">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${e.name}</div>
+          <div class="op-role">${e.title}</div>
+        </div>
+        ${isFlag ? '<span class="flag-chip">★ FLAGSHIP OPERATOR</span>' : ''}
+      </div>
+      <div class="op-desc">${wf.desc || ''}</div>
+      <div class="op-agents">${team}</div>
+      <div class="op-stats">
+        <div class="op-stat"><b>${e.handled.toLocaleString()}</b> runs</div>
+        <div class="op-stat"><b>~${e.hrs} hrs</b> saved/mo</div>
+        <div class="op-stat"><b>+${e.win}%</b> speedup</div>
+      </div>
+      <div class="op-actions">
+        <button class="run-btn" onclick="runOperator('${e.wf}')">▶ Run ${e.name}</button>
+      </div>
+    </div>
+  `;
+}
+
+function setView(v) {
+  document.getElementById('view-ops').classList.toggle('hidden', v !== 'ops');
+  document.getElementById('view-hire').classList.toggle('hidden', v !== 'hire');
+  document.getElementById('tabA').classList.toggle('active', v === 'ops');
+  document.getElementById('tabB').classList.toggle('active', v === 'hire');
+  if (v === 'hire') initBuilder();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+let isRunning = false;
+async function runOperator(wfKey) {
+  if (isRunning) return;
+  isRunning = true;
+  const wf = WORKFLOWS[wfKey];
+  if (!wf) return;
+
+  const panel = document.getElementById("runPanel");
+  const title = document.getElementById("runTitle");
+  const sub = document.getElementById("runSub");
+  const progress = document.getElementById("progressRow");
+  const feed = document.getElementById("feedArea");
+  const deliv = document.getElementById("deliverableBox");
+
+  panel.classList.add("active");
+  deliv.classList.remove("show");
+  title.innerText = `Executing Operator: ${wf.name}`;
+  sub.innerText = `Mode: ${wf.mode.toUpperCase()} · ${wf.tasks.length} Specialist Agents`;
+
+  progress.innerHTML = wf.tasks.map((_, i) => `<div class="pstep" id="ps_${i}"></div>`).join('');
+  feed.innerHTML = '';
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  function addFeedLine(agentKey, txt, isDone = false) {
+    const role = AGENT_ROLES[agentKey] || { emoji: '🤖', label: agentKey };
+    const div = document.createElement('div');
+    div.className = `feed-line ${isDone ? 'done' : ''}`;
+    div.innerHTML = `<span class="tag">[${role.emoji} ${role.label}]</span><span class="txt">${txt}</span>`;
+    feed.appendChild(div);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  addFeedLine(wf.tasks[0].agent, `Initializing ${wf.name} autonomous workflow loop...`);
+  await new Promise(r => setTimeout(r, 600));
+
+  for (let i = 0; i < wf.tasks.length; i++) {
+    const t = wf.tasks[i];
+    const stepEl = document.getElementById(`ps_${i}`);
+    if (stepEl) stepEl.classList.add("active");
+
+    addFeedLine(t.agent, `Executing Task ${i+1}: ${t.task}`);
+    await new Promise(r => setTimeout(r, 800));
+
+    const role = AGENT_ROLES[t.agent];
+    if (role && role.tools) {
+      for (const tool of role.tools) {
+        addFeedLine(t.agent, `Invoked tool '${tool}( )' -> ${toolOut(tool)}`);
+        await new Promise(r => setTimeout(r, 600));
+      }
+    }
+
+    if (stepEl) {
+      stepEl.classList.remove("active");
+      stepEl.classList.add("complete");
+    }
+    addFeedLine(t.agent, `Task ${i+1} completed. Artifact saved to shared Alif Semi project store.`, true);
+  }
+
+  await new Promise(r => setTimeout(r, 400));
+  document.getElementById("delivTitle").innerText = `Review-Ready Output · ${DTITLE[wfKey] || 'Deliverable'}`;
+  document.getElementById("delivCode").innerText = FINAL[wfKey] || "Execution completed successfully.";
+  deliv.classList.add("show");
+
+  isRunning = false;
+}
+
+function closeRun() {
+  document.getElementById("runPanel").classList.remove("active");
+}
+
+/* DYNEX BUILDER FLOW IMPLEMENTATION */
+let draft = {};
+function initBuilder() {
+  draft = { wf: null, mode: 'sequential', assign: [], name: '', title: '', cadence: 'Per project', step: 1 };
+  renderBuilder();
+}
+
+function renderBuilder() {
+  const steps = [['01', 'Pick a workflow'], ['02', 'Assign the agents'], ['03', 'Name & cadence']];
+  document.getElementById('bSteps').innerHTML = steps.map((s, i) => `
+    <div class="step-item ${draft.step === i + 1 ? 'active' : ''}">
+      <div class="step-num">${s[0]}</div>
+      <div class="step-lbl">${s[1]}</div>
+    </div>
+  `).join('');
+
+  if (draft.step === 1) bS1();
+  else if (draft.step === 2) bS2();
+  else bS3();
+  bNav();
+}
+
+function bS1() {
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 1: Choose Baseline Silicon Engineering Workflow</label></div>
+    <div class="wf-grid">
+      ${Object.keys(WORKFLOWS).map(k => {
+        const w = WORKFLOWS[k];
+        return `
+          <div class="wf-card ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')">
+            <div class="wf-title">${w.name}</div>
+            <div class="wf-desc">${w.desc}</div>
+            <div class="wf-meta">${w.tasks.length} agents · ${w.mode}</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 2: Assign Each Task to a Specialist Agent</label></div>
+    ${w.tasks.map((t, i) => `
+      <div class="task-row">
+        <div class="tn">${i + 1}</div>
+        <div class="tt">
+          ${t.task}
+          ${t.deps.length ? `<span style="color:var(--muted-2);font-family:var(--font-mono);font-size:11px;"> · waits for step ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}
+        </div>
+        <select onchange="draft.assign[${i}]=this.value">${opts}</select>
+      </div>
+    `).join('')}
+    <div class="field" style="margin-top:16px;">
+      <label>Execution Mode</label>
+      <div class="seg">
+        ${['sequential', 'dag'].map(m => `
+          <button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (Parallel DAG)' : 'Sequential'}</button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 3: Name Operator &amp; Set Cadence</label></div>
+    <div class="field">
+      <label>Operator Name</label>
+      <input type="text" value="${draft.name}" placeholder="e.g. Ensemble Silicon Specialist" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Role Title</label>
+      <input type="text" value="${draft.title}" placeholder="e.g. Autonomous Edge AI Silicon Engineer" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Cadence</label>
+      <div class="seg">
+        ${['Per project', 'Per batch', 'Weekly', 'On-demand'].map(c => `
+          <button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>
+        `).join('')}
+      </div>
+    </div>
+    <div class="field" style="margin-top:20px;">
+      <label>Live Operator Card Preview</label>
+      <div id="previewCardArea"></div>
+    </div>
+  `;
+  renderPreview();
+}
+
+function renderPreview() {
+  const w = WORKFLOWS[draft.wf];
+  const area = document.getElementById('previewCardArea');
+  if (!area) return;
+  
+  const team = draft.assign.map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  area.innerHTML = `
+    <div class="op-card" style="max-width:440px;">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${draft.name || 'New Operator'}</div>
+          <div class="op-role">${draft.title || 'AI Operator'}</div>
+        </div>
+      </div>
+      <div class="op-desc">Owns <b>${w.name}</b> · ${draft.cadence} · ${draft.mode.toUpperCase()}</div>
+      <div class="op-agents">${team}</div>
+    </div>
+  `;
+}
+
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn btn-ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right = '';
+  if (draft.step === 1) right = `<button class="btn btn-primary" ${draft.wf ? '' : 'disabled'} onclick="draft.step=2;renderBuilder()">Next: Assign Agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn btn-primary" onclick="draft.step=3;renderBuilder()">Next: Name &amp; Cadence →</button>`;
+  else right = `<button class="btn btn-primary" onclick="hire()">✓ Add this AI Operator</button>`;
+
+  document.getElementById('bNav').innerHTML = left + right;
+}
+
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  
+  WORKFLOWS[wfId] = {
+    name: w.name,
+    title: draft.title || w.title,
+    mode: draft.mode || w.mode,
+    track: w.track,
+    deliverable: w.deliverable,
+    desc: w.desc,
+    tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps }))
+  };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({
+    id, name,
+    title: draft.title || w.title,
+    wf: wfId,
+    handled: 0,
+    hrs: Math.floor(Math.random() * 60) + 40,
+    win: 0,
+    status: 'idle'
+  });
+
+  renderRoster();
+  setView('ops');
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  drawWaferGrid();
+  renderRoster();
+});
+</script>
+</body>
+</html>
