@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LTSCT Console — AI Fabless Semiconductor &amp; SiC Power Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060b14;
+  --surface:#0f1726;
+  --surface-2:#192438;
+  --surface-3:#283754;
+  --border:#283754;
+  --border-soft:#111a2b;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --muted-2:#64748b;
+  --accent:#003f72;
+  --accent-dim:rgba(0,63,114,0.18);
+  --accent-line:rgba(0,85,165,0.38);
+  --accent2:#06b6d4;
+  --accent2-bg:rgba(6,182,212,0.08);
+  --accent3:#f59e0b;
+  --danger:#ef4444;
+  --ok:#10b981;
+  --font-display:'Rajdhani',sans-serif;
+  --font-body:'Work Sans',sans-serif;
+  --font-mono:'Roboto Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 88% -8%, rgba(0,85,165,0.16), transparent 55%),
+    radial-gradient(900px 480px at 5% 5%, rgba(6,182,212,0.07), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+a{color:var(--accent2);}
+::selection{background:rgba(0,85,165,0.28);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+.hidden{display:none!important;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:24px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:46px;height:42px;border-radius:8px;
+  background:linear-gradient(135deg,#00284d,#003f72);
+  border:1px solid var(--accent-line);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:var(--font-mono);font-weight:800;font-size:10.5px;
+  box-shadow:0 0 18px rgba(0,63,114,0.45);
+}
+.mark-name{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:0.02em;color:#fff;}
+.mark-sub{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px;}
+
+.line-readout{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent2);
+  background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:8px 14px;display:flex;align-items:center;gap:10px;
+}
+.line-readout .dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);box-shadow:0 0 10px var(--accent2);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.tabs{display:flex;gap:8px;margin-top:20px;border-bottom:1px solid var(--border-soft);}
+.tab-btn{
+  background:transparent;border:none;color:var(--muted);padding:10px 18px;font-family:var(--font-body);
+  font-size:13.5px;font-weight:600;cursor:pointer;border-radius:8px 8px 0 0;transition:all 0.15s ease;
+}
+.tab-btn:hover{color:var(--text);background:var(--surface-2);}
+.tab-btn.active{color:var(--accent2);background:var(--surface);border:1px solid var(--border);border-bottom-color:var(--surface);}
+
+.hero{padding:36px 0 28px;display:grid;grid-template-columns:1.15fr 0.85fr;gap:40px;align-items:center;}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:24px 0 18px;}}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;color:var(--accent2);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent2);}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(30px,4vw,42px);line-height:1.08;letter-spacing:-0.005em;margin:0 0 14px;color:#fff;}
+h1 span{color:var(--accent2);background:linear-gradient(90deg,#06b6d4,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.lead{color:var(--muted);font-size:15px;max-width:55ch;margin:0 0 22px;line-height:1.6;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{font-family:var(--font-body);font-weight:600;font-size:13.5px;border-radius:6px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--accent2);color:#060b14;border-color:var(--accent2);font-weight:700;}
+.btn-primary:hover{background:#38bdf8;box-shadow:0 0 16px rgba(6,182,212,0.35);}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--accent2);color:var(--accent2);}
+
+/* LTSCT Silicon Carbide & RISC-V Graphic Card */
+.wafer{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:18px 18px 14px;box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+.wafer-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+.wafer-title{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em;}
+.wafer-val{font-family:var(--font-mono);font-size:12px;color:var(--accent2);font-weight:600;}
+svg.wafermap{width:100%;height:210px;display:block;}
+.wafer-outline{fill:none;stroke:var(--border);stroke-width:1.5;}
+.wafer-grid-line{stroke:var(--border-soft);stroke-width:0.5;stroke-dasharray:2 2;}
+.wafer-foot{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+
+.econ{border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:760px){.econ{grid-template-columns:repeat(2,1fr);}}
+.econ-item{padding:6px 18px;border-left:1px solid var(--border-soft);}
+.econ-item:first-child{border-left:none;padding-left:0;}
+@media(max-width:760px){.econ-item:nth-child(2n+1){border-left:none;padding-left:0;}}
+.econ-num{font-family:var(--font-display);font-weight:700;font-size:28px;color:#fff;}
+.econ-num small{font-size:14px;color:var(--accent2);font-weight:700;}
+.econ-label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+section{padding:36px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.section-title{font-family:var(--font-display);font-weight:700;font-size:24px;color:#fff;}
+.section-sub{color:var(--muted);font-size:13.5px;max-width:62ch;margin-top:4px;}
+.track-label{font-family:var(--font-mono);font-size:11px;color:var(--accent2);text-transform:uppercase;letter-spacing:.1em;margin:28px 0 14px;padding-top:10px;border-top:1px dashed var(--border-soft);}
+.track-label:first-of-type{border-top:none;padding-top:0;margin-top:6px;}
+
+.roster{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+@media(max-width:760px){.roster{grid-template-columns:1fr;}}
+.op-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;transition:all .15s ease;}
+.op-card:hover{border-color:var(--accent-line);transform:translateY(-2px);}
+.op-card.flagship{border-color:var(--accent2);background:linear-gradient(180deg,rgba(6,182,212,0.08),var(--surface));}
+.op-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.op-name{font-family:var(--font-display);font-weight:700;font-size:18px;color:#fff;}
+.op-role{font-size:12.5px;color:var(--muted);margin-top:2px;}
+.flag-chip{font-family:var(--font-mono);font-size:10px;color:var(--accent2);border:1px solid var(--accent2);background:var(--accent2-bg);border-radius:20px;padding:2px 8px;white-space:nowrap;}
+.op-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+.op-stats{display:flex;gap:18px;margin-top:2px;}
+.op-stat{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.op-stat b{color:var(--accent2);font-size:14px;display:block;font-family:var(--font-body);font-weight:600;}
+.op-agents{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
+.chip{font-size:11px;background:var(--surface-3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;color:var(--text);}
+.op-actions{display:flex;gap:10px;margin-top:6px;}
+.run-btn{flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-weight:600;font-size:13px;border-radius:6px;padding:10px;cursor:pointer;transition:all 0.15s ease;}
+.run-btn:hover{border-color:var(--accent2);color:var(--accent2);background:var(--accent2-bg);}
+
+.run-panel{background:var(--surface);border:1px solid var(--accent-line);border-radius:12px;padding:24px;margin-top:24px;display:none;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+.run-panel.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.run-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.run-head h3{font-family:var(--font-display);font-size:20px;margin:0;color:#fff;}
+.run-head .meta{font-family:var(--font-mono);font-size:11px;color:var(--muted-2);}
+.close-run{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:6px 12px;cursor:pointer;font-size:12px;}
+.close-run:hover{color:var(--text);border-color:var(--accent2);}
+
+.feed{background:var(--bg);border:1px solid var(--border-soft);border-radius:8px;padding:16px;height:260px;overflow-y:auto;font-family:var(--font-mono);font-size:12px;display:flex;flex-direction:column;gap:8px;}
+.feed-line{display:flex;gap:10px;align-items:flex-start;opacity:0;animation:appear .3s ease forwards;}
+@keyframes appear{to{opacity:1;}}
+.feed-line .tag{color:var(--accent2);white-space:nowrap;}
+.feed-line .txt{color:var(--muted);}
+.feed-line.done .tag{color:var(--accent2);}
+.feed-line.done .txt{color:var(--text);}
+
+.progress-row{display:flex;gap:6px;margin:16px 0 8px;flex-wrap:wrap;}
+.pstep{flex:1;min-width:64px;height:6px;border-radius:4px;background:var(--surface-3);overflow:hidden;position:relative;}
+.pstep.active{background:var(--accent-dim);}
+.pstep.complete{background:var(--accent2);box-shadow:0 0 8px var(--accent2);}
+
+.deliverable{margin-top:20px;background:var(--surface-2);border:1px solid var(--accent-line);border-radius:8px;padding:18px 20px;display:none;}
+.deliverable.show{display:block;animation:fadein .3s ease;}
+.deliverable h4{font-family:var(--font-display);font-size:17px;margin:0 0 12px;color:var(--accent2);}
+.deliverable pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:12.5px;color:var(--text);margin:0;line-height:1.65;}
+.note{font-size:11px;color:var(--muted-2);margin-top:12px;font-style:italic;}
+
+/* BUILDER STYLING (DYNEX FUNCTIONAL FLOW) */
+.steps-bar{display:flex;gap:10px;margin-bottom:24px;}
+.step-item{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);}
+.step-item.active{border-color:var(--accent2);background:var(--surface-3);}
+.step-item .step-num{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--muted-2);}
+.step-item.active .step-num{color:var(--accent2);}
+.step-item .step-lbl{font-size:13.5px;font-weight:600;color:var(--text);margin-top:2px;}
+
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.wf-card{border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;background:var(--surface-2);transition:all 0.15s ease;}
+.wf-card:hover{border-color:var(--accent2);}
+.wf-card.sel{border-color:var(--accent2);background:rgba(6,182,212,0.08);}
+.wf-title{font-family:var(--font-display);font-weight:700;font-size:16px;color:#fff;}
+.wf-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45;}
+.wf-meta{font-family:var(--font-mono);font-size:10.5px;color:var(--accent2);margin-top:8px;font-weight:600;text-transform:uppercase;}
+
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);margin-bottom:10px;}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--accent2);flex-shrink:0;}
+.task-row .tt{flex:1;font-size:13px;color:var(--text);}
+.task-row select{font-family:var(--font-body);font-size:12.5px;border:1px solid var(--border);border-radius:6px;padding:8px 10px;background:var(--surface);color:var(--text);outline:none;min-width:210px;}
+.task-row select:focus{border-color:var(--accent2);}
+
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.field input{width:100%;font-family:var(--font-body);font-size:13.5px;border:1px solid var(--border);border-radius:8px;padding:11px 13px;background:var(--surface-2);color:var(--text);outline:none;}
+.field input:focus{border-color:var(--accent2);}
+
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.seg button{font-family:var(--font-body);font-size:12.5px;padding:9px 16px;border:none;background:var(--surface-2);color:var(--muted);cursor:pointer;border-right:1px solid var(--border);}
+.seg button:last-child{border-right:none;}
+.seg button.on{background:var(--accent2);color:#060b14;font-weight:700;}
+
+.bnav{display:flex;justify-content:space-between;margin-top:24px;}
+
+footer{border-top:1px solid var(--border-soft);padding:30px 0 44px;}
+.foot-note{font-size:12px;color:var(--muted-2);max-width:85ch;line-height:1.6;}
+.foot-note strong{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark-row">
+      <div class="mark">
+        <div class="mark-badge">LTSCT</div>
+        <div>
+          <div class="mark-name">LTSCT Console</div>
+          <div class="mark-sub">L&amp;T Semiconductor Technologies (ltsct.com) · A Larsen &amp; Toubro Company</div>
+        </div>
+      </div>
+      <div class="line-readout">
+        <span class="dot"></span>
+        <span id="lineTxt">Bengaluru &amp; Global R&amp;D Centers · 1200V SiC MOSFET &amp; RISC-V Active</span>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tabA" onclick="setView('ops')">The AI Workforce Roster</button>
+      <button class="tab-btn" id="tabB" onclick="setView('hire')">+ Add an AI Operator</button>
+    </div>
+  </header>
+
+  <div id="view-ops">
+    <section class="hero" style="padding-bottom:10px;">
+      <div>
+        <div class="eyebrow">Silicon to Systems: India's Fabless Semiconductor Enterprise</div>
+        <h1>Eight operators to run LTSCT's <span>sic-power-to-riscv-bldc</span> loop</h1>
+        <p class="lead">Each operator below is a real L&amp;T Semiconductor Technologies (LTSCT) workflow — analyzing 3D CAD 1200V Silicon Carbide (SiC) MOSFET wafer layouts, LTSC5040 multi-channel PMIC thermal efficiency curves, and RISC-V motor controller FOC code, scrubbing 500-line IATF 16949 &amp; ISO 26262 ASIL-D silicon BOMs for AEC-Q100 qualified gate drivers, configuring RISC-V SoC firmware and Tata Electronics foundry PDK integration, and auditing ISO 9001 quality releases — handed to a team of specialist AI agents that works it end-to-end.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('roster-section').scrollIntoView({behavior:'smooth'})">View the Roster</button>
+          <button class="btn btn-ghost" onclick="runOperator('sic_power_dfm')">Run Flagship Operator</button>
+        </div>
+      </div>
+
+      <div class="wafer">
+        <div class="wafer-top">
+          <span class="wafer-title">LTSCT 1200V SiC &amp; PMIC Silicon Telemetry</span>
+          <span class="wafer-val" id="yieldVal">1200V 10 mΩ Rds(on) PASS</span>
+        </div>
+        <svg class="wafermap" viewBox="0 0 220 210" preserveAspectRatio="xMidYMid meet">
+          <circle class="wafer-outline" cx="110" cy="105" r="92"></circle>
+          <line class="wafer-grid-line" x1="20" y1="105" x2="200" y2="105"></line>
+          <line class="wafer-grid-line" x1="110" y1="15" x2="110" y2="195"></line>
+          <g id="dieGrid"></g>
+        </svg>
+        <div class="wafer-foot">
+          <span>Bengaluru R&amp;D · Lot LTSCT-2609-SiC</span>
+          <span id="binVal">Pass: ISO 26262 ASIL-D</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="econ">
+      <div class="econ-item">
+        <div class="econ-num">1200<small>V</small></div>
+        <div class="econ-label">Silicon Carbide (SiC) MOSFET power platform</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">L&amp;T<small> Group</small></div>
+        <div class="econ-label">Part of Larsen &amp; Toubro global engineering enterprise</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">36<small> hrs</small></div>
+        <div class="econ-label">Median SiC DFM &amp; RISC-V BLDC FOC setup hours returned</div>
+      </div>
+      <div class="econ-item">
+        <div class="econ-num">8<small>/8</small></div>
+        <div class="econ-label">Workflows covered, silicon DFM through ASIL-D safety release</div>
+      </div>
+    </div>
+
+    <section id="roster-section">
+      <div class="section-head">
+        <div>
+          <div class="section-title">The AI Workforce Roster</div>
+          <div class="section-sub">Grouped into Commercial &amp; Semiconductor OEM Tenders and Silicon Design &amp; Fabless Operations tracks. Click run on any operator to watch its agent team execute in real time.</div>
+        </div>
+      </div>
+
+      <div id="rosterContainer"></div>
+    </section>
+
+    <!-- Run Panel -->
+    <div class="run-panel" id="runPanel">
+      <div class="run-head">
+        <div>
+          <h3 id="runTitle">Running Operator...</h3>
+          <div class="meta" id="runSub">Simulated multi-agent execution feed</div>
+        </div>
+        <button class="close-run" onclick="closeRun()">✕ Close View</button>
+      </div>
+      <div class="progress-row" id="progressRow"></div>
+      <div class="feed" id="feedArea"></div>
+      <div class="deliverable" id="deliverableBox">
+        <h4 id="delivTitle">Review-Ready Output</h4>
+        <pre id="delivCode"></pre>
+        <div class="note">Human-in-the-loop oversight active. Outputs verified by L&amp;T Semiconductor Technologies senior silicon architecture team. Illustrative simulation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="section-title">Add an AI Operator</div>
+          <div class="section-sub">Stand up a new AI operator in three steps: pick the workflow, assign each task to an agent via dropdown, then name it and set cadence.</div>
+        </div>
+      </div>
+
+      <div class="steps-bar" id="bSteps"></div>
+      <div id="bBody"></div>
+      <div class="bnav" id="bNav"></div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="foot-note">
+      <strong>Independent Concept Prototype</strong> prepared for a conversation with <strong>L&amp;T Semiconductor Technologies (ltsct.com)</strong>. It is not affiliated with, endorsed by, or built on LTSCT or Larsen &amp; Toubro systems or data. All operators, 1200V SiC MOSFET thermal curves, LTSC5040 PMIC loops, and ASIL-D safety audits are illustrative simulations. A licensed semiconductor architect, power electronics specialist, or functional safety manager reviews and approves every chip selection, PDK setup, and safety release.
+    </div>
+  </footer>
+</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'EV Powertrain, Industrial Drives & Smart Grid Industry Intelligence', tools: ['research_ltsct_tenders', 'save'] },
+  silicon_eng: { emoji: '🔬', label: 'LTSCT 1200V SiC MOSFET & Multi-Channel PMIC Systems Engineer', tools: ['analyze_sic_layout', 'save'] },
+  power_spec: { emoji: '⚡', label: 'SiC/GaN Gate Driver & High-Voltage Inverter Specialist', tools: ['design_gate_driver', 'save'] },
+  safety_scrubber: { emoji: '📑', label: 'ISO 26262 ASIL-D, AEC-Q100 & IATF 16949 Component Specialist', tools: ['scrub_ltsct_bom', 'save'] },
+  cost_eng: { emoji: '🧮', label: 'Fabless Wafer Tape-out, SiC Epitaxial Layer & Packaging Costing Specialist', tools: ['calc_sic_cost', 'save'] },
+  cloud_architect: { emoji: '☁️', label: 'LTSCT Edge AI Telemetry & Smart Grid IoT SCADA Architect', tools: ['configure_ltsct_cloud', 'save'] },
+  quality_auditor: { emoji: '🛡️', label: 'ISO 9001:2015, ISO 14001 & Thermal Dissipation Quality Auditor', tools: ['audit_silicon_quality', 'save'] },
+  supply_planner: { emoji: '📦', label: 'SiC Substrates, Leadframes & Automotive BGA Package Planner', tools: ['plan_wafer_spares', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'Enterprise Automotive & Industrial Power Semiconductor RFP Writer', tools: ['compose_doc', 'save'] },
+  qa_reviewer: { emoji: '✅', label: 'Senior Fabless SoC Architecture & Power Electronics Reviewer', tools: ['qa_review', 'save'] },
+  prospector: { emoji: '🧲', label: 'VP Automotive Electronics & Tier-1 Systems Director Prospector', tools: ['source_ltsct_accounts', 'save'] },
+  riscv_spec: { emoji: '⚙️', label: 'RISC-V Microcontroller, Sensorless FOC & Embedded SDK Specialist', tools: ['program_riscv_foc', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+const TRACKS = [
+  { key: 'commercial', title: 'Commercial & Semiconductor OEM Tenders' },
+  { key: 'operations', title: 'Silicon Design & Fabless Operations' }
+];
+
+const WORKFLOWS = {
+  scout: {
+    name: 'EV Traction, Industrial Automation & Smart Grid Scouting',
+    title: 'AI Semiconductor Growth Scout',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'EV Traction & Smart Grid Silicon Opportunity Dossier',
+    desc: 'Maps Tier-1 automotive EV inverter builders (Tata Motors, Mahindra, Hyundai), industrial BLDC motor makers, and solar microgrid inverter OEMs.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan 1200V SiC MOSFET EV traction inverter RFPs, multi-channel PMIC bids, and RISC-V motor drive tenders.', deps: [] },
+      { agent: 'prospector', task: 'Source VP Automotive Electronics, Chief Power Semiconductor Engineers, and Industrial Automation Directors.', deps: [] },
+      { agent: 'silicon_eng', task: 'Score fit on LTSCT 1200V SiC MOSFETs, LTSC5040 PMICs, and RISC-V BLDC motor controller chips.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce target fabless semiconductor prospect dossier.', deps: [2] }
+    ]
+  },
+  quote: {
+    name: 'Custom 1200V SiC MOSFET & PMIC Silicon Quoting',
+    title: 'AI Silicon Systems Cost Specialist',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'LTSCT 1200V SiC MOSFET & PMIC System Quote Package',
+    desc: 'Models 1200V SiC MOSFET power modules, LTSC5040 multi-channel PMIC ICs, gate drivers, and Tata Electronics foundry manufacturing.',
+    tasks: [
+      { agent: 'silicon_eng', task: 'Review Rds(on) resistance (10 mΩ), drain current (120A), switching frequency (150 kHz), and thermal resistance (0.25 °C/W).', deps: [] },
+      { agent: 'cost_eng', task: 'Model 200mm SiC epitaxial wafer cost, PDK mask set, copper leadframe packaging, and AEC-Q100 qualification testing.', deps: [0] },
+      { agent: 'supply_planner', task: 'Verify 200mm SiC substrate reserves, foundry capacity at Tata Electronics, and Bengaluru test lab stocks.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Assemble formal LTSCT 1200V SiC MOSFET & PMIC System Quote Package.', deps: [2] }
+    ]
+  },
+  tender: {
+    name: 'Global Automotive OEM & Renewable Energy RFP Response',
+    title: 'AI Fabless Solution Specialist',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Global Automotive OEM & Renewable Energy RFP Response Package',
+    desc: 'Audits ISO 9001:2015 quality standards, ISO 26262 ASIL-D functional safety compliance, AEC-Q100 Grade 0 reliability, and 15-year automotive SLAs.',
+    tasks: [
+      { agent: 'researcher', task: 'Parse EV 800V architecture insulation rules, fast charger efficiency targets (>99%), and ASIL-D safety goals.', deps: [] },
+      { agent: 'quality_auditor', task: 'Verify ISO 9001:2015, IATF 16949 certificates, ISO 26262 safety cases, and Larsen & Toubro group credentials.', deps: [0] },
+      { agent: 'cost_eng', task: 'Structure global OEM silicon supply schedule backed by L&T group engineering network.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce formal Global Automotive OEM & Renewable Energy RFP response package.', deps: [2] }
+    ]
+  },
+  intel: {
+    name: 'Global SiC Power, RISC-V & Automotive Radar Intelligence Radar',
+    title: 'AI Semiconductor Market Intelligence',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Global SiC Power & RISC-V Semiconductor Intelligence Brief',
+    desc: 'Tracks 1200V SiC MOSFET adoption vs silicon IGBTs in 800V EVs, RISC-V architecture growth in motor drives, and 77GHz radar RFIC trends.',
+    tasks: [
+      { agent: 'researcher', task: 'Monitor global SiC substrate capex, EV fast charging power module growth, and RISC-V ecosystem initiatives.', deps: [] },
+      { agent: 'silicon_eng', task: 'Benchmark LTSCT 1200V SiC MOSFET 50% lower switching losses against silicon IGBT power modules.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile strategic power semiconductor market intelligence brief.', deps: [0, 1] }
+    ]
+  },
+  sic_power_dfm: {
+    name: '1200V SiC MOSFET & LTSC5040 PMIC Silicon DFM Scrub',
+    title: 'AI Silicon Design & DFM Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: '1200V SiC MOSFET & PMIC Silicon DFM Review Package',
+    desc: 'Audits 3D CAD SiC power die layouts, gate oxide reliability under high dv/dt, LTSC5040 PMIC buck-boost efficiency, and copper clip BGA packaging.',
+    tasks: [
+      { agent: 'silicon_eng', task: 'Analyze 1200V SiC MOSFET active cell area layout; verifies 10 mΩ Rds(on) at 175°C junction temperature with zero gate breakdown.', deps: [] },
+      { agent: 'power_spec', task: 'Verify isolated dual-channel SiC gate driver noise immunity against 100 kV/µs dv/dt transient voltage spikes.', deps: [0] },
+      { agent: 'riscv_spec', task: 'Configure RISC-V BLDC motor controller sensorless Field-Oriented Control (FOC) hardware acceleration pipeline.', deps: [1] },
+      { agent: 'quality_auditor', task: 'Audit ISO 26262 ASIL-D safety mechanism coverage, AEC-Q100 Grade 0 (-40°C to +150°C) burn-in, and IATF 16949 rules.', deps: [2] },
+      { agent: 'reviewer', task: 'QA silicon design & power electronics simulation findings and compile customer technical package.', deps: [3] },
+      { agent: 'proposal_writer', task: 'Produce final 1200V SiC MOSFET & PMIC Silicon DFM Review Package.', deps: [4] }
+    ]
+  },
+  riscv_bldc_setup: {
+    name: 'RISC-V BLDC Motor Controller & FOC Firmware Setup',
+    title: 'AI Embedded SoC & Firmware Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'RISC-V BLDC Controller & FOC Setup Package',
+    desc: 'Programs RISC-V MCU sensorless FOC algorithms, configures LTSC5040 PMIC power sequencing, and deploys Tata Electronics foundry PDK builds.',
+    tasks: [
+      { agent: 'riscv_spec', task: 'Write RISC-V C/C++ firmware for 20 kHz SVPWM sensorless FOC motor control with overcurrent protection.', deps: [] },
+      { agent: 'cloud_architect', task: 'Connect LTSCT edge IoT SCADA telemetry API for real-time motor RPM, inverter phase current, and thermal logging.', deps: [0] },
+      { agent: 'reviewer', task: 'Verify zero phase lag during 100,000-cycle high-torque acceleration dry run.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Produce RISC-V BLDC Controller & FOC Setup Package.', deps: [2] }
+    ]
+  },
+  asil_d_audit: {
+    name: 'ISO 26262 ASIL-D & AEC-Q100 Functional Safety Audit',
+    title: 'AI Silicon Safety & Quality Auditor',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'ISO 26262 ASIL-D & AEC-Q100 Silicon Quality Release',
+    desc: 'Audits ISO 26262 ASIL-D hardware safety metrics (SPFM >99%, LFM >90%), AEC-Q100 Grade 0 stress test logs, and IATF 16949 wafer pedigree.',
+    tasks: [
+      { agent: 'quality_auditor', task: 'Audit Bengaluru lab 1200V SiC MOSFET high-temperature gate bias (HTGB) and high-temperature reverse bias (HTRB) logs.', deps: [] },
+      { agent: 'safety_scrubber', task: 'Verify 100% Certificate of Conformance (CoC) for ASIL-D safety manual, FMEDA report, and AEC-Q100 qualification.', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile ISO 26262 ASIL-D & AEC-Q100 Silicon Quality Release Brief.', deps: [0, 1] }
+    ]
+  },
+  wafer_spares_plan: {
+    name: '200mm SiC Wafers, PMIC Dies & BGA Package Safety Stock Plan',
+    title: 'AI Silicon Wafer & Spares Planner',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: '1200V SiC & PMIC Silicon Wafer Safety Stock Plan',
+    desc: 'Secures 200mm SiC epitaxial wafers, LTSC5040 PMIC silicon dies, copper leadframe substrates, and evaluation kit boards for global OEM delivery.',
+    tasks: [
+      { agent: 'supply_planner', task: 'Evaluate 200mm SiC substrate foundry lead times and 90-day critical power die buffer in LTSCT warehouses.', deps: [] },
+      { agent: 'safety_scrubber', task: 'Execute raw material Certificate of Analysis (CoA) audit for SiC crystal purity and molding compound thermal conductivity.', deps: [] },
+      { agent: 'cost_eng', task: 'Structure strategic wafer inventory buffer to support Tier-1 EV OEM ramp schedules.', deps: [0, 1] },
+      { agent: 'proposal_writer', task: 'Produce 1200V SiC & PMIC Silicon Wafer Safety Stock Plan.', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'EV Traction & Smart Grid Silicon Opportunity Dossier',
+  quote: 'LTSCT 1200V SiC MOSFET & PMIC System Quote Package',
+  tender: 'Global Automotive OEM & Renewable Energy RFP Response Package',
+  intel: 'Global SiC Power & RISC-V Semiconductor Intelligence Brief',
+  sic_power_dfm: '1200V SiC MOSFET & PMIC Silicon DFM Review Package',
+  riscv_bldc_setup: 'RISC-V BLDC Controller & FOC Setup Package',
+  asil_d_audit: 'ISO 26262 ASIL-D & AEC-Q100 Silicon Quality Release',
+  wafer_spares_plan: '1200V SiC & PMIC Silicon Wafer Safety Stock Plan'
+};
+
+const TOOLS = {
+  research_ltsct_tenders: () => 'Scanned EV 1200V SiC MOSFET solicitations, multi-channel PMIC RFPs, and RISC-V motor drive bids.',
+  source_ltsct_accounts: () => 'Sourced verified VP Automotive Electronics and Industrial Automation Directors; deduped CRM.',
+  analyze_sic_layout: () => 'Analyzed 1200V SiC MOSFET cell layout; verified 10 mΩ Rds(on) at 175°C with zero gate oxide degradation.',
+  design_gate_driver: () => 'Designed isolated dual-channel gate driver circuit; verified 100 kV/µs dv/dt transient noise immunity.',
+  scrub_ltsct_bom: () => 'Scrubbed 500-line silicon BOM; verified 100% ISO 26262 ASIL-D compliance, AEC-Q100 Grade 0, and IATF 16949 specs.',
+  calc_sic_cost: () => 'Calculated 1200V SiC MOSFET module, LTSC5040 PMIC IC, RISC-V SoC, and copper clip package margins.',
+  configure_ltsct_cloud: () => 'Configured LTSCT edge IoT SCADA telemetry API for real-time motor RPM, phase current, and thermal logging.',
+  audit_silicon_quality: () => 'Audited SiC MOSFET HTGB/HTRB burn-in logs, ASIL-D safety mechanism coverage, and AEC-Q100 Grade 0 test (PASS).',
+  plan_wafer_spares: () => 'Cross-referenced 200mm SiC substrate lead times; secured 90-day material buffer across LTSCT depots.',
+  program_riscv_foc: () => 'Programmed RISC-V C/C++ 20 kHz SVPWM FOC motor control firmware, LTSC5040 PMIC sequencing, and protection loops.',
+  compose_doc: () => 'Compiled fabless semiconductor and 1200V SiC power metrics into clear, review-ready technical documentation.',
+  qa_review: () => 'Audited report completeness and checked ISO 9001 / ASIL-D standards; ready for LTSCT VP Engineering sign-off.',
+  save: () => 'Saved deliverable artifact to shared project repository.'
+};
+
+function toolOut(t) { return (TOOLS[t] || (() => 'Executed successfully.'))(); }
+
+const FINAL = {
+  scout: `EV TRACTION & SMART GRID SILICON OPPORTUNITY DOSSIER (illustrative)
+Target Sector: Electric Vehicles (800V EV Traction & Fast Charging), Industrial Motor Drives, Solar Microgrids
+Target Location: Bengaluru, India, San Jose, CA, Munich, Germany & Global Tier-1 Automotive OEMs
+
+A-Tier Qualified Enterprise Opportunities:
+1. Tata Motors Electric Mobility — 800V EV Traction Inverter — Fit Score: 99/100
+   • Key Contacts: VP EV Powertrain, Lead Power Electronics Engineer
+   • Requirement: LTSCT 1200V Silicon Carbide (SiC) MOSFET Modules & Isolated Gate Drivers
+2. Mahindra & Mahindra Automotive — EV Fast Charger & PMIC Power Board — Fit Score: 97/100
+   • Key Contacts: Director of Electrical Engineering, Lead PMIC Architect
+   • Requirement: LTSC5040 Multi-Channel PMIC ICs & High-Efficiency Buck/Boost Regulators
+3. Havells India — Energy-Efficient BLDC Ceiling Fan & Industrial Motors — Fit Score: 95/100
+   • Key Contacts: Chief Automation Officer, Lead Motor Drive Engineer
+   • Requirement: LTSCT Fully Integrated RISC-V BLDC Motor Controller Chip
+
+Strategic Positioning:
+Highlight L&T Semiconductor Technologies (LTSCT) role as India's premier fabless semiconductor enterprise, backed by Larsen & Toubro group engineering heritage, 1200V SiC MOSFET innovation, RISC-V co-development, and Tata Electronics manufacturing partnership.
+
+NOTE: Illustrative simulation prepared for L&T Semiconductor Technologies (ltsct.com).`,
+
+  quote: `LTSCT 1200V SIC MOSFET & PMIC SYSTEM QUOTE PACKAGE (illustrative)
+Customer: Tata Motors Electric Mobility / EV Inverter Program
+Program: LTSCT 1200V SiC MOSFET Power Modules & LTSC5040 PMICs (50,000 EV Platforms)
+Specifications: 1200V, 10 mΩ Rds(on), 150 kHz Switching, ISO 26262 ASIL-D, AEC-Q100 Grade 0
+
+Commercial Breakdown:
+• LTSCT 1200V SiC MOSFET Power Modules (300,000 Dies @ $14.50): $4,350,000.00
+• LTSC5040 Multi-Channel Automotive PMIC ICs (50,000 Units): $325,000.00
+• Isolated Dual-Channel SiC Gate Driver ICs & Board Kits: $180,000.00
+• RISC-V FOC Firmware SDK Licenses, Reference Design Kits & FAE Support: $45,000.00
+
+Performance Return:
+• Inverter Efficiency: +99.2% Peak Efficiency, Reducing EV Battery Heat & Extending Range by 8%
+• Size & Weight: 40% Reduction in Inverter Size vs Silicon IGBT Designs
+• Functional Safety: Built-in ISO 26262 ASIL-D Overcurrent & Thermal Shutdown Circuits
+
+Turnaround Time: 10 Weeks to Mass Production Silicon Delivery
+
+NOTE: Illustrative simulation; pricing figures are placeholders.`,
+
+  tender: `GLOBAL AUTOMOTIVE OEM & RENEWABLE ENERGY RFP RESPONSE PACKAGE (illustrative)
+Tender ID: IN-KA-SILICON-LTSCT-2026-32
+Scope: 1200V SiC MOSFETs, Multi-Channel PMICs & RISC-V Motor Controllers
+
+Quality & Performance Verification:
+• Quality Management System: ISO 9001:2015 & IATF 16949 Certified Design & Test Centers
+• Functional Safety Standard: 100% ISO 26262 ASIL-D Compliant Silicon Architecture
+• Automotive Reliability: AEC-Q100 Grade 0 (-40°C to +150°C) Qualification Verified
+• Corporate Ecosystem: Supported by Larsen & Toubro (L&T) global engineering network
+
+Technical Offer:
+• India's premier fabless semiconductor company delivering silicon to systems solution.
+
+NOTE: Illustrative simulation; confirm against RFP specifications.`,
+
+  intel: `GLOBAL SIC POWER & RISC-V SEMICONDUCTOR INTELLIGENCE BRIEF (illustrative)
+Focus: 1200V SiC MOSFET Performance, LTSC5040 PMICs & RISC-V Motor Control
+
+Key Insights:
+1. The 1200V SiC Power Revolution: 800V EV powertrains are shifting rapidly from silicon IGBTs to SiC MOSFETs to achieve 50% lower switching losses and ultra-fast charging speeds.
+2. Integrated RISC-V BLDC Architecture: Combining RISC-V cores with sensorless FOC hardware co-processors enables zero-latency motor control for industrial and consumer appliances.
+3. LTSCT Platform Advantage:
+   - Complete silicon-to-systems portfolio: SiC MOSFETs, PMICs, RISC-V MCUs, and MEMS sensors.
+   - Strategic manufacturing alliance with Tata Electronics ensuring domestic and global chip supply resilience.
+
+NOTE: Illustrative simulation.`,
+
+  sic_power_dfm: `1200V SIC MOSFET & PMIC SILICON DFM REVIEW PACKAGE (illustrative · flagship)
+Program: EV 800V Traction Inverter & Fast Charger Power Platform
+Factory: Bengaluru R&D Center & Foundry Partner Line
+
+Silicon Engineering Findings:
+1. SiC MOSFET Cell Optimization: Modeled 1200V SiC active area cell; verified 10 mΩ Rds(on) at 175°C junction temperature with zero gate voltage drift under 150 kHz switching.
+2. Gate Driver dv/dt Immunity: Tested isolated gate driver under 100 kV/µs transient voltage spikes; verified zero false turn-on events.
+3. LTSC5040 PMIC Buck Efficiency: Achieved 95.8% conversion efficiency across full load operating range.
+
+Quality & Safety Audit:
+• Safety Audit: ISO 26262 ASIL-D safety mechanism diagnostics verified (SPFM >99%).
+• Reliability Rating: AEC-Q100 Grade 0 and IATF 16949 release approved.
+
+Summary:
+ LTSCT 1200V SiC MOSFET and LTSC5040 PMIC silicon designs approved for tape-out and volume production.
+
+NOTE: Illustrative simulation; review with LTSCT engineering team.`,
+
+  riscv_bldc_setup: `RISC-V BLDC CONTROLLER & FOC SETUP PACKAGE (illustrative)
+Program: RISC-V BLDC Motor Controller & LTSC5040 PMIC Integration
+
+System Setup Configuration:
+• Sensorless FOC Firmware: Written 20 kHz SVPWM FOC firmware for high-efficiency motor control
+• LTSC5040 PMIC Power Setup: Programmed multi-channel buck/boost voltage rails and fault monitoring
+• Telemetry Connectivity: Connected LTSCT edge IoT telemetry API for real-time motor speed and thermal logging
+
+Outcome: RISC-V BLDC controller and PMIC system validated for high-efficiency motor applications.
+
+NOTE: Illustrative simulation.`,
+
+  asil_d_audit: `ISO 26262 ASIL-D & AEC-Q100 SILICON QUALITY RELEASE (illustrative)
+Production Silicon: LTSCT 1200V SiC MOSFET & LTSC5040 PMIC (#LTSCT-SIL-2026-23)
+Compliance Standard: ISO 26262 ASIL-D / AEC-Q100 Grade 0 / IATF 16949 / ISO 9001
+
+Audit Checklist Results:
+• High-Temperature Reverse Bias (HTRB): 1,000 hours at 1,200V & 175°C passed with zero leakage current drift - PASS
+• ASIL-D Safety Diagnostics: Measured Single-Point Fault Metric (SPFM) at 99.4% - PASS
+• Thermal Shock Test: 1,000 cycles from -55°C to +150°C passed with zero package delamination - PASS
+
+Outcome: ISO 26262 ASIL-D & AEC-Q100 Silicon Quality Release Approved. Certificate of Compliance issued.
+
+NOTE: Illustrative simulation.`,
+
+  wafer_spares_plan: `1200V SIC & PMIC SILICON WAFER SAFETY STOCK PLAN (illustrative)
+Scope: Bengaluru Central Silicon Depot & Foundry Warehouses
+
+Supply Strategy Breakdown:
+• 200mm SiC Wafers: 90-day supply of processed 1200V SiC MOSFET dies stored in wafer bank
+• LTSC5040 PMIC Dies: 100,000 PMIC silicon dies in reserve for automotive customer demand
+• Reference Kits: 50 evaluation boards ready for immediate Tier-1 OEM engineering samples
+
+Outcome: LTSCT silicon wafer and package inventory clear for continuous automotive volume ramp.
+
+NOTE: Illustrative simulation.`
+};
+
+let EMPLOYEES = [
+  { id: 'scout', name: 'Scout', title: 'AI Semiconductor Scout', wf: 'scout', handled: 285, hrs: 90, win: 62, status: 'idle' },
+  { id: 'quote', name: 'Quote', title: 'AI Silicon Systems Cost Specialist', wf: 'quote', handled: 375, hrs: 168, win: 84, status: 'idle' },
+  { id: 'tender', name: 'Tender', title: 'AI Fabless Solution Specialist', wf: 'tender', handled: 195, hrs: 132, win: 74, status: 'idle' },
+  { id: 'intel', name: 'Radar', title: 'AI Semiconductor Intelligence', wf: 'intel', handled: 225, hrs: 76, win: 52, status: 'idle' },
+  { id: 'sic_power_dfm', name: 'SiCPowerPMICDFM', title: 'AI Silicon Design & DFM Specialist', wf: 'sic_power_dfm', handled: 570, hrs: 325, win: 99, status: 'idle' },
+  { id: 'riscv_bldc_setup', name: 'RISCVBLDCSotwareSetup', title: 'AI Embedded SoC & Firmware Specialist', wf: 'riscv_bldc_setup', handled: 350, hrs: 158, win: 80, status: 'idle' },
+  { id: 'asil_d_audit', name: 'ASILDFunctionalSafetyAudit', title: 'AI Silicon Safety & Quality Auditor', wf: 'asil_d_audit', handled: 490, hrs: 198, win: 94, status: 'idle' },
+  { id: 'wafer_spares_plan', name: 'SupplyPlanner', title: 'AI Silicon Wafer & Spares Planner', wf: 'wafer_spares_plan', handled: 310, hrs: 118, win: 0, status: 'idle' }
+];
+
+/* Render Functions */
+function drawWaferGrid() {
+  const grid = document.getElementById("dieGrid");
+  let rects = '';
+  for (let x = -8; x <= 8; x++) {
+    for (let y = -8; y <= 8; y++) {
+      if (x*x + y*y <= 60) {
+        const px = 110 + x * 10 - 4;
+        const py = 105 + y * 10 - 4;
+        const pass = (Math.abs(x*y) % 8 !== 3);
+        const fill = pass ? 'rgba(0, 63, 114, 0.55)' : 'rgba(6, 182, 212, 0.6)';
+        rects += `<rect x="${px}" y="${py}" width="8" height="8" rx="1.5" fill="${fill}"></rect>`;
+      }
+    }
+  }
+  grid.innerHTML = rects;
+}
+
+function renderRoster() {
+  const container = document.getElementById("rosterContainer");
+  let html = '';
+  TRACKS.forEach(tr => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === tr.key);
+    if (!list.length) return;
+    html += `<div class="track-label">${tr.title}</div><div class="roster">`;
+    html += list.map(empCard).join('');
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+}
+
+function empCard(e) {
+  const wf = WORKFLOWS[e.wf] || {};
+  const isFlag = wf.tag === 'flagship';
+  const team = (wf.tasks || []).map(t => t.agent).filter((v, i, a) => a.indexOf(v) === i).map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  return `
+    <div class="op-card ${isFlag ? 'flagship' : ''}" id="emp-${e.id}">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${e.name}</div>
+          <div class="op-role">${e.title}</div>
+        </div>
+        ${isFlag ? '<span class="flag-chip">★ FLAGSHIP OPERATOR</span>' : ''}
+      </div>
+      <div class="op-desc">${wf.desc || ''}</div>
+      <div class="op-agents">${team}</div>
+      <div class="op-stats">
+        <div class="op-stat"><b>${e.handled.toLocaleString()}</b> runs</div>
+        <div class="op-stat"><b>~${e.hrs} hrs</b> saved/mo</div>
+        <div class="op-stat"><b>+${e.win}%</b> speedup</div>
+      </div>
+      <div class="op-actions">
+        <button class="run-btn" onclick="runOperator('${e.wf}')">▶ Run ${e.name}</button>
+      </div>
+    </div>
+  `;
+}
+
+function setView(v) {
+  document.getElementById('view-ops').classList.toggle('hidden', v !== 'ops');
+  document.getElementById('view-hire').classList.toggle('hidden', v !== 'hire');
+  document.getElementById('tabA').classList.toggle('active', v === 'ops');
+  document.getElementById('tabB').classList.toggle('active', v === 'hire');
+  if (v === 'hire') initBuilder();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+let isRunning = false;
+async function runOperator(wfKey) {
+  if (isRunning) return;
+  isRunning = true;
+  const wf = WORKFLOWS[wfKey];
+  if (!wf) return;
+
+  const panel = document.getElementById("runPanel");
+  const title = document.getElementById("runTitle");
+  const sub = document.getElementById("runSub");
+  const progress = document.getElementById("progressRow");
+  const feed = document.getElementById("feedArea");
+  const deliv = document.getElementById("deliverableBox");
+
+  panel.classList.add("active");
+  deliv.classList.remove("show");
+  title.innerText = `Executing Operator: ${wf.name}`;
+  sub.innerText = `Mode: ${wf.mode.toUpperCase()} · ${wf.tasks.length} Specialist Agents`;
+
+  progress.innerHTML = wf.tasks.map((_, i) => `<div class="pstep" id="ps_${i}"></div>`).join('');
+  feed.innerHTML = '';
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  function addFeedLine(agentKey, txt, isDone = false) {
+    const role = AGENT_ROLES[agentKey] || { emoji: '🤖', label: agentKey };
+    const div = document.createElement('div');
+    div.className = `feed-line ${isDone ? 'done' : ''}`;
+    div.innerHTML = `<span class="tag">[${role.emoji} ${role.label}]</span><span class="txt">${txt}</span>`;
+    feed.appendChild(div);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  addFeedLine(wf.tasks[0].agent, `Initializing ${wf.name} autonomous workflow loop...`);
+  await new Promise(r => setTimeout(r, 600));
+
+  for (let i = 0; i < wf.tasks.length; i++) {
+    const t = wf.tasks[i];
+    const stepEl = document.getElementById(`ps_${i}`);
+    if (stepEl) stepEl.classList.add("active");
+
+    addFeedLine(t.agent, `Executing Task ${i+1}: ${t.task}`);
+    await new Promise(r => setTimeout(r, 800));
+
+    const role = AGENT_ROLES[t.agent];
+    if (role && role.tools) {
+      for (const tool of role.tools) {
+        addFeedLine(t.agent, `Invoked tool '${tool}( )' -> ${toolOut(tool)}`);
+        await new Promise(r => setTimeout(r, 600));
+      }
+    }
+
+    if (stepEl) {
+      stepEl.classList.remove("active");
+      stepEl.classList.add("complete");
+    }
+    addFeedLine(t.agent, `Task ${i+1} completed. Artifact saved to shared LTSCT project store.`, true);
+  }
+
+  await new Promise(r => setTimeout(r, 400));
+  document.getElementById("delivTitle").innerText = `Review-Ready Output · ${DTITLE[wfKey] || 'Deliverable'}`;
+  document.getElementById("delivCode").innerText = FINAL[wfKey] || "Execution completed successfully.";
+  deliv.classList.add("show");
+
+  isRunning = false;
+}
+
+function closeRun() {
+  document.getElementById("runPanel").classList.remove("active");
+}
+
+/* DYNEX BUILDER FLOW IMPLEMENTATION */
+let draft = {};
+function initBuilder() {
+  draft = { wf: null, mode: 'sequential', assign: [], name: '', title: '', cadence: 'Per project', step: 1 };
+  renderBuilder();
+}
+
+function renderBuilder() {
+  const steps = [['01', 'Pick a workflow'], ['02', 'Assign the agents'], ['03', 'Name & cadence']];
+  document.getElementById('bSteps').innerHTML = steps.map((s, i) => `
+    <div class="step-item ${draft.step === i + 1 ? 'active' : ''}">
+      <div class="step-num">${s[0]}</div>
+      <div class="step-lbl">${s[1]}</div>
+    </div>
+  `).join('');
+
+  if (draft.step === 1) bS1();
+  else if (draft.step === 2) bS2();
+  else bS3();
+  bNav();
+}
+
+function bS1() {
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 1: Choose Baseline Silicon Engineering Workflow</label></div>
+    <div class="wf-grid">
+      ${Object.keys(WORKFLOWS).map(k => {
+        const w = WORKFLOWS[k];
+        return `
+          <div class="wf-card ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')">
+            <div class="wf-title">${w.name}</div>
+            <div class="wf-desc">${w.desc}</div>
+            <div class="wf-meta">${w.tasks.length} agents · ${w.mode}</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 2: Assign Each Task to a Specialist Agent</label></div>
+    ${w.tasks.map((t, i) => `
+      <div class="task-row">
+        <div class="tn">${i + 1}</div>
+        <div class="tt">
+          ${t.task}
+          ${t.deps.length ? `<span style="color:var(--muted-2);font-family:var(--font-mono);font-size:11px;"> · waits for step ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}
+        </div>
+        <select onchange="draft.assign[${i}]=this.value">${opts}</select>
+      </div>
+    `).join('')}
+    <div class="field" style="margin-top:16px;">
+      <label>Execution Mode</label>
+      <div class="seg">
+        ${['sequential', 'dag'].map(m => `
+          <button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (Parallel DAG)' : 'Sequential'}</button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  document.getElementById('bBody').innerHTML = `
+    <div class="field"><label>Step 3: Name Operator &amp; Set Cadence</label></div>
+    <div class="field">
+      <label>Operator Name</label>
+      <input type="text" value="${draft.name}" placeholder="e.g. LTSCT SiC Power Specialist" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Role Title</label>
+      <input type="text" value="${draft.title}" placeholder="e.g. Autonomous Fabless Silicon Engineer" oninput="draft.name=this.value;renderPreview();">
+    </div>
+    <div class="field">
+      <label>Cadence</label>
+      <div class="seg">
+        ${['Per project', 'Per batch', 'Weekly', 'On-demand'].map(c => `
+          <button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>
+        `).join('')}
+      </div>
+    </div>
+    <div class="field" style="margin-top:20px;">
+      <label>Live Operator Card Preview</label>
+      <div id="previewCardArea"></div>
+    </div>
+  `;
+  renderPreview();
+}
+
+function renderPreview() {
+  const w = WORKFLOWS[draft.wf];
+  const area = document.getElementById('previewCardArea');
+  if (!area) return;
+  
+  const team = draft.assign.map(r => {
+    const role = AGENT_ROLES[r] || { emoji: '🤖', label: r };
+    return `<span class="chip">${role.emoji} ${role.label}</span>`;
+  }).join('');
+
+  area.innerHTML = `
+    <div class="op-card" style="max-width:440px;">
+      <div class="op-top">
+        <div>
+          <div class="op-name">${draft.name || 'New Operator'}</div>
+          <div class="op-role">${draft.title || 'AI Operator'}</div>
+        </div>
+      </div>
+      <div class="op-desc">Owns <b>${w.name}</b> · ${draft.cadence} · ${draft.mode.toUpperCase()}</div>
+      <div class="op-agents">${team}</div>
+    </div>
+  `;
+}
+
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn btn-ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right = '';
+  if (draft.step === 1) right = `<button class="btn btn-primary" ${draft.wf ? '' : 'disabled'} onclick="draft.step=2;renderBuilder()">Next: Assign Agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn btn-primary" onclick="draft.step=3;renderBuilder()">Next: Name &amp; Cadence →</button>`;
+  else right = `<button class="btn btn-primary" onclick="hire()">✓ Add this AI Operator</button>`;
+
+  document.getElementById('bNav').innerHTML = left + right;
+}
+
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  
+  WORKFLOWS[wfId] = {
+    name: w.name,
+    title: draft.title || w.title,
+    mode: draft.mode || w.mode,
+    track: w.track,
+    deliverable: w.deliverable,
+    desc: w.desc,
+    tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps }))
+  };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({
+    id, name,
+    title: draft.title || w.title,
+    wf: wfId,
+    handled: 0,
+    hrs: Math.floor(Math.random() * 60) + 40,
+    win: 0,
+    status: 'idle'
+  });
+
+  renderRoster();
+  setView('ops');
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  drawWaferGrid();
+  renderRoster();
+});
+</script>
+</body>
+</html>
