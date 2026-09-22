@@ -255,3 +255,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/ltsct-semiconductor
 https://innvonix-tech-solutions.github.io/ai-workforce/alif-semi
 https://innvonix-tech-solutions.github.io/ai-workforce/la-semiconductor
 https://innvonix-tech-solutions.github.io/ai-workforce/motivo
+https://innvonix-tech-solutions.github.io/ai-workforce/finwave-semiconductor
