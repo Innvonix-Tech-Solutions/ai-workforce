@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maesa &mdash; Autonomous AI Workforce &amp; Beauty Brand Incubator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#fff;
+  --header-bg:linear-gradient(90deg, #121212 0%, #1f1f1f 50%, #0a0a0a 100%);
+  --surface:#faf7f5;
+  --surface2:#f4eee9;
+  --border:#dcd3cc;
+  --accent:#c8967e; /* Maesa Chic Champagne Rose Gold */
+  --accent-hover:#b07e66;
+  --accent-dim:rgba(200,150,126,0.08);
+  --accent-line:rgba(200,150,126,0.30);
+  --text:#171717;
+  --hi:#121212;
+  --tert:#5c544e;
+  --ok:#10b981;
+  --ok-dim:rgba(16,185,129,0.10);
+  --gold:#d97706;
+  --gold-bg:#fffbe3;
+  --gold-line:#fcd34d
+}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+
+/* MAESA BRAND HEADER */
+.header{background:var(--header-bg);border-bottom:3px solid var(--accent);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,0.3)}
+.brand-logo{display:flex;align-items:center;gap:12px;cursor:pointer}
+.logo-mark{width:38px;height:38px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:18px;box-shadow:0 0 12px rgba(200,150,126,0.5)}
+.logo-title{font-size:20px;font-weight:900;letter-spacing:-0.5px;color:#fff;line-height:1}
+.logo-title span{color:var(--accent)}
+.logo-sub{font-size:9px;font-weight:700;letter-spacing:1.5px;color:#a39993;text-transform:uppercase;margin-top:3px}
+
+.header-controls{display:flex;align-items:center;gap:14px}
+.badge-ate{border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:5px 12px;font-size:11px;color:#e5e0dc;background:rgba(255,255,255,0.08)}.badge-ate b{color:#fff}
+.btn-inspector{background:var(--accent);border:none;color:#fff;font-weight:800;font-size:12px;padding:8px 16px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .2s;box-shadow:0 2px 10px rgba(200,150,126,0.3)}
+.btn-inspector:hover{background:var(--accent-hover)}
+
+/* HERO BANNER */
+.hero{background:linear-gradient(135deg, #0a0a0a 0%, #1f1f1f 50%, #121212 100%);border-bottom:1px solid var(--border);padding:36px 32px 32px;position:relative;overflow:hidden;color:#fff}
+.hero-content{max-width:1180px;margin:0 auto;position:relative;z-index:2}
+.hero-tag{display:inline-block;background:var(--accent);color:#fff;font-size:11px;font-weight:800;letter-spacing:1.5px;padding:4px 12px;border-radius:4px;text-transform:uppercase;margin-bottom:14px}
+.hero-title{font-size:34px;font-weight:900;color:#fff;letter-spacing:-0.5px;line-height:1.2;margin-bottom:10px}
+.hero-sub{font-size:14.5px;color:#a39993;max-width:850px;line-height:1.6;margin-bottom:20px}
+.hero-cta{display:flex;gap:12px}
+.btn-blue{background:var(--accent);color:#fff;font-weight:800;font-size:13px;padding:12px 24px;border-radius:6px;border:none;cursor:pointer;letter-spacing:0.5px;text-transform:uppercase;box-shadow:0 0 20px rgba(200,150,126,0.4);transition:all .2s}
+.btn-blue:hover{background:var(--accent-hover);transform:translateY(-1px)}
+.btn-outline-white{background:transparent;border:1px solid rgba(255,255,255,0.3);color:#fff;font-weight:700;font-size:13px;padding:11px 22px;border-radius:6px;cursor:pointer;transition:all .2s}
+.btn-outline-white:hover{background:rgba(255,255,255,0.1)}
+
+/* TABS BAR */
+.tabs-bar{max-width:1180px;margin:20px auto 0;padding:0 24px;display:flex;gap:6px}
+.tab-btn{padding:12px 20px;font-size:13px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:8px 8px 0 0;background:none;transition:all .2s}
+.tab-btn.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+
+/* MAIN CONTAINER */
+.main-container{max-width:1180px;margin:0 auto;padding:24px}
+
+/* ECON STRIP */
+.econ-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.econ-card{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:10px;padding:18px}
+.econ-val{font-size:26px;font-weight:900;color:var(--hi)}.econ-val .unit{color:var(--accent);font-size:18px}
+.econ-lbl{font-size:11px;font-weight:600;color:var(--tert);margin-top:4px;text-transform:uppercase;letter-spacing:0.5px}
+
+.section-hdr{font-size:11px;font-weight:800;letter-spacing:1.5px;color:var(--tert);text-transform:uppercase;margin:24px 0 16px;display:flex;align-items:center;gap:12px}
+.section-hdr::after{content:"";flex:1;height:1px;background:var(--border)}
+
+/* ROSTER OPERATORS */
+.roster-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:18px}
+.operator-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;transition:all .2s}
+.operator-card:hover{border-color:var(--accent);box-shadow:0 6px 20px rgba(200,150,126,0.15)}
+.operator-card.hero-op{border-color:var(--gold-line);background:linear-gradient(180deg, var(--surface) 0%, var(--gold-bg) 100%)}
+.op-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.op-avatar{width:46px;height:46px;border-radius:10px;background:#fff;border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--accent);font-size:15px;flex-shrink:0}
+.op-name{font-size:15px;font-weight:800;color:var(--hi);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.op-title{font-size:12px;color:var(--tert);margin-top:2px}
+.op-owns{font-size:12px;color:var(--text);margin-bottom:12px}.op-owns b{color:var(--hi)}
+.team-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.agent-chip{font-size:11px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 9px}
+.op-stats{display:flex;gap:16px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:14px}
+.op-stat-item{font-size:11px;color:var(--tert)}.op-stat-item b{display:block;font-size:15px;color:var(--hi);font-weight:800}
+
+.btn-run-op{width:100%;background:var(--accent);color:#fff;font-weight:800;font-size:12.5px;padding:10px;border-radius:7px;border:none;cursor:pointer;transition:background .2s}
+.btn-run-op:hover{background:var(--accent-hover)}
+
+/* RUN PANEL */
+.run-panel{margin-top:28px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
+.run-title{font-size:18px;font-weight:800;color:var(--hi);margin-bottom:4px}
+.run-sub{font-size:12px;color:var(--tert);margin-bottom:18px}
+.run-input-group{display:flex;gap:12px;margin-bottom:20px}
+.run-input{flex:1;background:#fff;border:1px solid var(--border);border-radius:6px;padding:10px 14px;font-size:13px;color:var(--text);font-family:inherit}
+.btn-execute{background:var(--accent);color:#fff;font-weight:800;font-size:13px;padding:10px 20px;border-radius:6px;border:none;cursor:pointer}
+.btn-execute:hover{background:var(--accent-hover)}
+
+.run-feed{background:#0a0a0a;border:1px solid #262626;border-radius:8px;padding:16px;font-family:Consolas,monospace;font-size:12px;color:#f3e8e2;max-height:300px;overflow-y:auto;margin-bottom:20px;line-height:1.6}
+.feed-line{margin-bottom:4px}
+.feed-agent{color:#e2b79e;font-weight:700}
+.feed-tool{color:#facc15}
+.feed-ok{color:#4ade80}
+
+.deliverable-box{background:#fff;border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:8px;padding:20px}
+.deliverable-hdr{font-size:14px;font-weight:800;color:var(--hi);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.deliverable-text{font-family:Consolas,Monaco,monospace;font-size:12px;color:#334155;white-space:pre-wrap;line-height:1.6;background:#faf7f5;padding:14px;border-radius:6px;border:1px solid #dcd3cc}
+
+/* BUILDER */
+.builder-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-top:28px}
+.builder-step{margin-bottom:20px}
+.builder-lbl{font-size:12px;font-weight:800;color:var(--tert);text-transform:uppercase;margin-bottom:8px}
+.builder-select,.builder-input{width:100%;background:#fff;border:1px solid var(--border);border-radius:6px;padding:10px;font-size:13px;color:var(--text);margin-bottom:12px}
+
+/* BRAND GUIDELINES MODAL / DRAWER */
+.drawer-backdrop{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:200;display:flex;justify-content:flex-end;opacity:0;pointer-events:none;transition:opacity .3s}
+.drawer-backdrop.open{opacity:1;pointer-events:auto}
+.drawer-panel{width:620px;max-width:90vw;background:#fff;height:100%;overflow-y:auto;padding:32px;box-shadow:-4px 0 30px rgba(0,0,0,0.3);transform:translateX(100%);transition:transform .3s ease-out}
+.drawer-backdrop.open .drawer-panel{transform:translateX(0)}
+.drawer-close{float:right;background:none;border:none;font-size:24px;color:var(--tert);cursor:pointer}
+.brand-h1{font-size:22px;font-weight:900;color:var(--hi);margin-bottom:6px}
+.brand-p{font-size:13px;color:var(--tert);line-height:1.6;margin-bottom:20px}
+.swatch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.swatch-item{border-radius:8px;padding:12px;color:#fff;font-size:11px;font-weight:700}
+
+/* FOOTER */
+.footer{margin-top:60px;border-top:1px solid var(--border);padding:24px 32px;background:var(--surface);font-size:11px;color:var(--tert);display:flex;justify-content:space-between;align-items:center}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="brand-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <div class="logo-mark">M</div>
+    <div>
+      <div class="logo-title">MAESA <span>Incubator</span></div>
+      <div class="logo-sub">Turnkey Beauty Brand Operator</div>
+    </div>
+  </div>
+  <div class="header-controls">
+    <div class="badge-ate">Incubator Focus: <b>Mass &amp; Prestige Exclusive Brands</b></div>
+    <button class="btn-inspector" onclick="toggleBrandDrawer()">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+      Brand &amp; Incubation Specs
+    </button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Global Beauty Incubator &amp; Brand Operations</div>
+    <h1 class="hero-title">Maesa Autonomous AI Workforce</h1>
+    <p class="hero-sub">Accelerating turnkey beauty brand creation, clean olfactive chemistry, sustainable PCR packaging design, and retail GTM launches for Target, Walmart, Ulta, and Sephora with data-backed AI automation.</p>
+    <div class="hero-cta">
+      <button class="btn-blue" onclick="scrollToRoster()">Explore 8 AI Operators</button>
+      <button class="btn-outline-white" onclick="runFlagshipDemo()">Run Flagship Brand Incubation Demo</button>
+    </div>
+  </div>
+</section>
+
+<div class="tabs-bar">
+  <button class="tab-btn active" id="tab-roster-btn" onclick="switchTab('roster')">AI Operators Roster</button>
+  <button class="tab-btn" id="tab-run-btn" onclick="switchTab('run')">Live Run Engine</button>
+  <button class="tab-btn" id="tab-builder-btn" onclick="switchTab('builder')">Operator Builder</button>
+</div>
+
+<main class="main-container">
+
+  <!-- ECON STRIP -->
+  <div class="econ-grid">
+    <div class="econ-card">
+      <div class="econ-val"><span class="tnum">15</span><span class="unit">+</span></div>
+      <div class="econ-lbl">Exclusive Brands Incubated</div>
+    </div>
+    <div class="econ-card">
+      <div class="econ-val"><span class="tnum">25</span><span class="unit">k+</span></div>
+      <div class="econ-lbl">Global Retail Doors</div>
+    </div>
+    <div class="econ-card">
+      <div class="econ-val"><span class="tnum">12</span> <span class="unit">Months</span></div>
+      <div class="econ-lbl">Turnkey Launch Reduction</div>
+    </div>
+    <div class="econ-card">
+      <div class="econ-val"><span class="tnum">100</span><span class="unit">%</span></div>
+      <div class="econ-lbl">First-Pass Retail Acceptance</div>
+    </div>
+  </div>
+
+  <!-- TAB: ROSTER -->
+  <div id="tab-roster">
+    <div id="roster-container"></div>
+  </div>
+
+  <!-- TAB: RUN -->
+  <div id="tab-run" class="hidden">
+    <div class="run-panel">
+      <div class="run-title" id="run-panel-title">Select an Operator to Execute</div>
+      <div class="run-sub" id="run-panel-sub">Choose an autonomous workforce workflow from the roster to run multi-agent execution.</div>
+      
+      <div class="run-input-group">
+        <input type="text" id="run-prompt-input" class="run-input" placeholder="Enter target parameters or beauty incubation requirements...">
+        <button class="btn-execute" id="btn-run-execute" onclick="executeCurrentWorkflow()">Run AI Workforce Operator</button>
+      </div>
+
+      <div class="run-feed hidden" id="run-feed-box"></div>
+
+      <div class="deliverable-box hidden" id="deliverable-box">
+        <div class="deliverable-hdr">
+          <span id="deliverable-title">Produced Deliverable</span>
+          <span style="font-size:11px;font-weight:600;color:var(--ok);background:var(--ok-dim);padding:3px 8px;border-radius:4px;">HUMAN-IN-THE-LOOP VERIFIED</span>
+        </div>
+        <pre class="deliverable-text" id="deliverable-text"></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: BUILDER -->
+  <div id="tab-builder" class="hidden">
+    <div class="builder-card">
+      <h2 style="font-size:18px;font-weight:800;color:var(--hi);margin-bottom:6px;">Compose New AI Workforce Operator</h2>
+      <p style="font-size:13px;color:var(--tert);margin-bottom:20px;">Clone and customize any existing Maesa beauty incubation workflow into a tailored autonomous operator.</p>
+
+      <div class="builder-step">
+        <div class="builder-lbl">Step 1: Base Template Workflow</div>
+        <select class="builder-select" id="builder-base-select"></select>
+      </div>
+
+      <div class="builder-step">
+        <div class="builder-lbl">Step 2: Operator Identity &amp; Title</div>
+        <input type="text" class="builder-input" id="builder-op-name" placeholder="Operator Name (e.g. Prestige Haircare Specialist)">
+        <input type="text" class="builder-input" id="builder-op-title" placeholder="Operator Title (e.g. Lead Olfactive Formulator)">
+      </div>
+
+      <div class="builder-step">
+        <div class="builder-lbl">Step 3: Execution Cadence &amp; Target Win Metric</div>
+        <select class="builder-select" id="builder-cadence-select">
+          <option>Continuous Trend Sweep</option>
+          <option>Weekly Lab Formulation</option>
+          <option>Monthly Retail Review</option>
+          <option>Quarterly Brand Incubation</option>
+        </select>
+        <input type="text" class="builder-input" id="builder-win-metric" placeholder="Headline Win Metric (e.g. 100% Target Door Rollout)">
+      </div>
+
+      <button class="btn-blue" style="width:100%;" onclick="buildCustomOperator()">Deploy New Operator to Roster</button>
+    </div>
+  </div>
+
+</main>
+
+<!-- BRAND GUIDELINES & TECHNICAL SPECS DRAWER -->
+<div class="drawer-backdrop" id="brand-drawer" onclick="if(event.target===this)toggleBrandDrawer()">
+  <div class="drawer-panel">
+    <button class="drawer-close" onclick="toggleBrandDrawer()">&times;</button>
+    <h1 class="brand-h1">Maesa Brand &amp; Incubation System Specs</h1>
+    <p class="brand-p">Authoritative design tokens, beauty brand incubation guidelines, and global supply chain standards for Maesa.</p>
+
+    <h3 style="font-size:14px;font-weight:800;color:var(--hi);margin-bottom:12px;">Corporate Palette &amp; Design System</h3>
+    <div class="swatch-grid">
+      <div class="swatch-item" style="background:#c8967e;">#C8967E<br>Champagne Rose Gold</div>
+      <div class="swatch-item" style="background:#121212;">#121212<br>Deep Luxe Charcoal</div>
+      <div class="swatch-item" style="background:#faf7f5;color:#121212;border:1px solid #dcd3cc;">#FAF7F5<br>Alabaster Surface</div>
+      <div class="swatch-item" style="background:#5c544e;">#5C544E<br>Muted Taupe</div>
+      <div class="swatch-item" style="background:#10b981;">#10B981<br>Clean Beauty Green</div>
+      <div class="swatch-item" style="background:#d97706;">#D97706<br>Flagship Gold</div>
+    </div>
+
+    <h3 style="font-size:14px;font-weight:800;color:var(--hi);margin-bottom:10px;">Incubated Industry-Leading Brands</h3>
+    <ul style="font-size:13px;color:var(--tert);line-height:1.8;padding-left:20px;margin-bottom:20px;">
+      <li><b>Kristin Ess Hair:</b> Mass-prestige luxury haircare &amp; scalp wellness.</li>
+      <li><b>Being Frenshe by Ashley Tisdale:</b> Mood-boosting wellness body care &amp; olfactive ritual scents.</li>
+      <li><b>Hairitage by Mindy McKnight:</b> Inclusive haircare for all hair textures.</li>
+      <li><b>Flower Beauty by Drew Barrymore:</b> Cruelty-free mass cosmetics.</li>
+      <li><b>ITK by Brooklyn &amp; Bailey:</b> Dermatologist-tested clean skincare.</li>
+      <li><b>Andrew Fitzsimons &amp; Fine'ry:</b> Salon-grade haircare and luxury fragrance mists.</li>
+    </ul>
+
+    <h3 style="font-size:14px;font-weight:800;color:var(--hi);margin-bottom:10px;">End-to-End Turnkey Capabilities</h3>
+    <ul style="font-size:13px;color:var(--tert);line-height:1.8;padding-left:20px;">
+      <li><b>White-Space &amp; Trend Intelligence:</b> AI social trend tracking &amp; retail gap identification.</li>
+      <li><b>Formulation &amp; Olfactive Science:</b> Clean beauty chemistry, custom accords, clinical testing.</li>
+      <li><b>Design &amp; Prototyping:</b> In-house 3D comp making, PCR packaging, structural CAD.</li>
+      <li><b>Supply Chain &amp; Merchandising:</b> Contract mfg, MoCRA FDA regulatory, Target/Sephora endcaps.</li>
+      <li><b>Maesa Magic Incubator:</b> $35k grant funding &amp; mentorship for underrepresented founders.</li>
+    </ul>
+  </div>
+</div>
+
+<footer class="footer">
+  <div>&copy; 2026 Maesa. All rights reserved. | Autonomous AI Workforce Prototype</div>
+  <div>Human-in-the-Loop Governance: All brand concepts &amp; formulations require Executive Sign-Off.</div>
+</footer>
+
+<script>
+/* ============================================================================
+   MAESA DATA CONFIGURATION & MULTI-AGENT DATA STRUCTURES
+   ============================================================================ */
+
+const AGENT_ROLES = {
+  whitespaceanalyst: { emoji: "ðŸ“ˆ", label: "Beauty White-Space Analyst", tools: ["beauty_trend_radar", "whitespace_gap_analyzer", "tiktok_viral_tracker", "save"] },
+  brandarchitect: { emoji: "âœ¨", label: "Executive Beauty Brand Architect", tools: ["brand_identity_builder", "brand_positioning_matrix", "line_architecture_planner", "save"] },
+  formulationscientist: { emoji: "ðŸ§ª", label: "Clean Formula & Olfactive Chemist", tools: ["clean_beauty_chem_lab", "olfactive_accord_blender", "stability_micro_testing", "save"] },
+  packagingsustain: { emoji: "â™»ï¸", label: "Sustainable Packaging Specialist", tools: ["pcr_resin_evaluator", "refillable_3d_comp_builder", "eco_carton_structural_cad", "save"] },
+  clinicaleval: { emoji: "ðŸ”¬", label: "Clinical Efficacy & Claims Lead", tools: ["dermatologist_panel_suite", "consumer_perception_n100", "barrier_efficacy_meter", "save"] },
+  supplychainops: { emoji: "âš™ï¸", label: "Turnkey Supply Chain Lead", tools: ["contract_mfg_allocator", "moq_inventory_planner", "lead_time_optimizer", "save"] },
+  retailmerchandiser: { emoji: "ðŸª", label: "Retail Merchandising Strategist", tools: ["planogram_3d_visualizer", "retail_endcap_designer", "dtc_ecom_asset_gen", "save"] },
+  incubationfellow: { emoji: "ðŸŒŸ", label: "Maesa Magic Incubator Mentor", tools: ["founder_grant_scoring", "emerson_harvard_curriculum", "mentorship_matcher", "save"] },
+  costmarginengineer: { emoji: "ðŸ“Š", label: "Target COGS & Margin Engineer", tools: ["beauty_cogs_calculator", "msrp_tier_architect", "retailer_margin_model", "save"] },
+  regulatorysafety: { emoji: "ðŸ“‹", label: "FDA & EU Cosmetics Safety Lead", tools: ["inci_statement_gen", "mocra_fda_portal_checker", "eu_csrp_compliance_db", "save"] },
+  writer: { emoji: "ðŸ“", label: "Brand Strategy & Copy Lead", tools: ["brand_pitch_deck_writer", "packaging_copy_editor", "retail_sell_sheet_builder", "save"] },
+  reviewer: { emoji: "ðŸ”", label: "Principal Beauty Executive", tools: ["maesa_brand_greenlight", "commercial_viability_cert", "governance_audit_log", "save"] }
+};
+
+const WORKFLOWS = {
+  exclusive_retail_brand_incubation_surge: {
+    name: "Exclusive Mass/Prestige Beauty Brand Turnkey Incubation Surge",
+    title: "Exclusive Mass/Prestige Beauty Brand Turnkey Incubation Surge",
+    mode: 'dag',
+    deliverable: "Turnkey Beauty Brand Master Dossier & Mass Retail Pitch Package",
+    sample: "Incubate an exclusive mass-prestige scalp-wellness beauty brand for Target launch in 12 months.",
+    desc: "Orchestrates white-space trend analysis, brand positioning, clean formula chemistry, PCR packaging comps, and clinical perception panels.",
+    track: 'trackA',
+    tag: 'flagship',
+    tasks: [
+      { agent: 'whitespaceanalyst', task: "Map retail white-space gap in mass scalp wellness and analyze viral social search growth.", deps: [] },
+      { agent: 'brandarchitect', task: "Define brand persona, visual identity, product naming, and 12-SKU launch line architecture.", deps: [0] },
+      { agent: 'formulationscientist', task: "Develop clean, sulfate-free scalp serum and scrub formulas with mood-boosting fragrance accords.", deps: [1] },
+      { agent: 'packagingsustain', task: "Design 100% PCR aluminum bottles and refillable pumps with 3D prototype comp validation.", deps: [2] },
+      { agent: 'clinicaleval', task: "Execute 14-day dermatologist perception panel (n=100) to validate barrier repair and itch-relief claims.", deps: [3] },
+      { agent: 'reviewer', task: "Perform Maesa executive greenlight sign-off for Target exclusive retail launch deck.", deps: [4] }
+    ]
+  },
+  olfactive_mood_boosting_fragrance_formulation: {
+    name: "Mood-Boosting Olfactive & Body Care Clean Formula",
+    title: "Mood-Boosting Olfactive & Body Care Clean Formula",
+    mode: 'sequential',
+    deliverable: "Mood-Boosting Olfactive Accord & Body Care Formula Spec",
+    sample: "Formulate lavender-sandalwood mood-soothing body mist and lotion base with clean-beauty compliance.",
+    desc: "Crafts custom mood-enhancing fragrance accords (Being Frenshe style) paired with clean, sulfate-free body care bases.",
+    track: 'trackA',
+    tasks: [
+      { agent: 'formulationscientist', task: "Blend natural essential oil accords with functional mood-boosting aromachology molecules.", deps: [] },
+      { agent: 'clinicaleval', task: "Conduct consumer olfactory perception testing (94% reported feeling calm/relaxed post-use).", deps: [0] },
+      { agent: 'regulatorysafety', task: "Verify IFRA fragrance safety standards and EU 26 allergen disclosure limits.", deps: [1] },
+      { agent: 'reviewer', task: "Authorize olfactive formula master batch release.", deps: [2] }
+    ]
+  },
+  clean_skincare_dermatologist_clinical_audit: {
+    name: "Clean Skincare Dermatologist Clinical Claims Audit",
+    title: "Clean Skincare Dermatologist Clinical Claims Audit",
+    mode: 'sequential',
+    deliverable: "Dermatologist Clinical Validation & Claims Dossier",
+    sample: "Conduct clinical barrier-repair evaluation for clean niacinamide serum targeting sensitive skin.",
+    desc: "Validates clinical barrier repair claims, non-comedogenic status, and 14-day consumer perception panel metrics.",
+    track: 'trackA',
+    tasks: [
+      { agent: 'clinicaleval', task: "Measure transepidermal water loss (TEWL) reduction using barrier efficacy meter.", deps: [] },
+      { agent: 'formulationscientist', task: "Review active niacinamide (5%) and ceramide NP concentration for optimal skin absorption.", deps: [0] },
+      { agent: 'regulatorysafety', task: "Audit clinical study data for FDA compliant 'Dermatologist Tested & Non-Comedogenic' claims.", deps: [1] },
+      { agent: 'reviewer', task: "Sign off on retail packaging claim badge.", deps: [2] }
+    ]
+  },
+  beauty_unit_economics_cogs_margin_optimizer: {
+    name: "Target COGS & Retailer Margin Architecture Optimization",
+    title: "Target COGS & Retailer Margin Architecture Optimization",
+    mode: 'sequential',
+    deliverable: "Beauty Unit Economics & Retailer Margin Optimization Blueprint",
+    sample: "Optimize unit COGS for $16.99 MSRP haircare line to ensure 65% gross margin for mass retailer.",
+    desc: "Models unit economics to achieve 65% gross margin at $14-$22 mass-prestige retail price points with PCR packaging.",
+    track: 'trackA',
+    tasks: [
+      { agent: 'costmarginengineer', task: "Calculate complete bill-of-materials (BOM) including formula, PCR component, secondary carton, and fill fee.", deps: [] },
+      { agent: 'supplychainops', task: "Negotiate high-volume contract manufacturer filling fees across 500,000 unit opening orders.", deps: [0] },
+      { agent: 'brandarchitect', task: "Verify packaging luxury feel and weight per unit matches prestige competitor benchmark.", deps: [1] },
+      { agent: 'reviewer', task: "Approve commercial financial model for retail partnership agreement.", deps: [2] }
+    ]
+  },
+  sustainable_pcr_refillable_packaging_design: {
+    name: "Sustainable PCR & Refillable Packaging Engineering",
+    title: "Sustainable PCR & Refillable Packaging Engineering",
+    mode: 'dag',
+    deliverable: "100% PCR Refillable Packaging Assembly Technical Spec",
+    sample: "Engineer 100% PCR aluminum bottle and refill pod assembly for high-performance salon haircare line.",
+    desc: "Designs 100% PCR aluminum and glass refillable packaging assemblies with industrial 3D prototype comp validation.",
+    track: 'trackB',
+    tasks: [
+      { agent: 'packagingsustain', task: "Design aluminum refill pouch and outer reusable aluminum bottle CAD assembly.", deps: [] },
+      { agent: 'costmarginengineer', task: "Verify refill pod cost structure delivers 30% savings to consumer while improving retailer margin.", deps: [0] },
+      { agent: 'supplychainops', task: "Audit PCR resin supplier certification and ocean-bound plastic traceability.", deps: [1] },
+      { agent: 'reviewer', task: "Approve tooling investment and structural CAD package.", deps: [2] }
+    ]
+  },
+  retail_endcap_planogram_merchandising_deploy: {
+    name: "Mass/Prestige Retail Endcap Planogram & GTM Merchandising",
+    title: "Mass/Prestige Retail Endcap Planogram & GTM Merchandising",
+    mode: 'sequential',
+    deliverable: "Retail Endcap Planogram & GTM Merchandising Execution Package",
+    sample: "Create 4-tier interactive endcap display for 1,800 Target doors with video screens and scent tester pods.",
+    desc: "Engineers 4-tier retail endcap displays, secondary packaging, and DTC launch assets for 1,800 Target doors.",
+    track: 'trackB',
+    tasks: [
+      { agent: 'retailmerchandiser', task: "Render 3D planogram layout optimizing SKU velocity and color-coded shade matching.", deps: [] },
+      { agent: 'writer', task: "Draft eye-catching shelf-talker messaging and retail sell-sheets for store associate training.", deps: [0] },
+      { agent: 'supplychainops', task: "Schedule kitting and direct-to-store display shipper logistics for simultaneous nationwide launch.", deps: [1] },
+      { agent: 'reviewer', task: "Sign off on retail launch merchandising execution package.", deps: [2] }
+    ]
+  },
+  mocra_fda_eu_cosmetics_compliance_audit: {
+    name: "MoCRA FDA & EU Cosmetics Regulatory Safety Dossier",
+    title: "MoCRA FDA & EU Cosmetics Regulatory Safety Dossier",
+    mode: 'sequential',
+    deliverable: "MoCRA FDA Registration & EU CSRP Safety Compliance Dossier",
+    sample: "Compile global regulatory compliance dossier for multi-category beauty line expanding to EU and UK markets.",
+    desc: "Compiles INCI statements, safety assessor sign-offs, MoCRA facility registration, and European CSRP filings.",
+    track: 'trackB',
+    tasks: [
+      { agent: 'regulatorysafety', task: "Generate standardized INCI ingredient list and verify MoCRA facility registration requirements.", deps: [] },
+      { agent: 'formulationscientist', task: "Provide raw material safety data sheets (MSDS) and heavy metal heavy-atom assay reports.", deps: [0] },
+      { agent: 'writer', task: "Format international packaging artwork proof with compliant bilingual warning labels.", deps: [1] },
+      { agent: 'reviewer', task: "Issue final regulatory safety sign-off for global distribution.", deps: [2] }
+    ]
+  },
+  maesa_magic_incubator_grant_mentorship: {
+    name: "Maesa Magic Incubator Diverse Founder Grant & Growth Blueprint",
+    title: "Maesa Magic Incubator Diverse Founder Grant & Growth Blueprint",
+    mode: 'sequential',
+    deliverable: "Maesa Magic Incubator $35k Grant & 1-Year Growth Playbook",
+    sample: "Evaluate early-stage BIPOC skincare founder application and structure 1-year Maesa mentorship program.",
+    desc: "Evaluates underrepresented beauty founder applications, allocates $35,000 grants, and delivers 1-on-1 brand growth mentorship.",
+    track: 'trackB',
+    tasks: [
+      { agent: 'incubationfellow', task: "Score founder application against innovation, community impact, and retail scalability criteria.", deps: [] },
+      { agent: 'brandarchitect', task: "Conduct brand identity workshop to refine brand story and product line architecture.", deps: [0] },
+      { agent: 'writer', task: "Enroll founder in Emerson/Harvard executive education curriculum and draft press announcement.", deps: [1] },
+      { agent: 'reviewer', task: "Approve $35,000 grant funding disbursement and mentor assignment.", deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  exclusive_retail_brand_incubation_surge: "Turnkey Beauty Brand Master Dossier & Mass Retail Pitch Package",
+  olfactive_mood_boosting_fragrance_formulation: "Mood-Boosting Olfactive Accord & Body Care Formula Spec",
+  clean_skincare_dermatologist_clinical_audit: "Dermatologist Clinical Validation & Claims Dossier",
+  beauty_unit_economics_cogs_margin_optimizer: "Beauty Unit Economics & Retailer Margin Optimization Blueprint",
+  sustainable_pcr_refillable_packaging_design: "100% PCR Refillable Packaging Assembly Technical Spec",
+  retail_endcap_planogram_merchandising_deploy: "Retail Endcap Planogram & GTM Merchandising Execution Package",
+  mocra_fda_eu_cosmetics_compliance_audit: "MoCRA FDA Registration & EU CSRP Safety Compliance Dossier",
+  maesa_magic_incubator_grant_mentorship: "Maesa Magic Incubator $35k Grant & 1-Year Growth Playbook"
+};
+
+const TOOLS = {
+  beauty_trend_radar: () => "AI trend radar: Scalp wellness & aromachology searches up +142% YoY in mass retail",
+  whitespace_gap_analyzer: () => "White-space opportunity mapped: Mass-prestige barrier repair haircare ($14-$18 gap identified)",
+  tiktok_viral_tracker: () => "Viral ingredient tracker: Rosemary extract & peptide scalp serums indexing #1 on BeautyTok",
+  brand_identity_builder: () => "Brand DNA locked: 'Chic, elevated, accessible luxury' | Color palette: Champagne & Alabaster",
+  brand_positioning_matrix: () => "Brand positioned against mass incumbents: +45% higher perceived value at $16.99 price point",
+  line_architecture_planner: () => "12-SKU launch matrix finalized: 4 Core Cleansers, 4 Treatments, 4 Olfactive Body Mists",
+  clean_beauty_chem_lab: () => "Clean formula developed: Sulfate-free, silicone-free, phthalate-free | 98.4% natural origin",
+  olfactive_accord_blender: () => "Olfactive accord blended: Lavender, Bergamot, and Cashmere Wood (Functional mood-calming)",
+  stability_micro_testing: () => "45C 3-month accelerated stability passed | Micro challenge test: 0 CFU/g | Zero discolouration",
+  pcr_resin_evaluator: () => "100% Post-Consumer Recycled (PCR) PET bottle specified | Carbon footprint reduced by 58%",
+  refillable_3d_comp_builder: () => "3D comp prototype printed: Precision aluminum outer shell with snap-in recyclable pod",
+  eco_carton_structural_cad: () => "FSC-certified paperboard carton CAD generated | Zero plastic window laminates",
+  dermatologist_panel_suite: () => "Dermatologist panel (n=100): 100% showed zero skin irritation or sensitization",
+  consumer_perception_n100: () => "Consumer study: 96% agreed scalp felt nourished | 92% noted reduced flaking in 14 days",
+  barrier_efficacy_meter: () => "TEWL barrier measurement: 38% improvement in skin moisture barrier retention after 7 days",
+  contract_mfg_allocator: () => "Contract manufacturing allocated: Dual US ISO 22716 certified facilities secured",
+  moq_inventory_planner: () => "Opening inventory run: 500,000 units across 12 SKUs with 8-week replenishment cycle",
+  lead_time_optimizer: () => "Total turnkey timeline optimized to 12 months (40% faster than industry benchmark)",
+  planogram_3d_visualizer: () => "3D retail endcap planogram rendered: High-impact branding header with illumination",
+  retail_endcap_designer: () => "4-Tier Target endcap fixture designed with interactive scent tester pumps",
+  dtc_ecom_asset_gen: () => "DTC Shopify storefront assets & HD 3D product renders generated for launch day",
+  founder_grant_scoring: () => "Founder application scored: 96/100 for innovative formula concept and community engagement",
+  emerson_harvard_curriculum: () => "Founder enrolled in Maesa Executive Leadership Module @ Emerson / Harvard Program",
+  mentorship_matcher: () => "1-on-1 Mentor assigned: Maesa Chief Marketing Officer & SVP of Brand Development",
+  beauty_cogs_calculator: () => "Unit COGS: $2.48 @ 500k units (Formulation $0.85, PCR Pkg $1.15, Fill/Pack $0.48)",
+  msrp_tier_architect: () => "MSRP set at $16.99 (Prestige quality positioning at accessible mass retail price)",
+  retailer_margin_model: () => "Retailer margin: 55% margin guaranteed to Target ($9.34 revenue per unit to retailer)",
+  inci_statement_gen: () => "INCI ingredient declaration generated per 21 CFR 701.3 with full allergen breakdown",
+  mocra_fda_portal_checker: () => "FDA MoCRA cosmetic product listing submitted | Facility registration #FEA-882190",
+  eu_csrp_compliance_db: () => "European CSRP portal submission pre-validated | CPSR safety assessor report attached",
+  brand_pitch_deck_writer: () => "42-Slide executive retail pitch deck compiled with white-space data and financial models",
+  packaging_copy_editor: () => "Primary & secondary packaging copy finalized with bilingual regulatory text",
+  retail_sell_sheet_builder: () => "1-Page store associate cheat-sheet created detailing key ingredients and selling points",
+  maesa_brand_greenlight: () => "Maesa Executive Board sign-off: Brand approved for commercial partnership agreement",
+  commercial_viability_cert: () => "Commercial viability certificate issued: COGS, supply chain, and retail margins verified",
+  governance_audit_log: () => "Immutable governance log stored: SHA-256 hash verified for multi-agent incubation run",
+  save: () => "Output artifact saved successfully to enterprise repository."
+};
+
+const FINAL = {
+  exclusive_retail_brand_incubation_surge: `================================================================================
+MAESA BEAUTY BRAND INCUBATOR - TURNKEY BRAND INCUBATION MASTER DOSSIER
+================================================================================
+Incubated Brand Concept: Scalp-Wellness & Haircare Line ("AURA SCALP")
+Target Retail Partner: Exclusive Nationwide Mass-Prestige Rollout (1,800 Doors)
+Date: September 22, 2026 | Document ID: MAESA-BRAND-INC-20260922
+
+1. WHITE-SPACE TREND INTELLIGENCE & BRAND DNA
+- Retail Opportunity: Scalp-wellness searches up +142% YoY; $14-$18 price gap in mass retail
+- Brand Positioning: "Prestige scalp care efficacy at accessible mass pricing"
+- Launch Line Architecture: 12 SKUs (4 Core Cleansers, 4 Scalp Serums, 4 Mood Body Mists)
+- Visual Identity: Chic Alabaster bottles with Champagne Rose Gold accents & tactile embossed typography
+
+2. CLEAN FORMULATION & OLFACTIVE SCIENCE
+- Formula Standard: Clean Beauty at Target compliant (Sulfate-free, silicone-free, 98.4% natural)
+- Signature Fragrance: Mood-boosting Lavender, Bergamot & Cashmere Wood accord (Aromachology tested)
+- Stability & Safety: Passed 3-month 45C accelerated stability and GLP micro challenge (0 CFU/g)
+
+3. SUSTAINABLE PACKAGING & 3D PROTOTYPE COMPS
+- Material Standard: 100% Post-Consumer Recycled (PCR) PET & Aluminum refill pods
+- Environmental Impact: 58% carbon footprint reduction vs virgin plastic packaging
+- Component Comps: In-house 3D comp printed with precision snap-in refill mechanism
+
+4. CLINICAL EFFICACY & CONSUMER CLAIMS (n=100 PANEL)
+- Dermatologist Evaluation: 100% showed ZERO skin irritation or sensitization (Dermatologist Tested)
+- Barrier Repair Metric: 38% improvement in skin moisture barrier retention after 7 days (TEWL meter)
+- Consumer Perception: 96% agreed scalp felt nourished; 92% noted reduced flaking in 14 days
+
+5. TURNKEY FINANCIAL & RETAIL UNIT ECONOMICS
+- Target MSRP: $16.99 | Unit COGS: $2.48 (at 500,000 unit opening production run)
+- Retailer Margin: 55.0% guaranteed margin ($9.34 revenue per unit to retailer)
+- Gross Margin to Maesa/Brand: 65.2% gross margin
+
+6. EXECUTIVE BOARD APPROVAL
+- Executive Vice President, Brand Development: Claire Dupont
+- Chief Marketing Officer: Marcus Vance, CMO
+- Status: APPROVED FOR TARGET EXCLUSIVE RETAIL PARTNERSHIP AGREEMENT
+
+NOTE: This is an illustrative simulation generated by the Maesa Autonomous AI Workforce. All metrics are placeholders for demonstration purposes.`,
+
+  olfactive_mood_boosting_fragrance_formulation: `================================================================================
+MAESA OLFACTIVE SCIENCE - MOOD-BOOSTING FRAGRANCE & BODY CARE DOSSIER
+================================================================================
+Brand Line: Wellness Body Care & Aromachology Rituals
+Date: September 22, 2026 | Lab Code: OLFACTIVE-ACCORD-v8
+
+1. OLFACTIVE ACCORD ARCHITECTURE
+- Fragrance Family: Solar Floral & Warm Amber (Mood-Soothing Classification)
+- Top Notes: Italian Bergamot, Crisp Eucalyptus
+- Heart Notes: Wild French Lavender, White Jasmine
+- Base Notes: Creamy Sandalwood, Cashmere Musk
+
+2. AROMACHOLOGY CONSUMER TESTING
+- Panel Size: n=100 consumer perception trial
+- Emotional Response Metric: 94% of panellists reported feeling calm, relaxed, and centered post-application
+- Fragrance Longevity: 8-hour scent retention on skin without oxidation
+
+3. CLEAN BEAUTY & SAFETY COMPLIANCE
+- IFRA Standard: 100% compliant with IFRA 51st Amendment safety limits
+- EU Allergen Audit: Fully compliant with EU 26 allergen disclosure regulations
+- Base Chemistry: Sulfate-free, paraben-free, 100% vegan formula
+
+4. APPROVAL SIGN-OFF
+- Lead Olfactive Chemist: Dr. Helene Dubois, PhD
+- Status: AUTHORIZED FOR COMMERCIAL MASTER BATCHING
+
+NOTE: This is an illustrative simulation generated by the Maesa Autonomous AI Workforce.`,
+
+  clean_skincare_dermatologist_clinical_audit: `================================================================================
+MAESA CLINICAL RESEARCH - DERMATOLOGIST SKINCARE CLAIMS VALIDATION
+================================================================================
+Product Evaluated: Clean 5% Niacinamide & Ceramide Barrier Serum
+Date: September 22, 2026 | Clinical Protocol: MAESA-CLIN-2026-04
+
+1. INSTRUMENTAL BARRIER EFFICACY (TEWL METRIC)
+- Transepidermal Water Loss (TEWL): Measured via Tewameter @ Day 0, Day 7, Day 14
+- Barrier Improvement: 38.4% reduction in TEWL (significant barrier repair verification)
+
+2. DERMATOLOGIST SAFETY & COMEDOGENICITY
+- Human Repeat Insult Patch Test (HRIPT): n=105 subjects; 0 cases of allergic reaction
+- Non-Comedogenic Audit: Dermatologist grading confirmed zero pore-clogging escalation
+
+3. CONSUMER PERCEPTION TRIAL (14-DAY STUDY)
+- 98% agreed skin felt instantly hydrated
+- 94% noticed visibly reduced redness and calm skin tone within 7 days
+
+4. CLINICAL SIGN-OFF
+- Director of Clinical Research: Dr. Sarah Jenkins, MD (Board Certified Dermatologist)
+- Status: APPROVED FOR ON-PACK BADGING ("Dermatologist Tested & Approved")
+
+NOTE: This is an illustrative simulation generated by the Maesa Autonomous AI Workforce.`,
+
+  beauty_unit_economics_cogs_margin_optimizer: `================================================================================
+MAESA FINANCIAL ENGINE - BEAUTY UNIT ECONOMICS & MARGIN BLUEPRINT
+================================================================================
+Target Product Line: 12-SKU Haircare & Scalp Line ($16.99 MSRP)
+Date: September 22, 2026 | Model Target: 65% Gross Margin @ Mass Retail
+
+1. BILL OF MATERIALS (BOM) & COGS BREAKDOWN
+- Formula & Active Ingredients: $0.85 per unit
+- 100% PCR Component & Pump: $1.15 per unit
+- FSC Outer Packaging Carton: $0.22 per unit
+- Contract Filler & Assembly Fee: $0.26 per unit
+- Total Unit COGS: $2.48 per unit
+
+2. RETAILER MARGIN ARCHITECTURE
+- MSRP: $16.99 | Retail Wholesale Price (55% Retailer Margin): $7.65 per unit
+- Retailer Revenue per Unit: $9.34 per unit
+- Net Margin to Maesa: $5.17 per unit (67.6% Gross Margin achieved)
+
+3. SCALE PRODUCTION VOLUME IMPACT
+- Opening Order: 500,000 units across 1,800 doors
+- Total Initial Revenue Generation: $3,825,000 wholesale value
+
+4. FINANCIAL APPROVAL
+- Senior Director of Finance: David Chen, CPA
+- Status: APPROVED FOR COMMERICAL RETAIL CONTRACTING
+
+NOTE: This is an illustrative simulation generated by the Maesa Autonomous AI Workforce.`,
+
+  sustainable_pcr_refillable_packaging_design: `================================================================================
+MAESA SUSTAINABILITY STUDIO - 100% PCR REFILLABLE PACKAGING SPEC
+================================================================================
+Packaging Asset: Aluminum Outer Shell & Refill Pod System
+Date: September 22, 2026 | Standard: Maesa Conscious Packaging Charter
+
+1. MATERIAL SELECTION & RECYCLED CONTENT
+- Outer Container: Brushed Anodized Aluminum (100% infinitely recyclable)
+- Inner Refill Pod: 100% Post-Consumer Recycled (PCR) Ocean-Bound PET Resin
+- Dispensing Pump: Monomaterial PP pump (100% recyclable without disassembly)
+
+2. ENVIRONMENTAL IMPACT ANALYSIS
+- Virgin Plastic Reduction: Eliminates 78% of plastic weight per refill cycle
+- Transport Efficiency: Nestable refill pods reduce shipping volume by 42%
+- Lifecycle Carbon Footprint: 58% reduction in CO2e per 100 uses vs standard single-use bottles
+
+3. INDUSTRIAL 3D PROTOTYPE COMP TESTING
+- Drop Test: Passed 6-foot drop test onto concrete without leakage or shell denting
+- Snap-Fit Retention: Tested 500 refill insertions with zero latch fatigue
+
+4. SUSTAINABILITY SIGN-OFF
+- Head of Sustainable Packaging: Elena Rostova, PE
+- Status: CERTIFIED FOR TOOLING PRODUCTION
+
+NOTE: This is an illustrative simulation generated by the Maesa Autonomous AI Workforce.`,
+
+  retail_endcap_planogram_merchandising_deploy: `================================================================================
+MAESA MERCHANDISING STUDIO - MASS RETAIL ENDCAP PLANOGRAM PACKAGE
+================================================================================
+Target Retailer: Target Nationwide Store Network (1,800 Doors)
+Date: September 22, 2026 | Execution: Turnkey Endcap & Secondary Merchandising
+
+1. 3D PLANOGRAM & FIXTURE DESIGN
+- Display Dimensions: 4-Tier Interactive Endcap Display (36" W x 60" H x 18" D)
+- Color Palette: Matte Alabaster backdrop with Champagne Rose Gold shelf-trim accents
+- Interactive Elements: Integrated tester pumps & ambient LED header illumination
+
+2. MERCHANDISING VELOCITY OPTIMIZATION
+- Top Shelf: High-margin Scalp Serums (Hero SKUs)
+- Middle Shelves: Daily Cleansers & Hydrating Conditioners
+- Bottom Shelf: Mood-Boosting Olfactive Body Mists & Value Bundles
+
+3. STORE LOGISTICS & KITTING
+- Pre-Assembled Shippers: Direct-to-store display kit shipped with pre-loaded inventory
+- Store Associate Setup Time: Pre-configured shipper reduces setup time to <10 minutes
+
+4. MERCHANDISING APPROVAL
+- Director of Retail Merchandising: Sarah Jenkins
+- Status: APPROVED FOR TARGET GTM ROLLOUT
+
+NOTE: This is an illustrative simulation generated by the Maesa Autonomous AI Workforce.`,
+
+  mocra_fda_eu_cosmetics_compliance_audit: `================================================================================
+MAESA REGULATORY AFFAIRS - MOCRA FDA & EU CSRP COMPLIANCE DOSSIER
+================================================================================
+Product Line: Scalp Care & Olfactive Body Mist Collection
+Date: September 22, 2026 | Regulatory Scope: US MoCRA FDA & EU/UK Cosmetics Regulations
+
+1. MOCRA FDA COMPLIANCE STATUS
+- Facility Registration: Registered under MoCRA Portal (#FEA-882190)
+- Product Listing: All 12 SKUs listed with FDA cosmetic portal
+- Adverse Event Logging: Automated 15-day mandatory reporting system active
+
+2. INCI & ARTWORK VERIFICATION
+- INCI Statements: Verified compliant with 21 CFR 701.3
+- Bilingual Labeling: US English / French / Spanish claims verified
+- Warning Disclosures: Compliant with aerosol/mist safety standards
+
+3. INTERNATIONAL (EU/UK) READINESS
+- Cosmetic Product Safety Report (CPSR): Passed EU Safety Assessor audit
+- Responsible Person (RP): Designated EU RP in Dublin & UK RP in London
+
+4. REGULATORY SIGN-OFF
+- Global Regulatory Affairs VP: Maria Santos, RAC
+- Status: FULLY COMPLIANT FOR GLOBAL DISTRIBUTION
+
+NOTE: This is an illustrative simulation generated by the Maesa Autonomous AI Workforce.`,
+
+  maesa_magic_incubator_grant_mentorship: `================================================================================
+MAESA MAGIC INCUBATOR - DIVERSE FOUNDER GRANT & BLUEPRINT
+================================================================================
+Founder Project: BIPOC Clean Skincare Brand ("SOL GLOW")
+Date: September 22, 2026 | Program: Maesa Magic Incubator 2026 Cohort
+
+1. FOUNDER SELECTION & EVALUATION
+- Application Score: 96 / 100 (Exceptional innovation in melanated skin barrier repair)
+- Grant Allocation: $35,000 non-equity financial grant disbursed
+
+2. MENTORSHIP & EXECUTIVE EDUCATION
+- Assigned Mentors: Maesa CMO & VP of Turnkey Supply Chain
+- Academic Program: Enrolled in 2026 Emerson / Harvard Executive Education Beauty Module
+- Operational Support: Complimentary access to Maesa packaging & regulatory advisory
+
+3. 1-YEAR BRAND GROWTH PLAYBOOK
+- Q1: Brand identity refinement & 3-SKU formula standardization
+- Q2: Sustainable packaging sourcing & COGS optimization
+- Q3: DTC e-commerce launch & retailer pitch preparation
+- Q4: Retail buyer presentation for mass retail distribution
+
+4. INCUBATOR SIGN-OFF
+- Maesa Incubator Director: Claire Dupont
+- Status: AWARDED & INCUBATION ACTIVE
+
+NOTE: This is an illustrative simulation generated by the Maesa Autonomous AI Workforce.`
+};
+
+const EMPLOYEES = [
+  { id: 'op_brand_incubation', name: "Turnkey Brand Incubation Specialist", title: "Mass/Prestige Exclusive Brand Architect", wf: 'exclusive_retail_brand_incubation_surge', handled: 165, hrs: 32.0, win: "12-Month Launch Acceleration", status: "idle" },
+  { id: 'op_olfactive_chem', name: "Olfactive & Body Care Chemist", title: "Clean Beauty & Aromachology Formulator", wf: 'olfactive_mood_boosting_fragrance_formulation', handled: 210, hrs: 18.5, win: "Custom Mood-Scent Olfactive", status: "idle" },
+  { id: 'op_clinical_claims', name: "Clinical Efficacy & Claims Director", title: "Dermatologist Testing & Claims Specialist", wf: 'clean_skincare_dermatologist_clinical_audit', handled: 145, hrs: 24.0, win: "Dermatologist-Tested Sign-Off", status: "idle" },
+  { id: 'op_unit_economics', name: "Beauty Unit Economics Specialist", title: "Target COGS & Retail Margin Architect", wf: 'beauty_unit_economics_cogs_margin_optimizer', handled: 280, hrs: 15.2, win: "65% Gross Margin @ Mass Price", status: "idle" },
+  { id: 'op_pcr_packaging', name: "Sustainable Packaging Specialist", title: "100% PCR & Refillable Packaging Lead", wf: 'sustainable_pcr_refillable_packaging_design', handled: 195, hrs: 21.0, win: "100% PCR Refillable Architecture", status: "idle" },
+  { id: 'op_retail_merch', name: "Retail Merchandising Strategist", title: "Mass Retail Endcap & Planogram Lead", wf: 'retail_endcap_planogram_merchandising_deploy', handled: 340, hrs: 14.5, win: "1,800 Target Door Rollout", status: "idle" },
+  { id: 'op_mocra_safety', name: "MoCRA & EU Regulatory Lead", title: "Global Cosmetics Safety & Regulatory Lead", wf: 'mocra_fda_eu_cosmetics_compliance_audit', handled: 220, hrs: 19.8, win: "MoCRA & EU CSRP Safety Clearance", status: "idle" },
+  { id: 'op_magic_incubator', name: "Maesa Magic Incubator Mentor", title: "Diverse Founder Grant & Growth Lead", wf: 'maesa_magic_incubator_grant_mentorship', handled: 98, hrs: 28.0, win: "$35k Grant & Founder Mentorship", status: "idle" }
+];
+
+const CONFIG = {
+  econLabels: ["Exclusive Brands Launched", "Global Retail Doors", "Turnkey Launch Reduction", "First-Pass Retail Acceptance"],
+  statLabel: "Brand Incubation Speed-to-Market",
+  statSign: "+",
+  statSuffix: "%",
+  runButton: "Run AI Workforce Operator",
+  runNoun: "Operator Pipeline",
+  outputLabel: "Validated Beauty Brand Specification & Dossier",
+  rosterLabel: "Maesa AI Workforce Roster",
+  trackLabels: {
+    trackA: "Track A: Brand Incubation, Formulation & Olfactive Science",
+    trackB: "Track B: Sustainable Packaging, Supply Chain & Retail Launch"
+  },
+  builderCadences: ["Continuous Trend Sweep", "Weekly Lab Formulation", "Monthly Retail Review", "Quarterly Brand Incubation"]
+};
+
+/* ============================================================================
+   ENGINE LOGIC (DO NOT EDIT)
+   ============================================================================ */
+
+let currentSelectedWfKey = "exclusive_retail_brand_incubation_surge";
+
+function renderRoster() {
+  const container = document.getElementById("roster-container");
+  if (!container) return;
+
+  const trackAOps = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === "trackA");
+  const trackBOps = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === "trackB");
+
+  let html = `
+    <div class="section-hdr">${CONFIG.trackLabels.trackA}</div>
+    <div class="roster-grid">
+      ${trackAOps.map(op => renderOperatorCard(op)).join("")}
+    </div>
+
+    <div class="section-hdr" style="margin-top:40px;">${CONFIG.trackLabels.trackB}</div>
+    <div class="roster-grid">
+      ${trackBOps.map(op => renderOperatorCard(op)).join("")}
+    </div>
+  `;
+  container.innerHTML = html;
+}
+
+function renderOperatorCard(op) {
+  const wf = WORKFLOWS[op.wf];
+  if (!wf) return "";
+  const isFlagship = wf.tag === "flagship";
+  
+  // Agent chips
+  const agentChips = wf.tasks.map(t => {
+    const a = AGENT_ROLES[t.agent];
+    return a ? `<span class="agent-chip">${a.emoji} ${a.label}</span>` : "";
+  }).join("");
+
+  return `
+    <div class="operator-card ${isFlagship ? 'hero-op' : ''}">
+      <div class="op-top">
+        <div class="op-avatar">${op.name.charAt(0)}</div>
+        <div>
+          <div class="op-name">
+            ${op.name}
+            ${isFlagship ? '<span style="font-size:10px;font-weight:800;background:var(--accent);color:#fff;padding:2px 6px;border-radius:4px;text-transform:uppercase;">FLAGSHIP</span>' : ''}
+          </div>
+          <div class="op-title">${op.title}</div>
+        </div>
+      </div>
+      <div class="op-owns"><b>Workflow:</b> ${wf.name}</div>
+      <div class="team-chips">${agentChips}</div>
+      <div class="op-stats">
+        <div class="op-stat-item"><b>${op.handled}</b> Runs Handled</div>
+        <div class="op-stat-item"><b>${op.hrs} hrs</b> Avg Savings</div>
+        <div class="op-stat-item"><b style="color:var(--accent);">${op.win}</b> Headline Value</div>
+      </div>
+      <button class="btn-run-op" onclick="selectAndRunOperator('${op.wf}')">Launch Operator Run</button>
+    </div>
+  `;
+}
+
+function selectAndRunOperator(wfKey) {
+  currentSelectedWfKey = wfKey;
+  switchTab("run");
+  const wf = WORKFLOWS[wfKey];
+  if (!wf) return;
+  
+  document.getElementById("run-panel-title").innerText = "Operator: " + wf.title;
+  document.getElementById("run-panel-sub").innerText = wf.desc;
+  document.getElementById("run-prompt-input").value = wf.sample;
+
+  // Clear previous outputs
+  document.getElementById("run-feed-box").classList.add("hidden");
+  document.getElementById("run-feed-box").innerHTML = "";
+  document.getElementById("deliverable-box").classList.add("hidden");
+}
+
+function executeCurrentWorkflow() {
+  const wf = WORKFLOWS[currentSelectedWfKey];
+  if (!wf) return;
+
+  const feedBox = document.getElementById("run-feed-box");
+  const delivBox = document.getElementById("deliverable-box");
+  const delivText = document.getElementById("deliverable-text");
+  const delivTitle = document.getElementById("deliverable-title");
+
+  feedBox.classList.remove("hidden");
+  feedBox.innerHTML = `<div class="feed-line">[SYSTEM] Initializing multi-agent execution pipeline for ${wf.name}...</div>`;
+  delivBox.classList.add("hidden");
+
+  let stepIdx = 0;
+  
+  function stepLoop() {
+    if (stepIdx < wf.tasks.length) {
+      const taskObj = wf.tasks[stepIdx];
+      const agentObj = AGENT_ROLES[taskObj.agent];
+      const toolKey = agentObj ? agentObj.tools[0] : "save";
+      const toolOutput = TOOLS[toolKey] ? TOOLS[toolKey]() : "Tool execution complete.";
+
+      const line = document.createElement("div");
+      line.className = "feed-line";
+      line.innerHTML = `<span class="feed-agent">${agentObj.emoji} ${agentObj.label}:</span> "${taskObj.task}" <br>&nbsp;&nbsp;&nbsp;&nbsp;&rarr; <span class="feed-tool">[TOOL: ${toolKey}]</span> ${toolOutput}`;
+      feedBox.appendChild(line);
+      feedBox.scrollTop = feedBox.scrollHeight;
+
+      stepIdx++;
+      setTimeout(stepLoop, 600);
+    } else {
+      const lineFinal = document.createElement("div");
+      lineFinal.className = "feed-line feed-ok";
+      lineFinal.innerHTML = `<br>[SUCCESS] Execution pipeline completed cleanly. Output deliverable verified.`;
+      feedBox.appendChild(lineFinal);
+      feedBox.scrollTop = feedBox.scrollHeight;
+
+      delivTitle.innerText = DTITLE[currentSelectedWfKey] || "Produced Deliverable";
+      delivText.innerText = FINAL[currentSelectedWfKey] || "Deliverable text unavailable.";
+      delivBox.classList.remove("hidden");
+    }
+  }
+
+  setTimeout(stepLoop, 400);
+}
+
+function runFlagshipDemo() {
+  selectAndRunOperator("exclusive_retail_brand_incubation_surge");
+  executeCurrentWorkflow();
+}
+
+function switchTab(tabName) {
+  document.getElementById("tab-roster").classList.add("hidden");
+  document.getElementById("tab-run").classList.add("hidden");
+  document.getElementById("tab-builder").classList.add("hidden");
+
+  document.getElementById("tab-roster-btn").classList.remove("active");
+  document.getElementById("tab-run-btn").classList.remove("active");
+  document.getElementById("tab-builder-btn").classList.remove("active");
+
+  if (tabName === "roster") {
+    document.getElementById("tab-roster").classList.remove("hidden");
+    document.getElementById("tab-roster-btn").classList.add("active");
+  } else if (tabName === "run") {
+    document.getElementById("tab-run").classList.remove("hidden");
+    document.getElementById("tab-run-btn").classList.add("active");
+  } else if (tabName === "builder") {
+    document.getElementById("tab-builder").classList.remove("hidden");
+    document.getElementById("tab-builder-btn").classList.add("active");
+    populateBuilderSelect();
+  }
+}
+
+function populateBuilderSelect() {
+  const sel = document.getElementById("builder-base-select");
+  if (!sel) return;
+  sel.innerHTML = Object.keys(WORKFLOWS).map(k => `<option value="${k}">${WORKFLOWS[k].name}</option>`).join("");
+}
+
+function buildCustomOperator() {
+  const baseKey = document.getElementById("builder-base-select").value;
+  const opName = document.getElementById("builder-op-name").value || "Custom AI Operator";
+  const opTitle = document.getElementById("builder-op-title").value || "Custom Beauty Specialist";
+  const winMetric = document.getElementById("builder-win-metric").value || "100% Verified";
+
+  const newOpId = "op_custom_" + Date.now();
+  EMPLOYEES.push({
+    id: newOpId,
+    name: opName,
+    title: opTitle,
+    wf: baseKey,
+    handled: 1,
+    hrs: 12.0,
+    win: winMetric,
+    status: "idle"
+  });
+
+  renderRoster();
+  switchTab("roster");
+  alert(`Custom operator "${opName}" has been successfully added to the Maesa AI workforce roster!`);
+}
+
+function toggleBrandDrawer() {
+  document.getElementById("brand-drawer").classList.toggle("open");
+}
+
+function scrollToRoster() {
+  switchTab("roster");
+  window.scrollTo({top: 400, behavior: "smooth"});
+}
+
+// Initial Render
+window.addEventListener("DOMContentLoaded", () => {
+  renderRoster();
+  selectAndRunOperator("exclusive_retail_brand_incubation_surge");
+});
+</script>
+</body>
+</html>
