@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signode &mdash; Leading Global End of Line Packaging Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#ffffff;
+  --header-bg:#ffffff;
+  --surface:#f9f9f9;
+  --surface2:#f1f1f1;
+  --border:#e2e8f0;
+  --accent:#c84227; /* Signode Burnt Rust Red */
+  --accent-hover:#a6341d;
+  --accent-dim:rgba(200,66,39,0.08);
+  --accent-line:rgba(200,66,39,0.25);
+  --text:#1a1a1a;
+  --hi:#111111;
+  --tert:#555555;
+  --ok:#10b981;
+  --ok-dim:rgba(16,185,129,0.10);
+  --gold:#d97706;
+  --gold-bg:#fffbe3;
+  --gold-line:#fcd34d
+}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+
+/* SIGNODE OFFICIAL BRAND HEADER (MATCHING SIGNODE.COM WEBSITE) */
+.header{background:var(--header-bg);border-bottom:1px solid #e5e5e5;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,0.04)}
+.brand-logo{display:flex;align-items:center;gap:10px;cursor:pointer}
+.logo-shield{flex-shrink:0}
+.logo-title{font-size:24px;font-weight:900;letter-spacing:-0.5px;color:#111111;line-height:1;font-family:Inter,sans-serif}
+
+.nav-links{display:flex;align-items:center;gap:24px;margin-left:40px}
+.nav-item{font-size:13.5px;font-weight:600;color:#2d2d2d;text-decoration:none;transition:color .2s}
+.nav-item:hover{color:var(--accent)}
+
+.header-controls{display:flex;align-items:center;gap:16px}
+.lang-region{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#2d2d2d;cursor:pointer}
+.btn-contact{background:var(--accent);color:#fff;font-weight:700;font-size:13px;padding:9px 20px;border-radius:6px;border:none;cursor:pointer;transition:background .2s}
+.btn-contact:hover{background:var(--accent-hover)}
+.btn-search{width:36px;height:36px;border:1px solid #ccc;background:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+
+/* HERO BANNER MATCHING SIGNODE.COM SLAB-SERIF TYPOGRAPHY */
+.hero{background:linear-gradient(180deg, #ffffff 0%, #f9f9f9 100%);border-bottom:1px solid var(--border);padding:48px 40px 40px;position:relative;overflow:hidden;color:var(--hi)}
+.hero-content{max-width:1180px;margin:0 auto;position:relative;z-index:2}
+.hero-tag{display:inline-block;background:var(--accent-dim);border:1px solid var(--accent-line);color:var(--accent);font-size:11px;font-weight:800;letter-spacing:1.5px;padding:4px 12px;border-radius:4px;text-transform:uppercase;margin-bottom:16px}
+.hero-title{font-family:'Roboto Slab',Georgia,serif;font-size:38px;font-weight:900;color:var(--hi);letter-spacing:-0.8px;line-height:1.2;margin-bottom:12px;max-width:900px}
+.hero-sub{font-size:15px;color:var(--tert);max-width:850px;line-height:1.6;margin-bottom:24px}
+.hero-cta{display:flex;gap:14px}
+.btn-primary{background:var(--accent);color:#fff;font-weight:800;font-size:13px;padding:12px 24px;border-radius:6px;border:none;cursor:pointer;letter-spacing:0.5px;text-transform:uppercase;box-shadow:0 4px 14px rgba(200,66,39,0.3);transition:all .2s}
+.btn-primary:hover{background:var(--accent-hover);transform:translateY(-1px)}
+.btn-secondary{background:#fff;border:1px solid #ccc;color:#333;font-weight:700;font-size:13px;padding:11px 22px;border-radius:6px;cursor:pointer;transition:all .2s}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+
+/* TABS BAR */
+.tabs-bar{max-width:1180px;margin:24px auto 0;padding:0 24px;display:flex;gap:6px}
+.tab-btn{padding:12px 20px;font-size:13px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:8px 8px 0 0;background:none;transition:all .2s}
+.tab-btn.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+
+/* MAIN CONTAINER */
+.main-container{max-width:1180px;margin:0 auto;padding:24px}
+
+/* ECON STRIP */
+.econ-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.econ-card{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:10px;padding:18px}
+.econ-val{font-size:26px;font-weight:900;color:var(--hi)}.econ-val .unit{color:var(--accent);font-size:18px}
+.econ-lbl{font-size:11px;font-weight:600;color:var(--tert);margin-top:4px;text-transform:uppercase;letter-spacing:0.5px}
+
+.section-hdr{font-size:11px;font-weight:800;letter-spacing:1.5px;color:var(--tert);text-transform:uppercase;margin:24px 0 16px;display:flex;align-items:center;gap:12px}
+.section-hdr::after{content:"";flex:1;height:1px;background:var(--border)}
+
+/* ROSTER OPERATORS */
+.roster-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:18px}
+.operator-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;transition:all .2s}
+.operator-card:hover{border-color:var(--accent);box-shadow:0 6px 20px rgba(200,66,39,0.12)}
+.operator-card.hero-op{border-color:var(--gold-line);background:linear-gradient(180deg, var(--surface) 0%, var(--gold-bg) 100%)}
+.op-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.op-avatar{width:46px;height:46px;border-radius:10px;background:#fff;border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--accent);font-size:15px;flex-shrink:0}
+.op-name{font-size:15px;font-weight:800;color:var(--hi);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.op-title{font-size:12px;color:var(--tert);margin-top:2px}
+.op-owns{font-size:12px;color:var(--text);margin-bottom:12px}.op-owns b{color:var(--hi)}
+.team-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.agent-chip{font-size:11px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 9px}
+.op-stats{display:flex;gap:16px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:14px}
+.op-stat-item{font-size:11px;color:var(--tert)}.op-stat-item b{display:block;font-size:15px;color:var(--hi);font-weight:800}
+
+.btn-run-op{width:100%;background:var(--accent);color:#fff;font-weight:800;font-size:12.5px;padding:10px;border-radius:7px;border:none;cursor:pointer;transition:background .2s}
+.btn-run-op:hover{background:var(--accent-hover)}
+
+/* RUN PANEL */
+.run-panel{margin-top:28px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
+.run-title{font-size:18px;font-weight:800;color:var(--hi);margin-bottom:4px}
+.run-sub{font-size:12px;color:var(--tert);margin-bottom:18px}
+.run-input-group{display:flex;gap:12px;margin-bottom:20px}
+.run-input{flex:1;background:#fff;border:1px solid var(--border);border-radius:6px;padding:10px 14px;font-size:13px;color:var(--text);font-family:inherit}
+.btn-execute{background:var(--accent);color:#fff;font-weight:800;font-size:13px;padding:10px 20px;border-radius:6px;border:none;cursor:pointer}
+.btn-execute:hover{background:var(--accent-hover)}
+
+.run-feed{background:#111111;border:1px solid #333;border-radius:8px;padding:16px;font-family:Consolas,monospace;font-size:12px;color:#a7f3d0;max-height:300px;overflow-y:auto;margin-bottom:20px;line-height:1.6}
+.feed-line{margin-bottom:4px}
+.feed-agent{color:#f87171;font-weight:700}
+.feed-tool{color:#facc15}
+.feed-ok{color:#4ade80}
+
+.deliverable-box{background:#fff;border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:8px;padding:20px}
+.deliverable-hdr{font-size:14px;font-weight:800;color:var(--hi);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.deliverable-text{font-family:Consolas,Monaco,monospace;font-size:12px;color:#334155;white-space:pre-wrap;line-height:1.6;background:#f8fafc;padding:14px;border-radius:6px;border:1px solid #e2e8f0}
+
+/* BUILDER */
+.builder-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-top:28px}
+.builder-step{margin-bottom:20px}
+.builder-lbl{font-size:12px;font-weight:800;color:var(--tert);text-transform:uppercase;margin-bottom:8px}
+.builder-select,.builder-input{width:100%;background:#fff;border:1px solid var(--border);border-radius:6px;padding:10px;font-size:13px;color:var(--text);margin-bottom:12px}
+
+/* BRAND GUIDELINES MODAL / DRAWER */
+.drawer-backdrop{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:200;display:flex;justify-content:flex-end;opacity:0;pointer-events:none;transition:opacity .3s}
+.drawer-backdrop.open{opacity:1;pointer-events:auto}
+.drawer-panel{width:620px;max-width:90vw;background:#fff;height:100%;overflow-y:auto;padding:32px;box-shadow:-4px 0 30px rgba(0,0,0,0.3);transform:translateX(100%);transition:transform .3s ease-out}
+.drawer-backdrop.open .drawer-panel{transform:translateX(0)}
+.drawer-close{float:right;background:none;border:none;font-size:24px;color:var(--tert);cursor:pointer}
+.brand-h1{font-family:'Roboto Slab',serif;font-size:22px;font-weight:900;color:var(--hi);margin-bottom:6px}
+.brand-p{font-size:13px;color:var(--tert);line-height:1.6;margin-bottom:20px}
+.swatch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.swatch-item{border-radius:8px;padding:12px;color:#fff;font-size:11px;font-weight:700}
+
+/* FOOTER */
+.footer{margin-top:60px;border-top:1px solid var(--border);padding:24px 32px;background:var(--surface);font-size:11px;color:var(--tert);display:flex;justify-content:space-between;align-items:center}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="brand-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg class="logo-shield" width="32" height="32" viewBox="0 0 32 32" fill="none">
+      <path d="M16 2L4 7V15C4 22.5 9.1 29.2 16 31C22.9 29.2 28 22.5 28 15V7L16 2Z" fill="#c84227"/>
+      <path d="M11 15L15 19L21 11" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="logo-title">SIGNODE</div>
+  </div>
+
+  <nav class="nav-links">
+    <a href="#" class="nav-item">Products</a>
+    <a href="#" class="nav-item">Industries</a>
+    <a href="#" class="nav-item">Reliability Services</a>
+    <a href="#" class="nav-item">Sustainability</a>
+    <a href="#" class="nav-item">Company</a>
+  </nav>
+
+  <div class="header-controls">
+    <div class="lang-region" onclick="toggleBrandDrawer()">
+      <svg width="16" height="16" fill="none" stroke="#c84227" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      <span>Language &amp; Region</span>
+    </div>
+    <button class="btn-contact" onclick="toggleBrandDrawer()">Contact us</button>
+    <button class="btn-search" onclick="toggleBrandDrawer()"><svg width="14" height="14" fill="none" stroke="#333" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">We'll Protect It From Here</div>
+    <h1 class="hero-title">Leading Global End of Line Packaging Solutions &amp; AI Workforce</h1>
+    <p class="hero-sub">Optimizing transit packaging industrial automation, Octopus&reg; rotary ring stretch wrapping, Tenax&reg; PET &amp; Magnus&reg; steel strapping, Angleboard&reg; edge protection, and Packaging Plus&reg; reliability telemetry with safe, data-driven AI automation.</p>
+    <div class="hero-cta">
+      <button class="btn-primary" onclick="scrollToRoster()">Explore 8 AI Operators</button>
+      <button class="btn-secondary" onclick="runFlagshipDemo()">Run Flagship Octopus Wrapper Demo</button>
+    </div>
+  </div>
+</section>
+
+<div class="tabs-bar">
+  <button class="tab-btn active" id="tab-roster-btn" onclick="switchTab('roster')">AI Operators Roster</button>
+  <button class="tab-btn" id="tab-run-btn" onclick="switchTab('run')">Live Run Engine</button>
+  <button class="tab-btn" id="tab-builder-btn" onclick="switchTab('builder')">Operator Builder</button>
+</div>
+
+<main class="main-container">
+
+  <!-- ECON STRIP -->
+  <div class="econ-grid">
+    <div class="econ-card">
+      <div class="econ-val"><span class="tnum">100</span><span class="unit">M+</span></div>
+      <div class="econ-lbl">Annual Loads Secured</div>
+    </div>
+    <div class="econ-card">
+      <div class="econ-val"><span class="tnum">2,200</span><span class="unit">+</span></div>
+      <div class="econ-lbl">Global Service Engineers</div>
+    </div>
+    <div class="econ-card">
+      <div class="econ-val"><span class="tnum">28</span><span class="unit">%</span></div>
+      <div class="econ-lbl">Film Plastic Reduction</div>
+    </div>
+    <div class="econ-card">
+      <div class="econ-val"><span class="tnum">99.8</span><span class="unit">%</span></div>
+      <div class="econ-lbl">Equipment Uptime SLA</div>
+    </div>
+  </div>
+
+  <!-- TAB: ROSTER -->
+  <div id="tab-roster">
+    <div id="roster-container"></div>
+  </div>
+
+  <!-- TAB: RUN -->
+  <div id="tab-run" class="hidden">
+    <div class="run-panel">
+      <div class="run-title" id="run-panel-title">Select an Operator to Execute</div>
+      <div class="run-sub" id="run-panel-sub">Choose an autonomous workforce workflow from the roster to run multi-agent execution.</div>
+      
+      <div class="run-input-group">
+        <input type="text" id="run-prompt-input" class="run-input" placeholder="Enter target parameters or transit packaging requirements...">
+        <button class="btn-execute" id="btn-run-execute" onclick="executeCurrentWorkflow()">Run AI Workforce Operator</button>
+      </div>
+
+      <div class="run-feed hidden" id="run-feed-box"></div>
+
+      <div class="deliverable-box hidden" id="deliverable-box">
+        <div class="deliverable-hdr">
+          <span id="deliverable-title">Produced Deliverable</span>
+          <span style="font-size:11px;font-weight:600;color:var(--ok);background:var(--ok-dim);padding:3px 8px;border-radius:4px;">HUMAN-IN-THE-LOOP VERIFIED</span>
+        </div>
+        <pre class="deliverable-text" id="deliverable-text"></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: BUILDER -->
+  <div id="tab-builder" class="hidden">
+    <div class="builder-card">
+      <h2 style="font-size:18px;font-weight:800;color:var(--hi);margin-bottom:6px;">Compose New AI Workforce Operator</h2>
+      <p style="font-size:13px;color:var(--tert);margin-bottom:20px;">Clone and customize any existing Signode transit packaging workflow into a tailored autonomous operator.</p>
+
+      <div class="builder-step">
+        <div class="builder-lbl">Step 1: Base Template Workflow</div>
+        <select class="builder-select" id="builder-base-select"></select>
+      </div>
+
+      <div class="builder-step">
+        <div class="builder-lbl">Step 2: Operator Identity &amp; Title</div>
+        <input type="text" class="builder-input" id="builder-op-name" placeholder="Operator Name (e.g. Steel Coil Strapping Specialist)">
+        <input type="text" class="builder-input" id="builder-op-title" placeholder="Operator Title (e.g. Lead Industrial Strapping Engineer)">
+      </div>
+
+      <div class="builder-step">
+        <div class="builder-lbl">Step 3: Execution Cadence &amp; Target Win Metric</div>
+        <select class="builder-select" id="builder-cadence-select">
+          <option>Continuous Real-Time Telemetry</option>
+          <option>Weekly Line Optimization</option>
+          <option>Monthly Audit Sweep</option>
+          <option>Quarterly Fleet Maintenance</option>
+        </select>
+        <input type="text" class="builder-input" id="builder-win-metric" placeholder="Headline Win Metric (e.g. 100% ISTA 3E Clearance)">
+      </div>
+
+      <button class="btn-primary" style="width:100%;" onclick="buildCustomOperator()">Deploy New Operator to Roster</button>
+    </div>
+  </div>
+
+</main>
+
+<!-- BRAND GUIDELINES & TECHNICAL SPECS DRAWER -->
+<div class="drawer-backdrop" id="brand-drawer" onclick="if(event.target===this)toggleBrandDrawer()">
+  <div class="drawer-panel">
+    <button class="drawer-close" onclick="toggleBrandDrawer()">&times;</button>
+    <h1 class="brand-h1">Signode Official Brand &amp; Packaging Specs</h1>
+    <p class="brand-p">Authoritative design tokens matching Signode.com ("We'll Protect It From Here").</p>
+
+    <h3 style="font-size:14px;font-weight:800;color:var(--hi);margin-bottom:12px;">Corporate Brand Palette</h3>
+    <div class="swatch-grid">
+      <div class="swatch-item" style="background:#c84227;">#C84227<br>Signode Burnt Red</div>
+      <div class="swatch-item" style="background:#111111;">#111111<br>Corporate Black</div>
+      <div class="swatch-item" style="background:#ffffff;color:#111111;border:1px solid #ccc;">#FFFFFF<br>Clean White Header</div>
+      <div class="swatch-item" style="background:#f9f9f9;color:#111111;border:1px solid #ccc;">#F9F9F9<br>Surface Canvas</div>
+      <div class="swatch-item" style="background:#10b981;">#10B981<br>Uptime Green</div>
+      <div class="swatch-item" style="background:#d97706;">#D97706<br>Flagship Gold</div>
+    </div>
+
+    <h3 style="font-size:14px;font-weight:800;color:var(--hi);margin-bottom:10px;">Typography &amp; Layout Architecture</h3>
+    <ul style="font-size:13px;color:var(--tert);line-height:1.8;padding-left:20px;margin-bottom:20px;">
+      <li><b>Headings:</b> Roboto Slab / Georgia Heavy Serif (Matches signode.com headline font).</li>
+      <li><b>Navigation &amp; UI:</b> Inter clean sans-serif with red globe icons &amp; solid rust red CTA pill.</li>
+      <li><b>Logo:</b> Signode Shield Mark with crisp black bold uppercase typography.</li>
+    </ul>
+
+    <h3 style="font-size:14px;font-weight:800;color:var(--hi);margin-bottom:10px;">Core Product Architectures &amp; Machinery</h3>
+    <ul style="font-size:13px;color:var(--tert);line-height:1.8;padding-left:20px;margin-bottom:20px;">
+      <li><b>Octopus&reg; Stretch Wrappers:</b> Automatic rotary ring stretch wrappers with S-carriage pre-stretch &amp; No-Touch No-Tail NT2 seaming.</li>
+      <li><b>Tenax&reg; &amp; Magnus&reg; Strapping:</b> High-tensile PET &amp; steel strapping engineered with MOD-70 automated heads for heavy loads.</li>
+      <li><b>BXT3 Handheld Tools:</b> Battery-powered friction-weld combination tools with up to 4,500 N real-time tension control.</li>
+      <li><b>Angleboard&reg; &amp; Protective:</b> Right-angle edge protection, Gator-Deck&reg; paper pallets, and Shippers dunnage air bags.</li>
+      <li><b>Packaging Plus&reg; Services:</b> Predictive maintenance telemetry, 24/7 field service SLAs, and load containment audits.</li>
+    </ul>
+
+    <h3 style="font-size:14px;font-weight:800;color:var(--hi);margin-bottom:10px;">Transit Standards &amp; Safety Compliance</h3>
+    <ul style="font-size:13px;color:var(--tert);line-height:1.8;padding-left:20px;">
+      <li><b>ISTA 3E &amp; 3B Compliance:</b> Dynamic transport vibration, tilt, and shock simulation certification.</li>
+      <li><b>OSHA Cargo Securement:</b> Compliant strap tensioning &amp; dunnage air bag load stabilization per DOT/OSHA standards.</li>
+    </ul>
+  </div>
+</div>
+
+<footer class="footer">
+  <div>&copy; 2026 Signode Industrial Group. All rights reserved. | Autonomous AI Workforce Prototype</div>
+  <div>Human-in-the-Loop Governance: All transit equipment layouts &amp; ISTA certifications require Principal Engineer sign-off.</div>
+</footer>
+
+<script>
+/* ============================================================================
+   SIGNODE DATA CONFIGURATION & MULTI-AGENT DATA STRUCTURES
+   ============================================================================ */
+
+const AGENT_ROLES = {
+  strappingarchitect: { emoji: "ðŸ“¦", label: "Strapping Systems Architect", tools: ["tenax_strap_tension_calc", "mod70_head_cycle_sim", "friction_weld_integrity_tester", "save"] },
+  stretchwrapeng: { emoji: "ðŸ”„", label: "Stretch Wrap & Ring Specialist", tools: ["octopus_ring_speed_calc", "scarriage_prestretch_model", "nt2_no_tail_seamer", "save"] },
+  loadcontainment: { emoji: "ðŸ›¡ï¸", label: "ISTA Load Containment Specialist", tools: ["ista_3e_tilt_simulator", "containment_force_ftl_meter", "cargo_gforce_telemetry", "save"] },
+  roboticsautomation: { emoji: "ðŸ¤–", label: "Robotic Palletizing & AMR Lead", tools: ["kuka_fanuc_palletizer_cad", "amr_fleet_dispatch_sim", "scada_ethernet_ip_mapper", "save"] },
+  protectivepack: { emoji: "ðŸ“", label: "Angleboard Protective Packaging Lead", tools: ["angleboard_caliper_calc", "gator_deck_pallet_tester", "dunnage_air_bag_pressure_checker", "save"] },
+  fieldserviceops: { emoji: "ðŸ”§", label: "Packaging Plus Service Lead", tools: ["packaging_plus_telemetry", "strap_head_wear_analyzer", "predictive_maintenance_planner", "save"] },
+  lumbersteelops: { emoji: "â›“ï¸", label: "Heavy Industrial Metals & Timber Lead", tools: ["magnus_steel_coil_strapper", "timber_bundle_settling_model", "heavy_duty_notch_sealer", "save"] },
+  corrugatedfb: { emoji: "ðŸ¾", label: "Corrugated & F&B Line Ergonomist", tools: ["beverage_line_throughput_calc", "corrugated_column_strength_sim", "high_speed_pallet_wrapper", "save"] },
+  costmarginengineer: { emoji: "ðŸ“Š", label: "Transit Packaging COGS Modeler", tools: ["transit_cogs_roi_calculator", "film_plastic_downgauge_sim", "steel_vs_pet_cost_converter", "save"] },
+  eassafetyaudit: { emoji: "âš–ï¸", label: "OSHA & EHS Safety Compliance Auditor", tools: ["osha_cargo_securement_auditor", "bxt3_ergonomic_force_meter", "iso14001_lca_carbon_tracker", "save"] },
+  writer: { emoji: "ðŸ“", label: "Technical Packaging Proposal Lead", tools: ["signode_proposal_builder", "equipment_layout_cad_gen", "bxt3_operator_manual_gen", "save"] },
+  reviewer: { emoji: "ðŸ”", label: "Principal Signode Systems Reviewer", tools: ["signode_engineering_signoff", "ista_certification_approver", "governance_audit_log", "save"] }
+};
+
+const WORKFLOWS = {
+  octopus_rotary_ring_stretch_wrap_surge: {
+    name: "High-Speed OctopusÂ® Rotary Ring Stretch Wrap & Containment Surge",
+    title: "High-Speed OctopusÂ® Rotary Ring Stretch Wrap & Containment Surge",
+    mode: 'dag',
+    deliverable: "Octopus Rotary Ring Stretch Wrapper Line Layout & ISTA 3E Certification",
+    sample: "Deploy high-speed Octopus S-Series rotary ring stretch wrapper for 150 loads/hr F&B beverage line with S-carriage pre-stretch.",
+    desc: "Orchestrates 150+ loads/hr rotary ring wrapping, S-carriage film pre-stretch, No-Touch No-Tail NT2 seaming, and ISTA 3E load containment.",
+    track: 'trackA',
+    tag: 'flagship',
+    tasks: [
+      { agent: 'stretchwrapeng', task: "Configure Octopus S-Series rotary ring speed (80 RPM) and S-carriage pre-stretch ratio (300%).", deps: [] },
+      { agent: 'loadcontainment', task: "Measure force-to-load (FTL) containment distribution across top, middle, and bottom pallet zones.", deps: [0] },
+      { agent: 'roboticsautomation', task: "Integrate high-speed infeed roller conveyors and EtherNet/IP SCADA handshake.", deps: [1] },
+      { agent: 'protectivepack', task: "Apply automated corner Angleboard edge protection to prevent top carton crushing.", deps: [2] },
+      { agent: 'eassafetyaudit', task: "Verify light curtain safety perimeter and zero film tail tailing per OSHA Standards.", deps: [3] },
+      { agent: 'reviewer', task: "Perform principal engineer sign-off on Octopus wrapping system line package.", deps: [4] }
+    ]
+  },
+  tenax_pet_heavy_duty_lumber_strapping: {
+    name: "TenaxÂ® High-Tensile PET Strapping for Heavy Timber",
+    title: "TenaxÂ® High-Tensile PET Strapping for Heavy Timber",
+    mode: 'sequential',
+    deliverable: "Tenax Heavy Timber PET Strapping & MOD-70 Head Clearance Spec",
+    sample: "Engineer 32mm Tenax high-tensile PET strapping line for heavy lumber bundles to replace high-cost steel strap.",
+    desc: "Replaces steel strapping with heavy-duty recycled PET Tenax strap, utilizing elastic memory to maintain tension during lumber settling.",
+    track: 'trackA',
+    tasks: [
+      { agent: 'strappingarchitect', task: "Calculate 32mm Tenax PET strap tension retention and MOD-70 automatic strapping head cycle time.", deps: [] },
+      { agent: 'lumbersteelops', task: "Simulate timber bundle settling and humidity expansion to verify 15% shock absorption reserve.", deps: [0] },
+      { agent: 'loadcontainment', task: "Conduct ISTA 3B railcar impact simulation up to 4.2g longitudinal force.", deps: [1] },
+      { agent: 'reviewer', task: "Sign off on steel-to-PET strapping conversion certificate.", deps: [2] }
+    ]
+  },
+  bxt3_handheld_tool_ergonomic_field_audit: {
+    name: "BXT3 Handheld Battery Tool Fleet Diagnostics & Tension Audit",
+    title: "BXT3 Handheld Battery Tool Fleet Diagnostics & Tension Audit",
+    mode: 'sequential',
+    deliverable: "BXT3 Handheld Tool Fleet Performance & Tension Calibration Report",
+    sample: "Run diagnostic sweep across 40 BXT3 battery-powered friction-weld tools in global logistics hub.",
+    desc: "Audits real-time friction weld alignment, 4,500 N tension retention, and ergonomic wrist strain reduction.",
+    track: 'trackA',
+    tasks: [
+      { agent: 'fieldserviceops', task: "Connect BXT3 Bluetooth diagnostic module to inspect motor current draw and tooth plate wear.", deps: [] },
+      { agent: 'strappingarchitect', task: "Calibrate automatic, semi-automatic, and manual tension modes for 19mm Tenax PET strap.", deps: [0] },
+      { agent: 'eassafetyaudit', task: "Conduct operator ergonomic wrist torque assessment (confirms zero recoil kickback).", deps: [1] },
+      { agent: 'reviewer', task: "Approve BXT3 fleet maintenance recertification.", deps: [2] }
+    ]
+  },
+  transit_cogs_film_downgauging_roi_model: {
+    name: "Transit Packaging COGS & Film Down-Gauging ROI Modeler",
+    title: "Transit Packaging COGS & Film Down-Gauging ROI Modeler",
+    mode: 'sequential',
+    deliverable: "-28% Film Down-Gauging ROI Blueprint & ISTA Compliance Dossier",
+    sample: "Model 28% stretch film consumption reduction across 1.2M annual pallets while locking containment force.",
+    desc: "Demonstrates film down-gauging cost savings ($240,000/yr) while preserving 100% ISTA 3E load containment integrity.",
+    track: 'trackA',
+    tasks: [
+      { agent: 'costmarginengineer', task: "Compute annual film consumption cost per pallet (down-gauging from 80-gauge to 55-gauge nano-film).", deps: [] },
+      { agent: 'stretchwrapeng', task: "Optimize Octopus S-carriage pre-stretch settings (320% pre-stretch ratio).", deps: [0] },
+      { agent: 'writer', task: "Generate executive ROI proposal highlighting $240,000 annual film plastic savings.", deps: [1] },
+      { agent: 'reviewer', task: "Validate financial model and sign off on customer line optimization.", deps: [2] }
+    ]
+  },
+  angleboard_edge_protection_load_stability: {
+    name: "AngleboardÂ® Edge Protection & Pallet Stacking Reinforcement",
+    title: "AngleboardÂ® Edge Protection & Pallet Stacking Reinforcement",
+    mode: 'dag',
+    deliverable: "Angleboard Load Stability & Stacking Strength Specification",
+    sample: "Integrate automated Angleboard right-angle edge post applicators for double-stacked fragile beverage pallets.",
+    desc: "Combines laminated Angleboard edge posts and Gator-Deck paper pallets to increase vertical stacking strength by 40%.",
+    track: 'trackB',
+    tasks: [
+      { agent: 'protectivepack', task: "Calculate required Angleboard caliper (0.225 inch) and leg length (3 inch) for 2,400 lb stack loads.", deps: [] },
+      { agent: 'corrugatedfb', task: "Simulate 3-high warehouse stacking under 90% relative humidity ambient conditions.", deps: [0] },
+      { agent: 'loadcontainment', task: "Measure corner crush resistance improvement (+42% compression strength).", deps: [1] },
+      { agent: 'reviewer', task: "Approve protective packaging specification sheet.", deps: [2] }
+    ]
+  },
+  robotic_palletizing_amr_warehouse_integration: {
+    name: "Robotic Palletizing & AMR Warehouse Transfer Integration",
+    title: "Robotic Palletizing & AMR Warehouse Transfer Integration",
+    mode: 'sequential',
+    deliverable: "Robotic Palletizing & AMR Warehouse Transport CAD Layout",
+    sample: "Design turnkey cell featuring Fanuc robotic arm palletizing, MOD-GP strapping, and AMR automatic pickup.",
+    desc: "Engineers end-of-line robotic palletizing cells integrated with Autonomous Mobile Robots (AMRs) for zero-touch transfer.",
+    track: 'trackB',
+    tasks: [
+      { agent: 'roboticsautomation', task: "Develop Fanuc robotic end-of-arm tool (EOAT) vacuum gripper CAD pattern for multi-case pick.", deps: [] },
+      { agent: 'corrugatedfb', task: "Configure high-speed layer pattern generator for interlocking pallet stability.", deps: [0] },
+      { agent: 'fieldserviceops', task: "Map AMR fleet dispatch communication protocol via Modbus TCP/IP.", deps: [1] },
+      { agent: 'reviewer', task: "Sign off on turnkey automation cell engineering package.", deps: [2] }
+    ]
+  },
+  heavy_metals_steel_coil_cargo_securement: {
+    name: "Steel Coil & Heavy Metals MagnusÂ® High-Tensile Securement",
+    title: "Steel Coil & Heavy Metals MagnusÂ® High-Tensile Securement",
+    mode: 'sequential',
+    deliverable: "Magnus High-Tensile Steel Coil Packaging & Dunnage Air Bag Dossier",
+    sample: "Engineer heavy-duty packaging line for 20-ton slit steel coils using Magnus steel strap and dunnage air bags.",
+    desc: "Validates Magnus high-tensile steel strapping, pneumatic notch sealing, and Shippers Products dunnage air bags for flatcar rail shipping.",
+    track: 'trackB',
+    tasks: [
+      { agent: 'lumbersteelops', task: "Select Magnus 32mm x 1.14mm heat-treated steel strap and pneumatic double-notch sealer.", deps: [] },
+      { agent: 'protectivepack', task: "Calculate dunnage air bag inflation pressure (3.5 PSI) for intermodal rail void fill.", deps: [0] },
+      { agent: 'eassafetyaudit', task: "Audit AAR (Association of American Railroads) Rule 42 open-top railcar securement rules.", deps: [1] },
+      { agent: 'reviewer', task: "Authorize AAR-compliant heavy metals shipping dossier.", deps: [2] }
+    ]
+  },
+  packaging_plus_predictive_maintenance_dossier: {
+    name: "Packaging PlusÂ® Predictive Maintenance & Turnkey Handover",
+    title: "Packaging PlusÂ® Predictive Maintenance & Turnkey Handover",
+    mode: 'sequential',
+    deliverable: "Packaging Plus Predictive Telemetry & Turnkey Handover Dossier",
+    sample: "Compile 24/7 IoT predictive maintenance telemetry package for automated end-of-line packaging plant.",
+    desc: "Monitors strapping head cycle count, seal temperature drift, and motor current spectrum to guarantee 99.8% uptime.",
+    track: 'trackB',
+    tasks: [
+      { agent: 'fieldserviceops', task: "Analyze Packaging Plus IoT gateway telemetry for predictive strapping head maintenance.", deps: [] },
+      { agent: 'roboticsautomation', task: "Cross-reference conveyor motor vibration FFT spectrum with SCADA alarm thresholds.", deps: [0] },
+      { agent: 'writer', task: "Publish 48-page Turnkey Equipment Reliability Manual and spare parts kit list.", deps: [1] },
+      { agent: 'reviewer', task: "Approve 24/7 service SLA and commercial facility handover.", deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  octopus_rotary_ring_stretch_wrap_surge: "Octopus Rotary Ring Stretch Wrapper Line Layout & ISTA 3E Certification",
+  tenax_pet_heavy_duty_lumber_strapping: "Tenax Heavy Timber PET Strapping & MOD-70 Head Clearance Spec",
+  bxt3_handheld_tool_ergonomic_field_audit: "BXT3 Handheld Tool Fleet Performance & Tension Calibration Report",
+  transit_cogs_film_downgauging_roi_model: "-28% Film Down-Gauging ROI Blueprint & ISTA Compliance Dossier",
+  angleboard_edge_protection_load_stability: "Angleboard Load Stability & Stacking Strength Specification",
+  robotic_palletizing_amr_warehouse_integration: "Robotic Palletizing & AMR Warehouse Transport CAD Layout",
+  heavy_metals_steel_coil_cargo_securement: "Magnus High-Tensile Steel Coil Packaging & Dunnage Air Bag Dossier",
+  packaging_plus_predictive_maintenance_dossier: "Packaging Plus Predictive Telemetry & Turnkey Handover Dossier"
+};
+
+const TOOLS = {
+  tenax_strap_tension_calc: () => "Tenax PET strap tension: 4,200 N retained tension | Elastic memory compensation active",
+  mod70_head_cycle_sim: () => "MOD-70 strapping head cycle time: 1.8 seconds per strap | Dual-stage strap feed verified",
+  friction_weld_integrity_tester: () => "Friction-weld joint efficiency: 88.4% of strap break strength (Exceeds 80% ASTM D3950 spec)",
+  octopus_ring_speed_calc: () => "Octopus S-Series ring rotational speed: 82 RPM | Throughput: 154 pallets/hour achieved",
+  scarriage_prestretch_model: () => "S-carriage film pre-stretch: 310% stretch ratio | Film thickness down-gauged to 55 gauge",
+  nt2_no_tail_seamer: () => "No-Touch No-Tail NT2 seamer: Film tail thermal seal completed (Zero loose film tails)",
+  ista_3e_tilt_simulator: () => "ISTA 3E incline impact test: 0.8g acceleration passed | Zero load displacement or tipping",
+  containment_force_ftl_meter: () => "Force-to-Load (FTL): Top 18 lbs | Middle 14 lbs | Bottom 22 lbs (Optimized containment profile)",
+  cargo_gforce_telemetry: () => "Cargo acceleration sensor: Peak 1.4g dynamic shock absorbed during simulated rail impact",
+  kuka_fanuc_palletizer_cad: () => "Fanuc M-410iC/110 robotic arm reach: 3,143 mm | Cycle rate: 1,800 cases/hour",
+  amr_fleet_dispatch_sim: () => "Autonomous Mobile Robot (AMR) fleet dispatch: Pickup cycle 42 seconds | Zero conveyor bottleneck",
+  scada_ethernet_ip_mapper: () => "EtherNet/IP CIP safety protocol mapped: 256 I/O tags online | Latency: <5ms",
+  angleboard_caliper_calc: () => "Angleboard caliper: 0.225 inch x 3.0 inch leg | Corner crush resistance: +42% uplift",
+  gator_deck_pallet_tester: () => "Gator-Deck paper pallet dynamic load rating: 2,500 lbs | 100% recyclable paperboard construction",
+  dunnage_air_bag_pressure_checker: () => "Shippers Products dunnage air bag: Inflated to 3.5 PSI working pressure (Void fill 14 inches)",
+  packaging_plus_telemetry: () => "Packaging Plus IoT gateway: 1.2M cycles logged | Strapping head wear level: 12% (Normal)",
+  strap_head_wear_analyzer: () => "Tension wheel & cutter knife inspection: 88% remaining service life | Zero jam events",
+  predictive_maintenance_planner: () => "Predictive maintenance schedule generated: Next scheduled service in 450 operating hours",
+  magnus_steel_coil_strapper: () => "Magnus 32mm x 1.14mm high-tensile steel strap: Break strength 24,500 N | Notch seal 92% efficiency",
+  timber_bundle_settling_model: () => "Lumber bundle settling model: Tenax PET elastic recovery maintains 85% initial tension after 14 days",
+  heavy_duty_notch_sealer: () => "Pneumatic double-notch seal verified | Zero seal slippage under dynamic tension",
+  beverage_line_throughput_calc: () => "F&B canning line packaging throughput: 162 pallets/hour wrapped, strapped, and labeled",
+  corrugated_column_strength_sim: () => "Corrugated box BCT compression strength: 4,800 N | Zero box buckling under 3-high stack",
+  high_speed_pallet_wrapper: () => "High-speed wrapper cycle: 22 seconds per pallet including top sheet application",
+  transit_cogs_roi_calculator: () => "Annual transit packaging COGS savings: $240,000 per plant across 1.2M annual pallets",
+  film_plastic_downgauge_sim: () => "Film plastic reduction: 34,000 lbs plastic film saved annually per production line",
+  steel_vs_pet_cost_converter: () => "Steel-to-PET conversion: 48% material cost reduction switching from steel to Tenax PET",
+  osha_cargo_securement_auditor: () => "OSHA / DOT cargo securement audit: 100% compliant under 49 CFR 393 cargo rules",
+  bxt3_ergonomic_force_meter: () => "BXT3 tool operator wrist force: 0.4 Nm (Well within NIOSH safe manual handling limits)",
+  iso14001_lca_carbon_tracker: () => "Scope 3 carbon reduction: 82 metric tons CO2e saved annually via PET recycling",
+  signode_proposal_builder: () => "Technical proposal generated: 38 pages with 3D CAD layout, BOM, and ISTA test reports",
+  equipment_layout_cad_gen: () => "Single-line equipment layout CAD file generated for end-of-line integration",
+  bxt3_operator_manual_gen: () => "BXT3 operator instruction manual & quick-start guide compiled in 12 languages",
+  signode_engineering_signoff: () => "Signode Chief Systems Engineer sign-off: SIG-ENG-2026-0922-APPROVED",
+  ista_certification_approver: () => "ISTA Certified Testing Laboratory approval stamp granted: ISTA-LAB-3E-2026",
+  governance_audit_log: () => "Immutable governance log entry stored: SHA-256 hash verified for multi-agent transit run",
+  save: () => "Output artifact saved successfully to enterprise repository."
+};
+
+const FINAL = {
+  octopus_rotary_ring_stretch_wrap_surge: `================================================================================
+SIGNODE INDUSTRIAL GROUP - OCTOPUSÂ® ROTARY RING LINE LAYOUT & ISTA 3E DOSSIER
+================================================================================
+Project: High-Speed Beverage Pallet Packaging Line (150+ Loads/Hour)
+Equipment: Signode OctopusÂ® S-Series Automatic Rotary Ring Stretch Wrapper
+Date: September 22, 2026 | Document ID: SIG-OCTOPUS-150-20260922
+
+1. ROTARY RING MACHINERY & FILM CARRIAGE SPECS
+- Model: Signode OctopusÂ® S-Series Rotary Ring Stretch Wrapper
+- Ring Rotational Speed: 82 RPM continuous rotational speed
+- Film Carriage: Patented "S" Type Pre-Stretch Carriage (310% pre-stretch ratio)
+- Seaming System: No-Touch No-Tail (NT2) thermal film tail seamer (Zero loose film tails)
+- Top Sheet Applicator: Integrated automatic top sheet dispenser for IP54 weatherproofing
+
+2. FORCE-TO-LOAD (FTL) & ISTA 3E CONTAINMENT AUDIT
+- Containment Profile: Variable FTL distribution (Top: 18 lbs | Middle: 14 lbs | Bottom: 22 lbs)
+- ISTA 3E Test Performance: Passed 0.8g dynamic tilt, shock, and transport vibration simulation
+- Film Down-Gauging: Nano-film down-gauged from 80-gauge to 55-gauge with zero tear events
+
+3. LINE THROUGHPUT & WAREHOUSE AUTOMATION INTEGRATION
+- System Line Throughput: 154 pallets / hour continuous production capacity
+- Infeed/Outfeed Conveyor: Dual motor-driven roller conveyors with EtherNet/IP SCADA mapping
+- Safety Perimeter: Category 4 light curtain safety fencing with auto-mute pallet entry
+
+4. SIGNODE PRINCIPAL ENGINEER APPROVAL
+- Chief Systems Architect: Marcus Vance, PE (Signode Global Automation)
+- ISTA Test Lab Approval: APPROVED (ISTA Lab Cert #3E-2026-0922)
+
+NOTE: This is an illustrative simulation generated by the Signode Autonomous AI Workforce. All metrics are placeholders for demonstration purposes.`,
+
+  tenax_pet_heavy_duty_lumber_strapping: `================================================================================
+SIGNODE TENAXÂ® PET STRAPPING FOR HEAVY TIMBER SPECIFICATION
+================================================================================
+Application: Hardwood & Softwood Dimensional Lumber Bundle Packaging
+Target Material: TenaxÂ® 32mm x 1.14mm High-Tensile Polyester (PET) Strapping
+Date: September 22, 2026
+
+1. STRAP PERFORMANCE & TENSION RETENTION
+- Strap Width & Thickness: 32mm (1.25 in) x 1.14mm high-tensile embossed PET
+- Retained Strap Tension: 4,200 N per strap (Elastic memory compensates for 14-day lumber drying shrinkage)
+- Break Strength: 18,500 N (3,000 lbs) shock-absorbing tensile rating
+
+2. MOD-70 AUTOMATIC STRAPPING HEAD INTEGRATION
+- Strapping Head: Signode MOD-70 Modular Strapping Head
+- Cycle Time: 1.8 seconds per strap application
+- Weld Efficiency: Friction-weld joint efficiency 88.4% of strap break strength
+
+3. STEEL-TO-PET CONVERSION ROI
+- Material Cost Savings: 48% savings vs heavy-duty steel strapping
+- Weight Reduction: 78% lighter strap coil weight, improving operator safety
+
+4. APPROVAL SIGN-OFF
+- Industrial Packaging Specialist: David Chen, PE
+- Status: CERTIFIED FOR LUMBER MILL ROLLOUT
+
+NOTE: This is an illustrative simulation generated by the Signode Autonomous AI Workforce.`,
+
+  bxt3_handheld_tool_ergonomic_field_audit: `================================================================================
+SIGNODE BXT3 BATTERY TOOL FLEET PERFORMANCE & TENSION AUDIT REPORT
+================================================================================
+Scope: Global Logistics Hub Fleet Diagnostics (40 Handheld BXT3 Tools)
+Tool Model: Signode BXT3-19 Battery-Powered Friction-Weld Tool
+Date: September 22, 2026
+
+1. DIAGNOSTIC SWEEP & TELEMETRY AUDIT
+- Bluetooth Telemetry Data: 1.2 Million total strap cycles evaluated across fleet
+- Tooth Plate & Tension Wheel Wear: Mean 88% remaining service life (Zero jam incidents)
+- Weld Motor Current Spectrum: Nominal operating parameters across 38 of 40 tools
+
+2. TENSION CALIBRATION & REPEATABILITY
+- Maximum Tension Setting: Calibrated to 4,500 N (1,000 lbs) for 19mm Tenax PET strap
+- Real-Time Tension Accuracy: +/- 2.5% variance across 500 test strap cycles
+
+3. ERGONOMICS & OPERATOR SAFETY
+- Ergonomic Assessment: Measured operator wrist torque @ 0.4 Nm (Well below NIOSH limits)
+- Weight Distribution: Balanced center of gravity eliminates operator fatigue
+
+4. FIELD SERVICE CERTIFICATION
+- Signode Packaging Plus Manager: Sarah Jenkins
+- Status: BXT3 FLEET RE-CERTIFIED FOR OPERATION
+
+NOTE: This is an illustrative simulation generated by the Signode Autonomous AI Workforce.`,
+
+  transit_cogs_film_downgauging_roi_model: `================================================================================
+SIGNODE TRANSIT PACKAGING COGS & FILM DOWN-GAUGING BLUEPRINT
+================================================================================
+Target Facility: Food & Beverage Manufacturing Plant (1.2M Pallets/Year)
+Date: September 22, 2026 | Financial Model: COGS-DOWNGAUGE-v4.2
+
+1. FILM CONSUMPTION & DOWN-GAUGING ANALYSIS
+- Baseline Film Gauge: 80-gauge (20.3 micron) conventional stretch film
+- Optimized Film Gauge: 55-gauge (14.0 micron) Signode high-performance nano-film
+- Film Plastic Savings: 34,000 lbs of plastic film eliminated annually per packaging line
+
+2. FINANCIAL ROI & COST REDUCTION
+- Baseline Packaging Cost: $0.85 per pallet wrapped
+- Down-Gauged Packaging Cost: $0.61 per pallet wrapped
+- Annual Net Cost Savings: $240,000 annual savings across 1.2M pallets
+
+3. CONTAINMENT ASSURANCE
+- Containment Force: Held @ 16 lbs average FTL (100% ISTA 3E transport compliant)
+
+4. EXECUTIVE SIGN-OFF
+- Senior Packaging Engineer: Mark Sterling, PE
+- Status: APPROVED FOR PLANTWIDE FILM CONVERSION
+
+NOTE: This is an illustrative simulation generated by the Signode Autonomous AI Workforce.`,
+
+  angleboard_edge_protection_load_stability: `================================================================================
+SIGNODE ANGLEBOARDÂ® PROTECTIVE PACKAGING STABILITY SPECIFICATION
+================================================================================
+Application: Double-Stacked Beverage & Consumer Goods Pallet Warehousing
+Date: September 22, 2026
+
+1. ANGLEBOARD PRODUCT SPECIFICATIONS
+- Caliper & Leg Length: 0.225 inch thickness x 3.0 inch x 3.0 inch leg length
+- Material: 100% recycled laminated paperboard (Water-resistant outer ply)
+- Pallet Base: Gator-DeckÂ® paperboard pallets (2,500 lbs dynamic capacity)
+
+2. WAREHOUSE STACKING & COMPRESSION TEST
+- Vertical Column Strength: Increased pallet stacking compression strength by +42%
+- Humidity Endurance: Tested @ 90% RH for 14 days with zero corner post buckling
+
+3. CARGO INDENTATION PREVENTION
+- Strap Protection: Prevents PET strap indentation into corrugated shipping cartons
+
+4. APPROVAL SIGN-OFF
+- Protective Packaging Specialist: Elena Rostova, PE
+- Status: APPROVED FOR WAREHOUSE STACKING SPECIFICATION
+
+NOTE: This is an illustrative simulation generated by the Signode Autonomous AI Workforce.`,
+
+  robotic_palletizing_amr_warehouse_integration: `================================================================================
+SIGNODE AUTOMATION - ROBOTIC PALLETIZING & AMR CELL DOSSIER
+================================================================================
+Application: End-of-Line High-Speed Case Palletizing & AMR Transfer Cell
+Date: September 22, 2026
+
+1. ROBOTIC PALLETIZING ARM SPECS
+- Robot Model: Fanuc M-410iC/110 4-Axis Heavy-Payload Palletizing Robot
+- End-of-Arm Tooling (EOAT): Dual-zone vacuum foam gripper with mechanical edge clamps
+- Throughput Rating: 1,800 cases per hour (Interlocking layer pattern)
+
+2. AMR FLEET DISPATCH & CONVEYOR AUTOMATION
+- Autonomous Mobile Robots (AMRs): Top-load AMR transfer vehicles integrated via Modbus TCP/IP
+- Cycle Time: AMR pickup executed in 42 seconds with zero packaging line pause
+
+3. SAFETY & SCADA HANDSHAKE
+- Safety Rating: ISO 13849-1 Category 3 PLd safety enclosure with automatic mute curtains
+
+4. SIGN-OFF
+- Automation Director: Greg Harrison, PE
+- Status: APPROVED FOR TURNKEY CELL INTEGRATION
+
+NOTE: This is an illustrative simulation generated by the Signode Autonomous AI Workforce.`,
+
+  heavy_metals_steel_coil_cargo_securement: `================================================================================
+SIGNODE METALS DIVISION - MAGNUSÂ® STEEL COIL CARGO SECUREMENT
+================================================================================
+Application: 20-Ton Slit Steel Coil Open-Top Railcar Transport
+Date: September 22, 2026 | Standard: AAR Rule 42 Railcar Securement
+
+1. MAGNUSÂ® STEEL STRAPPING SPECIFICATIONS
+- Strap Material: MagnusÂ® 32mm x 1.14mm Heat-Treated High-Tensile Steel Strap
+- Tensile Break Strength: 24,500 N (5,500 lbs)
+- Sealing System: Pneumatic double-notch sealer (92% joint strength efficiency)
+
+2. VOID FILL & DUNNAGE AIR BAG SECUREMENT
+- Air Bag Specs: Shippers Products 4-ply paper dunnage air bags (48" x 96")
+- Working Inflation Pressure: 3.5 PSI (Absorbs up to 4.5g dynamic rail impact)
+
+3. RAILWAY SAFETY COMPLIANCE
+- Association of American Railroads (AAR): Fully certified under AAR Rule 42 open-top rules
+
+4. APPROVAL SIGN-OFF
+- Heavy Metals Logistics Specialist: Robert Vance, PE
+- Status: AUTHORIZED FOR FLATCAR RAIL SHIPPING
+
+NOTE: This is an illustrative simulation generated by the Signode Autonomous AI Workforce.`,
+
+  packaging_plus_predictive_maintenance_dossier: `================================================================================
+SIGNODE PACKAGING PLUSÂ® PREDICTIVE MAINTENANCE & SLA HANDOVER
+================================================================================
+Target Plant: High-Volume Regional Distribution Center (Plant #4)
+Date: September 22, 2026 | Contract: Packaging PlusÂ® 24/7 Reliability SLA
+
+1. IOT TELEMETRY & PREDICTIVE DIAGNOSTICS
+- Telemetry Gateway: Signode Packaging Plus IoT Smart Node
+- Strapping Head Cycle Monitor: 1,240,000 cycles logged (Strapping head wear @ 12%)
+- Motor Vibration FFT Spectrum: Mean 0.9 mm/s RMS (Well within ISO normal band)
+
+2. SERVICE SLA & UPTIME GUARANTEE
+- Equipment Operational Uptime: 99.84% (Exceeds 99.5% contract SLA guarantee)
+- Guaranteed Technician Response: On-site dispatch <2 hours for critical line outages
+
+3. HANDOVER & DOCUMENTATION
+- Reliability Manual: 48-Page equipment operation & preventative maintenance guide issued
+
+4. SIGN-OFF
+- Signode Global Service Lead: Sarah Jenkins, VP Service Operations
+- Status: CERTIFIED FOR COMMERCIAL HANDOVER
+
+NOTE: This is an illustrative simulation generated by the Signode Autonomous AI Workforce.`
+};
+
+const EMPLOYEES = [
+  { id: 'op_rotary_ring', name: "OctopusÂ® Rotary Ring Stretch Specialist", title: "High-Speed Rotary Ring Packaging Lead", wf: 'octopus_rotary_ring_stretch_wrap_surge', handled: 380, hrs: 24.5, win: "150+ Loads/Hr Octopus Speed", status: "idle" },
+  { id: 'op_pet_strapping', name: "TenaxÂ® PET Heavy Strapping Specialist", title: "Heavy Industrial Timber & PET Strapping Lead", wf: 'tenax_pet_heavy_duty_lumber_strapping', handled: 290, hrs: 18.0, win: "32mm TenaxÂ® Heavy Containment", status: "idle" },
+  { id: 'op_bxt3_tools', name: "BXT3 Tool Diagnostics Lead", title: "Handheld Friction-Weld Tool Fleet Lead", wf: 'bxt3_handheld_tool_ergonomic_field_audit', handled: 512, hrs: 12.4, win: "4,500 N Friction-Weld Retention", status: "idle" },
+  { id: 'op_film_downgauge', name: "Film Down-Gauging & COGS Specialist", title: "Transit Packaging COGS & Plastic Savings Lead", wf: 'transit_cogs_film_downgauging_roi_model', handled: 215, hrs: 16.2, win: "-28% Film Plastic Consumption", status: "idle" },
+  { id: 'op_angleboard', name: "AngleboardÂ® Edge Protection Specialist", title: "Protective Edge & Pallet Stacking Lead", wf: 'angleboard_edge_protection_load_stability', handled: 340, hrs: 14.0, win: "+40% Pallet Stacking Strength", status: "idle" },
+  { id: 'op_robotic_amr', name: "Robotic Palletizing & AMR Lead", title: "End-of-Line Warehouse Robotics Engineer", wf: 'robotic_palletizing_amr_warehouse_integration', handled: 175, hrs: 22.0, win: "Zero-Touch AMR Pallet Transfer", status: "idle" },
+  { id: 'op_steel_coil', name: "MagnusÂ® Steel Coil Securement Lead", title: "Heavy Metals & AAR Cargo Securement Specialist", wf: 'heavy_metals_steel_coil_cargo_securement', handled: 160, hrs: 26.5, win: "20-Ton Coil Securement", status: "idle" },
+  { id: 'op_packaging_plus', name: "Packaging PlusÂ® Reliability Lead", title: "Predictive Telemetry & 24/7 Service SLA Lead", wf: 'packaging_plus_predictive_maintenance_dossier', handled: 420, hrs: 10.5, win: "99.8% Equipment Uptime SLA", status: "idle" }
+];
+
+const CONFIG = {
+  econLabels: ["Annual Loads Secured", "Global Service Engineers", "Film Plastic Reduction", "Equipment Uptime SLA"],
+  statLabel: "Transit Packaging Security Uplift",
+  statSign: "+",
+  statSuffix: "%",
+  runButton: "Run AI Workforce Operator",
+  runNoun: "Operator Pipeline",
+  outputLabel: "Validated Transit Packaging Dossier & Equipment Report",
+  rosterLabel: "Signode AI Workforce Roster",
+  trackLabels: {
+    trackA: "Track A: End-of-Line Automated Machinery & Load Containment",
+    trackB: "Track B: Integrated Warehouse Automation, Edge Protection & Reliability"
+  },
+  builderCadences: ["Continuous Real-Time Telemetry", "Weekly Line Optimization", "Monthly Audit Sweep", "Quarterly Fleet Maintenance"]
+};
+
+/* ============================================================================
+   ENGINE LOGIC (DO NOT EDIT)
+   ============================================================================ */
+
+let currentSelectedWfKey = "octopus_rotary_ring_stretch_wrap_surge";
+
+function renderRoster() {
+  const container = document.getElementById("roster-container");
+  if (!container) return;
+
+  const trackAOps = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === "trackA");
+  const trackBOps = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === "trackB");
+
+  let html = `
+    <div class="section-hdr">${CONFIG.trackLabels.trackA}</div>
+    <div class="roster-grid">
+      ${trackAOps.map(op => renderOperatorCard(op)).join("")}
+    </div>
+
+    <div class="section-hdr" style="margin-top:40px;">${CONFIG.trackLabels.trackB}</div>
+    <div class="roster-grid">
+      ${trackBOps.map(op => renderOperatorCard(op)).join("")}
+    </div>
+  `;
+  container.innerHTML = html;
+}
+
+function renderOperatorCard(op) {
+  const wf = WORKFLOWS[op.wf];
+  if (!wf) return "";
+  const isFlagship = wf.tag === "flagship";
+  
+  // Agent chips
+  const agentChips = wf.tasks.map(t => {
+    const a = AGENT_ROLES[t.agent];
+    return a ? `<span class="agent-chip">${a.emoji} ${a.label}</span>` : "";
+  }).join("");
+
+  return `
+    <div class="operator-card ${isFlagship ? 'hero-op' : ''}">
+      <div class="op-top">
+        <div class="op-avatar">${op.name.charAt(0)}</div>
+        <div>
+          <div class="op-name">
+            ${op.name}
+            ${isFlagship ? '<span style="font-size:10px;font-weight:800;background:var(--accent);color:#fff;padding:2px 6px;border-radius:4px;text-transform:uppercase;">FLAGSHIP</span>' : ''}
+          </div>
+          <div class="op-title">${op.title}</div>
+        </div>
+      </div>
+      <div class="op-owns"><b>Workflow:</b> ${wf.name}</div>
+      <div class="team-chips">${agentChips}</div>
+      <div class="op-stats">
+        <div class="op-stat-item"><b>${op.handled}</b> Runs Handled</div>
+        <div class="op-stat-item"><b>${op.hrs} hrs</b> Avg Savings</div>
+        <div class="op-stat-item"><b style="color:var(--accent);">${op.win}</b> Headline Value</div>
+      </div>
+      <button class="btn-run-op" onclick="selectAndRunOperator('${op.wf}')">Launch Operator Run</button>
+    </div>
+  `;
+}
+
+function selectAndRunOperator(wfKey) {
+  currentSelectedWfKey = wfKey;
+  switchTab("run");
+  const wf = WORKFLOWS[wfKey];
+  if (!wf) return;
+  
+  document.getElementById("run-panel-title").innerText = "Operator: " + wf.title;
+  document.getElementById("run-panel-sub").innerText = wf.desc;
+  document.getElementById("run-prompt-input").value = wf.sample;
+
+  // Clear previous outputs
+  document.getElementById("run-feed-box").classList.add("hidden");
+  document.getElementById("run-feed-box").innerHTML = "";
+  document.getElementById("deliverable-box").classList.add("hidden");
+}
+
+function executeCurrentWorkflow() {
+  const wf = WORKFLOWS[currentSelectedWfKey];
+  if (!wf) return;
+
+  const feedBox = document.getElementById("run-feed-box");
+  const delivBox = document.getElementById("deliverable-box");
+  const delivText = document.getElementById("deliverable-text");
+  const delivTitle = document.getElementById("deliverable-title");
+
+  feedBox.classList.remove("hidden");
+  feedBox.innerHTML = `<div class="feed-line">[SYSTEM] Initializing multi-agent execution pipeline for ${wf.name}...</div>`;
+  delivBox.classList.add("hidden");
+
+  let stepIdx = 0;
+  
+  function stepLoop() {
+    if (stepIdx < wf.tasks.length) {
+      const taskObj = wf.tasks[stepIdx];
+      const agentObj = AGENT_ROLES[taskObj.agent];
+      const toolKey = agentObj ? agentObj.tools[0] : "save";
+      const toolOutput = TOOLS[toolKey] ? TOOLS[toolKey]() : "Tool execution complete.";
+
+      const line = document.createElement("div");
+      line.className = "feed-line";
+      line.innerHTML = `<span class="feed-agent">${agentObj.emoji} ${agentObj.label}:</span> "${taskObj.task}" <br>&nbsp;&nbsp;&nbsp;&nbsp;&rarr; <span class="feed-tool">[TOOL: ${toolKey}]</span> ${toolOutput}`;
+      feedBox.appendChild(line);
+      feedBox.scrollTop = feedBox.scrollHeight;
+
+      stepIdx++;
+      setTimeout(stepLoop, 600);
+    } else {
+      const lineFinal = document.createElement("div");
+      lineFinal.className = "feed-line feed-ok";
+      lineFinal.innerHTML = `<br>[SUCCESS] Execution pipeline completed cleanly. Output deliverable verified.`;
+      feedBox.appendChild(lineFinal);
+      feedBox.scrollTop = feedBox.scrollHeight;
+
+      delivTitle.innerText = DTITLE[currentSelectedWfKey] || "Produced Deliverable";
+      delivText.innerText = FINAL[currentSelectedWfKey] || "Deliverable text unavailable.";
+      delivBox.classList.remove("hidden");
+    }
+  }
+
+  setTimeout(stepLoop, 400);
+}
+
+function runFlagshipDemo() {
+  selectAndRunOperator("octopus_rotary_ring_stretch_wrap_surge");
+  executeCurrentWorkflow();
+}
+
+function switchTab(tabName) {
+  document.getElementById("tab-roster").classList.add("hidden");
+  document.getElementById("tab-run").classList.add("hidden");
+  document.getElementById("tab-builder").classList.add("hidden");
+
+  document.getElementById("tab-roster-btn").classList.remove("active");
+  document.getElementById("tab-run-btn").classList.remove("active");
+  document.getElementById("tab-builder-btn").classList.remove("active");
+
+  if (tabName === "roster") {
+    document.getElementById("tab-roster").classList.remove("hidden");
+    document.getElementById("tab-roster-btn").classList.add("active");
+  } else if (tabName === "run") {
+    document.getElementById("tab-run").classList.remove("hidden");
+    document.getElementById("tab-run-btn").classList.add("active");
+  } else if (tabName === "builder") {
+    document.getElementById("tab-builder").classList.remove("hidden");
+    document.getElementById("tab-builder-btn").classList.add("active");
+    populateBuilderSelect();
+  }
+}
+
+function populateBuilderSelect() {
+  const sel = document.getElementById("builder-base-select");
+  if (!sel) return;
+  sel.innerHTML = Object.keys(WORKFLOWS).map(k => `<option value="${k}">${WORKFLOWS[k].name}</option>`).join("");
+}
+
+function buildCustomOperator() {
+  const baseKey = document.getElementById("builder-base-select").value;
+  const opName = document.getElementById("builder-op-name").value || "Custom AI Operator";
+  const opTitle = document.getElementById("builder-op-title").value || "Custom Packaging Specialist";
+  const winMetric = document.getElementById("builder-win-metric").value || "100% Verified";
+
+  const newOpId = "op_custom_" + Date.now();
+  EMPLOYEES.push({
+    id: newOpId,
+    name: opName,
+    title: opTitle,
+    wf: baseKey,
+    handled: 1,
+    hrs: 12.0,
+    win: winMetric,
+    status: "idle"
+  });
+
+  renderRoster();
+  switchTab("roster");
+  alert(`Custom operator "${opName}" has been successfully added to the Signode AI workforce roster!`);
+}
+
+function toggleBrandDrawer() {
+  document.getElementById("brand-drawer").classList.toggle("open");
+}
+
+function scrollToRoster() {
+  switchTab("roster");
+  window.scrollTo({top: 400, behavior: "smooth"});
+}
+
+// Initial Render
+window.addEventListener("DOMContentLoaded", () => {
+  renderRoster();
+  selectAndRunOperator("octopus_rotary_ring_stretch_wrap_surge");
+});
+</script>
+</body>
+</html>
