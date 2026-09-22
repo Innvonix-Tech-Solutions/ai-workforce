@@ -250,3 +250,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/elevate
 https://innvonix-tech-solutions.github.io/ai-workforce/essinc
 https://innvonix-tech-solutions.github.io/ai-workforce/rubix
 https://innvonix-tech-solutions.github.io/ai-workforce/maesa
+https://innvonix-tech-solutions.github.io/ai-workforce/sensitron
