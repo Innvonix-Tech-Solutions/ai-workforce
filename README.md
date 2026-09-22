@@ -258,3 +258,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/motivo
 https://innvonix-tech-solutions.github.io/ai-workforce/finwave-semiconductor
 https://innvonix-tech-solutions.github.io/ai-workforce/inficon
 https://innvonix-tech-solutions.github.io/ai-workforce/nextflex
+https://innvonix-tech-solutions.github.io/ai-workforce/signode
