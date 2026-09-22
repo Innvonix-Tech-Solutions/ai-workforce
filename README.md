@@ -252,3 +252,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/rubix
 https://innvonix-tech-solutions.github.io/ai-workforce/maesa
 https://innvonix-tech-solutions.github.io/ai-workforce/sensitron
 https://innvonix-tech-solutions.github.io/ai-workforce/ltsct-semiconductor
+https://innvonix-tech-solutions.github.io/ai-workforce/alif-semi
