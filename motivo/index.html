@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Motivo, Inc. &mdash; AI IC Design &amp; Semiconductor Yield Optimization Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f0f6fa;--surface2:#d4e6f2;--border:#9ec5fe;--accent:#00a896;
+--accent-dim:rgba(0,168,150,.10);--accent-line:rgba(0,168,150,.40);--slate:#0e1928;--slate-line:rgba(14,25,40,.32);--text:#08172a;--hi:#030d1a;--tert:#566a82;--ok:#10b981;--ok-dim:rgba(16,185,129,.10);--gold:#d97706;--gold-bg:#fffbeb;--gold-line:#fde68a}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:46px;height:34px;border-radius:8px;background:linear-gradient(135deg,#0e1928,#00a896);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:14px;letter-spacing:.5px;font-family:Inter,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#00a896}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:900px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#00796b;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(16,185,129,.08);color:#059669;border:1px solid rgba(16,185,129,.3)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#00a896}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#00796b;font-size:15px;flex-shrink:0;position:relative;font-family:Inter,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#00a896}.btn.primary{background:#00a896;border-color:#00a896;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#00a896;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#00a896}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(16,185,129,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(16,185,129,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#00a896}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Inter,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#00796b;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px;font-family:Inter,sans-serif}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input,.field select{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:8px;padding:10px 12px;background:#fff;outline:none}
+.field input:focus{border-color:var(--accent)}
+.seg{display:flex;gap:6px}.seg button{flex:1;padding:9px;font-size:12px;font-weight:600;border:1px solid var(--border);border-radius:8px;background:#fff;cursor:pointer;color:var(--tert)}.seg button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.bnav{display:flex;justify-content:space-between;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
+.foot{max-width:1180px;margin:32px auto 40px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.5;font-family:Inter,sans-serif;border-top:1px solid var(--border);padding-top:16px}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">
+    <div class="mark">MAI</div>
+    <div>
+      <div class="htitle">Motivo, Inc. &mdash; AI IC Design &amp; Semiconductor Yield Optimization Workforce</div>
+      <div class="hsub">M-Graph&trade; Combinatorial Analytics, Graph ML, Yield Ramp Acceleration &amp; DFM Analytics</div>
+    </div>
+  </div>
+  <div class="badge">Concept demo &middot; <b>Motivo, Inc.</b></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tabA" onclick="setView('ops')">AI Operators Roster</button>
+  <button class="tab" id="tabB" onclick="setView('hire')">+ Compose New AI Operator</button>
+</div>
+
+<div class="main">
+  <div id="view-ops">
+    <div class="lead">
+      <b>Autonomous AI workforce prototype for Motivo, Inc.:</b> Orchestrating foundry &amp; fabless account sourcing, M-Graph enterprise platform quoting, GDSII/OASIS combinatorial pattern learning, EUV/OPC hotspot extraction, physical failure analysis correlation, and yield ramp release sign-off.
+    </div>
+    
+    <div class="legend">
+      <span><span class="tag commercial">Commercial &amp; Yield BD</span> Foundries, fabless chipmakers, M-Graph platform licensing &amp; yield ramp SLAs</span>
+      <span><span class="tag operations">AI Yield Analytics &amp; DFM Ops</span> M-Graph graph learning, OPC hotspot extraction, failure analysis &amp; silicon debug</span>
+      <span><span class="tag hero">Flagship</span> M-Graph AI Yield Learning &amp; Defect Attribution</span>
+    </div>
+
+    <div class="econ" id="econ"></div>
+    <div id="roster"></div>
+    
+    <div id="runPanel"></div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <div class="lead">
+      <b>Compose a custom Motivo AI Operator:</b> Pick an M-Graph combinatorial layout analysis, OPC/EUV hotspot extraction, or E-beam defect correlation workflow, assign specialist agents, and deploy to your semiconductor AI roster.
+    </div>
+    <div class="steps" id="bSteps"></div>
+    <div class="emp" style="background:#fff;margin-bottom:20px;padding:20px" id="bBody"></div>
+    <div class="bnav" id="bNav"></div>
+  </div>
+</div>
+
+<div class="foot">
+  Demonstration prototype created for Motivo, Inc. by Innvonix Tech Solutions. All metrics, RFQ responses, M-Graph defect attribution accuracy figures, and yield ramp acceleration savings are simulated placeholders for illustrative purposes. Human yield engineering review required prior to commercial silicon volume release.
+</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'EDA, DFM & Semiconductor Yield Market Research', tools: ['research_eda_yield_markets', 'save'] },
+  prospector: { emoji: '🧲', label: 'Foundry, Fabless Semiconductor & IDM Sourcing', tools: ['source_fabless_foundry_accounts', 'save'] },
+  qualifier: { emoji: '🎯', label: 'M-Graph Platform & Yield Ramp RFQ Qualifier', tools: ['score_motivo_rfq', 'save'] },
+  mgraph_ai_architect: { emoji: '🧠', label: 'M-Graph Combinatorial AI & Pattern Graph Architect', tools: ['architect_mgraph_ai_pipeline', 'save'] },
+  dfm_yield_eng: { emoji: '🔬', label: 'DFM Yield Ramp & Systematic Defect Specialist', tools: ['analyze_dfm_yield_killers', 'save'] },
+  layout_pattern_spec: { emoji: '📐', label: 'GDSII/OASIS Layout Pattern & OPC Hotspot Lead', tools: ['extract_layout_patterns', 'save'] },
+  failure_analysis_lead: { emoji: '⚡', label: 'Physical Failure Analysis & E-Test Correlation Lead', tools: ['run_failure_analysis_correlation', 'save'] },
+  throughput: { emoji: '📊', label: 'Silicon Debug & Tape-Out Analytics Lead', tools: ['analyze_tapeout_debug_throughput', 'save'] },
+  compliance: { emoji: '📋', label: 'ISO 26262, SEMI E187 & Silicon Yield SLA Lead', tools: ['verify_semi_iso_yield_standards', 'save'] },
+  pricing: { emoji: '🧮', label: 'M-Graph Platform License & Yield Ramp Quoting', tools: ['calculate_motivo_platform_pricing', 'save'] },
+  writer: { emoji: '✍️', label: 'Semiconductor AI Proposal & Analytics Report Writer', tools: ['compose_motivo_proposal', 'save'] },
+  reviewer: { emoji: '✅', label: 'QA & Final Motivo Yield Release Reviewer', tools: ['review_motivo_qa', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Foundry & Fabless Yield Analytics Sourcing',
+    title: 'Design-Win & Advanced Node Yield Ramp Opportunity Discovery',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Target list of 3nm/2nm foundries, AI accelerator fabless chipmakers & complex SoC developers needing M-Graph AI yield learning',
+    sample: 'Identify top 20 fabless semiconductor companies ramping 3nm/2nm AI SoCs requiring automated DFM defect attribution.',
+    desc: 'Automated discovery of advanced node chipmakers, foundry yield engineering directors, and DFM team leads.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan 3nm/2nm advanced node foundry ramps, AI accelerator fabless chipmakers, and complex SoC tape-outs', deps: [] },
+      { agent: 'prospector', task: 'Source VP of Product Engineering, Yield Operations Directors & Design-for-Manufacturability (DFM) Leads at TSMC, GlobalFoundries & Qualcomm', deps: [0] },
+      { agent: 'qualifier', task: 'Score fit with Motivo M-Graph AI platform, explainable ML pattern learning & rapid yield ramp SLAs', deps: [1] }
+    ]
+  },
+  mgraph_license_quote: {
+    name: 'M-Graph Enterprise Platform Quoting',
+    title: 'Commercial RFQ Evaluation & Motivo M-Graph Licensing Engine',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Commercial quotation & enterprise licensing breakdown for Motivo M-Graph AI yield analytics software',
+    sample: 'Generate platform quotation for M-Graph Enterprise analytics suite targeting a 3nm 120-billion transistor AI accelerator SoC.',
+    desc: 'Evaluates customer RFQs, calculates GDSII data volume requirements, defines cloud/on-premise compute cluster sizing, and sets licensing tiers.',
+    tasks: [
+      { agent: 'qualifier', task: 'Parse customer RFQ specs for IC design size (Billion+ transistors), process node (5nm/3nm/2nm), GDSII file volume & target yield ramp timeline', deps: [] },
+      { agent: 'pricing', task: 'Compute M-Graph Enterprise platform licensing fees, compute cluster compute node sizing, and yield ramp performance milestone pricing', deps: [0] },
+      { agent: 'writer', task: 'Generate formal Motivo commercial proposal with yield acceleration guarantees, data security SLAs, and M-Graph deployment schedules', deps: [1] }
+    ]
+  },
+  yield_ramp_proposal: {
+    name: 'Advanced Node Yield Ramp Acceleration Proposal',
+    title: 'Turnkey M-Graph AI Yield Learning & Defect Attribution Proposal',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Comprehensive engineering proposal for M-Graph automated yield learning framework for 3nm/2nm silicon production ramps',
+    sample: 'Draft technical proposal for M-Graph yield learning deployment achieving 4-month faster silicon yield maturity for 3nm chips.',
+    desc: 'Combines combinatorial graph analytics, SEMI E187 cybersecurity compliance, and multi-million dollar time-to-market ROI into a winning proposal.',
+    tasks: [
+      { agent: 'dfm_yield_eng', task: 'Configure M-Graph automated yield learning framework for N3/N2 node multi-patterning defect attribution', deps: [] },
+      { agent: 'compliance', task: 'Verify SEMI E187 cybersecurity standards, ISO 26262 automotive reliability, and NDA layout IP encryption controls', deps: [0] },
+      { agent: 'pricing', task: 'Estimate yield learning ROI, time-to-market acceleration savings (estimated $15M per month of earlier ramp), and support tiers', deps: [1] }
+    ]
+  },
+  radar: {
+    name: 'AI for EDA & Semiconductor Yield Market Radar',
+    title: 'Machine Learning for IC Design & Yield Analytics Intelligence',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Competitive intelligence summary on AI-assisted EDA tools, ML-driven DFM, and OPC hotspot prediction algorithms',
+    sample: 'Analyze market positioning and defect attribution accuracy of competing ML-based yield management platforms.',
+    desc: 'Monitors competitor patent filings in ML DFM, optical proximity correction (OPC) simulation, and AI EDA analytics.',
+    tasks: [
+      { agent: 'researcher', task: 'Track competitor patent filings in ML-driven DFM, optical proximity correction (OPC) simulation & AI EDA analytics', deps: [] },
+      { agent: 'researcher', task: 'Benchmark Motivo M-Graph graph learning against traditional rule-based DFM and deep learning computer vision tools', deps: [] }
+    ]
+  },
+  mgraph_yield_learning_engine: {
+    name: 'M-Graph AI Yield Learning & Defect Attribution',
+    title: 'Combinatorial Layout Graph Ingestion, OPC Hotspots & Defect Attribution',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'Complete M-Graph AI yield learning package for 3nm AI SoC with combinatorial layout graph representation and physical failure correlation',
+    sample: 'Run M-Graph combinatorial pattern learning on 3nm GDSII layout: extract EUV/OPC hotspot candidates, correlate with wafer probe yield loss, and issue pre-tapeout DFM fixes.',
+    desc: 'Flagship engineering workflow: integrates GDSII graph ingestion, explainable ML defect attribution, physical failure analysis (PFA) correlation, DFM ECO recommendations, and QA sign-off.',
+    tasks: [
+      { agent: 'mgraph_ai_architect', task: 'Ingest GDSII/OASIS layout stream and build M-Graph combinatorial pattern graph representation for 3nm AI SoC', deps: [] },
+      { agent: 'layout_pattern_spec', task: 'Extract OPC hotspot patterns, E-beam inspection defect markers & EUV stochastic weakness candidates', deps: [0] },
+      { agent: 'dfm_yield_eng', task: 'Execute explainable ML model to correlate wafer probe yield loss with specific combinatorial layout features', deps: [1] },
+      { agent: 'failure_analysis_lead', task: 'Correlate physical failure analysis (PFA) SEM micrographs and inline scan test diagnostics with M-Graph yield predictions', deps: [2] },
+      { agent: 'writer', task: 'Assemble master Motivo Yield Ramp Report, DFM layout fix manual, and pre-tapeout risk mitigation guide', deps: [3] },
+      { agent: 'reviewer', task: 'Conduct final zero-defect QA sign-off against Motivo algorithm confidence thresholds and customer yield targets', deps: [4] }
+    ]
+  },
+  opc_hotspot_pattern_extraction: {
+    name: 'EUV & OPC Hotspot Pattern Extraction Spec',
+    title: 'Combinatorial Layout Graph Search & Fast DFM ECO Fix Generation',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'GDSII layout hotspot pattern extraction report & DFM engineering change order (ECO) fix guide',
+    sample: 'Perform M-Graph pattern search across 500 mm² layout to detect EUV line-end pullback and tip-to-tip bridge risks.',
+    desc: 'Optimizes graph pattern matching runtime (< 2 hours for 100B transistor chip), pinpoints layout weakness signatures, and generates DFM ECO scripts.',
+    tasks: [
+      { agent: 'layout_pattern_spec', task: 'Run M-Graph graph pattern search across 500 mm² GDSII layout to isolate EUV line-end pullback & bridge risks', deps: [] },
+      { agent: 'throughput', task: 'Benchmark pattern search runtime (< 2 hours for 100B transistor chip) and generate DFM layout ECO recommendations', deps: [0] }
+    ]
+  },
+  ebeam_inline_defect_correlation: {
+    name: 'E-Beam Defect & M-Graph Correlation Report',
+    title: 'Inline E-Beam Inspection & Topological Graph Cluster Analysis',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'E-beam inline inspection correlation report & ISO 9001 yield analytics certificate',
+    sample: 'Correlate inline E-beam defect inspection maps with M-Graph topological graph clusters to isolate systematic yield killers.',
+    desc: 'Evaluates inline wafer inspection maps, correlates electrical bit-cell failures with topological layout graphs, and verifies SEMI compliance.',
+    tasks: [
+      { agent: 'failure_analysis_lead', task: 'Correlate inline E-beam defect inspection maps with M-Graph topological graph clusters', deps: [] },
+      { agent: 'compliance', task: 'Verify ISO 9001:2015 quality analytics standards and SEMI yield data exchange protocol compliance', deps: [] }
+    ]
+  },
+  tapeout_debug_yield_ramp_audit: {
+    name: 'Silicon Debug & Volume Yield Ramp Audit',
+    title: 'ATE Scan Diagnosis, Wafer Probe Pareto & Commercial Volume Sign-Off',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'Wafer probe yield Pareto audit report & commercial silicon volume release certificate',
+    sample: 'Audit ATE scan diagnosis logs, wafer probe yield Pareto charts, and M-Graph defect attribution accuracy for 3nm silicon volume release.',
+    desc: 'Monitors ATE test diagnostics, wafer probe yield maturity metrics, ITAR export security, and commercial production release sign-offs.',
+    tasks: [
+      { agent: 'throughput', task: 'Analyze ATE scan diagnosis logs, wafer probe yield Pareto charts, and M-Graph defect attribution accuracy', deps: [] },
+      { agent: 'compliance', task: 'Verify ITAR / EAR export controls for defense customer silicon design data', deps: [] },
+      { agent: 'reviewer', task: 'Issue Motivo Yield Ramp Sign-Off Certificate for commercial silicon volume production release', deps: [0, 1] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'Foundry & Fabless Yield Analytics Opportunity Report',
+  mgraph_license_quote: 'M-Graph Enterprise Platform Commercial Quotation',
+  yield_ramp_proposal: 'Advanced Node Yield Ramp Acceleration Proposal',
+  radar: 'AI for EDA & Semiconductor Yield Market Radar Brief',
+  mgraph_yield_learning_engine: 'M-Graph AI Yield Learning & Defect Attribution Package',
+  opc_hotspot_pattern_extraction: 'EUV & OPC Hotspot Pattern Extraction Spec',
+  ebeam_inline_defect_correlation: 'E-Beam Defect & M-Graph Correlation Report',
+  tapeout_debug_yield_ramp_audit: 'Silicon Debug & Volume Yield Ramp Audit'
+};
+
+const TOOLS = {
+  research_eda_yield_markets: () => 'Identified 22 advanced node (3nm/2nm) SoC design programs requiring AI-driven DFM and yield ramp analytics.',
+  source_fabless_foundry_accounts: () => 'Found 56 key decision-makers: VP of Product Engineering, Yield Operations Directors & DFM Leads.',
+  score_motivo_rfq: () => 'RFQ evaluation score = 99/100 (Strong match for Motivo M-Graph graph learning & explainable defect attribution).',
+  architect_mgraph_ai_pipeline: () => 'M-Graph combinatorial pattern graph created: 120-billion transistor layout graph ingested in < 90 minutes.',
+  extract_layout_patterns: () => 'EUV/OPC hotspot candidates extracted: 14 systematic layout pattern weaknesses identified and cataloged.',
+  analyze_dfm_yield_killers: () => 'Explainable ML yield model complete: isolated 3 critical layout feature combinations causing 82% of wafer probe yield loss.',
+  run_failure_analysis_correlation: () => 'Physical failure analysis correlation complete: PFA SEM micrographs verified 100% agreement with M-Graph predictions.',
+  analyze_tapeout_debug_throughput: () => 'Pattern search runtime benchmarked: 500 mm² GDSII layout searched in 1.4 hours; DFM ECO scripts generated.',
+  verify_semi_iso_yield_standards: () => 'SEMI E187 cybersecurity, ISO 26262 automotive reliability, and NDA IP encryption controls verified.',
+  calculate_motivo_platform_pricing: () => 'Platform pricing computed: $650,000 annual M-Graph Enterprise license + $120,000 dedicated compute node cluster.',
+  compose_motivo_proposal: () => 'Technical semiconductor AI proposal package, DFM ECO fix manual & yield ramp traveler generated.',
+  review_motivo_qa: () => 'Final QA release sign-off granted by Motivo Chief Technology Officer.',
+  save: () => 'Data block saved to shared Motivo engineering context.'
+};
+
+const FINAL = {
+  scout: `MOTIVO, INC. — FOUNDRY & FABLESS YIELD ANALYTICS OPPORTUNITY REPORT (illustrative)
+
+Target Market Segment: Advanced Node Foundries (3nm/2nm), AI Accelerator Fabless Chipmakers & Defense Microelectronics (#MOTIVO-SOURCING-2026-Q3).
+
+Key Sourcing Findings & Qualified Opportunities:
+• Advanced Node Chipmakers: 14 leading fabless firms ramping 3nm/2nm AI SoCs facing multi-patterning and EUV stochastic yield bottlenecks.
+• Foundries & IDMs: 6 top-tier semiconductor foundries seeking explainable ML solutions to accelerate yield learning curves for new node launches.
+• Qualified Contacts: 56 verified leads (VP of Product Engineering, Yield Operations Directors, Design-for-Manufacturability Leads).
+• Estimated Annual Demand: ~35 M-Graph Enterprise platform licenses & 80 custom yield ramp acceleration consulting projects.
+
+Action Item: Initiate outreach highlighting Motivo M-Graph combinatorial graph learning and proven 4-month yield ramp acceleration.
+
+→ Saved: qualified_semiconductor_leads, motivo_license_pipeline, yield_analytics_market_analysis
+
+NOTE: illustrative; confirm against Motivo, Inc. commercial BD data.`,
+
+  mgraph_license_quote: `MOTIVO, INC. — M-GRAPH ENTERPRISE PLATFORM COMMERCIAL QUOTATION (illustrative)
+
+RFQ Reference: #MOTIVO-RFQ-2026-55032 — M-Graph Enterprise Analytics Suite for 3nm AI Accelerator SoC.
+
+Commercial Quotation & Platform Licensing Breakdown:
+• Software Suite: Motivo M-Graph Enterprise AI Yield Analytics Platform (unlimited GDSII/OASIS layout graph ingestion).
+• Compute Node Sizing: Dedicated 64-node hybrid cloud/on-premise compute cluster for ultra-fast combinatorial pattern matching.
+• Analytics Modules: Includes M-Graph Pattern Learning, OPC Hotspot Extraction, PFA SEM Correlation & Automated DFM ECO Generator.
+• Commercial Pricing:
+  - Annual Enterprise License: $650,000 / year
+  - Dedicated Compute Cluster Management: $120,000 / year
+  - Total Annual Investment: $770,000
+• Deployment Schedule: 2 weeks for M-Graph software setup; 1 week for engineering team onboarding.
+
+SLA & Quality: Guaranteed < 2-hour GDSII graph search runtime and 24/7 dedicated Motivo yield analytics support.
+
+→ Saved: mgraph_quote_55032, platform_pricing_schedule, motivo_deployment_terms
+
+NOTE: illustrative; confirm against Motivo, Inc. official commercial pricing models.`,
+
+  yield_ramp_proposal: `MOTIVO, INC. — ADVANCED NODE YIELD RAMP ACCELERATION PROPOSAL (illustrative)
+
+Proposal Title: Turnkey M-Graph AI Yield Learning Deployment for N3/N2 Semiconductor Ramps (#MOTIVO-PROP-9914).
+
+Technical & Engineering Specification:
+• Objective: Accelerate 3nm silicon yield maturity curve by 4 months, capturing estimated $15M/month in early market volume revenues.
+• Core AI Engine: M-Graph combinatorial pattern graph learning correlating inline E-beam inspection and ATE scan logs with layout.
+• Data Protection: Full compliance with SEMI E187 cybersecurity guidelines and hardware-encrypted NDA layout IP protection.
+• Deliverables: Weekly yield killer Pareto reports, automated DFM ECO layout scripts, and pre-tapeout risk scoring models.
+
+Compliance: Certified under ISO 9001:2015 and SEMI data exchange standards.
+
+→ Saved: yield_ramp_proposal, mgraph_roi_calculator, data_security_spec
+
+NOTE: illustrative; confirm against Motivo custom project specifications.`,
+
+  radar: `MOTIVO, INC. — AI FOR EDA & SEMICONDUCTOR YIELD MARKET RADAR BRIEF (illustrative)
+
+Intelligence Scope: Explainable AI/ML, M-Graph Combinatorial Analytics & DFM Optimization (#MOTIVO-RADAR-2026).
+
+Competitive Landscape Analysis:
+• Competitor Patent Activity: Monitored 18 patent filings in computer vision convolutional neural networks for optical inspection.
+• Market Trends: Transition from black-box deep learning models to explainable/interpretable graph AI (M-Graph) that pinpoints exact layout root causes.
+• Analytics Benchmarking: Motivo M-Graph achieves 10x faster defect attribution runtime compared to conventional rule-based DFM tools on 100B+ transistor designs.
+
+Strategic Recommendation: Expand promotional campaigns targeting 3nm/2nm AI accelerator chipmakers highlighting M-Graph explainable AI.
+
+→ Saved: competitor_patent_matrix, eda_ai_benchmark, yield_analytics_market_analysis
+
+NOTE: illustrative; confirm against Motivo, Inc. market intelligence reports.`,
+
+  mgraph_yield_learning_engine: `MOTIVO, INC. — M-GRAPH AI YIELD LEARNING & DEFECT ATTRIBUTION PACKAGE (illustrative)
+
+Master Semiconductor Analytics Specification (#MOTIVO-ENG-MGRAPH-3NM-2026):
+
+1. GDSII/OASIS M-Graph Layout Ingestion:
+   • Design Ingested: 3nm AI Accelerator SoC (120-billion transistors, 500 mm² die area).
+   • Ingestion Performance: M-Graph combinatorial graph representation generated in 82 minutes with zero layout truncation.
+
+2. Explainable ML Defect Attribution:
+   • Systematic Defects Identified: Isolated 3 specific multi-patterning metal-2 feature combinations responsible for 82% of yield loss.
+   • Hotspot Extraction: Identified 14 EUV line-end pullback candidates prior to volume mask tape-out.
+
+3. Physical Failure Analysis (PFA) SEM Correlation:
+   • PFA Verification: SEM micrographs confirmed 100% alignment with M-Graph predicted bridge and short circuit locations.
+
+4. Executive Sign-off:
+   • Quality Release: Approved for pre-tapeout DFM ECO layout release by Motivo Chief Technology Officer.
+
+→ Saved: master_mgraph_spec_3nm, defect_attribution_report, pfa_sem_correlation_plots, dfm_eco_traveler
+
+NOTE: illustrative; confirm against Motivo, Inc. engineering guidelines.`,
+
+  opc_hotspot_pattern_extraction: `MOTIVO, INC. — EUV & OPC HOTSPOT PATTERN EXTRACTION SPEC (illustrative)
+
+Graph Search & DFM ECO Generation Model (#MOTIVO-HOTSPOT-SPEC-2201):
+
+Analytics Performance Metrics:
+• Graph Search Scope: 500 mm² GDSII layout searched across all 64 lithography and metal layers.
+• Pattern Matching Speed: Completed full-chip topological graph search in 1.4 hours on 64-node compute cluster.
+• Hotspot Isolation: Isolated 14 critical EUV line-end pullback and tip-to-tip bridging weaknesses.
+• DFM ECO Fixes: Generated 100% DRC-clean layout ECO scripts ready for EDA tool back-annotation.
+
+Quality Sign-off: Approved for customer physical design team implementation.
+
+→ Saved: hotspot_extraction_spec_2201, pattern_matching_benchmark, dfm_eco_script_pack
+
+NOTE: illustrative; confirm against Motivo pattern extraction guidelines.`,
+
+  ebeam_inline_defect_correlation: `MOTIVO, INC. — E-BEAM DEFECT & M-GRAPH CORRELATION REPORT (illustrative)
+
+Inline Inspection & Topological Graph Cluster Correlation (#MOTIVO-CORRELATION-AUDIT-2026):
+
+Correlation Analytics Results:
+• E-Beam Inspection Data: Ingested 45,000 inline E-beam defect locations from 3nm wafer lots.
+• M-Graph Clustering: Successfully mapped 94.6% of physical defects to 4 core topological layout graph clusters.
+• Root Cause Attribution: Identified chemical mechanical planarization (CMP) dishing vulnerability on dense metal-3 line arrays.
+• ISO Compliance: Fully compliant with ISO 9001:2015 yield analytics quality standards.
+
+Conclusion: M-Graph defect attribution verified; recommended immediate metal-3 dummy fill layout modification.
+
+→ Saved: ebeam_correlation_report, topological_cluster_plots, iso9001_analytics_cert
+
+NOTE: illustrative; confirm against Motivo, Inc. testing standards.`,
+
+  tapeout_debug_yield_ramp_audit: `MOTIVO, INC. — SILICON DEBUG & VOLUME YIELD RAMP AUDIT (illustrative)
+
+Audit Scope: 3nm AI Accelerator Silicon Debug & Commercial Volume Sign-Off (#MOTIVO-AUDIT-2026-09).
+
+Manufacturing & Yield Maturity Metrics:
+• Wafer Probe Yield Maturity: Silicon yield increased from 34% initial silicon to 78% target mature yield in 3.5 months (4 months ahead of schedule).
+• ATE Scan Diagnosis Agreement: M-Graph defect attribution accuracy reached 96.8% across 10,000 tested dies.
+• Security & Export: Fully compliant with ITAR and EAR defense export control protocols.
+• Commercial Release: Approved for full commercial volume mask tape-out and foundry production ramp.
+
+Sign-off Status: Motivo Yield Ramp Sign-Off Certificate issued to fabless customer VP of Engineering.
+
+→ Saved: motivo_yield_ramp_audit, yield_maturity_curve, itar_export_certificates
+
+NOTE: illustrative; confirm against Motivo, Inc. quality management systems.`
+};
+
+let EMPLOYEES = [
+  { id: 'scout', name: 'AI-YieldRamp-Sourcing-Scout', title: 'AI Semiconductor Sourcing Lead', wf: 'scout', handled: 380, hrs: 82, win: 0, status: 'idle' },
+  { id: 'mgraph_license_quote', name: 'AI-MGraph-Quoting-Estimator', title: 'AI M-Graph Platform Quoting Lead', wf: 'mgraph_license_quote', handled: 490, hrs: 112, win: 68, status: 'idle' },
+  { id: 'yield_ramp_proposal', name: 'AI-YieldProposal-Architect', title: 'AI Yield Ramp Proposal Lead', wf: 'yield_ramp_proposal', handled: 245, hrs: 104, win: 65, status: 'idle' },
+  { id: 'radar', name: 'AI-EDA-Market-Intel', title: 'AI EDA & Yield Intel Lead', wf: 'radar', handled: 185, hrs: 48, win: 0, status: 'idle' },
+  { id: 'mgraph_yield_learning_engine', name: 'AI-MGraph-Yield-Architect', title: 'AI M-Graph Yield & DFM Lead', wf: 'mgraph_yield_learning_engine', handled: 580, hrs: 340, win: 92, status: 'idle' },
+  { id: 'opc_hotspot_pattern_extraction', name: 'AI-LayoutPattern-Specialist', title: 'AI OPC Hotspot Pattern Lead', wf: 'opc_hotspot_pattern_extraction', handled: 410, hrs: 215, win: 76, status: 'idle' },
+  { id: 'ebeam_inline_defect_correlation', name: 'AI-DefectCorrelation-Lead', title: 'AI Failure Analysis & E-Beam Lead', wf: 'ebeam_inline_defect_correlation', handled: 360, hrs: 195, win: 70, status: 'idle' },
+  { id: 'tapeout_debug_yield_ramp_audit', name: 'AI-SiliconDebug-Yield-Lead', title: 'AI Silicon Debug & Ramp Lead', wf: 'tapeout_debug_yield_ramp_audit', handled: 450, hrs: 245, win: 86, status: 'idle' }
+];
+
+const TRACKS = [
+  ['commercial', 'Commercial & Yield BD'],
+  ['operations', 'AI Yield Analytics & DFM Ops']
+];
+
+let running = false;
+const $ = id => document.getElementById(id);
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const rand = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
+const now = () => new Date().toLocaleTimeString('en-GB');
+const mono = n => n.trim().slice(0, 2).toUpperCase();
+
+function toolOut(toolKey) {
+  return TOOLS[toolKey] ? TOOLS[toolKey]() : 'Completed successfully.';
+}
+
+function chips(wf) {
+  let s = '';
+  if (wf.track === 'commercial') s += '<span class="tag commercial">Commercial &amp; Yield BD</span>';
+  if (wf.track === 'operations') s += '<span class="tag operations">AI Yield &amp; DFM Ops</span>';
+  if (wf.tag === 'flagship') s += ' <span class="tag hero">Flagship</span>';
+  return s;
+}
+
+function setView(v) {
+  $('view-ops').classList.toggle('hidden', v !== 'ops');
+  $('view-hire').classList.toggle('hidden', v !== 'hire');
+  $('tabA').classList.toggle('active', v === 'ops');
+  $('tabB').classList.toggle('active', v === 'hire');
+  if (v === 'hire') initBuilder();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderEcon() {
+  const total = EMPLOYEES.length, h = EMPLOYEES.reduce((s, e) => s + e.handled, 0), hrs = EMPLOYEES.reduce((s, e) => s + e.hrs, 0);
+  const w = EMPLOYEES.filter(e => e.win > 0);
+  const avg = w.length ? Math.round(w.reduce((s, e) => s + e.win, 0) / w.length) : 0;
+  const cells = [
+    [total, 'AI operators (commercial + engineering)'],
+    [h.toLocaleString(), 'M-Graph runs, DFM ECOs & yield RFQs handled'],
+    [hrs.toLocaleString() + '<span class="u"> hrs</span>', 'yield engineering hours saved / mo'],
+    ['+' + avg + '%', 'avg turnaround improvement']
+  ];
+  $('econ').innerHTML = cells.map(c => `<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');
+}
+
+function empCard(e) {
+  const wf = WORKFLOWS[e.wf];
+  const team = wf.tasks.map(t => t.agent).filter((v, i, a) => a.indexOf(v) === i).map(r => `<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');
+  return `<div class="emp ${e.status === 'working' ? 'working' : ''} ${wf.tag === 'flagship' ? 'hero' : ''}" id="emp-${e.id}"><div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div><div class="emp-owns">Owns: <b>${wf.name}</b></div><div class="team">${team}</div><div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win > 0 ? ('+' + e.win + '%') : '—'}</b>faster</div></div><div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a GDSII / DFM spec</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;
+}
+
+function renderRoster() {
+  const hire = `<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;
+  let html = '';
+  TRACKS.forEach(([tk, label], gi) => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf].track === tk);
+    if (!list.length) return;
+    html += `<div class="slabel">${label}</div><div class="roster">` + list.map(empCard).join('') + (gi === TRACKS.length - 1 ? hire : '') + `</div>`;
+  });
+  $('roster').innerHTML = html;
+}
+
+function assign(id) {
+  if (running) return;
+  const e = EMPLOYEES.find(x => x.id === id), wf = WORKFLOWS[e.wf];
+  $('runPanel').innerHTML = `<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} &middot; ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a GDSII layout, DFM target, or RFQ and ${e.name} runs the whole loop.</div></div></div><div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div><div id="stage"></div></div>`;
+  $('run').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  $('obj').focus();
+}
+
+async function runEmp(id) {
+  if (running) return;
+  running = true;
+  const e = EMPLOYEES.find(x => x.id === id), wf = WORKFLOWS[e.wf];
+  const obj = ($('obj').value || wf.sample).trim();
+  $('go').disabled = true;
+  e.status = 'working';
+  const card = $('emp-' + e.id);
+  if (card) card.classList.add('working');
+  const stage = $('stage');
+  stage.innerHTML = `<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div><div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div><div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;
+  const feed = $('feed');
+  function log(rk, d) {
+    const r = AGENT_ROLES[rk];
+    const nm = r ? (r.emoji + ' ' + r.label) : '◆ ' + e.name;
+    const row = document.createElement('div');
+    row.className = 'frow';
+    row.innerHTML = `<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0, 150)}</span>`;
+    feed.appendChild(row);
+    feed.scrollTop = feed.scrollHeight;
+  }
+  log(null, `Input received: "${obj.substring(0, 54)}…"`);
+  log(null, `Running the ${wf.name} workflow &middot; ${wf.tasks.length} agents &middot; ${wf.mode.toUpperCase()} mode`);
+  await sleep(rand(700, 1100));
+  const grid = $('agrid');
+  wf.tasks.forEach((t, i) => {
+    const r = AGENT_ROLES[t.agent];
+    const c = document.createElement('div');
+    c.className = 'acard';
+    c.id = 'ac-' + i;
+    c.innerHTML = `<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;
+    grid.appendChild(c);
+    setTimeout(() => c.classList.add('visible'), i * 85);
+  });
+  await sleep(600);
+  $('p1').classList.remove('active');
+  $('p1').classList.add('done');
+  $('p1').querySelector('.dot').textContent = '✓';
+  $('p2').classList.add('active');
+  const done = new Set();
+  async function runOne(i) {
+    const t = wf.tasks[i], r = AGENT_ROLES[t.agent], c = $('ac-' + i), st = $('ast-' + i);
+    c.classList.remove('visible');
+    c.classList.add('running');
+    st.textContent = 'Running…';
+    log(t.agent, t.task.substring(0, 72));
+    await sleep(rand(450, 820));
+    for (const tool of r.tools) {
+      log(t.agent, tool + '( ) → ' + toolOut(tool));
+      await sleep(rand(450, 820));
+    }
+    c.classList.remove('running');
+    c.classList.add('done');
+    st.textContent = 'Done';
+    log(t.agent, 'result saved to shared context');
+    done.add(i);
+  }
+  if (wf.mode === 'sequential') {
+    for (let i = 0; i < wf.tasks.length; i++) await runOne(i);
+  } else {
+    while (done.size < wf.tasks.length) {
+      const ready = wf.tasks.map((t, i) => i).filter(i => !done.has(i) && wf.tasks[i].deps.every(d => done.has(d)));
+      if (!ready.length) break;
+      if (ready.length > 1) await Promise.all(ready.map(runOne));
+      else await runOne(ready[0]);
+    }
+  }
+  $('p2').classList.remove('active');
+  $('p2').classList.add('done');
+  $('p2').querySelector('.dot').textContent = '✓';
+  $('p3').classList.add('active');
+  $('p3').querySelector('.dot').textContent = '✓';
+  $('p3').classList.add('done');
+  await sleep(400);
+  const out = FINAL[e.wf] || 'Review-ready output produced.';
+  const hrsThis = rand(6, 44);
+  $('resultArea').innerHTML = `<div class="result"><div class="rstats"><div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div><div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div><div class="rrow"><span class="k">Track</span><span class="v">${wf.track === 'commercial' ? 'Commercial & Yield BD' : 'AI Yield & DFM Ops'}</span></div><div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div><div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div><div class="rout"><div class="rh">Review-ready output &middot; ${DTITLE[e.wf] || 'Output'}</div><div class="rb">${out.replace(/</g, '&lt;')}</div></div></div><div class="donebar"><b>${e.name} produced a review-ready output.</b> Read, adapt and QA complete, ready for a Chief Technology Officer, Yield Operations Director, or DFM Lead to confirm against Motivo and ISO 9001 standards. Illustrative simulation, not a production deliverable.</div>`;
+  e.handled += 1;
+  e.status = 'idle';
+  if (card) card.classList.remove('working');
+  renderEcon();
+  renderRoster();
+  running = false;
+}
+
+let draft = {};
+function initBuilder() { draft = { wf: null, mode: null, assign: [], name: '', title: '', cadence: 'Per tape-out run', step: 1 }; renderBuilder(); }
+function renderBuilder() {
+  const steps = [['01', 'Pick a workflow'], ['02', 'Assign the agents'], ['03', 'Name & cadence']];
+  $('bSteps').innerHTML = steps.map((s, i) => `<div class="step ${draft.step === i + 1 ? 'active' : ''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+  if (draft.step === 1) bS1(); else if (draft.step === 2) bS2(); else bS3();
+  bNav();
+}
+function bS1() {
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">` + Object.keys(WORKFLOWS).map(k => {
+    const w = WORKFLOWS[k];
+    return `<div class="wf ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents &middot; ${w.mode}</div></div>`;
+  }).join('') + `</div>`;
+}
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Assign each task to an agent</div>` + w.tasks.map((t, i) => `<div class="task-row"><div class="tn">${i + 1}</div><div class="tt">${t.task}${t.deps.length ? ` <span style="color:var(--tert)">&middot; waits for ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('') + `<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">` + ['sequential', 'dag'].map(m => `<button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (parallel where safe)' : 'Sequential'}</button>`).join('') + `</div></div>`;
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Name & cadence</div><div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. AI-MGraph-Yield-Architect" oninput="draft.name=this.value"></div><div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI M-Graph Yield & DFM Lead" oninput="draft.title=this.value"></div><div class="field"><label>Cadence</label><div class="seg">` + ['Per tape-out run', 'Per GDSII revision', 'Weekly', 'On-demand'].map(c => `<button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('') + `</div></div><div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name || 'New')}</div><div><div class="emp-name">${draft.name || 'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title || 'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> &middot; ${draft.cadence} &middot; ${draft.mode}</div></div>`;
+}
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right;
+  if (draft.step === 1) right = `<button class="btn primary" ${draft.wf ? '' : 'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+  else right = `<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;
+  $('bNav').innerHTML = left + right;
+}
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  WORKFLOWS[wfId] = { name: w.name, title: w.title, mode: draft.mode || w.mode, track: w.track, tag: w.tag, deliverable: w.deliverable, sample: w.sample, desc: w.desc, tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps })) };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({ id, name, title: draft.title || w.title, wf: wfId, handled: 0, hrs: rand(40, 140), win: 0, status: 'idle' });
+  renderEcon();
+  renderRoster();
+  setView('ops');
+  setTimeout(() => {
+    const c = $('emp-' + id);
+    if (c) {
+      c.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      c.style.boxShadow = '0 0 0 2px var(--accent)';
+      setTimeout(() => c.style.boxShadow = '', 1800);
+    }
+  }, 250);
+}
+
+renderEcon(); renderRoster();
+</script>
+</body>
+</html>
