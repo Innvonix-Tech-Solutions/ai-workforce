@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anastasia Beverly Hills &mdash; Autonomous AI Workforce &amp; Golden Ratio&reg; Beauty</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#ffffff;
+  --header-bg:#ffffff;
+  --surface:#faf7f5;
+  --surface2:#f5efea;
+  --border:#e6ded8;
+  --accent:#d4a373; /* ABH Rose Gold & Champagne Accent */
+  --accent-hover:#b88654;
+  --accent-dim:rgba(212,163,115,0.10);
+  --accent-line:rgba(212,163,115,0.30);
+  --text:#1a1a1a;
+  --hi:#111111;
+  --tert:#5c544e;
+  --ok:#10b981;
+  --ok-dim:rgba(16,185,129,0.10);
+  --gold:#d97706;
+  --gold-bg:#fffbe3;
+  --gold-line:#fcd34d
+}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+
+/* ANASTASIA BEVERLY HILLS BRAND HEADER */
+.header{background:var(--header-bg);border-bottom:1px solid var(--border);padding:18px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.04)}
+.brand-logo{display:flex;flex-direction:column;cursor:pointer}
+.logo-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;letter-spacing:2px;color:#111111;line-height:1;text-transform:uppercase}
+.logo-sub{font-size:8.5px;font-weight:600;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-top:4px}
+
+.nav-links{display:flex;align-items:center;gap:28px;margin-left:40px}
+.nav-item{font-size:12px;font-weight:600;letter-spacing:1.5px;color:#111111;text-transform:uppercase;text-decoration:none;transition:color .2s}
+.nav-item:hover{color:var(--accent)}
+
+.header-controls{display:flex;align-items:center;gap:16px}
+.badge-golden{border:1px solid var(--accent-line);border-radius:20px;padding:5px 12px;font-size:11px;color:var(--hi);background:var(--accent-dim);font-weight:600}.badge-golden b{color:var(--accent)}
+.btn-inspector{background:var(--hi);border:none;color:#fff;font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:10px 18px;border-radius:4px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .2s}
+.btn-inspector:hover{background:var(--accent)}
+
+/* HERO BANNER */
+.hero{background:linear-gradient(180deg, #ffffff 0%, #faf7f5 100%);border-bottom:1px solid var(--border);padding:48px 40px 40px;position:relative;overflow:hidden;color:var(--hi)}
+.hero-content{max-width:1180px;margin:0 auto;position:relative;z-index:2}
+.hero-tag{display:inline-block;background:var(--accent-dim);border:1px solid var(--accent-line);color:var(--accent);font-size:10px;font-weight:800;letter-spacing:2px;padding:4px 12px;border-radius:4px;text-transform:uppercase;margin-bottom:16px}
+.hero-title{font-family:'Playfair Display',serif;font-size:40px;font-weight:700;color:var(--hi);letter-spacing:-0.5px;line-height:1.2;margin-bottom:12px;max-width:900px}
+.hero-title i{font-weight:400;color:var(--accent)}
+.hero-sub{font-size:15px;color:var(--tert);max-width:850px;line-height:1.6;margin-bottom:24px}
+.hero-cta{display:flex;gap:14px}
+.btn-primary{background:var(--hi);color:#fff;font-weight:800;font-size:12px;padding:14px 28px;border-radius:4px;border:none;cursor:pointer;letter-spacing:1px;text-transform:uppercase;box-shadow:0 4px 14px rgba(0,0,0,0.15);transition:all .2s}
+.btn-primary:hover{background:var(--accent);transform:translateY(-1px)}
+.btn-secondary{background:#fff;border:1px solid var(--border);color:var(--hi);font-weight:700;font-size:12px;padding:13px 26px;border-radius:4px;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:all .2s}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+
+/* TABS BAR */
+.tabs-bar{max-width:1180px;margin:24px auto 0;padding:0 24px;display:flex;gap:6px}
+.tab-btn{padding:12px 20px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:6px 6px 0 0;background:none;transition:all .2s}
+.tab-btn.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+
+/* MAIN CONTAINER */
+.main-container{max-width:1180px;margin:0 auto;padding:24px}
+
+/* ECON STRIP */
+.econ-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.econ-card{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:10px;padding:18px}
+.econ-val{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--hi)}.econ-val .unit{color:var(--accent);font-size:18px;font-family:Inter,sans-serif}
+.econ-lbl{font-size:11px;font-weight:600;color:var(--tert);margin-top:4px;text-transform:uppercase;letter-spacing:0.5px}
+
+.section-hdr{font-size:11px;font-weight:800;letter-spacing:1.5px;color:var(--tert);text-transform:uppercase;margin:24px 0 16px;display:flex;align-items:center;gap:12px}
+.section-hdr::after{content:"";flex:1;height:1px;background:var(--border)}
+
+/* ROSTER OPERATORS */
+.roster-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:18px}
+.operator-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;transition:all .2s}
+.operator-card:hover{border-color:var(--accent);box-shadow:0 6px 20px rgba(212,163,115,0.15)}
+.operator-card.hero-op{border-color:var(--gold-line);background:linear-gradient(180deg, var(--surface) 0%, var(--gold-bg) 100%)}
+.op-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.op-avatar{width:46px;height:46px;border-radius:10px;background:#fff;border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--accent);font-size:15px;flex-shrink:0}
+.op-name{font-size:15px;font-weight:800;color:var(--hi);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.op-title{font-size:12px;color:var(--tert);margin-top:2px}
+.op-owns{font-size:12px;color:var(--text);margin-bottom:12px}.op-owns b{color:var(--hi)}
+.team-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.agent-chip{font-size:11px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 9px}
+.op-stats{display:flex;gap:16px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:14px}
+.op-stat-item{font-size:11px;color:var(--tert)}.op-stat-item b{display:block;font-size:15px;color:var(--hi);font-weight:800}
+
+.btn-run-op{width:100%;background:var(--hi);color:#fff;font-weight:800;font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:10px;border-radius:6px;border:none;cursor:pointer;transition:background .2s}
+.btn-run-op:hover{background:var(--accent)}
+
+/* RUN PANEL */
+.run-panel{margin-top:28px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
+.run-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--hi);margin-bottom:4px}
+.run-sub{font-size:12px;color:var(--tert);margin-bottom:18px}
+.run-input-group{display:flex;gap:12px;margin-bottom:20px}
+.run-input{flex:1;background:#fff;border:1px solid var(--border);border-radius:6px;padding:10px 14px;font-size:13px;color:var(--text);font-family:inherit}
+.btn-execute{background:var(--accent);color:#fff;font-weight:800;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:10px 20px;border-radius:6px;border:none;cursor:pointer}
+.btn-execute:hover{background:var(--accent-hover)}
+
+.run-feed{background:#111111;border:1px solid #333;border-radius:8px;padding:16px;font-family:Consolas,monospace;font-size:12px;color:#f5efea;max-height:300px;overflow-y:auto;margin-bottom:20px;line-height:1.6}
+.feed-line{margin-bottom:4px}
+.feed-agent{color:#d4a373;font-weight:700}
+.feed-tool{color:#facc15}
+.feed-ok{color:#4ade80}
+
+.deliverable-box{background:#fff;border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:8px;padding:20px}
+.deliverable-hdr{font-size:14px;font-weight:800;color:var(--hi);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.deliverable-text{font-family:Consolas,Monaco,monospace;font-size:12px;color:#334155;white-space:pre-wrap;line-height:1.6;background:#faf7f5;padding:14px;border-radius:6px;border:1px solid #e6ded8}
+
+/* BUILDER */
+.builder-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-top:28px}
+.builder-step{margin-bottom:20px}
+.builder-lbl{font-size:12px;font-weight:800;color:var(--tert);text-transform:uppercase;margin-bottom:8px}
+.builder-select,.builder-input{width:100%;background:#fff;border:1px solid var(--border);border-radius:6px;padding:10px;font-size:13px;color:var(--text);margin-bottom:12px}
+
+/* BRAND GUIDELINES MODAL / DRAWER */
+.drawer-backdrop{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:200;display:flex;justify-content:flex-end;opacity:0;pointer-events:none;transition:opacity .3s}
+.drawer-backdrop.open{opacity:1;pointer-events:auto}
+.drawer-panel{width:620px;max-width:90vw;background:#fff;height:100%;overflow-y:auto;padding:32px;box-shadow:-4px 0 30px rgba(0,0,0,0.3);transform:translateX(100%);transition:transform .3s ease-out}
+.drawer-backdrop.open .drawer-panel{transform:translateX(0)}
+.drawer-close{float:right;background:none;border:none;font-size:24px;color:var(--tert);cursor:pointer}
+.brand-h1{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--hi);margin-bottom:6px}
+.brand-p{font-size:13px;color:var(--tert);line-height:1.6;margin-bottom:20px}
+.swatch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.swatch-item{border-radius:8px;padding:12px;color:#fff;font-size:11px;font-weight:700}
+
+/* FOOTER */
+.footer{margin-top:60px;border-top:1px solid var(--border);padding:24px 32px;background:var(--surface);font-size:11px;color:var(--tert);display:flex;justify-content:space-between;align-items:center}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="brand-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <div class="logo-title">ANASTASIA</div>
+    <div class="logo-sub">BEVERLY HILLS</div>
+  </div>
+
+  <nav class="nav-links">
+    <a href="#" class="nav-item">Brows</a>
+    <a href="#" class="nav-item">Eyes</a>
+    <a href="#" class="nav-item">Complexion</a>
+    <a href="#" class="nav-item">Lips</a>
+    <a href="#" class="nav-item">Golden Ratio&reg;</a>
+  </nav>
+
+  <div class="header-controls">
+    <div class="badge-golden">Patented: <b>Golden Ratio&reg; Method</b></div>
+    <button class="btn-inspector" onclick="toggleBrandDrawer()">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+      Brand Specs
+    </button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Prestige Beauty &amp; Facial Geometry Operations</div>
+    <h1 class="hero-title">Anastasia Beverly Hills <i>Autonomous AI Workforce</i></h1>
+    <p class="hero-sub">Pioneering the Golden Ratio&reg; Eyebrow Shaping Method, micro-brow formula innovation, Modern Renaissance eyeshadow palettes, and global Sephora/Ulta retail execution with prestige AI automation.</p>
+    <div class="hero-cta">
+      <button class="btn-primary" onclick="scrollToRoster()">Explore 8 AI Operators</button>
+      <button class="btn-secondary" onclick="runFlagshipDemo()">Run Flagship Brow Wiz Demo</button>
+    </div>
+  </div>
+</section>
+
+<div class="tabs-bar">
+  <button class="tab-btn active" id="tab-roster-btn" onclick="switchTab('roster')">AI Operators Roster</button>
+  <button class="tab-btn" id="tab-run-btn" onclick="switchTab('run')">Live Run Engine</button>
+  <button class="tab-btn" id="tab-builder-btn" onclick="switchTab('builder')">Operator Builder</button>
+</div>
+
+<main class="main-container">
+
+  <!-- ECON STRIP -->
+  <div class="econ-grid">
+    <div class="econ-card">
+      <div class="econ-val"><span class="tnum">2,500</span><span class="unit">+</span></div>
+      <div class="econ-lbl">Global Sephora/Ulta Doors</div>
+    </div>
+    <div class="econ-card">
+      <div class="econ-val"><span class="tnum">100</span><span class="unit">%</span></div>
+      <div class="econ-lbl">Golden Ratio Symmetrical Fit</div>
+    </div>
+    <div class="econ-card">
+      <div class="econ-val"><span class="tnum">1.0</span> <span class="unit">mm</span></div>
+      <div class="econ-lbl">Brow Wiz Tip Precision</div>
+    </div>
+    <div class="econ-card">
+      <div class="econ-val"><span class="tnum">24</span><span class="unit">Hr</span></div>
+      <div class="econ-lbl">Waterproof Wear Claim</div>
+    </div>
+  </div>
+
+  <!-- TAB: ROSTER -->
+  <div id="tab-roster">
+    <div id="roster-container"></div>
+  </div>
+
+  <!-- TAB: RUN -->
+  <div id="tab-run" class="hidden">
+    <div class="run-panel">
+      <div class="run-title" id="run-panel-title">Select an Operator to Execute</div>
+      <div class="run-sub" id="run-panel-sub">Choose an autonomous workforce workflow from the roster to run multi-agent execution.</div>
+      
+      <div class="run-input-group">
+        <input type="text" id="run-prompt-input" class="run-input" placeholder="Enter target parameters or beauty formula requirements...">
+        <button class="btn-execute" id="btn-run-execute" onclick="executeCurrentWorkflow()">Run AI Workforce Operator</button>
+      </div>
+
+      <div class="run-feed hidden" id="run-feed-box"></div>
+
+      <div class="deliverable-box hidden" id="deliverable-box">
+        <div class="deliverable-hdr">
+          <span id="deliverable-title">Produced Deliverable</span>
+          <span style="font-size:11px;font-weight:600;color:var(--ok);background:var(--ok-dim);padding:3px 8px;border-radius:4px;">HUMAN-IN-THE-LOOP VERIFIED</span>
+        </div>
+        <pre class="deliverable-text" id="deliverable-text"></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: BUILDER -->
+  <div id="tab-builder" class="hidden">
+    <div class="builder-card">
+      <h2 style="font-size:18px;font-weight:800;color:var(--hi);margin-bottom:6px;">Compose New AI Workforce Operator</h2>
+      <p style="font-size:13px;color:var(--tert);margin-bottom:20px;">Clone and customize any existing Anastasia Beverly Hills beauty workflow into a tailored autonomous operator.</p>
+
+      <div class="builder-step">
+        <div class="builder-lbl">Step 1: Base Template Workflow</div>
+        <select class="builder-select" id="builder-base-select"></select>
+      </div>
+
+      <div class="builder-step">
+        <div class="builder-lbl">Step 2: Operator Identity &amp; Title</div>
+        <input type="text" class="builder-input" id="builder-op-name" placeholder="Operator Name (e.g. Norvina Pigment Specialist)">
+        <input type="text" class="builder-input" id="builder-op-title" placeholder="Operator Title (e.g. Lead Palette Colorist)">
+      </div>
+
+      <div class="builder-step">
+        <div class="builder-lbl">Step 3: Execution Cadence &amp; Target Win Metric</div>
+        <select class="builder-select" id="builder-cadence-select">
+          <option>Continuous Trend Sweep</option>
+          <option>Weekly Lab Formulation</option>
+          <option>Monthly Salon Cutting</option>
+          <option>Quarterly Palette Launch</option>
+        </select>
+        <input type="text" class="builder-input" id="builder-win-metric" placeholder="Headline Win Metric (e.g. 100% Sephora Clearance)">
+      </div>
+
+      <button class="btn-primary" style="width:100%;" onclick="buildCustomOperator()">Deploy New Operator to Roster</button>
+    </div>
+  </div>
+
+</main>
+
+<!-- BRAND GUIDELINES & TECHNICAL SPECS DRAWER -->
+<div class="drawer-backdrop" id="brand-drawer" onclick="if(event.target===this)toggleBrandDrawer()">
+  <div class="drawer-panel">
+    <button class="drawer-close" onclick="toggleBrandDrawer()">&times;</button>
+    <h1 class="brand-h1">Anastasia Beverly Hills Brand Specs</h1>
+    <p class="brand-p">Authoritative design tokens, Golden Ratio&reg; facial geometry standards, and prestige beauty specifications for Anastasia Beverly Hills.</p>
+
+    <h3 style="font-size:14px;font-weight:800;color:var(--hi);margin-bottom:12px;">Corporate Brand Palette</h3>
+    <div class="swatch-grid">
+      <div class="swatch-item" style="background:#d4a373;">#D4A373<br>ABH Rose Gold</div>
+      <div class="swatch-item" style="background:#111111;">#111111<br>Obsidian Velvet Black</div>
+      <div class="swatch-item" style="background:#ffffff;color:#111111;border:1px solid #e6ded8;">#FFFFFF<br>Pure Alabaster Surface</div>
+      <div class="swatch-item" style="background:#faf7f5;color:#111111;border:1px solid #e6ded8;">#FAF7F5<br>Nude Canvas</div>
+      <div class="swatch-item" style="background:#10b981;">#10B981<br>Clinical Pass Green</div>
+      <div class="swatch-item" style="background:#d97706;">#D97706<br>Flagship Gold</div>
+    </div>
+
+    <h3 style="font-size:14px;font-weight:800;color:var(--hi);margin-bottom:10px;">The Golden Ratio&reg; Eyebrow Shaping Method</h3>
+    <ul style="font-size:13px;color:var(--tert);line-height:1.8;padding-left:20px;margin-bottom:20px;">
+      <li><b>Patented 3-Point Mapping:</b> Brow begins vertically directly above center of nostril; arch aligns from nostril through center of iris; tail ends on line from nostril to outer corner of eye.</li>
+      <li><b>Facial Balance:</b> Enhances individual bone structure based on divine proportion (1:1.618) rather than ephemeral beauty trends.</li>
+    </ul>
+
+    <h3 style="font-size:14px;font-weight:800;color:var(--hi);margin-bottom:10px;">Hero Product Architectures</h3>
+    <ul style="font-size:13px;color:var(--tert);line-height:1.8;padding-left:20px;">
+      <li><b>Brow Wiz&reg;:</b> Ultra-fine 1.0mm micro-pencil for hair-like detail &amp; spoolie blending.</li>
+      <li><b>Dipbrow&reg; Pomade:</b> Waterproof, smudge-proof, full-pigment brow pomade.</li>
+      <li><b>Modern Renaissance Palette:</b> 14-shade iconic eye shadow collection with high color payoff.</li>
+      <li><b>Norvina&reg; Collection:</b> Pro-level pigment palettes &amp; viral trend cosmetics curated by Claudia Soare.</li>
+    </ul>
+  </div>
+</div>
+
+<footer class="footer">
+  <div>&copy; 2026 Anastasia Beverly Hills, LLC. All rights reserved. | Autonomous AI Workforce Prototype</div>
+  <div>Human-in-the-Loop Governance: All brow geometry &amp; formula releases require Salon Director sign-off.</div>
+</footer>
+
+<script>
+/* ============================================================================
+   ANASTASIA BEVERLY HILLS DATA CONFIGURATION & MULTI-AGENT DATA STRUCTURES
+   ============================================================================ */
+
+const AGENT_ROLES = {
+  goldenratioarchitect: { emoji: "ðŸ“", label: "Golden Ratio Facial Architect", tools: ["golden_ratio_brow_mapper", "facial_symmetry_3d_scanner", "brow_stencil_geometry_cad", "save"] },
+  browwizformulator: { emoji: "âœï¸", label: "Brow Wiz Micro-Pencil Chemist", tools: ["brow_wiz_micro_wax_lab", "waterproof_polymer_binder", "smudgeproof_24hr_tester", "save"] },
+  palettecolorist: { emoji: "ðŸŽ¨", label: "Eye & Face Palette Colorist", tools: ["micronized_mica_dispersion", "eyeshadow_press_density_calc", "shade_payoff_reflectometer", "save"] },
+  complexionspecialist: { emoji: "âœ¨", label: "Complexion & Concealer Specialist", tools: ["magic_touch_shade_matcher", "soft_focus_blurring_optics", "sebum_resistance_meter", "save"] },
+  sensoryclinical: { emoji: "ðŸ‘ï¸", label: "Clinical & Ocular Safety Lead", tools: ["ophthalmologist_eye_suite", "dermatologist_hript_panel", "tewl_moisture_meter", "save"] },
+  sustainablepackaging: { emoji: "ðŸŒ¸", label: "Rose Gold Packaging Designer", tools: ["rose_gold_pcr_evaluator", "magnetic_refill_comp_builder", "fsc_carton_structural_cad", "save"] },
+  salongtmops: { emoji: "ðŸ’„", label: "Beverly Hills Salon & GTM Lead", tools: ["sephora_planogram_3d_render", "ar_brow_tryon_engine", "salon_pro_kit_assembler", "save"] },
+  norvinaartistry: { emoji: "ðŸŒŸ", label: "NorvinaÂ® Collection Trend Director", tools: ["beautytok_viral_trend_radar", "duochrome_glitter_blender", "influencer_shade_cocreator", "save"] },
+  cogsunitengineer: { emoji: "ðŸ“Š", label: "Prestige Beauty COGS Modeler", tools: ["prestige_cogs_calculator", "msrp_margin_architect", "retailer_discount_model", "save"] },
+  cosmeticsregulatory: { emoji: "ðŸ“‹", label: "Global Cosmetics Regulatory Lead", tools: ["inci_declaration_generator", "mocra_fda_registration_db", "eu_csrp_safety_dossier", "save"] },
+  writer: { emoji: "ðŸ“", label: "Prestige Beauty Copywriter", tools: ["pdp_copywriting_generator", "packaging_editorial_editor", "salon_masterclass_author", "save"] },
+  reviewer: { emoji: "ðŸ”", label: "Principal Salon & Beauty Executive", tools: ["abh_executive_greenlight", "golden_ratio_certification", "governance_audit_log", "save"] }
+};
+
+const WORKFLOWS = {
+  golden_ratio_brow_wiz_surge: {
+    name: "Golden RatioÂ® Brow Wiz & Dipbrow Innovation Surge",
+    title: "Golden RatioÂ® Brow Wiz & Dipbrow Innovation Surge",
+    mode: 'dag',
+    deliverable: "Golden Ratio 1.0mm Brow Wiz Micro-Pencil & Dipbrow Master Specification",
+    sample: "Develop ultra-fine 1.0mm waterproof Brow Wiz micro-pencil with Golden Ratio 3-point mapping stencil for Sephora global rollout.",
+    desc: "Orchestrates patented 3-point facial ratio mapping, micro-fine wax extrusion, 24-hour waterproof polymer testing, and rose gold packaging.",
+    track: 'trackA',
+    tag: 'flagship',
+    tasks: [
+      { agent: 'goldenratioarchitect', task: "Map 3-point Golden Ratio brow geometry (start, arch, end points) based on 1:1.618 facial proportion.", deps: [] },
+      { agent: 'browwizformulator', task: "Formulate ultra-fine 1.0mm micro-pencil wax lead with waterproof hydrophobic film formers.", deps: [0] },
+      { agent: 'sensoryclinical', task: "Run 24-hour smudge-proof and humidity chamber resistance clinical testing (n=100 panellists).", deps: [1] },
+      { agent: 'sustainablepackaging', task: "Design rose gold dual-ended component with built-in custom spoolie brush.", deps: [2] },
+      { agent: 'cogsunitengineer', task: "Model unit COGS ($1.85) to achieve 78% gross margin at $25.00 MSRP price point.", deps: [3] },
+      { agent: 'reviewer', task: "Perform Anastasia Soare Golden Ratio principal certification and commercial release sign-off.", deps: [4] }
+    ]
+  },
+  modern_renaissance_eyeshadow_palette_formulation: {
+    name: "Modern Renaissance High-Pigment Eyeshadow Palette",
+    title: "Modern Renaissance High-Pigment Eyeshadow Palette",
+    mode: 'sequential',
+    deliverable: "Modern Renaissance 14-Pan Eyeshadow Palette Specification",
+    sample: "Formulate 14-shade velvet eyeshadow palette with iconic berry and neutral tones, zero fall-out, and high color payoff.",
+    desc: "Engineers micronized mica powder dispersion, ultra-buttery press density, and ophthalmologist-approved eye safety.",
+    track: 'trackA',
+    tasks: [
+      { agent: 'palettecolorist', task: "Micronize intense berry and warm neutral earth pigments for 1-swipe color payoff.", deps: [] },
+      { agent: 'norvinaartistry', task: "Curate 14-shade color story pairing matte transitions with shimmering metallic foils.", deps: [0] },
+      { agent: 'sensoryclinical', task: "Conduct ophthalmologist contact lens wearer safety panel and zero fallout ocular testing.", deps: [1] },
+      { agent: 'reviewer', task: "Authorize palette mass production batch release.", deps: [2] }
+    ]
+  },
+  luminous_magic_touch_concealer_shade_expansion: {
+    name: "Luminous Complexion & Magic Touch Concealer Range",
+    title: "Luminous Complexion & Magic Touch Concealer Range",
+    mode: 'sequential',
+    deliverable: "30-Shade Magic Touch Concealer Master Formulation Dossier",
+    sample: "Develop 30 inclusive undertone shades of Magic Touch Concealer with soft-focus blurring optics and 16-hour crease-proof wear.",
+    desc: "Blends soft-focus sphere optics, hydrating amino acid coatings, and non-comedogenic sebum control.",
+    track: 'trackA',
+    tasks: [
+      { agent: 'complexionspecialist', task: "Formulate soft-focus blurring emulsion with 30 calibrated undertones (cool, warm, neutral).", deps: [] },
+      { agent: 'sensoryclinical', task: "Measure 16-hour crease-resistance and non-comedogenic pore-blurring clinical metrics.", deps: [0] },
+      { agent: 'cosmeticsregulatory', task: "Verify FDA MoCRA cosmetic safety listing and cruelty-free ingredient compliance.", deps: [1] },
+      { agent: 'reviewer', task: "Sign off on complexion shade range launch dossier.", deps: [2] }
+    ]
+  },
+  norvina_viral_trend_color_story_launch: {
+    name: "NorvinaÂ® Collection Viral Trend & Festival Glam Launch",
+    title: "NorvinaÂ® Collection Viral Trend & Festival Glam Launch",
+    mode: 'sequential',
+    deliverable: "Norvina Collection Trend Color Story & Viral Marketing Deck",
+    sample: "Curate neon duo-chrome pigment collection and TikTok influencer campaign for festival glam season.",
+    desc: "Pairs ultra-vibrant pressed pigments with BeautyTok viral trend forecasting and influencer co-creation.",
+    track: 'trackA',
+    tasks: [
+      { agent: 'norvinaartistry', task: "Identify viral festival glam trends indexing #1 on BeautyTok and design duo-chrome glitters.", deps: [] },
+      { agent: 'palettecolorist', task: "Formulate pressed neon pigments with high binder adhesion for 18-hour festival wear.", deps: [0] },
+      { agent: 'writer', task: "Draft viral TikTok campaign copy, masterclass tutorials, and Sephora product page text.", deps: [1] },
+      { agent: 'reviewer', task: "Approve Norvina Collection marketing & production release.", deps: [2] }
+    ]
+  },
+  rose_gold_refillable_brow_compact_packaging: {
+    name: "Rose Gold Refillable Brow & Palette Component Engineering",
+    title: "Rose Gold Refillable Brow & Palette Component Engineering",
+    mode: 'dag',
+    deliverable: "Rose Gold Refillable Magnetic Palette Technical Spec",
+    sample: "Engineer 100% PCR aluminum rose gold magnetic brow compact with snap-in refillable pan system.",
+    desc: "Engineers luxury rose gold packaging with magnetic refillable pans, FSC cartons, and 100% PCR PET cases.",
+    track: 'trackB',
+    tasks: [
+      { agent: 'sustainablepackaging', task: "Design brushed rose gold aluminum compact with magnetic pan retention mechanism.", deps: [] },
+      { agent: 'cogsunitengineer', task: "Verify refill pod cost structure delivers 35% savings to consumer while boosting gross margin.", deps: [0] },
+      { agent: 'cosmeticsregulatory', task: "Audit heavy metal migration and PCR plastic food-contact safety compliance.", deps: [1] },
+      { agent: 'reviewer', task: "Approve luxury tooling production and CAD drawings.", deps: [2] }
+    ]
+  },
+  sephora_ulta_endcap_planogram_deploy: {
+    name: "Sephora & Ulta Global Endcap Planogram & Salon Display",
+    title: "Sephora & Ulta Global Endcap Planogram & Salon Display",
+    mode: 'sequential',
+    deliverable: "Sephora/Ulta Global Endcap Planogram & Merchandising Package",
+    sample: "Create 4-tier interactive Golden Ratio brow station endcap display for 2,500 Sephora and Ulta doors.",
+    desc: "Renders 3D retail fixtures featuring Golden Ratio brow mirror stations, AR digital try-on screens, and tester trays.",
+    track: 'trackB',
+    tasks: [
+      { agent: 'salongtmops', task: "Render 3D planogram featuring Golden Ratio brow mirror station and shade tester trays.", deps: [] },
+      { agent: 'writer', task: "Write store associate training cheat-sheets and high-impact shelf-talker copy.", deps: [0] },
+      { agent: 'cogsunitengineer', task: "Model endcap fixture ROI and store-level SKU velocity targets.", deps: [1] },
+      { agent: 'reviewer', task: "Sign off on global Sephora & Ulta retail merchandising deployment.", deps: [2] }
+    ]
+  },
+  mocra_fda_eu_cosmetics_safety_compliance: {
+    name: "FDA MoCRA & EU Cosmetics Safety Certification Dossier",
+    title: "FDA MoCRA & EU Cosmetics Safety Certification Dossier",
+    mode: 'sequential',
+    deliverable: "FDA MoCRA Registration & EU CSRP Safety Compliance Dossier",
+    sample: "Compile global regulatory compliance dossier for Anastasia brow and color cosmetics in 45 countries.",
+    desc: "Compiles INCI statements, safety assessor reports, MoCRA facility registration, and EU CSRP notifications.",
+    track: 'trackB',
+    tasks: [
+      { agent: 'cosmeticsregulatory', task: "Generate standardized INCI declarations and complete FDA MoCRA facility registration.", deps: [] },
+      { agent: 'browwizformulator', task: "Provide raw material safety data sheets (MSDS) and heavy metal heavy-atom assay reports.", deps: [0] },
+      { agent: 'writer', task: "Format international packaging artwork with compliant multilingual warning labels.", deps: [1] },
+      { agent: 'reviewer', task: "Issue final regulatory safety clearance for global shipping.", deps: [2] }
+    ]
+  },
+  beverly_hills_salon_masterclass_educational_kit: {
+    name: "Beverly Hills Salon Masterclass & Pro Artist Kit",
+    title: "Beverly Hills Salon Masterclass & Pro Artist Kit",
+    mode: 'sequential',
+    deliverable: "Beverly Hills Salon Golden Ratio Masterclass & Pro Kit Dossier",
+    sample: "Author Golden Ratio eyebrow shaping masterclass curriculum and assemble pro artist kit for salon partners.",
+    desc: "Authors Anastasia Soare's signature Golden Ratio shaping curriculum and packages pro makeup artist kits.",
+    track: 'trackB',
+    tasks: [
+      { agent: 'goldenratioarchitect', task: "Compile step-by-step Golden Ratio brow mapping masterclass training manual.", deps: [] },
+      { agent: 'salongtmops', task: "Assemble pro makeup artist kit with 5 Golden Ratio stencils, scissors, tweezers, and Dipbrow.", deps: [0] },
+      { agent: 'writer', task: "Write certification exam and digital video masterclass script.", deps: [1] },
+      { agent: 'reviewer', task: "Grant Anastasia Beverly Hills Master Artist Certification approval.", deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  golden_ratio_brow_wiz_surge: "Golden Ratio 1.0mm Brow Wiz Micro-Pencil & Dipbrow Master Specification",
+  modern_renaissance_eyeshadow_palette_formulation: "Modern Renaissance 14-Pan Eyeshadow Palette Specification",
+  luminous_magic_touch_concealer_shade_expansion: "30-Shade Magic Touch Concealer Master Formulation Dossier",
+  norvina_viral_trend_color_story_launch: "Norvina Collection Trend Color Story & Viral Marketing Deck",
+  rose_gold_refillable_brow_compact_packaging: "Rose Gold Refillable Magnetic Palette Technical Spec",
+  sephora_ulta_endcap_planogram_deploy: "Sephora/Ulta Global Endcap Planogram & Merchandising Package",
+  mocra_fda_eu_cosmetics_safety_compliance: "FDA MoCRA Registration & EU CSRP Safety Compliance Dossier",
+  beverly_hills_salon_masterclass_educational_kit: "Beverly Hills Salon Golden Ratio Masterclass & Pro Kit Dossier"
+};
+
+const TOOLS = {
+  golden_ratio_brow_mapper: () => "Golden Ratio 3-point brow map generated: Start (0.0mm), Arch (1:1.618 ratio), End (42mm outer eye line)",
+  facial_symmetry_3d_scanner: () => "3D facial bone structure scanned | Symmetry alignment index: 99.8% optimal fit achieved",
+  brow_stencil_geometry_cad: () => "Patented brow stencil CAD geometry finalized: 5 universal arch shapes (Petite, Slim High, Medium, Full High, Structured)",
+  brow_wiz_micro_wax_lab: () => "Brow Wiz micro-pencil lead extruded @ 1.0mm diameter | Hardness: 42 Shore D | Zero tip breakage",
+  waterproof_polymer_binder: () => "Waterproof film former added: Silicone resin network provides 24-hour sweat and humidity resistance",
+  smudgeproof_24hr_tester: () => "24-Hour smudge test: 99.2% color retention under 95% relative humidity test chamber",
+  micronized_mica_dispersion: () => "Micronized synthetic fluorphlogopite dispersion: Mean particle size 12 microns | Ultra-silky feel",
+  eyeshadow_press_density_calc: () => "Press density: 1.4 g/cm3 | Fall-out index: 0.02% (Exceeds zero fall-out benchmark)",
+  shade_payoff_reflectometer: () => "Spectrophotometer color payoff: 98.6% match to Gold Standard Modern Renaissance Berry shade",
+  magic_touch_shade_matcher: () => "Magic Touch shade matrix: 30 undertone shades mapped (10 Cool, 10 Warm, 10 Neutral)",
+  soft_focus_blurring_optics: () => "Polymethylsilsesquioxane soft-focus spheres added: Softens fine lines & blurs pores instantly",
+  sebum_resistance_meter: () => "Sebum resistance test: 16-hour crease-free wear verified on oily skin panel",
+  ophthalmologist_eye_suite: () => "Ophthalmologist safety trial (n=60 contact lens wearers): 100% tolerated without irritation",
+  dermatologist_hript_panel: () => "HRIPT patch test (n=100 subjects): 0 instances of dermal irritation or allergic sensitization",
+  tewl_moisture_meter: () => "Tewameter moisture barrier rating: TEWL reduction of 28% after 7 days continuous wear",
+  rose_gold_pcr_evaluator: () => "Rose Gold anodized aluminum finish approved | 100% PCR PET inner casing verified",
+  magnetic_refill_comp_builder: () => "3D magnetic compact comp printed: N52 neodymium magnet holds refill pan securely",
+  fsc_carton_structural_cad: () => "FSC-certified soft-touch paperboard carton CAD created with rose gold foil stamping",
+  sephora_planogram_3d_render: () => "Sephora 4-tier interactive endcap 3D render generated with integrated Golden Ratio mirror station",
+  ar_brow_tryon_engine: () => "AR digital brow try-on algorithm integrated: Live camera maps Golden Ratio brow shape in <100ms",
+  salon_pro_kit_assembler: () => "Beverly Hills Salon Pro Kit assembled: 5 Stencils, Pro Pencil, Precision Tweezers, & Dipbrow",
+  beautytok_viral_trend_radar: () => "BeautyTok trend radar: 'Glass Skin Brow' & 'Sunset Eye' searches up +210% this month",
+  duochrome_glitter_blender: () => "Norvina duo-chrome glitter blend: Violet-to-gold shift with zero plastic micro-glitters",
+  influencer_shade_cocreator: () => "Co-creator shade panel locked: 6 exclusive festival glam shades selected by top creators",
+  prestige_cogs_calculator: () => "Brow Wiz unit COGS calculated: $1.85 per unit @ 500,000 unit production run",
+  msrp_margin_architect: () => "MSRP set at $25.00 | Retailer wholesale price: $11.25 (55% Sephora/Ulta margin)",
+  retailer_discount_model: () => "Gross margin to ABH: 78.4% gross margin ($9.40 net margin per unit)",
+  inci_declaration_generator: () => "INCI ingredient statement generated per 21 CFR 701.3 with complete color additive numbers",
+  mocra_fda_registration_db: () => "FDA MoCRA product listing submitted | Facility registration #FEA-993120 verified",
+  eu_csrp_safety_dossier: () => "EU Cosmetic Product Safety Report (CPSR) signed by certified toxicologist",
+  pdp_copywriting_generator: () => "Sephora & Ulta product detail page (PDP) copy written with Golden Ratio story & shade guide",
+  packaging_editorial_editor: () => "Prestige packaging copy edited with multilingual warnings (English, French, Spanish, German)",
+  salon_masterclass_author: () => "Golden Ratio Eyebrow Shaping Masterclass 48-page manual authored by Anastasia Soare",
+  abh_executive_greenlight: () => "Anastasia Soare & Claudia Soare executive sign-off: ABH-EXEC-2026-0923-APPROVED",
+  golden_ratio_certification: () => "Golden RatioÂ® Certified Authentic seal granted to product line specification",
+  governance_audit_log: () => "Immutable governance log entry stored: SHA-256 hash verified for multi-agent beauty run",
+  save: () => "Output artifact saved successfully to enterprise repository."
+};
+
+const FINAL = {
+  golden_ratio_brow_wiz_surge: `================================================================================
+ANASTASIA BEVERLY HILLS - GOLDEN RATIOÂ® BROW WIZ MASTER SPECIFICATION
+================================================================================
+Product Asset: Brow WizÂ® Ultra-Fine 1.0mm Micro-Pencil & Golden RatioÂ® Stencil Kit
+Category: Prestige Eyebrow Cosmetics & Facial Geometry
+Date: September 23, 2026 | Document ID: ABH-BROW-WIZ-20260923
+
+1. GOLDEN RATIOÂ® FACIAL GEOMETRY MAPPING
+- Patented 3-Point Ratio:
+  * Point 1 (Start): Vertical line directly above center of nostril (0.0mm reference)
+  * Point 2 (Arch): Line from center of nostril through center of iris (1:1.618 golden proportion)
+  * Point 3 (End): Diagonal line from outer edge of nostril through outer corner of eye (42mm)
+- Brow Stencil Geometry: 5 Precision CAD Stencils (Petite Arch, Slim High, Medium, Full High, Structured)
+
+2. BROW WIZÂ® MICRO-PENCIL FORMULATION
+- Lead Diameter: Ultra-fine 1.0mm extruded wax tip for hair-like precision strokes
+- Hardness & Payoff: 42 Shore D hardness (smooth glide without breaking or dragging)
+- Waterproof Chemistry: Hydrophobic silicone resin network delivers 24-hour sweat & humidity resistance
+- Built-In Spoolie: Custom high-density spoolie brush on dual-ended component for seamless blending
+
+3. CLINICAL & SENSORY SAFETY TESTING
+- Smudge-Proof Efficacy: 99.2% color retention after 24 hours @ 95% relative humidity
+- Ophthalmologist Safety: Passed (n=60 contact lens wearers; 0 irritation reports)
+- Dermatologist Test: Passed 200-subject HRIPT patch test (Hypoallergenic & non-comedogenic)
+
+4. LUXURY PACKAGING & UNIT ECONOMICS
+- Primary Packaging: Slender Rose Gold anodized aluminum sleeve with obsidian branding
+- Unit COGS: $1.85 per unit @ 500,000 unit production run
+- Retail MSRP: $25.00 | Retailer Wholesale: $11.25 (55% Sephora/Ulta Margin)
+- Gross Margin to ABH: 78.4%
+
+5. EXECUTIVE BOARD APPROVAL
+- Founder & CEO: Anastasia Soare (Creator of Golden RatioÂ® Method)
+- President: Claudia "Norvina" Soare
+- Status: CERTIFIED & APPROVED FOR SEPHORA GLOBAL LAUNCH
+
+NOTE: This is an illustrative simulation generated by the Anastasia Beverly Hills Autonomous AI Workforce. All metrics are placeholders for demonstration purposes.`,
+
+  modern_renaissance_eyeshadow_palette_formulation: `================================================================================
+ANASTASIA BEVERLY HILLS - MODERN RENAISSANCE EYE SHADOW PALETTE SPEC
+================================================================================
+Product Asset: Modern Renaissance 14-Pan Eye Shadow Palette
+Date: September 23, 2026 | Color Story: Berry & Warm Earth Neutrals
+
+1. PIGMENT DISPERSION & COLOR PAYOFF
+- Micronized Powder Technology: Synthetic fluorphlogopite mica (12 micron mean size)
+- Press Density: 1.4 g/cm3 press density delivers buttery texture with zero fall-out (0.02% index)
+- Color Matching: 98.6% spectrophotometer match to Gold Standard Modern Renaissance shades
+
+2. SHADE MATRIX & FINISHES
+- 14 Pans: 11 Soft Ultramatte Shades + 3 Metallic Foiled Shimmers
+- Hero Shades: Love Letter (Berry), Realgar (Brick), Venetian Red, Primavera (Shimmer)
+
+3. CLINICAL SAFETY
+- Ophthalmic Clearance: Ophthalmologist tested; approved for sensitive eye area & contact lens wearers
+
+4. EXECUTIVE SIGN-OFF
+- President & Creative Director: Claudia "Norvina" Soare
+- Status: APPROVED FOR MASS PRODUCTION BATCH RELEASE
+
+NOTE: This is an illustrative simulation generated by the Anastasia Beverly Hills Autonomous AI Workforce.`,
+
+  luminous_magic_touch_concealer_shade_expansion: `================================================================================
+ANASTASIA BEVERLY HILLS - MAGIC TOUCH 30-SHADE CONCEALER DOSSIER
+================================================================================
+Product Asset: Magic Touch Luminous Concealer Range (30 Calibrated Shades)
+Date: September 23, 2026
+
+1. COMPLEXION OPTICS & FORMULATION
+- Soft-Focus Technology: Polysilsesquioxane blurring spheres diminish fine lines & dark circles
+- Wear Metric: 16-Hour crease-proof, oil-resistant coverage with natural skin-like finish
+- Hydration Active: Amino acid complex maintains TEWL moisture retention (+28% hydration)
+
+2. 30-SHADE INCLUSIVE MATRIX
+- Range: 10 Fair/Light, 10 Medium, 10 Deep/Rich (Calibrated across Cool, Warm, & Neutral undertones)
+
+3. MOCRA FDA COMPLIANCE
+- Regulatory Status: FDA MoCRA listed (#FEA-993120) | Cruelty-free & 100% Vegan
+
+4. APPROVAL SIGN-OFF
+- Lead Complexion Chemist: Dr. Elena Rostova, PhD
+- Status: APPROVED FOR SEPHORA GLOBAL DISTRIBUTION
+
+NOTE: This is an illustrative simulation generated by the Anastasia Beverly Hills Autonomous AI Workforce.`,
+
+  norvina_viral_trend_color_story_launch: `================================================================================
+ANASTASIA BEVERLY HILLS - NORVINAÂ® COLLECTION FESTIVAL GLAM LAUNCH
+================================================================================
+Collection: NorvinaÂ® Pro Pigment Festival Collection
+Date: September 23, 2026 | Creative Lead: Claudia "Norvina" Soare
+
+1. VIRAL TREND RADAR & COLOR STORY
+- BeautyTok Trend Alignment: 'Sunset Eye' & 'Glass Skin Brow' indexing +210% search volume
+- Pigment Engineering: Duo-chrome glitters with violet-to-gold optical shift (Zero plastic micro-glitters)
+
+2. WEAR & BINDER ADHESION
+- Durability: High-adhesion polymer binder provides 18-hour festival wear without creasing
+
+3. MARKETING & EDITORIAL COPY
+- Campaign Strategy: TikTok influencer co-creation + Sephora PDP masterclass video series
+
+4. SIGN-OFF
+- President: Claudia "Norvina" Soare
+- Status: AUTHORIZED FOR VIRAL CAMPAIGN ROLLOUT
+
+NOTE: This is an illustrative simulation generated by the Anastasia Beverly Hills Autonomous AI Workforce.`,
+
+  rose_gold_refillable_brow_compact_packaging: `================================================================================
+ANASTASIA BEVERLY HILLS - ROSE GOLD REFILLABLE COMPACT TECHNICAL SPEC
+================================================================================
+Packaging Asset: Brushed Rose Gold Magnetic Refillable Compact
+Date: September 23, 2026 | Sustainability Standard: ABH Luxury Packaging Charter
+
+1. LUXURY MATERIAL & COMPONENT ENGINEERING
+- Shell Finish: Brushed Rose Gold anodized aluminum with laser-engraved ABH butterfly emblem
+- Inner Casing: 100% Post-Consumer Recycled (PCR) PET
+- Pan Retention: High-strength N52 neodymium magnetic retention for snap-in refill pans
+
+2. SUSTAINABILITY & FINANCIAL ROI
+- Refill Efficiency: Cuts packaging plastic waste by 74% per refill purchase
+- Consumer Value: Refill pan priced at $16.00 vs $25.00 full compact (Saves consumer 36%)
+- Gross Margin: Elevates refill pan margin to 82.1%
+
+3. PACKAGING SIGN-OFF
+- Head of Packaging Design: Marcus Vance, PE
+- Status: APPROVED FOR TOOLING MANUFACTURE
+
+NOTE: This is an illustrative simulation generated by the Anastasia Beverly Hills Autonomous AI Workforce.`,
+
+  sephora_ulta_endcap_planogram_deploy: `================================================================================
+ANASTASIA BEVERLY HILLS - SEPHORA & ULTA GLOBAL ENDCAP MERCHANDISING
+================================================================================
+Scope: 2,500 Sephora & Ulta Global Retail Doors
+Date: September 23, 2026 | Merchandising Execution: Golden Ratio Brow Station
+
+1. 3D RETAIL FIXTURE & PLANOGRAM LAYOUT
+- Endcap Fixture: 4-Tier Rose Gold & Obsidian Display with Golden Ratio Mirror Station
+- Digital Try-On: Integrated AR camera screen mapping customer brow geometry in <100ms
+- Tester Trays: Color-coded shade matching trays for Brow Wiz, Dipbrow, & Concealer
+
+2. STORE ASSOCIATE EDUCATION & SALES CHEAT-SHEET
+- Training Module: 1-Page store associate guide on recommending Golden Ratio stencils
+
+3. MERCHANDISING APPROVAL
+- VP of Global Retail Operations: Sarah Jenkins
+- Status: APPROVED FOR NATIONWIDE RETAIL DEPLOYMENT
+
+NOTE: This is an illustrative simulation generated by the Anastasia Beverly Hills Autonomous AI Workforce.`,
+
+  mocra_fda_eu_cosmetics_safety_compliance: `================================================================================
+ANASTASIA BEVERLY HILLS - GLOBAL MOCRA & EU SAFETY DOSSIER
+================================================================================
+Regulatory Scope: 45 Global Countries (US, EU, UK, Canada, Australia)
+Date: September 23, 2026 | Compliance Standard: FDA MoCRA & EU Regulation 1223/2009
+
+1. FDA MOCRA COMPLIANCE
+- Facility Listing: Registered under MoCRA Portal (#FEA-993120)
+- INCI Statements: Verified compliant with 21 CFR 701.3 & heavy metal purity standards
+
+2. EU / UK COSMETIC SAFETY (CPSR)
+- Toxicologist Audit: Signed EU Cosmetic Product Safety Report (CPSR) attached
+- Multilingual Packaging: Compliant 12-language warning copy finalized
+
+3. REGULATORY SIGN-OFF
+- Global Regulatory VP: Maria Santos, RAC
+- Status: CERTIFIED FOR INTERNATIONAL DISTRIBUTION
+
+NOTE: This is an illustrative simulation generated by the Anastasia Beverly Hills Autonomous AI Workforce.`,
+
+  beverly_hills_salon_masterclass_educational_kit: `================================================================================
+ANASTASIA BEVERLY HILLS - SALON MASTERCLASS & PRO ARTIST KIT
+================================================================================
+Program: Beverly Hills Flagship Salon Masterclass & Global Artist Certification
+Date: September 23, 2026
+
+1. GOLDEN RATIOÂ® CURRICULUM & INSTRUCTION
+- Masterclass Manual: 48-Page training guide by Anastasia Soare detailing 3-point brow mapping
+- Digital Certification: Online video masterclass with exam module for pro artists
+
+2. PRO MAKEUP ARTIST KIT COMPONENTS
+- Kit Inventory: 5 Golden Ratio Stencils, Pro Pencil, Precision Scissors, Tweezers, & Dipbrow
+
+3. SALON DIRECTOR APPROVAL
+- Founder & Salon Director: Anastasia Soare
+- Status: AUTHORIZED FOR GLOBAL ARTIST CERTIFICATION
+
+NOTE: This is an illustrative simulation generated by the Anastasia Beverly Hills Autonomous AI Workforce.`
+};
+
+const EMPLOYEES = [
+  { id: 'op_brow_wiz', name: "Golden Ratio Brow Wiz Specialist", title: "Micro-Pencil & Golden Ratio Brow Architect", wf: 'golden_ratio_brow_wiz_surge', handled: 310, hrs: 28.0, win: "1.0mm Waterproof Brow Precision", status: "idle" },
+  { id: 'op_eyeshadow_palette', name: "Eyeshadow Palette Colorist", title: "Modern Renaissance High-Pigment Specialist", wf: 'modern_renaissance_eyeshadow_palette_formulation', handled: 240, hrs: 18.5, win: "14-Pan Zero Fall-Out Payoff", status: "idle" },
+  { id: 'op_concealer_shades', name: "Magic Touch Complexion Specialist", title: "30-Shade Luminous Concealer Architect", wf: 'luminous_magic_touch_concealer_shade_expansion', handled: 185, hrs: 22.0, win: "30-Shade Inclusive Match", status: "idle" },
+  { id: 'op_norvina_trend', name: "NorvinaÂ® Collection Trend Operator", title: "Viral BeautyTok & Festival Glam Lead", wf: 'norvina_viral_trend_color_story_launch', handled: 275, hrs: 15.4, win: "Viral BeautyTok Color Story", status: "idle" },
+  { id: 'op_rose_gold_pkg', name: "Rose Gold Packaging Specialist", title: "Luxury Refillable Packaging & PCR Lead", wf: 'rose_gold_refillable_brow_compact_packaging', handled: 195, hrs: 21.0, win: "100% PCR Refillable Rose Gold", status: "idle" },
+  { id: 'op_sephora_merch', name: "Sephora & Ulta Merchandising Lead", title: "Global Endcap & Brow Station Lead", wf: 'sephora_ulta_endcap_planogram_deploy', handled: 410, hrs: 14.2, win: "2,500 Sephora/Ulta Doors", status: "idle" },
+  { id: 'op_mocra_safety', name: "MoCRA & EU Regulatory Specialist", title: "Global Cosmetics Regulatory Safety Lead", wf: 'mocra_fda_eu_cosmetics_safety_compliance', handled: 230, hrs: 19.5, win: "MoCRA & EU CSRP Clearance", status: "idle" },
+  { id: 'op_salon_masterclass', name: "Beverly Hills Salon Masterclass Lead", title: "Golden Ratio Pro Artist & Salon Lead", wf: 'beverly_hills_salon_masterclass_educational_kit', handled: 120, hrs: 26.0, win: "Beverly Hills Salon Pro Kit", status: "idle" }
+];
+
+const CONFIG = {
+  econLabels: ["Global Salon & Retail Doors", "Golden Ratio Stencils Shipped", "Formula Development Reduction", "First-Pass Retail Clearance"],
+  statLabel: "Prestige Beauty Speed-to-Market",
+  statSign: "+",
+  statSuffix: "%",
+  runButton: "Run AI Workforce Operator",
+  runNoun: "Operator Pipeline",
+  outputLabel: "Validated Beauty Product Specification & Master Dossier",
+  rosterLabel: "Anastasia Beverly Hills AI Workforce Roster",
+  trackLabels: {
+    trackA: "Track A: Golden RatioÂ® Brow Geometry & Clean Formula Innovation",
+    trackB: "Track B: Luxury Packaging, Salon Merchandising & Global GTM"
+  },
+  builderCadences: ["Continuous Trend Sweep", "Weekly Lab Formulation", "Monthly Salon Cutting", "Quarterly Palette Launch"]
+};
+
+/* ============================================================================
+   ENGINE LOGIC (DO NOT EDIT)
+   ============================================================================ */
+
+let currentSelectedWfKey = "golden_ratio_brow_wiz_surge";
+
+function renderRoster() {
+  const container = document.getElementById("roster-container");
+  if (!container) return;
+
+  const trackAOps = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === "trackA");
+  const trackBOps = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === "trackB");
+
+  let html = `
+    <div class="section-hdr">${CONFIG.trackLabels.trackA}</div>
+    <div class="roster-grid">
+      ${trackAOps.map(op => renderOperatorCard(op)).join("")}
+    </div>
+
+    <div class="section-hdr" style="margin-top:40px;">${CONFIG.trackLabels.trackB}</div>
+    <div class="roster-grid">
+      ${trackBOps.map(op => renderOperatorCard(op)).join("")}
+    </div>
+  `;
+  container.innerHTML = html;
+}
+
+function renderOperatorCard(op) {
+  const wf = WORKFLOWS[op.wf];
+  if (!wf) return "";
+  const isFlagship = wf.tag === "flagship";
+  
+  // Agent chips
+  const agentChips = wf.tasks.map(t => {
+    const a = AGENT_ROLES[t.agent];
+    return a ? `<span class="agent-chip">${a.emoji} ${a.label}</span>` : "";
+  }).join("");
+
+  return `
+    <div class="operator-card ${isFlagship ? 'hero-op' : ''}">
+      <div class="op-top">
+        <div class="op-avatar">${op.name.charAt(0)}</div>
+        <div>
+          <div class="op-name">
+            ${op.name}
+            ${isFlagship ? '<span style="font-size:10px;font-weight:800;background:var(--accent);color:#fff;padding:2px 6px;border-radius:4px;text-transform:uppercase;">FLAGSHIP</span>' : ''}
+          </div>
+          <div class="op-title">${op.title}</div>
+        </div>
+      </div>
+      <div class="op-owns"><b>Workflow:</b> ${wf.name}</div>
+      <div class="team-chips">${agentChips}</div>
+      <div class="op-stats">
+        <div class="op-stat-item"><b>${op.handled}</b> Runs Handled</div>
+        <div class="op-stat-item"><b>${op.hrs} hrs</b> Avg Savings</div>
+        <div class="op-stat-item"><b style="color:var(--accent);">${op.win}</b> Headline Value</div>
+      </div>
+      <button class="btn-run-op" onclick="selectAndRunOperator('${op.wf}')">Launch Operator Run</button>
+    </div>
+  `;
+}
+
+function selectAndRunOperator(wfKey) {
+  currentSelectedWfKey = wfKey;
+  switchTab("run");
+  const wf = WORKFLOWS[wfKey];
+  if (!wf) return;
+  
+  document.getElementById("run-panel-title").innerText = "Operator: " + wf.title;
+  document.getElementById("run-panel-sub").innerText = wf.desc;
+  document.getElementById("run-prompt-input").value = wf.sample;
+
+  // Clear previous outputs
+  document.getElementById("run-feed-box").classList.add("hidden");
+  document.getElementById("run-feed-box").innerHTML = "";
+  document.getElementById("deliverable-box").classList.add("hidden");
+}
+
+function executeCurrentWorkflow() {
+  const wf = WORKFLOWS[currentSelectedWfKey];
+  if (!wf) return;
+
+  const feedBox = document.getElementById("run-feed-box");
+  const delivBox = document.getElementById("deliverable-box");
+  const delivText = document.getElementById("deliverable-text");
+  const delivTitle = document.getElementById("deliverable-title");
+
+  feedBox.classList.remove("hidden");
+  feedBox.innerHTML = `<div class="feed-line">[SYSTEM] Initializing multi-agent execution pipeline for ${wf.name}...</div>`;
+  delivBox.classList.add("hidden");
+
+  let stepIdx = 0;
+  
+  function stepLoop() {
+    if (stepIdx < wf.tasks.length) {
+      const taskObj = wf.tasks[stepIdx];
+      const agentObj = AGENT_ROLES[taskObj.agent];
+      const toolKey = agentObj ? agentObj.tools[0] : "save";
+      const toolOutput = TOOLS[toolKey] ? TOOLS[toolKey]() : "Tool execution complete.";
+
+      const line = document.createElement("div");
+      line.className = "feed-line";
+      line.innerHTML = `<span class="feed-agent">${agentObj.emoji} ${agentObj.label}:</span> "${taskObj.task}" <br>&nbsp;&nbsp;&nbsp;&nbsp;&rarr; <span class="feed-tool">[TOOL: ${toolKey}]</span> ${toolOutput}`;
+      feedBox.appendChild(line);
+      feedBox.scrollTop = feedBox.scrollHeight;
+
+      stepIdx++;
+      setTimeout(stepLoop, 600);
+    } else {
+      const lineFinal = document.createElement("div");
+      lineFinal.className = "feed-line feed-ok";
+      lineFinal.innerHTML = `<br>[SUCCESS] Execution pipeline completed cleanly. Output deliverable verified.`;
+      feedBox.appendChild(lineFinal);
+      feedBox.scrollTop = feedBox.scrollHeight;
+
+      delivTitle.innerText = DTITLE[currentSelectedWfKey] || "Produced Deliverable";
+      delivText.innerText = FINAL[currentSelectedWfKey] || "Deliverable text unavailable.";
+      delivBox.classList.remove("hidden");
+    }
+  }
+
+  setTimeout(stepLoop, 400);
+}
+
+function runFlagshipDemo() {
+  selectAndRunOperator("golden_ratio_brow_wiz_surge");
+  executeCurrentWorkflow();
+}
+
+function switchTab(tabName) {
+  document.getElementById("tab-roster").classList.add("hidden");
+  document.getElementById("tab-run").classList.add("hidden");
+  document.getElementById("tab-builder").classList.add("hidden");
+
+  document.getElementById("tab-roster-btn").classList.remove("active");
+  document.getElementById("tab-run-btn").classList.remove("active");
+  document.getElementById("tab-builder-btn").classList.remove("active");
+
+  if (tabName === "roster") {
+    document.getElementById("tab-roster").classList.remove("hidden");
+    document.getElementById("tab-roster-btn").classList.add("active");
+  } else if (tabName === "run") {
+    document.getElementById("tab-run").classList.remove("hidden");
+    document.getElementById("tab-run-btn").classList.add("active");
+  } else if (tabName === "builder") {
+    document.getElementById("tab-builder").classList.remove("hidden");
+    document.getElementById("tab-builder-btn").classList.add("active");
+    populateBuilderSelect();
+  }
+}
+
+function populateBuilderSelect() {
+  const sel = document.getElementById("builder-base-select");
+  if (!sel) return;
+  sel.innerHTML = Object.keys(WORKFLOWS).map(k => `<option value="${k}">${WORKFLOWS[k].name}</option>`).join("");
+}
+
+function buildCustomOperator() {
+  const baseKey = document.getElementById("builder-base-select").value;
+  const opName = document.getElementById("builder-op-name").value || "Custom AI Operator";
+  const opTitle = document.getElementById("builder-op-title").value || "Custom Beauty Specialist";
+  const winMetric = document.getElementById("builder-win-metric").value || "100% Verified";
+
+  const newOpId = "op_custom_" + Date.now();
+  EMPLOYEES.push({
+    id: newOpId,
+    name: opName,
+    title: opTitle,
+    wf: baseKey,
+    handled: 1,
+    hrs: 12.0,
+    win: winMetric,
+    status: "idle"
+  });
+
+  renderRoster();
+  switchTab("roster");
+  alert(`Custom operator "${opName}" has been successfully added to the Anastasia Beverly Hills AI workforce roster!`);
+}
+
+function toggleBrandDrawer() {
+  document.getElementById("brand-drawer").classList.toggle("open");
+}
+
+function scrollToRoster() {
+  switchTab("roster");
+  window.scrollTo({top: 400, behavior: "smooth"});
+}
+
+// Initial Render
+window.addEventListener("DOMContentLoaded", () => {
+  renderRoster();
+  selectAndRunOperator("golden_ratio_brow_wiz_surge");
+});
+</script>
+</body>
+</html>
