@@ -260,3 +260,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/inficon
 https://innvonix-tech-solutions.github.io/ai-workforce/nextflex
 https://innvonix-tech-solutions.github.io/ai-workforce/signode
 https://innvonix-tech-solutions.github.io/ai-workforce/anastasia
+https://innvonix-tech-solutions.github.io/ai-workforce/crestron-electronics
