@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Berlin Packaging - AI Commercial Sourcing &amp; Structural Operations Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#ffffff;
+  --surface:#f4f6f9;
+  --surface2:#e9eef5;
+  --border:#cbd5e1;
+  --accent:#002b49;
+  --accent-light:#004373;
+  --accent-dark:#001a2d;
+  --berlin-blue:#0072ce;
+  --berlin-green:#2e7d32;
+  --berlin-green-bg:rgba(46,125,50,.08);
+  --berlin-green-line:rgba(46,125,50,.28);
+  --accent-dim:rgba(0,43,73,.08);
+  --accent-line:rgba(0,43,73,.25);
+  --text:#1a2530;
+  --text-muted:#64748b;
+  --hi:#0f172a;
+  --ok:#2e7d32;
+  --ok-dim:rgba(46,125,50,.10);
+}
+body{background:var(--canvas);color:var(--text);font-family:"Plus Jakarta Sans",system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:3px solid var(--berlin-blue);position:sticky;top:0;background:var(--accent);color:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:14px}
+.mark{min-width:88px;height:36px;padding:0 12px;border-radius:6px;background:#ffffff;display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:900;font-size:14px;letter-spacing:1px;white-space:nowrap;overflow:hidden;flex-shrink:0;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.mark span{color:var(--berlin-blue)}
+.htitle{font-size:15px;font-weight:800;color:#fff;letter-spacing:.4px;text-transform:uppercase}.hsub{font-size:11px;color:#cbd5e1;margin-top:1px;font-weight:500;letter-spacing:.3px}
+.badge{border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:6px 12px;font-size:11px;color:#e2e8f0;background:rgba(0,26,45,.6)}.badge b{color:#ffffff}
+.tabs{max-width:1200px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:700;color:var(--text-muted);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none;letter-spacing:.3px}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface);border-top:3px solid var(--accent)}
+.main{max-width:1200px;margin:0 auto;padding:24px}
+.lead{font-size:14.5px;line-height:1.6;max-width:920px;margin-bottom:14px;color:#334155}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--text-muted);margin-bottom:22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.5px;padding:3px 8px;border-radius:5px;text-transform:uppercase;vertical-align:middle}
+.tag.commercial{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.operations{background:var(--berlin-green-bg);color:#1b5e20;border:1px solid var(--berlin-green-line)}
+.tag.hero{background:rgba(0,43,73,.12);color:var(--accent);border:1px solid var(--accent)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--accent)}.cell .v .u{color:var(--accent);font-size:16px}
+.cell .k{font-size:11.5px;color:var(--text-muted);margin-top:4px;line-height:1.35}
+.slabel{font-size:11px;font-weight:800;letter-spacing:1.2px;color:var(--accent);text-transform:uppercase;margin:22px 0 14px;display:flex;align-items:center;gap:10px;font-family:"IBM Plex Sans Condensed",sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;transition:box-shadow .2s,border-color .2s}
+.emp:hover{border-color:var(--accent-line);box-shadow:0 4px 14px rgba(0,43,73,.10)}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--accent-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);font-size:15px;flex-shrink:0;position:relative}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:15px;font-weight:800;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;letter-spacing:.2px}.emp-title{font-size:12px;color:var(--text-muted)}
+.emp-owns{font-size:12.5px;margin-bottom:10px;line-height:1.4}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--text-muted);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-weight:600}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px}
+.st{font-size:11px;color:var(--text-muted)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:800}
+.actions{display:flex;gap:8px}
+.btn{font-family:inherit;font-size:12.5px;font-weight:700;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi);transition:all .15s}
+.btn:hover{border-color:var(--accent-line)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#ffffff}
+.btn.primary:hover{background:var(--accent-dark);border-color:var(--accent-dark);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent;color:var(--accent)}.btn.big{padding:12px 22px;font-size:13.5px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px;background:rgba(244,246,249,.6)}
+.hire-card:hover{border-color:var(--accent);background:var(--surface)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:700;color:var(--hi)}.hire-card .p{font-size:12px;color:var(--text-muted);margin-top:4px;max-width:220px}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--text-muted);margin-bottom:16px}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:inherit;font-size:13px;color:var(--hi);resize:none;min-height:60px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--berlin-green-bg)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text-muted);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent-dark)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:700;color:var(--text-muted);letter-spacing:.3px}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(46,125,50,.5);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--text-muted);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--text-muted)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--text-muted)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:176px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:"IBM Plex Mono",monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 220px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.ft{color:var(--text-muted)}.fa{font-weight:600;color:var(--accent)}.fd{color:var(--hi)}
+.result{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px;margin-top:14px}
+.rstats{display:flex;gap:22px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:12px;margin-bottom:14px}
+.rrow .k{font-size:11px;color:var(--text-muted);text-transform:uppercase;display:block}.rrow .v{font-size:13px;font-weight:800;color:var(--hi)}
+.rh{font-size:12px;font-weight:800;letter-spacing:.8px;color:var(--accent);text-transform:uppercase;margin-bottom:8px}
+.rb{font-family:"IBM Plex Mono",monospace;font-size:12px;line-height:1.55;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;white-space:pre-wrap;color:#334155;max-height:300px;overflow-y:auto}
+.donebar{margin-top:12px;font-size:12px;color:var(--text-muted);background:rgba(0,43,73,.06);border:1px solid var(--accent-line);border-radius:8px;padding:10px 14px}
+.donebar b{color:var(--hi)}
+.steps{display:flex;gap:12px;margin-bottom:20px}
+.step{flex:1;border:1px solid var(--border);border-radius:10px;padding:12px 14px;background:#fff;display:flex;align-items:center;gap:10px}
+.step.active{border-color:var(--accent);background:var(--accent-dim)}
+.step .n{width:26px;height:26px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--text-muted)}
+.step.active .n{border-color:var(--accent);color:var(--accent-dark);background:#fff}
+.step .l{font-size:12px;font-weight:700;color:var(--text-muted)}.step.active .l{color:var(--hi)}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:18px}
+.wf{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;transition:.15s}
+.wf:hover{border-color:var(--accent-line)}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:13px;font-weight:800;color:var(--hi);margin-bottom:5px}.wf .wd{font-size:11.5px;color:var(--text-muted);line-height:1.4;margin-bottom:8px}
+.wf .wm{font-size:10.5px;font-weight:700;color:var(--accent)}
+.task-row{display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fff;border:1px solid var(--border);border-radius:8px;margin-bottom:8px}
+.task-row .tn{font-size:11px;font-weight:800;color:var(--text-muted);width:20px}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:200px}
+.field{margin-bottom:16px}.field label{display:block;font-size:12px;font-weight:700;color:var(--hi);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:11px 16px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.seg button{font-family:inherit;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--text-muted);cursor:pointer;border-right:1px solid var(--border);font-weight:600}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#ffffff}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1200px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--text-muted);line-height:1.5}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="header">
+<div class="logo">
+<div class="mark">BERLIN <span>PACKAGING</span></div>
+<div><div class="htitle">Berlin Packaging · AI Commercial Sourcing &amp; Structural Operations Workforce</div><div class="hsub">CHICAGO IL · HYBRID PACKAGING SUPPLIER · STUDIO ONE ELEVEN · GLOBAL SUPPLY CHAIN &amp; SUSTAINABILITY</div></div></div>
+<div class="badge">Hybrid Packaging Engine &nbsp;·&nbsp; <b>illustrative</b></div>
+</header>
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>a Berlin Packaging commercial CPG account origination, Studio One Eleven structural container engineering, post-consumer recycled (PCR) resin sustainability audit, global inventory stocking, or filling line compatibility workflow turned into an autonomous team of agents</b>. One track scales CPG enterprise accounts, glass/PET container quotes, mold tooling capex models, and distributor market share: it scans food, beverage, spirits, personal care, and pharma brand owners across North America and Europe, models custom glass bottle pro formas, structures multi-year inventory holding agreements, and benchmarks resin spot prices. The other track delivers structural package design, FEA top-load simulation, life cycle assessment (LCA), and supply chain fulfillment: it executes finite-element top-load stress models for lightweighted PET containers, evaluates custom neck finish thread tolerances (e.g. 28-400 vs 28-410), audits 100+ global distribution center safety stocks, and enforces container tooling ECO revisions. Point one at a CPG RFQ single-line drawing, a resin index forecast, or a high-speed bottling line telemetry feed and it executes the loop, delivering a review-ready dossier for a Chief Commercial Officer, VP of Engineering, or Director of Supply Chain to confirm.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial Sourcing</span> CPG Lead Scout, Custom Mold BOM Quote, Enterprise RFQ Tender, Resin Market Radar</span>
+<span><span class="tag operations">Structural Engineering &amp; Supply Chain</span> Studio One Eleven FEA, Inventory Fulfillment, Sustainable PCR LCA, Container Tooling ECO</span>
+<span><span class="tag hero">Flagship</span> Studio One Eleven FEA Top-Load Stress &amp; High-Speed Line Qualification</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+<div class="foot">Independent concept prototype prepared for a conversation with Berlin Packaging (berlinpackaging.com). Built using Berlin Packaging visual identity tokens (#002B49 Deep Navy primary, #0072CE Electric Blue accent, #2E7D32 Eco Green, #F4F6F9 surface, and #1A2530 neutral slate). All operators and outputs are illustrative simulations; CPG accounts, bill of materials quotes, structural stress models, resin price indexes, and custom mold change orders are placeholders. A VP of Commercial Sourcing, Director of Structural Engineering, Chief Supply Chain Officer, or Quality Director reviews and approves every packaging proposal, custom mold tooling release, and master supply agreement.</div>
+<script>
+const AGENT_ROLES={
+enterprise_cpg_packaging_lead_scout:{emoji:'📦',label:'Enterprise CPG Packaging Sourcing Scout',tools:['screen_cpg_brand_portfolios_and_container_rfqs','save']},
+hybrid_packaging_bom_pricing_eng:{emoji:'💰',label:'Hybrid Packaging BOM & Custom Mold Quoting Lead',tools:['calculate_glass_pet_metal_container_and_tooling_bom','save']},
+studio_one_eleven_structural_design_spec:{emoji:'📐',label:'Studio One Eleven Structural Packaging Engineer',tools:['model_fea_top_load_stress_and_container_drop_dynamics','save']},
+pcr_sustainability_lca_compliance_auditor:{emoji:'🌱',label:'Post-Consumer Recycled (PCR) & LCA Sustainability Auditor',tools:['calculate_life_cycle_carbon_footprint_and_pcr_ratio','save']},
+global_supply_chain_inventory_router:{emoji:'🚚',label:'Global Inventory & Distribution Center Fulfillment Lead',tools:['optimize_safety_stock_and_reorder_triggers_across_dcs','save']},
+cpg_enterprise_account_tender_lead:{emoji:'🤝',label:'CPG Enterprise Master Packaging Tender Operator',tools:['structure_multi_year_supply_and_inventory_holding_contract','save']},
+glass_plastic_metal_container_qualification_eng:{emoji:'🍾',label:'Glass & Rigid Plastic Container Qualification Engineer',tools:['audit_annealing_stress_and_wall_thickness_distribution','save']},
+closure_pump_dispensing_fitment_spec:{emoji:'🧪',label:'Closure, Dispensing Pump & Fitment Specialist',tools:['evaluate_neck_finish_thread_torque_and_leakage_limits','save']},
+custom_mold_tooling_eco_revision_spec:{emoji:'🔄',label:'Custom Container Mold Tooling ECO Revision Lead',tools:['evaluate_cavity_shrinkage_and_parting_line_tolerances','save']},
+filling_line_compatibility_qa_engineer:{emoji:'⚙️',label:'High-Speed Bottling & Filling Line QA Engineer',tools:['simulate_conveyor_starwheel_clearance_and_capping_torque','save']},
+writer:{emoji:'✍️',label:'Packaging Technical Dossier & CPG Proposal Writer',tools:['compose','save']},
+reviewer:{emoji:'✅',label:'Director of Structural Engineering & Principal Packaging PE',tools:['qa_review','save']},
+};
+const RK=Object.keys(AGENT_ROLES);
+const TRACKS=[['commercial','Commercial Packaging Sourcing & Enterprise Offtake'],['operations','Studio One Eleven Engineering, PCR & Supply Chain Ops']];
+const WORKFLOWS={
+scout:{name:'Top 50 Enterprise CPG packaging sourcing & glass/PET consolidation scout',title:'AI CPG Enterprise Packaging Scout',mode:'dag',track:'commercial',deliverable:'Top 50 Enterprise CPG Packaging Sourcing & Container Opportunity List',
+sample:'Identify food, beverage, spirits, personal care, and pharmaceutical brand owners across North America and Europe consuming over 10 million annual glass, PET, or metal containers, seeking hybrid packaging consolidation, custom Studio One Eleven design, and inventory holding programs.',
+desc:'Agents analyze CPG financial filings, trade show registries, brand extension launches, and import customs bill of lading records.',
+tasks:[{agent:'enterprise_cpg_packaging_lead_scout',task:'Screen CPG brand owners consuming 5M to 50M glass bottles and PET jars across beverage, personal care, and pharma.',deps:[]},
+{agent:'closure_pump_dispensing_fitment_spec',task:'Identify packaging lines requiring specialized lotion pumps, fine-mist sprayers, or tamper-evident closures.',deps:[0]},
+{agent:'reviewer',task:'Audit CPG credit rating, purchasing volume commitments, and stock vs custom container feasibility.',deps:[1]},
+{agent:'writer',task:'Compile Top 50 CPG packaging enterprise pipeline brief with target buyer contact profiles.',deps:[2]}]},
+quote:{name:'Turnkey 12M unit custom glass & closure BOM pro forma with mold tooling capex',title:'AI Hybrid Packaging Quoting Operator',mode:'sequential',track:'commercial',deliverable:'Turnkey 12M Unit Custom Glass & Closure BOM Pro Forma with Mold Tooling Capex Dossier',
+sample:'Generate complete bill of materials (BOM), unit cost tiering, and custom mold tooling capex for a 12 million unit annual spirits glass bottle program in Louisville, Kentucky including custom 750ml flint glass bottles, bar-top synthetic cork closures, and 12-pack corrugated shipping cartons.',
+desc:'Agents calculate glass furnace melt runs, unit price volume breaks (1M vs 5M vs 12M units), custom mold cavitation tooling costs ($145,000), and regional warehouse safety stock holding terms.',
+tasks:[{agent:'hybrid_packaging_bom_pricing_eng',task:'Calculate unit prices: $0.485/unit for 750ml glass + $0.092 for bar-top closure + $0.085 for master carton.',deps:[]},
+{agent:'glass_plastic_metal_container_qualification_eng',task:'Confirm glass thermal shock resistance, internal pressure rating, and annealing stress compliance.',deps:[0]},
+{agent:'cpg_enterprise_account_tender_lead',task:'Structure 60-day warehouse safety stock buffer terms and freight logistics from glass plant to bottling facility.',deps:[1]},
+{agent:'reviewer',task:'Audit single-line bottle drawing, neck finish specifications (GPI 28-400), and mold amortizing payback.',deps:[2]},
+{agent:'writer',task:'Produce review-ready enterprise packaging commercial proposal package with 3D Studio One Eleven rendering.',deps:[3]}]},
+tender:{name:'Global CPG master packaging supply & 90-day inventory holding tender response',title:'AI Master Packaging Tender Operator',mode:'sequential',track:'commercial',deliverable:'Global CPG Master Packaging Supply & 90-Day Inventory Holding Tender Response',
+sample:'Formulate master multi-year packaging supply tender response for a Fortune 500 personal care brand owner covering 85 million PET lotion bottles, 85 million treatment pumps, and 20 million aluminum tubes across 6 global manufacturing facilities.',
+desc:'Agents benchmark global vendor manufacturing capacities, dual-sourcing plant risk mitigation, 90-day vendor-managed inventory (VMI) stocking agreements, and rebate volume tiers.',
+tasks:[{agent:'cpg_enterprise_account_tender_lead',task:'Structure master supply contract with 90-day VMI stocking terms across 4 Berlin Packaging distribution centers.',deps:[]},
+{agent:'pcr_sustainability_lca_compliance_auditor',task:'Provide certified 50% Post-Consumer Recycled (PCR) PET resin supply guarantee and carbon footprint reduction audit.',deps:[0]},
+{agent:'reviewer',task:'Audit vendor liability terms, key performance indicators (99.5% on-time delivery SLA), and price index escalation clauses.',deps:[1]},
+{agent:'writer',task:'Draft master enterprise packaging supply agreement, regional warehouse release matrix, and executive presentation.',deps:[2]}]},
+radar:{name:'Global packaging resin, glass energy surcharges & freight market intelligence brief',title:'AI Packaging Market Intelligence Operator',mode:'dag',track:'commercial',deliverable:'Global Packaging Resin, Glass Energy Surcharges & Freight Market Intelligence Brief',
+sample:'Analyze global packaging commodity trends across North America and Europe, tracking virgin PET and HDPE resin spot prices ($/lb), glass furnace natural gas energy surcharges, ocean container spot freight rates, and supply availability of food-grade PCR resins.',
+desc:'Agents synthesize ICIS resin market reports, glass container producer earnings calls, freight index telemetry, and regulatory recycled-content mandates (e.g. California AB 793, EU PPWR).',
+tasks:[{agent:'hybrid_packaging_bom_pricing_eng',task:'Track virgin PET ($0.68/lb) vs 50% PCR PET ($0.82/lb) price spreads and calculate CPG unit cost impacts.',deps:[]},
+{agent:'enterprise_cpg_packaging_lead_scout',task:'Highlight Berlin Packaging competitive advantages: Global hybrid sourcing scale, VMI holding, and Studio One Eleven design.',deps:[0]},
+{agent:'writer',task:'Produce quarterly executive packaging commodity market intelligence dossier with CPG buying battlecards.',deps:[1]}]},
+panel_qualification:{name:'Studio One Eleven FEA top-load stress & high-speed line qualification',title:'AI Studio One Eleven FEA Operator',mode:'dag',track:'operations',tag:'flagship',deliverable:'Studio One Eleven FEA Top-Load Stress & High-Speed Line Qualification Dossier',
+sample:'Execute finite-element analysis (FEA) top-load structural stress models and high-speed filling line compatibility simulations for a lightweighted 32 oz HDPE dairy container (reduced from 42g to 36g weight), certifying container wall stability under 450 lbs pallet stacking force and 600 bottle-per-minute starwheel conveyor handling.',
+desc:'Agents simulate vertical top-load buckling limits, side-wall squeeze resistance, drop-impact stress concentration at shoulder radii, and capper chuck torque engagement.',
+tasks:[{agent:'studio_one_eleven_structural_design_spec',task:'Execute 3D FEA top-load stress simulation across 36g lightweighted container geometry, verifying 520 lbs crush threshold.',deps:[]},
+{agent:'filling_line_compatibility_qa_engineer',task:'Simulate 600 bpm conveyor transfer line dynamics, starwheel pocket clearance, and liquid fill level accuracy.',deps:[]},
+{agent:'closure_pump_dispensing_fitment_spec',task:'Confirm 38-400 continuous thread closure seal integrity under 22 in-lbs application torque.',deps:[0,1]},
+{agent:'reviewer',task:'Audit 3D CAD models, finite element stress color contours, and high-speed line trial protocol with PE stamp.',deps:[2]},
+{agent:'writer',task:'Publish complete Studio One Eleven structural qualification dossier and commercial filling line certification.',deps:[3]}]},
+inverter_yield:{name:'Global distribution center inventory optimization & safety stock reorder test',title:'AI Supply Chain Inventory Optimization Operator',mode:'sequential',track:'operations',deliverable:'Global Distribution Center Inventory Optimization & Safety Stock Reorder Test Report',
+sample:'Audit inventory levels across 4,200 active SKU items across 12 Berlin Packaging distribution centers in North America, evaluating seasonal CPG demand spikes, lead time variability from glass factories, and automated reorder triggers.',
+desc:'Agents analyze warehouse management system (WMS) inventory turns, calculate safety stock buffers for high-velocity SKUs, identify slow-moving inventory, and issue automated purchase orders to manufacturing partners.',
+tasks:[{agent:'global_supply_chain_inventory_router',task:'Parse 4,200 SKU inventory feeds to identify 28 SKUs approaching safety stock reorder thresholds ahead of summer beverage peak.',deps:[]},
+{agent:'glass_plastic_metal_container_qualification_eng',task:'Verify manufacturing plant production slot availability and 45-day glass factory furnace lead times.',deps:[0]},
+{agent:'reviewer',task:'Validate inventory holding turnover ratio (8.4x/yr) against customer VMI contractual minimums.',deps:[1]},
+{agent:'writer',task:'Generate inventory health report and automated purchase order dispatch matrix for plant operations.',deps:[2]}]},
+thermal_simulation:{name:'Post-consumer recycled (PCR) resin packaging LCA & carbon footprint simulation',title:'AI Sustainable Packaging LCA Simulation Operator',mode:'dag',track:'operations',deliverable:'Post-Consumer Recycled (PCR) Resin Packaging LCA & Carbon Footprint Simulation Strategy',
+sample:'Run Life Cycle Assessment (LCA) environmental impact simulations comparing a standard 100% virgin PET 16 oz beverage container against a 50% PCR PET container and a 100% recycled glass container across raw material extraction, transport, manufacturing, and end-of-life disposal.',
+desc:'Agents quantify cradle-to-grave greenhouse gas emissions (kg CO2e per 1,000 units), water consumption, energy intensity, and compliance with European Union PPWR and US state recycled content mandates.',
+tasks:[{agent:'pcr_sustainability_lca_compliance_auditor',task:'Calculate cradle-to-grave carbon footprint: Virgin PET (68.4 kg CO2e/1k units) vs 50% PCR PET (41.2 kg CO2e/1k units, -39.7%).',deps:[]},
+{agent:'studio_one_eleven_structural_design_spec',task:'Confirm 50% PCR resin blend maintains container clarity, drop impact resistance, and top-load structural strength.',deps:[0]},
+{agent:'writer',task:'Produce Berlin Packaging Sustainability LCA white paper and CPG ESG compliance certificate.',deps:[0,1]}]},
+mask_eco:{name:'Custom container mold tooling neck finish & closure thread ECO review',title:'AI Packaging Design ECO Revision Operator',mode:'sequential',track:'operations',deliverable:'Custom Container Mold Tooling Neck Finish & Closure Thread ECO Assessment',
+sample:'Evaluate Engineering Change Order ECO-2026-PKG-512 (Modify 750ml Spirits Glass Bottle Neck Finish from GPI 28-400 Standard Thread to GPI 28-410 Extended Thread and Deepen Cork Bore Diameter by 0.4mm for Improved Bar-Top Seal).',
+desc:'Agents evaluate 3D mold cavity shrinkage factors, steel tooling recutting feasibility, closure thread engagement depth, liquid leak-tightness under 15 psi pressure, and capping machine chuck modifications.',
+tasks:[{agent:'custom_mold_tooling_eco_revision_spec',task:'Execute 3D CAD tooling revision audit, confirming mold cavity recutting on neck ring components without scrap.',deps:[]},
+{agent:'closure_pump_dispensing_fitment_spec',task:'Confirm modified neck finish maintains zero-leakage seal at 15 psi vacuum pressure testing.',deps:[0]},
+{agent:'writer',task:'Publish integrated Berlin Packaging ECO release notice and glass plant manufacturing bulletin.',deps:[1]}]},
+};
+const DTITLE={
+scout:'Top 50 Enterprise CPG Packaging Sourcing & Container Opportunity List',
+quote:'Turnkey 12M Unit Custom Glass & Closure BOM Pro Forma with Mold Tooling Capex Dossier',
+tender:'Global CPG Master Packaging Supply & 90-Day Inventory Holding Tender Response',
+radar:'Global Packaging Resin, Glass Energy Surcharges & Freight Market Intelligence Brief',
+panel_qualification:'Studio One Eleven FEA Top-Load Stress & High-Speed Line Qualification Dossier',
+inverter_yield:'Global Distribution Center Inventory Optimization & Safety Stock Reorder Test Report',
+thermal_simulation:'Post-Consumer Recycled (PCR) Resin Packaging LCA & Carbon Footprint Simulation Strategy',
+mask_eco:'Custom Container Mold Tooling Neck Finish & Closure Thread ECO Assessment'
+};
+const TOOLS={
+screen_cpg_brand_portfolios_and_container_rfqs:()=>'Audited 400+ food, beverage, personal care, and pharma brand owners for 5M+ container programs.',
+calculate_glass_pet_metal_container_and_tooling_bom:()=>'Calculated 12M unit glass BOM, bar-top closures, master cartons, and $145k mold tooling capex.',
+model_fea_top_load_stress_and_container_drop_dynamics:()=>'Executed FEA top-load simulation; verified 520 lbs crush threshold on 36g lightweighted PET container.',
+calculate_life_cycle_carbon_footprint_and_pcr_ratio:()=>'Quantified cradle-to-grave LCA; verified 39.7% CO2e reduction using 50% PCR PET resin blend.',
+optimize_safety_stock_and_reorder_triggers_across_dcs:()=>'Audited 4,200 SKU inventory feeds across 12 DCs; flagged 28 reorder triggers ahead of peak season.',
+structure_multi_year_supply_and_inventory_holding_contract:()=>'Structured 90-day VMI holding contract, 99.5% delivery SLA, and volume rebate tiers.',
+audit_annealing_stress_and_wall_thickness_distribution:()=>'Audited glass polariscope strain patterns, thermal shock limits, and wall thickness uniformity.',
+evaluate_neck_finish_thread_torque_and_leakage_limits:()=>'Tested GPI 28-400 closure thread seal under 22 in-lbs torque and 15 psi vacuum pressure.',
+evaluate_cavity_shrinkage_and_parting_line_tolerances:()=>'Verified 3D mold cavity recut tolerances on neck ring inserts without scrapping mold bases.',
+simulate_conveyor_starwheel_clearance_and_capping_torque:()=>'Simulated 600 bpm bottling line conveyor transfer, starwheel pocket clearance, and capping chuck torque.',
+compose:()=>'Drafted in clear, structural packaging engineering, CPG commercial sourcing, and QA review-ready style.',
+qa_review:()=>'QA: Verified top-load FEA calculations, closure thread tolerances, and Professional Engineer stamp.',
+save:()=>'Saved to shared project repository for downstream engineering agents.',
+};
+function toolOut(t){return (TOOLS[t]||(()=>'Executed.'))()}
+const FINAL={
+scout:`TOP 50 ENTERPRISE CPG PACKAGING SOURCING & CONTAINER OPPORTUNITY LIST (illustrative)
+Scanned food, beverage, spirits, personal care, and pharmaceutical brand owners across North America and EMEA consuming >5 million annual containers.
+
+Tier-1 Enterprise CPG Packaging Opportunities:
+1. Heritage Spirits Distilling (Louisville, KY) - 12M Units/Yr - Custom 750ml Glass + Bar-Top Cork - Studio One Eleven Fit: 99
+2. Pacific Coast Organic Beverage Co. (Portland, OR) - 25M Units/Yr - 50% PCR PET Juice Bottles - Sustainability Fit: 98
+3. Apex Personal Care & Beauty Brands (New York, NY) - 40M Units/Yr - Custom Dispensing Pumps & Jars - Fit Score: 96
+4. Great Lakes Nutraceuticals (Chicago, IL) - 18M Units/Yr - HDPE Pharma Containers & Closure Systems - Fit Score: 95
+
+Key Decision Makers: VP of Global Packaging Procurement, Director of Packaging Engineering, Chief Supply Chain Officer.
+→ Saved: target_cpg_pipeline, container_mold_database, distributor_vmi_agreements
+NOTE: illustrative concept for Berlin Packaging (berlinpackaging.com).`,
+
+quote:`TURNKEY 12M UNIT CUSTOM GLASS & CLOSURE BOM PRO FORMA WITH MOLD TOOLING CAPEX (illustrative)
+Project Name: Royal Reserve 750ml Custom Glass Spirits Bottle (Louisville, Kentucky)
+Customer: Heritage Spirits Distilling Co.
+
+System Engineering Architecture & Bill of Materials Breakdown:
+• Primary Packaging Fleet: 12,000,000 Custom 750ml Heavy-Base Flint Glass Spirits Bottles (GPI 28-400 finish)
+• Closure System: 12,000,000 Bar-Top Synthetic Cork Closures with Embossed Wood Head
+• Secondary Packaging: 1,000,000 Custom Printed 12-Pack Heavy Duty Corrugated Master Shippers
+• Custom Mold Tooling: 16-cavity blow-and-blow glass mold set designed by Studio One Eleven
+
+Financial Performance & Unit Capex Breakdown:
+• Unit Glass Bottle Price: $0.485/unit ($5,820,000.00 annual glass spend)
+• Unit Closure Price: $0.092/unit ($1,104,000.00 annual closure spend)
+• Master Shipper Carton Price: $0.085/container equivalent ($1,020,000.00 annual corrugated spend)
+• Total Packaging Capex: $0.662/unit delivered ($7,944,000.00 total annual program spend)
+• Mold Tooling Capex: $145,000.00 one-time (amortized over first 3 million units at $0.048/unit)
+• VMI Holding Agreement: 60-day safety stock (2.0 million units) held at Berlin Packaging Louisville DC.
+→ Saved: custom_glass_bom_quote, mold_tooling_amortization_schedule, Studio_One_Eleven_3D_render
+NOTE: illustrative.`,
+
+tender:`GLOBAL CPG MASTER PACKAGING SUPPLY & 90-DAY INVENTORY HOLDING TENDER (illustrative)
+Solicitation: Master Multi-Year Packaging Supply & Inventory Holding Agreement (190,000,000 Units/Yr)
+CPG Brand Partner: Global Fortune 500 Personal Care & Household Products Corporation (6 Manufacturing Plants)
+
+Volume Commitment & Product Category Breakdown:
+• Custom 50% PCR PET Lotion Bottles: 85,000,000 units/year (8 oz and 16 oz sizes)
+• High-Viscosity Treatment Pumps: 85,000,000 units/year (24-410 neck finish with locking clip)
+• Collapsible Aluminum Tubes: 20,000,000 units/year (Pharma grade with internal lacquer lining)
+
+Supply Chain & Inventory Guarantee:
+• 90-Day Vendor Managed Inventory (VMI): 47.5 million unit safety stock held across Berlin distribution centers.
+• Delivery SLA: Guaranteed 99.5% on-time delivery with 24-hour emergency stock release commitment.
+• Sustainability Commitment: Guaranteed 50% PCR PET resin blend reducing supply chain CO2e emissions by 39.7%.
+• Value-Added Services: Included Studio One Eleven structural package redesigns and LCA sustainability audits.
+→ Saved: master_supply_agreement, vmi_warehouse_release_matrix, annual_volume_rebate_schedule
+NOTE: illustrative.`,
+
+radar:`GLOBAL PACKAGING RESIN, GLASS ENERGY SURCHARGES & FREIGHT MARKET INTELLIGENCE (illustrative)
+Analysis Scope: Global Packaging Commodity Indices, Energy Surcharges & Sustainable Material Spreads
+
+Market Pricing & Index Dynamics:
+• Virgin PET Resin (North America): $0.68/lb (Flat over prior quarter due to stable paraxylene feedstock).
+• Food-Grade PCR PET Resin: $0.82/lb (+20.5% premium over virgin PET driven by CPG ESG mandates and AB 793).
+• Virgin HDPE Resin (Blow Molding): $0.72/lb (-2.1% decrease due to Gulf Coast ethylene capacity expansion).
+• European Glass Energy Surcharge: €42.50/ton (Down from winter peak, stabilizing glass bottle production costs).
+• Ocean Freight Spot Rates (Asia to US West Coast): $2,150/40ft container (Stable supply chain routing).
+
+Strategic Purchasing Recommendation: Lock in 12-month virgin PET fixed-margin contracts while securing long-term PCR resin supply agreements to buffer CPG clients against regulatory penalty spikes.
+→ Saved: packaging_resin_index_report, pcr_price_spread_analysis, cpg_procurement_battlecards
+NOTE: illustrative.`,
+
+panel_qualification:`STUDIO ONE ELEVEN FEA TOP-LOAD STRESS & HIGH-SPEED LINE DOSSIER (illustrative)
+Project Site: 36g Lightweighted 32 oz HDPE Dairy & Beverage Container (Redesigned from 42g baseline)
+Engineering Agency: Studio One Eleven (Chicago, Illinois)
+
+Structural FEA Stress Simulation & Drop Test Results:
+• Top-Load Buckling Resistance: FEA simulation verified maximum vertical crush strength of 520 lbs (exceeding 450 lbs pallet stacking requirement under 3-high warehouse storage).
+• Wall Thickness Distribution: Uniform 0.65mm minimum wall thickness maintained at container corners and parting lines.
+• Drop Impact Performance: Zero failure rate across 200 bottle 6-foot drop tests filled with chilled water (40°F).
+• Squeeze Resistance: Panel deflection under hand grip force held under 2.4mm, maintaining ergonomic firmness.
+
+High-Speed Filling Line Compatibility:
+• Conveyor Transfer Trial: 600 bottles/minute continuous run with zero starwheel tipping or jam events.
+• Capping Torque Integration: 38-400 tamper-evident closure applied at 22 in-lbs torque with zero thread stripping.
+• Annual Material Savings: 6.0 grams HDPE saved per bottle = 132,000 lbs plastic eliminated annually per 10M bottles ($95,040.00 annual resin savings).
+→ Saved: studio_one_eleven_fea_report, bottle_3d_cad_drawing, filling_line_commissioning_certificate
+NOTE: illustrative concept for Berlin Packaging.`,
+
+inverter_yield:`GLOBAL DISTRIBUTION CENTER INVENTORY OPTIMIZATION & REORDER REPORT (illustrative)
+Monitored Network: 4,200 Active Packaging SKUs across 12 Berlin Packaging Distribution Centers in North America
+Analytics Engine: Global Supply Chain & Warehouse Management System (WMS) Integrator
+
+Diagnostic Inventory Audit Results:
+• Total Inventory Value Monitored: $142,500,000.00 (Network Inventory Turnover: 8.4x/year)
+• Reorder Trigger Alerts: 28 high-velocity SKUs identified reaching safety stock reorder point ahead of summer peak.
+  - 12 oz Longneck Amber Beer Bottles: 4.2M units on hand (Reorder triggered for 8.0M units from Indiana glass plant).
+  - 28-400 Lotion Dispensing Pumps: 1.8M units on hand (Reorder triggered for 3.5M units from supplier).
+  - 16 oz PET Boston Round Bottles: 850k units on hand (Reorder triggered for 2.0M units).
+
+Supply Chain Optimization & Savings:
+• Avoided Out-of-Stock Risk: Prevented stockouts for 14 major beverage and personal care accounts.
+• Automated PO Dispatch: Electronic purchase orders issued to glass and plastic manufacturing partners with 45-day lead time window.
+→ Saved: dc_inventory_health_report, automated_purchase_orders, warehouse_safety_stock_matrix
+NOTE: illustrative.`,
+
+thermal_simulation:`POST-CONSUMER RECYCLED (PCR) RESIN PACKAGING LCA SIMULATION STRATEGY (illustrative)
+Simulated Package: 16 oz PET Beverage Bottle (Virgin PET vs 50% PCR PET vs 100% Recycled Glass)
+Methodology: ISO 14040/14044 Compliant Life Cycle Assessment (Cradle-to-Grave Analysis)
+
+LCA Environmental Impact Results per 1,000 Delivered Containers:
+• Greenhouse Gas Emissions (Carbon Footprint):
+  - 100% Virgin PET Bottle: 68.4 kg CO2e
+  - 50% PCR PET Bottle: 41.2 kg CO2e (-39.7% reduction)
+  - 100% Recycled Glass Bottle: 142.8 kg CO2e (due to higher furnace energy and freight weight)
+• Water Consumption: 50% PCR PET reduced water consumption by 28.5% compared to virgin PET processing.
+• Non-Renewable Energy Demand: Primary energy demand decreased from 1,240 MJ to 780 MJ per 1k bottles.
+
+Regulatory & ESG Compliance:
+• Complies with California AB 793 (minimum 50% PCR threshold by 2030) and EU Packaging & Packaging Waste Regulation (PPWR).
+→ Saved: packaging_lca_simulation_report, carbon_footprint_certificate, esg_compliance_dossier
+NOTE: illustrative.`,
+
+mask_eco:`CUSTOM CONTAINER MOLD TOOLING NECK FINISH & CLOSURE THREAD ECO ASSESSMENT (illustrative)
+Engineering Change Order: ECO-2026-PKG-512
+Affected Product Lines: Custom 750ml Spirits Glass Bottle Family (Mold Sets M-104A through M-104D)
+
+Design Changes & Geotechnical Results:
+• Neck Finish Modification: Converted neck thread profile from GPI 28-400 (single thread turn) to GPI 28-410 (1.5 thread turns).
+• Cork Bore Refinement: Deepened upper neck bore diameter by 0.4mm to accommodate high-density synthetic bar-top corks.
+• Tooling Impact Analysis: 3D CAD audit confirmed neck ring inserts can be re-cut via CNC machining without scrapping mold bases ($32,000 tooling modification saved).
+• Vacuum Leak Testing: Sealed bottles subjected to 15 psi vacuum pressure for 10 minutes with zero liquid seepage.
+
+Release Status: Certified for commercial glass plant mold recutting and production execution.
+→ Saved: packaging_eco_bulletin, mold_tooling_cnc_drawings, vacuum_seal_test_results
+NOTE: illustrative.`,
+};
+let EMPLOYEES=[
+{id:'scout',name:'Scout',title:'AI CPG Enterprise Packaging Scout',wf:'scout',handled:742,hrs:278,win:0,status:'idle'},
+{id:'quote',name:'Quote',title:'AI Hybrid Packaging Quoting Operator',wf:'quote',handled:665,hrs:305,win:94,status:'idle'},
+{id:'tender',name:'Tender',title:'AI Master Packaging Tender Operator',wf:'tender',handled:498,hrs:324,win:95,status:'idle'},
+{id:'radar',name:'Radar',title:'AI Packaging Market Intelligence Operator',wf:'radar',handled:552,hrs:252,win:72,status:'idle'},
+{id:'safety',name:'Sentinel',title:'AI Studio One Eleven FEA Operator',wf:'panel_qualification',handled:580,hrs:395,win:99,status:'idle'},
+{id:'mill',name:'Atlas',title:'AI Supply Chain Inventory Optimization Operator',wf:'inverter_yield',handled:610,hrs:330,win:97,status:'idle'},
+{id:'cfd',name:'Vanguard',title:'AI Sustainable Packaging LCA Simulation Operator',wf:'thermal_simulation',handled:535,hrs:290,win:91,status:'idle'},
+{id:'eco',name:'Nexus',title:'AI Packaging Design ECO Revision Operator',wf:'mask_eco',handled:548,hrs:295,win:94,status:'idle'},
+];
+let running=false;
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const now=()=>new Date().toLocaleTimeString('en-GB');
+const mono=n=>n.trim().slice(0,2).toUpperCase();
+function chips(wf){let s='';if(wf.track==='commercial')s+='<span class="tag commercial">Commercial</span>';if(wf.track==='operations')s+='<span class="tag operations">Structural Ops &amp; Supply Chain</span>';if(wf.tag==='flagship')s+=' <span class="tag hero">Flagship</span>';return s;}
+function setView(v){
+$('view-ops').classList.toggle('hidden',v!=='ops');$('view-hire').classList.toggle('hidden',v!=='hire');
+$('tabA').classList.toggle('active',v==='ops');$('tabB').classList.toggle('active',v==='hire');
+if(v==='hire')initBuilder();window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderEcon(){
+const total=EMPLOYEES.length,h=EMPLOYEES.reduce((s,e)=>s+e.handled,0),hrs=EMPLOYEES.reduce((s,e)=>s+e.hrs,0);
+const w=EMPLOYEES.filter(e=>e.win>0);const avg=w.length?Math.round(w.reduce((s,e)=>s+e.win,0)/w.length):0;
+const cells=[[total,'AI operators (CPG commercial sourcing &amp; Studio One Eleven engineering)'],[h.toLocaleString(),'CPG BOM quotes, top-load FEA stress audits &amp; VMI reorders handled'],[hrs.toLocaleString()+'<span class="u"> hrs</span>','chief commercial officer &amp; VP of structural engineering hours saved / month'],['+'+avg+'%','avg turnaround improvement']];
+$('econ').innerHTML=cells.map(c=>`<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');
+}
+function empCard(e){const wf=WORKFLOWS[e.wf];
+const team=wf.tasks.map(t=>t.agent).filter((v,i,a)=>a.indexOf(v)===i).map(r=>`<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');
+return `<div class="emp ${e.status==='working'?'working':''} ${wf.tag==='flagship'?'hero':''}" id="emp-${e.id}">
+<div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div>
+<div class="emp-owns">Owns: <b>${wf.name}</b></div>
+<div class="team">${team}</div>
+<div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win>0?('+'+e.win+'%'):'None'}</b>faster</div></div>
+<div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a CPG project</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;
+}
+function renderRoster(){
+const hire=`<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;
+let html='';
+TRACKS.forEach(([tk,label],gi)=>{const list=EMPLOYEES.filter(e=>WORKFLOWS[e.wf].track===tk);if(!list.length)return;
+html+=`<div class="slabel">${label}</div><div class="roster">`+list.map(empCard).join('')+(gi===TRACKS.length-1?hire:'')+`</div>`;});
+const untracked=EMPLOYEES.filter(e=>!WORKFLOWS[e.wf].track);
+if(untracked.length)html+=`<div class="slabel">Other</div><div class="roster">`+untracked.map(empCard).join('')+`</div>`;
+$('roster').innerHTML=html;
+}
+function assign(id){
+if(running)return;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+$('runPanel').innerHTML=`<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div>
+<div><div class="emp-name">${e.name} · ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a CPG container specification, a resin market index, or a Studio One Eleven CAD model and ${e.name} executes the entire workflow.</div></div></div>
+<div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div>
+<div id="stage"></div></div>`;
+$('run').scrollIntoView({behavior:'smooth',block:'start'});$('obj').focus();
+}
+async function runEmp(id){
+if(running)return;running=true;const e=EMPLOYEES.find(x=>x.id===id),wf=WORKFLOWS[e.wf];
+const obj=($('obj').value||wf.sample).trim();$('go').disabled=true;
+e.status='working';const card=$('emp-'+e.id);if(card)card.classList.add('working');
+const stage=$('stage');
+stage.innerHTML=`<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div>
+<div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div>
+<div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;
+const feed=$('feed');
+function log(rk,d){const r=AGENT_ROLES[rk];const nm=r?(r.emoji+' '+r.label):'◆ '+e.name;
+const row=document.createElement('div');row.className='frow';row.innerHTML=`<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0,160)}</span>`;feed.appendChild(row);feed.scrollTop=feed.scrollHeight;}
+log(null,`Input received: "${obj.substring(0,54)}…"`);
+log(null,`Running the ${wf.name} workflow · ${wf.tasks.length} agents · ${wf.mode.toUpperCase()} mode`);
+await sleep(rand(700,1100));
+const grid=$('agrid');
+wf.tasks.forEach((t,i)=>{const r=AGENT_ROLES[t.agent];const c=document.createElement('div');c.className='acard';c.id='ac-'+i;
+c.innerHTML=`<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;
+grid.appendChild(c);setTimeout(()=>c.classList.add('visible'),i*85);});
+await sleep(600);
+$('p1').classList.remove('active');$('p1').classList.add('done');$('p1').querySelector('.dot').textContent='✓';$('p2').classList.add('active');
+const done=new Set();
+async function runOne(i){const t=wf.tasks[i],r=AGENT_ROLES[t.agent],c=$('ac-'+i),st=$('ast-'+i);
+c.classList.remove('visible');c.classList.add('running');st.textContent='Running…';
+log(t.agent,t.task.substring(0,72));await sleep(rand(450,820));
+for(const tool of r.tools){log(t.agent,tool+'( ) → '+toolOut(tool));await sleep(rand(450,820));}
+c.classList.remove('running');c.classList.add('done');st.textContent='Done';log(t.agent,'result saved to shared context');done.add(i);}
+if(wf.mode==='sequential'){for(let i=0;i<wf.tasks.length;i++)await runOne(i);}
+else{while(done.size<wf.tasks.length){const ready=wf.tasks.map((t,i)=>i).filter(i=>!done.has(i)&&wf.tasks[i].deps.every(d=>done.has(d)));if(!ready.length)break;
+if(ready.length>1)await Promise.all(ready.map(runOne));else await runOne(ready[0]);}}
+$('p2').classList.remove('active');$('p2').classList.add('done');$('p2').querySelector('.dot').textContent='✓';$('p3').classList.add('active');$('p3').querySelector('.dot').textContent='✓';$('p3').classList.add('done');
+await sleep(400);
+const out=FINAL[e.wf]||'Review-ready output produced.';const hrsThis=rand(8,38);
+$('resultArea').innerHTML=`<div class="result"><div class="rstats">
+<div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div>
+<div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div>
+<div class="rrow"><span class="k">Track</span><span class="v">${wf.track==='commercial'?'Commercial Sourcing &amp; Enterprise Offtake':'Studio One Eleven Engineering &amp; Supply Chain'}</span></div>
+<div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div>
+<div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div>
+<div class="rout"><div class="rh">Review-ready output · ${DTITLE[e.wf]||'Output'}</div><div class="rb">${out.replace(/</g,'&lt;')}</div></div></div>
+<div class="donebar"><b>${e.name} produced a review-ready output.</b> Execution, packaging engineering verification and QA complete, ready for a Chief Commercial Officer, VP of Engineering, or Director of Supply Chain to review and approve. Illustrative simulation placeholder.</div>`;
+e.handled+=1;e.status='idle';if(card)card.classList.remove('working');renderEcon();renderRoster();running=false;
+}
+// builder
+let draft={};
+function initBuilder(){draft={wf:null,mode:null,assign:[],name:'',title:'',cadence:'Per CPG container RFQ proposal',step:1};renderBuilder();}
+function renderBuilder(){
+const steps=[['01','Pick a workflow'],['02','Assign the agents'],['03','Name & cadence']];
+$('bSteps').innerHTML=steps.map((s,i)=>`<div class="step ${draft.step===i+1?'active':''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+if(draft.step===1)bS1();else if(draft.step===2)bS2();else bS3();bNav();
+}
+function bS1(){$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">`+
+Object.keys(WORKFLOWS).map(k=>{const w=WORKFLOWS[k];return `<div class="wf ${draft.wf===k?'sel':''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents · ${w.mode}</div></div>`;}).join('')+`</div>`;}
+function pickWf(k){draft.wf=k;const w=WORKFLOWS[k];draft.mode=w.mode;draft.assign=w.tasks.map(t=>t.agent);if(!draft.title)draft.title=w.title;renderBuilder();}
+function bS2(){const w=WORKFLOWS[draft.wf];const opts=RK.map(r=>`<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Assign each task to an agent</div>`+
+w.tasks.map((t,i)=>`<div class="task-row"><div class="tn">${i+1}</div><div class="tt">${t.task}${t.deps.length?` <span style="color:var(--text-muted)">· waits for ${t.deps.map(d=>d+1).join(', ')}</span>`:''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('')+
+`<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">`+['sequential','dag'].map(m=>`<button class="${draft.mode===m?'on':''}" onclick="draft.mode='${m}';bS2()">${m==='dag'?'Auto (parallel where safe)':'Sequential'}</button>`).join('')+`</div></div>`;
+document.querySelectorAll('#bBody select').forEach((s,i)=>s.value=draft.assign[i]);}
+function bS3(){const w=WORKFLOWS[draft.wf];$('bBody').innerHTML=`<div class="slabel" style="margin-top:0">Name & cadence</div>
+<div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. Berlin Packaging CPG Solutions Operator" oninput="draft.name=this.value"></div>
+<div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Structural Packaging Lead" oninput="draft.title=this.value"></div>
+<div class="field"><label>Cadence</label><div class="seg">`+['Per CPG container RFQ proposal','Per inventory stocking cycle','Weekly','On-demand'].map(c=>`<button class="${draft.cadence===c?'on':''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('')+`</div></div>
+<div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name||'New')}</div><div><div class="emp-name">${draft.name||'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title||'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div></div>`;}
+function bNav(){const left=draft.step>1?`<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>`:`<span></span>`;
+let right;if(draft.step===1)right=`<button class="btn primary" ${draft.wf?'':'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+else if(draft.step===2)right=`<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+else right=`<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;$('bNav').innerHTML=left+right;}
+function hire(){const w=WORKFLOWS[draft.wf];const name=(draft.name||'New Operator').trim();
+const wfId='custom_'+Date.now();WORKFLOWS[wfId]={name:w.name,title:w.title,mode:draft.mode||w.mode,track:w.track,tag:w.tag,deliverable:w.deliverable,sample:w.sample,desc:w.desc,tasks:w.tasks.map((t,i)=>({agent:draft.assign[i]||t.agent,task:t.task,deps:t.deps}))};
+DTITLE[wfId]=DTITLE[draft.wf];FINAL[wfId]=FINAL[draft.wf];
+const id='op_'+Date.now();EMPLOYEES.push({id,name,title:draft.title||w.title,wf:wfId,handled:0,hrs:rand(40,140),win:0,status:'idle'});
+renderEcon();renderRoster();setView('ops');
+setTimeout(()=>{const c=$('emp-'+id);if(c){c.scrollIntoView({behavior:'smooth',block:'center'});c.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>c.style.boxShadow='',1800);}},250);
+}
+renderEcon();renderRoster();
+</script>
+</body>
+</html>
