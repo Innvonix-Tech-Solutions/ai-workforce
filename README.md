@@ -264,3 +264,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/crestron-electronics
 https://innvonix-tech-solutions.github.io/ai-workforce/berlinpackaging
 https://innvonix-tech-solutions.github.io/ai-workforce/pei-genesis
 https://innvonix-tech-solutions.github.io/ai-workforce/omnicable
+https://innvonix-tech-solutions.github.io/ai-workforce/lumotive
