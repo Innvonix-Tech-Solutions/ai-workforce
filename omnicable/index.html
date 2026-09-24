@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Omni Cable &mdash; AI Commercial &amp; Value-Added Cable Services Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f4f7fa;--surface2:#dbe3ec;--border:#b5c5d6;--accent:#002f6c;
+--accent-dim:rgba(0,47,108,.10);--accent-line:rgba(0,47,108,.40);--slate:#0b2038;--slate-line:rgba(11,32,56,.32);--text:#081728;--hi:#030e1a;--tert:#506377;--ok:#10b981;--ok-dim:rgba(16,185,129,.10);--gold:#ff6600;--gold-bg:#fff5ee;--gold-line:#ffd4b8}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:46px;height:34px;border-radius:8px;background:linear-gradient(135deg,#002f6c,#ff6600);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:12px;letter-spacing:.5px;font-family:Inter,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#002f6c}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:900px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#002454;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(16,185,129,.08);color:#059669;border:1px solid rgba(16,185,129,.3)}
+.tag.hero{background:var(--gold-bg);color:#c44d00;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#002f6c}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#002454;font-size:15px;flex-shrink:0;position:relative;font-family:Inter,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#002f6c}.btn.primary{background:linear-gradient(270deg,#002f6c,#0b2038);border-color:#002f6c;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#002f6c;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#002f6c}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(16,185,129,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(16,185,129,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#002f6c}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Inter,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#002454;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px;font-family:Inter,sans-serif}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input,.field select{width:100%;background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);outline:none}
+.field input:focus{border-color:var(--accent)}
+.seg{display:flex;gap:6px}.seg button{flex:1;padding:9px;font-size:12px;font-weight:600;border:1px solid var(--border);border-radius:7px;background:#fff;color:var(--tert);cursor:pointer;font-family:Inter,sans-serif}
+.seg button.on{background:var(--accent-dim);color:var(--hi);border-color:var(--accent-line)}
+.foot{max-width:1180px;margin:30px auto 40px;padding:18px 24px;border-top:1px solid var(--border);font-size:11.5px;color:var(--tert);text-align:center;line-height:1.5;font-family:Inter,sans-serif}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">
+    <div class="mark">OMNI</div>
+    <div>
+      <div class="htitle">Omni Cable &middot; AI Commercial &amp; Value-Added Cable Services Workforce</div>
+      <div class="hsub">Master distributor 100% distribution-only sales, custom cable paralleling &amp; 24/7 emergency dispatch</div>
+    </div>
+  </div>
+  <div class="badge"><b>OmniCable Master Platform</b> &middot; West Chester, PA</div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tabA" onclick="setView('ops')">Active Operators (8)</button>
+  <button class="tab" id="tabB" onclick="setView('hire')">+ Add New Operator</button>
+</div>
+
+<div class="main">
+  <div id="view-ops">
+    <p class="lead"><b>Omni Cable</b> (West Chester, Pennsylvania) is a premier master distributor of specialty wire, cable, fiber optics, and electrical products, selling 100% exclusively through electrical distributors. With a nationwide network of distribution centers, OmniCable provides distributors with immediate access to specialty tray cables, portable cords, aluminum building wire, medium voltage, and industrial Ethernet, supported by value-added services (VAS) including custom cutting, paralleling, twisting, lashing, conductor striping, and 24/7 emergency dispatch. This prototype demonstrates an autonomous AI workforce automating electrical distributor sourcing, cut-to-length tray cable quotes, Distributor Stock Package (DSP) proposals, custom paralleling operations, fiber optic submittals, and UL/NEC compliance audits.</p>
+    <div class="legend">
+      <span><span class="tag commercial">Distributor Sales &amp; Sourcing</span> Electrical distributors, DSP stock packages &amp; tray cable quotes</span>
+      <span><span class="tag operations">Value-Added Cable Operations</span> Paralleling, striping, 24/7 emergency dispatch &amp; UL quality</span>
+      <span><span class="tag hero">Flagship</span> Multi-agent parallel simulation</span>
+    </div>
+    <div class="econ" id="econ"></div>
+    <div id="roster"></div>
+    <div id="runPanel"></div>
+  </div>
+
+  <div id="view-hire" class="hidden">
+    <div class="steps" id="bSteps"></div>
+    <div id="bBody"></div>
+    <div class="actions" id="bNav" style="margin-top:20px;justify-between"></div>
+  </div>
+</div>
+
+<div class="foot">
+  Demonstration prototype created for Omni Cable by Innvonix Tech Solutions. All metrics, commercial cable quotation figures, paralleling reel schedules, and 24/7 emergency dispatch logs are simulated placeholders for illustrative purposes. Human cable engineering review required prior to commercial wire shipment or UL quality release.
+</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'Electrical Distribution & Infrastructure Research', tools: ['research_cable_markets', 'save'] },
+  prospector: { emoji: '🧲', label: 'Electrical Distributor Account Sourcing', tools: ['source_distributor_accounts', 'save'] },
+  qualifier: { emoji: '🎯', label: 'Specialty Wire & Cut-to-Length RFQ Qualifier', tools: ['score_omnicable_rfq', 'save'] },
+  cable_architect: { emoji: '⚡', label: 'Tray Cable & Medium Voltage Cable Specialist', tools: ['select_cable_spec', 'save'] },
+  vas_engineer: { emoji: '✂️', label: 'Paralleling, Twisting & Custom Cut Lead', tools: ['plan_vas_operations', 'save'] },
+  striping_specialist: { emoji: '🎨', label: 'Conductor Color-Striping & Lashing Lead', tools: ['configure_striping_lashing', 'save'] },
+  fiber_analyst: { emoji: '🌐', label: 'Fiber Optic & Industrial Ethernet Specialist', tools: ['spec_fiber_ethernet_cable', 'save'] },
+  logistics_lead: { emoji: '🚚', label: '24/7 Emergency Dispatch & Same-Day Logistics Lead', tools: ['schedule_sameday_dispatch', 'save'] },
+  compliance: { emoji: '📋', label: 'UL, NEC & IEEE Cable Standards Lead', tools: ['verify_ul_nec_compliance', 'save'] },
+  pricing: { emoji: '🧮', label: 'Cut-to-Length & Value-Added Pricing Estimator', tools: ['calculate_omnicable_pricing', 'save'] },
+  writer: { emoji: '✍️', label: 'Technical Cable Submittal & Quote Writer', tools: ['compose_omnicable_proposal', 'save'] },
+  reviewer: { emoji: '✅', label: 'QA & OmniCable Master Release Reviewer', tools: ['review_omnicable_qa', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Electrical Distributor & OEM Channel Sourcing',
+    title: 'Master Distributor Channel Discovery & Contractor Project Pipeline',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Target list of regional electrical distributors, industrial automation houses & utility suppliers seeking 100% distribution-only master inventory',
+    sample: 'Identify top 35 regional electrical distributors expanding into industrial tray cable, data center fiber, and utility solar projects.',
+    desc: 'Automated discovery of regional electrical distributors and industrial supply houses seeking master inventory support.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan NAED electrical distributor expansions, utility grid modernizations, and industrial data center cable bids', deps: [] },
+      { agent: 'prospector', task: 'Source VP of Purchasing, Wire & Cable Product Managers & Purchasing Directors at WESCO, Graybar, Rexel & Sonepar', deps: [0] },
+      { agent: 'qualifier', task: 'Score fit for OmniCable 100% exclusive distribution model, custom cut-to-length, and Distributor Stock Package (DSP) terms', deps: [1] }
+    ]
+  },
+  tray_cable_quote: {
+    name: 'Tray Cable Cut-to-Length Quoting Engine',
+    title: 'Industrial TC-ER, VNTC & Portable Cord Instant Quotation',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Commercial quotation & reel cutting schedule for 12,000 ft of THHN/VNTC industrial tray cable across 4 custom reel lengths',
+    sample: 'Generate volume cut-to-length quotation for 12,000 ft of 500 KCMIL TC-ER aluminum tray cable split across 4 paralleled jobsite reels.',
+    desc: 'Evaluates copper/aluminum metal market pricing, cut-to-length charges, reel sizes, and same-day warehouse dispatch SLAs.',
+    tasks: [
+      { agent: 'qualifier', task: 'Parse electrical distributor RFQ parameters (500 KCMIL TC-ER 3-conductor with ground, 4x 3,000 ft reels, same-day shipment)', deps: [] },
+      { agent: 'pricing', task: 'Compute copper/aluminum daily spot price, custom reel cutting fee, reel deposit, freight allowance & distributor margin', deps: [0] },
+      { agent: 'writer', task: 'Generate formal OmniCable commercial quote with submittal datasheet, UL listing verification & guaranteed same-day shipping SLA', deps: [1] }
+    ]
+  },
+  dsp_package_proposal: {
+    name: 'Distributor Stock Package (DSP) Proposal',
+    title: 'Consignment Stock & Inventory Flexibility Program Proposal',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Distributor Stock Package (DSP) inventory proposal, fast-turn stocking matrix, and factory-direct pricing agreement',
+    sample: 'Formulate a Distributor Stock Package (DSP) proposal for a regional electrical distributor branch stocking portable cords and building wire.',
+    desc: 'Combines fast-turn stocking items, factory-direct pricing, volume rebates, and stock rotation flexibility for electrical distributors.',
+    tasks: [
+      { agent: 'researcher', task: 'Analyze branch regional sales velocity for SOOW portable cords, XHHW-2 aluminum, and industrial Ethernet cables', deps: [] },
+      { agent: 'pricing', task: 'Structure DSP tier pricing, stock rotation terms, annual volume rebates & guaranteed local warehouse replenishment', deps: [0] },
+      { agent: 'writer', task: 'Draft turnkey Distributor Stock Package agreement with stocking matrix, marketing collateral & branch training schedule', deps: [1] }
+    ]
+  },
+  radar: {
+    name: 'Specialty Cable & Metal Market Radar',
+    title: 'Copper/Aluminum Spot Index & Value-Added Services Intelligence',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Market intelligence report tracking LME copper/aluminum commodity trends, competitor lead times & distributor inventory levels',
+    sample: 'Track daily COMEX copper and LME aluminum spot price trends and benchmark master distributor paralleling turnaround speeds.',
+    desc: 'Monitors metal commodity indices, master distributor stock availability, and value-added service capabilities across North America.',
+    tasks: [
+      { agent: 'researcher', task: 'Track COMEX copper, LME aluminum, and PVC/XLPE resin price fluctuations to forecast cable cost movements', deps: [] },
+      { agent: 'researcher', task: 'Benchmark OmniCable same-day dispatch and 24/7 emergency service speed against secondary redistributors', deps: [] }
+    ]
+  },
+  vas_paralleling_assembly: {
+    name: 'Master Value-Added Cable Paralleling Operation',
+    title: 'Multi-Conductor Cable Paralleling, Custom Striping & Reeling Package',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'Master Value-Added Services (VAS) production release package: paralleling reel setup traveler, conductor color-striping log, UL spark test cert & QA release',
+    sample: 'Execute full Value-Added Services (VAS) run for 4,000 ft 4-conductor paralleled feeder pull: pull 4x 350 KCMIL THHN conductors onto a single heavy-duty wooden reel, apply custom color striping (Black/Red/Blue/White), run UL inline spark test, and dispatch within 24 hours.',
+    desc: 'Flagship cable operations workflow: integrates cable spec verification, multi-conductor paralleling reel setup, custom color-striping/lashing, inline UL spark & continuity testing, 24/7 emergency dispatch logistics, and Omni QA sign-off.',
+    tasks: [
+      { agent: 'cable_architect', task: 'Verify 350 KCMIL THHN/THWN-2 copper conductor specs, ampacity ratings, wall thickness & NEC Article 310 compliance', deps: [] },
+      { agent: 'vas_engineer', task: 'Plan multi-conductor paralleling operation: setup 4-payoff tension arbor, select 84-inch wooden master reel & balance conductor payout speed', deps: [0] },
+      { agent: 'striping_specialist', task: 'Apply continuous spiraled color-striping (Phase A Red, Phase B Blue, Neutral White) using high-adhesion extruded thermoset ink', deps: [1] },
+      { agent: 'compliance', task: 'Run 100% inline UL 1581 spark dielectric voltage test (7,500 V) & verify zero jacket abrasion or conductor crossover', deps: [2] },
+      { agent: 'logistics_lead', task: 'Package master wooden reel with heavy-duty heat-shrink end caps, apply distributor jobsite tag & schedule flatbed freight dispatch', deps: [3] },
+      { agent: 'reviewer', task: 'Issue zero-defect OmniCable Master Quality Release Traveler signed by Warehouse Operations Engineering Manager', deps: [4] }
+    ]
+  },
+  fiber_ethernet_spec: {
+    name: 'Fiber Optic & Industrial Ethernet Submittal',
+    title: 'Armored Loose-Tube Fiber & Shielded Cat6A Technical Submittal',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'Technical submittal package for 24-strand armored single-mode fiber and industrial M12 Cat6A Ethernet cable',
+    sample: 'Generate technical submittal for 15,000 ft armored outdoor loose-tube fiber optic cable for industrial plant backbone.',
+    desc: 'Evaluates fiber strand counts, single-mode/multi-mode OM4 attenuation, interlocked aluminum armor, and TIA-568 standards.',
+    tasks: [
+      { agent: 'fiber_analyst', task: 'Spec 24-strand single-mode OS2 loose-tube fiber optic cable with interlocked aluminum armor and outdoor polyethylene jacket', deps: [] },
+      { agent: 'compliance', task: 'Verify IEEE 802.3, TIA-568.3-D optical performance standards, UL 1666 riser flame test & ICEA S-87-640 compliance', deps: [] }
+    ]
+  },
+  emergency_dispatch_audit: {
+    name: '24/7/365 Emergency Service & Same-Day Audit',
+    title: 'After-Hours Emergency Order Execution & Freight Dispatch Audit',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: '24/7 emergency order execution traveler, hot-shot freight dispatch log & distributor emergency delivery receipt',
+    sample: 'Audit 2:00 AM emergency dispatch call for 1,500 ft 15kV medium voltage cable required for storm restoration power plant outage.',
+    desc: 'Evaluates after-hours warehouse call-out response time (< 30 min), reel cutting, hot-shot courier dispatch, and delivery tracking.',
+    tasks: [
+      { agent: 'logistics_lead', task: 'Execute 24/7 emergency warehouse call-out: pull 15kV MV-105 cable, cut to 1,500 ft length & book dedicated hot-shot courier truck', deps: [] },
+      { agent: 'compliance', task: 'Verify emergency order UL factory reel seals, MV-105 high-voltage test certs & distributor emergency account verification', deps: [0] },
+      { agent: 'reviewer', task: 'Issue 24/7 Emergency Service completion traveler and confirm delivery arrival at storm restoration jobsite', deps: [1] }
+    ]
+  },
+  ul_nec_quality_audit: {
+    name: 'UL & NEC Cable Quality Facility Audit',
+    title: 'National Distribution Center Quality & Flame Test Audit',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'National distribution center quality audit report, UL Follow-Up Service log & NEC compliance certificate',
+    sample: 'Perform annual UL factory audit and NEC compliance review across OmniCable national distribution center network.',
+    desc: 'Audits UL Subject 1277 tray cables, IEEE 1202/FT4 flame tests, conductor resistance testing, and ISO 9001:2015 distribution quality.',
+    tasks: [
+      { agent: 'compliance', task: 'Audit UL Follow-Up Services compliance, IEEE 1202 / FT4 flame test certificates, and NEC Article 336 tray cable markings', deps: [] },
+      { agent: 'reviewer', task: 'Issue OmniCable Distribution Quality Assurance Certificate and master facility compliance seal', deps: [0] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'Electrical Distributor & OEM Channel Sourcing Report',
+  tray_cable_quote: 'Tray Cable Cut-to-Length Commercial Quotation',
+  dsp_package_proposal: 'Distributor Stock Package (DSP) Proposal',
+  radar: 'Specialty Cable & Metal Market Radar Brief',
+  vas_paralleling_assembly: 'Master Value-Added Cable Paralleling Release Package',
+  fiber_ethernet_spec: 'Fiber Optic & Industrial Ethernet Technical Submittal',
+  emergency_dispatch_audit: '24/7/365 Emergency Service Dispatch Audit Report',
+  ul_nec_quality_audit: 'UL & NEC Cable Quality Facility Audit Certificate'
+};
+
+const TOOLS = {
+  research_cable_markets: () => 'Identified 48 regional electrical distributor expansions and 22 industrial infrastructure bids needing specialty cable.',
+  source_distributor_accounts: () => 'Sourced 92 verified accounts: VP of Purchasing, Wire & Cable Product Managers & Purchasing Directors at WESCO, Graybar, Rexel & Sonepar.',
+  score_omnicable_rfq: () => 'RFQ match score = 99/100 (Strong fit for OmniCable 100% exclusive distribution channel, custom cut-to-length & paralleling VAS).',
+  select_cable_spec: () => 'Cable specification verified: 500 KCMIL TC-ER aluminum tray cable (XHHW-2 conductors, PVC jacket, 600V, UL 1277 listed).',
+  plan_vas_operations: () => 'Paralleling setup planned: 4x 350 KCMIL conductors set up on 4-payoff arbor for single-reel payout onto 84-inch wooden master reel.',
+  configure_striping_lashing: () => 'Color-striping configured: Phase A Red, Phase B Blue, Neutral White continuous thermoset ink extrusions applied.',
+  spec_fiber_ethernet_cable: () => 'Fiber optic submittal generated: 24-strand OS2 single-mode loose-tube cable with interlocked aluminum armor & IEEE 802.3 compliance.',
+  schedule_sameday_dispatch: () => 'Same-day freight scheduled: master wooden reel sealed with heat-shrink end caps; flatbed dispatch booked for 2:00 PM cutoff.',
+  verify_ul_nec_compliance: () => 'Verified compliance with UL 1277, UL 1581 spark test (7,500V), IEEE 1202 / FT4 flame test & NEC Article 336 standards.',
+  calculate_omnicable_pricing: () => 'Calculated commercial pricing: 12,000 ft 500 KCMIL TC-ER at $4.25/ft ($51,000 total) with zero cut fees for distributor account.',
+  compose_omnicable_proposal: () => 'Generated technical submittal datasheet, UL Certificate of Conformance, reel schedule & same-day shipping SLA.',
+  review_omnicable_qa: () => 'Final QA release sign-off granted by OmniCable Warehouse Operations Engineering Manager.',
+  save: () => 'Data block saved to shared OmniCable engineering context.'
+};
+
+const FINAL = {
+  scout: `OMNI CABLE — ELECTRICAL DISTRIBUTOR & OEM SOURCING REPORT (illustrative)
+
+Target Sourcing Scope: NAED Electrical Distributors, Industrial Supply Houses & Utility Partners (#OMNI-SOURCING-2026-Q3).
+
+Key Account Sourcing & Qualified Channel Pipeline:
+• Electrical Distributors: 35 regional electrical distributor branches seeking master inventory support for specialty tray cables and portable cords.
+• Utility & Solar Distributors: 18 electrical supply houses bidding on utility grid modernization and 1,500V DC solar farm cabling.
+• Key Industry Leads: 92 verified decision-makers (VP of Purchasing, Wire & Cable Product Managers, Purchasing Directors).
+• Annual Master Demand: ~4.5M feet of industrial tray cable, 2.8M feet of portable cord, and 1.2M feet of armored fiber optic cable.
+
+Action Item: Dispatch regional sales managers with Distributor Stock Package (DSP) programs and custom paralleling demonstration kits.
+
+→ Saved: qualified_distributor_leads, electrical_channel_pipeline, omnicable_market_analysis
+
+NOTE: illustrative; confirm against Omni Cable commercial business development records.`,
+
+  tray_cable_quote: `OMNI CABLE — TRAY CABLE CUT-TO-LENGTH COMMERCIAL QUOTATION (illustrative)
+
+RFQ Reference: #OMNI-RFQ-2026-55018 — 500 KCMIL TC-ER Aluminum Tray Cable Cut-to-Length.
+
+Commercial Quotation & Cable Specifications:
+• Product Description: 500 KCMIL TC-ER 3-Conductor with Ground Aluminum Tray Cable (XHHW-2 Insulated, Sun Res PVC Jacket, 600V).
+• Value-Added Processing: Cut to 4 custom lengths of 3,000 ft each with heavy-duty heat-shrink end caps and jobsite tags.
+• Distribution Policy: 100% Sold Exclusively Through Electrical Distribution (Redistribution Model).
+• Commercial Investment Breakdown:
+  - 12,000 ft 500 KCMIL TC-ER Aluminum Tray Cable ($4.25 / ft): $51,000
+  - Custom Reel Cutting Charges (4 custom cuts): Included (Waived for DSP Account)
+  - 4x Heavy-Duty Returnable Wooden Reels ($450 deposit / reel): $1,800
+  - Freight Allowance: Full Freight Allowed (FFA) via Same-Day Dispatch
+  - Total Distributor Order Value: $52,800
+• Delivery SLA: Ships Same-Day from regional distribution center for orders placed by 3:00 PM.
+
+→ Saved: tray_cable_quote_55018, cut_to_length_schedule, omnicable_sameday_sla
+
+NOTE: illustrative; confirm against Omni Cable official commercial pricing system.`,
+
+  dsp_package_proposal: `OMNI CABLE — DISTRIBUTOR STOCK PACKAGE (DSP) PROPOSAL (illustrative)
+
+Proposal Title: Turnkey Distributor Stock Package & Fast-Turn Inventory Program (#OMNI-DSP-2026).
+
+Program Architecture & Fast-Turn Stocking:
+• Target Branch: Regional Electrical Distributor Headquarters & 4 Branch Warehouses.
+• Stocking Product Mix: High-velocity SOOW portable cords (10 AWG - 14 AWG), XHHW-2 building wire, and Category 6A industrial Ethernet.
+• Commercial Terms: Factory-direct tier pricing, 100% inventory stock rotation protection after 180 days, and annual volume rebate incentives.
+• Logistics Commitment: Guaranteed same-day replenishment from nearest OmniCable national distribution center.
+
+Compliance: Fully compliant with NAED distribution guidelines and OmniCable 100% exclusive distribution policy.
+
+→ Saved: dsp_proposal_package, branch_stocking_matrix, omnicable_rebate_terms
+
+NOTE: illustrative; confirm against Omni Cable commercial agreement terms.`,
+
+  radar: `OMNI CABLE — SPECIALTY CABLE & METAL MARKET RADAR BRIEF (illustrative)
+
+Market Intelligence Scope: COMEX Copper / LME Aluminum Spot Index & Master Distributor Services (#OMNI-RADAR-2026).
+
+Competitive Positioning & Benchmarking:
+• 100% Exclusive Channel Commitment: Unlike competing master distributors, OmniCable sells strictly through electrical distribution with zero direct contractor sales.
+• Value-Added Service Speed: Custom paralleling and color-striping operations executed within 24 hours of order placement.
+• Inventory Depth: $150M+ master inventory across 14 distribution centers ensures 99.1% fill rate on specialty items.
+
+Strategic Recommendation: Expand marketing of Kingwire utility aluminum wire integration and 24/7/365 emergency hotline services.
+
+→ Saved: metal_market_index, master_distributor_benchmark, specialty_cable_report
+
+NOTE: illustrative; confirm against Omni Cable strategic commercial roadmap.`,
+
+  vas_paralleling_assembly: `OMNI CABLE — MASTER VALUE-ADDED CABLE PARALLELING RELEASE PACKAGE (illustrative)
+
+Master Value-Added Services (VAS) Production Run & Quality Traveler (#OMNI-VAS-RUN-2026-09):
+
+1. Cable Specification & Conductor Verification:
+   • Conductor Selection: 4x 350 KCMIL THHN/THWN-2 copper conductors (600V, UL 83 listed, 90°C wet/dry rated).
+   • Ampacity & Code Verification: NEC Article 310 ampacity rated at 310A per conductor; verified zero insulation pinholes.
+
+2. Multi-Conductor Paralleling & Color-Striping:
+   • Paralleling Arbor Setup: 4-payoff arbor feeding 4 conductors simultaneously onto single 84-inch master wooden reel (4,000 ft total payout).
+   • Extruded Color-Striping: Continuous high-adhesion thermoset color stripes applied (Phase A Red, Phase B Blue, Neutral White).
+
+3. 100% Inline UL Spark Testing & Quality Release:
+   • Dielectric Spark Test: 100% inline UL 1581 spark testing passed at 7,500 VDC; zero jacket abrasion or conductor crossover detected.
+   • Packaging & Dispatch: Master wooden reel sealed with heavy-duty heat-shrink end caps, tagged with distributor jobsite labels, and loaded onto flatbed truck.
+
+4. Executive Quality Sign-off:
+   • Quality Release: Master Quality Traveler approved by OmniCable Warehouse Operations Engineering Manager.
+
+→ Saved: vas_paralleling_release_package, color_striping_log, ul_spark_test_report, sameday_freight_manifest
+
+NOTE: illustrative; confirm against Omni Cable warehouse operations standards.`,
+
+  fiber_ethernet_spec: `OMNI CABLE — FIBER OPTIC & INDUSTRIAL ETHERNET SUBMITTAL (illustrative)
+
+Technical Cable Submittal & Compliance Package (#OMNI-FIBER-SUBMITTAL-2026):
+
+Submittal Specifications:
+• Fiber Optic Cable: 24-Strand OS2 Single-Mode Outdoor Loose-Tube Fiber with Interlocked Aluminum Armor (Polyethylene Jacket, ICEA S-87-640).
+• Industrial Ethernet: 4-Pair 23 AWG Shielded Cat6A Industrial Ethernet Cable (F/UTP, TPE Outer Jacket, Sun Res, Oil Res II).
+• Standards Compliance: Fully compliant with IEEE 802.3, TIA-568.3-D, UL 1666 Riser Flame Test, and NEC Article 770.
+
+Conclusion: Technical submittal cleared for distributor jobsite presentation.
+
+→ Saved: fiber_submittal_package, optical_attenuation_specs, ul1666_flame_test_cert
+
+NOTE: illustrative; confirm against Omni Cable technical product specifications.`,
+
+  emergency_dispatch_audit: `OMNI CABLE — 24/7/365 EMERGENCY SERVICE DISPATCH AUDIT REPORT (illustrative)
+
+After-Hours Emergency Order Execution Certificate (#OMNI-EMERGENCY-2026):
+
+Emergency Order Log & Dispatch Performance:
+• Emergency Call-Out Time: Order received via 24/7 hotline at 2:14 AM for storm restoration power plant outage.
+• Material Pulled: 1,500 ft 15kV MV-105 133% insulation level medium voltage power cable.
+• Cutting & Hot-Shot Dispatch: Cable cut, reeled, end-capped, and loaded onto dedicated hot-shot truck by 3:05 AM (51-minute total turnaround).
+• Delivery Status: Arrived at utility storm restoration site by 5:45 AM, restoring plant power ahead of schedule.
+
+Sign-off Status: 24/7 Emergency Service ticket successfully closed with zero safety or quality non-conformances.
+
+→ Saved: emergency_dispatch_report, hotshot_freight_receipt, 15kv_test_cert
+
+NOTE: illustrative; confirm against Omni Cable emergency response procedures.`,
+
+  ul_nec_quality_audit: `OMNI CABLE — UL & NEC CABLE QUALITY FACILITY AUDIT CERTIFICATE (illustrative)
+
+National Distribution Center Quality & Compliance Certificate (#OMNI-FACILITY-AUDIT-2026):
+
+Audit Findings & Certification:
+• Quality System Audit: 100% compliance verified across national distribution centers under ISO 9001:2015 quality management.
+• UL Follow-Up Services: Passed UL Follow-Up Services inspection for UL 1277 tray cables, UL 44 rubber cords, and UL 83 building wire.
+• Flame Test Compliance: Verified IEEE 1202 / FT4 flame test certificates and NEC Article 336 cable jacket markings across all stocked lines.
+
+Sign-off Status: National distribution center network certified cleared for high-reliability industrial and utility cable distribution.
+
+→ Saved: ul_nec_facility_certificate, ISO9001_quality_seal, flame_test_compliance_log
+
+NOTE: illustrative; confirm against Omni Cable global quality assurance system.`
+};
+
+let EMPLOYEES = [
+  { id: 'scout', name: 'AI-Distributor-Sourcing-Scout', title: 'AI Electrical Channel Sourcing Lead', wf: 'scout', handled: 480, hrs: 95, win: 0, status: 'idle' },
+  { id: 'tray_cable_quote', name: 'AI-TrayCable-Quoting-Estimator', title: 'AI Tray Cable Quoting Lead', wf: 'tray_cable_quote', handled: 560, hrs: 130, win: 78, status: 'idle' },
+  { id: 'dsp_package_proposal', name: 'AI-Distributor-Stock-Lead', title: 'AI Distributor Stock Program Lead', wf: 'dsp_package_proposal', handled: 340, hrs: 90, win: 65, status: 'idle' },
+  { id: 'radar', name: 'AI-Specialty-Cable-Radar-Lead', title: 'AI Metal Market & Cable Intel Lead', wf: 'radar', handled: 200, hrs: 52, win: 0, status: 'idle' },
+  { id: 'vas_paralleling_assembly', name: 'AI-VAS-Paralleling-Architect', title: 'AI Cable Paralleling & VAS Lead', wf: 'vas_paralleling_assembly', handled: 670, hrs: 390, win: 96, status: 'idle' },
+  { id: 'fiber_ethernet_spec', name: 'AI-Fiber-Ethernet-Spec-Lead', title: 'AI Fiber Optic & Data Cable Lead', wf: 'fiber_ethernet_spec', handled: 440, hrs: 210, win: 80, status: 'idle' },
+  { id: 'emergency_dispatch_audit', name: 'AI-247-Emergency-Dispatch-Lead', title: 'AI 24/7 Emergency Logistics Lead', wf: 'emergency_dispatch_audit', handled: 510, hrs: 240, win: 92, status: 'idle' },
+  { id: 'ul_nec_quality_audit', name: 'AI-UL-NEC-Quality-Auditor', title: 'AI UL & NEC Cable Quality Auditor', wf: 'ul_nec_quality_audit', handled: 410, hrs: 200, win: 84, status: 'idle' }
+];
+
+const TRACKS = [
+  ['commercial', 'Distributor Sales & Specialty Sourcing'],
+  ['operations', 'Value-Added Services & Cable Operations']
+];
+
+let running = false;
+const $ = id => document.getElementById(id);
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const rand = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
+const now = () => new Date().toLocaleTimeString('en-GB');
+const mono = n => n.trim().slice(0, 2).toUpperCase();
+
+function toolOut(toolKey) {
+  return TOOLS[toolKey] ? TOOLS[toolKey]() : 'Completed successfully.';
+}
+
+function chips(wf) {
+  let s = '';
+  if (wf.track === 'commercial') s += '<span class="tag commercial">Distributor Sales</span>';
+  if (wf.track === 'operations') s += '<span class="tag operations">Value-Added Cable Ops</span>';
+  if (wf.tag === 'flagship') s += ' <span class="tag hero">Flagship</span>';
+  return s;
+}
+
+function setView(v) {
+  $('view-ops').classList.toggle('hidden', v !== 'ops');
+  $('view-hire').classList.toggle('hidden', v !== 'hire');
+  $('tabA').classList.toggle('active', v === 'ops');
+  $('tabB').classList.toggle('active', v === 'hire');
+  if (v === 'hire') initBuilder();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderEcon() {
+  const total = EMPLOYEES.length, h = EMPLOYEES.reduce((s, e) => s + e.handled, 0), hrs = EMPLOYEES.reduce((s, e) => s + e.hrs, 0);
+  const w = EMPLOYEES.filter(e => e.win > 0);
+  const avg = w.length ? Math.round(w.reduce((s, e) => s + e.win, 0) / w.length) : 0;
+  const cells = [
+    [total, 'AI operators (distributor sales + cable ops)'],
+    [h.toLocaleString(), 'tray quotes, VAS paralleling runs & 24/7 emergency dispatches handled'],
+    [hrs.toLocaleString() + '<span class="u"> hrs</span>', 'cable logistics hours saved / mo'],
+    ['+' + avg + '%', 'avg turnaround improvement']
+  ];
+  $('econ').innerHTML = cells.map(c => `<div class="cell"><div class="v tnum">${c[0]}</div><div class="k">${c[1]}</div></div>`).join('');
+}
+
+function empCard(e) {
+  const wf = WORKFLOWS[e.wf];
+  const team = wf.tasks.map(t => t.agent).filter((v, i, a) => a.indexOf(v) === i).map(r => `<span class="chip">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</span>`).join('');
+  return `<div class="emp ${e.status === 'working' ? 'working' : ''} ${wf.tag === 'flagship' ? 'hero' : ''}" id="emp-${e.id}"><div class="emp-top"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} ${chips(wf)}</div><div class="emp-title">${e.title}</div></div></div><div class="emp-owns">Owns: <b>${wf.name}</b></div><div class="team">${team}</div><div class="emp-stats"><div class="st"><b class="tnum">${e.handled.toLocaleString()}</b>runs</div><div class="st"><b class="tnum">~${e.hrs}</b>hrs saved/mo</div><div class="st"><b class="tnum">${e.win > 0 ? ('+' + e.win + '%') : '—'}</b>faster</div></div><div class="actions"><button class="btn primary" onclick="assign('${e.id}')">Run on a cable / VAS spec</button><button class="btn ghost" onclick="assign('${e.id}')">View workflow</button></div></div>`;
+}
+
+function renderRoster() {
+  const hire = `<div class="hire-card" onclick="setView('hire')"><div class="plus">+</div><div class="h">Add a new AI operator</div><div class="p">Pick a workflow, assign agents, set cadence.</div></div>`;
+  let html = '';
+  TRACKS.forEach(([tk, label], gi) => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf].track === tk);
+    if (!list.length) return;
+    html += `<div class="slabel">${label}</div><div class="roster">` + list.map(empCard).join('') + (gi === TRACKS.length - 1 ? hire : '') + `</div>`;
+  });
+  $('roster').innerHTML = html;
+}
+
+function assign(id) {
+  if (running) return;
+  const e = EMPLOYEES.find(x => x.id === id), wf = WORKFLOWS[e.wf];
+  $('runPanel').innerHTML = `<div class="run" id="run"><div class="run-head"><div class="avatar">${mono(e.name)}</div><div><div class="emp-name">${e.name} &middot; ${e.title} ${chips(wf)}</div><div class="run-sub">Owns ${wf.name}. Point it at a tray cable spec, paralleling reel target, or 24/7 emergency order and ${e.name} runs the whole loop.</div></div></div><div class="run-input"><textarea id="obj">${wf.sample}</textarea><button class="btn primary big" id="go" onclick="runEmp('${e.id}')">▶ Run ${e.name}</button></div><div id="stage"></div></div>`;
+  $('run').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  $('obj').focus();
+}
+
+async function runEmp(id) {
+  if (running) return;
+  running = true;
+  const e = EMPLOYEES.find(x => x.id === id), wf = WORKFLOWS[e.wf];
+  const obj = ($('obj').value || wf.sample).trim();
+  $('go').disabled = true;
+  e.status = 'working';
+  const card = $('emp-' + e.id);
+  if (card) card.classList.add('working');
+  const stage = $('stage');
+  stage.innerHTML = `<div class="phases"><div class="ph active" id="p1"><div class="dot">1</div><div class="l">Plan the workflow</div></div><div class="ph" id="p2"><div class="dot">2</div><div class="l">Agents run</div></div><div class="ph" id="p3"><div class="dot">3</div><div class="l">Review-ready output</div></div></div><div class="agent-grid" id="agrid"></div><div class="feed" id="feed"></div><div id="resultArea"></div>`;
+  const feed = $('feed');
+  function log(rk, d) {
+    const r = AGENT_ROLES[rk];
+    const nm = r ? (r.emoji + ' ' + r.label) : '◆ ' + e.name;
+    const row = document.createElement('div');
+    row.className = 'frow';
+    row.innerHTML = `<span class="ft tnum">${now()}</span><span class="fa">${nm}</span><span class="fd">${d.substring(0, 150)}</span>`;
+    feed.appendChild(row);
+    feed.scrollTop = feed.scrollHeight;
+  }
+  log(null, `Input received: "${obj.substring(0, 54)}…"`);
+  log(null, `Running the ${wf.name} workflow &middot; ${wf.tasks.length} agents &middot; ${wf.mode.toUpperCase()} mode`);
+  await sleep(rand(700, 1100));
+  const grid = $('agrid');
+  wf.tasks.forEach((t, i) => {
+    const r = AGENT_ROLES[t.agent];
+    const c = document.createElement('div');
+    c.className = 'acard';
+    c.id = 'ac-' + i;
+    c.innerHTML = `<div class="ae">${r.emoji}</div><div class="ar">${r.label}</div><div class="at">${t.task}</div><div class="as"><span class="sd"></span><span id="ast-${i}">Queued</span></div>`;
+    grid.appendChild(c);
+    setTimeout(() => c.classList.add('visible'), i * 85);
+  });
+  await sleep(600);
+  $('p1').classList.remove('active');
+  $('p1').classList.add('done');
+  $('p1').querySelector('.dot').textContent = '✓';
+  $('p2').classList.add('active');
+  const done = new Set();
+  async function runOne(i) {
+    const t = wf.tasks[i], r = AGENT_ROLES[t.agent], c = $('ac-' + i), st = $('ast-' + i);
+    c.classList.remove('visible');
+    c.classList.add('running');
+    st.textContent = 'Running…';
+    log(t.agent, t.task.substring(0, 72));
+    await sleep(rand(450, 820));
+    for (const tool of r.tools) {
+      log(t.agent, tool + '( ) → ' + toolOut(tool));
+      await sleep(rand(450, 820));
+    }
+    c.classList.remove('running');
+    c.classList.add('done');
+    st.textContent = 'Done';
+    log(t.agent, 'result saved to shared context');
+    done.add(i);
+  }
+  if (wf.mode === 'sequential') {
+    for (let i = 0; i < wf.tasks.length; i++) await runOne(i);
+  } else {
+    while (done.size < wf.tasks.length) {
+      const ready = wf.tasks.map((t, i) => i).filter(i => !done.has(i) && wf.tasks[i].deps.every(d => done.has(d)));
+      if (!ready.length) break;
+      if (ready.length > 1) await Promise.all(ready.map(runOne));
+      else await runOne(ready[0]);
+    }
+  }
+  $('p2').classList.remove('active');
+  $('p2').classList.add('done');
+  $('p2').querySelector('.dot').textContent = '✓';
+  $('p3').classList.add('active');
+  $('p3').querySelector('.dot').textContent = '✓';
+  $('p3').classList.add('done');
+  await sleep(400);
+  const out = FINAL[e.wf] || 'Review-ready output produced.';
+  const hrsThis = rand(6, 44);
+  $('resultArea').innerHTML = `<div class="result"><div class="rstats"><div class="rrow"><span class="k">Operator</span><span class="v">${e.name}</span></div><div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div><div class="rrow"><span class="k">Track</span><span class="v">${wf.track === 'commercial' ? 'Distributor Sales' : 'Value-Added Cable Ops'}</span></div><div class="rrow"><span class="k">Agents run</span><span class="v tnum">${wf.tasks.length}</span></div><div class="rrow"><span class="k">Hours saved (est.)</span><span class="v tnum">≈ ${hrsThis}</span></div></div><div class="rout"><div class="rh">Review-ready output &middot; ${DTITLE[e.wf] || 'Output'}</div><div class="rb">${out.replace(/</g, '&lt;')}</div></div></div><div class="donebar"><b>${e.name} produced a review-ready output.</b> Read, adapt and QA complete, ready for a Vice President of Operations, Cable Product Manager, or OmniCable Quality Lead to confirm against UL and NEC standards. Illustrative simulation, not a production deliverable.</div>`;
+  e.handled += 1;
+  e.status = 'idle';
+  if (card) card.classList.remove('working');
+  renderEcon();
+  renderRoster();
+  running = false;
+}
+
+let draft = {};
+function initBuilder() { draft = { wf: null, mode: null, assign: [], name: '', title: '', cadence: 'Per cable order', step: 1 }; renderBuilder(); }
+function renderBuilder() {
+  const steps = [['01', 'Pick a workflow'], ['02', 'Assign the agents'], ['03', 'Name & cadence']];
+  $('bSteps').innerHTML = steps.map((s, i) => `<div class="step ${draft.step === i + 1 ? 'active' : ''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+  if (draft.step === 1) bS1(); else if (draft.step === 2) bS2(); else bS3();
+  bNav();
+}
+function bS1() {
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">` + Object.keys(WORKFLOWS).map(k => {
+    const w = WORKFLOWS[k];
+    return `<div class="wf ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')"><div class="wn">${w.name} ${chips(w)}</div><div class="wd">${w.desc}</div><div class="wm">${w.tasks.length} agents &middot; ${w.mode}</div></div>`;
+  }).join('') + `</div>`;
+}
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Assign each task to an agent</div>` + w.tasks.map((t, i) => `<div class="task-row"><div class="tn">${i + 1}</div><div class="tt">${t.task}${t.deps.length ? ` <span style="color:var(--tert)">&middot; waits for ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}</div><select onchange="draft.assign[${i}]=this.value">${opts}</select></div>`).join('') + `<div class="field" style="margin-top:14px"><label>Execution mode</label><div class="seg">` + ['sequential', 'dag'].map(m => `<button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (parallel where safe)' : 'Sequential'}</button>`).join('') + `</div></div>`;
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Name & cadence</div><div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. AI-VAS-Paralleling-Architect" oninput="draft.name=this.value"></div><div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Cable Paralleling & VAS Lead" oninput="draft.title=this.value"></div><div class="field"><label>Cadence</label><div class="seg">` + ['Per cable order', 'Per VAS run', 'Weekly', 'On-demand'].map(c => `<button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('') + `</div></div><div class="slabel" style="margin-top:0">Preview</div><div class="emp" style="max-width:360px"><div class="emp-top"><div class="avatar">${mono(draft.name || 'New')}</div><div><div class="emp-name">${draft.name || 'New operator'} ${chips(w)}</div><div class="emp-title">${draft.title || 'AI operator'}</div></div></div><div class="emp-owns">Owns: <b>${w.name}</b> &middot; ${draft.cadence} &middot; ${draft.mode}</div></div>`;
+}
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right;
+  if (draft.step === 1) right = `<button class="btn primary" ${draft.wf ? '' : 'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+  else right = `<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;
+  $('bNav').innerHTML = left + right;
+}
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  WORKFLOWS[wfId] = { name: w.name, title: w.title, mode: draft.mode || w.mode, track: w.track, tag: w.tag, deliverable: w.deliverable, sample: w.sample, desc: w.desc, tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps })) };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({ id, name, title: draft.title || w.title, wf: wfId, handled: 0, hrs: rand(40, 140), win: 0, status: 'idle' });
+  renderEcon();
+  renderRoster();
+  setView('ops');
+  setTimeout(() => {
+    const c = $('emp-' + id);
+    if (c) {
+      c.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      c.style.boxShadow = '0 0 0 2px var(--accent)';
+      setTimeout(() => c.style.boxShadow = '', 1800);
+    }
+  }, 250);
+}
+
+renderEcon(); renderRoster();
+</script>
+</body>
+</html>
