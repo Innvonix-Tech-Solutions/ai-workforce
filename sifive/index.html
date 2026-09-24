@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SiFive &mdash; AI Commercial &amp; RISC-V Core IP Engineering Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f7f5f4;--surface2:#e5e0de;--border:#c7bfbc;--accent:#E23725;
+--accent-dim:rgba(226,55,37,.09);--accent-line:rgba(226,55,37,.35);--slate:#131510;--slate-line:rgba(19,21,16,.30);--text:#1c1917;--hi:#0a0908;--tert:#5c5450;--ok:#10b981;--ok-dim:rgba(16,185,129,.10);--gold:#e65100;--gold-bg:#fff3e0;--gold-line:#ffcc80}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:48px;height:34px;border-radius:8px;background:linear-gradient(135deg,#E23725,#131510);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:12px;letter-spacing:.5px;font-family:Inter,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#E23725}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:900px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#9e1b0e;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(16,185,129,.08);color:#059669;border:1px solid rgba(16,185,129,.3)}
+.tag.hero{background:var(--gold-bg);color:#b73a00;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#E23725}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#9e1b0e;font-size:15px;flex-shrink:0;position:relative;font-family:Inter,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#E23725}.btn.primary{background:linear-gradient(270deg,#E23725,#131510);border-color:#E23725;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#E23725;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#E23725}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(16,185,129,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(16,185,129,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#E23725}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Inter,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#9e1b0e;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px;font-family:Inter,sans-serif}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input,.field select{width:100%;background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);outline:none}
+.field input:focus{border-color:var(--accent)}
+.seg{display:flex;gap:6px}.seg button{flex:1;padding:9px;font-size:12px;font-weight:600;border:1px solid var(--border);border-radius:7px;background:#fff;color:var(--tert);cursor:pointer;font-family:Inter,sans-serif}
+.seg button.on{background:var(--accent-dim);color:var(--hi);border-color:var(--accent-line)}
+.foot{max-width:1180px;margin:30px auto 40px;padding:18px 24px;border-top:1px solid var(--border);font-size:11.5px;color:var(--tert);text-align:center;line-height:1.5;font-family:Inter,sans-serif}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">
+    <div class="mark">Si5</div>
+    <div>
+      <div class="htitle">SiFive &middot; AI Commercial &amp; RISC-V Core IP Engineering Workforce</div>
+      <div class="hsub">High-Performance Scalar, Vector, and Matrix RISC-V Processor Core IP Platform</div>
+    </div>
+  </div>
+  <div class="badge"><b>SiFive Master Platform</b> &middot; Santa Clara, CA</div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('roster')">AI Operators Roster</button>
+  <button class="tab" onclick="switchTab('builder')">Operator Builder</button>
+</div>
+
+<div class="main">
+  <div class="lead">
+    <b>SiFive AI Workforce Prototype:</b> Accelerating global RISC-V architecture adoption through autonomous agent teams. From fabless chipmaker licensing strategy and P800-series datacenter core configuration to multi-core RTL verification, Intelligence XM matrix tuning, and ISO 26262 ASIL-D automotive safety compliance.
+  </div>
+
+  <div class="legend">
+    <span><span class="tag commercial">Commercial Track</span> RISC-V IP Licensing, Account Sourcing &amp; Quoting</span>
+    <span><span class="tag operations">Semiconductor Track</span> RTL Verification, Vector/Matrix AI SKL &amp; ASIL-D Cert</span>
+    <span><span class="tag hero">Flagship</span> P800-Series Datacenter CPU Core Specification Package</span>
+  </div>
+
+  <div id="view-roster">
+    <div class="econ" id="econ-strip"></div>
+    <div id="roster-container"></div>
+  </div>
+
+  <div id="view-run" class="hidden">
+    <div class="run">
+      <div class="run-head">
+        <span class="tag" id="run-track-tag">Track</span>
+        <h2 id="run-title" style="font-size:18px;color:var(--hi)">Workflow Title</h2>
+      </div>
+      <div class="run-sub" id="run-desc">Workflow description...</div>
+
+      <div class="run-input">
+        <textarea id="run-prompt" rows="2"></textarea>
+        <button class="btn primary big" id="btn-exec" onclick="executeRun()">Execute Operator Run</button>
+      </div>
+
+      <div class="phases" id="phase-bar"></div>
+      <div class="agent-grid" id="agent-cards"></div>
+
+      <div class="slabel">Live Execution Stream</div>
+      <div class="feed" id="live-feed"></div>
+
+      <div class="result hidden" id="result-box">
+        <div class="rstats" id="result-stats"></div>
+        <div class="rout">
+          <div class="rh" id="result-head">Deliverable Output</div>
+          <div class="rb" id="result-body"></div>
+        </div>
+      </div>
+
+      <div class="donebar hidden" id="done-bar">
+        <b>Run Completed:</b> All agent tasks executed successfully. Deliverable generated with human-in-the-loop audit signoff.
+      </div>
+    </div>
+  </div>
+
+  <div id="view-builder" class="hidden">
+    <div class="run">
+      <h2 style="font-size:18px;color:var(--hi);margin-bottom:4px">Operator Builder</h2>
+      <div style="font-size:12.5px;color:var(--tert);margin-bottom:20px">Compose a new specialized AI Operator from SiFive's workflow templates.</div>
+
+      <div class="steps">
+        <div class="step active" id="st-1"><div class="n">STEP 1</div><div class="l">Select Template</div><div class="d">Pick base workflow motion</div></div>
+        <div class="step" id="st-2"><div class="n">STEP 2</div><div class="l">Customize Team</div><div class="d">Assign specialist agents</div></div>
+        <div class="step" id="st-3"><div class="n">STEP 3</div><div class="l">Deploy Operator</div><div class="d">Set title &amp; initial state</div></div>
+      </div>
+
+      <div id="bstep-1">
+        <div class="slabel">Available Workflow Templates</div>
+        <div class="wf-grid" id="builder-wf-grid"></div>
+        <div style="margin-top:20px;text-align:right">
+          <button class="btn primary" onclick="bNext(2)">Next: Assign Agents &rarr;</button>
+        </div>
+      </div>
+
+      <div id="bstep-2" class="hidden">
+        <div class="slabel">Workflow Task &amp; Agent Mapping</div>
+        <div id="builder-tasks"></div>
+        <div style="margin-top:20px;display:flex;justify-content:space-between">
+          <button class="btn" onclick="bNext(1)">&larr; Back</button>
+          <button class="btn primary" onclick="bNext(3)">Next: Operator Identity &rarr;</button>
+        </div>
+      </div>
+
+      <div id="bstep-3" class="hidden">
+        <div class="slabel">Operator Configuration</div>
+        <div class="field"><label>Operator Name</label><input type="text" id="b-name" value="Custom Core IP Operator"></div>
+        <div class="field"><label>Role / Title</label><input type="text" id="b-title" value="Specialized RISC-V SoC Integration Engineer"></div>
+        <div style="margin-top:20px;display:flex;justify-content:space-between">
+          <button class="btn" onclick="bNext(2)">&larr; Back</button>
+          <button class="btn primary" onclick="deployOperator()">Deploy Operator to Roster</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  SiFive AI Workforce Prototype &middot; Designed for SiFive High-Performance RISC-V Core IP Platform &middot; Santa Clara, CA<br>
+  All data, metrics, and generated deliverables shown are illustrative concepts. Final outputs require human-in-the-loop review.
+</div>
+
+<script>
+const TRACKS = [
+  ['commercial', 'RISC-V IP Licensing & Account Strategy'],
+  ['operations', 'Core IP Engineering & SoC Enablement']
+];
+
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'AI & Datacenter Compute Research', tools: ['search_compute_trends', 'save'] },
+  prospector: { emoji: '🎯', label: 'SoC & Semiconductor Account Sourcing', tools: ['source_chipmakers', 'save'] },
+  qualifier: { emoji: '📊', label: 'RISC-V Architecture Fit Scorer', tools: ['score_isa_fit', 'save'] },
+  core_architect: { emoji: '🔬', label: 'Performance & Intelligence Core Lead', tools: ['config_core_pipeline', 'save'] },
+  system_fae: { emoji: '🛠️', label: 'Core Designer & SoC Integration FAE', tools: ['integrate_system_ip', 'save'] },
+  vector_ai_dev: { emoji: '💻', label: 'Vector & Matrix AI Accelerator Lead', tools: ['optimize_skl_kernels', 'save'] },
+  licensing_lead: { emoji: '🧮', label: 'IP Licensing & Core Royalty Quoter', tools: ['calculate_ip_license_quote', 'save'] },
+  safety_cert: { emoji: '🛡️', label: 'ISO 26262 ASIL-D & Security Lead', tools: ['audit_worldguard_safety', 'save'] },
+  rtl_qa: { emoji: '🔬', label: 'RTL Verification & Emulation Lead', tools: ['verify_core_rtl', 'save'] },
+  intel: { emoji: '🛰️', label: 'x86 / ARM & RISC-V Market Intel', tools: ['benchmark_isa_power_perf', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'Custom Core Spec & Contract Writer', tools: ['draft_ip_licensing_spec', 'save'] },
+  reviewer: { emoji: '✅', label: 'Core Delivery & Design QA Reviewer', tools: ['qa_signoff', 'save'] }
+};
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Chipmaker Sourcing',
+    title: 'Autonomous Chipmaker & OEM Account Sourcing',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'RISC-V Account Sourcing & ISA Migration Dossier',
+    sample: 'Identify hyperscaler ASIC teams and fabless semiconductor accounts looking to migrate from ARM Neoverse to SiFive P800 RISC-V cores.',
+    desc: 'Scans global chipmaker RFIs, patent filings, and ARM licensing renewals to uncover target accounts seeking open RISC-V compute.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan AI hyperscaler, automotive Tier-1, and edge SoC RFIs for ARM alternative RISC-V architecture needs.', deps: [] },
+      { agent: 'prospector', task: 'Identify fabless chipmakers and datacenter ASIC teams seeking customizable high-performance CPU IP.', deps: [0] },
+      { agent: 'qualifier', task: 'Evaluate core count, ISA extensions (Vector RVV 1.0, Matrix XM, Bitmanip), frequency, and TDP targets against SiFive P800 and Intelligence XM series.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Compose tailored RISC-V strategic value proposal and IP evaluation agreement.', deps: [2] }
+    ]
+  },
+  p800_core_package: {
+    name: 'P800 Core Package',
+    title: 'P800-Series Datacenter CPU Core Specification & IP Package',
+    mode: 'sequential',
+    track: 'commercial',
+    tag: 'flagship',
+    deliverable: 'SiFive P800 Datacenter Core Specification Datasheet & IP Contract',
+    sample: 'Generate a complete 16-core SiFive P800 RISC-V cluster configuration package with Intelligence XM Matrix extensions for a 3nm AI accelerator SoC.',
+    desc: 'Deep technical core configuration workflow mapping TileLink interconnects, L2/L3 cache coherence, Vector RVV 1.0, WorldGuard security, and licensing terms.',
+    tasks: [
+      { agent: 'system_fae', task: 'Assess customer SoC interconnect (TileLink / AXI5), L2/L3 cache coherence, and DRAM memory controller requirements.', deps: [] },
+      { agent: 'core_architect', task: 'Configure SiFive Core Designer parameters for Out-of-Order P800 multi-core cluster (16-core cluster with RV64GCV).', deps: [0] },
+      { agent: 'vector_ai_dev', task: 'Integrate Intelligence XM Matrix engine and optimize SiFive Kernel Library (SKL) LLM inference primitives.', deps: [1] },
+      { agent: 'safety_cert', task: 'Configure SiFive WorldGuard hardware security domains, IOMMU Gen 2 virtualization, and Shield root-of-trust.', deps: [2] },
+      { agent: 'licensing_lead', task: 'Compute IP upfront licensing fees, volume chiplet royalty structure, and Freedom SDK support SLA.', deps: [3] },
+      { agent: 'proposal_writer', task: 'Generate complete RISC-V Core Specification Datasheet, Core Designer config file, and licensing contract.', deps: [4] },
+      { agent: 'reviewer', task: 'Conduct complete technical verification and executive signoff before IP dispatch.', deps: [5] }
+    ]
+  },
+  ip_quote: {
+    name: 'IP Licensing Quoting',
+    title: 'Custom Core IP Licensing & Royalty Quoting',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'SiFive Core IP Commercial Licensing Agreement & Royalty Schedule',
+    sample: 'Model tiered upfront licensing and per-chip royalties for a 5-million unit annual tapeout of SiFive Essential U74 cores.',
+    desc: 'Automates IP pricing matrix compilation based on annual volume forecast, process node, and SiFive Core Designer support tiers.',
+    tasks: [
+      { agent: 'qualifier', task: 'Verify projected annual SoC Tapeout volume (100k to 10M units) and process node (TSMC N3/N5).', deps: [] },
+      { agent: 'licensing_lead', task: 'Model tiered upfront licensing, maintenance fees, per-wafer royalty schedules, and Core Designer access tier.', deps: [0] },
+      { agent: 'proposal_writer', task: 'Author formal IP Licensing Agreement and Freedom SDK support agreement.', deps: [1] }
+    ]
+  },
+  radar: {
+    name: 'ISA Competitive Radar',
+    title: 'Datacenter & Automotive ISA Competitive Intelligence',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'RISC-V vs ARM Neoverse & x86 PPA Benchmarking Battlecard',
+    sample: 'Benchmark SiFive P800 and Intelligence XM against ARM Neoverse V2 and x86 EPYC on SPECint2017, AI TFLOPS/Watt, and licensing flexibility.',
+    desc: 'Monitors competitor announcements, PPA efficiency metrics, and software stack readiness across datacenter and automotive compute.',
+    tasks: [
+      { agent: 'intel', task: 'Monitor competing CPU architectures (ARM Neoverse, x86 EPYC, proprietary RISC-V cores) on SPECint, PPA, and ISA flexibility.', deps: [] },
+      { agent: 'researcher', task: 'Analyze vector acceleration throughput (RVV 1.0 vs ARM SVE2) for AI matrix workloads.', deps: [0] },
+      { agent: 'reviewer', task: 'Compile executive competitive battlecard highlighting SiFive core PPA efficiency and software ecosystem maturity.', deps: [1] }
+    ]
+  },
+  rtl_verification: {
+    name: 'RTL Verification Audit',
+    title: 'Multi-Core Cluster RTL Verification & Emulation Audit',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'SiFive Multi-Core RTL Verification & Emulation Release Dossier',
+    sample: 'Execute formal verification and instruction stream testbenches on a 32-core P800 cluster RTL deliverable targeting TSMC N3E.',
+    desc: 'Validates RTL correctness, branch predictor corner cases, TileLink cache coherence transactions, and zero-defect tapeout readiness.',
+    tasks: [
+      { agent: 'rtl_qa', task: 'Run formal verification and constrained-random instruction stream testbenches on P800/X300 RTL deliverables.', deps: [] },
+      { agent: 'core_architect', task: 'Analyze formal coverage reports, branch prediction corner cases, and bus bridge transaction latency.', deps: [0] },
+      { agent: 'reviewer', task: 'Generate RTL Verification Dossier and release signoff for customer tapeout.', deps: [1] }
+    ]
+  },
+  skl_ai_acceleration: {
+    name: 'Vector/Matrix SKL Tuning',
+    title: 'Vector & Matrix SKL AI Kernel Optimization',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'SiFive Kernel Library (SKL) Acceleration Package & Benchmarks',
+    sample: 'Optimize FP16 matrix multiplication and GEMM kernels using SiFive Intelligence XM vector units for LLM inference on BigSky servers.',
+    desc: 'Tunes SKL primitive kernels, custom vector instructions, and DMA streaming paths to maximize AI throughput per watt.',
+    tasks: [
+      { agent: 'vector_ai_dev', task: 'Profile INT8/FP16 matrix multiplication and attention kernels on Intelligence XM core simulator.', deps: [] },
+      { agent: 'system_fae', task: 'Map custom vector instructions and DMA stream channels into Freedom SDK for Linux environment.', deps: [0] },
+      { agent: 'proposal_writer', task: 'Document C/C++ intrinsic headers, SKL kernel benchmark results, and BigSky SF-2U870 test results.', deps: [1] }
+    ]
+  },
+  automotive_asil_audit: {
+    name: 'Automotive ASIL-D Audit',
+    title: 'Automotive S7-A / E7-A ISO 26262 ASIL-D Qualification Package',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'ISO 26262 ASIL-D Automotive Functional Safety Manual & Cert Package',
+    sample: 'Audit dual-core lockstep (DCLS) logic and fault injection testbenches for SiFive Automotive S7-A core IP.',
+    desc: 'Generates ISO 26262 ASIL-D safety manuals, FMEDA coverage analysis, and ECC fault injection verification reports for automotive OEMs.',
+    tasks: [
+      { agent: 'safety_cert', task: 'Conduct FMEDA and dual-core lockstep (DCLS) verification for S7-A automotive core IP.', deps: [] },
+      { agent: 'rtl_qa', task: 'Verify fault-injection recovery routines and ECC memory parity error handling.', deps: [0] },
+      { agent: 'reviewer', task: 'Compile formal ISO 26262 ASIL-D Safety Manual and Certificate Package for Tier-1 automotive auditors.', deps: [1] }
+    ]
+  },
+  hifive_dev_enablement: {
+    name: 'HiFive Board Enablement',
+    title: 'HiFive Premier P550 Platform Software Enablement',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'HiFive Premier P550 Board Support Package (BSP) & Developer Guide',
+    sample: 'Build complete Yocto Linux BSP and PyTorch execution stack for HiFive Premier P550 development board.',
+    desc: 'Assembles open-source Linux kernel drivers, Freedom SDK toolchains, and developer quick-start guides for hardware boards.',
+    tasks: [
+      { agent: 'system_fae', task: 'Configure Freedom SDK Linux BSP for HiFive Premier P550 development board.', deps: [] },
+      { agent: 'vector_ai_dev', task: 'Validate PyTorch / ONNX Runtime execution on RISC-V vector extensions.', deps: [0] },
+      { agent: 'proposal_writer', task: 'Author Developer Quick-Start Guide, Yocto Linux build scripts, and open-source SDK documentation.', deps: [1] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'RISC-V Account Sourcing & ISA Migration Dossier',
+  p800_core_package: 'SiFive P800 Core Datasheet & IP Licensing Package',
+  ip_quote: 'SiFive Core IP Commercial Licensing Agreement',
+  radar: 'RISC-V vs ARM & x86 PPA Competitive Battlecard',
+  rtl_verification: 'SiFive Multi-Core RTL Verification Release Dossier',
+  skl_ai_acceleration: 'SiFive Kernel Library (SKL) AI Acceleration Package',
+  automotive_asil_audit: 'ISO 26262 ASIL-D Automotive Safety Manual Dossier',
+  hifive_dev_enablement: 'HiFive Premier P550 Software BSP Package'
+};
+
+const TOOLS = {
+  search_compute_trends: () => 'Querying global AI hyperscaler and fabless semiconductor RFI databases for RISC-V ISA trends...',
+  source_chipmakers: () => 'Cross-referencing datacenter ASIC requirements with SiFive P800 and Intelligence core roadmaps...',
+  score_isa_fit: () => 'Scoring SPECint2017 per watt, Vector RVV 1.0 throughput, and custom instruction extension feasibility...',
+  config_core_pipeline: () => 'Generating verilog parameters via SiFive Core Designer for 16-core P800 Out-of-Order cluster...',
+  integrate_system_ip: () => 'Mapping TileLink L2/L3 coherent cache hierarchy, AXI5 bus bridges, and IOMMU Gen 2 virtualization...',
+  optimize_skl_kernels: () => 'Compiling C intrinsics for SiFive Kernel Library (SKL) FP16 GEMM attention primitives...',
+  calculate_ip_license_quote: () => 'Calculating upfront core IP licensing fee, per-wafer royalty tier, and Freedom SDK maintenance SLA...',
+  audit_worldguard_safety: () => 'Configuring SiFive WorldGuard security domains and ASIL-D dual-core lockstep (DCLS) fault interlocks...',
+  verify_core_rtl: () => 'Executing formal verification, branch prediction corner cases, and constrained-random instruction streams...',
+  benchmark_isa_power_perf: () => 'Benchmarking SiFive P800 PPA against ARM Neoverse V2 and x86 EPYC processor cores...',
+  draft_ip_licensing_spec: () => 'Authoring technical core specification datasheet, Memory Map API, and formal IP contract...',
+  qa_signoff: () => 'Executing formal verification signoff checklist, PPA audit, and executive delivery approval...',
+  save: () => 'Persisting structured artifact into SiFive enterprise knowledge repository...'
+};
+
+const FINAL = {
+  scout: `SIFIVE RISC-V ACCOUNT SOURCING & ISA MIGRATION DOSSIER
+Target Account: Global Hyperscaler ASIC Division & Automotive Tier-1 Supplier
+Primary Requirement: High-performance customizable CPU cores with vector AI acceleration
+Recommended Core Family: SiFive Performance P800 Series & Intelligence XM Series
+
+Identified Opportunities:
+1. Datacenter AI Accelerator: 16-core P800 cluster with RV64GCV and Intelligence XM matrix engines.
+2. Automotive Zonal Controller: Dual-core lockstep S7-A core IP with ISO 26262 ASIL-D safety qualification.
+
+Next Step: Initiate SiFive Core Designer evaluation environment and deliver custom PPA benchmark report.
+NOTE: illustrative concept for SiFive RISC-V IP workforce.`,
+
+  p800_core_package: `SIFIVE P800 DATACENTER CORE SPECIFICATION DATASHEET & IP CONTRACT
+Customer: Leading Semiconductor Fabless ASIC Innovator
+Target Core Cluster: SiFive Performance P800 Multi-Core Subsystem (16 Cores)
+
+Architecture Specification:
+- Pipeline Architecture: 64-bit Out-of-Order Execution, 12-stage pipeline
+- ISA Extensions: RV64GCV (Vector RVV 1.0, Bitmanip, Cryptography, Matrix XM)
+- Coherence & Memory: TileLink coherent L2/L3 cache system with IOMMU Gen 2
+- Hardware Security: SiFive WorldGuard hardware domain isolation & Shield Root-of-Trust
+- Process Target: TSMC N3E / N5 (Frequency target: 3.4 GHz at nominal VDD)
+- Software Environment: Freedom SDK for Linux & SiFive Kernel Library (SKL)
+
+Commercial Terms:
+- Upfront Core License Fee: $2,450,000 (Includes Core Designer access, RTL deliverable, FAE support)
+- Per-Wafer Royalty Rate: Tiered schedule starting at $1.85 / SoC unit (at 1M+ volume)
+- Freedom SDK Support SLA: 24/7 dedicated engineering support & Yocto BSP maintenance
+
+NOTE: illustrative concept for SiFive RISC-V IP workforce.`,
+
+  ip_quote: `SIFIVE CORE IP COMMERCIAL LICENSING AGREEMENT & ROYALTY SCHEDULE
+Quotation ID: SIF-LIC-2026-991
+Product: SiFive Essential U74 & Performance P650 Processor IP
+
+Licensing Breakdown:
+- Tier 1 (100k - 1M units): $1,200,000 license fee + $0.85 per-chip royalty
+- Tier 2 (1M - 5M units): $1,800,000 license fee + $0.55 per-chip royalty
+- Tier 3 (5M+ units): Custom Enterprise Unlimited License Agreement
+
+Includes: Full Verilog RTL source, Core Designer configuration keys, Freedom SDK suite.
+NOTE: illustrative concept for SiFive RISC-V IP workforce.`,
+
+  radar: `RISC-V VS ARM NEOVERSE & X86 PPA COMPETITIVE BATTLECARD
+Focus: SiFive P800 Series vs ARM Neoverse V2 & x86 Datacenter Cores
+
+Key Differentiators:
+1. vs ARM Neoverse: 25% higher performance density (SPECint/mm²), fully open ISA customization, zero proprietary architecture lock-in.
+2. vs x86 Cores: 40% lower thermal design power (TDP), customizable vector/matrix extensions for domain-specific AI workloads.
+3. License Flexibility: Direct access to SiFive Core Designer for rapid architectural exploration.
+
+Strategic Takeaway: Position SiFive P800 as the leading open-standard alternative for sovereign and custom AI silicon.
+NOTE: illustrative concept for SiFive RISC-V IP workforce.`,
+
+  rtl_verification: `SIFIVE MULTI-CORE RTL VERIFICATION & EMULATION RELEASE DOSSIER
+Core Subsystem: SiFive P800 32-Core Cluster (RTL v4.12.0)
+Verification Methodology: UVM, Formal Verification, Palladium Emulation
+
+QA Summary:
+- Instruction Stream Coverage: 99.98% coverage across RV64GCV testbenches
+- TileLink Coherence Stress Test: 10B cycles without deadlock or protocol violation
+- Corner-Case Coverage: Branch predictor recovery and ECC error injection 100% verified
+- Tapeout Status: APPROVED for TSMC N3E silicon tapeout.
+
+NOTE: illustrative concept for SiFive RISC-V IP workforce.`,
+
+  skl_ai_acceleration: `SIFIVE KERNEL LIBRARY (SKL) ACCELERATION PACKAGE & BENCHMARKS
+Target Platform: SiFive Intelligence XM & BigSky SF-2U870 Datacenter Server
+Software Library: SKL v2.8 (RISC-V Vector RVV 1.0 Optimized)
+
+Performance Metrics:
+- FP16 GEMM Attention Throughput: 3.4x speedup over scalar execution baseline
+- INT8 Quantized Convolution: 4.1x TFLOPS/Watt efficiency gain
+- Framework Compatibility: Native integration into PyTorch, ONNX Runtime, and TVM
+
+NOTE: illustrative concept for SiFive RISC-V IP workforce.`,
+
+  automotive_asil_audit: `ISO 26262 ASIL-D AUTOMOTIVE FUNCTIONAL SAFETY MANUAL & CERT DOSSIER
+System: SiFive Automotive S7-A Core Subsystem
+Safety Standard: ISO 26262:2018 ASIL-D Compliance
+
+Safety Verification Summary:
+- Hardware Fault Coverage: Dual-Core Lockstep (DCLS) provides >99% single-point fault detection
+- FMEDA Diagnostic Metric: Architectural metrics exceed ASIL-D requirements for automotive safety
+- ECC Memory Protection: L1/L2 cache and bus bridges protected by SECDED ECC
+- Status: Safety Audit Passed - Recommended for Automotive ISO 26262 Certification.
+
+NOTE: illustrative concept for SiFive RISC-V IP workforce.`,
+
+  hifive_dev_enablement: `HIFIVE PREMIER P550 BOARD SUPPORT PACKAGE (BSP) & DEVELOPER GUIDE
+Platform: HiFive Premier P550 Development Board
+Target OS: Ubuntu 26.04 LTS / Yocto Embedded Linux
+
+Package Artifacts:
+1. Linux BSP Source: Open-source kernel 6.12 driver suite, U-Boot bootloader.
+2. Freedom SDK Suite: Freedom Studio IDE toolchain with RISC-V GCC/Clang compilers.
+3. AI Developer Kit: Pre-compiled ONNX Runtime with SKL vector acceleration bindings.
+4. Documentation: "HiFive Premier P550 Linux Developer Quick-Start Guide".
+
+NOTE: illustrative concept for SiFive RISC-V IP workforce.`
+};
+
+const EMPLOYEES = [
+  { id: 'emp1', name: 'SF-Scout', title: 'Datacenter & AI Chipmaker Sourcing Lead', wf: 'scout', handled: 168, hrs: 380, win: '5.2x Lead Pipeline' },
+  { id: 'emp2', name: 'P800-Architect', title: 'SiFive P800 Core Package Lead', wf: 'p800_core_package', handled: 96, hrs: 460, win: '90% Faster Core Spec' },
+  { id: 'emp3', name: 'Licensing-Quoter', title: 'RISC-V Core IP Licensing Lead', wf: 'ip_quote', handled: 240, hrs: 210, win: '1.5h IP Turnaround' },
+  { id: 'emp4', name: 'SF-Radar', title: 'ARM & x86 Architecture Battlecard Lead', wf: 'radar', handled: 72, hrs: 160, win: 'Real-time PPA Radar' },
+  { id: 'emp5', name: 'RTL-Verify', title: 'Multi-Core RTL Verification Lead', wf: 'rtl_verification', handled: 134, hrs: 340, win: '100% Zero-Bug RTL' },
+  { id: 'emp6', name: 'Vector-SKL', title: 'Intelligence XM & SKL AI Kernel Dev', wf: 'skl_ai_acceleration', handled: 110, hrs: 295, win: '3.4x LLM Speedup' },
+  { id: 'emp7', name: 'ASIL-Cert', title: 'Automotive S7-A Safety Audit Lead', wf: 'automotive_asil_audit', handled: 58, hrs: 410, win: 'ASIL-D Certified' },
+  { id: 'emp8', name: 'HiFive-Enable', title: 'HiFive Premier P550 Software Lead', wf: 'hifive_dev_enablement', handled: 82, hrs: 230, win: '2-Week BSP Onboarding' }
+];
+
+// ENGINE LOGIC (Standard proven engine implementation)
+let currentTab = 'roster';
+let activeRunWf = null;
+let activeRunTimer = null;
+let builderWfKey = 'scout';
+let builderTasks = [];
+
+function init() {
+  renderEcon();
+  renderRoster();
+  renderBuilderWfs();
+}
+
+function switchTab(t) {
+  currentTab = t;
+  document.querySelectorAll('.tab').forEach((el, idx) => {
+    el.classList.toggle('active', (t === 'roster' && idx === 0) || (t === 'builder' && idx === 1));
+  });
+  document.getElementById('view-roster').classList.toggle('hidden', t !== 'roster');
+  document.getElementById('view-run').classList.toggle('hidden', t !== 'run');
+  document.getElementById('view-builder').classList.toggle('hidden', t !== 'builder');
+}
+
+function renderEcon() {
+  const totalH = EMPLOYEES.reduce((a, b) => a + b.handled, 0);
+  const totalHrs = EMPLOYEES.reduce((a, b) => a + b.hrs, 0);
+  const el = document.getElementById('econ-strip');
+  el.innerHTML = `
+    <div class="cell"><div class="v"><span class="tnum">${EMPLOYEES.length}</span></div><div class="k">Active AI Operators</div></div>
+    <div class="cell"><div class="v"><span class="tnum">${totalH}</span></div><div class="k">Workflows Completed</div></div>
+    <div class="cell"><div class="v"><span class="tnum">${totalHrs}</span> <span class="u">hrs</span></div><div class="k">Engineering Hours Saved</div></div>
+    <div class="cell"><div class="v"><span class="u">90%</span></div><div class="k">Core Spec Acceleration</div></div>
+  `;
+}
+
+function renderRoster() {
+  const container = document.getElementById('roster-container');
+  container.innerHTML = '';
+
+  TRACKS.forEach(([tKey, tLabel]) => {
+    const section = document.createElement('div');
+    section.innerHTML = `<div class="slabel">${tLabel}</div>`;
+    const grid = document.createElement('div');
+    grid.className = 'roster';
+
+    EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === tKey).forEach(emp => {
+      grid.appendChild(createEmpCard(emp));
+    });
+    section.appendChild(grid);
+    container.appendChild(section);
+  });
+
+  const untracked = EMPLOYEES.filter(e => !WORKFLOWS[e.wf] || !WORKFLOWS[e.wf].track);
+  if (untracked.length > 0) {
+    const section = document.createElement('div');
+    section.innerHTML = `<div class="slabel">Custom Operators</div>`;
+    const grid = document.createElement('div');
+    grid.className = 'roster';
+    untracked.forEach(emp => grid.appendChild(createEmpCard(emp)));
+    section.appendChild(grid);
+    container.appendChild(section);
+  }
+}
+
+function createEmpCard(emp) {
+  const wf = WORKFLOWS[emp.wf] || { name: emp.wf, desc: '', tasks: [] };
+  const isHero = wf.tag === 'flagship';
+  const card = document.createElement('div');
+  card.className = `emp ${isHero ? 'hero' : ''}`;
+  card.id = `card-${emp.id}`;
+
+  const agentChips = wf.tasks.map(t => {
+    const a = AGENT_ROLES[t.agent] || { emoji: '🤖', label: t.agent };
+    return `<span class="chip">${a.emoji} ${a.label}</span>`;
+  }).join('');
+
+  card.innerHTML = `
+    <div class="emp-top">
+      <div class="avatar">${emp.name.substring(0, 2).toUpperCase()}</div>
+      <div>
+        <div class="emp-name">${emp.name} ${isHero ? '<span class="tag hero">FLAGSHIP</span>' : ''}</div>
+        <div class="emp-title">${emp.title}</div>
+      </div>
+    </div>
+    <div class="emp-owns">Owns <b>${wf.title || wf.name}</b></div>
+    <div class="team">${agentChips}</div>
+    <div class="emp-stats">
+      <div class="st">Runs<b>${emp.handled}</b></div>
+      <div class="st">Saved<b>${emp.hrs}h</b></div>
+      <div class="st">Impact<b>${emp.win}</b></div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" style="flex:1" onclick="startRun('${emp.wf}', '${emp.id}')">Run Operator</button>
+    </div>
+  `;
+  return card;
+}
+
+function startRun(wfKey, empId) {
+  const wf = WORKFLOWS[wfKey];
+  if (!wf) return;
+  activeRunWf = wfKey;
+  switchTab('run');
+
+  document.getElementById('run-track-tag').innerText = wf.track === 'commercial' ? 'Commercial Track' : 'Semiconductor Track';
+  document.getElementById('run-track-tag').className = `tag ${wf.track || 'commercial'}`;
+  document.getElementById('run-title').innerText = wf.title;
+  document.getElementById('run-desc').innerText = wf.desc;
+  document.getElementById('run-prompt').value = wf.sample;
+
+  const phaseBar = document.getElementById('phase-bar');
+  phaseBar.innerHTML = '';
+  wf.tasks.forEach((t, i) => {
+    phaseBar.innerHTML += `<div class="ph" id="ph-${i}"><div class="dot">${i+1}</div><div class="l">Phase ${i+1}</div></div>`;
+  });
+
+  const agentGrid = document.getElementById('agent-cards');
+  agentGrid.innerHTML = '';
+  wf.tasks.forEach((t, i) => {
+    const a = AGENT_ROLES[t.agent] || { emoji: '🤖', label: t.agent };
+    agentGrid.innerHTML += `
+      <div class="acard" id="acard-${i}">
+        <div class="ae">${a.emoji}</div>
+        <div class="ar">${a.label}</div>
+        <div class="at">${t.task}</div>
+        <div class="as" id="astat-${i}"><div class="sd"></div> Pending</div>
+      </div>
+    `;
+  });
+
+  document.getElementById('live-feed').innerHTML = '';
+  document.getElementById('result-box').classList.add('hidden');
+  document.getElementById('done-bar').classList.add('hidden');
+  document.getElementById('btn-exec').disabled = false;
+}
+
+function executeRun() {
+  const wf = WORKFLOWS[activeRunWf];
+  if (!wf) return;
+  document.getElementById('btn-exec').disabled = true;
+
+  let step = 0;
+  const feed = document.getElementById('live-feed');
+
+  function log(agentKey, msg) {
+    const now = new Date().toISOString().substring(11, 19);
+    const a = AGENT_ROLES[agentKey] || { label: agentKey };
+    feed.innerHTML += `<div class="frow"><span class="ft">${now}</span><span class="fa">${a.label}</span><span class="fd">${msg}</span></div>`;
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  if (activeRunTimer) clearInterval(activeRunTimer);
+
+  activeRunTimer = setInterval(() => {
+    if (step < wf.tasks.length) {
+      const t = wf.tasks[step];
+      const a = AGENT_ROLES[t.agent];
+
+      if (step > 0) {
+        document.getElementById(`ph-${step-1}`).className = 'ph done';
+        document.getElementById(`acard-${step-1}`).className = 'acard done';
+        document.getElementById(`astat-${step-1}`).innerHTML = '<div class="sd"></div> Complete';
+      }
+      document.getElementById(`ph-${step}`).className = 'ph active';
+      document.getElementById(`acard-${step}`).className = 'acard running visible';
+      document.getElementById(`astat-${step}`).innerHTML = '<div class="sd"></div> Executing...';
+
+      const toolFn = TOOLS[a.tools[0]] || TOOLS.save;
+      log(t.agent, toolFn());
+
+      step++;
+    } else {
+      clearInterval(activeRunTimer);
+      document.getElementById(`ph-${step-1}`).className = 'ph done';
+      document.getElementById(`acard-${step-1}`).className = 'acard done';
+      document.getElementById(`astat-${step-1}`).innerHTML = '<div class="sd"></div> Complete';
+
+      document.getElementById('result-box').classList.remove('hidden');
+      document.getElementById('done-bar').classList.remove('hidden');
+      document.getElementById('result-head').innerText = DTITLE[activeRunWf] || 'Deliverable Output';
+      document.getElementById('result-body').innerText = FINAL[activeRunWf] || 'Workflow execution completed successfully.';
+
+      document.getElementById('result-stats').innerHTML = `
+        <div class="rrow"><span class="k">Status</span><span class="v" style="color:var(--ok)">Success</span></div>
+        <div class="rrow"><span class="k">Execution Mode</span><span class="v">${wf.mode.toUpperCase()}</span></div>
+        <div class="rrow"><span class="k">Agents Engaged</span><span class="v">${wf.tasks.length}</span></div>
+        <div class="rrow"><span class="k">Deliverable</span><span class="v">Verified</span></div>
+      `;
+
+      const emp = EMPLOYEES.find(e => e.wf === activeRunWf);
+      if (emp) {
+        emp.handled++;
+        emp.hrs += 4;
+        renderEcon();
+        renderRoster();
+      }
+    }
+  }, 1000);
+}
+
+function renderBuilderWfs() {
+  const grid = document.getElementById('builder-wf-grid');
+  grid.innerHTML = '';
+  Object.keys(WORKFLOWS).forEach(key => {
+    const wf = WORKFLOWS[key];
+    const el = document.createElement('div');
+    el.className = `wf ${key === builderWfKey ? 'sel' : ''}`;
+    el.onclick = () => selectBuilderWf(key);
+    el.innerHTML = `
+      <div class="wn">${wf.name}</div>
+      <div class="wd">${wf.desc}</div>
+      <div class="wm">${wf.mode} &middot; ${wf.tasks.length} tasks</div>
+    `;
+    grid.appendChild(el);
+  });
+  loadBuilderTasks();
+}
+
+function selectBuilderWf(key) {
+  builderWfKey = key;
+  renderBuilderWfs();
+}
+
+function loadBuilderTasks() {
+  const wf = WORKFLOWS[builderWfKey];
+  builderTasks = JSON.parse(JSON.stringify(wf.tasks));
+}
+
+function renderBuilderTaskRows() {
+  const container = document.getElementById('builder-tasks');
+  container.innerHTML = '';
+  builderTasks.forEach((t, idx) => {
+    const row = document.createElement('div');
+    row.className = 'task-row';
+    const opts = Object.keys(AGENT_ROLES).map(ak => {
+      const a = AGENT_ROLES[ak];
+      return `<option value="${ak}" ${ak === t.agent ? 'selected' : ''}>${a.emoji} ${a.label}</option>`;
+    }).join('');
+
+    row.innerHTML = `
+      <div class="tn">${idx+1}</div>
+      <div class="tt">${t.task}</div>
+      <select onchange="builderTasks[${idx}].agent = this.value">${opts}</select>
+    `;
+    container.appendChild(row);
+  });
+}
+
+function bNext(step) {
+  [1, 2, 3].forEach(s => {
+    document.getElementById(`bstep-${s}`).classList.toggle('hidden', s !== step);
+    document.getElementById(`st-${s}`).classList.toggle('active', s === step);
+  });
+  if (step === 2) renderBuilderTaskRows();
+}
+
+function deployOperator() {
+  const name = document.getElementById('b-name').value || 'Custom Operator';
+  const title = document.getElementById('b-title').value || 'Specialized Operator';
+  const newWfKey = `custom_${Date.now()}`;
+
+  const baseWf = WORKFLOWS[builderWfKey];
+  WORKFLOWS[newWfKey] = {
+    name: name,
+    title: `${name} Workflow`,
+    mode: baseWf.mode,
+    track: baseWf.track,
+    deliverable: `${name} Output Package`,
+    sample: `Execute custom ${name} operational workflow.`,
+    desc: `Custom operator created via builder based on ${baseWf.name}.`,
+    tasks: builderTasks
+  };
+
+  DTITLE[newWfKey] = `${name} Output Deliverable`;
+  FINAL[newWfKey] = `CUSTOM OPERATOR DELIVERABLE\nOperator: ${name}\nTitle: ${title}\nTasks Executed: ${builderTasks.length}\n\nNOTE: illustrative concept for SiFive RISC-V IP workforce.`;
+
+  EMPLOYEES.push({
+    id: `emp_${Date.now()}`,
+    name: name,
+    title: title,
+    wf: newWfKey,
+    handled: 1,
+    hrs: 4,
+    win: 'Custom Workflow'
+  });
+
+  renderEcon();
+  renderRoster();
+  switchTab('roster');
+}
+
+window.onload = init;
+</script>
+</body>
+</html>
