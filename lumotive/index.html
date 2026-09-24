@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumotive &mdash; AI Commercial &amp; Optical Semiconductor Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f2f6fa;--surface2:#d8e3f0;--border:#b0c4de;--accent:#003B73;
+--accent-dim:rgba(0,59,115,.09);--accent-line:rgba(0,59,115,.35);--slate:#071526;--slate-line:rgba(7,21,38,.30);--text:#0a192f;--hi:#020b18;--tert:#4a607a;--ok:#10b981;--ok-dim:rgba(16,185,129,.10);--gold:#00B4D8;--gold-bg:#e6f9fc;--gold-line:#80e0f2}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:48px;height:34px;border-radius:8px;background:linear-gradient(135deg,#003B73,#00B4D8);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:12px;letter-spacing:.5px;font-family:Inter,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#003B73}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:900px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#002447;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(16,185,129,.08);color:#059669;border:1px solid rgba(16,185,129,.3)}
+.tag.hero{background:var(--gold-bg);color:#007791;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#003B73}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#002447;font-size:15px;flex-shrink:0;position:relative;font-family:Inter,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#003B73}.btn.primary{background:linear-gradient(270deg,#003B73,#071526);border-color:#003B73;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#003B73;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#003B73}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(16,185,129,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(16,185,129,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#003B73}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Inter,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#002447;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px;font-family:Inter,sans-serif}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input,.field select{width:100%;background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);outline:none}
+.field input:focus{border-color:var(--accent)}
+.seg{display:flex;gap:6px}.seg button{flex:1;padding:9px;font-size:12px;font-weight:600;border:1px solid var(--border);border-radius:7px;background:#fff;color:var(--tert);cursor:pointer;font-family:Inter,sans-serif}
+.seg button.on{background:var(--accent-dim);color:var(--hi);border-color:var(--accent-line)}
+.foot{max-width:1180px;margin:30px auto 40px;padding:18px 24px;border-top:1px solid var(--border);font-size:11.5px;color:var(--tert);text-align:center;line-height:1.5;font-family:Inter,sans-serif}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">
+    <div class="mark">LUMO</div>
+    <div>
+      <div class="htitle">Lumotive &middot; AI Commercial &amp; Optical Semiconductor Workforce</div>
+      <div class="hsub">Light Control Metasurface&trade; (LCM&trade;) solid-state optical beamsteering &amp; 3D LiDAR sensing platform</div>
+    </div>
+  </div>
+  <div class="badge"><b>Lumotive Platform</b> &middot; Redmond, WA</div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('roster')">AI Operators Roster</button>
+  <button class="tab" onclick="switchTab('builder')">Operator Builder</button>
+</div>
+
+<div class="main">
+  <div class="lead">
+    <b>Lumotive AI Workforce Prototype:</b> Accelerating solid-state 3D LiDAR adoption through autonomous agent teams. From Tier-1 OEM lead discovery and LM10&trade; optical sensor integration packages to metasurface wafer foundry audit and ISO 26262 automotive functional safety compliance.
+  </div>
+
+  <div class="legend">
+    <span><span class="tag commercial">Commercial Track</span> OEM Sourcing, LM10&trade; Integration &amp; Wafer Quoting</span>
+    <span><span class="tag operations">Semiconductor Track</span> Metasurface Lithography QA, Foveation SDK &amp; ISO 26262 Cert</span>
+    <span><span class="tag hero">Flagship</span> LM10&trade; Custom Optical Integration Package</span>
+  </div>
+
+  <div id="view-roster">
+    <div class="econ" id="econ-strip"></div>
+    <div id="roster-container"></div>
+  </div>
+
+  <div id="view-run" class="hidden">
+    <div class="run">
+      <div class="run-head">
+        <span class="tag" id="run-track-tag">Track</span>
+        <h2 id="run-title" style="font-size:18px;color:var(--hi)">Workflow Title</h2>
+      </div>
+      <div class="run-sub" id="run-desc">Workflow description...</div>
+
+      <div class="run-input">
+        <textarea id="run-prompt" rows="2"></textarea>
+        <button class="btn primary big" id="btn-exec" onclick="executeRun()">Execute Operator Run</button>
+      </div>
+
+      <div class="phases" id="phase-bar"></div>
+      <div class="agent-grid" id="agent-cards"></div>
+
+      <div class="slabel">Live Execution Stream</div>
+      <div class="feed" id="live-feed"></div>
+
+      <div class="result hidden" id="result-box">
+        <div class="rstats" id="result-stats"></div>
+        <div class="rout">
+          <div class="rh" id="result-head">Deliverable Output</div>
+          <div class="rb" id="result-body"></div>
+        </div>
+      </div>
+
+      <div class="donebar hidden" id="done-bar">
+        <b>Run Completed:</b> All agent tasks executed successfully. Deliverable generated with human-in-the-loop audit signoff.
+      </div>
+    </div>
+  </div>
+
+  <div id="view-builder" class="hidden">
+    <div class="run">
+      <h2 style="font-size:18px;color:var(--hi);margin-bottom:4px">Operator Builder</h2>
+      <div style="font-size:12.5px;color:var(--tert);margin-bottom:20px">Compose a new specialized AI Operator from Lumotive's workflow templates.</div>
+
+      <div class="steps">
+        <div class="step active" id="st-1"><div class="n">STEP 1</div><div class="l">Select Template</div><div class="d">Pick base workflow motion</div></div>
+        <div class="step" id="st-2"><div class="n">STEP 2</div><div class="l">Customize Team</div><div class="d">Assign specialist agents</div></div>
+        <div class="step" id="st-3"><div class="n">STEP 3</div><div class="l">Deploy Operator</div><div class="d">Set title &amp; initial state</div></div>
+      </div>
+
+      <div id="bstep-1">
+        <div class="slabel">Available Workflow Templates</div>
+        <div class="wf-grid" id="builder-wf-grid"></div>
+        <div style="margin-top:20px;text-align:right">
+          <button class="btn primary" onclick="bNext(2)">Next: Assign Agents &rarr;</button>
+        </div>
+      </div>
+
+      <div id="bstep-2" class="hidden">
+        <div class="slabel">Workflow Task &amp; Agent Mapping</div>
+        <div id="builder-tasks"></div>
+        <div style="margin-top:20px;display:flex;justify-content:space-between">
+          <button class="btn" onclick="bNext(1)">&larr; Back</button>
+          <button class="btn primary" onclick="bNext(3)">Next: Operator Identity &rarr;</button>
+        </div>
+      </div>
+
+      <div id="bstep-3" class="hidden">
+        <div class="slabel">Operator Configuration</div>
+        <div class="field"><label>Operator Name</label><input type="text" id="b-name" value="Custom Beamsteering Operator"></div>
+        <div class="field"><label>Role / Title</label><input type="text" id="b-title" value="Specialized Optical Integration Engineer"></div>
+        <div style="margin-top:20px;display:flex;justify-content:space-between">
+          <button class="btn" onclick="bNext(2)">&larr; Back</button>
+          <button class="btn primary" onclick="deployOperator()">Deploy Operator to Roster</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  Lumotive AI Workforce Prototype &middot; Designed for Lumotive Optical Beamsteering &amp; 3D LiDAR Sensing Platform &middot; Redmond, WA<br>
+  All data, metrics, and generated deliverables shown are illustrative concepts. Final outputs require human-in-the-loop review.
+</div>
+
+<script>
+const TRACKS = [
+  ['commercial', 'Commercial & OEM Sourcing'],
+  ['operations', 'Optical Semiconductor & 3D Sensing Ops']
+];
+
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'Market & OEM LiDAR Research', tools: ['search_market', 'save'] },
+  prospector: { emoji: '🎯', label: 'OEM & Tier-1 Account Sourcing', tools: ['source_oems', 'save'] },
+  qualifier: { emoji: '📊', label: 'Sensing Spec & Fit Scorer', tools: ['score_sensor_fit', 'save'] },
+  lcm_designer: { emoji: '🔬', label: 'LCM™ & Beamforming Engineer', tools: ['design_lcm_steer', 'save'] },
+  optics_fae: { emoji: '🛠️', label: 'Optical FAE & Integration Lead', tools: ['eval_optical_link', 'save'] },
+  firmware: { emoji: '💻', label: 'M30™ / SDK & Foveation Dev', tools: ['compile_beam_driver', 'save'] },
+  pricing: { emoji: '🧮', label: 'Silicon & Module Quoting Lead', tools: ['calculate_wafer_quote', 'save'] },
+  iso_compliance: { emoji: '🛡️', label: 'ISO 26262 & Automotive Cert Lead', tools: ['audit_safety_spec', 'save'] },
+  wafer_qa: { emoji: '🔬', label: 'Wafer Foundry & Packaging Audit', tools: ['inspect_metasurface', 'save'] },
+  intel: { emoji: '🛰️', label: 'Solid-State LiDAR & OEM Intel', tools: ['benchmark_comp_lidar', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'Technical Proposal & PRD Writer', tools: ['draft_nre_proposal', 'save'] },
+  reviewer: { emoji: '✅', label: 'Design & Deliverable Reviewer', tools: ['qa_signoff', 'save'] }
+};
+
+const WORKFLOWS = {
+  scout: {
+    name: 'OEM Sourcing',
+    title: 'Autonomous OEM & Tier-1 Opportunity Sourcing',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'OEM Opportunity Intelligence Dossier',
+    sample: 'Identify automotive Tier-1 suppliers and robotics OEMs seeking mirrorless 3D LiDAR sensors for ADAS and industrial navigation.',
+    desc: 'Scans global RFIs, RFPs, and engineering patents to surface target OEM projects requiring solid-state beam steering.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan automotive ADAS, autonomous robotics, and industrial automation RFIs for solid-state 3D LiDAR requirements.', deps: [] },
+      { agent: 'prospector', task: 'Filter Tier-1 automotive suppliers (Continental, Denso, Magna) and robotics OEMs needing mirrorless optical beamforming.', deps: [0] },
+      { agent: 'qualifier', task: 'Evaluate FOV, range, wavelength (905nm vs 1550nm), frame rate, and unit cost requirements against LM10™ specs.', deps: [1] },
+      { agent: 'proposal_writer', task: 'Draft personalized executive briefing and LCM™ technical advantage memo for OEM engineering leadership.', deps: [2] }
+    ]
+  },
+  lm10_design_package: {
+    name: 'LM10™ Integration Package',
+    title: 'LM10™ Custom Optical Sensor Integration Package',
+    mode: 'sequential',
+    track: 'commercial',
+    tag: 'flagship',
+    deliverable: 'LM10™ OEM Integration Architecture & NRE Proposal',
+    sample: 'Generate a comprehensive optical sensor integration package for a Tier-1 automotive ADAS customer requiring 120° x 30° FOV software-defined scanning.',
+    desc: 'Deep technical integration workflow configuring metasurface beamsteering parameters, optical link budget, SDK foveation profiles, and ASIL-B safety compliance.',
+    tasks: [
+      { agent: 'optics_fae', task: 'Assess customer mechanical footprint, VCSEL illuminator specs, and target detection range (200m+).', deps: [] },
+      { agent: 'lcm_designer', task: 'Configure LCM™ phase array parameters, beam steering angle (120° x 30°), and random-access ROI scan patterns.', deps: [0] },
+      { agent: 'firmware', task: 'Generate Lumotive SDK foveation profile and software-defined scan logic for dynamic object tracking.', deps: [1] },
+      { agent: 'iso_compliance', task: 'Map ASIL-B / ASIL-D functional safety mechanisms, fail-safe optical shutdown, and AEC-Q102 optoelectronic qualification.', deps: [2] },
+      { agent: 'pricing', task: 'Compute high-volume LM10™ chiplet pricing, NRE engineering fees, and custom evaluation kit (EVK) delivery schedule.', deps: [3] },
+      { agent: 'proposal_writer', task: 'Synthesize end-to-end integration package, architecture diagram, and customer evaluation contract.', deps: [4] },
+      { agent: 'reviewer', task: 'Conduct complete technical QA and executive signoff before client dispatch.', deps: [5] }
+    ]
+  },
+  wafer_quote: {
+    name: 'Silicon & EVK Quoting',
+    title: 'High-Volume LCM™ Wafer & EVK Quoting',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'LCM™ Commercial Quotation & Volume Tier Matrix',
+    sample: 'Calculate tiered unit pricing for 50,000 LM10™ optical beamformer chiplets and 5 EVK evaluation units.',
+    desc: 'Automates pricing matrix compilation based on CMOS foundry wafer yields, packaging options, and EVK staging.',
+    tasks: [
+      { agent: 'qualifier', task: 'Verify annual volume forecast (10k to 1M units) and packaging tier (bare die, BGA chiplet, optical sub-assembly).', deps: [] },
+      { agent: 'pricing', task: 'Model CMOS foundry wafer yields, TSV packaging costs, and tiered volume discount matrix.', deps: [0] },
+      { agent: 'proposal_writer', task: 'Generate formal commercial quotation and sample delivery agreement for evaluation kits.', deps: [1] }
+    ]
+  },
+  radar: {
+    name: 'LiDAR Market Radar',
+    title: 'Solid-State LiDAR & Optical Beamforming Competitive Intelligence',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Optical Beamforming Technology & Market Battlecard',
+    sample: 'Benchmark Lumotive LCM™ semiconductor beam steering against legacy MEMS mirrors, Flash LiDAR, and optical phase arrays (OPA).',
+    desc: 'Monitors competitor filings, optical efficiency metrics, and mechanical reliability benchmarks across 3D sensing markets.',
+    tasks: [
+      { agent: 'intel', task: 'Monitor competitor announcements (MEMS LiDAR, Flash LiDAR, OPA chips, micro-galvanometers).', deps: [] },
+      { agent: 'researcher', task: 'Analyze patent filings around optical metasurfaces and liquid crystal beam deflectors.', deps: [0] },
+      { agent: 'reviewer', task: 'Compile executive battlecard highlighting Lumotive LCM™ advantages in reliability, size, and cost.', deps: [1] }
+    ]
+  },
+  lcm_wafer_audit: {
+    name: 'Metasurface Wafer Audit',
+    title: 'Foundry Metasurface Wafer & Fabrication QA Audit',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'CMOS Metasurface Fabrication Yield & Phase QA Report',
+    sample: 'Audit sub-micron lithography alignment and phase modulation uniformity for 300mm silicon-on-insulator (SOI) wafer Lot #LUM-8820.',
+    desc: 'Validates semiconductor foundry fabrication quality, phase shift consistency, and packaging yield metrics.',
+    tasks: [
+      { agent: 'wafer_qa', task: 'Inspect silicon-on-insulator (SOI) wafer batch sub-micron etching uniformity and phase modulation yields.', deps: [] },
+      { agent: 'lcm_designer', task: 'Correlate physical lithography drift with simulated optical beam efficiency and diffraction sidelobes.', deps: [0] },
+      { agent: 'reviewer', task: 'Generate foundry disposition report and wafer batch approval for packaging.', deps: [1] }
+    ]
+  },
+  foveation_sdk_build: {
+    name: 'Foveation SDK Build',
+    title: 'Custom Software-Defined Foveation SDK Build',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'Software-Defined Beamsteering SDK Package & API Docs',
+    sample: 'Compile custom dynamic Region-of-Interest (ROI) beam scanning profile for high-speed highway ADAS object tracking.',
+    desc: 'Configures software drivers for adaptive beam steering, custom frame rate scaling, and real-time foveated 3D perception.',
+    tasks: [
+      { agent: 'firmware', task: 'Program dynamic Region-of-Interest (ROI) scanning algorithms for highway ADAS vs urban robotics.', deps: [] },
+      { agent: 'optics_fae', task: 'Benchmark point-cloud angular resolution (0.05°) and frame rate scaling (up to 120 Hz) in hardware EVK.', deps: [0] },
+      { agent: 'proposal_writer', task: 'Document SDK API endpoints, C++/Python bindings, and sample ROS2 integration nodes.', deps: [1] }
+    ]
+  },
+  iso26262_safety_audit: {
+    name: 'Automotive Safety Audit',
+    title: 'ISO 26262 & AEC-Q102 Automotive Qualification Package',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'ISO 26262 ASIL-B Functional Safety Audit Dossier',
+    sample: 'Execute functional safety verification and optoelectronic stress testing for LM10™ automotive sensor deployment.',
+    desc: 'Generates safety compliance documentation, FMEDA analysis, and AEC-Q102 thermal/vibration stress test logs.',
+    tasks: [
+      { agent: 'iso_compliance', task: 'Execute FMEDA (Failure Modes, Effects, and Diagnostic Analysis) for LCM™ optical beamformer chiplet.', deps: [] },
+      { agent: 'wafer_qa', task: 'Validate thermal cycling (-40°C to +125°C) and vibration test logs against AEC-Q102 standards.', deps: [0] },
+      { agent: 'reviewer', task: 'Produce formal Automotive Functional Safety Compliance Dossier for Tier-1 auditors.', deps: [1] }
+    ]
+  },
+  ref_design_enablement: {
+    name: 'Robotics Reference Design',
+    title: 'Autonomous Robotics 3D Sensing Reference Design Enablement',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'Autonomous Robotics 3D Sensing Hardware Reference Design Kit',
+    sample: 'Build complete 3D LiDAR sensing reference design for autonomous mobile robots (AMRs) using LM10™ chiplet and VCSEL illuminators.',
+    desc: 'Assembles end-to-end hardware schematics, optical ray-tracing files, ambient light filter specs, and firmware stack.',
+    tasks: [
+      { agent: 'optics_fae', task: 'Assemble hardware reference design combining LM10™ chiplet, VCSEL laser array, and CMOS receiver module.', deps: [] },
+      { agent: 'firmware', task: 'Embed real-time point cloud noise filtering and ambient sunlight suppression firmware.', deps: [0] },
+      { agent: 'proposal_writer', task: 'Author comprehensive Application Note and Hardware Integration Guide for robotics OEMs.', deps: [1] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'OEM Sourcing & Opportunity Dossier',
+  lm10_design_package: 'LM10™ OEM Optical Sensor Integration Package',
+  wafer_quote: 'LCM™ Commercial Quotation & Volume Tier Matrix',
+  radar: 'Solid-State LiDAR Competitive Battlecard',
+  lcm_wafer_audit: 'Metasurface Wafer Lithography QA Report',
+  foveation_sdk_build: 'Software-Defined Foveation SDK Release Package',
+  iso26262_safety_audit: 'ISO 26262 ASIL-B Functional Safety Dossier',
+  ref_design_enablement: 'Robotics 3D Sensing Reference Design Package'
+};
+
+const TOOLS = {
+  search_market: () => 'Querying global automotive ADAS and industrial robotics RFI databases for 3D sensing RFPs...',
+  source_oems: () => 'Cross-referencing Tier-1 automotive specs with Lumotive optical metasurface parameters...',
+  score_sensor_fit: () => 'Scoring angular resolution, FOV (120°x30°), optical efficiency, and power budget...',
+  design_lcm_steer: () => 'Synthesizing optical phase delay profile for solid-state LCM™ beam steering...',
+  eval_optical_link: () => 'Modeling VCSEL illumination laser power, receiver SNR, and 200m range optical budget...',
+  compile_beam_driver: () => 'Compiling Lumotive SDK dynamic ROI scan patterns and foveated frame rate profiles...',
+  calculate_wafer_quote: () => 'Computing CMOS foundry 300mm wafer yields, packaging NRE, and volume unit price tier...',
+  audit_safety_spec: () => 'Running FMEDA diagnostic coverage check for ASIL-B laser safety shutdown controls...',
+  inspect_metasurface: () => 'Analyzing sub-micron silicon etching phase shift uniformity across wafer batch...',
+  benchmark_comp_lidar: () => 'Benchmarking mechanical MEMS vs Lumotive solid-state optical metasurface cost/reliability...',
+  draft_nre_proposal: () => 'Generating customer technical proposal, system architecture diagram, and integration milestones...',
+  qa_signoff: () => 'Executing compliance audit, verification checklist, and senior engineering signoff...',
+  save: () => 'Persisting structured artifact into Lumotive enterprise knowledge repository...'
+};
+
+const FINAL = {
+  scout: `LUMOTIVE OEM OPPORTUNITY INTELLIGENCE DOSSIER
+Target Account: Tier-1 Automotive ADAS Supplier & Autonomous Robotics OEM
+Primary Requirement: Solid-state 3D LiDAR without mechanical mirrors or MEMS components
+Recommended Solution: Lumotive LM10™ Light Control Metasurface™ (LCM™) Optical Beamformer
+
+Identified Opportunities:
+1. Automotive ADAS Program: 120° Field-of-View long-range sensing; 200m detection range at 905nm VCSEL illuminator.
+2. Warehouse Robotics (AMR): Compact optical sub-assembly requiring software-defined foveated scanning for obstacle avoidance.
+
+Next Step: Dispatch LM10™ Evaluation Kit (EVK) and commence custom optical link simulation.
+NOTE: illustrative concept for Lumotive optical beamsteering workforce.`,
+
+  lm10_design_package: `LM10™ OEM OPTICAL SENSOR INTEGRATION PACKAGE & NRE PROPOSAL
+Customer: Global Tier-1 Automotive Systems Integrator
+Target Sensor Module: LM10™ Solid-State 3D LiDAR Engine
+
+Architecture Specification:
+- Beam Steering Mechanism: Light Control Metasurface™ (LCM™) semiconductor phase array
+- Steering Range: 120° horizontal x 30° vertical (random-access software steering)
+- Laser Illuminator: Integrated multi-junction VCSEL array (Class 1 Eye Safe)
+- Foveation Capability: Dynamic Region of Interest (ROI) with up to 0.05° angular resolution
+- Functional Safety: ISO 26262 ASIL-B compliant fail-safe optical shutdown
+- Automotive Reliability: AEC-Q102 optoelectronic qualification
+
+Commercial Summary:
+- NRE Integration Fee: $185,000 (Includes EVK hardware, SDK support, custom beam profile)
+- High-Volume Chiplet Pricing: $42.50 per LM10™ IC (50,000+ annual unit threshold)
+- EVK Delivery Lead Time: 3 weeks ARO
+
+NOTE: illustrative concept for Lumotive optical beamsteering workforce.`,
+
+  wafer_quote: `LCM™ COMMERCIAL QUOTATION & VOLUME TIER MATRIX
+Quotation ID: LUM-Q-2026-884
+Product: LM10™ Optical Beamformer IC & Evaluation Hardware
+
+Volume Pricing Breakdown:
+- Tier 1 (1k - 10k units): $68.00 / unit
+- Tier 2 (10k - 50k units): $52.00 / unit
+- Tier 3 (50k - 200k units): $42.50 / unit
+- Tier 4 (200k+ units): Custom Foundry Contract
+
+Includes: Standard BGA packaging, Lumotive Software Driver SDK, 12-month technical support.
+NOTE: illustrative concept for Lumotive optical beamsteering workforce.`,
+
+  radar: `OPTICAL BEAMFORMING TECHNOLOGY & MARKET BATTLECARD
+Focus: Lumotive LCM™ vs Legacy 3D LiDAR Architectures
+
+Key Differentiators:
+1. vs Mechanical MEMS Mirrors: Zero moving parts, immune to automotive vibration/shock (AEC-Q102 pass), 10x longer MTBF.
+2. vs Optical Phase Arrays (OPA): CMOS fabrication compatibility, significantly lower insertion loss, higher optical efficiency.
+3. vs Flash LiDAR: Software-defined random-access beam steering concentrate illumination energy where needed (foveated 3D vision).
+
+Strategic Takeaway: Position LM10™ as the only commercially viable silicon metasurface solution for mass-market automotive LiDAR.
+NOTE: illustrative concept for Lumotive optical beamsteering workforce.`,
+
+  lcm_wafer_audit: `CMOS METASURFACE FABRICATION YIELD & PHASE QA REPORT
+Wafer Batch: Lot #LUM-8820 (300mm SOI Foundry Process)
+Inspection Date: September 2026
+
+Quality Metrics:
+- Sub-micron Lithography Alignment: 99.78% within +/- 5nm tolerance
+- Optical Phase Shift Uniformity: 99.4% across die array
+- Defect Density: 0.04 defects/cm² (Exceeds automotive grade 1 targets)
+- Disposition: Wafer Lot Approved for BGA Packaging & Optical Sub-assembly.
+
+NOTE: illustrative concept for Lumotive optical beamsteering workforce.`,
+
+  foveation_sdk_build: `SOFTWARE-DEFINED FOVEATION SDK RELEASE PACKAGE
+SDK Version: Lumotive M30™ Sensor Suite v3.4.0
+Supported Platforms: Linux x86_64, ARM64 ROS2, Automotive ECU Autosar
+
+Features Included:
+- Adaptive Region-of-Interest (ROI) beam scanning configuration API
+- Dynamic frame rate scaling (20 Hz full-field to 120 Hz foveated zoom)
+- Point cloud ambient sunlight noise cancellation algorithms
+- C++ / Python native bindings with sample ROS2 point-cloud publisher nodes
+
+NOTE: illustrative concept for Lumotive optical beamsteering workforce.`,
+
+  iso26262_safety_audit: `ISO 26262 ASIL-B FUNCTIONAL SAFETY AUDIT DOSSIER
+System: Lumotive LM10™ Optical Beamforming Subsystem
+Standard Compliance: ISO 26262:2018 (Automotive Functional Safety) & AEC-Q102
+
+Safety Evaluation Summary:
+- FMEDA Diagnostic Coverage: 94.2% (ASIL-B requirement met)
+- Hardware Fault Metrics: Single point fault metric > 90%; Latent fault metric > 60%
+- Laser Eye Safety Protocol: Hardware-level VCSEL pulse interlock executes in < 2ms upon anomaly detection
+- Status: Audit Passed - Recommended for Tier-1 Automotive Design Wins.
+
+NOTE: illustrative concept for Lumotive optical beamsteering workforce.`,
+
+  ref_design_enablement: `AUTONOMOUS ROBOTICS 3D SENSING REFERENCE DESIGN KIT
+Design ID: LUM-REF-AMR-3D
+Application: Autonomous Mobile Robots (AMRs) & Automated Guided Vehicles (AGVs)
+
+Package Contents:
+1. Hardware Schematics & Layout: LM10™ chiplet + 905nm VCSEL array + SPAD receiver board.
+2. Optical Lens CAD Files: Customized wide-angle Rx/Tx optical lens stack.
+3. Software Driver: Plug-and-play ROS2 navigation driver with foveated obstacle detection.
+4. Application Note: "Integrating Metasurface LiDAR in Compact AMR Chassis".
+
+NOTE: illustrative concept for Lumotive optical beamsteering workforce.`
+};
+
+const EMPLOYEES = [
+  { id: 'emp1', name: 'LUMO-Scout', title: 'Tier-1 OEM Sourcing Operator', wf: 'scout', handled: 142, hrs: 310, win: '4.8x Lead Pipeline' },
+  { id: 'emp2', name: 'LM10-Architect', title: 'LM10™ Integration Package Lead', wf: 'lm10_design_package', handled: 88, hrs: 420, win: '85% Faster NRE Cycle' },
+  { id: 'emp3', name: 'LUMO-Quoter', title: 'Silicon Wafer & EVK Quoting Lead', wf: 'wafer_quote', handled: 210, hrs: 185, win: '1.2h Turnaround' },
+  { id: 'emp4', name: 'LUMO-Radar', title: 'Solid-State LiDAR Competitive Intel', wf: 'radar', handled: 64, hrs: 140, win: 'Real-time OEM Radar' },
+  { id: 'emp5', name: 'Wafer-Audit', title: 'Metasurface Lithography QA Lead', wf: 'lcm_wafer_audit', handled: 115, hrs: 290, win: '99.4% Fab Yield' },
+  { id: 'emp6', name: 'Foveation-Dev', title: 'Software-Defined SDK Build Lead', wf: 'foveation_sdk_build', handled: 94, hrs: 260, win: '120 Hz Dynamic ROI' },
+  { id: 'emp7', name: 'ISO-Safety', title: 'Automotive ASIL Compliance Lead', wf: 'iso26262_safety_audit', handled: 52, hrs: 380, win: '100% Audit Readiness' },
+  { id: 'emp8', name: 'Robotics-Enable', title: '3D Sensing Reference Design Lead', wf: 'ref_design_enablement', handled: 76, hrs: 215, win: '3-Week OEM Onboarding' }
+];
+
+// ENGINE LOGIC (Standard proven engine implementation)
+let currentTab = 'roster';
+let activeRunWf = null;
+let activeRunTimer = null;
+let builderWfKey = 'scout';
+let builderTasks = [];
+
+function init() {
+  renderEcon();
+  renderRoster();
+  renderBuilderWfs();
+}
+
+function switchTab(t) {
+  currentTab = t;
+  document.querySelectorAll('.tab').forEach((el, idx) => {
+    el.classList.toggle('active', (t === 'roster' && idx === 0) || (t === 'builder' && idx === 1));
+  });
+  document.getElementById('view-roster').classList.toggle('hidden', t !== 'roster');
+  document.getElementById('view-run').classList.toggle('hidden', t !== 'run');
+  document.getElementById('view-builder').classList.toggle('hidden', t !== 'builder');
+}
+
+function renderEcon() {
+  const totalH = EMPLOYEES.reduce((a, b) => a + b.handled, 0);
+  const totalHrs = EMPLOYEES.reduce((a, b) => a + b.hrs, 0);
+  const el = document.getElementById('econ-strip');
+  el.innerHTML = `
+    <div class="cell"><div class="v"><span class="tnum">${EMPLOYEES.length}</span></div><div class="k">Active AI Operators</div></div>
+    <div class="cell"><div class="v"><span class="tnum">${totalH}</span></div><div class="k">Workflows Completed</div></div>
+    <div class="cell"><div class="v"><span class="tnum">${totalHrs}</span> <span class="u">hrs</span></div><div class="k">Engineering Hours Saved</div></div>
+    <div class="cell"><div class="v"><span class="u">85%</span></div><div class="k">NRE Cycle Acceleration</div></div>
+  `;
+}
+
+function renderRoster() {
+  const container = document.getElementById('roster-container');
+  container.innerHTML = '';
+
+  TRACKS.forEach(([tKey, tLabel]) => {
+    const section = document.createElement('div');
+    section.innerHTML = `<div class="slabel">${tLabel}</div>`;
+    const grid = document.createElement('div');
+    grid.className = 'roster';
+
+    EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === tKey).forEach(emp => {
+      grid.appendChild(createEmpCard(emp));
+    });
+    section.appendChild(grid);
+    container.appendChild(section);
+  });
+
+  // Untracked or added operators
+  const untracked = EMPLOYEES.filter(e => !WORKFLOWS[e.wf] || !WORKFLOWS[e.wf].track);
+  if (untracked.length > 0) {
+    const section = document.createElement('div');
+    section.innerHTML = `<div class="slabel">Custom Operators</div>`;
+    const grid = document.createElement('div');
+    grid.className = 'roster';
+    untracked.forEach(emp => grid.appendChild(createEmpCard(emp)));
+    section.appendChild(grid);
+    container.appendChild(section);
+  }
+}
+
+function createEmpCard(emp) {
+  const wf = WORKFLOWS[emp.wf] || { name: emp.wf, desc: '', tasks: [] };
+  const isHero = wf.tag === 'flagship';
+  const card = document.createElement('div');
+  card.className = `emp ${isHero ? 'hero' : ''}`;
+  card.id = `card-${emp.id}`;
+
+  const agentChips = wf.tasks.map(t => {
+    const a = AGENT_ROLES[t.agent] || { emoji: '🤖', label: t.agent };
+    return `<span class="chip">${a.emoji} ${a.label}</span>`;
+  }).join('');
+
+  card.innerHTML = `
+    <div class="emp-top">
+      <div class="avatar">${emp.name.substring(0, 2).toUpperCase()}</div>
+      <div>
+        <div class="emp-name">${emp.name} ${isHero ? '<span class="tag hero">FLAGSHIP</span>' : ''}</div>
+        <div class="emp-title">${emp.title}</div>
+      </div>
+    </div>
+    <div class="emp-owns">Owns <b>${wf.title || wf.name}</b></div>
+    <div class="team">${agentChips}</div>
+    <div class="emp-stats">
+      <div class="st">Runs<b>${emp.handled}</b></div>
+      <div class="st">Saved<b>${emp.hrs}h</b></div>
+      <div class="st">Impact<b>${emp.win}</b></div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" style="flex:1" onclick="startRun('${emp.wf}', '${emp.id}')">Run Operator</button>
+    </div>
+  `;
+  return card;
+}
+
+function startRun(wfKey, empId) {
+  const wf = WORKFLOWS[wfKey];
+  if (!wf) return;
+  activeRunWf = wfKey;
+  switchTab('run');
+
+  document.getElementById('run-track-tag').innerText = wf.track === 'commercial' ? 'Commercial Track' : 'Semiconductor Track';
+  document.getElementById('run-track-tag').className = `tag ${wf.track || 'commercial'}`;
+  document.getElementById('run-title').innerText = wf.title;
+  document.getElementById('run-desc').innerText = wf.desc;
+  document.getElementById('run-prompt').value = wf.sample;
+
+  // Render Phase Bar
+  const phaseBar = document.getElementById('phase-bar');
+  phaseBar.innerHTML = '';
+  wf.tasks.forEach((t, i) => {
+    phaseBar.innerHTML += `<div class="ph" id="ph-${i}"><div class="dot">${i+1}</div><div class="l">Phase ${i+1}</div></div>`;
+  });
+
+  // Render Agent Cards
+  const agentGrid = document.getElementById('agent-cards');
+  agentGrid.innerHTML = '';
+  wf.tasks.forEach((t, i) => {
+    const a = AGENT_ROLES[t.agent] || { emoji: '🤖', label: t.agent };
+    agentGrid.innerHTML += `
+      <div class="acard" id="acard-${i}">
+        <div class="ae">${a.emoji}</div>
+        <div class="ar">${a.label}</div>
+        <div class="at">${t.task}</div>
+        <div class="as" id="astat-${i}"><div class="sd"></div> Pending</div>
+      </div>
+    `;
+  });
+
+  document.getElementById('live-feed').innerHTML = '';
+  document.getElementById('result-box').classList.add('hidden');
+  document.getElementById('done-bar').classList.add('hidden');
+  document.getElementById('btn-exec').disabled = false;
+}
+
+function executeRun() {
+  const wf = WORKFLOWS[activeRunWf];
+  if (!wf) return;
+  document.getElementById('btn-exec').disabled = true;
+
+  let step = 0;
+  const feed = document.getElementById('live-feed');
+
+  function log(agentKey, msg) {
+    const now = new Date().toISOString().substring(11, 19);
+    const a = AGENT_ROLES[agentKey] || { label: agentKey };
+    feed.innerHTML += `<div class="frow"><span class="ft">${now}</span><span class="fa">${a.label}</span><span class="fd">${msg}</span></div>`;
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  if (activeRunTimer) clearInterval(activeRunTimer);
+
+  activeRunTimer = setInterval(() => {
+    if (step < wf.tasks.length) {
+      const t = wf.tasks[step];
+      const a = AGENT_ROLES[t.agent];
+
+      // Update phase
+      if (step > 0) {
+        document.getElementById(`ph-${step-1}`).className = 'ph done';
+        document.getElementById(`acard-${step-1}`).className = 'acard done';
+        document.getElementById(`astat-${step-1}`).innerHTML = '<div class="sd"></div> Complete';
+      }
+      document.getElementById(`ph-${step}`).className = 'ph active';
+      document.getElementById(`acard-${step}`).className = 'acard running visible';
+      document.getElementById(`astat-${step}`).innerHTML = '<div class="sd"></div> Executing...';
+
+      const toolFn = TOOLS[a.tools[0]] || TOOLS.save;
+      log(t.agent, toolFn());
+
+      step++;
+    } else {
+      clearInterval(activeRunTimer);
+      document.getElementById(`ph-${step-1}`).className = 'ph done';
+      document.getElementById(`acard-${step-1}`).className = 'acard done';
+      document.getElementById(`astat-${step-1}`).innerHTML = '<div class="sd"></div> Complete';
+
+      // Output final
+      document.getElementById('result-box').classList.remove('hidden');
+      document.getElementById('done-bar').classList.remove('hidden');
+      document.getElementById('result-head').innerText = DTITLE[activeRunWf] || 'Deliverable Output';
+      document.getElementById('result-body').innerText = FINAL[activeRunWf] || 'Workflow execution completed successfully.';
+
+      document.getElementById('result-stats').innerHTML = `
+        <div class="rrow"><span class="k">Status</span><span class="v" style="color:var(--ok)">Success</span></div>
+        <div class="rrow"><span class="k">Execution Mode</span><span class="v">${wf.mode.toUpperCase()}</span></div>
+        <div class="rrow"><span class="k">Agents Engaged</span><span class="v">${wf.tasks.length}</span></div>
+        <div class="rrow"><span class="k">Deliverable</span><span class="v">Verified</span></div>
+      `;
+
+      // Increment employee stats
+      const emp = EMPLOYEES.find(e => e.wf === activeRunWf);
+      if (emp) {
+        emp.handled++;
+        emp.hrs += 4;
+        renderEcon();
+        renderRoster();
+      }
+    }
+  }, 1000);
+}
+
+// BUILDER FUNCTIONS
+function renderBuilderWfs() {
+  const grid = document.getElementById('builder-wf-grid');
+  grid.innerHTML = '';
+  Object.keys(WORKFLOWS).forEach(key => {
+    const wf = WORKFLOWS[key];
+    const el = document.createElement('div');
+    el.className = `wf ${key === builderWfKey ? 'sel' : ''}`;
+    el.onclick = () => selectBuilderWf(key);
+    el.innerHTML = `
+      <div class="wn">${wf.name}</div>
+      <div class="wd">${wf.desc}</div>
+      <div class="wm">${wf.mode} &middot; ${wf.tasks.length} tasks</div>
+    `;
+    grid.appendChild(el);
+  });
+  loadBuilderTasks();
+}
+
+function selectBuilderWf(key) {
+  builderWfKey = key;
+  renderBuilderWfs();
+}
+
+function loadBuilderTasks() {
+  const wf = WORKFLOWS[builderWfKey];
+  builderTasks = JSON.parse(JSON.stringify(wf.tasks));
+}
+
+function renderBuilderTaskRows() {
+  const container = document.getElementById('builder-tasks');
+  container.innerHTML = '';
+  builderTasks.forEach((t, idx) => {
+    const row = document.createElement('div');
+    row.className = 'task-row';
+    const opts = Object.keys(AGENT_ROLES).map(ak => {
+      const a = AGENT_ROLES[ak];
+      return `<option value="${ak}" ${ak === t.agent ? 'selected' : ''}>${a.emoji} ${a.label}</option>`;
+    }).join('');
+
+    row.innerHTML = `
+      <div class="tn">${idx+1}</div>
+      <div class="tt">${t.task}</div>
+      <select onchange="builderTasks[${idx}].agent = this.value">${opts}</select>
+    `;
+    container.appendChild(row);
+  });
+}
+
+function bNext(step) {
+  [1, 2, 3].forEach(s => {
+    document.getElementById(`bstep-${s}`).classList.toggle('hidden', s !== step);
+    document.getElementById(`st-${s}`).classList.toggle('active', s === step);
+  });
+  if (step === 2) renderBuilderTaskRows();
+}
+
+function deployOperator() {
+  const name = document.getElementById('b-name').value || 'Custom Operator';
+  const title = document.getElementById('b-title').value || 'Specialized Operator';
+  const newWfKey = `custom_${Date.now()}`;
+
+  const baseWf = WORKFLOWS[builderWfKey];
+  WORKFLOWS[newWfKey] = {
+    name: name,
+    title: `${name} Workflow`,
+    mode: baseWf.mode,
+    track: baseWf.track,
+    deliverable: `${name} Output Package`,
+    sample: `Execute custom ${name} operational workflow.`,
+    desc: `Custom operator created via builder based on ${baseWf.name}.`,
+    tasks: builderTasks
+  };
+
+  DTITLE[newWfKey] = `${name} Output Deliverable`;
+  FINAL[newWfKey] = `CUSTOM OPERATOR DELIVERABLE\nOperator: ${name}\nTitle: ${title}\nTasks Executed: ${builderTasks.length}\n\nNOTE: illustrative concept for Lumotive optical beamsteering workforce.`;
+
+  EMPLOYEES.push({
+    id: `emp_${Date.now()}`,
+    name: name,
+    title: title,
+    wf: newWfKey,
+    handled: 1,
+    hrs: 4,
+    win: 'Custom Workflow'
+  });
+
+  renderEcon();
+  renderRoster();
+  switchTab('roster');
+}
+
+window.onload = init;
+</script>
+</body>
+</html>
