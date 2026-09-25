@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LISCR Console — AI Maritime Flag State &amp; Fleet Registry Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060b14;
+  --surface:#0f1726;
+  --surface-2:#192438;
+  --surface-3:#283754;
+  --border:#283754;
+  --border-soft:#111a2b;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --muted-2:#64748b;
+  --accent:#c5a059;
+  --accent-dim:rgba(197,160,89,0.16);
+  --accent-line:rgba(197,160,89,0.38);
+  --accent2:#003366;
+  --accent2-bg:rgba(0,51,102,0.18);
+  --accent3:#06b6d4;
+  --danger:#ef4444;
+  --ok:#10b981;
+  --font-display:'Rajdhani',sans-serif;
+  --font-body:'Work Sans',sans-serif;
+  --font-mono:'Roboto Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 88% -8%, rgba(197,160,89,0.18), transparent 55%),
+    radial-gradient(900px 480px at 5% 5%, rgba(0,51,102,0.22), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+a{color:var(--accent);}
+::selection{background:rgba(197,160,89,0.28);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+.hidden{display:none!important;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:24px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:44px;height:42px;border-radius:8px;
+  background:linear-gradient(135deg,#002244,#003366);
+  border:1px solid var(--accent-line);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--accent);font-family:var(--font-display);font-weight:700;font-size:15px;letter-spacing:1px;
+  box-shadow:0 0 20px rgba(197,160,89,0.3);
+}
+.mark-title{font-family:var(--font-display);font-size:22px;font-weight:700;color:#fff;letter-spacing:.5px;line-height:1.1;}
+.mark-sub{font-size:12px;color:var(--muted);margin-top:2px;}
+.pill-live{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--accent-dim);border:1px solid var(--accent-line);
+  padding:4px 10px;border-radius:20px;font-size:11px;color:var(--accent);font-family:var(--font-mono);
+}
+.pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);}
+
+.hero{padding:28px 0 20px;}
+.hero-title{font-family:var(--font-display);font-size:32px;font-weight:700;color:#fff;line-height:1.2;margin-bottom:8px;}
+.hero-desc{font-size:14px;color:var(--muted);max-width:880px;line-height:1.6;}
+
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:24px 0 32px;}
+.metric-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;
+  transition:all .2s ease;
+}
+.metric-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+.metric-val{font-family:var(--font-display);font-size:26px;font-weight:700;color:#fff;}
+.metric-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
+
+.nav-tabs{display:flex;gap:12px;border-bottom:1px solid var(--border);margin-bottom:24px;}
+.tab-btn{
+  background:transparent;border:none;color:var(--muted);font-family:var(--font-display);
+  font-size:15px;font-weight:600;padding:10px 16px;cursor:pointer;
+  border-bottom:2px solid transparent;transition:all .2s;
+}
+.tab-btn:hover{color:var(--text);}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+.roster-sec{margin-bottom:24px;}
+.track-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.track-title{font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;}
+.track-tag{font-size:10px;padding:2px 8px;border-radius:4px;background:var(--surface-2);color:var(--accent3);border:1px solid var(--border);}
+.cards-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+
+.op-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;
+  display:flex;flex-direction:column;justify-content:space-between;transition:all .2s ease;
+}
+.op-card:hover{border-color:var(--accent-line);background:var(--surface-2);}
+.op-card.flagship{border-color:var(--accent);box-shadow:0 0 15px rgba(197,160,89,0.12);}
+.op-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px;}
+.op-name{font-family:var(--font-display);font-size:17px;font-weight:700;color:#fff;}
+.op-title{font-size:12px;color:var(--muted);}
+.badge-flag{background:var(--accent-dim);border:1px solid var(--accent);color:var(--accent);font-size:10px;padding:2px 6px;border-radius:4px;font-weight:600;}
+.op-meta{font-size:11px;color:var(--muted-2);margin-bottom:14px;display:flex;gap:12px;}
+.op-tasks{background:var(--surface-2);border-radius:6px;padding:10px 12px;margin-bottom:16px;border:1px solid var(--border-soft);}
+.task-step{font-size:11px;color:var(--text);display:flex;align-items:center;gap:6px;margin-bottom:4px;}
+.task-step:last-child{margin-bottom:0;}
+.task-dot{width:4px;height:4px;border-radius:50%;background:var(--accent3);}
+.btn-run{
+  background:var(--accent-dim);border:1px solid var(--accent-line);color:var(--accent);
+  width:100%;padding:8px 12px;border-radius:6px;font-family:var(--font-display);font-weight:600;
+  font-size:13px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.btn-run:hover{background:var(--accent);color:#000;border-color:var(--accent);}
+
+/* Live Execution Panel */
+.exec-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:32px;}
+.exec-hdr{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:20px;}
+.exec-title{font-family:var(--font-display);font-size:20px;font-weight:700;color:#fff;}
+.phases{display:flex;gap:16px;}
+.phase-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);}
+.phase-item.active{color:var(--accent);font-weight:600;}
+.phase-num{width:18px;height:18px;border-radius:50%;background:var(--surface-3);display:flex;align-items:center;justify-content:center;font-size:10px;}
+.phase-item.active .phase-num{background:var(--accent);color:#000;}
+
+.agents-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+.agent-node{
+  background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:12px;
+  font-size:11px;transition:all .2s;
+}
+.agent-node.active{border-color:var(--accent3);box-shadow:0 0 10px rgba(6,182,212,0.2);}
+.agent-node.done{border-color:var(--ok);}
+.agent-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.agent-name{font-weight:600;color:#fff;}
+.agent-st{font-size:9px;text-transform:uppercase;padding:1px 4px;border-radius:3px;}
+.st-idle{background:var(--surface-3);color:var(--muted);}
+.st-run{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line);}
+.st-done{background:rgba(16,185,129,0.15);color:var(--ok);}
+
+.terminal-box{
+  background:#020509;border:1px solid var(--border);border-radius:8px;padding:14px;
+  font-family:var(--font-mono);font-size:11px;color:#a3e635;height:140px;overflow-y:auto;margin-bottom:20px;
+  line-height:1.6;
+}
+.term-line{margin-bottom:2px;}
+.term-line.sys{color:var(--muted);}
+.term-line.warn{color:var(--accent);}
+
+.deliverable-box{
+  background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:18px;
+}
+.deliv-hdr{font-family:var(--font-display);font-size:14px;font-weight:700;color:var(--accent);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px;}
+.deliv-content{font-family:var(--font-mono);font-size:11px;color:var(--text);white-space:pre-wrap;line-height:1.5;}
+
+/* Builder Styles */
+.builder-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;}
+.step-nav{display:flex;gap:12px;margin-bottom:24px;border-bottom:1px solid var(--border);padding-bottom:12px;}
+.step-btn{background:none;border:none;color:var(--muted);font-family:var(--font-display);font-size:14px;font-weight:600;cursor:pointer;}
+.step-btn.active{color:var(--accent);}
+.form-group{margin-bottom:16px;}
+.form-label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:600;}
+.form-control{
+  width:100%;background:var(--surface-2);border:1px solid var(--border);color:#fff;
+  padding:10px 12px;border-radius:6px;font-size:13px;font-family:var(--font-body);
+}
+.form-control:focus{outline:none;border-color:var(--accent);}
+
+footer{
+  border-top:1px solid var(--border-soft);padding:24px 0;margin-top:40px;font-size:11px;color:var(--muted-2);
+  display:flex;align-items:center;justify-content:space-between;
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap mark-row">
+    <div class="mark">
+      <div class="mark-badge">LISCR</div>
+      <div>
+        <div class="mark-title">LIBERIAN INTERNATIONAL SHIP &amp; CORPORATE REGISTRY</div>
+        <div class="mark-sub">World's Largest Flag State Administration · Dulles, Virginia HQ</div>
+      </div>
+    </div>
+    <div class="pill-live">
+      <span class="pulse-dot"></span> WAYPOINT DIGITAL REGISTRY ACTIVE · 250M+ GT FLEET
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1 class="hero-title">Autonomous AI Workforce for Global Ship Registry &amp; Maritime Flag State Operations</h1>
+    <p class="hero-desc">
+      Deploy domain-specialized AI agent operators across paperless vessel registration, preferred ship mortgage recording, SOLAS/MARPOL compliance, IMO EEXI/CII decarbonization audits, and global nautical inspections.
+    </p>
+  </section>
+
+  <section class="metrics" id="econMetrics">
+    <div class="metric-card">
+      <div class="metric-val" id="mV1">1.2 hrs</div>
+      <div class="metric-lbl">Provisional Registry Cycle</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" id="mV2">100%</div>
+      <div class="metric-lbl">IMO White List Safety Rating</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" id="mV3">250M+</div>
+      <div class="metric-lbl">Gross Tons Administered</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" id="mV4">$8.5M</div>
+      <div class="metric-lbl">Annual Shipowner Fee Savings</div>
+    </div>
+  </section>
+
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="switchView('ops')">AI Operator Roster</button>
+    <button class="tab-btn" onclick="switchView('builder')">DYNEX 3-Step Operator Builder</button>
+  </nav>
+
+  <!-- ROSTER VIEW -->
+  <div id="viewOps">
+    <section class="roster-sec">
+      <div class="track-hdr">
+        <div class="track-title">Commercial &amp; Flag State Tenders Track <span class="track-tag">COMMERCIAL</span></div>
+      </div>
+      <div class="cards-grid" id="gridCommercial"></div>
+    </section>
+
+    <section class="roster-sec">
+      <div class="track-hdr">
+        <div class="track-title">Flag State Operations &amp; Fleet Compliance Track <span class="track-tag">OPERATIONS</span></div>
+      </div>
+      <div class="cards-grid" id="gridOperations"></div>
+    </section>
+
+    <!-- LIVE RUN ENGINE -->
+    <section class="exec-panel" id="execEngine">
+      <div class="exec-hdr">
+        <div>
+          <div class="exec-title" id="execWfTitle">Run Operator: Select an Operator Above</div>
+          <div style="font-size:12px;color:var(--muted);" id="execWfDesc">Click any "Run Operator" button to execute live simulation</div>
+        </div>
+        <div class="phases">
+          <div class="phase-item" id="p1"><span class="phase-num">1</span> Registry Check</div>
+          <div class="phase-item" id="p2"><span class="phase-num">2</span> Agent DAG Run</div>
+          <div class="phase-item" id="p3"><span class="phase-num">3</span> Deliverable Ready</div>
+        </div>
+      </div>
+
+      <div class="agents-grid" id="agentNodes"></div>
+
+      <div class="terminal-box" id="termFeed">
+        <div class="term-line sys">[SYSTEM] LISCR Maritime Flag State WayPoint Engine v4.8 Ready. Waiting for execution...</div>
+      </div>
+
+      <div class="deliverable-box">
+        <div class="deliv-hdr" id="delivTitle">Review-Ready Deliverable Output</div>
+        <div class="deliv-content" id="delivBody">Select an operator and click "Run Operator" to generate an authentic Provisional Certificate of Registry.</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- BUILDER VIEW -->
+  <div id="viewBuilder" class="hidden">
+    <div class="builder-box">
+      <div class="step-nav">
+        <button class="step-btn active" id="stB1" onclick="bS(1)">1. Select Base Workflow</button>
+        <button class="step-btn" id="stB2" onclick="bS(2)">2. Assign Agent Roles</button>
+        <button class="step-btn" id="stB3" onclick="bS(3)">3. Name &amp; Deploy Operator</button>
+      </div>
+
+      <!-- Step 1 -->
+      <div id="bStep1">
+        <div class="form-group">
+          <label class="form-label">Select Baseline Template Workflow</label>
+          <select class="form-control" id="bWfSelect" onchange="bSelectWf()">
+            <!-- JS populated -->
+          </select>
+        </div>
+        <div style="text-align:right;">
+          <button class="btn-run" style="width:auto;display:inline-flex;" onclick="bS(2)">Next: Assign Agents &rarr;</button>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div id="bStep2" class="hidden">
+        <div id="bTaskAssignList"></div>
+        <div class="form-group" style="margin-top:16px;">
+          <label class="form-label">Execution Mode</label>
+          <select class="form-control" id="bExecMode">
+            <option value="dag">Auto Parallel DAG (High Throughput)</option>
+            <option value="sequential">Sequential Pipeline (Step-by-Step Validation)</option>
+          </select>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:20px;">
+          <button class="btn-run" style="width:auto;background:transparent;border-color:var(--border);" onclick="bS(1)">&larr; Back</button>
+          <button class="btn-run" style="width:auto;" onclick="bS(3)">Next: Name &amp; Deploy &rarr;</button>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div id="bStep3" class="hidden">
+        <div class="form-group">
+          <label class="form-label">Custom Operator Name</label>
+          <input type="text" class="form-control" id="bOpName" placeholder="e.g. Dulles IMO Decarbonization Audit Sentinel">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Role Title &amp; Department</label>
+          <input type="text" class="form-control" id="bOpTitle" placeholder="e.g. Vice President of Flag State Compliance">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Execution Cadence</label>
+          <select class="form-control" id="bOpCadence">
+            <option value="Per Vessel Registration Filing">Per Vessel Registration Filing</option>
+            <option value="Continuous 24/7 Monitoring">Continuous 24/7 Monitoring</option>
+            <option value="Annual Fleet Safety Audit">Annual Fleet Safety Audit</option>
+          </select>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:20px;">
+          <button class="btn-run" style="width:auto;background:transparent;border-color:var(--border);" onclick="bS(2)">&larr; Back</button>
+          <button class="btn-run" style="width:auto;background:var(--ok);border-color:var(--ok);color:#000;" onclick="hireOperator()">&check; Add to Active Roster</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap" style="width:100%;display:flex;justify-content:space-between;align-items:center;">
+    <div>&copy; 2026 LISCR LLC. Liberian International Ship &amp; Corporate Registry. Dulles, Virginia HQ.</div>
+    <div>Confidential Sales Campaign Prototype · Powered by Antigravity Multi-Agent Architecture</div>
+  </div>
+</footer>
+
+<script>
+const AGENT_ROLES = {
+  scout: { emoji:"⚓", label:"Shipowner Fleet BD Scout", tools:["search_vessel_records","check_tonnage_tax","save"] },
+  quote: { emoji:"🧮", label:"Tonnage Tax & Mortgage Registrar", tools:["calc_tonnage_fees","record_mortgage","save"] },
+  tender: { emoji:"🛡️", label:"Global Maritime RFP Lead", tools:["parse_rfp","check_imo_compliance","save"] },
+  radar: { emoji:"📡", label:"World Fleet & IMO Regulatory Radar", tools:["track_imo_resolutions","monitor_flag_transfers","save"] },
+  vessel_reg: { emoji:"📜", label:"Vessel Registration Architect", tools:["verify_bill_of_sale","issue_provisional_cert","save"] },
+  decarb_spec: { emoji:"🌱", label:"EEXI & CII Decarbonization Auditor", tools:["calc_eexi_rating","audit_seemp_part3","save"] },
+  qa_audit: { emoji:"📋", label:"SOLAS, MARPOL & STCW Compliance Lead", tools:["verify_solas_certs","check_stcw_seafarers","save"] },
+  supply: { emoji:"🌐", label:"Nautical Inspector & E-Cert Planner", tools:["dispatch_inspector","issue_waypoint_ecert","save"] }
+};
+
+const WORKFLOWS = {
+  Scout: {
+    name: "Global Shipowner & Fleet Flag Prospecting",
+    title: "Commercial Maritime BD & Fleet Growth Lead",
+    track: "commercial",
+    mode: "dag",
+    tasks: [
+      { agent: "scout", task: "Scan Clarksons & Equasis databases for Capesize & LNG carrier re-flagging opportunities", deps: [] },
+      { agent: "quote", task: "Calculate Liberian tonnage tax discounts & initial registration fee structures", deps: [0] },
+      { agent: "tender", task: "Prepare competitive comparison versus Panama & Marshall Islands registries", deps: [1] }
+    ]
+  },
+  Quote: {
+    name: "Vessel Registration & Mortgage Fee Engine",
+    title: "Maritime Finance & Tonnage Pricing Specialist",
+    track: "commercial",
+    mode: "sequential",
+    tasks: [
+      { agent: "quote", task: "Calculate net tonnage fee, annual safety inspection fee & corporate entity dues", deps: [] },
+      { agent: "vessel_reg", task: "Verify vessel title ownership documents & previous flag deletion certificate", deps: [0] }
+    ]
+  },
+  Tender: {
+    name: "Global Maritime Fleet Flagging Proposal",
+    title: "Shipowner Advisory & Legal Proposal Lead",
+    track: "commercial",
+    mode: "dag",
+    tasks: [
+      { agent: "tender", task: "Review legal requirements for preferred ship mortgage recordation in Dulles HQ", deps: [] },
+      { agent: "qa_audit", task: "Confirm 100% IMO White List Port State Control (PSC) performance metrics", deps: [0] }
+    ]
+  },
+  Radar: {
+    name: "World Fleet Growth & IMO Regulatory Radar",
+    title: "Maritime Policy & Decarbonization Intelligence",
+    track: "commercial",
+    mode: "sequential",
+    tasks: [
+      { agent: "radar", task: "Track IMO MEPC green shipping regulations, EU ETS maritime extensions & EEXI deadlines", deps: [] },
+      { agent: "decarb_spec", task: "Proactively advise Liberian-flagged shipowners on CII rating optimization", deps: [0] }
+    ]
+  },
+  VesselRegSolasEexiAudit: {
+    name: "Paperless Vessel Registration & EEXI/CII Audit",
+    title: "Flagship Liberian Registry & Compliance Engine",
+    track: "operations",
+    tag: "FLAGSHIP",
+    mode: "dag",
+    tasks: [
+      { agent: "vessel_reg", task: "Verify GDSII bill of sale, IMO number (IMO 9948210) & corporate entity standing", deps: [] },
+      { agent: "decarb_spec", task: "Audit Energy Efficiency Existing Ship Index (EEXI) & SEEMP Part III carbon intensity", deps: [0] },
+      { agent: "qa_audit", task: "Verify SOLAS, MARPOL Annex VI & STCW seafarer endorsement compliance", deps: [1] },
+      { agent: "supply", task: "Issue digital Provisional Certificate of Registry via WayPoint portal & dispatch inspector", deps: [2] }
+    ]
+  },
+  MortgageRecordationSetup: {
+    name: "Preferred Ship Mortgage Recording",
+    title: "Dulles Legal & Maritime Finance Specialist",
+    track: "operations",
+    mode: "sequential",
+    tasks: [
+      { agent: "quote", task: "Record $45,000,000 Preferred Ship Mortgage under Liberian Maritime Law", deps: [] },
+      { agent: "vessel_reg", task: "Issue certified transcript of registry & priority mortgage endorsement", deps: [0] }
+    ]
+  },
+  FlagStateInspectionAudit: {
+    name: "Annual Safety Inspection & STCW Audit",
+    title: "Flag State Safety & Security Director",
+    track: "operations",
+    mode: "dag",
+    tasks: [
+      { agent: "qa_audit", task: "Schedule Annual Safety Inspection (ASI) with global nautical inspector in Hamburg", deps: [] },
+      { agent: "tender", task: "Verify ISPS Code maritime security plan & authorized PMSC guard credentials", deps: [0] }
+    ]
+  },
+  SupplyPlanner: {
+    name: "Global Inspector Network & E-Cert Plan",
+    title: "WayPoint Digital Portal & Inspector Dispatcher",
+    track: "operations",
+    mode: "sequential",
+    tasks: [
+      { agent: "supply", task: "Manage global network of 450+ nautical inspectors across major bunkering ports", deps: [] },
+      { agent: "decarb_spec", task: "Automate cryptographic QR-code verification on digital maritime certificates", deps: [0] }
+    ]
+  }
+};
+
+const DTITLE = {
+  Scout: "Global Shipowner & Fleet Prospecting Report",
+  Quote: "Vessel Registration Tonnage Fee Calculation",
+  Tender: "Fleet Flagging & Maritime Finance Proposal Package",
+  Radar: "World Fleet Growth & IMO Regulatory Radar",
+  VesselRegSolasEexiAudit: "Provisional Certificate of Registry & EEXI Statement of Compliance",
+  MortgageRecordationSetup: "Certificate of Preferred Ship Mortgage Recordation",
+  FlagStateInspectionAudit: "Annual Safety Inspection (ASI) & STCW Certificate",
+  SupplyPlanner: "WayPoint Digital Certificate & Inspector Dispatch Manifest"
+};
+
+const FINAL = {
+  VesselRegSolasEexiAudit: `LIBERIAN INTERNATIONAL SHIP & CORPORATE REGISTRY — OFFICIAL RELEASE
+================================================================================
+Vessel Name        : M/V LIBERIAN CELESTIAL
+IMO Number / Call  : IMO 9948210 | Call Sign: A8ZX9
+Vessel Type        : 180,000 DWT Capesize Bulk Carrier (Built 2024)
+Registry Office    : LISCR Headquarters · Dulles, Virginia, USA
+
+1. TITLE & REGISTRATION VERIFICATION
+   - Bill of Sale Status       : VERIFIED (100% Unencumbered Ownership Transfer)
+   - Official Number Issued    : LISCR-ON-48921 (WayPoint QR Encrypted)
+   - Tonnage Assessment       : 94,500 Gross Tons / 58,200 Net Tons
+
+2. IMO ENVIRONMENTAL & DECARBONIZATION AUDIT
+   - EEXI Attained Value      : 2.14 g-CO2/t-NM (Exceeds Required EEXI threshold by -8.2%)
+   - CII Operational Rating   : Grade 'A' (Superior Performance · SEEMP Part III Approved)
+   - MARPOL Annex VI Status   : Full Statement of Compliance Issued
+
+3. MORTGAGE RECORDATION & FLAG STATE SAFETY
+   - Preferred Ship Mortgage  : $45,000,000 Recorded in Favor of Global Maritime Bank N.A.
+   - SOLAS / MARPOL Audit     : 100% Passed (Issued via WayPoint E-Certificate System)
+
+STATUS: PROVISIONAL CERTIFICATE OF REGISTRY ISSUED · LIBERIAN FLAG ACTIVE`,
+  Scout: `LISCR FLEET PROSPECTING SUMMARY
+Identified 14 Capesize & LNG Carrier Fleets comprising 3.2M Gross Tons.
+Estimated Annual Tonnage Tax Revenue: $1.85M under Liberian Fleet Discount Program.`,
+  Quote: `LISCR TONNAGE FEE CALCULATION
+Vessel: 94,500 GT Capesize | Initial Registration Fee: $2,500
+Annual Tonnage Tax & Safety Inspection Dues: $14,200 / year.`,
+  Tender: `LISCR MARITIME FLEET PROPOSAL
+Submitted to European Shipowner Group for 22-Vessel Fleet Flag Transfer.
+Highlighting 24/7 Dulles HQ Duty Officer support & IMO White List status.`,
+  Radar: `LISCR MARITIME REGULATORY RADAR
+IMO MEPC 82 Update: Carbon Intensity Indicator (CII) enforcement tightened for 2026.
+LISCR WayPoint portal automatically alerts shipowners of vessel rating degradation.`,
+  MortgageRecordationSetup: `LISCR MORTGAGE RECORDATION CERTIFICATE
+Recorded $45,000,000 Preferred Ship Mortgage in Dulles HQ Official Register.
+Indexed under Liberian Maritime Law Title 21 with top legal priority ranking.`,
+  FlagStateInspectionAudit: `LISCR ANNUAL SAFETY INSPECTION (ASI)
+Inspector Dispatched to Port of Hamburg | Result: SATISFACTORY WITH ZERO DEFICIENCIES.
+STCW Seafarer Certificates of Endorsement verified for 22 crew members.`,
+  SupplyPlanner: `LISCR WAYPOINT DIGITAL CERTIFICATE MANIFEST
+Issued 120 Cryptographically Signed E-Certificates for newly registered fleet.
+Global inspector network activated across Singapore, Rotterdam & Houston.`
+};
+
+let EMPLOYEES = [
+  { id: "op1", name: "Dulles Registry Sentinel", title: "Principal Vessel Registration Architect", wf: "VesselRegSolasEexiAudit", handled: 412, hrs: 580, status: "idle" },
+  { id: "op2", name: "Maritime BD Scout", title: "Global Shipowner BD Lead", wf: "Scout", handled: 184, hrs: 290, status: "idle" },
+  { id: "op3", name: "Decarbonization Auditor", title: "IMO EEXI & CII Compliance Specialist", wf: "Radar", handled: 112, hrs: 220, status: "idle" }
+];
+
+let activeWfKey = "VesselRegSolasEexiAudit";
+
+function renderRoster() {
+  const cGrid = document.getElementById("gridCommercial");
+  const oGrid = document.getElementById("gridOperations");
+  cGrid.innerHTML = "";
+  oGrid.innerHTML = "";
+
+  Object.keys(WORKFLOWS).forEach(key => {
+    const wf = WORKFLOWS[key];
+    const isFlagship = wf.tag === "FLAGSHIP";
+    const cardHtml = `
+      <div class="op-card ${isFlagship ? 'flagship' : ''}">
+        <div>
+          <div class="op-header">
+            <div>
+              <div class="op-name">${wf.name}</div>
+              <div class="op-title">${wf.title}</div>
+            </div>
+            ${isFlagship ? '<span class="badge-flag">FLAGSHIP</span>' : ''}
+          </div>
+          <div class="op-meta">
+            <span>Execution Mode: <strong>${wf.mode.toUpperCase()}</strong></span>
+            <span>Tasks: <strong>${wf.tasks.length} Agents</strong></span>
+          </div>
+          <div class="op-tasks">
+            ${wf.tasks.map(t => `
+              <div class="task-step">
+                <span class="task-dot"></span>
+                <strong>${AGENT_ROLES[t.agent]?.label || t.agent}:</strong> ${t.task}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        <button class="btn-run" onclick="runOperator('${key}')">&blackright; Run Operator Simulation</button>
+      </div>
+    `;
+    if (wf.track === "commercial") {
+      cGrid.innerHTML += cardHtml;
+    } else {
+      oGrid.innerHTML += cardHtml;
+    }
+  });
+}
+
+function runOperator(key) {
+  activeWfKey = key;
+  const wf = WORKFLOWS[key];
+  document.getElementById("execWfTitle").innerText = `Run Operator: ${wf.name}`;
+  document.getElementById("execWfDesc").innerText = `${wf.title} · Execution Mode: ${wf.mode.toUpperCase()}`;
+
+  // Reset steps
+  document.getElementById("p1").className = "phase-item active";
+  document.getElementById("p2").className = "phase-item";
+  document.getElementById("p3").className = "phase-item";
+
+  // Render Agent Nodes
+  const nodesBox = document.getElementById("agentNodes");
+  nodesBox.innerHTML = wf.tasks.map((t, i) => `
+    <div class="agent-node" id="an_${i}">
+      <div class="agent-hdr">
+        <span class="agent-name">${AGENT_ROLES[t.agent]?.emoji || '🤖'} ${AGENT_ROLES[t.agent]?.label || t.agent}</span>
+        <span class="agent-st st-idle" id="ast_${i}">QUEUED</span>
+      </div>
+      <div style="font-size:10px;color:var(--muted);">${t.task}</div>
+    </div>
+  `).join('');
+
+  const term = document.getElementById("termFeed");
+  term.innerHTML = `<div class="term-line sys">[SYSTEM] Initiating ${wf.name} execution sequence...</div>`;
+
+  document.getElementById("delivTitle").innerText = DTITLE[key] || "LISCR Flag State Deliverable";
+  document.getElementById("delivBody").innerText = "Executing agent DAG... Generating official registry document...";
+
+  let currentTask = 0;
+
+  const interval = setInterval(() => {
+    if (currentTask === 0) {
+      document.getElementById("p1").className = "phase-item";
+      document.getElementById("p2").className = "phase-item active";
+    }
+
+    if (currentTask < wf.tasks.length) {
+      const task = wf.tasks[currentTask];
+      document.getElementById(`an_${currentTask}`).className = "agent-node active";
+      document.getElementById(`ast_${currentTask}`).className = "agent-st st-run";
+      document.getElementById(`ast_${currentTask}`).innerText = "RUNNING";
+
+      term.innerHTML += `<div class="term-line">[RUNNING] ${AGENT_ROLES[task.agent]?.label}: ${task.task}</div>`;
+      term.scrollTop = term.scrollHeight;
+
+      setTimeout(() => {
+        const node = document.getElementById(`an_${currentTask}`);
+        const st = document.getElementById(`ast_${currentTask}`);
+        if(node && st) {
+          node.className = "agent-node done";
+          st.className = "agent-st st-done";
+          st.innerText = "DONE";
+        }
+      }, 600);
+
+      currentTask++;
+    } else {
+      clearInterval(interval);
+      document.getElementById("p2").className = "phase-item";
+      document.getElementById("p3").className = "phase-item active";
+
+      term.innerHTML += `<div class="term-line sys">[COMPLETE] All agent tasks finished successfully. Registry release document generated.</div>`;
+      term.scrollTop = term.scrollHeight;
+
+      document.getElementById("delivBody").innerText = FINAL[key] || FINAL["VesselRegSolasEexiAudit"];
+    }
+  }, 1000);
+}
+
+function switchView(v) {
+  if (v === 'ops') {
+    document.getElementById("viewOps").classList.remove("hidden");
+    document.getElementById("viewBuilder").classList.add("hidden");
+    document.querySelectorAll(".tab-btn")[0].classList.add("active");
+    document.querySelectorAll(".tab-btn")[1].classList.remove("active");
+  } else {
+    document.getElementById("viewOps").classList.add("hidden");
+    document.getElementById("viewBuilder").classList.remove("hidden");
+    document.querySelectorAll(".tab-btn")[0].classList.remove("active");
+    document.querySelectorAll(".tab-btn")[1].classList.add("active");
+    initBuilder();
+  }
+}
+
+// Builder Logic
+function initBuilder() {
+  const sel = document.getElementById("bWfSelect");
+  sel.innerHTML = Object.keys(WORKFLOWS).map(k => `
+    <option value="${k}">${WORKFLOWS[k].name} (${WORKFLOWS[k].track.toUpperCase()})</option>
+  `).join('');
+  bSelectWf();
+}
+
+function bSelectWf() {
+  const wfKey = document.getElementById("bWfSelect").value;
+  const wf = WORKFLOWS[wfKey];
+  const list = document.getElementById("bTaskAssignList");
+  list.innerHTML = wf.tasks.map((t, i) => `
+    <div class="form-group" style="background:var(--surface-2);padding:12px;border-radius:6px;border:1px solid var(--border);">
+      <div style="font-size:11px;color:var(--accent);margin-bottom:4px;">Task ${i+1}: ${t.task}</div>
+      <label class="form-label">Assign Agent Role</label>
+      <select class="form-control" id="bAgent_${i}">
+        ${Object.keys(AGENT_ROLES).map(rKey => `
+          <option value="${rKey}" ${rKey === t.agent ? 'selected' : ''}>
+            ${AGENT_ROLES[rKey].emoji} ${AGENT_ROLES[rKey].label}
+          </option>
+        `).join('')}
+      </select>
+    </div>
+  `).join('');
+}
+
+function bS(step) {
+  document.getElementById("bStep1").classList.add("hidden");
+  document.getElementById("bStep2").classList.add("hidden");
+  document.getElementById("bStep3").classList.add("hidden");
+  document.getElementById(`stB1`).classList.remove("active");
+  document.getElementById(`stB2`).classList.remove("active");
+  document.getElementById(`stB3`).classList.remove("active");
+
+  document.getElementById(`bStep${step}`).classList.remove("hidden");
+  document.getElementById(`stB${step}`).classList.add("active");
+}
+
+function hireOperator() {
+  const name = document.getElementById("bOpName").value || "Custom Liberian Registry Operator";
+  const title = document.getElementById("bOpTitle").value || "Flag State Operations Specialist";
+  const baseKey = document.getElementById("bWfSelect").value;
+  const baseWf = WORKFLOWS[baseKey];
+
+  const newKey = "Custom_" + Date.now();
+  WORKFLOWS[newKey] = {
+    name: name,
+    title: title,
+    track: baseWf.track,
+    mode: document.getElementById("bExecMode").value,
+    tasks: baseWf.tasks.map((t, i) => ({
+      agent: document.getElementById(`bAgent_${i}`)?.value || t.agent,
+      task: t.task,
+      deps: t.deps
+    }))
+  };
+
+  DTITLE[newKey] = `Custom Flag State Certificate — ${name}`;
+  FINAL[newKey] = `LIBERIAN REGISTRY — CUSTOM OPERATOR CERTIFICATE\nOperator: ${name} (${title})\nStatus: Active and integrated into LISCR Dulles HQ WayPoint network.\nAll assigned agent tasks completed with 100% verification score.`;
+
+  alert(`AI Operator "${name}" successfully deployed to LISCR active roster!`);
+  renderRoster();
+  switchView('ops');
+  runOperator(newKey);
+}
+
+// Initial Run
+renderRoster();
+runOperator("VesselRegSolasEexiAudit");
+</script>
+</body>
+</html>
