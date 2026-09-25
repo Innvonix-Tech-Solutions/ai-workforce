@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BioPoints Scout &amp; Outreach — personal tool (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f4f9f9;--surface2:#e9f3f3;--border:#dce8e8;--accent:#0d7a82;
+--accent-dim:rgba(13,122,130,.07);--accent-line:rgba(13,122,130,.30);--text:#22333a;--hi:#0d1d24;--tert:#63787f;--ok:#1a7f5a;--ok-dim:rgba(26,127,90,.10);--gold:#a9741a;--gold-bg:#fdf6e8;--gold-line:#e8cf94;--red:#b23c14;--red-bg:#fbeee9}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:15px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--ok));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px}
+.htitle{font-size:15px;font-weight:600;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert)}.badge b{color:var(--accent)}
+.tabs{max-width:1120px;margin:0 auto;padding:20px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13px;font-weight:600;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:9px 9px 0 0;background:none;display:flex;align-items:center;gap:8px}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.tab .pill{background:var(--accent);color:#fff;border-radius:20px;font-size:10px;padding:1px 7px;font-weight:700}
+.main{max-width:1120px;margin:0 auto;padding:22px 24px 40px}
+.lead{font-size:13.5px;line-height:1.55;max-width:900px;margin-bottom:18px;color:var(--text)}.lead b{color:var(--hi)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px}
+.card h2{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--tert);margin-bottom:14px;font-weight:700}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:720px){.grid2{grid-template-columns:1fr}}
+.field{margin-bottom:14px}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:9px;padding:10px 12px;outline:none;background:#fff;color:var(--hi)}
+.field textarea{resize:vertical;min-height:70px;line-height:1.45}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent)}
+.weights{display:grid;grid-template-columns:1fr 1fr;gap:12px 18px}
+.wrow label{display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:5px}
+.wrow label span{color:var(--accent);font-weight:700}
+.wrow input[type=range]{width:100%;accent-color:var(--accent)}
+.wsum{font-size:11px;color:var(--tert);margin-top:8px}
+.btn{font-family:inherit;font-size:13px;font-weight:600;border-radius:9px;padding:11px 18px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#b9d0d1}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:disabled{opacity:.45;cursor:not-allowed}.btn.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+.btn.sm{padding:7px 12px;font-size:12px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.log{background:#0d1d24;border-radius:10px;padding:12px 14px;height:150px;overflow-y:auto;font-family:'SF Mono',Consolas,monospace;font-size:11.5px;line-height:1.7;color:#9fd6d2;margin-top:14px}
+.log .t{color:#5a7f83}.log .s{color:#e0b352}.log .g{color:#e88a6a}.log .ok{color:#7fdcae}
+.summ{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}@media(max-width:640px){.summ{grid-template-columns:repeat(2,1fr)}}
+.cell{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px 15px}
+.cell .v{font-size:21px;font-weight:700;color:var(--hi)}.cell .k{font-size:11px;color:var(--tert);margin-top:3px}
+.cand{background:#fff;border:1px solid var(--border);border-radius:12px;padding:15px 16px;margin-bottom:10px}
+.cand.sel{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent-line)}
+.cand-top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.rank{width:30px;height:30px;border-radius:9px;background:var(--accent-dim);color:var(--accent);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.cand-name{font-size:14.5px;font-weight:700;color:var(--hi)}
+.score-badge{margin-left:auto;font-size:20px;font-weight:700;color:var(--hi)}.score-badge span{font-size:12px;color:var(--tert);font-weight:500}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.3px;padding:2px 7px;border-radius:5px;text-transform:uppercase}
+.tag.clean{background:var(--ok-dim);color:var(--ok);border:1px solid rgba(26,127,90,.3)}
+.tag.neg{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-line)}
+.bars{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0}
+.bar .bl{font-size:10px;color:var(--tert);display:flex;justify-content:space-between;margin-bottom:3px}.bar .bl b{color:var(--hi)}
+.bar .track{height:6px;background:var(--surface2);border-radius:4px;overflow:hidden}.bar .fill{height:100%;background:var(--accent);border-radius:4px}
+.rationale{font-size:12px;color:var(--text);line-height:1.5;margin:6px 0 8px}
+.src{font-size:11px;color:var(--tert);line-height:1.5}.src b{color:var(--accent);font-weight:600}
+.gap{font-size:11px;color:var(--red);margin-top:5px}
+.cand-actions{display:flex;align-items:center;gap:10px;margin-top:10px;border-top:1px solid var(--border);padding-top:10px}
+.chk{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--hi);cursor:pointer}
+.excl{background:#fff;border:1px dashed var(--border);border-radius:10px;padding:12px 15px;margin-top:6px}
+.excl .er{font-size:12px;color:var(--tert);padding:4px 0}.excl .er b{color:var(--hi)}
+.note{background:var(--gold-bg);border:1px solid var(--gold-line);border-radius:10px;padding:12px 15px;font-size:12px;color:#6b4e18;line-height:1.5;margin-top:12px}
+.sticky-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+.empty{text-align:center;color:var(--tert);padding:50px 20px;font-size:13.5px}
+.empty .big{font-size:15px;color:var(--hi);font-weight:600;margin-bottom:6px}
+.ocard{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+.ocard-h{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.ocard-h .n{font-size:15px;font-weight:700;color:var(--hi)}
+.ocard-h .sc{margin-left:auto;font-size:12px;color:var(--tert)}.ocard-h .sc b{color:var(--hi)}
+/* ---- Company Approach Brief ---- */
+.brief{border:1px solid var(--border);border-radius:11px;overflow:hidden;margin-bottom:14px}
+.bsec{padding:13px 15px;border-bottom:1px solid var(--border)}.bsec:last-child{border-bottom:none}
+.bsec .bh{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--tert);margin-bottom:9px;display:flex;align-items:center;gap:8px}
+.bsec .bh .n{width:18px;height:18px;border-radius:5px;background:var(--accent-dim);color:var(--accent);font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.snap{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px}@media(max-width:640px){.snap{grid-template-columns:1fr}}
+.snap .sr{font-size:12px;line-height:1.4}.snap .sr .k{color:var(--tert)}.snap .sr .v{color:var(--hi);font-weight:600}
+.signal{border-radius:9px;padding:11px 13px;font-size:12.5px;line-height:1.55}
+.signal.evt{background:var(--ok-dim);border:1px solid rgba(26,127,90,.3)}
+.signal.none{background:var(--gold-bg);border:1px solid var(--gold-line)}
+.signal .stag{font-size:9.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;border-radius:5px;margin-right:8px}
+.signal.evt .stag{background:var(--ok);color:#fff}.signal.none .stag{background:var(--gold);color:#fff}
+.signal .sh{font-weight:700;color:var(--hi)}.signal .sd{color:var(--text);margin-top:4px}
+.signal .ss{font-size:10.5px;color:var(--tert);margin-top:6px}.signal .ss b{color:var(--accent)}
+.opp{font-size:12.5px;line-height:1.6;color:var(--text)}.opp b{color:var(--hi)}
+.opp .move{margin-top:8px;background:var(--accent-dim);border-radius:8px;padding:9px 11px;color:var(--hi)}
+.opp .move b{color:var(--accent)}
+.dm{font-size:12px;color:var(--tert);margin-bottom:10px}.dm b{color:var(--hi)}
+.olabel{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--tert);margin:12px 0 6px}
+.omsg{width:100%;font-family:inherit;font-size:12.5px;line-height:1.6;border:1px solid var(--border);border-radius:9px;padding:11px 13px;background:#fff;color:var(--hi);resize:vertical;min-height:96px}
+.omsg.ar{font-family:'Noto Sans Arabic',Inter,sans-serif;direction:rtl;text-align:right}
+.claims{background:var(--red-bg);border:1px solid rgba(178,60,20,.25);border-radius:9px;padding:11px 13px;font-size:11.5px;color:#7a2f13;line-height:1.55;margin-top:12px}
+.claims b{color:#5c2410}
+.foot{max-width:1120px;margin:10px auto 40px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.55}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#0d1d24;color:#fff;padding:11px 18px;border-radius:9px;font-size:12.5px;opacity:0;transition:.3s;pointer-events:none;z-index:60}
+.toast.show{opacity:1}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="logo"><div class="mark">BP</div>
+    <div><div class="htitle">BioPoints &middot; Scout &amp; Outreach</div><div class="hsub">Personal tool &middot; single user &middot; concept prototype by Innvonix</div></div></div>
+  <div class="badge">Independent concept &nbsp;&middot;&nbsp; <b>illustrative</b></div>
+</header>
+
+<div class="tabs">
+  <button class="tab active" id="tab-scout" onclick="setTab('scout')">① Distributor Scout</button>
+  <button class="tab" id="tab-outreach" onclick="setTab('outreach')">② Company Brief &amp; Outreach <span class="pill hidden" id="approvedPill">0</span></button>
+</div>
+
+<div class="main">
+  <!-- ============ SCOUT ============ -->
+  <div id="view-scout">
+    <div class="lead">Type any <b>region</b> and <b>product</b> and a short manufacturer brief. The tool pulls the licensed importer, product-registration and distributor data it can find from public sources, scores each candidate against your weights, and returns a ranked shortlist with the evidence behind every row. It cites what it finds and flags what it cannot verify. You approve the distributors worth approaching.</div>
+
+    <div class="card">
+      <h2>Run the Distributor Scout</h2>
+      <div class="grid2">
+        <div class="field"><label>Region</label>
+          <select id="region">
+            <option>Saudi Arabia</option><option>United Arab Emirates</option><option>Egypt</option>
+            <option>Kingdom of Jordan</option><option>Kenya</option><option>Other (type below)</option>
+          </select>
+        </div>
+        <div class="field"><label>Product / category</label>
+          <input id="product" value="IVD rapid tests and immunoassays" placeholder="e.g. food supplements, lab equipment">
+        </div>
+      </div>
+      <div class="field"><label>Manufacturer brief</label>
+        <textarea id="brief">Mid-size IVD manufacturer, CE-marked rapid test and immunoassay range. Wants a distributor with a diagnostics-led book, lab and hospital reach, and no competing assay line. Portfolio fit and conflict of interest are the deciding criteria.</textarea>
+      </div>
+      <div class="field"><label style="margin-bottom:8px">Scoring weights <span style="color:var(--tert);font-weight:500">(drag to retune; the ranking updates live)</span></label>
+        <div class="weights">
+          <div class="wrow"><label>Portfolio fit <span id="wv-portfolio">30</span></label><input type="range" id="w-portfolio" min="0" max="50" value="30" oninput="onWeights()"></div>
+          <div class="wrow"><label>Conflict / exclusivity <span id="wv-conflict">30</span></label><input type="range" id="w-conflict" min="0" max="50" value="30" oninput="onWeights()"></div>
+          <div class="wrow"><label>Coverage <span id="wv-coverage">20</span></label><input type="range" id="w-coverage" min="0" max="50" value="20" oninput="onWeights()"></div>
+          <div class="wrow"><label>Team &amp; capacity <span id="wv-team">20</span></label><input type="range" id="w-team" min="0" max="50" value="20" oninput="onWeights()"></div>
+        </div>
+        <div class="wsum" id="wsum">Weights total 100. Normalised automatically.</div>
+      </div>
+      <div class="row"><button class="btn primary" id="runBtn" onclick="runScout()">▶ Run Scout</button>
+        <span style="font-size:12px;color:var(--tert)">Reads public sources on demand · cites every field · flags gaps</span></div>
+      <div class="log hidden" id="log"></div>
+    </div>
+
+    <div id="results"></div>
+  </div>
+
+  <!-- ============ OUTREACH ============ -->
+  <div id="view-outreach" class="hidden">
+    <div class="lead">For each distributor you approved, this builds a <b>Company Approach Brief</b>: what the business is, the <b>why-now signal</b> (and an honest fallback to context when there is no real event), and the <b>opportunity read</b> — is this the right partner for the line and how do you play it. The English and Arabic approach note is written off the brief, not from thin air. You review and edit before anything is sent.</div>
+    <div id="outreachBody"></div>
+  </div>
+</div>
+
+<div class="foot">Independent concept prototype built by Innvonix Tech Solutions for a discovery discussion with BioPoints Technologies L.L.C. Not affiliated with, endorsed by, or built on any BioPoints system. Company names, snapshots, signals, scores, sources and figures are illustrative placeholders, not real data. Regulatory authorities (SFDA, MOHAP, EDA and others) are shown as examples of the public sources such a tool would read, and must be verified against the authority of record. This is a research-and-brief assistant: it prepares and recommends, and a person reviews and approves every output before it reaches a manufacturer or a distributor.</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------- illustrative candidate pool (invented) ---------- */
+const POOL=[
+ {id:'A',name:'Candidate A',portfolio:92,conflict:95,coverage:82,team:70,conflictNote:'clean',
+   read:'Diagnostics-led book with no immunoassay line currently carried. The gap in their panel is exactly this range.',
+   sources:['licensed establishment register','product registration record','company portfolio page'],
+   gap:'Private polyclinic reach not confirmed in public sources — confirm by phone.',
+   snap:{type:'Diagnostics-focused distributor, lab and hospital channel',size:'Field team in the low twenties',
+     principals:'3 diagnostics principals; none in immunoassay',licence:'Establishment licence active, IVD category',
+     footprint:'Central, Eastern and Western provinces',infra:'Own fleet; validated cold chain'},
+   signal:{evt:true,when:'about 3 weeks ago',head:'Exhibited in the diagnostics hall at the regional show',
+     detail:'They took stand space in the diagnostics hall rather than the general pavilion, which reads as active investment in the category, not maintenance.',src:'exhibitor list'},
+   opp:'The signal and the fit line up. They are visibly leaning into diagnostics and their panel has no immunoassay line, so this range fills a real gap rather than competing with anything they carry.',
+   move:'Lead with the show. Propose the line as the gap-filler in their panel, with a dedicated diagnostics rep as the one condition. This is the cleanest appointment in the set.'},
+ {id:'B',name:'Candidate B',portfolio:80,conflict:52,coverage:93,team:74,conflictNote:'neg',
+   read:'Strongest national reach of the set, but carries an adjacent rapid-test line. Negotiable if the principal accepts channel separation.',
+   sources:['licensed establishment register','distributor principal list','trade-press listing'],
+   gap:'Exact scope of the adjacent-line agreement not public — confirm by phone.',
+   snap:{type:'Broad healthcare distributor, national reach',size:'Large field team, thin diagnostics specialisation',
+     principals:'11 principals across healthcare; one adjacent rapid-test line',licence:'Establishment licence active, multiple categories',
+     footprint:'National, all regions',infra:'Multiple warehouses; cold chain in two sites'},
+   signal:{evt:true,when:'last month',head:'Won a hospital group framework award',
+     detail:'A framework win with a hospital group signals live buying relationships you could ride, but it is on the medical-supplies side, not diagnostics.',src:'tender award notice'},
+   opp:'Best reach in the set, and a fresh hospital framework to leverage, but the adjacent rapid-test line is a real conflict, not a cosmetic one.',
+   move:'Only worth a conversation if the principal will accept a shared shelf, or if Candidate B will carve out the overlapping SKUs. Raise the conflict in the first meeting, not the third.'},
+ {id:'D',name:'Candidate D',portfolio:63,conflict:93,coverage:61,team:67,conflictNote:'clean',
+   read:'No overlap and solid mid-market coverage. A dependable second choice on a clean-book basis.',
+   sources:['licensed establishment register','product registration record'],
+   gap:'',
+   snap:{type:'Mid-market diagnostics and consumables distributor',size:'Mid-size commercial team',
+     principals:'5 principals; no overlap with this line',licence:'Establishment licence active, IVD category',
+     footprint:'Two regions, strongest centrally',infra:'Single warehouse; cold chain present'},
+   signal:{evt:false,fallback:'No recent dated event found for this distributor. Falling back to background context rather than inventing a hook: a stable mid-market diagnostics book, no overlap, steady but unremarkable.',src:'no dated source found'},
+   opp:'There is no trigger to lead with, so do not manufacture one. The case here is fit, not timing: a clean book and dependable coverage make them a solid appointment if the front-runner stalls.',
+   move:'Approach as a considered second option, not an urgent one. Lead on the clean-book fit and reliability, and keep them warm while Candidate A plays out.'},
+ {id:'E',name:'Candidate E',portfolio:85,conflict:44,coverage:79,team:58,conflictNote:'neg',
+   read:'Good fit and reach, but an overlapping principal at a different price point. Workable only with a written carve-out.',
+   sources:['distributor principal list','product registration record'],
+   gap:'Carve-out availability unknown — confirm before any introduction.',
+   snap:{type:'Diagnostics and lab distributor, private-sector lean',size:'Mid-size team, strong private labs',
+     principals:'7 principals; one overlapping assay line at a higher price point',licence:'Establishment licence active, IVD category',
+     footprint:'Central and Western provinces',infra:'New temperature-controlled warehouse this quarter'},
+   signal:{evt:true,when:'this quarter',head:'Opened a new temperature-controlled warehouse',
+     detail:'Fresh cold-chain capacity is a genuine capability signal for an immunoassay line, which is exactly what this range needs.',src:'company announcement'},
+   opp:'Strong fit and a real capability signal in the new cold chain, but the overlapping assay principal is the catch. This only becomes an appointment with a written carve-out.',
+   move:'Use the new warehouse as the reason to talk, then test the carve-out early. Without it, do not put them in front of the principal.'},
+ {id:'C',name:'Candidate C',portfolio:71,conflict:88,coverage:44,team:41,conflictNote:'clean',
+   read:'Strong lab-equipment motion but single-region and a small commercial team. Keep warm as a regional partner.',
+   sources:['licensed establishment register','company site'],
+   gap:'Commercial team size inferred, not confirmed.',
+   snap:{type:'Regional lab-equipment specialist',size:'Small commercial team',
+     principals:'Lab-equipment principals; limited consumables motion',licence:'Establishment licence active, IVD category',
+     footprint:'Single region',infra:'Single facility; limited cold chain'},
+   signal:{evt:false,fallback:'No recent dated event found. Using background context: a capable single-region lab specialist with a thin consumables motion. Nothing timely to hang an approach on.',src:'no dated source found'},
+   opp:'Not a national appointment and there is no trigger to act on. The honest read is a regional partner at best.',
+   move:'Keep warm for a regional or niche role. Do not lead a national conversation here; it starts the relationship on the wrong footing.'},
+];
+const EXCLUDED=[
+ {name:'Candidate F','why':'Carries a directly competing principal under an exclusive arrangement (blocking).'},
+ {name:'Candidate G','why':'Carries a directly competing principal under an exclusive arrangement (blocking).'},
+ {name:'Candidate H','why':'Establishment licence shows as lapsed on the public register.'},
+ {name:'Candidate I','why':'Licensed for a product category that does not cover this line.'},
+];
+const CRIT=[['portfolio','Portfolio'],['conflict','Conflict'],['coverage','Coverage'],['team','Team']];
+
+let RANKED=[]; let APPROVED=[];
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+function toast(t){const el=$('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2200);}
+
+function setTab(v){
+  $('view-scout').classList.toggle('hidden',v!=='scout');
+  $('view-outreach').classList.toggle('hidden',v!=='outreach');
+  $('tab-scout').classList.toggle('active',v==='scout');
+  $('tab-outreach').classList.toggle('active',v==='outreach');
+  if(v==='outreach')renderOutreach();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function weights(){const w={};CRIT.forEach(([k])=>w[k]=+$('w-'+k).value);const sum=Object.values(w).reduce((a,b)=>a+b,0)||1;return {w,sum};}
+function onWeights(){
+  CRIT.forEach(([k])=>$('wv-'+k).textContent=$('w-'+k).value);
+  const {w,sum}=weights();
+  $('wsum').textContent='Weights total '+sum+(sum===100?'. ':' — normalised to 100 automatically. ');
+  if(RANKED.length)renderResults();
+}
+function score(c){const {w,sum}=weights();let t=0;const parts={};
+  CRIT.forEach(([k])=>{const p=w[k]/sum*c[k];parts[k]=p;t+=p;});
+  return {total:Math.round(t),parts};}
+function regAuthority(){const r=$('region').value;
+  if(/saudi/i.test(r))return'SFDA licensed-establishment &amp; product register';
+  if(/emirates|uae/i.test(r))return'MOHAP / registered-products database';
+  if(/egypt/i.test(r))return'EDA establishment &amp; product register';
+  return'national medical-device / product register';}
+
+async function runScout(){
+  $('runBtn').disabled=true;
+  const region=$('region').value, product=$('product').value.trim()||'the product line';
+  const log=$('log'); log.classList.remove('hidden'); log.innerHTML=''; $('results').innerHTML='';
+  const line=(html)=>{const d=document.createElement('div');d.innerHTML=html;log.appendChild(d);log.scrollTop=log.scrollHeight;};
+  const now=()=>`<span class="t">${new Date().toLocaleTimeString('en-GB')}</span> `;
+  line(now()+`request: <b style="color:#cfeeeb">${product}</b> in <b style="color:#cfeeeb">${region}</b>`);
+  await sleep(500); line(now()+`searching <span class="s">${regAuthority()}</span> …`);
+  await sleep(650); line(now()+`normalised <b style="color:#cfeeeb">9</b> licensed importers into one candidate list <span class="ok">✓</span>`);
+  await sleep(600); line(now()+`reading distributor principal books &amp; category coverage …`);
+  await sleep(650); line(now()+`mapped portfolios · flagged <span class="s">2</span> exclusivity conflicts · <span class="s">1</span> lapsed licence`);
+  await sleep(600); line(now()+`scanning for recent dated events (appointments, tenders, facilities) …`);
+  await sleep(600); line(now()+`cited <b style="color:#cfeeeb">14</b> public sources · <span class="g">2 distributors have no recent event</span> — will fall back to context`);
+  await sleep(550); line(now()+`applying weights · ranking candidates <span class="ok">done</span>`);
+  await sleep(450);
+  RANKED=POOL.slice();
+  renderResults();
+  $('runBtn').disabled=false;
+  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function renderResults(){
+  RANKED.sort((a,b)=>score(b).total-score(a).total);
+  const region=$('region').value, product=$('product').value.trim()||'the line';
+  let h=`<div class="card"><h2>Ranked shortlist — ${product} · ${region}</h2>`;
+  h+=`<div class="summ">
+    <div class="cell"><div class="v tnum">${RANKED.length}</div><div class="k">candidates shortlisted</div></div>
+    <div class="cell"><div class="v tnum">14</div><div class="k">public sources cited</div></div>
+    <div class="cell"><div class="v tnum" style="color:var(--red)">4</div><div class="k">fields flagged / unverified</div></div>
+    <div class="cell"><div class="v tnum">${EXCLUDED.length}</div><div class="k">excluded at screening</div></div></div>`;
+  RANKED.forEach((c,i)=>{
+    const s=score(c); const approved=APPROVED.includes(c.id);
+    const tag=c.conflictNote==='clean'?'<span class="tag clean">No conflict</span>':'<span class="tag neg">Negotiable conflict</span>';
+    const sig=c.signal.evt?'<span class="tag clean" style="background:var(--ok-dim)">Signal</span>':'<span class="tag neg">No recent event</span>';
+    h+=`<div class="cand ${approved?'sel':''}" id="cand-${c.id}">
+      <div class="cand-top"><div class="rank">${i+1}</div><div class="cand-name">${c.name}</div> ${tag} ${sig}
+        <div class="score-badge">${s.total}<span> / 100</span></div></div>
+      <div class="bars">`+CRIT.map(([k,lab])=>{
+        const pct=Math.round(c[k]); return `<div class="bar"><div class="bl">${lab} <b>${pct}</b></div><div class="track"><div class="fill" style="width:${pct}%"></div></div></div>`;
+      }).join('')+`</div>
+      <div class="rationale">${c.read}</div>
+      <div class="src">Evidence: <b>${c.sources.join('</b>, <b>')}</b></div>
+      ${c.gap?`<div class="gap">⚑ Open question: ${c.gap}</div>`:''}
+      <div class="cand-actions">
+        <label class="chk"><input type="checkbox" ${approved?'checked':''} onchange="toggleApprove('${c.id}')"> Approve for outreach</label>
+      </div></div>`;
+  });
+  h+=`<h2 style="margin-top:18px">Excluded at screening</h2><div class="excl">`+
+     EXCLUDED.map(e=>`<div class="er"><b>${e.name}</b> — ${e.why}</div>`).join('')+`</div>`;
+  h+=`<div class="note"><b>Coverage note.</b> Public coverage varies by country and source. Fields marked as open questions were not found in an authoritative public source and must be confirmed against the authority of record before any decision. Nothing here is presented as verified fact unless a source is cited.</div>`;
+  h+=`<div class="sticky-actions">
+     <button class="btn ok" onclick="sendToOutreach()">Build brief for ${APPROVED.length} approved →</button>
+     <button class="btn" onclick="exportShortlist()">⭳ Export shortlist</button>
+     <span style="font-size:12px;color:var(--tert)">You approve the distributors. The tool sends nothing on its own.</span></div>`;
+  h+=`</div>`;
+  $('results').innerHTML=h;
+  updateApprovedPill();
+}
+function toggleApprove(id){
+  const i=APPROVED.indexOf(id);
+  if(i>=0)APPROVED.splice(i,1); else APPROVED.push(id);
+  document.getElementById('cand-'+id).classList.toggle('sel');
+  const btn=document.querySelector('.sticky-actions .btn.ok'); if(btn)btn.textContent=`Build brief for ${APPROVED.length} approved →`;
+  updateApprovedPill();
+}
+function updateApprovedPill(){const p=$('approvedPill');p.textContent=APPROVED.length;p.classList.toggle('hidden',APPROVED.length===0);}
+function sendToOutreach(){
+  if(!APPROVED.length){toast('Approve at least one distributor first.');return;}
+  toast('Company brief built for '+APPROVED.length+' distributor(s).');setTab('outreach');
+}
+
+/* ---------- company approach brief + outreach ---------- */
+function outreachContent(c){
+  const region=$('region').value, product=$('product').value.trim()||'the line';
+  const dm = c.id==='B'?'Commercial Director':(c.id==='C'?'Managing Partner':'General Manager, diagnostics division');
+  const en = `Dear ${dm},\n\nWe represent a ${product} manufacturer looking for a distribution partner in ${region}. Reviewing your current portfolio, we see a clear gap this range fills without competing with what you already carry. We think it is worth a short conversation.\n\nCould we schedule a 30-minute introduction in the coming weeks?\n\nKind regards,\nBioPoints`;
+  const ar = `تحية طيبة ${dm}،\n\nنمثّل شركة مصنّعة لمنتجات ${product} تبحث عن شريك توزيع في ${region}. بمراجعة محفظتكم الحالية، نرى فرصة واضحة يكمّلها هذا الخط دون منافسة ما تمثّلونه اليوم، ونعتقد أن الأمر يستحق حديثاً قصيراً.\n\nهل يمكننا ترتيب لقاء تعريفي لا يتجاوز ثلاثين دقيقة خلال الأسابيع القادمة؟\n\nمع خالص التقدير،\nBioPoints`;
+  return {dm,en,ar};
+}
+function briefHtml(c){
+  const s=c.snap;
+  let sig;
+  if(c.signal.evt){
+    sig=`<div class="signal evt"><div><span class="stag">Why now</span><span class="sh">${c.signal.head}</span> <span style="color:var(--tert);font-size:11px">· ${c.signal.when}</span></div>
+      <div class="sd">${c.signal.detail}</div><div class="ss">Source: <b>${c.signal.src}</b> · illustrative</div></div>`;
+  }else{
+    sig=`<div class="signal none"><div><span class="stag">No recent event</span><span class="sh">Falling back to context</span></div>
+      <div class="sd">${c.signal.fallback}</div><div class="ss">${c.signal.src} · not dressed up as news</div></div>`;
+  }
+  return `<div class="brief">
+    <div class="bsec"><div class="bh"><span class="n">1</span>Snapshot</div>
+      <div class="snap">
+        <div class="sr"><span class="k">Type</span> · <span class="v">${s.type}</span></div>
+        <div class="sr"><span class="k">Size</span> · <span class="v">${s.size}</span></div>
+        <div class="sr"><span class="k">Principals</span> · <span class="v">${s.principals}</span></div>
+        <div class="sr"><span class="k">Licence</span> · <span class="v">${s.licence}</span></div>
+        <div class="sr"><span class="k">Footprint</span> · <span class="v">${s.footprint}</span></div>
+        <div class="sr"><span class="k">Infrastructure</span> · <span class="v">${s.infra}</span></div>
+      </div></div>
+    <div class="bsec"><div class="bh"><span class="n">2</span>Signal — the reason to call now</div>${sig}</div>
+    <div class="bsec"><div class="bh"><span class="n">3</span>Opportunity read</div>
+      <div class="opp">${c.opp}<div class="move"><b>The move.</b> ${c.move}</div></div></div>
+  </div>`;
+}
+function renderOutreach(){
+  const body=$('outreachBody');
+  if(!APPROVED.length){
+    body.innerHTML=`<div class="card"><div class="empty"><div class="big">No approved distributors yet</div>Approve one or more in the Distributor Scout, then build their brief here.</div></div>`;
+    return;
+  }
+  const targets=RANKED.filter(c=>APPROVED.includes(c.id));
+  let h=`<div class="card"><h2>Company approach brief — ${targets.length} distributor(s)</h2>`;
+  targets.forEach(c=>{
+    const o=outreachContent(c);const s=score(c);
+    h+=`<div class="ocard">
+      <div class="ocard-h"><div class="n">${c.name}</div>${c.conflictNote==='clean'?'<span class="tag clean">Clean book</span>':'<span class="tag neg">Conflict to clear</span>'}
+        <div class="sc">Scout fit <b>${s.total}/100</b></div></div>
+      ${briefHtml(c)}
+      <div class="dm">Approach via your relationship contact, then the operational owner. First conversation with: <b>${o.dm}</b></div>
+      <div class="olabel">Approach note — English (editable, written off the brief)</div>
+      <textarea class="omsg">${o.en}</textarea>
+      <div class="olabel">Approach note — Arabic (editable)</div>
+      <textarea class="omsg ar">${o.ar}</textarea>
+      <div class="claims"><b>Claims check.</b> 2 performance claims from the manufacturer brochure were removed because they are not supported by what is registered and approved in ${$('region').value}. The teaser carries no confidential terms and no unsupported claims.</div>
+    </div>`;
+  });
+  h+=`<div class="note"><b>Illustrative brief.</b> Snapshots, signals and sources shown here are placeholders for demonstration. In use, each line is retrieved from public sources, cited, and anything unverifiable is flagged rather than stated as fact. You verify against the authority of record before approaching.</div>`;
+  h+=`<div class="sticky-actions">
+     <button class="btn ok" onclick="exportOutreach()">⭳ Export briefs + outreach (EN / AR)</button>
+     <button class="btn" onclick="setTab('scout')">← Back to Scout</button>
+     <span style="font-size:12px;color:var(--tert)">Review and edit above. Nothing is sent from here.</span></div></div>`;
+  body.innerHTML=h;
+}
+
+/* ---------- export (real download) ---------- */
+function download(name,text){
+  const b=new Blob([text],{type:'text/plain'});const u=URL.createObjectURL(b);
+  const a=document.createElement('a');a.href=u;a.download=name;a.click();URL.revokeObjectURL(u);
+  toast('Downloaded '+name);
+}
+function exportShortlist(){
+  const region=$('region').value,product=$('product').value;
+  let t=`RANKED DISTRIBUTOR SHORTLIST (illustrative)\nProduct: ${product}\nRegion: ${region}\n\n`;
+  RANKED.forEach((c,i)=>{const s=score(c);
+    t+=`RANK ${i+1}  ${c.name}  —  ${s.total}/100  (${c.conflictNote==='clean'?'no conflict':'negotiable conflict'})\n`;
+    CRIT.forEach(([k,l])=>t+=`   ${l}: ${c[k]}\n`);
+    t+=`   Read: ${c.read}\n   Evidence: ${c.sources.join(', ')}\n`;
+    if(c.gap)t+=`   Open question: ${c.gap}\n`; t+=`\n`;});
+  t+=`EXCLUDED AT SCREENING\n`;EXCLUDED.forEach(e=>t+=`   ${e.name} — ${e.why}\n`);
+  t+=`\nNOTE: illustrative placeholder. Verify against the authority of record before acting.\n`;
+  download('shortlist.txt',t);
+}
+function exportOutreach(){
+  const targets=RANKED.filter(c=>APPROVED.includes(c.id));
+  let t=`COMPANY APPROACH BRIEFS + OUTREACH (illustrative) — EN / AR\nRegion: ${$('region').value}\n\n`;
+  const cards=document.querySelectorAll('#outreachBody .ocard');
+  targets.forEach((c,idx)=>{
+    const tas=cards[idx].querySelectorAll('textarea');const s=c.snap;
+    t+=`===== ${c.name} =====\n`;
+    t+=`SNAPSHOT\n  Type: ${s.type}\n  Size: ${s.size}\n  Principals: ${s.principals}\n  Licence: ${s.licence}\n  Footprint: ${s.footprint}\n  Infrastructure: ${s.infra}\n`;
+    t+=`SIGNAL (why now)\n  ${c.signal.evt?(c.signal.head+' ('+c.signal.when+') — '+c.signal.detail):('No recent event. '+c.signal.fallback)}\n`;
+    t+=`OPPORTUNITY READ\n  ${c.opp}\n  The move: ${c.move}\n`;
+    t+=`APPROACH NOTE [EN]\n${tas[0].value}\n\nAPPROACH NOTE [AR]\n${tas[1].value}\n\n`;
+  });
+  t+=`NOTE: illustrative placeholder. Signals and snapshots are for demonstration; verify against the authority of record. Reviewed by a person before sending.\n`;
+  download('company-briefs-and-outreach.txt',t);
+}
+onWeights();
+</script>
+</body>
+</html>
