@@ -266,3 +266,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/pei-genesis
 https://innvonix-tech-solutions.github.io/ai-workforce/omnicable
 https://innvonix-tech-solutions.github.io/ai-workforce/lumotive
 https://innvonix-tech-solutions.github.io/ai-workforce/sifive
+https://innvonix-tech-solutions.github.io/ai-workforce/tomfordbeauty
