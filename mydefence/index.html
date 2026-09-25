@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyDefence Console — AI Counter-UAS &amp; RF Threat Intelligence Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&family=Work+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060a10;
+  --surface:#0e1624;
+  --surface-2:#162236;
+  --surface-3:#20304a;
+  --border:#263854;
+  --border-soft:#111b2b;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --muted-2:#64748b;
+  --accent:#00e599;
+  --accent-dim:rgba(0,229,153,0.14);
+  --accent-line:rgba(0,229,153,0.38);
+  --accent-glow:rgba(0,229,153,0.25);
+  --accent2:#00f0ff;
+  --accent2-bg:rgba(0,240,255,0.08);
+  --accent3:#ff9900;
+  --danger:#ff3366;
+  --ok:#10b981;
+  --font-display:'Rajdhani',sans-serif;
+  --font-body:'Work Sans',sans-serif;
+  --font-mono:'Roboto Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 88% -8%, rgba(0,229,153,0.15), transparent 55%),
+    radial-gradient(900px 480px at 5% 5%, rgba(0,240,255,0.08), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+a{color:var(--accent2);text-decoration:none;}
+a:hover{text-decoration:underline;}
+::selection{background:rgba(0,229,153,0.3);}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px;}
+.hidden{display:none!important;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:24px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:14px;}
+.mark-badge{
+  width:46px;height:44px;border-radius:6px;
+  background:linear-gradient(135deg,#005c3d,#00e599);
+  border:1px solid var(--accent);
+  display:flex;align-items:center;justify-content:center;
+  color:#000;font-family:var(--font-display);font-weight:800;font-size:18px;letter-spacing:1px;
+  box-shadow:0 0 22px rgba(0,229,153,0.4);
+}
+.mark-title{font-family:var(--font-display);font-size:22px;font-weight:700;color:#fff;letter-spacing:1px;line-height:1.1;}
+.mark-sub{font-size:12px;color:var(--muted);margin-top:2px;letter-spacing:0.5px;}
+.pill-live{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--accent-dim);border:1px solid var(--accent-line);
+  padding:5px 12px;border-radius:20px;font-size:11px;color:var(--accent);font-family:var(--font-mono);
+}
+.pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);}
+
+.hero{padding:30px 0 20px;}
+.hero-title{font-family:var(--font-display);font-size:32px;font-weight:700;color:#fff;line-height:1.25;margin-bottom:10px;letter-spacing:0.5px;}
+.hero-desc{font-size:14px;color:var(--muted);max-width:920px;line-height:1.65;}
+
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:26px 0 34px;}
+.metric-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px 20px;
+  transition:all .2s ease;
+}
+.metric-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.4);}
+.metric-val{font-family:var(--font-display);font-size:26px;font-weight:700;color:var(--accent);}
+.metric-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:4px;}
+
+.nav-tabs{display:flex;gap:12px;border-bottom:1px solid var(--border);margin-bottom:26px;}
+.tab-btn{
+  background:transparent;border:none;color:var(--muted);font-family:var(--font-display);
+  font-size:14px;font-weight:600;padding:12px 18px;cursor:pointer;letter-spacing:1px;
+  border-bottom:2px solid transparent;transition:all .2s;
+}
+.tab-btn:hover{color:var(--text);}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+.roster-sec{margin-bottom:30px;}
+.track-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.track-title{font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff;display:flex;align-items:center;gap:10px;letter-spacing:0.5px;}
+.track-tag{font-size:10px;padding:3px 10px;border-radius:4px;background:var(--surface-2);color:var(--accent2);border:1px solid var(--border);font-family:var(--font-mono);}
+.cards-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+
+.op-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px;
+  display:flex;flex-direction:column;justify-content:space-between;gap:16px;
+  transition:all .2s ease;position:relative;overflow:hidden;
+}
+.op-card:hover{border-color:var(--accent-line);box-shadow:0 8px 24px rgba(0,0,0,0.5);}
+.op-card.flagship{border-color:var(--accent);background:linear-gradient(145deg, var(--surface), #0f1c2d);}
+.op-card.flagship::before{
+  content:'';position:absolute;top:0;right:0;width:120px;height:120px;
+  background:radial-gradient(circle at 100% 0%, var(--accent-glow), transparent 70%);
+  pointer-events:none;
+}
+
+.flag-badge{
+  position:absolute;top:14px;right:14px;background:linear-gradient(135deg,var(--accent),#008f5d);
+  color:#000;font-weight:700;font-size:10px;padding:3px 8px;border-radius:4px;
+  text-transform:uppercase;letter-spacing:0.8px;font-family:var(--font-mono);
+}
+
+.op-top{display:flex;gap:14px;}
+.op-icon{
+  width:46px;height:46px;border-radius:8px;background:var(--surface-2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;
+}
+.op-meta{flex:1;}
+.op-title{font-family:var(--font-display);font-size:17px;font-weight:700;color:#fff;line-height:1.2;margin-bottom:4px;}
+.op-role{font-size:11px;color:var(--accent);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.5px;}
+
+.op-desc{font-size:13px;color:var(--muted);line-height:1.5;margin-top:8px;}
+
+.op-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+.tag{font-size:11px;background:var(--surface-2);border:1px solid var(--border);color:var(--text);padding:3px 8px;border-radius:4px;}
+
+.op-foot{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--border-soft);}
+.op-cadence{font-size:11px;color:var(--muted-2);font-family:var(--font-mono);}
+
+.btn{
+  background:var(--surface-2);border:1px solid var(--border);color:var(--text);
+  font-family:var(--font-body);font-size:12px;font-weight:600;padding:8px 14px;border-radius:5px;
+  cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px;
+}
+.btn:hover{background:var(--surface-3);border-color:var(--accent);color:#fff;}
+.btn-primary{background:linear-gradient(135deg,#00704a,#00e599);border-color:var(--accent);color:#000;font-weight:700;}
+.btn-primary:hover{background:linear-gradient(135deg,#008f5d,#33f0b2);box-shadow:0 0 16px rgba(0,229,153,0.4);color:#000;}
+
+/* DYNEX Builder Section */
+.builder-box{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px;margin-bottom:30px;
+}
+.builder-hdr{margin-bottom:20px;}
+.builder-hdr h3{font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--accent);margin:0 0 6px 0;}
+.builder-hdr p{font-size:13px;color:var(--muted);margin:0;}
+
+.b-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;}
+.b-step{background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:16px;}
+.b-step-num{font-family:var(--font-mono);font-size:10px;color:var(--accent2);text-transform:uppercase;margin-bottom:6px;}
+.b-step-title{font-family:var(--font-display);font-size:15px;font-weight:700;color:#fff;margin-bottom:12px;}
+
+.form-group{margin-bottom:12px;}
+.form-label{display:block;font-size:11px;color:var(--muted);margin-bottom:4px;font-family:var(--font-mono);}
+.form-control{
+  width:100%;background:var(--surface-3);border:1px solid var(--border);color:#fff;
+  padding:8px 12px;border-radius:5px;font-size:12px;font-family:var(--font-body);
+}
+.form-control:focus{outline:none;border-color:var(--accent);}
+
+.radio-group{display:flex;gap:12px;margin-top:6px;}
+.radio-label{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text);cursor:pointer;}
+
+.preview-card{
+  background:var(--surface-3);border:1px dashed var(--accent-line);border-radius:6px;padding:14px;margin-top:12px;
+}
+
+/* Execution Modal & Output */
+.modal-overlay{
+  position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);
+  display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;
+  backdrop-filter:blur(6px);
+}
+.modal-body{
+  background:var(--surface);border:1px solid var(--accent);border-radius:10px;
+  width:100%;max-width:940px;max-height:90vh;overflow-y:auto;padding:28px;
+  box-shadow:0 0 40px rgba(0,0,0,0.9);
+}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:14px;}
+.modal-title{font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--accent);}
+.modal-close{background:transparent;border:none;color:var(--muted);font-size:22px;cursor:pointer;}
+.modal-close:hover{color:#fff;}
+
+.progress-bar-wrap{background:var(--surface-2);height:8px;border-radius:4px;overflow:hidden;margin-bottom:16px;}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;transition:width 0.4s ease;}
+
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px;}
+.t-node{background:var(--surface-2);border:1px solid var(--border);padding:10px;border-radius:6px;font-size:11px;text-align:center;}
+.t-node.active{border-color:var(--accent);color:var(--accent);}
+.t-node.done{border-color:var(--ok);color:var(--ok);}
+
+.terminal-box{
+  background:#04070d;border:1px solid var(--border);border-radius:6px;padding:14px;
+  font-family:var(--font-mono);font-size:11px;color:#00f0ff;height:170px;overflow-y:auto;margin-bottom:20px;
+  line-height:1.6;
+}
+
+.output-panel{
+  background:var(--surface-2);border:1px solid var(--accent-line);border-radius:8px;padding:20px;margin-bottom:20px;
+}
+.output-title{font-family:var(--font-display);font-size:16px;font-weight:700;color:#fff;margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:8px;}
+
+.spec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+.spec-box{background:var(--surface-3);border:1px solid var(--border);padding:12px;border-radius:6px;}
+.spec-box-lbl{font-size:10px;color:var(--muted);font-family:var(--font-mono);text-transform:uppercase;}
+.spec-box-val{font-size:14px;font-weight:700;color:var(--accent);margin-top:2px;}
+
+.footer{border-top:1px solid var(--border-soft);padding:30px 0;margin-top:40px;color:var(--muted-2);font-size:12px;text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="wrap mark-row">
+    <div class="mark">
+      <div class="mark-badge">MD</div>
+      <div>
+        <div class="mark-title">MYDEFENCE COUNTER-UAS</div>
+        <div class="mark-sub">AI-Powered RF Drone Threat Intelligence &amp; Mitigation &bull; Nørresundby, Denmark</div>
+      </div>
+    </div>
+    <div class="pill-live">
+      <span class="pulse-dot"></span> radar active &bull; NATO STANAG Compliant &bull; Global Operations
+    </div>
+  </div>
+</div>
+
+<div class="wrap hero">
+  <h1 class="hero-title">AI Counter-UAS &amp; RF Threat Intelligence Workforce Console</h1>
+  <p class="hero-desc">
+    Deploy autonomous AI operators across dismounted soldier passive RF detection, Watchdog 202 360° triangulation, Pitbull smart jamming, ATAK C2 sensor fusion, and NATO defense procurement. Purpose-built for MyDefence passive RF sensors and integrated counter-drone systems.
+  </p>
+</div>
+
+<div class="wrap">
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-val">8 SPECIALISTS</div>
+      <div class="metric-lbl">Autonomous C-UAS AI Operators</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">&lt; 50 MS</div>
+      <div class="metric-lbl">Passive RF Signal Classification</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">&lt; 5° BEARING</div>
+      <div class="metric-lbl">Watchdog 202 Triangulation Accuracy</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">ATAK &amp; C2</div>
+      <div class="metric-lbl">STANAG Sensor Fusion Ready</div>
+    </div>
+  </div>
+
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('roster')">OPERATOR ROSTER</button>
+    <button class="tab-btn" onclick="switchTab('builder')">DYNEX BUILDER</button>
+  </div>
+
+  <!-- ROSTER TAB -->
+  <div id="tab-roster" class="tab-content">
+    <!-- TRACK 1 -->
+    <div class="roster-sec">
+      <div class="track-hdr">
+        <div class="track-title">
+          <span>📡 TRACK 1: TACTICAL OPERATIONS &amp; C-UAS INTELLIGENCE</span>
+        </div>
+        <span class="track-tag">4 OPERATORS ACTIVE</span>
+      </div>
+      <div class="cards-grid">
+        
+        <!-- OP 1 (FLAGSHIP) -->
+        <div class="op-card flagship">
+          <span class="flag-badge">FLAGSHIP OPERATOR</span>
+          <div class="op-top">
+            <div class="op-icon">📡</div>
+            <div class="op-meta">
+              <div class="op-title">Wingman Passive RF Threat Intelligence Operator</div>
+              <div class="op-role">Track 1 &bull; Wearable Passive RF Detection</div>
+            </div>
+          </div>
+          <div class="op-desc">
+            Analyzes passive RF spectrum signals, detects drone control telemetry &amp; video streams (2.4GHz, 5.8GHz, 433MHz, 900MHz, custom ISM bands), and identifies drone make/model without emitting RF position traces.
+          </div>
+          <div class="op-tags">
+            <span class="tag">Wingman 103/105</span>
+            <span class="tag">Passive RF Sweep</span>
+            <span class="tag">OcuSync &amp; Custom RF</span>
+            <span class="tag">Zero RF Signature</span>
+          </div>
+          <div class="op-foot">
+            <span class="op-cadence">Cadence: Real-Time Tactical Stream</span>
+            <button class="btn btn-primary" onclick="openSim('op1')">▶ Run Live Simulation</button>
+          </div>
+        </div>
+
+        <!-- OP 2 -->
+        <div class="op-card">
+          <div class="op-top">
+            <div class="op-icon">🎯</div>
+            <div class="op-meta">
+              <div class="op-title">Watchdog 202 360° Triangulation Specialist</div>
+              <div class="op-role">Track 1 &bull; Perimeter DF &amp; Bearing</div>
+            </div>
+          </div>
+          <div class="op-desc">
+            Networks multiple Watchdog 202 sensors across perimeter zones to triangulate drone pilot coordinates with &lt;5° bearing accuracy, triggering immediate early warning alerts.
+          </div>
+          <div class="op-tags">
+            <span class="tag">Watchdog 202</span>
+            <span class="tag">360° Direction Finding</span>
+            <span class="tag">&lt;5° Bearing Accuracy</span>
+            <span class="tag">Pilot Triangulation</span>
+          </div>
+          <div class="op-foot">
+            <span class="op-cadence">Cadence: Continuous 24/7 Sweep</span>
+            <button class="btn" onclick="openSim('op2')">▶ Run Simulation</button>
+          </div>
+        </div>
+
+        <!-- OP 3 -->
+        <div class="op-card">
+          <div class="op-top">
+            <div class="op-icon">⚡</div>
+            <div class="op-meta">
+              <div class="op-title">Pitbull Smart Mitigation &amp; Jamming Controller</div>
+              <div class="op-role">Track 1 &bull; Targeted RF Neutralization</div>
+            </div>
+          </div>
+          <div class="op-desc">
+            Controls directional and omnidirectional smart RF jamming protocols, executing surgical spot-jamming on C2/GNSS channels while preserving friendly tactical comms.
+          </div>
+          <div class="op-tags">
+            <span class="tag">Pitbull Jammer</span>
+            <span class="tag">Surgical Spot Jamming</span>
+            <span class="tag">GNSS / C2 Disruption</span>
+            <span class="tag">Friendly Comms Protection</span>
+          </div>
+          <div class="op-foot">
+            <span class="op-cadence">Cadence: Threat Triggered</span>
+            <button class="btn" onclick="openSim('op3')">▶ Run Simulation</button>
+          </div>
+        </div>
+
+        <!-- OP 4 -->
+        <div class="op-card">
+          <div class="op-top">
+            <div class="op-icon">🗺️</div>
+            <div class="op-meta">
+              <div class="op-title">ATAK Tactical C2 &amp; Sensor Fusion Engine</div>
+              <div class="op-role">Track 1 &bull; Multi-Sensor Map Integration</div>
+            </div>
+          </div>
+          <div class="op-desc">
+            Fuses passive RF detections, radar tracks, and electro-optical (EO/IR) feeds directly into ATAK maps and military C2 networks via STANAG messaging protocols.
+          </div>
+          <div class="op-tags">
+            <span class="tag">ATAK Integration</span>
+            <span class="tag">CoT Cursor-on-Target</span>
+            <span class="tag">RF + Radar Fusion</span>
+            <span class="tag">STANAG Protocol</span>
+          </div>
+          <div class="op-foot">
+            <span class="op-cadence">Cadence: Real-Time C2 Feed</span>
+            <button class="btn" onclick="openSim('op4')">▶ Run Simulation</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TRACK 2 -->
+    <div class="roster-sec">
+      <div class="track-hdr">
+        <div class="track-title">
+          <span>⚙️ TRACK 2: DEFENSE PROCUREMENT &amp; SYSTEMS ENGINEERING</span>
+        </div>
+        <span class="track-tag">4 OPERATORS ACTIVE</span>
+      </div>
+      <div class="cards-grid">
+        
+        <!-- OP 5 -->
+        <div class="op-card">
+          <div class="op-top">
+            <div class="op-icon">📄</div>
+            <div class="op-meta">
+              <div class="op-title">NATO Defense Procurement &amp; Tender Compliance</div>
+              <div class="op-role">Track 2 &bull; Tender &amp; MIL-STD Auditor</div>
+            </div>
+          </div>
+          <div class="op-desc">
+            Evaluates NATO STANAG specifications, MIL-STD-810H environmental testing, export compliance (ITAR/EAR/EU Dual-Use), and defense tender responses.
+          </div>
+          <div class="op-tags">
+            <span class="tag">NATO STANAG</span>
+            <span class="tag">MIL-STD-810H</span>
+            <span class="tag">EU Dual-Use Export</span>
+            <span class="tag">Tender Compliance</span>
+          </div>
+          <div class="op-foot">
+            <span class="op-cadence">Cadence: Tender-Based</span>
+            <button class="btn" onclick="openSim('op5')">▶ Run Simulation</button>
+          </div>
+        </div>
+
+        <!-- OP 6 -->
+        <div class="op-card">
+          <div class="op-top">
+            <div class="op-icon">🚙</div>
+            <div class="op-meta">
+              <div class="op-title">Vehicle &amp; Tactical Mobile C-UAS Integration Engineer</div>
+              <div class="op-role">Track 2 &bull; Vehicle Platform Integration</div>
+            </div>
+          </div>
+          <div class="op-desc">
+            Designs vehicle integration blueprints (Dobermann &amp; Watchdog 150/250), vehicle power draw budgets, CAN-bus interfacing, and high-vibration shock mounting.
+          </div>
+          <div class="op-tags">
+            <span class="tag">Dobermann Kit</span>
+            <span class="tag">Watchdog 150/250</span>
+            <span class="tag">CAN-Bus Interface</span>
+            <span class="tag">Tactical Mobile</span>
+          </div>
+          <div class="op-foot">
+            <span class="op-cadence">Cadence: On-Demand</span>
+            <button class="btn" onclick="openSim('op6')">▶ Run Simulation</button>
+          </div>
+        </div>
+
+        <!-- OP 7 -->
+        <div class="op-card">
+          <div class="op-top">
+            <div class="op-icon">🧠</div>
+            <div class="op-meta">
+              <div class="op-title">AI RF Spectral Library &amp; Machine Learning Operator</div>
+              <div class="op-role">Track 2 &bull; Signal Library &amp; Neural Nets</div>
+            </div>
+          </div>
+          <div class="op-desc">
+            Updates on-device neural network models with new threat signatures, frequency-hopping algorithms, and unknown RF signal classification profiles.
+          </div>
+          <div class="op-tags">
+            <span class="tag">RF Neural Networks</span>
+            <span class="tag">Frequency Hopping</span>
+            <span class="tag">Threat Signatures</span>
+            <span class="tag">Edge AI Model Sync</span>
+          </div>
+          <div class="op-foot">
+            <span class="op-cadence">Cadence: Continuous Learning</span>
+            <button class="btn" onclick="openSim('op7')">▶ Run Simulation</button>
+          </div>
+        </div>
+
+        <!-- OP 8 -->
+        <div class="op-card">
+          <div class="op-top">
+            <div class="op-icon">🏢</div>
+            <div class="op-meta">
+              <div class="op-title">Critical Infrastructure &amp; Airport Security Specialist</div>
+              <div class="op-role">Track 2 &bull; Fixed Site Multi-Sensor Security</div>
+            </div>
+          </div>
+          <div class="op-desc">
+            Simulates multi-sensor coverage for commercial airports, energy grids, and government buildings, preventing false positives from civilian RF noise.
+          </div>
+          <div class="op-tags">
+            <span class="tag">Airport Security</span>
+            <span class="tag">Critical Infrastructure</span>
+            <span class="tag">Wolfpack Network</span>
+            <span class="tag">Zero False Positive</span>
+          </div>
+          <div class="op-foot">
+            <span class="op-cadence">Cadence: Event-Triggered</span>
+            <button class="btn" onclick="openSim('op8')">▶ Run Simulation</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- DYNEX BUILDER TAB -->
+  <div id="tab-builder" class="tab-content hidden">
+    <div class="builder-box">
+      <div class="builder-hdr">
+        <h3>DYNEX 3-Step Custom Operator Builder</h3>
+        <p>Configure a custom AI operator tailored to MyDefence passive RF threat intelligence and C-UAS operational standards.</p>
+      </div>
+
+      <div class="b-steps">
+        <!-- STEP 1 -->
+        <div class="b-step">
+          <div class="b-step-num">STEP 1</div>
+          <div class="b-step-title">Select Baseline Template</div>
+          <div class="form-group">
+            <label class="form-label">OPERATOR TEMPLATE</label>
+            <select id="bS1" class="form-control" onchange="updateBuilderPreview()">
+              <option value="wingman">C-UAS Passive RF Threat Classifier</option>
+              <option value="watchdog">Watchdog 360° Triangulation Engine</option>
+              <option value="atak">ATAK Sensor Fusion Orchestrator</option>
+              <option value="nato">NATO Defense Tender Auditor</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="b-step">
+          <div class="b-step-num">STEP 2</div>
+          <div class="b-step-title">Assign Agent Pipeline</div>
+          <div class="form-group">
+            <label class="form-label">PRIMARY TASK AGENT</label>
+            <select id="bS2" class="form-control" onchange="updateBuilderPreview()">
+              <option value="wingman_rf">📡 Wingman RF Classifier (2.4/5.8GHz &amp; ISM)</option>
+              <option value="watchdog_df">🎯 Watchdog 202 Triangulation Engine (&lt;5° DF)</option>
+              <option value="pitbull_jam">⚡ Pitbull Smart RF Jamming Controller</option>
+              <option value="atak_cot">🗺️ ATAK Cursor-on-Target Gateway</option>
+              <option value="nato_audit">📄 NATO STANAG &amp; Defense Compliance Auditor</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">EXECUTION MODE</label>
+            <div class="radio-group">
+              <label class="radio-label"><input type="radio" name="bMode" value="sequential" checked onchange="updateBuilderPreview()"> Sequential</label>
+              <label class="radio-label"><input type="radio" name="bMode" value="dag" onchange="updateBuilderPreview()"> DAG Parallel</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="b-step">
+          <div class="b-step-num">STEP 3</div>
+          <div class="b-step-title">Deploy Operator</div>
+          <div class="form-group">
+            <label class="form-label">OPERATOR NAME</label>
+            <input type="text" id="bName" class="form-control" value="MyDefence Tactical Perimeter Watcher" oninput="updateBuilderPreview()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">ROLE TITLE</label>
+            <input type="text" id="bRole" class="form-control" value="Lead C-UAS Triangulation Officer" oninput="updateBuilderPreview()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">CADENCE</label>
+            <select id="bCadence" class="form-control" onchange="updateBuilderPreview()">
+              <option value="Real-Time">Real-Time Tactical</option>
+              <option value="Continuous">Continuous 24/7</option>
+              <option value="Threat-Triggered">Threat-Triggered</option>
+              <option value="Mission-Based">Mission-Based</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" style="width:100%;margin-top:10px;" onclick="hireOperator()">DEPLOY TO MYDEFENCE ROSTER</button>
+        </div>
+      </div>
+
+      <!-- PREVIEW CARD -->
+      <div class="preview-card">
+        <div style="font-size:11px;color:var(--accent2);font-family:var(--font-mono);margin-bottom:6px;">LIVE PREVIEW</div>
+        <div id="prevTitle" style="font-family:var(--font-display);font-size:16px;font-weight:700;color:#fff;">MyDefence Tactical Perimeter Watcher</div>
+        <div id="prevRole" style="font-size:12px;color:var(--accent);font-family:var(--font-mono);">Lead C-UAS Triangulation Officer</div>
+        <div id="prevPipeline" style="font-size:12px;color:var(--muted);margin-top:6px;">Pipeline: Wingman RF Classifier (2.4/5.8GHz &amp; ISM) &bull; Mode: Sequential &bull; Cadence: Real-Time</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- EXECUTION MODAL -->
+<div id="simModal" class="modal-overlay hidden">
+  <div class="modal-body">
+    <div class="modal-hdr">
+      <div id="modalTitle" class="modal-title">MyDefence Wingman &amp; Watchdog 202 C-UAS Engine</div>
+      <button class="modal-close" onclick="closeSim()">&times;</button>
+    </div>
+
+    <div class="progress-bar-wrap">
+      <div id="pBar" class="progress-bar"></div>
+    </div>
+
+    <div class="timeline">
+      <div id="t1" class="t-node">1. Passive RF Sweep</div>
+      <div id="t2" class="t-node">2. AI Classification</div>
+      <div id="t3" class="t-node">3. DF Triangulation</div>
+      <div id="t4" class="t-node">4. ATAK &amp; Jamming</div>
+    </div>
+
+    <div id="term" class="terminal-box">
+      [SYSTEM READY] MyDefence C-UAS Kernel initialised...<br>
+    </div>
+
+    <div id="outPanel" class="output-panel hidden">
+      <div class="output-title">RE-VIEW READY DELIVERABLE: C-UAS TACTICAL THREAT REPORT #8492-ALPHA</div>
+      
+      <div class="spec-grid">
+        <div class="spec-box">
+          <div class="spec-box-lbl">THREAT IDENTIFICATION</div>
+          <div class="spec-box-val">DJI Matrice 300 RTK (OcuSync 3.0)</div>
+        </div>
+        <div class="spec-box">
+          <div class="spec-box-lbl">BEARING &amp; TRIANGULATION</div>
+          <div class="spec-box-val">2,140 m @ 142° SE (&lt;2.8° DF)</div>
+        </div>
+        <div class="spec-box">
+          <div class="spec-box-lbl">NEUTRALIZATION ACTION</div>
+          <div class="spec-box-val">Pitbull Smart Jamming Ready</div>
+        </div>
+      </div>
+
+      <div style="font-size:13px;color:var(--text);line-height:1.6;background:var(--surface-3);padding:14px;border-radius:6px;border:1px solid var(--border);margin-bottom:16px;">
+        <strong>Passive Telemetry Stream:</strong> Video Feed 5.785 GHz (Active), Pilot Uplink 2.412 GHz, GNSS L1 Active.<br>
+        <strong>Multi-Sensor Fusion:</strong> 3x Watchdog 202 networked sensors confirmed pilot position at Grid Zone 32V NH 4821 9102.<br>
+        <strong>Recommended Countermeasure:</strong> Pitbull Selective Spot-Jamming Protocol #4 (Targeted C2/GNSS disruption, zero impact on 433MHz squad comms).<br>
+        <strong>C2 Network Status:</strong> Cursor-on-Target (CoT) marker broadcasted to ATAK tactical map server.
+      </div>
+
+      <div style="display:flex;gap:12px;">
+        <button class="btn btn-primary" onclick="alert('Tactical After-Action Report (PDF) exported successfully.')">📥 Export Tactical After-Action Report (PDF)</button>
+        <button class="btn" onclick="alert('CoT Cursor pushed to ATAK Tactical Server.')">🗺️ Push CoT Cursor to ATAK Server</button>
+        <button class="btn" onclick="alert('RF Signature Profile copied to clipboard.')">📋 Copy RF Signature Profile</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer wrap">
+  &copy; 2026 MyDefence Communication A/S. Designed for Counter-UAS, RF Sensors &amp; Defense Systems in Nørresundby, Denmark. Interactive Executive AI Workforce Prototype.
+</div>
+
+<script>
+function switchTab(tabId){
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+  if(tabId === 'roster'){
+    document.querySelectorAll('.tab-btn')[0].classList.add('active');
+    document.getElementById('tab-roster').classList.remove('hidden');
+  } else {
+    document.querySelectorAll('.tab-btn')[1].classList.add('active');
+    document.getElementById('tab-builder').classList.remove('hidden');
+  }
+}
+
+function updateBuilderPreview(){
+  const name = document.getElementById('bName').value || 'Custom MyDefence Operator';
+  const role = document.getElementById('bRole').value || 'Specialist Lead';
+  const agentSelect = document.getElementById('bS2');
+  const agentText = agentSelect.options[agentSelect.selectedIndex].text;
+  const mode = document.querySelector('input[name="bMode"]:checked').value;
+  const cadence = document.getElementById('bCadence').value;
+
+  document.getElementById('prevTitle').innerText = name;
+  document.getElementById('prevRole').innerText = role;
+  document.getElementById('prevPipeline').innerText = `Pipeline: ${agentText} • Mode: ${mode.toUpperCase()} • Cadence: ${cadence}`;
+}
+
+function hireOperator(){
+  const name = document.getElementById('bName').value || 'Custom MyDefence Operator';
+  const role = document.getElementById('bRole').value || 'Specialist Lead';
+  
+  alert(`Operator "${name}" deployed successfully to MyDefence active C-UAS workforce roster!`);
+  switchTab('roster');
+}
+
+let simTimer = null;
+function openSim(opId){
+  document.getElementById('simModal').classList.remove('hidden');
+  document.getElementById('outPanel').classList.add('hidden');
+  document.getElementById('pBar').style.width = '0%';
+  
+  const term = document.getElementById('term');
+  term.innerHTML = '[SYSTEM START] Initializing MyDefence C-UAS Simulation Kernel...<br>';
+
+  const nodes = ['t1', 't2', 't3', 't4'];
+  nodes.forEach(n => {
+    document.getElementById(n).className = 't-node';
+  });
+
+  let step = 0;
+  const logs = [
+    "[PHASE 1] Executing passive RF spectrum sweep across 400MHz - 6.0GHz... Sweeping Wingman 105 wearable sensor matrix.",
+    "[PHASE 2] AI Neural Classifier matched RF signature: DJI Matrice 300 RTK (OcuSync 3.0 protocol, 2.412 GHz uplink, 5.785 GHz video feed).",
+    "[PHASE 3] Watchdog 202 Direction-Finding sensors engaged: Triangulating pilot RF bearing at 142° SE, range 2,140m (<2.8° accuracy).",
+    "[PHASE 4] Generating Cursor-on-Target (CoT) packet for ATAK map integration & staging Pitbull selective smart jammer protocol #4.",
+    "[COMPLETE] C-UAS Tactical Threat Report #8492-ALPHA finalized."
+  ];
+
+  simTimer = setInterval(() => {
+    step++;
+    if(step <= 4){
+      document.getElementById('pBar').style.width = (step * 25) + '%';
+      document.getElementById('t' + step).classList.add('active');
+      if(step > 1) document.getElementById('t' + (step - 1)).classList.remove('active').classList.add('done');
+      term.innerHTML += logs[step-1] + '<br>';
+      term.scrollTop = term.scrollHeight;
+    } else {
+      clearInterval(simTimer);
+      document.getElementById('t4').classList.remove('active').classList.add('done');
+      term.innerHTML += logs[4] + '<br>';
+      document.getElementById('outPanel').classList.remove('hidden');
+    }
+  }, 1000);
+}
+
+function closeSim(){
+  if(simTimer) clearInterval(simTimer);
+  document.getElementById('simModal').classList.add('hidden');
+}
+</script>
+</body>
+</html>
