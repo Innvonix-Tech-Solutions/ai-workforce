@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OnBoard Logistics Console — AI Global Freight &amp; Time-Critical Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060b14;
+  --surface:#0f1726;
+  --surface-2:#192438;
+  --surface-3:#283754;
+  --border:#283754;
+  --border-soft:#111a2b;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --muted-2:#64748b;
+  --accent:#0055a5;
+  --accent-dim:rgba(0,85,165,0.16);
+  --accent-line:rgba(0,85,165,0.38);
+  --accent2:#10b981;
+  --accent2-bg:rgba(16,185,129,0.08);
+  --accent3:#06b6d4;
+  --danger:#ef4444;
+  --ok:#10b981;
+  --font-display:'Rajdhani',sans-serif;
+  --font-body:'Work Sans',sans-serif;
+  --font-mono:'Roboto Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 88% -8%, rgba(0,85,165,0.20), transparent 55%),
+    radial-gradient(900px 480px at 5% 5%, rgba(16,185,129,0.08), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+a{color:var(--accent2);}
+::selection{background:rgba(0,85,165,0.28);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+.hidden{display:none!important;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:24px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:12px;}
+.mark-badge{
+  width:44px;height:42px;border-radius:8px;
+  background:linear-gradient(135deg,#003366,#0055a5);
+  border:1px solid var(--accent-line);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:var(--font-display);font-weight:800;font-size:15px;letter-spacing:1px;
+  box-shadow:0 0 20px rgba(0,85,165,0.3);
+}
+.mark-title{font-family:var(--font-display);font-size:22px;font-weight:700;color:#fff;letter-spacing:.5px;line-height:1.1;}
+.mark-sub{font-size:12px;color:var(--muted);margin-top:2px;}
+.pill-live{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--accent-dim);border:1px solid var(--accent-line);
+  padding:4px 10px;border-radius:20px;font-size:11px;color:var(--accent2);font-family:var(--font-mono);
+}
+.pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);}
+
+.hero{padding:28px 0 20px;}
+.hero-title{font-family:var(--font-display);font-size:32px;font-weight:700;color:#fff;line-height:1.2;margin-bottom:8px;}
+.hero-desc{font-size:14px;color:var(--muted);max-width:880px;line-height:1.6;}
+
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:24px 0 32px;}
+.metric-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;
+  transition:all .2s ease;
+}
+.metric-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+.metric-val{font-family:var(--font-display);font-size:26px;font-weight:700;color:#fff;}
+.metric-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
+
+.nav-tabs{display:flex;gap:12px;border-bottom:1px solid var(--border);margin-bottom:24px;}
+.tab-btn{
+  background:transparent;border:none;color:var(--muted);font-family:var(--font-display);
+  font-size:15px;font-weight:600;padding:10px 16px;cursor:pointer;
+  border-bottom:2px solid transparent;transition:all .2s;
+}
+.tab-btn:hover{color:var(--text);}
+.tab-btn.active{color:var(--accent2);border-bottom-color:var(--accent2);}
+
+.roster-sec{margin-bottom:24px;}
+.track-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.track-title{font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;}
+.track-tag{font-size:10px;padding:2px 8px;border-radius:4px;background:var(--surface-2);color:var(--accent3);border:1px solid var(--border);}
+.cards-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+
+.op-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;
+  display:flex;flex-direction:column;justify-content:space-between;transition:all .2s ease;
+}
+.op-card:hover{border-color:var(--accent-line);background:var(--surface-2);}
+.op-card.flagship{border-color:var(--accent2);box-shadow:0 0 15px rgba(16,185,129,0.12);}
+.op-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px;}
+.op-name{font-family:var(--font-display);font-size:17px;font-weight:700;color:#fff;}
+.op-title{font-size:12px;color:var(--muted);}
+.badge-flag{background:var(--accent2-bg);border:1px solid var(--accent2);color:var(--accent2);font-size:10px;padding:2px 6px;border-radius:4px;font-weight:600;}
+.op-meta{font-size:11px;color:var(--muted-2);margin-bottom:14px;display:flex;gap:12px;}
+.op-tasks{background:var(--surface-2);border-radius:6px;padding:10px 12px;margin-bottom:16px;border:1px solid var(--border-soft);}
+.task-step{font-size:11px;color:var(--text);display:flex;align-items:center;gap:6px;margin-bottom:4px;}
+.task-step:last-child{margin-bottom:0;}
+.task-dot{width:4px;height:4px;border-radius:50%;background:var(--accent3);}
+.btn-run{
+  background:var(--accent-dim);border:1px solid var(--accent-line);color:var(--accent2);
+  width:100%;padding:8px 12px;border-radius:6px;font-family:var(--font-display);font-weight:600;
+  font-size:13px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.btn-run:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+/* Live Execution Panel */
+.exec-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:32px;}
+.exec-hdr{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:20px;}
+.exec-title{font-family:var(--font-display);font-size:20px;font-weight:700;color:#fff;}
+.phases{display:flex;gap:16px;}
+.phase-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);}
+.phase-item.active{color:var(--accent2);font-weight:600;}
+.phase-num{width:18px;height:18px;border-radius:50%;background:var(--surface-3);display:flex;align-items:center;justify-content:center;font-size:10px;}
+.phase-item.active .phase-num{background:var(--accent2);color:#000;}
+
+.agents-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+.agent-node{
+  background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:12px;
+  font-size:11px;transition:all .2s;
+}
+.agent-node.active{border-color:var(--accent3);box-shadow:0 0 10px rgba(6,182,212,0.2);}
+.agent-node.done{border-color:var(--ok);}
+.agent-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.agent-name{font-weight:600;color:#fff;}
+.agent-st{font-size:9px;text-transform:uppercase;padding:1px 4px;border-radius:3px;}
+.st-idle{background:var(--surface-3);color:var(--muted);}
+.st-run{background:var(--accent-dim);color:var(--accent2);border:1px solid var(--accent-line);}
+.st-done{background:rgba(16,185,129,0.15);color:var(--ok);}
+
+.terminal-box{
+  background:#020509;border:1px solid var(--border);border-radius:8px;padding:14px;
+  font-family:var(--font-mono);font-size:11px;color:#a3e635;height:140px;overflow-y:auto;margin-bottom:20px;
+  line-height:1.6;
+}
+.term-line{margin-bottom:2px;}
+.term-line.sys{color:var(--muted);}
+.term-line.warn{color:var(--accent2);}
+
+.deliverable-box{
+  background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:18px;
+}
+.deliv-hdr{font-family:var(--font-display);font-size:14px;font-weight:700;color:var(--accent2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px;}
+.deliv-content{font-family:var(--font-mono);font-size:11px;color:var(--text);white-space:pre-wrap;line-height:1.5;}
+
+/* Builder Styles */
+.builder-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;}
+.step-nav{display:flex;gap:12px;margin-bottom:24px;border-bottom:1px solid var(--border);padding-bottom:12px;}
+.step-btn{background:none;border:none;color:var(--muted);font-family:var(--font-display);font-size:14px;font-weight:600;cursor:pointer;}
+.step-btn.active{color:var(--accent2);}
+.form-group{margin-bottom:16px;}
+.form-label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:600;}
+.form-control{
+  width:100%;background:var(--surface-2);border:1px solid var(--border);color:#fff;
+  padding:10px 12px;border-radius:6px;font-size:13px;font-family:var(--font-body);
+}
+.form-control:focus{outline:none;border-color:var(--accent);}
+
+footer{
+  border-top:1px solid var(--border-soft);padding:24px 0;margin-top:40px;font-size:11px;color:var(--muted-2);
+  display:flex;align-items:center;justify-content:space-between;
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap mark-row">
+    <div class="mark">
+      <div class="mark-badge">OBL</div>
+      <div>
+        <div class="mark-title">ONBOARD LOGISTICS</div>
+        <div class="mark-sub">Your Logistics Ally · Global Freight Forwarder &amp; OBC Specialist · Miami HQ &amp; LATAM</div>
+      </div>
+    </div>
+    <div class="pill-live">
+      <span class="pulse-dot"></span> 31 GLOBAL OFFICES ACTIVE · VUELA NEUTRAL CO2 OFFSET
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1 class="hero-title">Autonomous AI Workforce for Global Freight &amp; Time-Critical Logistics</h1>
+    <p class="hero-desc">
+      Deploy domain-specialized AI agent operators across priority air freight, On-Board Courier (OBC) hand carry, ocean FCL/LCL NVOCC management, cold chain pharma logistics, and automated Americas trade lane dispatch.
+    </p>
+  </section>
+
+  <section class="metrics" id="econMetrics">
+    <div class="metric-card">
+      <div class="metric-val" id="mV1">31 Offices</div>
+      <div class="metric-lbl">Global LATAM &amp; US Hub Network</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" id="mV2">100%</div>
+      <div class="metric-lbl">Vuela Neutral CO2 Offset</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" id="mV3">99.85%</div>
+      <div class="metric-lbl">Priority Freight On-Time SLA</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" id="mV4">$5.2M</div>
+      <div class="metric-lbl">Annual Line-Stop Risk Saved</div>
+    </div>
+  </section>
+
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="switchView('ops')">AI Operator Roster</button>
+    <button class="tab-btn" onclick="switchView('builder')">DYNEX 3-Step Operator Builder</button>
+  </nav>
+
+  <!-- ROSTER VIEW -->
+  <div id="viewOps">
+    <section class="roster-sec">
+      <div class="track-hdr">
+        <div class="track-title">Commercial &amp; Freight Forwarding Tenders Track <span class="track-tag">COMMERCIAL</span></div>
+      </div>
+      <div class="cards-grid" id="gridCommercial"></div>
+    </section>
+
+    <section class="roster-sec">
+      <div class="track-hdr">
+        <div class="track-title">Time-Critical Logistics &amp; Freight Operations Track <span class="track-tag">OPERATIONS</span></div>
+      </div>
+      <div class="cards-grid" id="gridOperations"></div>
+    </section>
+
+    <!-- LIVE RUN ENGINE -->
+    <section class="exec-panel" id="execEngine">
+      <div class="exec-hdr">
+        <div>
+          <div class="exec-title" id="execWfTitle">Run Operator: Select an Operator Above</div>
+          <div style="font-size:12px;color:var(--muted);" id="execWfDesc">Click any "Run Operator" button to execute live simulation</div>
+        </div>
+        <div class="phases">
+          <div class="phase-item" id="p1"><span class="phase-num">1</span> Booking Check</div>
+          <div class="phase-item" id="p2"><span class="phase-num">2</span> Agent DAG Run</div>
+          <div class="phase-item" id="p3"><span class="phase-num">3</span> Deliverable Ready</div>
+        </div>
+      </div>
+
+      <div class="agents-grid" id="agentNodes"></div>
+
+      <div class="terminal-box" id="termFeed">
+        <div class="term-line sys">[SYSTEM] OnBoard Logistics Americas Engine v5.3 Ready. Waiting for execution...</div>
+      </div>
+
+      <div class="deliverable-box">
+        <div class="deliv-hdr" id="delivTitle">Review-Ready Deliverable Output</div>
+        <div class="deliv-content" id="delivBody">Select an operator and click "Run Operator" to generate an authentic Air Waybill &amp; OBC dispatch report.</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- BUILDER VIEW -->
+  <div id="viewBuilder" class="hidden">
+    <div class="builder-box">
+      <div class="step-nav">
+        <button class="step-btn active" id="stB1" onclick="bS(1)">1. Select Base Workflow</button>
+        <button class="step-btn" id="stB2" onclick="bS(2)">2. Assign Agent Roles</button>
+        <button class="step-btn" id="stB3" onclick="bS(3)">3. Name &amp; Deploy Operator</button>
+      </div>
+
+      <!-- Step 1 -->
+      <div id="bStep1">
+        <div class="form-group">
+          <label class="form-label">Select Baseline Template Workflow</label>
+          <select class="form-control" id="bWfSelect" onchange="bSelectWf()">
+            <!-- JS populated -->
+          </select>
+        </div>
+        <div style="text-align:right;">
+          <button class="btn-run" style="width:auto;display:inline-flex;" onclick="bS(2)">Next: Assign Agents &rarr;</button>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div id="bStep2" class="hidden">
+        <div id="bTaskAssignList"></div>
+        <div class="form-group" style="margin-top:16px;">
+          <label class="form-label">Execution Mode</label>
+          <select class="form-control" id="bExecMode">
+            <option value="dag">Auto Parallel DAG (High Throughput)</option>
+            <option value="sequential">Sequential Pipeline (Step-by-Step Validation)</option>
+          </select>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:20px;">
+          <button class="btn-run" style="width:auto;background:transparent;border-color:var(--border);" onclick="bS(1)">&larr; Back</button>
+          <button class="btn-run" style="width:auto;" onclick="bS(3)">Next: Name &amp; Deploy &rarr;</button>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div id="bStep3" class="hidden">
+        <div class="form-group">
+          <label class="form-label">Custom Operator Name</label>
+          <input type="text" class="form-control" id="bOpName" placeholder="e.g. Miami to Sao Paulo OBC Emergency Sentinel">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Role Title &amp; Department</label>
+          <input type="text" class="form-control" id="bOpTitle" placeholder="e.g. Director of Americas Freight Dispatch">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Execution Cadence</label>
+          <select class="form-control" id="bOpCadence">
+            <option value="Per Emergency Shipment Booking">Per Emergency Shipment Booking</option>
+            <option value="Continuous 24/7 Monitoring">Continuous 24/7 Monitoring</option>
+            <option value="Weekly Trade Lane Review">Weekly Trade Lane Review</option>
+          </select>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:20px;">
+          <button class="btn-run" style="width:auto;background:transparent;border-color:var(--border);" onclick="bS(1)">&larr; Back</button>
+          <button class="btn-run" style="width:auto;background:var(--ok);border-color:var(--ok);color:#000;" onclick="hireOperator()">&check; Add to Active Roster</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap" style="width:100%;display:flex;justify-content:space-between;align-items:center;">
+    <div>&copy; 2026 OnBoard Logistics Inc. Miami HQ &amp; Global LATAM Network. Your Logistics Ally.</div>
+    <div>Confidential Sales Campaign Prototype · Powered by Antigravity Multi-Agent Architecture</div>
+  </div>
+</footer>
+
+<script>
+const AGENT_ROLES = {
+  scout: { emoji:"🛰️", label:"Americas Freight BD Scout", tools:["search_latam_shippers","check_air_routes","save"] },
+  quote: { emoji:"🧮", label:"Air & Ocean Rate Quoter", tools:["calc_airwaybill_rate","obc_handcarry_quote","save"] },
+  tender: { emoji:"🛡️", label:"Enterprise Multimodal RFP Lead", tools:["parse_rfp","check_iata_nvocc_compliance","save"] },
+  radar: { emoji:"📡", label:"LATAM Trade Lane & Port Radar", tools:["track_customs_delays","monitor_airport_congestion","save"] },
+  obc_dispatch: { emoji:"✈️", label:"OBC & Priority Air Architect", tools:["assign_onboard_courier","book_block_space","save"] },
+  pharma_spec: { emoji:"🌡️", label:"Cold Chain Pharma Specialist", tools:["verify_gdp_refrigerated","monitor_temp_container","save"] },
+  customs_audit: { emoji:"📋", label:"Customs Clearance & NVOCC Lead", tools:["verify_us_latam_customs","issue_nvocc_house_bl","save"] },
+  supply: { emoji:"📦", label:"Miami Hub & Carbon Offset Planner", tools:["calc_vuela_neutral_co2","warehouse_space_planner","save"] }
+};
+
+const WORKFLOWS = {
+  Scout: {
+    name: "Automotive & Pharma LATAM Freight Scout",
+    title: "Americas BD & Enterprise Account Lead",
+    track: "commercial",
+    mode: "dag",
+    tasks: [
+      { agent: "scout", task: "Scan US-LATAM trade lanes (MIA, MEX, GRU, BOG) for high-priority automotive & pharma freight", deps: [] },
+      { agent: "quote", task: "Calculate priority air freight rates vs On-Board Courier (OBC) hand-carry costs", deps: [0] },
+      { agent: "tender", task: "Verify LATAM Cargo block-space agreement & IATA freight forwarding certification", deps: [1] }
+    ]
+  },
+  Quote: {
+    name: "Air Priority & Ocean FCL/LCL Pricing",
+    title: "Multimodal Freight Rate Specialist",
+    track: "commercial",
+    mode: "sequential",
+    tasks: [
+      { agent: "quote", task: "Parse shipment origin, destination, chargeable weight & customs brokerage fees", deps: [] },
+      { agent: "obc_dispatch", task: "Confirm guaranteed airline block-space & next flight out availability", deps: [0] }
+    ]
+  },
+  Tender: {
+    name: "Enterprise LATAM Multimodal RFP Proposal",
+    title: "Global Supply Chain Proposal Lead",
+    track: "commercial",
+    mode: "dag",
+    tasks: [
+      { agent: "tender", task: "Review SLA requirements for 24-hour door-to-door LATAM emergency deliveries", deps: [] },
+      { agent: "customs_audit", task: "Confirm 100% US Customs (CBP) & LATAM import compliance track record", deps: [0] }
+    ]
+  },
+  Radar: {
+    name: "Americas Airport & Customs Congestion Radar",
+    title: "Real-Time Trade Lane Intelligence Lead",
+    track: "commercial",
+    mode: "sequential",
+    tasks: [
+      { agent: "radar", task: "Monitor customs clearance delays & airport cargo congestion in MEX, GRU & BOG", deps: [] },
+      { agent: "obc_dispatch", task: "Reroute urgent automotive shipments via alternative regional air hubs", deps: [0] }
+    ]
+  },
+  OBCAirFreightTimeCriticalDispatch: {
+    name: "On-Board Courier & Air Freight Dispatch",
+    title: "Flagship OnBoard Logistics Americas Engine",
+    track: "operations",
+    tag: "FLAGSHIP",
+    mode: "dag",
+    tasks: [
+      { agent: "obc_dispatch", task: "Dispatch On-Board Courier with valid passport for MIA -> MEX line-stop hand carry", deps: [] },
+      { agent: "pharma_spec", task: "Verify GDP cold chain temperature log (2°C - 8°C) for pharma cargo payload", deps: [0] },
+      { agent: "customs_audit", task: "Process expedited e-customs manifest release with Mexico SAT & US CBP", deps: [1] },
+      { agent: "supply", task: "Calculate 'Vuela Neutral' 100% CO2 carbon offset in partnership with LATAM Cargo", deps: [2] }
+    ]
+  },
+  ColdChainPharmaRefrigeratedSetup: {
+    name: "Cold Chain Pharma & Chemical Logistics",
+    title: "Refrigerated Cargo Operations Lead",
+    track: "operations",
+    mode: "sequential",
+    tasks: [
+      { agent: "pharma_spec", task: "Inspect active temperature-controlled container (Envirotainer / CSafe) pre-loading", deps: [] },
+      { agent: "customs_audit", task: "Audit FDA & ANVISA pharmaceutical import documentation completeness", deps: [0] }
+    ]
+  },
+  CustomsClearanceNVOCCAudit: {
+    name: "Customs Brokerage & NVOCC Audit",
+    title: "Regulatory Compliance & Legal Director",
+    track: "operations",
+    mode: "dag",
+    tasks: [
+      { agent: "customs_audit", task: "Issue NVOCC House Bill of Lading (HBL) for ocean FCL container shipment", deps: [] },
+      { agent: "tender", task: "Verify bond coverage & duty drawback qualification for cross-border freight", deps: [0] }
+    ]
+  },
+  SupplyPlanner: {
+    name: "Miami Hub & Vuela Neutral Carbon Plan",
+    title: "Global Network & Sustainability Controller",
+    track: "operations",
+    mode: "sequential",
+    tasks: [
+      { agent: "supply", task: "Manage Miami 36th Street hub warehouse cross-docking & bonded storage capacity", deps: [] },
+      { agent: "quote", task: "Certificate 100% CO2 emission offset for client sustainability reporting", deps: [0] }
+    ]
+  }
+};
+
+const DTITLE = {
+  Scout: "Automotive & Pharma Freight Prospecting Report",
+  Quote: "Air Priority & Ocean FCL/LCL Instant Quote",
+  Tender: "Enterprise Multimodal RFP Proposal Package",
+  Radar: "Americas Trade Lane & Customs Radar Brief",
+  OBCAirFreightTimeCriticalDispatch: "Air Waybill & On-Board Courier Release Manifest",
+  ColdChainPharmaRefrigeratedSetup: "Cold Chain Pharma GDP Validation Certificate",
+  CustomsClearanceNVOCCAudit: "NVOCC House Bill of Lading & Customs Release",
+  SupplyPlanner: "Miami Hub & Vuela Neutral Carbon Offset Certificate"
+};
+
+const FINAL = {
+  OBCAirFreightTimeCriticalDispatch: `ONBOARD LOGISTICS — TIME-CRITICAL AIRWAYBILL & OBC RELEASE
+================================================================================
+Shipment Category  : Emergency Automotive Line-Stop Part (ECU Module)
+Origin / Destination: MIA (Miami International) -> MEX (Mexico City Juarez)
+Service Level      : On-Board Courier (OBC) Hand Carry + Air Priority
+Carrier Partner    : LATAM Cargo (Block-Space Priority Agreement)
+
+1. COURIER & FLIGHT DISPATCH
+   - On-Board Courier Handled : Courier #OBL-7742 (Passport Valid / US & MX Customs Cleared)
+   - Flight Selection         : LATAM Flight LA8104 (Departs MIA 11:30 EST · Arrives MEX 14:15 CST)
+   - First-Mile Pickup Time   : 08:14 EST (Pick-up to Boarding in 22 Minutes)
+
+2. VUELA NEUTRAL CARBON OFFSET
+   - Estimated Flight CO2     : 1.48 Metric Tons CO2e
+   - Vuela Neutral Offset     : 100% Offset (Shared 50/50 between OnBoard Logistics & LATAM Cargo)
+   - Client Net Carbon Impact : 0.0 Metric Tons CO2e (Zero Added Cost)
+
+3. CUSTOMS CLEARANCE & DELIVERY
+   - Customs Status           : Pre-Cleared with Mexico SAT & US CBP (Express Customs Line)
+   - Factory Hand-off ETA     : 15:30 CST (Prevented 12-hour OEM assembly line stoppage)
+
+STATUS: SHIPMENT IN-TRANSIT · REAL-TIME ONLINE DASHBOARD TRACKING ACTIVE`,
+  Scout: `ONBOARD LOGISTICS — PROSPECTING SUMMARY
+Identified 20 Enterprise Automotive & Pharma shippers across US-LATAM trade lanes.
+Estimated Annual Freight Contract Volume: $6.2M across Air Priority & Ocean NVOCC.`,
+  Quote: `ONBOARD LOGISTICS — FREIGHT QUOTATION
+Route: MIA -> MEX | Air Freight Priority (LATAM Cargo) | Chargeable Weight: 420 kg.
+Quote Amount: $3,150 (Includes Customs Clearance, Airport Handling & Vuela Neutral Offset).`,
+  Tender: `ONBOARD LOGISTICS — MULTIMODAL PROPOSAL
+Submitted to Tier-1 Automotive Supplier for 31-office Americas logistics coverage.
+Includes 24/7 dedicated control tower & guaranteed peak season air cargo space.`,
+  Radar: `ONBOARD LOGISTICS — TRADE LANE RADAR
+Mexico City (MEX) Air Cargo Customs Queue: 4-hour delay on standard freight.
+OnBoard Logistics OBC hand-carry bypasses cargo queue via passenger expedited customs.`,
+  ColdChainPharmaRefrigeratedSetup: `ONBOARD LOGISTICS — COLD CHAIN PHARMA CERTIFICATE
+Temperature Range Maintained: +2°C to +8°C Constant throughout MIA -> GRU flight.
+Envirotainer active container battery level 99% · GDP compliance 100% verified.`,
+  CustomsClearanceNVOCCAudit: `ONBOARD LOGISTICS — NVOCC HOUSE BILL OF LADING
+Issued House Bill of Lading OBL-HBL-99420 for 40ft High-Cube FCL Ocean Container.
+US CBP Customs Entry approved with zero duty discrepancy.`,
+  SupplyPlanner: `ONBOARD LOGISTICS — VUELA NEUTRAL SUSTAINABILITY REPORT
+Total CO2 Emissions Offset in Q3: 420 Metric Tons across 180 Air Priority shipments.
+100% Carbon Neutral Air Cargo verified by LATAM Cargo alliance.`
+};
+
+let EMPLOYEES = [
+  { id: "op1", name: "Miami Dispatch Sentinel", title: "Principal Americas Freight & OBC Architect", wf: "OBCAirFreightTimeCriticalDispatch", handled: 482, hrs: 690, status: "idle" },
+  { id: "op2", name: "LATAM Freight Scout", title: "Enterprise Americas BD Manager", wf: "Scout", handled: 210, hrs: 310, status: "idle" },
+  { id: "op3", name: "Cold Chain Specialist", title: "Refrigerated Pharma Logistics Lead", wf: "ColdChainPharmaRefrigeratedSetup", handled: 164, hrs: 250, status: "idle" }
+];
+
+let activeWfKey = "OBCAirFreightTimeCriticalDispatch";
+
+function renderRoster() {
+  const cGrid = document.getElementById("gridCommercial");
+  const oGrid = document.getElementById("gridOperations");
+  cGrid.innerHTML = "";
+  oGrid.innerHTML = "";
+
+  Object.keys(WORKFLOWS).forEach(key => {
+    const wf = WORKFLOWS[key];
+    const isFlagship = wf.tag === "FLAGSHIP";
+    const cardHtml = `
+      <div class="op-card ${isFlagship ? 'flagship' : ''}">
+        <div>
+          <div class="op-header">
+            <div>
+              <div class="op-name">${wf.name}</div>
+              <div class="op-title">${wf.title}</div>
+            </div>
+            ${isFlagship ? '<span class="badge-flag">FLAGSHIP</span>' : ''}
+          </div>
+          <div class="op-meta">
+            <span>Execution Mode: <strong>${wf.mode.toUpperCase()}</strong></span>
+            <span>Tasks: <strong>${wf.tasks.length} Agents</strong></span>
+          </div>
+          <div class="op-tasks">
+            ${wf.tasks.map(t => `
+              <div class="task-step">
+                <span class="task-dot"></span>
+                <strong>${AGENT_ROLES[t.agent]?.label || t.agent}:</strong> ${t.task}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        <button class="btn-run" onclick="runOperator('${key}')">&blackright; Run Operator Simulation</button>
+      </div>
+    `;
+    if (wf.track === "commercial") {
+      cGrid.innerHTML += cardHtml;
+    } else {
+      oGrid.innerHTML += cardHtml;
+    }
+  });
+}
+
+function runOperator(key) {
+  activeWfKey = key;
+  const wf = WORKFLOWS[key];
+  document.getElementById("execWfTitle").innerText = `Run Operator: ${wf.name}`;
+  document.getElementById("execWfDesc").innerText = `${wf.title} · Execution Mode: ${wf.mode.toUpperCase()}`;
+
+  // Reset steps
+  document.getElementById("p1").className = "phase-item active";
+  document.getElementById("p2").className = "phase-item";
+  document.getElementById("p3").className = "phase-item";
+
+  // Render Agent Nodes
+  const nodesBox = document.getElementById("agentNodes");
+  nodesBox.innerHTML = wf.tasks.map((t, i) => `
+    <div class="agent-node" id="an_${i}">
+      <div class="agent-hdr">
+        <span class="agent-name">${AGENT_ROLES[t.agent]?.emoji || '🤖'} ${AGENT_ROLES[t.agent]?.label || t.agent}</span>
+        <span class="agent-st st-idle" id="ast_${i}">QUEUED</span>
+      </div>
+      <div style="font-size:10px;color:var(--muted);">${t.task}</div>
+    </div>
+  `).join('');
+
+  const term = document.getElementById("termFeed");
+  term.innerHTML = `<div class="term-line sys">[SYSTEM] Initiating ${wf.name} execution sequence...</div>`;
+
+  document.getElementById("delivTitle").innerText = DTITLE[key] || "OnBoard Logistics Deliverable";
+  document.getElementById("delivBody").innerText = "Executing agent DAG... Generating Air Waybill report...";
+
+  let currentTask = 0;
+
+  const interval = setInterval(() => {
+    if (currentTask === 0) {
+      document.getElementById("p1").className = "phase-item";
+      document.getElementById("p2").className = "phase-item active";
+    }
+
+    if (currentTask < wf.tasks.length) {
+      const task = wf.tasks[currentTask];
+      document.getElementById(`an_${currentTask}`).className = "agent-node active";
+      document.getElementById(`ast_${currentTask}`).className = "agent-st st-run";
+      document.getElementById(`ast_${currentTask}`).innerText = "RUNNING";
+
+      term.innerHTML += `<div class="term-line">[RUNNING] ${AGENT_ROLES[task.agent]?.label}: ${task.task}</div>`;
+      term.scrollTop = term.scrollHeight;
+
+      setTimeout(() => {
+        const node = document.getElementById(`an_${currentTask}`);
+        const st = document.getElementById(`ast_${currentTask}`);
+        if(node && st) {
+          node.className = "agent-node done";
+          st.className = "agent-st st-done";
+          st.innerText = "DONE";
+        }
+      }, 600);
+
+      currentTask++;
+    } else {
+      clearInterval(interval);
+      document.getElementById("p2").className = "phase-item";
+      document.getElementById("p3").className = "phase-item active";
+
+      term.innerHTML += `<div class="term-line sys">[COMPLETE] All agent tasks finished successfully. Air Waybill manifest generated.</div>`;
+      term.scrollTop = term.scrollHeight;
+
+      document.getElementById("delivBody").innerText = FINAL[key] || FINAL["OBCAirFreightTimeCriticalDispatch"];
+    }
+  }, 1000);
+}
+
+function switchView(v) {
+  if (v === 'ops') {
+    document.getElementById("viewOps").classList.remove("hidden");
+    document.getElementById("viewBuilder").classList.add("hidden");
+    document.querySelectorAll(".tab-btn")[0].classList.add("active");
+    document.querySelectorAll(".tab-btn")[1].classList.remove("active");
+  } else {
+    document.getElementById("viewOps").classList.add("hidden");
+    document.getElementById("viewBuilder").classList.remove("hidden");
+    document.querySelectorAll(".tab-btn")[0].classList.remove("active");
+    document.querySelectorAll(".tab-btn")[1].classList.add("active");
+    initBuilder();
+  }
+}
+
+// Builder Logic
+function initBuilder() {
+  const sel = document.getElementById("bWfSelect");
+  sel.innerHTML = Object.keys(WORKFLOWS).map(k => `
+    <option value="${k}">${WORKFLOWS[k].name} (${WORKFLOWS[k].track.toUpperCase()})</option>
+  `).join('');
+  bSelectWf();
+}
+
+function bSelectWf() {
+  const wfKey = document.getElementById("bWfSelect").value;
+  const wf = WORKFLOWS[wfKey];
+  const list = document.getElementById("bTaskAssignList");
+  list.innerHTML = wf.tasks.map((t, i) => `
+    <div class="form-group" style="background:var(--surface-2);padding:12px;border-radius:6px;border:1px solid var(--border);">
+      <div style="font-size:11px;color:var(--accent2);margin-bottom:4px;">Task ${i+1}: ${t.task}</div>
+      <label class="form-label">Assign Agent Role</label>
+      <select class="form-control" id="bAgent_${i}">
+        ${Object.keys(AGENT_ROLES).map(rKey => `
+          <option value="${rKey}" ${rKey === t.agent ? 'selected' : ''}>
+            ${AGENT_ROLES[rKey].emoji} ${AGENT_ROLES[rKey].label}
+          </option>
+        `).join('')}
+      </select>
+    </div>
+  `).join('');
+}
+
+function bS(step) {
+  document.getElementById("bStep1").classList.add("hidden");
+  document.getElementById("bStep2").classList.add("hidden");
+  document.getElementById("bStep3").classList.add("hidden");
+  document.getElementById(`stB1`).classList.remove("active");
+  document.getElementById(`stB2`).classList.remove("active");
+  document.getElementById(`stB3`).classList.remove("active");
+
+  document.getElementById(`bStep${step}`).classList.remove("hidden");
+  document.getElementById(`stB${step}`).classList.add("active");
+}
+
+function hireOperator() {
+  const name = document.getElementById("bOpName").value || "Custom OnBoard Logistics Operator";
+  const title = document.getElementById("bOpTitle").value || "Freight Forwarding Specialist";
+  const baseKey = document.getElementById("bWfSelect").value;
+  const baseWf = WORKFLOWS[baseKey];
+
+  const newKey = "Custom_" + Date.now();
+  WORKFLOWS[newKey] = {
+    name: name,
+    title: title,
+    track: baseWf.track,
+    mode: document.getElementById("bExecMode").value,
+    tasks: baseWf.tasks.map((t, i) => ({
+      agent: document.getElementById(`bAgent_${i}`)?.value || t.agent,
+      task: t.task,
+      deps: t.deps
+    }))
+  };
+
+  DTITLE[newKey] = `Custom Air Waybill — ${name}`;
+  FINAL[newKey] = `ONBOARD LOGISTICS — CUSTOM OPERATOR AIR WAYBILL\nOperator: ${name} (${title})\nStatus: Active and integrated into OnBoard Logistics Americas network.\nAll assigned agent tasks completed with 100% verification score.`;
+
+  alert(`AI Operator "${name}" successfully deployed to OnBoard Logistics active roster!`);
+  renderRoster();
+  switchView('ops');
+  runOperator(newKey);
+}
+
+// Initial Run
+renderRoster();
+runOperator("OBCAirFreightTimeCriticalDispatch");
+</script>
+</body>
+</html>
