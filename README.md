@@ -268,3 +268,11 @@ https://innvonix-tech-solutions.github.io/ai-workforce/lumotive
 https://innvonix-tech-solutions.github.io/ai-workforce/sifive
 https://innvonix-tech-solutions.github.io/ai-workforce/tomfordbeauty
 https://innvonix-tech-solutions.github.io/ai-workforce/biopoints
+https://innvonix-tech-solutions.github.io/ai-workforce/airspace
+https://innvonix-tech-solutions.github.io/ai-workforce/cryoport
+https://innvonix-tech-solutions.github.io/ai-workforce/everstream
+https://innvonix-tech-solutions.github.io/ai-workforce/liscr
+https://innvonix-tech-solutions.github.io/ai-workforce/onboard-logistics
+https://innvonix-tech-solutions.github.io/ai-workforce/trax-tech
+https://innvonix-tech-solutions.github.io/ai-workforce/monarca-international
+https://innvonix-tech-solutions.github.io/ai-workforce/mydefence
