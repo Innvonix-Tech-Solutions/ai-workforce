@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOM FORD BEAUTY | Autonomous AI Workforce Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-main: #FFFFFF;
+  --bg-topbar: #2D2D2D;
+  --bg-card: #FFFFFF;
+  --bg-surface: #F8F8F8;
+  --text-black: #000000;
+  --text-dark: #111111;
+  --text-muted: #666666;
+  --text-light: #888888;
+  --border-dark: #000000;
+  --border-subtle: #E5E5E5;
+  --accent-gold: #C5A059;
+  --accent-gold-dark: #A37F39;
+  --font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg-main);
+  color: var(--text-black);
+  font-family: var(--font-sans);
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Announcement Bar */
+.announcement-bar {
+  background-color: var(--bg-topbar);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 10px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+.announcement-bar span { opacity: 0.7; cursor: pointer; }
+
+/* Main Navigation Header */
+.site-header {
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 24px 40px 16px 40px;
+}
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.brand-logo {
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: var(--text-black);
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.badge-elc {
+  background: var(--text-black);
+  color: var(--accent-gold);
+  padding: 6px 12px;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* Category Nav Bar */
+.cat-nav {
+  display: flex;
+  gap: 32px;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 16px;
+}
+.cat-link {
+  color: var(--text-black);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  padding-bottom: 8px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+.cat-link:hover, .cat-link.active {
+  border-bottom-color: var(--text-black);
+}
+
+/* Hero Section */
+.hero-section {
+  padding: 32px 40px 24px 40px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 32px;
+}
+.breadcrumb {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.hero-title {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-black);
+}
+.hero-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 6px;
+  max-width: 900px;
+}
+
+/* Container & Layout */
+.container {
+  padding: 0 40px 40px 40px;
+}
+.track-selector {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.track-btn {
+  background: var(--bg-main);
+  border: 1px solid var(--text-black);
+  color: var(--text-black);
+  padding: 10px 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.track-btn.active {
+  background: var(--text-black);
+  color: #FFFFFF;
+}
+
+/* Grids */
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-dark);
+  padding: 24px;
+  position: relative;
+  transition: box-shadow 0.2s;
+}
+.card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+.card-flagship {
+  border: 2px solid var(--accent-gold);
+}
+.gold-tag {
+  display: inline-block;
+  background: var(--accent-gold);
+  color: #000000;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.card-title {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-black);
+  margin-bottom: 6px;
+}
+.card-subtitle {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 14px;
+  margin-top: 14px;
+  margin-bottom: 16px;
+}
+.stat-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.stat-val {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-black);
+}
+
+/* Buttons */
+.btn-tf {
+  background: var(--text-black);
+  color: #FFFFFF;
+  border: 1px solid var(--text-black);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 12px 20px;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s;
+}
+.btn-tf:hover {
+  background: var(--accent-gold);
+  border-color: var(--accent-gold);
+  color: #000000;
+}
+.btn-outline {
+  background: transparent;
+  color: var(--text-black);
+  border: 1px solid var(--text-black);
+}
+.btn-outline:hover {
+  background: var(--text-black);
+  color: #FFFFFF;
+}
+
+/* Simulation Section */
+.dag-step {
+  background: var(--bg-surface);
+  border-left: 3px solid var(--text-black);
+  padding: 14px;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+.dag-step.flagship {
+  border-left-color: var(--accent-gold);
+}
+.log-box {
+  background: #111111;
+  color: #00FF66;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 16px;
+  height: 240px;
+  overflow-y: auto;
+  border: 1px solid var(--border-dark);
+}
+.progress-bg {
+  background: #E5E5E5;
+  height: 4px;
+  margin: 12px 0;
+}
+.progress-fill {
+  background: var(--accent-gold);
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s;
+}
+.dossier-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-dark);
+  padding: 24px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  white-space: pre-wrap;
+  color: var(--text-black);
+  margin-top: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.hidden { display: none !important; }
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--border-subtle);
+  padding: 32px 40px;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  background: var(--bg-surface);
+  margin-top: 40px;
+}
+</style>
+</head>
+<body>
+
+<div class="announcement-bar">
+  <span>&lt;</span>
+  <div>COMPLIMENTARY LOST CHERRY 4ML ON ORDERS $150+.</div>
+  <span>&gt;</span>
+</div>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="#" class="brand-logo">TOM FORD</a>
+    <div class="header-right">
+      <div class="badge-elc">ESTÉE LAUDER COMPANIES LUXURY DIVISION</div>
+    </div>
+  </div>
+
+  <nav class="cat-nav">
+    <a class="cat-link active" onclick="switchTab('roster')">AI WORKFORCE ROSTER</a>
+    <a class="cat-link" onclick="switchTab('simulation')">WORKFLOW SIMULATION</a>
+    <a class="cat-link" onclick="switchTab('hire')">STAND UP OPERATOR</a>
+  </nav>
+</header>
+
+<div class="hero-section">
+  <div class="breadcrumb">HOME / AUTONOMOUS AI WORKFORCE</div>
+  <h1 class="hero-title">MOST WANTED WORKFORCE PLATFORM</h1>
+  <div class="hero-subtitle">12 Specialist AI Agents and 8 Enterprise Workflows Orchestrating Luxury Fragrance & Cosmetics Packaging, Studio Tom Ford FEA Stress Engineering, and Global Boutique Retail Replenishment.</div>
+</div>
+
+<div class="container">
+  
+  <!-- VIEW ROSTER -->
+  <div id="view-roster">
+    <div class="track-selector">
+      <button class="track-btn active" onclick="filterTrack('all')">All Workflows (8)</button>
+      <button class="track-btn" onclick="filterTrack('commercial')">Commercial & Creative Ops (4)</button>
+      <button class="track-btn" onclick="filterTrack('operations')">Studio Tom Ford & Quality (4)</button>
+    </div>
+    <div class="grid-4" id="opGrid"></div>
+  </div>
+
+  <!-- VIEW SIMULATION -->
+  <div id="view-simulation" class="hidden">
+    <div class="card">
+      <div class="card-title">EXECUTE AUTONOMOUS WORKFLOW SIMULATION</div>
+      <div style="font-size:12px; color:var(--text-muted); margin-bottom:16px;">Select an enterprise workflow to run live multi-agent execution telemetry:</div>
+      
+      <div style="display:flex; gap:16px; margin-bottom:24px;">
+        <select id="simWfSelect" style="flex:1; padding:12px; border:1px solid var(--border-dark); font-family:var(--font-sans); font-size:12px; font-weight:700;" onchange="loadSimDetails()">
+        </select>
+        <button class="btn-tf" style="width:200px;" id="runBtn" onclick="runSimulation()">START SIMULATION</button>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <div style="font-size:12px; font-weight:800; letter-spacing:1px; margin-bottom:12px; text-transform:uppercase;">WORKFLOW EXECUTION GRAPH (DAG)</div>
+          <div id="dagContainer"></div>
+        </div>
+        <div>
+          <div style="font-size:12px; font-weight:800; letter-spacing:1px; margin-bottom:12px; text-transform:uppercase;">REAL-TIME AGENT TELEMETRY</div>
+          <div class="progress-bg"><div class="progress-fill" id="simProgress"></div></div>
+          <div class="log-box" id="simLogs">Ready to launch simulation...</div>
+        </div>
+      </div>
+
+      <div id="dossierContainer" class="hidden">
+        <div style="font-size:14px; font-weight:900; letter-spacing:1px; margin-top:24px; text-transform:uppercase;">GENERATED EXECUTIVE DOSSIER</div>
+        <div class="dossier-box" id="dossierText"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW STAND UP OPERATOR -->
+  <div id="view-hire" class="hidden">
+    <div class="card" style="max-width:700px; margin:0 auto;">
+      <div class="card-title">STAND UP NEW TOM FORD AI OPERATOR</div>
+      <div style="font-size:12px; color:var(--text-muted); margin-bottom:20px;">Deploy an autonomous operator for specialized luxury packaging or supply chain monitoring:</div>
+      
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div>
+          <label style="font-size:10px; font-weight:800; letter-spacing:1px; display:block; margin-bottom:6px; text-transform:uppercase;">Operator Name</label>
+          <input type="text" id="newOpName" placeholder="e.g. Private Blend Glass Scout" style="width:100%; padding:12px; border:1px solid var(--border-dark); font-family:var(--font-sans); font-size:12px;">
+        </div>
+        <div>
+          <label style="font-size:10px; font-weight:800; letter-spacing:1px; display:block; margin-bottom:6px; text-transform:uppercase;">Target Enterprise Workflow</label>
+          <select id="newOpWf" style="width:100%; padding:12px; border:1px solid var(--border-dark); font-family:var(--font-sans); font-size:12px; font-weight:700;">
+            <option value="scout">Global Luxury Fragrance & Cosmetics Campaign Asset Scout</option>
+            <option value="quote">Turnkey 5M Unit Private Blend Glass Bottle & Gold Compact BOM</option>
+            <option value="tender">Global Luxury Retail Counter & Boutique Master Packaging Tender</option>
+            <option value="panel_qualification">Studio Tom Ford FEA Glass Bottle & High-Speed Line Qualification</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:10px; font-weight:800; letter-spacing:1px; display:block; margin-bottom:6px; text-transform:uppercase;">Execution Cadence</label>
+          <select id="newOpCadence" style="width:100%; padding:12px; border:1px solid var(--border-dark); font-family:var(--font-sans); font-size:12px;">
+            <option value="daily">Daily Continuous Execution</option>
+            <option value="weekly">Weekly Launch Sync</option>
+            <option value="on_demand">On-Demand Executive Trigger</option>
+          </select>
+        </div>
+        <button class="btn-tf" onclick="deployOperator()">DEPLOY OPERATOR</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  Independent concept prototype prepared for Tom Ford Beauty (tomfordbeauty.com) / The Estée Lauder Companies. Built with official Tom Ford visual identity tokens (Stark White #FFFFFF, Pure Black #000000, Metallic Gold #C5A059 accents). All workflows, FEA stress simulations, BOM quotes, and dossier outputs are illustrative simulations.
+</footer>
+
+<script>
+const AGENT_ROLES = {
+  tom_ford_creative_ops_asset_scout: { emoji: '✨', label: 'Luxury Creative Campaign & Global Asset Pipeline Scout', tools: ['screen_luxury_campaigns', 'save'] },
+  luxury_cosmetics_bom_pricing_eng: { emoji: '💎', label: 'High-End Cosmetics & Fragrance Packaging BOM Lead', tools: ['calculate_luxury_bom', 'save'] },
+  studio_tom_ford_structural_design_spec: { emoji: '📐', label: 'Studio Tom Ford FEA Glass & Compact Structural Engineer', tools: ['model_fea_compact_stress', 'save'] },
+  sustainable_luxury_lca_compliance_auditor: { emoji: '🌱', label: 'Sustainable Luxury & Refill Packaging LCA Auditor', tools: ['calculate_lca_carbon', 'save'] },
+  global_prestige_supply_chain_inventory_router: { emoji: '🚚', label: 'Global Luxury Retail & Counter Replenishment Router', tools: ['optimize_boutique_inventory', 'save'] },
+  estee_lauder_luxury_tender_lead: { emoji: '🤝', label: 'Enterprise Luxury Fragrance & Cosmetic Tender Lead', tools: ['structure_master_tender', 'save'] },
+  prestige_glass_metal_compact_qa_eng: { emoji: '🍾', label: 'Prestige Glass & Electroplated Metallic Compact QA Engineer', tools: ['audit_electroplating_quality', 'save'] },
+  fragrance_formula_dispensing_fitment_spec: { emoji: '🧪', label: 'Fragrance Pump Atomizer & Airtight Fitment Specialist', tools: ['evaluate_atomizer_dosage', 'save'] },
+  custom_compact_tooling_eco_revision_spec: { emoji: '🔄', label: 'Custom Mold & Anodized Tooling ECO Revision Lead', tools: ['audit_compact_hinge_eco', 'save'] },
+  luxury_filling_capping_qa_engineer: { emoji: '⚙️', label: 'High-Speed Luxury Filling & Automated Capping QA Engineer', tools: ['simulate_filling_capping', 'save'] },
+  writer: { emoji: '✍️', label: 'Luxury Brand Dossier & Executive Proposal Writer', tools: ['compose', 'save'] },
+  reviewer: { emoji: '✅', label: 'Director of Creative Operations & Luxury Packaging Principal PE', tools: ['qa_review', 'save'] }
+};
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Global luxury fragrance & cosmetics creative campaign asset scout',
+    title: 'AI Luxury Creative Campaign Scout',
+    track: 'commercial',
+    deliverable: 'Top 50 Luxury Fragrance & Beauty Retail Campaign Asset Audit',
+    desc: 'Agents screen worldwide boutique retail displays, seasonal Private Blend launch assets, and premium counter packaging specifications.',
+    tasks: [
+      { agent: 'tom_ford_creative_ops_asset_scout', task: 'Screen global luxury beauty boutique counters and Private Blend campaign launch deadlines.', deps: [] },
+      { agent: 'fragrance_formula_dispensing_fitment_spec', task: 'Identify ultra-fine mist atomizer specifications for 50ml and 250ml decanters.', deps: [0] },
+      { agent: 'reviewer', task: 'Audit brand aesthetic alignment and metallic gold anodization standards.', deps: [1] },
+      { agent: 'writer', task: 'Compile executive creative operations campaign pipeline report.', deps: [2] }
+    ]
+  },
+  quote: {
+    name: 'Turnkey 5M unit Private Blend glass bottle & gold compact BOM pro forma',
+    title: 'AI Luxury Packaging Quoting Operator',
+    track: 'commercial',
+    deliverable: 'Turnkey 5M Unit Private Blend Glass Bottle & Gold Compact BOM Pro Forma',
+    desc: 'Agents compute heavy-weight flint glass container melt runs, 24k gold-electroplated compact tooling capex, and magnetic closure assembly costs.',
+    tasks: [
+      { agent: 'luxury_cosmetics_bom_pricing_eng', task: 'Calculate unit packaging cost: $2.85 for 50ml glass bottle + $1.45 for magnetic gold cap.', deps: [] },
+      { agent: 'prestige_glass_metal_compact_qa_eng', task: 'Verify optical glass clarity, zero-bubble threshold, and scratch-resistant gold plating.', deps: [0] },
+      { agent: 'estee_lauder_luxury_tender_lead', task: 'Structure 90-day boutique retail safety stock buffer and air freight logistics from Italy.', deps: [1] },
+      { agent: 'reviewer', task: 'Audit bottle geometry tolerances and laser-etched Tom Ford logo quality.', deps: [2] },
+      { agent: 'writer', task: 'Produce review-ready luxury packaging commercial proposal dossier.', deps: [3] }
+    ]
+  },
+  tender: {
+    name: 'Global luxury retail counter & boutique master packaging tender response',
+    title: 'AI Master Packaging Tender Operator',
+    track: 'commercial',
+    deliverable: 'Global Luxury Retail Counter & Boutique Master Packaging Tender Response',
+    desc: 'Agents formulate multi-year master supply agreements covering 25 million luxury cosmetic compacts, lip color cases, and fragrance bottles.',
+    tasks: [
+      { agent: 'estee_lauder_luxury_tender_lead', task: 'Structure master supply agreement across boutique retail hubs in Paris, London, New York, and Shanghai.', deps: [] },
+      { agent: 'sustainable_luxury_lca_compliance_auditor', task: 'Provide certified 40% post-consumer recycled glass and refillable compact compliance audit.', deps: [0] },
+      { agent: 'reviewer', task: 'Audit 99.8% on-time delivery SLA for global holiday launch dates.', deps: [1] },
+      { agent: 'writer', task: 'Draft master enterprise packaging supply contract and executive briefing.', deps: [2] }
+    ]
+  },
+  radar: {
+    name: 'Global luxury fragrance raw material, glass energy & gold foil market intelligence',
+    title: 'AI Luxury Market Intelligence Operator',
+    track: 'commercial',
+    deliverable: 'Global Luxury Fragrance Raw Material & Sustainable Packaging Intelligence Brief',
+    desc: 'Agents synthesize market spot prices for specialty glass furnaces, precious metal electroplating raw materials, and organic fragrance solvents.',
+    tasks: [
+      { agent: 'luxury_cosmetics_bom_pricing_eng', task: 'Track heavy flint glass furnace energy surcharges and anodized aluminum ingot prices.', deps: [] },
+      { agent: 'tom_ford_creative_ops_asset_scout', task: 'Evaluate luxury market trends in refillable lipstick cartridges and weighted caps.', deps: [0] },
+      { agent: 'writer', task: 'Publish quarterly executive commodity intelligence report for Tom Ford procurement leads.', deps: [1] }
+    ]
+  },
+  panel_qualification: {
+    name: 'Studio Tom Ford FEA glass bottle stress & high-speed line qualification',
+    title: 'AI Studio Tom Ford FEA Operator',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'Studio Tom Ford FEA Glass Bottle Stress & High-Speed Line Qualification Dossier',
+    desc: 'Agents model 3D finite-element stress analysis for heavy-base glass decanters under 380 lbs stacking pressure and high-speed 450 bpm bottling lines.',
+    tasks: [
+      { agent: 'studio_tom_ford_structural_design_spec', task: 'Execute 3D FEA stress simulation on heavy-base 250ml decanter, confirming 420 lbs top-load crush threshold.', deps: [] },
+      { agent: 'luxury_filling_capping_qa_engineer', task: 'Simulate 450 bpm luxury filling line dynamics, starwheel pocket clearance, and precision capping torque.', deps: [] },
+      { agent: 'fragrance_formula_dispensing_fitment_spec', task: 'Confirm airtight pump seal under 18 psi pressure and zero fragrance evaporation over 24 months.', deps: [0, 1] },
+      { agent: 'reviewer', task: 'Audit 3D CAD stress color contours and high-speed line trial protocol with PE stamp.', deps: [2] },
+      { agent: 'writer', task: 'Publish complete Studio Tom Ford structural qualification dossier and filling line certification.', deps: [3] }
+    ]
+  },
+  inverter_yield: {
+    name: 'Global boutique distribution center inventory optimization & safety stock test',
+    title: 'AI Boutique Inventory Optimization Operator',
+    track: 'operations',
+    deliverable: 'Global Boutique Distribution Center Inventory Optimization & Replenishment Test',
+    desc: 'Agents audit 1,800 prestige beauty SKUs across regional distribution centers to prevent boutique out-of-stock events during peak holiday seasons.',
+    tasks: [
+      { agent: 'global_prestige_supply_chain_inventory_router', task: 'Parse 1,800 SKU inventory feeds across distribution hubs in Newark, Milan, and Tokyo to flag 15 reorder triggers.', deps: [] },
+      { agent: 'prestige_glass_metal_compact_qa_eng', task: 'Verify factory slot reservations and 30-day lead times for gold compact assemblies.', deps: [0] },
+      { agent: 'reviewer', task: 'Validate inventory turnover ratio (9.2x/yr) against boutique SLA targets.', deps: [1] },
+      { agent: 'writer', task: 'Generate automated replenishment order matrix for global supply chain operations.', deps: [2] }
+    ]
+  },
+  thermal_simulation: {
+    name: 'Post-consumer recycled glass & refillable luxury compact LCA simulation',
+    title: 'AI Sustainable Luxury LCA Operator',
+    track: 'operations',
+    deliverable: 'Post-Consumer Recycled Glass & Refillable Compact LCA Simulation Dossier',
+    desc: 'Agents run cradle-to-grave environmental impact simulations comparing virgin glass/aluminum compacts against 40% PCR glass and aluminum refill pods.',
+    tasks: [
+      { agent: 'sustainable_luxury_lca_compliance_auditor', task: 'Calculate cradle-to-grave carbon footprint: Virgin compact (1.42 kg CO2e) vs Refill Pod System (0.46 kg CO2e, -67.6% reduction).', deps: [] },
+      { agent: 'studio_tom_ford_structural_design_spec', task: 'Confirm aluminum refill pod maintains magnetic lock strength and tactile luxury weight.', deps: [0] },
+      { agent: 'writer', task: 'Produce Tom Ford Sustainable Luxury White Paper and ESG compliance certificate.', deps: [0, 1] }
+    ]
+  },
+  mask_eco: {
+    name: 'Custom anodized aluminum compact hinge & magnetic closure ECO review',
+    title: 'AI Compact Design ECO Revision Operator',
+    track: 'operations',
+    deliverable: 'Custom Anodized Aluminum Compact Hinge & Magnetic Closure ECO Assessment',
+    desc: 'Agents evaluate Engineering Change Order ECO-2026-TF-804 (Refine Eye Color Quad Compact Hinge Resistance and Increase Magnet Retention Force).',
+    tasks: [
+      { agent: 'custom_compact_tooling_eco_revision_spec', task: 'Audit 3D CAD tooling revisions, confirming mold insert recutting for N52 neodymium magnet pockets.', deps: [] },
+      { agent: 'fragrance_formula_dispensing_fitment_spec', task: 'Verify 5,000-cycle compact snap-closure hinge fatigue life and zero gold flaking.', deps: [0] },
+      { agent: 'writer', task: 'Publish integrated Tom Ford Beauty ECO release bulletin for manufacturing partners.', deps: [1] }
+    ]
+  }
+};
+
+const FINAL = {
+  scout: `TOP 50 LUXURY FRAGRANCE & BEAUTY RETAIL CAMPAIGN ASSET AUDIT (illustrative)
+Prepared for Tom Ford Beauty / The Estée Lauder Companies Creative Operations
+
+Audit Summary:
+• Evaluated 50 flagship boutique retail installations across New York, London, Paris, Tokyo, and Shanghai.
+• Private Blend Fragrance Decanters: 100% compliance with gold electroplating and heavy-base glass clarity specs.
+• Eye Color Quad & Lip Color Merchandising: Verified magnetic cartridge alignment across 1,200 counter units.
+
+Key Findings:
+1. Private Blend Reserve Line: 250ml decanters achieved 99.4% customer satisfaction score.
+2. Holiday Launch Campaign: Packaging lead times on track for Q4 release.
+3. Sustainable Packaging Alignment: 40% PCR glass transition scheduled for next production batch.
+
+→ Saved: creative_ops_audit_2026, boutique_merchandising_matrix, tom_ford_brand_dossier`,
+
+  quote: `TURNKEY 5M UNIT PRIVATE BLEND GLASS BOTTLE & GOLD COMPACT BOM PRO FORMA (illustrative)
+Program: Private Blend 50ml Eau de Parfum & Gold Magnetic Compact Fleet
+
+Packaging System Architecture & Bill of Materials:
+• Primary Glass Bottle: 5,000,000 Custom Heavy-Base Flint Glass Bottles (50ml capacity) @ $2.85/unit
+• Cap & Fitment Assembly: 5,000,000 24k Gold Electroplated Magnetic Caps @ $1.45/unit
+• Secondary Packaging: 5,000,000 Textured Soft-Touch Gold Foil Embossed Cartons @ $0.65/unit
+• Mold Capex: $185,000 one-time tooling capex for 12-cavity glass bottle mold
+
+Financial Summary:
+• Total Unit Packaging Spend: $4.95/unit delivered ($24,750,000 total annual program spend)
+• Logistics & Safety Stock: 90-day safety stock (1.25M units) stored at Newark logistics center.
+
+→ Saved: tom_ford_private_blend_bom, gold_compact_capex_schedule, estee_lauder_procurement_dossier`,
+
+  tender: `GLOBAL LUXURY RETAIL COUNTER & BOUTIQUE MASTER PACKAGING TENDER RESPONSE (illustrative)
+Scope: Master Multi-Year Packaging & Display Supply Contract (25,000,000 Units/Yr)
+
+Contract Deliverables:
+1. Refillable Metallic Lip Color Cases: 10,000,000 units/year
+2. Eye Color Quad Compacts: 8,000,000 units/year
+3. Private Blend 50ml & 100ml Glass Decanters: 7,000,000 units/year
+
+Logistics & Service Level Agreement:
+• 99.8% On-Time Delivery SLA across 350 boutique retail locations worldwide.
+• 90-Day Vendor-Managed Inventory (VMI) buffer maintained at Newark, Milan, and Tokyo distribution hubs.
+• Certified 40% PCR glass and zero-plastic secondary packaging.
+
+→ Saved: master_luxury_supply_agreement, boutique_vmi_matrix, elc_executive_dossier`,
+
+  radar: `GLOBAL LUXURY FRAGRANCE RAW MATERIAL & SUSTAINABLE PACKAGING INTELLIGENCE (illustrative)
+
+Market Commodity & Pricing Telemetry:
+• Heavy Flint Glass Melt Costs: +3.2% due to European natural gas spot prices ($18.40/MWh).
+• Anodized Aluminum Ingot Index: $2,420/ton (Stable; gold anodizing processing fee flat).
+• Organic Fragrance Solvents (Perfumer Grade Ethanol): $1.15/L (Flat).
+• Refillable Aluminum Cartridges vs Virgin Compacts: Refill pods yield 67.6% lower CO2e lifecycle footprint.
+
+Strategic Recommendation:
+Lock in 18-month fixed glass melt contracts for Private Blend decanters and accelerate refill pod cartridge rollout.
+
+→ Saved: luxury_beauty_commodity_index, tom_ford_sustainability_radar`,
+
+  panel_qualification: `STUDIO TOM FORD FEA GLASS BOTTLE STRESS & HIGH-SPEED LINE DOSSIER (illustrative)
+Project: Heavy-Base 250ml Private Blend Decanters (Studio Tom Ford Design Team)
+
+Structural FEA Stress Analysis Results:
+• Top-Load Buckling Resistance: Verified 420 lbs vertical crush threshold (exceeding 350 lbs pallet requirement).
+• Drop Impact Dynamics: 100% survival rate across 150 drop tests from 1.5 meters onto hard tile.
+• Glass Wall Thickness Uniformity: Minimum 1.8mm base thickness maintained across all 4 corners.
+
+High-Speed Bottling Line Compatibility:
+• Line Velocity: Certified for 450 bottles/minute continuous run with zero tipping or scuffing.
+• Capping Torque & Evaporation Seal: Airtight pump seal maintained under 18 psi pressure over 24-month simulation.
+
+→ Saved: studio_tom_ford_fea_report, decanter_3d_cad_drawing, bottling_line_certification`,
+
+  inverter_yield: `GLOBAL BOUTIQUE DISTRIBUTION CENTER INVENTORY OPTIMIZATION REPORT (illustrative)
+Network Scope: 1,800 Prestige Beauty SKUs across Newark, Milan, and Tokyo Distribution Centers
+
+Inventory Audit Findings:
+• Total Network Inventory Monitored: $85,400,000.00
+• Network Turnover Ratio: 9.2x/year
+• Reorder Trigger Alerts: 15 high-velocity SKUs flagged for replenishment ahead of Q4 holiday season.
+  - Private Blend Tobacco Vanille 50ml: 42,000 units on hand (Reorder triggered for 80,000 units from Milan plant).
+  - Eye Color Quad Gold Compacts: 18,000 units on hand (Reorder triggered for 45,000 units).
+
+→ Saved: boutique_inventory_health_report, automated_replenishment_orders`,
+
+  thermal_simulation: `POST-CONSUMER RECYCLED GLASS & REFILLABLE COMPACT LCA DOSSIER (illustrative)
+Simulation Scope: Standard Virgin Compact vs Refillable Pod System (Cradle-to-Grave ISO 14040 Audit)
+
+Environmental Impact Metrics per 1,000 Units:
+• Virgin Aluminum Compact: 1.42 kg CO2e / unit
+• Refill Pod System: 0.46 kg CO2e / unit (-67.6% reduction)
+• Water Usage: Refill system reduces water consumption by 52.3% during manufacturing.
+• Energy Consumption: Primary energy demand drops from 28.5 MJ to 9.2 MJ per compact.
+
+ESG Compliance:
+Fully compliant with EU Packaging Waste Regulations and Estée Lauder 2030 Sustainability Goals.
+
+→ Saved: tom_ford_lca_report, esg_compliance_certificate`,
+
+  mask_eco: `CUSTOM ANODIZED ALUMINUM COMPACT HINGE & MAGNETIC CLOSURE ECO ASSESSMENT (illustrative)
+Engineering Change Order: ECO-2026-TF-804
+Product Family: Tom Ford Eye Color Quad Metallic Gold Compacts
+
+Design Modifications & Test Verification:
+• Hinge Mechanism: Enhanced double-pin hinge torque resistance to 4.2 N-cm for premium tactile click.
+• Magnetic Closure: Upgraded magnet grade to N52 neodymium, increasing retention force to 8.5 N.
+• Plating Durability: Certified zero gold flaking across 5,000 opening/closing cycles.
+• Tooling Impact: Re-cut pocket inserts on existing CNC molds with zero mold scrap.
+
+Release Status: Certified for commercial mass production release.
+
+→ Saved: eco_804_release_bulletin, compact_hinge_test_log`
+};
+
+const OPERATORS = [
+  { id: 'scout', name: 'Scout', title: 'AI Luxury Creative Campaign Scout', wf: 'scout', handled: 480, hrs: 210, status: 'idle' },
+  { id: 'quote', name: 'Quote', title: 'AI Luxury Packaging Quoting Operator', wf: 'quote', handled: 520, hrs: 245, status: 'idle' },
+  { id: 'tender', name: 'Tender', title: 'AI Master Packaging Tender Operator', wf: 'tender', handled: 310, hrs: 190, status: 'idle' },
+  { id: 'radar', name: 'Radar', title: 'AI Luxury Market Intelligence Operator', wf: 'radar', handled: 410, hrs: 180, status: 'idle' },
+  { id: 'safety', name: 'Sentinel', title: 'AI Studio Tom Ford FEA Operator', wf: 'panel_qualification', handled: 620, hrs: 340, status: 'idle' },
+  { id: 'mill', name: 'Atlas', title: 'AI Boutique Inventory Optimization Operator', wf: 'inverter_yield', handled: 590, hrs: 280, status: 'idle' },
+  { id: 'cfd', name: 'Vanguard', title: 'AI Sustainable Luxury LCA Operator', wf: 'thermal_simulation', handled: 430, hrs: 220, status: 'idle' },
+  { id: 'eco', name: 'Nexus', title: 'AI Compact Design ECO Revision Operator', wf: 'mask_eco', handled: 380, hrs: 205, status: 'idle' }
+];
+
+function initUI() {
+  renderOperators('all');
+  populateSimSelect();
+  loadSimDetails();
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.cat-link').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('[id^="view-"]').forEach(v => v.classList.add('hidden'));
+  
+  if(tab === 'roster') {
+    document.querySelectorAll('.cat-link')[0].classList.add('active');
+    document.getElementById('view-roster').classList.remove('hidden');
+  } else if(tab === 'simulation') {
+    document.querySelectorAll('.cat-link')[1].classList.add('active');
+    document.getElementById('view-simulation').classList.remove('hidden');
+  } else if(tab === 'hire') {
+    document.querySelectorAll('.cat-link')[2].classList.add('active');
+    document.getElementById('view-hire').classList.remove('hidden');
+  }
+}
+
+function renderOperators(track) {
+  const grid = document.getElementById('opGrid');
+  grid.innerHTML = '';
+  
+  OPERATORS.forEach(op => {
+    const wf = WORKFLOWS[op.wf];
+    if(track !== 'all' && wf.track !== track) return;
+    
+    const isFlagship = wf.tag === 'flagship';
+    const card = document.createElement('div');
+    card.className = `card ${isFlagship ? 'card-flagship' : ''}`;
+    card.innerHTML = `
+      ${isFlagship ? '<div class="gold-tag">FLAGSHIP FEA WORKFLOW</div>' : ''}
+      <div class="card-title">${op.name}</div>
+      <div class="card-subtitle">${op.title}</div>
+      <div style="font-size:11px; font-weight:600; color:var(--text-dark); margin-bottom:12px; height:36px; line-height:1.3;">${wf.name}</div>
+      <div class="stat-row">
+        <div>
+          <div class="stat-label">TASKS RUN</div>
+          <div class="stat-val">${op.handled}</div>
+        </div>
+        <div>
+          <div class="stat-label">TIME SAVED</div>
+          <div class="stat-val">${op.hrs}h</div>
+        </div>
+      </div>
+      <button class="btn-tf" onclick="quickRun('${op.wf}')">SIMULATE OPERATOR</button>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function filterTrack(track) {
+  document.querySelectorAll('.track-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderOperators(track);
+}
+
+function populateSimSelect() {
+  const sel = document.getElementById('simWfSelect');
+  sel.innerHTML = '';
+  Object.keys(WORKFLOWS).forEach(key => {
+    const wf = WORKFLOWS[key];
+    const opt = document.createElement('option');
+    opt.value = key;
+    opt.textContent = `${wf.title} (${wf.name})`;
+    sel.appendChild(opt);
+  });
+}
+
+function loadSimDetails() {
+  const key = document.getElementById('simWfSelect').value;
+  const wf = WORKFLOWS[key];
+  const dag = document.getElementById('dagContainer');
+  dag.innerHTML = '';
+  
+  wf.tasks.forEach((t, idx) => {
+    const role = AGENT_ROLES[t.agent];
+    const node = document.createElement('div');
+    node.className = `dag-step ${wf.tag === 'flagship' ? 'flagship' : ''}`;
+    node.innerHTML = `
+      <div style="font-weight:800; letter-spacing:0.5px; text-transform:uppercase;">${role.emoji} STEP ${idx + 1}: ${role.label}</div>
+      <div style="color:var(--text-black); margin-top:4px;">${t.task}</div>
+    `;
+    dag.appendChild(node);
+  });
+  
+  document.getElementById('dossierContainer').classList.add('hidden');
+  document.getElementById('simProgress').style.width = '0%';
+  document.getElementById('simLogs').textContent = `Loaded workflow: ${wf.title}\nClick 'START SIMULATION' to execute multi-agent task workflow.`;
+}
+
+function quickRun(wfKey) {
+  switchTab('simulation');
+  document.getElementById('simWfSelect').value = wfKey;
+  loadSimDetails();
+  runSimulation();
+}
+
+function runSimulation() {
+  const key = document.getElementById('simWfSelect').value;
+  const wf = WORKFLOWS[key];
+  const btn = document.getElementById('runBtn');
+  const logs = document.getElementById('simLogs');
+  const fill = document.getElementById('simProgress');
+  const dossierContainer = document.getElementById('dossierContainer');
+  const dossierText = document.getElementById('dossierText');
+  
+  btn.disabled = true;
+  dossierContainer.classList.add('hidden');
+  logs.textContent = `[0.00s] INITIALIZING TOM FORD BEAUTY AI WORKFORCE ENGINE...\n[0.10s] Loading agent roles & tool definitions for workflow '${key}'...\n`;
+  fill.style.width = '10%';
+  
+  let currentStep = 0;
+  const totalSteps = wf.tasks.length;
+  
+  const timer = setInterval(() => {
+    if(currentStep < totalSteps) {
+      const task = wf.tasks[currentStep];
+      const role = AGENT_ROLES[task.agent];
+      const timestamp = ((currentStep + 1) * 0.45).toFixed(2);
+      
+      logs.textContent += `[${timestamp}s] EXECUTING STEP ${currentStep + 1}/${totalSteps}: ${role.label}\n`;
+      logs.textContent += `  ➜ Task: ${task.task}\n`;
+      logs.textContent += `  ➜ Tool Output: Executed tool '${role.tools[0]}' successfully.\n`;
+      logs.scrollTop = logs.scrollHeight;
+      
+      currentStep++;
+      fill.style.width = `${Math.min(90, (currentStep / totalSteps) * 90)}%`;
+    } else {
+      clearInterval(timer);
+      fill.style.width = '100%';
+      logs.textContent += `[${(totalSteps * 0.45 + 0.2).toFixed(2)}s] WORKFLOW EXECUTION COMPLETE. GENERATING EXECUTIVE DOSSIER...\n`;
+      logs.scrollTop = logs.scrollHeight;
+      
+      dossierText.textContent = FINAL[key] || 'Dossier completed.';
+      dossierContainer.classList.remove('hidden');
+      btn.disabled = false;
+    }
+  }, 500);
+}
+
+function deployOperator() {
+  const name = document.getElementById('newOpName').value || 'Custom Luxe Operator';
+  const wf = document.getElementById('newOpWf').value;
+  
+  OPERATORS.push({
+    id: 'custom_' + Date.now(),
+    name: name,
+    title: 'Custom ' + WORKFLOWS[wf].title,
+    wf: wf,
+    handled: 1,
+    hrs: 0,
+    status: 'idle'
+  });
+  
+  alert(`Successfully deployed AI Operator '${name}' into Tom Ford Beauty workforce roster!`);
+  switchTab('roster');
+  renderOperators('all');
+}
+
+window.onload = initUI;
+</script>
+</body>
+</html>
