@@ -295,3 +295,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/element-energy
 https://innvonix-tech-solutions.github.io/ai-workforce/classone
 https://innvonix-tech-solutions.github.io/ai-workforce/d-matrix
 https://innvonix-tech-solutions.github.io/ai-workforce/lesker
+https://innvonix-tech-solutions.github.io/ai-workforce/harken
