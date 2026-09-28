@@ -279,3 +279,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/mydefence
 https://innvonix-tech-solutions.github.io/ai-workforce/asm
 https://innvonix-tech-solutions.github.io/ai-workforce/energetiq-technology
 https://innvonix-tech-solutions.github.io/ai-workforce/gct-semiconductor
+https://innvonix-tech-solutions.github.io/ai-workforce/silanna-semiconductor
