@@ -287,3 +287,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/silicon-catalyst
 https://innvonix-tech-solutions.github.io/ai-workforce/mojo-vision
 https://innvonix-tech-solutions.github.io/ai-workforce/movellus-inc
 https://innvonix-tech-solutions.github.io/ai-workforce/avicena-tech
+https://innvonix-tech-solutions.github.io/ai-workforce/vorago-technologies
