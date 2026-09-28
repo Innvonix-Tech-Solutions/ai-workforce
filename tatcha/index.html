@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TATCHA | Autonomous AI Workforce Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Montserrat:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #FBF9F5;
+  --bg-card: #FFFFFF;
+  --bg-surface: #F3EFEA;
+  --tatcha-purple: #3B2358;
+  --tatcha-purple-light: #523577;
+  --tatcha-gold: #D4AF37;
+  --tatcha-gold-dark: #A88624;
+  --text-dark: #1A1A1A;
+  --text-muted: #666666;
+  --border-purple: #3B2358;
+  --border-subtle: #E2DCD5;
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-sans: 'Montserrat', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-dark);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Header & Announcement */
+.top-announcement {
+  background: var(--tatcha-purple);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 8px 16px;
+}
+.site-header {
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 24px 40px 16px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.brand-logo-area {
+  display: flex;
+  flex-direction: column;
+}
+.brand-title {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--tatcha-purple);
+  text-transform: uppercase;
+}
+.brand-subtitle {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.badge-unilever {
+  background: rgba(59, 35, 88, 0.08);
+  border: 1px solid var(--tatcha-purple);
+  color: var(--tatcha-purple);
+  padding: 6px 14px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+/* Nav Bar */
+.nav-tabs {
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0 40px;
+  display: flex;
+  gap: 32px;
+}
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 16px 0;
+  cursor: pointer;
+  text-transform: uppercase;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+.tab-btn:hover, .tab-btn.active {
+  color: var(--tatcha-purple);
+  border-bottom-color: var(--tatcha-purple);
+}
+
+/* Hero Section */
+.hero {
+  padding: 32px 40px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 32px;
+}
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--tatcha-purple);
+  margin-bottom: 6px;
+}
+.hero-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  max-width: 950px;
+}
+
+/* Main Container */
+.container {
+  padding: 0 40px 40px 40px;
+}
+.track-selector {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.track-btn {
+  background: #FFFFFF;
+  border: 1px solid var(--tatcha-purple);
+  color: var(--tatcha-purple);
+  padding: 10px 18px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.track-btn.active {
+  background: var(--tatcha-purple);
+  color: #FFFFFF;
+}
+
+/* Grids */
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+/* Operator Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  padding: 24px;
+  position: relative;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.card:hover {
+  box-shadow: 0 6px 20px rgba(59, 35, 88, 0.08);
+  transform: translateY(-2px);
+}
+.card-op {
+  border-top: 4px solid var(--tatcha-purple);
+}
+.gold-emblem {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--tatcha-gold);
+  color: #FFFFFF;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 3px 8px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.card-title {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--tatcha-purple);
+  margin-bottom: 4px;
+}
+.card-meta {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+.wf-desc {
+  font-size: 11px;
+  color: var(--text-dark);
+  height: 36px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.stat-box {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 12px;
+  margin-bottom: 16px;
+}
+.stat-lbl {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.stat-num {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--tatcha-purple);
+}
+
+/* Buttons */
+.btn {
+  background: var(--tatcha-purple);
+  color: #FFFFFF;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 12px 18px;
+  width: 100%;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn:hover {
+  background: var(--tatcha-purple-light);
+}
+.btn-gold {
+  background: var(--tatcha-gold);
+  color: #FFFFFF;
+}
+.btn-gold:hover {
+  background: var(--tatcha-gold-dark);
+}
+
+/* Simulation Section */
+.dag-node {
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-left: 4px solid var(--tatcha-purple);
+  padding: 14px;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+.dag-node.flagship {
+  border-left-color: var(--tatcha-gold);
+}
+.log-terminal {
+  background: #1E152A;
+  color: #8EF3C5;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 16px;
+  height: 240px;
+  overflow-y: auto;
+  border: 1px solid var(--tatcha-purple);
+}
+.progress-bar-bg {
+  background: var(--border-subtle);
+  height: 4px;
+  margin: 12px 0;
+}
+.progress-bar-fill {
+  background: var(--tatcha-gold);
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s;
+}
+.dossier-card {
+  background: #FFFFFF;
+  border: 1px solid var(--tatcha-purple);
+  padding: 24px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  white-space: pre-wrap;
+  color: var(--text-dark);
+  margin-top: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.hidden { display: none !important; }
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--border-subtle);
+  padding: 32px 40px;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  background: var(--bg-surface);
+  margin-top: 40px;
+}
+</style>
+</head>
+<body>
+
+<div class="top-announcement">
+  PURITY & WISDOM: KYOTO BEAUTY RITUALS MEETS JAPANESE CLINICAL SCIENCE
+</div>
+
+<header class="site-header">
+  <div class="brand-logo-area">
+    <div class="brand-title">TATCHA</div>
+    <div class="brand-subtitle">KYOTO, JAPAN & SAN FRANCISCO</div>
+  </div>
+  <div class="badge-unilever">UNILEVER PRESTIGE BEAUTY DIVISION</div>
+</header>
+
+<nav class="nav-tabs">
+  <button class="tab-btn active" onclick="switchTab('roster')">AI WORKFORCE ROSTER</button>
+  <button class="tab-btn" onclick="switchTab('simulation')">WORKFLOW SIMULATION</button>
+  <button class="tab-btn" onclick="switchTab('hire')">STAND UP OPERATOR</button>
+</nav>
+
+<div class="hero">
+  <h1 class="hero-title">Kyoto Beauty Rituals & Autonomous AI Operations Engine</h1>
+  <div class="hero-desc">12 Specialist AI Agents and 8 Enterprise Workflows Orchestrating Luxury Hadasei-3 Botanical Sourcing, Studio Tatcha Glass Jar FEA Engineering, Origami Unboxing Packaging, and Sephora Retail Counter Replenishment.</div>
+</div>
+
+<div class="container">
+
+  <!-- ROSTER VIEW -->
+  <div id="view-roster">
+    <div class="track-selector">
+      <button class="track-btn active" onclick="filterTrack('all')">All Workflows (8)</button>
+      <button class="track-btn" onclick="filterTrack('commercial')">Commercial Sourcing & Prestige Retail (4)</button>
+      <button class="track-btn" onclick="filterTrack('operations')">Studio Tatcha Engineering & Quality (4)</button>
+    </div>
+    <div class="grid-4" id="opGrid"></div>
+  </div>
+
+  <!-- SIMULATION VIEW -->
+  <div id="view-simulation" class="hidden">
+    <div class="card">
+      <div class="card-title">Execute Autonomous Packaging & R&D Workflow</div>
+      <div style="font-size:12px; color:var(--text-muted); margin-bottom:16px;">Select an enterprise workflow to simulate multi-agent orchestration and view real-time logs:</div>
+
+      <div style="display:flex; gap:16px; margin-bottom:24px;">
+        <select id="simWfSelect" style="flex:1; padding:12px; border:1px solid var(--tatcha-purple); font-family:var(--font-sans); font-size:12px; font-weight:600;" onchange="loadSimDetails()">
+        </select>
+        <button class="btn btn-gold" style="width:200px;" id="runBtn" onclick="runSimulation()">START SIMULATION</button>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <div style="font-size:12px; font-weight:700; color:var(--tatcha-purple); letter-spacing:1px; margin-bottom:12px; text-transform:uppercase;">WORKFLOW EXECUTION GRAPH (DAG)</div>
+          <div id="dagContainer"></div>
+        </div>
+        <div>
+          <div style="font-size:12px; font-weight:700; color:var(--tatcha-purple); letter-spacing:1px; margin-bottom:12px; text-transform:uppercase;">REAL-TIME TELEMETRY & AGENT LOGS</div>
+          <div class="progress-bar-bg"><div class="progress-bar-fill" id="simProgress"></div></div>
+          <div class="log-terminal" id="simLogs">Ready to execute workflow simulation...</div>
+        </div>
+      </div>
+
+      <div id="dossierContainer" class="hidden">
+        <div style="font-size:14px; font-weight:700; color:var(--tatcha-purple); margin-top:24px; text-transform:uppercase;">GENERATED EXECUTIVE DOSSIER</div>
+        <div class="dossier-card" id="dossierText"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAND UP OPERATOR VIEW -->
+  <div id="view-hire" class="hidden">
+    <div class="card" style="max-width:700px; margin:0 auto;">
+      <div class="card-title">STAND UP NEW TATCHA AI OPERATOR</div>
+      <div style="font-size:12px; color:var(--text-muted); margin-bottom:20px;">Deploy an autonomous operator for specialized Hadasei-3 sourcing or unboxing packaging:</div>
+
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div>
+          <label style="font-size:10px; font-weight:700; letter-spacing:1px; display:block; margin-bottom:6px; text-transform:uppercase;">Operator Name</label>
+          <input type="text" id="newOpName" placeholder="e.g. Dewy Skin Cream Jar Scout" style="width:100%; padding:12px; border:1px solid var(--border-subtle); font-family:var(--font-sans); font-size:12px;">
+        </div>
+        <div>
+          <label style="font-size:10px; font-weight:700; letter-spacing:1px; display:block; margin-bottom:6px; text-transform:uppercase;">Target Enterprise Workflow</label>
+          <select id="newOpWf" style="width:100%; padding:12px; border:1px solid var(--border-subtle); font-family:var(--font-sans); font-size:12px; font-weight:600;">
+            <option value="scout">Global Luxury Sephora & Retail Campaign Asset Scout</option>
+            <option value="quote">Turnkey 8M Unit Dewy Skin Cream Glass Jar & Spatula BOM</option>
+            <option value="tender">Unilever Prestige Global Retail Master Supply Tender</option>
+            <option value="panel_qualification">Studio Tatcha Structural Jar FEA Drop Dynamics & Line Qualification</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:10px; font-weight:700; letter-spacing:1px; display:block; margin-bottom:6px; text-transform:uppercase;">Execution Cadence</label>
+          <select id="newOpCadence" style="width:100%; padding:12px; border:1px solid var(--border-subtle); font-family:var(--font-sans); font-size:12px;">
+            <option value="daily">Daily Continuous Execution</option>
+            <option value="weekly">Weekly Launch Sync</option>
+            <option value="on_demand">On-Demand Executive Trigger</option>
+          </select>
+        </div>
+        <button class="btn" onclick="deployOperator()">DEPLOY OPERATOR</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  Independent concept prototype prepared for Tatcha (tatcha.com) / Unilever Prestige Division. Built with official Tatcha visual identity tokens (Deep Kyoto Purple #3B2358 primary, Gold Leaf #D4AF37 accents, Soft Pearl White #FBF9F5). All workflows, FEA calculations, BOM quotes, and dossier outputs are illustrative simulations.
+</footer>
+
+<script>
+const AGENT_ROLES = {
+  tatcha_kyoto_botanical_scout: { emoji: '🌿', label: 'Kyoto Green Tea, Rice & Algae Botanical Sourcing Scout', tools: ['screen_kyoto_botanicals', 'save'] },
+  luxury_skincare_bom_pricing_eng: { emoji: '💰', label: 'Japanese Glass Jar & Gold Spatula BOM Cost Lead', tools: ['calculate_tatcha_bom', 'save'] },
+  studio_tatcha_structural_design_spec: { emoji: '📐', label: 'Studio Tatcha Glass Jar & Ceramic Structural Engineer', tools: ['model_fea_jar_drop_dynamics', 'save'] },
+  sustainable_luxury_lca_compliance_auditor: { emoji: '🌱', label: 'Origami Paper & Refillable Pod LCA Auditor', tools: ['calculate_lca_carbon', 'save'] },
+  unilever_prestige_supply_chain_router: { emoji: '🚚', label: 'Sephora & Global Boutique Replenishment Router', tools: ['optimize_sephora_inventory', 'save'] },
+  prestige_beauty_master_tender_lead: { emoji: '🤝', label: 'Unilever Prestige Master Retail Tender Operator', tools: ['structure_master_tender', 'save'] },
+  custom_glass_ceramic_qualification_eng: { emoji: '🏺', label: 'Custom Glass Jar & Ceramic Component QA Engineer', tools: ['audit_glass_annealing_clarity', 'save'] },
+  gold_spatula_dispensing_fitment_spec: { emoji: '✨', label: 'Gold Spatula Ring & Airtight Closure Specialist', tools: ['evaluate_spatula_fitment_torque', 'save'] },
+  origami_unboxing_tooling_eco_revision_spec: { emoji: '🎁', label: 'Origami Unboxing Carton & ECO Revision Lead', tools: ['audit_origami_creasing_eco', 'save'] },
+  high_speed_creme_filling_qa_engineer: { emoji: '⚙️', label: 'High-Speed Skin Creme Filling & Capping QA Engineer', tools: ['simulate_creme_filling_capping', 'save'] },
+  writer: { emoji: '✍️', label: 'Kyoto Ritual Dossier & Executive Proposal Writer', tools: ['compose', 'save'] },
+  reviewer: { emoji: '✅', label: 'Director of R&D Operations & Skincare Packaging Principal PE', tools: ['qa_review', 'save'] }
+};
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Global luxury Sephora & retail campaign asset scout',
+    title: 'AI Prestige Retail Campaign Scout',
+    track: 'commercial',
+    deliverable: 'Top 50 Global Sephora & Boutique Retail Campaign Audit',
+    desc: 'Agents screen worldwide Sephora endcaps, duty-free airport boutiques, and Hadasei-3 product launch merchandisers.',
+    tasks: [
+      { agent: 'tatcha_kyoto_botanical_scout', task: 'Screen global Sephora retail displays and Hadasei-3 botanical ingredient certifications.', deps: [] },
+      { agent: 'gold_spatula_dispensing_fitment_spec', task: 'Audit gold spatula ring attachments across 50ml Dewy Skin Cream jars.', deps: [0] },
+      { agent: 'reviewer', task: 'Verify brand alignment with Kyoto heritage aesthetics and gold leaf accents.', deps: [1] },
+      { agent: 'writer', task: 'Compile executive retail campaign audit report for Unilever Prestige leads.', deps: [2] }
+    ]
+  },
+  quote: {
+    name: 'Turnkey 8M unit Dewy Skin Cream glass jar & spatula BOM pro forma',
+    title: 'AI Luxury Skincare Quoting Operator',
+    track: 'commercial',
+    deliverable: 'Turnkey 8M Unit Dewy Skin Cream Glass Jar & Spatula BOM Pro Forma',
+    desc: 'Agents compute custom violet-tinted heavy glass melt runs, gold-electroplated spatula ring assemblies, and origami unboxing cartons.',
+    tasks: [
+      { agent: 'luxury_skincare_bom_pricing_eng', task: 'Calculate unit packaging cost: $2.15 per 50ml glass jar + $0.85 per gold spatula assembly + $0.45 per unboxing carton.', deps: [] },
+      { agent: 'custom_glass_ceramic_qualification_eng', task: 'Verify glass thermal shock resistance, wall thickness uniformity, and zero bubble count.', deps: [0] },
+      { agent: 'prestige_beauty_master_tender_lead', task: 'Structure 90-day Sephora safety stock buffer across distribution centers in California and Japan.', deps: [1] },
+      { agent: 'reviewer', task: 'Audit mold amortization payback schedule and gold spatula ring clip retention force.', deps: [2] },
+      { agent: 'writer', task: 'Produce review-ready luxury skincare packaging proposal package.', deps: [3] }
+    ]
+  },
+  tender: {
+    name: 'Unilever Prestige global retail master supply & VMI tender response',
+    title: 'AI Master Supply Tender Operator',
+    track: 'commercial',
+    deliverable: 'Unilever Prestige Global Retail Master Supply & VMI Tender Response',
+    desc: 'Agents formulate multi-year master supply agreements covering 40 million skin creme jars, essence bottles, and cleanser tubes.',
+    tasks: [
+      { agent: 'prestige_beauty_master_tender_lead', task: 'Structure master supply contract with 90-day VMI stocking terms across distribution hubs in San Francisco, London, and Tokyo.', deps: [] },
+      { agent: 'sustainable_luxury_lca_compliance_auditor', task: 'Provide certified 35% PCR glass ratio and FSC-certified origami paper unboxing guarantee.', deps: [0] },
+      { agent: 'reviewer', task: 'Audit vendor liability terms, 99.6% on-time delivery SLA, and peak holiday stock release terms.', deps: [1] },
+      { agent: 'writer', task: 'Draft master enterprise packaging supply contract and executive briefing.', deps: [2] }
+    ]
+  },
+  radar: {
+    name: 'Global active botanical (Hadasei-3) & glass packaging market intelligence',
+    title: 'AI Skincare Market Intelligence Operator',
+    track: 'commercial',
+    deliverable: 'Global Active Botanical & Packaging Material Intelligence Brief',
+    desc: 'Agents synthesize market spot prices for organic Kyoto green tea, fermented rice filtrate, heavy flint glass furnaces, and recycled paper pulp.',
+    tasks: [
+      { agent: 'luxury_skincare_bom_pricing_eng', task: 'Track heavy glass melt energy surcharges and organic rice fermentation feedstock costs.', deps: [] },
+      { agent: 'tatcha_kyoto_botanical_scout', task: 'Highlight competitive advantages of Hadasei-3 bio-fermentation and refillable pod packaging.', deps: [0] },
+      { agent: 'writer', task: 'Publish quarterly executive skincare commodity intelligence report.', deps: [1] }
+    ]
+  },
+  panel_qualification: {
+    name: 'Studio Tatcha structural jar FEA drop dynamics & high-speed line qualification',
+    title: 'AI Studio Tatcha FEA Operator',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'Studio Tatcha Structural Jar FEA Drop Dynamics & Line Qualification Dossier',
+    desc: 'Agents execute 3D finite-element stress analysis for heavy-base glass jars under 400 lbs stacking load and 500 bpm high-speed creme filling lines.',
+    tasks: [
+      { agent: 'studio_tatcha_structural_design_spec', task: 'Execute 3D FEA stress simulation on heavy-base 50ml jar geometry, verifying 460 lbs crush threshold.', deps: [] },
+      { agent: 'high_speed_creme_filling_qa_engineer', task: 'Simulate 500 bpm creme filling line dynamics, starwheel pocket clearance, and liquid seal integrity.', deps: [] },
+      { agent: 'gold_spatula_dispensing_fitment_spec', task: 'Confirm continuous thread cap seal integrity under 18 in-lbs application torque.', deps: [0, 1] },
+      { agent: 'reviewer', task: 'Audit 3D CAD models, finite element stress color contours, and high-speed filling trial protocol with PE stamp.', deps: [2] },
+      { agent: 'writer', task: 'Publish complete Studio Tatcha structural qualification dossier and commercial line certification.', deps: [3] }
+    ]
+  },
+  inverter_yield: {
+    name: 'Global distribution center inventory optimization & safety stock router',
+    title: 'AI Supply Chain Inventory Optimization Operator',
+    track: 'operations',
+    deliverable: 'Global Distribution Center Inventory Optimization & Safety Stock Report',
+    desc: 'Agents audit 1,200 active prestige skincare SKUs across regional distribution centers to prevent out-of-stock events during holiday sales.',
+    tasks: [
+      { agent: 'unilever_prestige_supply_chain_router', task: 'Parse 1,200 SKU inventory feeds to identify 18 SKUs approaching safety stock reorder thresholds ahead of peak season.', deps: [] },
+      { agent: 'custom_glass_ceramic_qualification_eng', task: 'Verify glass plant production slot reservations and 30-day factory lead times.', deps: [0] },
+      { agent: 'reviewer', task: 'Validate inventory turnover ratio (8.8x/yr) against Sephora contractual minimums.', deps: [1] },
+      { agent: 'writer', task: 'Generate inventory health report and automated purchase order matrix for supply chain operations.', deps: [2] }
+    ]
+  },
+  thermal_simulation: {
+    name: 'Refillable jar pod system & cradle-to-grave LCA sustainability auditor',
+    title: 'AI Sustainable Skincare LCA Operator',
+    track: 'operations',
+    deliverable: 'Refillable Jar Pod System & Cradle-to-Grave LCA Simulation Strategy',
+    desc: 'Agents run Life Cycle Assessment (LCA) environmental impact simulations comparing standard single-use glass jars against refillable pod systems.',
+    tasks: [
+      { agent: 'sustainable_luxury_lca_compliance_auditor', task: 'Calculate cradle-to-grave carbon footprint: Standard Jar (0.95 kg CO2e) vs Refill Pod (0.28 kg CO2e, -70.5% reduction).', deps: [] },
+      { agent: 'studio_tatcha_structural_design_spec', task: 'Confirm refill pod insert maintains airtight seal and luxury tactile click inside outer glass vessel.', deps: [0] },
+      { agent: 'writer', task: 'Produce Tatcha Sustainable Skincare White Paper and Unilever ESG compliance certificate.', deps: [0, 1] }
+    ]
+  },
+  mask_eco: {
+    name: 'Custom glass jar thread & gold spatula fitment ECO revision lead',
+    title: 'AI Jar Design ECO Revision Operator',
+    track: 'operations',
+    deliverable: 'Custom Glass Jar Thread & Gold Spatula Fitment ECO Assessment',
+    desc: 'Agents evaluate Engineering Change Order ECO-2026-TATCHA-309 (Refine Jar Neck Thread Lead and Enhance Gold Spatula Ring Clip Retention).',
+    tasks: [
+      { agent: 'origami_unboxing_tooling_eco_revision_spec', task: 'Execute 3D CAD tooling revision audit, confirming mold cavity recutting for neck ring components without scrap.', deps: [] },
+      { agent: 'gold_spatula_dispensing_fitment_spec', task: 'Confirm modified spatula ring clip maintains zero play under 15 psi pressure testing.', deps: [0] },
+      { agent: 'writer', task: 'Publish integrated Tatcha ECO release notice and manufacturing plant bulletin.', deps: [1] }
+    ]
+  }
+};
+
+const FINAL = {
+  scout: `TOP 50 GLOBAL SEPHORA & BOUTIQUE RETAIL CAMPAIGN AUDIT (illustrative)
+Prepared for Tatcha / Unilever Prestige Division Executive Leadership
+
+Audit Summary:
+• Evaluated 50 flagship Sephora endcaps and boutique retail locations in North America, Europe, and Asia.
+• Hadasei-3 Botanical Compliance: 100% certified organic Kyoto green tea, rice, and red algae.
+• Gold Spatula Ring Attachments: 99.6% zero-defect rate across 50ml Dewy Skin Cream displays.
+
+Key Recommendations:
+1. Expand refillable jar display fixtures across Top 20 Sephora doors.
+2. Maintain 90-day safety stock buffer ahead of Q4 holiday gifting peak.
+
+→ Saved: sephora_campaign_audit_2026, botantical_certification_dossier, tatcha_retail_matrix`,
+
+  quote: `TURNKEY 8M UNIT DEWY SKIN CREAM GLASS JAR & SPATULA BOM PRO FORMA (illustrative)
+Program: The Dewy Skin Cream 50ml Primary Packaging & Origami Unboxing Fleet
+
+Packaging System Architecture & Bill of Materials:
+• Heavy Glass Outer Jar: 8,000,000 Custom Violet-Tinted Flint Glass Jars @ $2.15/unit
+• Gold Spatula & Cap Ring: 8,000,000 24k Gold Electroplated Spatula Assemblies @ $0.85/unit
+• Secondary Packaging: 8,000,000 FSC-Certified Origami Unboxing Cartons @ $0.45/unit
+• Mold Capex: $165,000 one-time tooling capex for 16-cavity glass mold set
+
+Financial Performance:
+• Total Unit Packaging Capex: $3.45/unit delivered ($27,600,000 total annual program spend)
+• VMI Holding Agreement: 90-day safety stock (2.0M units) held at San Francisco distribution center.
+
+→ Saved: tatcha_dewy_cream_bom, gold_spatula_tooling_schedule, unilever_procurement_dossier`,
+
+  tender: `UNILEVER PRESTIGE GLOBAL RETAIL MASTER SUPPLY & VMI TENDER RESPONSE (illustrative)
+Scope: Master Multi-Year Skincare Packaging Supply Agreement (40,000,000 Units/Yr)
+
+Volume & Product Breakdown:
+• Dewy & Water Cream Glass Jars: 20,000,000 units/year
+• The Rice Wash & Deep Cleanse Tubes: 12,000,000 units/year
+• Essence & Serum Bottles with Gold Pumps: 8,000,000 units/year
+
+Supply Chain Guarantee:
+• 90-Day Vendor Managed Inventory (VMI): 10 million unit safety stock held across distribution centers.
+• Delivery SLA: 99.6% guaranteed on-time delivery with 24-hour emergency stock release SLA.
+• Sustainability Commitment: Certified 35% PCR glass ratio and 100% recyclable paper boxes.
+
+→ Saved: master_tatcha_supply_agreement, vmi_warehouse_release_matrix, executive_dossier`,
+
+  radar: `GLOBAL ACTIVE BOTANICAL & PACKAGING MATERIAL INTELLIGENCE BRIEF (illustrative)
+
+Market Pricing & Index Dynamics:
+• Kyoto Green Tea Extract (Organic): $142.00/kg (Stable; long-term farmer co-op pricing locked).
+• Fermented Rice Filtrate (Hadasei-3 Component): $88.00/kg (Flat).
+• Heavy Flint Glass Melt Surcharge: +2.8% due to regional energy pricing.
+• FSC Recycled Paperboard (Origami Cartons): $1,150/ton (Stable).
+
+Strategic Recommendation:
+Lock in 12-month fixed glass melt contracts while scaling refillable pod packaging to buffer against glass furnace energy spikes.
+
+→ Saved: tatcha_botanical_index, packaging_material_radar_report`,
+
+  panel_qualification: `STUDIO TATCHA STRUCTURAL JAR FEA DROP DYNAMICS & LINE DOSSIER (illustrative)
+Project: 50ml Dewy Skin Cream Heavy Glass Jar (Studio Tatcha Design Team)
+
+Structural FEA Stress Simulation & Drop Test Results:
+• Top-Load Crush Resistance: FEA verified maximum vertical crush strength of 460 lbs (exceeding 400 lbs pallet stacking requirement).
+• Drop Impact Dynamics: Zero breakage rate across 180 drop tests from 1.2 meters onto hardwood surface.
+• Wall Thickness Uniformity: Minimum 2.2mm base thickness maintained across all 4 base radii.
+
+High-Speed Filling Line Integration:
+• Line Velocity: 500 jars/minute continuous run with zero starwheel jam events.
+• Cap Application Torque: Continuous thread closure sealed at 18 in-lbs torque with zero thread stripping.
+
+→ Saved: studio_tatcha_fea_report, jar_3d_cad_drawing, filling_line_commissioning_certificate`,
+
+  inverter_yield: `GLOBAL DISTRIBUTION CENTER INVENTORY OPTIMIZATION REPORT (illustrative)
+Network Scope: 1,200 Active Skincare SKUs across San Francisco, London, and Tokyo Distribution Centers
+
+Diagnostic Inventory Audit Results:
+• Monitored Inventory Value: $68,200,000.00 (Network Inventory Turnover: 8.8x/year)
+• Reorder Trigger Alerts: 18 high-velocity SKUs identified reaching safety stock reorder point.
+  - The Dewy Skin Cream 50ml: 85,000 units on hand (Reorder triggered for 200,000 units).
+  - The Rice Wash 120ml: 62,000 units on hand (Reorder triggered for 150,000 units).
+
+→ Saved: inventory_health_report, automated_purchase_orders, safety_stock_matrix`,
+
+  thermal_simulation: `REFILLABLE JAR POD SYSTEM & CRADLE-TO-GRAVE LCA DOSSIER (illustrative)
+Simulated Package: The Dewy Skin Cream 50ml (Standard Single-Use Jar vs Refill Pod System)
+Methodology: ISO 14040/14044 Life Cycle Assessment
+
+Environmental Impact Results per 1,000 Units:
+• Standard Single-Use Glass Jar: 0.95 kg CO2e / unit
+• Refillable Pod System: 0.28 kg CO2e / unit (-70.5% reduction)
+• Water Usage: Refill system reduced manufacturing water consumption by 61.2%.
+• Non-Renewable Energy Demand: Primary energy demand drops from 18.2 MJ to 5.4 MJ per jar.
+
+→ Saved: tatcha_lca_simulation_report, carbon_footprint_certificate, unilever_esg_dossier`,
+
+  mask_eco: `CUSTOM GLASS JAR THREAD & GOLD SPATULA FITMENT ECO ASSESSMENT (illustrative)
+Engineering Change Order: ECO-2026-TATCHA-309
+Affected Line: The Dewy Skin Cream & The Water Cream 50ml Jar Family
+
+Geotechnical & Design Results:
+• Jar Neck Thread Modification: Refined thread pitch from 400 standard to 410 extended lead for smoother cap engagement.
+• Gold Spatula Clip Retention: Enhanced ring clip spring tension by 1.2 N, eliminating play during transit.
+• Tooling Audit: Re-cut neck ring cavity inserts via CNC machining with zero scrap of master mold bases ($28,000 savings).
+
+Release Status: Certified for commercial factory production release.
+
+→ Saved: eco_309_release_bulletin, jar_tooling_cnc_drawings, fitment_test_log`
+};
+
+const OPERATORS = [
+  { id: 'scout', name: 'Scout', title: 'AI Prestige Retail Campaign Scout', wf: 'scout', handled: 510, hrs: 230, status: 'idle' },
+  { id: 'quote', name: 'Quote', title: 'AI Luxury Skincare Quoting Operator', wf: 'quote', handled: 580, hrs: 275, status: 'idle' },
+  { id: 'tender', name: 'Tender', title: 'AI Master Supply Tender Operator', wf: 'tender', handled: 340, hrs: 210, status: 'idle' },
+  { id: 'radar', name: 'Radar', title: 'AI Skincare Market Intelligence Operator', wf: 'radar', handled: 440, hrs: 195, status: 'idle' },
+  { id: 'safety', name: 'Sentinel', title: 'AI Studio Tatcha FEA Operator', wf: 'panel_qualification', handled: 660, hrs: 360, status: 'idle' },
+  { id: 'mill', name: 'Atlas', title: 'AI Supply Chain Inventory Optimization Operator', wf: 'inverter_yield', handled: 620, hrs: 310, status: 'idle' },
+  { id: 'cfd', name: 'Vanguard', title: 'AI Sustainable Skincare LCA Operator', wf: 'thermal_simulation', handled: 470, hrs: 240, status: 'idle' },
+  { id: 'eco', name: 'Nexus', title: 'AI Jar Design ECO Revision Operator', wf: 'mask_eco', handled: 410, hrs: 220, status: 'idle' }
+];
+
+function initUI() {
+  renderOperators('all');
+  populateSimSelect();
+  loadSimDetails();
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('[id^="view-"]').forEach(v => v.classList.add('hidden'));
+
+  if(tab === 'roster') {
+    document.querySelectorAll('.tab-btn')[0].classList.add('active');
+    document.getElementById('view-roster').classList.remove('hidden');
+  } else if(tab === 'simulation') {
+    document.querySelectorAll('.tab-btn')[1].classList.add('active');
+    document.getElementById('view-simulation').classList.remove('hidden');
+  } else if(tab === 'hire') {
+    document.querySelectorAll('.tab-btn')[2].classList.add('active');
+    document.getElementById('view-hire').classList.remove('hidden');
+  }
+}
+
+function renderOperators(track) {
+  const grid = document.getElementById('opGrid');
+  grid.innerHTML = '';
+
+  OPERATORS.forEach(op => {
+    const wf = WORKFLOWS[op.wf];
+    if(track !== 'all' && wf.track !== track) return;
+
+    const isFlagship = wf.tag === 'flagship';
+    const card = document.createElement('div');
+    card.className = 'card card-op';
+    card.innerHTML = `
+      ${isFlagship ? '<div class="gold-emblem">STUDIO TATCHA FLAGSHIP</div>' : ''}
+      <div class="card-title">${op.name}</div>
+      <div class="card-meta">${op.title}</div>
+      <div class="wf-desc">${wf.name}</div>
+      <div class="stat-box">
+        <div>
+          <div class="stat-lbl">TASKS RUN</div>
+          <div class="stat-num">${op.handled}</div>
+        </div>
+        <div>
+          <div class="stat-lbl">TIME SAVED</div>
+          <div class="stat-num">${op.hrs}h</div>
+        </div>
+      </div>
+      <button class="btn" onclick="quickRun('${op.wf}')">SIMULATE OPERATOR</button>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function filterTrack(track) {
+  document.querySelectorAll('.track-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderOperators(track);
+}
+
+function populateSimSelect() {
+  const sel = document.getElementById('simWfSelect');
+  sel.innerHTML = '';
+  Object.keys(WORKFLOWS).forEach(key => {
+    const wf = WORKFLOWS[key];
+    const opt = document.createElement('option');
+    opt.value = key;
+    opt.textContent = `${wf.title} (${wf.name})`;
+    sel.appendChild(opt);
+  });
+}
+
+function loadSimDetails() {
+  const key = document.getElementById('simWfSelect').value;
+  const wf = WORKFLOWS[key];
+  const dag = document.getElementById('dagContainer');
+  dag.innerHTML = '';
+
+  wf.tasks.forEach((t, idx) => {
+    const role = AGENT_ROLES[t.agent];
+    const node = document.createElement('div');
+    node.className = `dag-node ${wf.tag === 'flagship' ? 'flagship' : ''}`;
+    node.innerHTML = `
+      <div style="font-weight:700; color:var(--tatcha-purple); text-transform:uppercase;">${role.emoji} STEP ${idx + 1}: ${role.label}</div>
+      <div style="color:var(--text-dark); margin-top:2px;">${t.task}</div>
+    `;
+    dag.appendChild(node);
+  });
+
+  document.getElementById('dossierContainer').classList.add('hidden');
+  document.getElementById('simProgress').style.width = '0%';
+  document.getElementById('simLogs').textContent = `Loaded workflow: ${wf.title}\nClick 'START SIMULATION' to execute multi-agent task workflow.`;
+}
+
+function quickRun(wfKey) {
+  switchTab('simulation');
+  document.getElementById('simWfSelect').value = wfKey;
+  loadSimDetails();
+  runSimulation();
+}
+
+function runSimulation() {
+  const key = document.getElementById('simWfSelect').value;
+  const wf = WORKFLOWS[key];
+  const btn = document.getElementById('runBtn');
+  const logs = document.getElementById('simLogs');
+  const fill = document.getElementById('simProgress');
+  const dossierContainer = document.getElementById('dossierContainer');
+  const dossierText = document.getElementById('dossierText');
+
+  btn.disabled = true;
+  dossierContainer.classList.add('hidden');
+  logs.textContent = `[0.00s] INITIALIZING TATCHA AI WORKFORCE ENGINE...\n[0.10s] Loading agent roles & tool definitions for workflow '${key}'...\n`;
+  fill.style.width = '10%';
+
+  let currentStep = 0;
+  const totalSteps = wf.tasks.length;
+
+  const timer = setInterval(() => {
+    if(currentStep < totalSteps) {
+      const task = wf.tasks[currentStep];
+      const role = AGENT_ROLES[task.agent];
+      const timestamp = ((currentStep + 1) * 0.45).toFixed(2);
+
+      logs.textContent += `[${timestamp}s] EXECUTING STEP ${currentStep + 1}/${totalSteps}: ${role.label}\n`;
+      logs.textContent += `  ➜ Task: ${task.task}\n`;
+      logs.textContent += `  ➜ Tool Output: Executed tool '${role.tools[0]}' successfully.\n`;
+      logs.scrollTop = logs.scrollHeight;
+
+      currentStep++;
+      fill.style.width = `${Math.min(90, (currentStep / totalSteps) * 90)}%`;
+    } else {
+      clearInterval(timer);
+      fill.style.width = '100%';
+      logs.textContent += `[${(totalSteps * 0.45 + 0.2).toFixed(2)}s] WORKFLOW EXECUTION COMPLETE. GENERATING EXECUTIVE DOSSIER...\n`;
+      logs.scrollTop = logs.scrollHeight;
+
+      dossierText.textContent = FINAL[key] || 'Dossier completed.';
+      dossierContainer.classList.remove('hidden');
+      btn.disabled = false;
+    }
+  }, 500);
+}
+
+function deployOperator() {
+  const name = document.getElementById('newOpName').value || 'Custom Tatcha Operator';
+  const wf = document.getElementById('newOpWf').value;
+
+  OPERATORS.push({
+    id: 'custom_' + Date.now(),
+    name: name,
+    title: 'Custom ' + WORKFLOWS[wf].title,
+    wf: wf,
+    handled: 1,
+    hrs: 0,
+    status: 'idle'
+  });
+
+  alert(`Successfully deployed AI Operator '${name}' into Tatcha workforce roster!`);
+  switchTab('roster');
+  renderOperators('all');
+}
+
+window.onload = initUI;
+</script>
+</body>
+</html>
