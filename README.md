@@ -105,7 +105,6 @@ https://innvonix-tech-solutions.github.io/ai-workforce/premier-logitech
 https://innvonix-tech-solutions.github.io/ai-workforce/ftc-solar
 https://innvonix-tech-solutions.github.io/ai-workforce/solid-power-workforce
 https://innvonix-tech-solutions.github.io/ai-workforce/streamlight-workforce
-https://innvonix-tech-solutions.github.io/ai-workforce/stentech
 https://innvonix-tech-solutions.github.io/ai-workforce/illesfoods
 https://innvonix-tech-solutions.github.io/ai-workforce/trusted-semiconductor
 https://innvonix-tech-solutions.github.io/ai-workforce/saras-micro
