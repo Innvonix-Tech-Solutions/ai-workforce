@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Movellus &mdash; AI Intelligent Clock Networks &amp; Power Optimization IP Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f0f9ff;--surface2:#d0eafb;--border:#93c5fd;--accent:#0284c7;
+--accent-dim:rgba(2,132,199,.08);--accent-line:rgba(2,132,199,.30);--slate:#0f172a;--slate-line:rgba(15,23,42,.30);--text:#091424;--hi:#020914;--tert:#475569;--ok:#10b981;--ok-dim:rgba(16,185,129,.10);--gold:#f59e0b;--gold-bg:#fef3c7;--gold-line:#fde68a}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:48px;height:34px;border-radius:8px;background:linear-gradient(135deg,#0284c7,#0ea5e9);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:12px;letter-spacing:.5px;font-family:Inter,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#0284c7}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:900px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#0369a1;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(16,185,129,.08);color:#059669;border:1px solid rgba(16,185,129,.3)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#0284c7}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#0369a1;font-size:15px;flex-shrink:0;position:relative;font-family:Inter,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#0284c7}.btn.primary{background:linear-gradient(270deg,#0284c7,#0369a1);border-color:#0284c7;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#0284c7;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#0284c7}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(16,185,129,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(16,185,129,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#0284c7}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Inter,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#0369a1;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px;font-family:Inter,sans-serif}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input,.field select{width:100%;background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);outline:none}
+.field input:focus{border-color:var(--accent)}
+.seg{display:flex;gap:6px}.seg button{flex:1;padding:9px;font-size:12px;font-weight:600;border:1px solid var(--border);border-radius:7px;background:#fff;color:var(--tert);cursor:pointer;font-family:Inter,sans-serif}
+.seg button.on{background:var(--accent-dim);color:var(--hi);border-color:var(--accent-line)}
+.foot{max-width:1180px;margin:30px auto 40px;padding:18px 24px;border-top:1px solid var(--border);font-size:11.5px;color:var(--tert);text-align:center;line-height:1.5;font-family:Inter,sans-serif}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">
+    <div class="mark">MOV</div>
+    <div>
+      <div class="htitle">Movellus &middot; AI Intelligent Clock Networks &amp; Power IP Workforce</div>
+      <div class="hsub">Aeonic&trade; Digital IP Platform &middot; Synthesizable Clocking, Voltage Droop Mitigation &amp; Telemetry (3nm-40nm)</div>
+    </div>
+  </div>
+  <div class="badge"><b>Movellus HQ</b> &middot; Santa Clara, CA</div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tab-roster" onclick="switchTab('roster')">Workforce Roster</button>
+  <button class="tab" id="tab-run" onclick="switchTab('run')">Execution Engine</button>
+  <button class="tab" id="tab-builder" onclick="switchTab('builder')">Operator Builder</button>
+</div>
+
+<div class="main">
+  <div id="view-roster">
+    <div class="lead">
+      Interactive prototype of an autonomous AI workforce purpose-built for <b>Movellus</b>. Designed to accelerate SoC design-wins for the Aeonic&trade; Digital IP platform. Automates synthesizable clock network generation (Aeonic Generate&trade;), voltage droop telemetry (Aeonic Insight&trade;), fine-grained DVFS power optimization (Aeonic Power&trade;), and Synopsys RTL-to-GDSII integration.
+    </div>
+
+    <div class="legend">
+      <span><span class="tag commercial">Track A</span> IP Sales &amp; Design-Win Engine</span>
+      <span><span class="tag operations">Track B</span> Aeonic&trade; IP &amp; Silicon Integration Engine</span>
+      <span><span class="tag hero">Flagship</span> Flagship Operator</span>
+    </div>
+
+    <div class="econ" id="econ-strip"></div>
+    <div id="roster-tracks"></div>
+  </div>
+
+  <div id="view-run" class="hidden">
+    <div class="run">
+      <div class="run-head">
+        <h2 id="run-title">Select an Operator</h2>
+        <span id="run-badge"></span>
+      </div>
+      <div class="run-sub" id="run-desc">Choose an operator from the roster to launch execution.</div>
+
+      <div class="run-input">
+        <textarea id="run-prompt" rows="2" placeholder="Workflow prompt instructions..."></textarea>
+        <button class="btn primary big" id="run-btn" onclick="startRun()">Launch Run</button>
+      </div>
+
+      <div class="phases" id="run-phases"></div>
+      <div class="agent-grid" id="agent-grid"></div>
+
+      <div class="feed" id="run-feed">
+        <div class="frow">
+          <span class="ft">00:00.0</span>
+          <span class="fa">System</span>
+          <span class="fd">Engine initialized. Ready to execute workflow.</span>
+        </div>
+      </div>
+
+      <div class="result hidden" id="run-result">
+        <div class="rstats" id="result-stats"></div>
+        <div class="rout">
+          <div class="rh" id="result-title">Produced Deliverable</div>
+          <div class="rb" id="result-text"></div>
+        </div>
+      </div>
+      <div id="run-donebar" class="hidden"></div>
+    </div>
+  </div>
+
+  <div id="view-builder" class="hidden">
+    <div class="run">
+      <h2>3-Step Operator Builder</h2>
+      <div class="run-sub">Compose a new AI operator by tailoring workflow tasks and agent assignments.</div>
+
+      <div class="steps">
+        <div class="step active" id="st-1">
+          <div class="n">STEP 1</div>
+          <div class="l">Select Base Workflow</div>
+          <div class="d">Choose template workflow</div>
+        </div>
+        <div class="step" id="st-2">
+          <div class="n">STEP 2</div>
+          <div class="l">Assign Agents</div>
+          <div class="d">Configure task execution</div>
+        </div>
+        <div class="step" id="st-3">
+          <div class="n">STEP 3</div>
+          <div class="l">Deploy Operator</div>
+          <div class="d">Save to active roster</div>
+        </div>
+      </div>
+
+      <div id="bstep-1">
+        <div class="slabel">Available Workflows</div>
+        <div class="wf-grid" id="builder-wf-grid"></div>
+        <div style="margin-top:18px;text-align:right">
+          <button class="btn primary" onclick="bNext(2)">Next: Assign Agents &rarr;</button>
+        </div>
+      </div>
+
+      <div id="bstep-2" class="hidden">
+        <div class="slabel">Configure Task Assignments</div>
+        <div id="builder-tasks"></div>
+        <div style="margin-top:18px;display:flex;justify-content:space-between">
+          <button class="btn ghost" onclick="bNext(1)">&larr; Back</button>
+          <button class="btn primary" onclick="bNext(3)">Next: Operator Details &rarr;</button>
+        </div>
+      </div>
+
+      <div id="bstep-3" class="hidden">
+        <div class="slabel">Operator Profile</div>
+        <div class="field">
+          <label>Operator Name</label>
+          <input type="text" id="b-name" value="Custom Movellus Operator">
+        </div>
+        <div class="field">
+          <label>Title / Role</label>
+          <input type="text" id="b-title" value="Specialized Clocking &amp; Power IP Specialist">
+        </div>
+        <div style="margin-top:18px;display:flex;justify-content:space-between">
+          <button class="btn ghost" onclick="bNext(2)">&larr; Back</button>
+          <button class="btn primary" onclick="deployOperator()">Deploy Operator to Roster</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  Movellus AI Workforce Simulation &middot; Designed for Movellus (Santa Clara, CA)<br>
+  Built with autonomous multi-agent architecture for synthesizable digital clock networks, on-die telemetry, and voltage droop power mitigation.<br>
+  <i>Disclaimer: Illustrative simulation based on public domain information for Movellus. All outputs subject to human-in-the-loop review.</i>
+</div>
+
+<script>
+const TRACKS = [
+  ['sales', 'IP Sales & Design-Win Engine'],
+  ['engineering', 'Aeonic™ IP & Silicon Integration Engine']
+];
+
+const AGENT_ROLES = {
+  prospector: { emoji: '🧲', label: 'SoC & AI Chipmaker Prospector', tools: ['source_soc_accounts', 'save'] },
+  ppa_architect: { emoji: '📐', label: 'PPA & Clocking Architect', tools: ['benchmark_ppa', 'analyze_clock_jitter', 'save'] },
+  aeonic_gen_lead: { emoji: '⏱️', label: 'Aeonic Generate™ Clock Lead', tools: ['configure_dco_pll', 'verify_clock_synthesis', 'save'] },
+  aeonic_power_lead: { emoji: '⚡', label: 'Aeonic Power™ Droop Lead', tools: ['simulate_droop_mitigation', 'optimize_dvfs_response', 'save'] },
+  aeonic_insight_lead: { emoji: '🛰️', label: 'Aeonic Insight™ Telemetry Lead', tools: ['setup_ondie_sensors', 'profile_silicon_health', 'save'] },
+  pdk_porting_lead: { emoji: '🔬', label: '3nm/5nm PDK Porting Engineer', tools: ['port_ip_node', 'verify_drc_lvs', 'save'] },
+  eda_integration_lead: { emoji: '💻', label: 'Synopsys EDA Integration Eng', tools: ['generate_rtl_synthesis', 'check_sdc_constraints', 'save'] },
+  ip_pricing_lead: { emoji: '🧮', label: 'IP Licensing & Royalty Lead', tools: ['build_ip_quote', 'analyze_roi', 'save'] },
+  auto_compliance_lead: { emoji: '🚗', label: 'ISO 26262 Automotive QA Lead', tools: ['verify_auto_safety', 'audit_rad_hard', 'save'] },
+  competitor_intel: { emoji: '🛰️', label: 'Analog vs Digital IP Analyst', tools: ['profile_analog_pll_limits', 'benchmark_aeonic_vs_analog', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'Technical Proposal & Spec Writer', tools: ['compose_ip_proposal', 'save'] },
+  qa_reviewer: { emoji: '✅', label: 'Final QA & Package Reviewer', tools: ['qa_audit', 'save'] }
+};
+
+const WORKFLOWS = {
+  soc_designwin_eval: {
+    name: 'AI Accelerator SoC Design-Win',
+    title: 'AI Accelerator SoC Clocking Evaluation & Design-Win Proposal',
+    mode: 'sequential',
+    track: 'sales',
+    tag: 'flagship',
+    deliverable: 'AI Accelerator SoC Clocking Evaluation & Design-Win Proposal',
+    sample: 'Evaluate synthesizable Aeonic Generate clock network for 128-core AI accelerator SoC.',
+    desc: 'Multi-agent technical due diligence mapping PPA gains, synthesizable DCO setup, and IP license terms.',
+    tasks: [
+      { agent: 'prospector', task: 'Source AI accelerator & data center SoC target accounts requiring sub-nanosecond clock networks', deps: [] },
+      { agent: 'ppa_architect', task: 'Benchmark Power, Performance, Area (PPA) gains vs legacy analog PLLs', deps: [0] },
+      { agent: 'aeonic_gen_lead', task: 'Configure Aeonic Generate™ synthesizable DCO/PLL clock tree for 128-core AI chiplet', deps: [1] },
+      { agent: 'ip_pricing_lead', task: 'Build custom IP license model (upfront fee + tapeout royalty tier)', deps: [2] },
+      { agent: 'proposal_writer', task: 'Compose executive technical evaluation report and IP licensing agreement', deps: [3] },
+      { agent: 'qa_reviewer', task: 'Perform final QA audit and package deliverable', deps: [4] }
+    ]
+  },
+  ip_licensing_quote: {
+    name: 'Aeonic IP Licensing Quoting',
+    title: 'Aeonic™ Digital IP Licensing & Royalty Quotation Engine',
+    mode: 'sequential',
+    track: 'sales',
+    deliverable: 'Aeonic™ Digital IP Licensing & Royalty Quotation Package',
+    sample: 'Calculate IP licensing contract for multi-tapeout TSMC 3nm AI accelerator SoC.',
+    desc: 'Automated IP licensing pricing across 3nm, 5nm, and 7nm silicon nodes.',
+    tasks: [
+      { agent: 'ip_pricing_lead', task: 'Calculate single-pass vs multi-tapeout licensing fees across TSMC 3nm/5nm and Samsung 4nm', deps: [] },
+      { agent: 'ppa_architect', task: 'Estimate silicon area savings and power reduction ROI for customer SoC budget', deps: [0] },
+      { agent: 'proposal_writer', task: 'Structure licensing agreement contract and royalty schedule', deps: [1] },
+      { agent: 'qa_reviewer', task: 'Finalize IP quotation package for executive sign-off', deps: [2] }
+    ]
+  },
+  analog_vs_digital_radar: {
+    name: 'Analog vs Digital IP Radar',
+    title: 'Analog PLL vs Aeonic™ Digital Clocking Competitive Radar',
+    mode: 'dag',
+    track: 'sales',
+    deliverable: 'Analog PLL vs Aeonic™ Digital Clocking Competitive Brief',
+    sample: 'Benchmark Aeonic Digital IP against legacy analog PLL redesign bottlenecks.',
+    desc: 'Parallel competitive analysis contrasting synthesizable digital IP vs analog custom layout.',
+    tasks: [
+      { agent: 'competitor_intel', task: 'Benchmark Aeonic Digital IP against traditional analog PLL/DLL limits (area, noise, porting friction)', deps: [] },
+      { agent: 'prospector', task: 'Track customer pain points in 3nm FinFET / GAA node analog PLL migration', deps: [] },
+      { agent: 'proposal_writer', task: 'Publish competitive intelligence briefing for sales & FAE team', deps: [0, 1] },
+      { agent: 'qa_reviewer', task: 'Verify competitive benchmarks and market positioning', deps: [2] }
+    ]
+  },
+  ondie_telemetry_insight: {
+    name: 'Aeonic Insight Telemetry',
+    title: 'Aeonic Insight™ Telemetry & Sensor Deployment Guide',
+    mode: 'dag',
+    track: 'sales',
+    deliverable: 'Aeonic Insight™ Telemetry & Sensor Deployment Charter',
+    sample: 'Deploy 64-node on-die clock and voltage droop telemetry grid for automotive ADAS SoC.',
+    desc: 'On-die telemetry setup for real-time silicon health, voltage droop, and thermal monitoring.',
+    tasks: [
+      { agent: 'aeonic_insight_lead', task: 'Map on-die high-precision clock & power grid telemetry sensors across 64-tile compute fabric', deps: [] },
+      { agent: 'ppa_architect', task: 'Evaluate real-time silicon health observability and thermal throttling thresholds', deps: [0] },
+      { agent: 'auto_compliance_lead', task: 'Verify functional safety (ISO 26262 ASIL-D) telemetry compliance for automotive SoC', deps: [0] },
+      { agent: 'qa_reviewer', task: 'Finalize Aeonic Insight™ telemetry integration package', deps: [1, 2] }
+    ]
+  },
+  aeonic_generate_clock_tree: {
+    name: 'Aeonic Generate Synthesis',
+    title: 'Aeonic Generate™ Synthesizable Distributed Clock Network Setup',
+    mode: 'sequential',
+    track: 'engineering',
+    deliverable: 'Aeonic Generate™ Synthesizable Clock Network Delivery Package',
+    sample: 'Synthesize per-core distributed clock tree for 64-core enterprise CPU in Verilog RTL.',
+    desc: 'Fully digital clock tree synthesis replacing analog PLLs with synthesizable DCO blocks.',
+    tasks: [
+      { agent: 'aeonic_gen_lead', task: 'Generate synthesizable distributed clock network (DCO) for multi-core AI processor', deps: [] },
+      { agent: 'pdk_porting_lead', task: 'Verify clock tree timing closure across PVT (Process, Voltage, Temperature) corners', deps: [0] },
+      { agent: 'eda_integration_lead', task: 'Export SDC timing constraints and Verilog RTL for Synopsys Design Compiler', deps: [1] },
+      { agent: 'qa_reviewer', task: 'Complete Aeonic Generate™ clock network delivery package', deps: [2] }
+    ]
+  },
+  droop_mitigation_dvfs: {
+    name: 'Aeonic Power Droop Mitigation',
+    title: 'Aeonic Power™ Voltage Droop Mitigation & DVFS Response Tuning',
+    mode: 'dag',
+    track: 'engineering',
+    deliverable: 'Aeonic Power™ Voltage Droop Mitigation & DVFS Report',
+    sample: 'Configure dynamic voltage droop mitigation during peak AI transformer matrix workload.',
+    desc: 'Parallel voltage droop detection, frequency shedding, and DVFS power delivery network optimization.',
+    tasks: [
+      { agent: 'aeonic_power_lead', task: 'Simulate transient voltage droop response during peak AI matrix multiplication workload', deps: [] },
+      { agent: 'ppa_architect', task: 'Configure fine-grained DVFS frequency shedding to prevent SoC voltage collapse', deps: [0] },
+      { agent: 'auto_compliance_lead', task: 'Validate power delivery network (PDN) reliability under high di/dt load steps', deps: [0] },
+      { agent: 'qa_reviewer', task: 'Publish Aeonic Power™ droop mitigation validation charter', deps: [1, 2] }
+    ]
+  },
+  pdk_3nm_porting: {
+    name: '3nm PDK IP Porting',
+    title: 'Advanced Node (3nm/5nm) Synthesizable IP Porting Qualification',
+    mode: 'sequential',
+    track: 'engineering',
+    deliverable: '3nm Advanced Node Synthesizable IP Porting Qualification Certificate',
+    sample: 'Port Aeonic Digital IP from TSMC 5nm to TSMC 3nm (N3E) process node in 4 days.',
+    desc: 'Standard-cell digital synthesis porting across advanced foundry nodes (TSMC, Samsung, Intel).',
+    tasks: [
+      { agent: 'pdk_porting_lead', task: 'Port Aeonic synthesizable digital logic to TSMC N3 / Samsung SF4 process nodes', deps: [] },
+      { agent: 'eda_integration_lead', task: 'Execute DRC/LVS physical verification and standard cell cell-library mapping', deps: [0] },
+      { agent: 'ppa_architect', task: 'Verify zero analog layout dependency and 100% digital synthesis flow', deps: [1] },
+      { agent: 'qa_reviewer', task: 'Generate 3nm IP porting qualification certificate', deps: [2] }
+    ]
+  },
+  synopsys_rtl_integration: {
+    name: 'Synopsys EDA Integration',
+    title: 'Synopsys RTL-to-GDSII Automated IP Integration Flow',
+    mode: 'dag',
+    track: 'engineering',
+    deliverable: 'Synopsys RTL-to-GDSII Reference Integration Flow Package',
+    sample: 'Run automated push-button synthesis flow using Synopsys Fusion Compiler & PrimeTime.',
+    desc: 'Automated EDA synthesis integration scripts for Synopsys Design Compiler, IC Validator, and PrimeTime.',
+    tasks: [
+      { agent: 'eda_integration_lead', task: 'Automate Synopsys Fusion Compiler & IC Validator flow for Movellus Aeonic IP', deps: [] },
+      { agent: 'ppa_architect', task: 'Verify static timing analysis (STA) and power grid integrity in Synopsys PrimeTime', deps: [] },
+      { agent: 'aeonic_gen_lead', task: 'Validate clock tree synthesis (CTS) latency and phase noise compliance', deps: [0, 1] },
+      { agent: 'qa_reviewer', task: 'Finalize Synopsys EDA reference flow documentation', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  soc_designwin_eval: 'AI Accelerator SoC Clocking Evaluation & Design-Win Proposal',
+  ip_licensing_quote: 'Aeonic™ Digital IP Licensing & Royalty Quotation Package',
+  analog_vs_digital_radar: 'Analog PLL vs Aeonic™ Digital Clocking Competitive Brief',
+  ondie_telemetry_insight: 'Aeonic Insight™ Telemetry & Sensor Deployment Charter',
+  aeonic_generate_clock_tree: 'Aeonic Generate™ Synthesizable Clock Network Delivery Package',
+  droop_mitigation_dvfs: 'Aeonic Power™ Voltage Droop Mitigation & DVFS Report',
+  pdk_3nm_porting: '3nm Advanced Node Synthesizable IP Porting Qualification Certificate',
+  synopsys_rtl_integration: 'Synopsys RTL-to-GDSII Reference Integration Flow Package'
+};
+
+const TOOLS = {
+  source_soc_accounts: ()=>'Sourced 18 Tier-1 AI chipmaker accounts (Nvidia, AMD, Tenstorrent, Broadcom, Marvell).',
+  benchmark_ppa: ()=>'Benchmarked PPA gains: 32% power reduction, 45% area savings vs conventional analog PLL.',
+  analyze_clock_jitter: ()=>'Analyzed clock jitter: 180fs RMS period jitter achieved across 3nm FinFET process corners.',
+  configure_dco_pll: ()=>'Configured Aeonic Generate DCO: 4GHz distributed clock network generated via standard Verilog RTL.',
+  verify_clock_synthesis: ()=>'Verified clock synthesis: 100% digital synthesis flow clean in Synopsys Design Compiler.',
+  simulate_droop_mitigation: ()=>'Simulated droop mitigation: detected 45mV voltage drop in 1.2ns, shed clock freq by 25% instantly.',
+  optimize_dvfs_response: ()=>'Optimized DVFS response: dynamic voltage/frequency scaling latency reduced from 10µs to 40ns.',
+  setup_ondie_sensors: ()=>'Configured 64 on-die telemetry sensors: real-time voltage, frequency, and thermal profiling.',
+  profile_silicon_health: ()=>'Profiled silicon health telemetry: zero undetected hot-spots or power grid droop hazards.',
+  port_ip_node: ()=>'Ported Aeonic IP: migrated synthesizable clocking from TSMC N5 to N3E in 4 days.',
+  verify_drc_lvs: ()=>'Verified DRC/LVS: 0 layout errors, 100% standard-cell compatible digital implementation.',
+  generate_rtl_synthesis: ()=>'Generated RTL synthesis scripts: created automated TCL flow for Synopsys Fusion Compiler.',
+  check_sdc_constraints: ()=>'Checked SDC constraints: verified clock uncertainty, setup/hold margins across 16 PVT corners.',
+  build_ip_quote: ()=>'Built IP license quote: $1.2M upfront license + $0.15/chip royalty tier model.',
+  analyze_roi: ()=>'Analyzed customer ROI: customer saves $2.4M in analog custom layout & retargeting costs per tapeout.',
+  verify_auto_safety: ()=>'Verified ISO 26262 ASIL-D safety: redundant clock health monitoring compliant with automotive ADAS.',
+  audit_rad_hard: ()=>'Audited rad-hard resilience: verified single-event upset (SEU) immunity for aerospace compute.',
+  profile_analog_pll_limits: ()=>'Profiled analog PLL limits: analog PLL redesign requires 6-9 months per process node migration.',
+  benchmark_aeonic_vs_analog: ()=>'Benchmarked Aeonic vs analog: 10x faster porting, 50% smaller die footprint, zero analog layout.',
+  compose_ip_proposal: ()=>'Composed technical IP proposal: compiled comprehensive Aeonic Digital IP integration dossier.',
+  qa_audit: ()=>'Executed QA audit: verified specs, RTL synthesis logs, and complete deliverable package.',
+  save: ()=>'Saved deliverable artifact to Movellus IP repository.'
+};
+
+const FINAL = {
+  soc_designwin_eval: `MOVELLUS AEONIC™ DIGITAL IP SOC TECHNICAL EVALUATION REPORT
+Target Customer: Next-Gen AI Accelerator Chipmaker (128 Compute Tiles)
+Process Node: TSMC N3E (3nm FinFET)
+Evaluation Date: September 2026
+
+1. EXECUTIVE PPA BENCHMARK ANALYSIS
+- Legacy Analog PLL Baseline: 12 Analog PLL blocks, 4.2mm² die footprint, 120mW power budget.
+- Aeonic Generate™ Synthesizable Solution: 12 Distributed DCO blocks, 2.3mm² die area (45% reduction), 81mW power (32% savings).
+- Node Migration Friction: 100% digital RTL synthesis flow vs 9-month custom analog layout redesign.
+
+2. AEONIC GENERATE™ SYNTHESIZABLE CLOCK TREE
+- Clock Frequency Range: 100MHz to 4.5GHz per-core fine-grained clocking.
+- RMS Jitter: 180fs across all PVT corners.
+- Observability: Integrated on-die clock health monitoring via Aeonic Insight™.
+
+3. AEONIC POWER™ VOLTAGE DROOP MITIGATION
+- Transient Response Time: < 1.2ns droop detection.
+- Droop Mitigation Action: Instantaneous 25% frequency shedding under peak AI matrix load step, preventing voltage collapse.
+
+4. COMMERCIAL IP LICENSE RECOMMENDATION
+- Selection Verdict: RECOMMENDED for Tier-1 SoC Design-Win.
+- Contract Structure: Single-SoC license ($1.2M) + volume tapeout royalty tier ($0.15/unit).
+
+NOTE: illustrative simulation based on public domain information for Movellus.`,
+
+  ip_licensing_quote: `MOVELLUS AEONIC™ DIGITAL IP COMMERCIAL LICENSE & ROYALTY QUOTATION
+Customer: Enterprise Data Center Compute Architect
+
+1. IP LICENSE FEE BREAKDOWN
+- Aeonic Generate™ Core License (TSMC N3E): $1,200,000
+- Aeonic Insight™ Telemetry Module Add-On: $450,000
+- Aeonic Power™ Droop Mitigation Module Add-On: $500,000
+- Total License Fee: $2,150,000 (Includes 12 months FAE integration support)
+
+2. PRODUCTION ROYALTY TIERS
+- Tier 1 (0 - 1M Units): $0.25 / SoC
+- Tier 2 (1M - 5M Units): $0.18 / SoC
+- Tier 3 (5M+ Units): $0.12 / SoC
+
+NOTE: illustrative simulation based on public domain information for Movellus.`,
+
+  analog_vs_digital_radar: `MOVELLUS COMPETITIVE BENCHMARK: AEONIC™ DIGITAL IP VS ANALOG PLL
+
+1. TECHNICAL COMPARISON SUMMARY
+- Synthesizability: Movellus Aeonic (100% Verilog RTL) vs Legacy Analog PLL (Custom Hard IP Layout).
+- Porting Time: Movellus (4 Days per node) vs Legacy Analog (6 - 9 Months per node).
+- Die Area Footprint: Movellus (0.19mm² @ 3nm) vs Legacy Analog (0.42mm² @ 3nm).
+- Testability & Telemetry: Movellus Aeonic Insight (Full On-Die Scan Telemetry) vs Legacy Analog (Black Box).
+
+NOTE: illustrative simulation based on public domain information for Movellus.`,
+
+  ondie_telemetry_insight: `AEONIC INSIGHT™ ON-DIE TELEMETRY INTEGRATION CHARTER
+Target SoC: Automotive ADAS & Autonomous Driving Processor
+
+1. TELEMETRY SENSOR MATRIX
+- 64 Distributed On-Die Sensors (Voltage, Frequency, Temperature).
+- Real-time power grid health reporting to central safety manager.
+
+2. AUTOMOTIVE ISO 26262 ASIL-D COMPLIANCE
+- Passed functional safety audit for hardware fault tolerance and telemetry redundancy.
+
+NOTE: illustrative simulation based on public domain information for Movellus.`,
+
+  aeonic_generate_clock_tree: `AEONIC GENERATE™ SYNTHESIZABLE CLOCK TREE DELIVERY PACKAGE
+
+1. VERILOG RTL & TIMING SPECIFICATIONS
+- Standard Cell Compatibility: 100% compatible with TSMC N3 / N5 standard cell libraries.
+- Synthesis Output: Clean Synopsys Design Compiler netlist & SDC timing constraints file.
+
+NOTE: illustrative simulation based on public domain information for Movellus.`,
+
+  droop_mitigation_dvfs: `AEONIC POWER™ VOLTAGE DROOP MITIGATION REPORT
+
+1. DROOP SIMULATION METRICS
+- Peak di/dt Load Step: 50A / 10ns simulated across AI matrix engine.
+- Maximum Unmitigated Droop: 120mV (Causes timing hazard / crash).
+- Mitigated Droop with Aeonic Power: 38mV (Zero timing violations).
+
+NOTE: illustrative simulation based on public domain information for Movellus.`,
+
+  pdk_3nm_porting: `MOVELLUS 3nm ADVANCED NODE PORTING CERTIFICATE
+
+1. PDK QUALIFICATION RESULTS
+- Target Node: TSMC N3E (3nm FinFET).
+- Porting Turnaround: 4 Business Days from PDK receipt to timing closure.
+- DRC / LVS Status: CLEAN (Zero DRC errors across 2,400 physical verification rules).
+
+NOTE: illustrative simulation based on public domain information for Movellus.`,
+
+  synopsys_rtl_integration: `MOVELLUS SYNOPSYS RTL-TO-GDSII INTEGRATION FLOW PACKAGE
+
+1. AUTOMATED EDA FLOW SCRIPTS
+- Synopsys Fusion Compiler TCL Scripts included for push-button clock synthesis.
+- Synopsys PrimeTime STA script validated for 16 PVT corner timing closure.
+
+NOTE: illustrative simulation based on public domain information for Movellus.`
+};
+
+const EMPLOYEES = [
+  { id: 'emp_1', name: 'DesignWin-Director', title: 'SoC Design-Win Operator', wf: 'soc_designwin_eval', handled: 52, hrs: 680, win: '30% Power Cut', status: 'idle' },
+  { id: 'emp_2', name: 'Quote-Manager', title: 'IP Licensing & Royalty Lead', wf: 'ip_licensing_quote', handled: 46, hrs: 420, win: '85% Quote Speed', status: 'idle' },
+  { id: 'emp_3', name: 'Radar-Analyst', title: 'Analog vs Digital IP Analyst', wf: 'analog_vs_digital_radar', handled: 38, hrs: 390, win: '10x Porting Speed', status: 'idle' },
+  { id: 'emp_4', name: 'Insight-Lead', title: 'Aeonic Insight™ Telemetry Lead', wf: 'ondie_telemetry_insight', handled: 41, hrs: 510, win: 'Real-Time Telemetry', status: 'idle' },
+  { id: 'emp_5', name: 'Clock-Director', title: 'Aeonic Generate™ Clock Lead', wf: 'aeonic_generate_clock_tree', handled: 64, hrs: 720, win: '100% Synthesizable', status: 'idle' },
+  { id: 'emp_6', name: 'Droop-Director', title: 'Aeonic Power™ Droop Mgr', wf: 'droop_mitigation_dvfs', handled: 33, hrs: 450, win: 'Zero Droop Crashes', status: 'idle' },
+  { id: 'emp_7', name: 'PDK-Specialist', title: '3nm/5nm PDK Porting Lead', wf: 'pdk_3nm_porting', handled: 29, hrs: 480, win: 'Seamless Node Porting', status: 'idle' },
+  { id: 'emp_8', name: 'Synopsys-Lead', title: 'Synopsys EDA Integration Lead', wf: 'synopsys_rtl_integration', handled: 58, hrs: 610, win: 'Push-Button Synthesis', status: 'idle' }
+];
+
+let activeTab = 'roster';
+let activeEmpId = null;
+let activeWfKey = null;
+let runTimer = null;
+let builderWfKey = 'soc_designwin_eval';
+let builderTasks = [];
+
+function init() {
+  renderEcon();
+  renderRoster();
+  renderBuilderWfs();
+}
+
+function switchTab(t) {
+  activeTab = t;
+  ['roster', 'run', 'builder'].forEach(x => {
+    document.getElementById(`tab-${x}`).classList.toggle('active', x === t);
+    document.getElementById(`view-${x}`).classList.toggle('hidden', x !== t);
+  });
+}
+
+function renderEcon() {
+  const totHandled = EMPLOYEES.reduce((a, b) => a + b.handled, 0);
+  const totHrs = EMPLOYEES.reduce((a, b) => a + b.hrs, 0);
+  const container = document.getElementById('econ-strip');
+  container.innerHTML = `
+    <div class="cell">
+      <div class="v"><span class="u">${totHandled}</span></div>
+      <div class="k">Workflows Executed</div>
+    </div>
+    <div class="cell">
+      <div class="v"><span class="u">${totHrs}</span> hrs</div>
+      <div class="k">Annual Time Saved</div>
+    </div>
+    <div class="cell">
+      <div class="v"><span class="u">100%</span> Synthesizable</div>
+      <div class="k">Digital Aeonic&trade; IP</div>
+    </div>
+    <div class="cell">
+      <div class="v"><span class="u">3nm - 40nm</span> Node</div>
+      <div class="k">Portable Silicon IP</div>
+    </div>
+  `;
+}
+
+function renderRoster() {
+  const container = document.getElementById('roster-tracks');
+  container.innerHTML = '';
+
+  TRACKS.forEach(([tKey, tLabel]) => {
+    const section = document.createElement('div');
+    section.innerHTML = `<div class="slabel">${tLabel}</div>`;
+    const grid = document.createElement('div');
+    grid.className = 'roster';
+
+    const emps = EMPLOYEES.filter(e => {
+      const wf = WORKFLOWS[e.wf];
+      return wf && wf.track === tKey;
+    });
+
+    emps.forEach(emp => {
+      grid.appendChild(createEmpCard(emp));
+    });
+
+    if (tKey === TRACKS[0][0]) {
+      const addCard = document.createElement('div');
+      addCard.className = 'hire-card';
+      addCard.onclick = () => switchTab('builder');
+      addCard.innerHTML = `
+        <div class="plus">+</div>
+        <div class="h">Build Custom Operator</div>
+        <div class="p">Compose a new AI operator with tailored workflow steps</div>
+      `;
+      grid.appendChild(addCard);
+    }
+
+    section.appendChild(grid);
+    container.appendChild(section);
+  });
+}
+
+function createEmpCard(emp) {
+  const wf = WORKFLOWS[emp.wf];
+  const el = document.createElement('div');
+  const isFlagship = wf && wf.tag === 'flagship';
+  el.className = `emp ${emp.status === 'working' ? 'working' : ''} ${isFlagship ? 'hero' : ''}`;
+
+  const chips = wf.tasks.map(t => {
+    const a = AGENT_ROLES[t.agent];
+    return `<span class="chip">${a ? a.emoji : ''} ${a ? a.label : t.agent}</span>`;
+  }).join('');
+
+  const initials = emp.name.split('-').map(n => n[0]).join('').substring(0, 3).toUpperCase();
+
+  el.innerHTML = `
+    <div class="emp-top">
+      <div class="avatar">${initials}</div>
+      <div>
+        <div class="emp-name">
+          ${emp.name}
+          ${isFlagship ? '<span class="tag hero">FLAGSHIP</span>' : ''}
+        </div>
+        <div class="emp-title">${emp.title}</div>
+      </div>
+    </div>
+    <div class="emp-owns">Workflow: <b>${wf ? wf.name : emp.wf}</b></div>
+    <div class="team">${chips}</div>
+    <div class="emp-stats">
+      <div class="st">Workflows<b>${emp.handled}</b></div>
+      <div class="st">Time Saved<b>${emp.hrs}h</b></div>
+      <div class="st">Impact Metric<b>${emp.win}</b></div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" onclick="launchRun('${emp.id}')">Run Operator</button>
+    </div>
+  `;
+  return el;
+}
+
+function launchRun(empId) {
+  const emp = EMPLOYEES.find(e => e.id === empId);
+  if (!emp) return;
+  activeEmpId = empId;
+  activeWfKey = emp.wf;
+
+  const wf = WORKFLOWS[activeWfKey];
+  document.getElementById('run-title').innerText = `${emp.name} &middot; ${wf.name}`;
+  document.getElementById('run-badge').innerHTML = `<span class="tag ${wf.track === 'sales' ? 'commercial' : 'operations'}">${wf.mode.toUpperCase()}</span>`;
+  document.getElementById('run-desc').innerText = wf.desc;
+  document.getElementById('run-prompt').value = wf.sample;
+
+  resetRunView();
+  switchTab('run');
+}
+
+function resetRunView() {
+  const wf = WORKFLOWS[activeWfKey];
+  if (!wf) return;
+
+  const phasesComp = document.getElementById('run-phases');
+  phasesComp.innerHTML = `
+    <div class="ph active" id="ph-1"><div class="dot">1</div><div class="l">Task Setup</div></div>
+    <div class="ph" id="ph-2"><div class="dot">2</div><div class="l">Agent Execution</div></div>
+    <div class="ph" id="ph-3"><div class="dot">3</div><div class="l">Deliverable Finalized</div></div>
+  `;
+
+  const grid = document.getElementById('agent-grid');
+  grid.innerHTML = '';
+  wf.tasks.forEach((t, idx) => {
+    const a = AGENT_ROLES[t.agent];
+    const card = document.createElement('div');
+    card.className = 'acard visible';
+    card.id = `acard-${idx}`;
+    card.innerHTML = `
+      <div class="ae">${a ? a.emoji : '🤖'}</div>
+      <div class="ar">${a ? a.label : t.agent}</div>
+      <div class="at">${t.task}</div>
+      <div class="as"><div class="sd"></div><span id="astat-${idx}">Pending</span></div>
+    `;
+    grid.appendChild(card);
+  });
+
+  document.getElementById('run-feed').innerHTML = `
+    <div class="frow">
+      <span class="ft">00:00.0</span>
+      <span class="fa">System</span>
+      <span class="fd">Initialized workflow: ${wf.name} (${wf.mode.toUpperCase()})</span>
+    </div>
+  `;
+
+  document.getElementById('run-result').classList.add('hidden');
+  document.getElementById('run-donebar').classList.add('hidden');
+  document.getElementById('run-btn').disabled = false;
+}
+
+function startRun() {
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[activeWfKey];
+  if (!emp || !wf) return;
+
+  emp.status = 'working';
+  renderRoster();
+
+  document.getElementById('run-btn').disabled = true;
+  document.getElementById('ph-1').className = 'ph done';
+  document.getElementById('ph-2').className = 'ph active';
+
+  const feed = document.getElementById('run-feed');
+  const startTime = Date.now();
+
+  function log(agentName, text) {
+    const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+    const row = document.createElement('div');
+    row.className = 'frow';
+    row.innerHTML = `
+      <span class="ft">00:${elapsed < 10 ? '0' + elapsed : elapsed}</span>
+      <span class="fa">${agentName}</span>
+      <span class="fd">${text}</span>
+    `;
+    feed.appendChild(row);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  log('Orchestrator', `Starting multi-agent execution pipeline...`);
+
+  let currentTask = 0;
+
+  function runNextTask() {
+    if (currentTask >= wf.tasks.length) {
+      finishRun(emp, wf, startTime, log);
+      return;
+    }
+
+    const idx = currentTask;
+    const t = wf.tasks[idx];
+    const a = AGENT_ROLES[t.agent];
+
+    const card = document.getElementById(`acard-${idx}`);
+    const stat = document.getElementById(`astat-${idx}`);
+    card.className = 'acard running';
+    stat.innerText = 'Running...';
+
+    log(a ? a.label : t.agent, `Executing: ${t.task}`);
+
+    setTimeout(() => {
+      const toolKey = a && a.tools[0] ? a.tools[0] : 'save';
+      const toolFn = TOOLS[toolKey];
+      const output = toolFn ? toolFn() : 'Task completed successfully.';
+
+      log(a ? a.label : t.agent, output);
+
+      card.className = 'acard done';
+      stat.innerText = 'Completed';
+
+      currentTask++;
+      runNextTask();
+    }, 800);
+  }
+
+  runNextTask();
+}
+
+function finishRun(emp, wf, startTime, log) {
+  emp.status = 'idle';
+  emp.handled++;
+  renderEcon();
+  renderRoster();
+
+  document.getElementById('ph-2').className = 'ph done';
+  document.getElementById('ph-3').className = 'ph done';
+
+  log('System', 'All tasks executed successfully. Output assembled.');
+
+  const totalTime = ((Date.now() - startTime) / 1000).toFixed(1);
+
+  document.getElementById('result-stats').innerHTML = `
+    <div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div>
+    <div class="rrow"><span class="k">Execution Mode</span><span class="v">${wf.mode.toUpperCase()}</span></div>
+    <div class="rrow"><span class="k">Tasks Executed</span><span class="v">${wf.tasks.length}</span></div>
+    <div class="rrow"><span class="k">Total Latency</span><span class="v">${totalTime}s</span></div>
+    <div class="rrow"><span class="k">Human Time Saved</span><span class="v">~8.5 Hours</span></div>
+    <div class="rrow"><span class="k">Verification</span><span class="v">PASSED</span></div>
+  `;
+
+  document.getElementById('result-title').innerText = DTITLE[activeWfKey] || 'Deliverable Output';
+  document.getElementById('result-text').innerText = FINAL[activeWfKey] || 'Workflow completed.';
+
+  document.getElementById('run-result').classList.remove('hidden');
+
+  const donebar = document.getElementById('run-donebar');
+  donebar.className = 'donebar';
+  donebar.innerHTML = `<b>Run Complete!</b> ${emp.name} produced <b>${DTITLE[activeWfKey]}</b> in ${totalTime}s. Output verified and saved to repository.`;
+  donebar.classList.remove('hidden');
+
+  document.getElementById('run-btn').disabled = false;
+}
+
+function renderBuilderWfs() {
+  const grid = document.getElementById('builder-wf-grid');
+  grid.innerHTML = '';
+  Object.keys(WORKFLOWS).forEach(key => {
+    const wf = WORKFLOWS[key];
+    const el = document.createElement('div');
+    el.className = `wf ${key === builderWfKey ? 'sel' : ''}`;
+    el.onclick = () => selectBuilderWf(key);
+    el.innerHTML = `
+      <div class="wn">${wf.name}</div>
+      <div class="wd">${wf.desc}</div>
+      <div class="wm">${wf.mode} &middot; ${wf.tasks.length} tasks</div>
+    `;
+    grid.appendChild(el);
+  });
+  loadBuilderTasks();
+}
+
+function selectBuilderWf(key) {
+  builderWfKey = key;
+  renderBuilderWfs();
+}
+
+function loadBuilderTasks() {
+  const wf = WORKFLOWS[builderWfKey];
+  builderTasks = JSON.parse(JSON.stringify(wf.tasks));
+}
+
+function renderBuilderTaskRows() {
+  const container = document.getElementById('builder-tasks');
+  container.innerHTML = '';
+  builderTasks.forEach((t, idx) => {
+    const row = document.createElement('div');
+    row.className = 'task-row';
+    const opts = Object.keys(AGENT_ROLES).map(ak => {
+      const a = AGENT_ROLES[ak];
+      return `<option value="${ak}" ${ak === t.agent ? 'selected' : ''}>${a.emoji} ${a.label}</option>`;
+    }).join('');
+
+    row.innerHTML = `
+      <div class="tn">${idx+1}</div>
+      <div class="tt">${t.task}</div>
+      <select onchange="builderTasks[${idx}].agent = this.value">${opts}</select>
+    `;
+    container.appendChild(row);
+  });
+}
+
+function bNext(step) {
+  [1, 2, 3].forEach(s => {
+    document.getElementById(`bstep-${s}`).classList.toggle('hidden', s !== step);
+    document.getElementById(`st-${s}`).classList.toggle('active', s === step);
+  });
+  if (step === 2) renderBuilderTaskRows();
+}
+
+function deployOperator() {
+  const name = document.getElementById('b-name').value || 'Custom Operator';
+  const title = document.getElementById('b-title').value || 'Specialized Operator';
+  const newWfKey = `custom_${Date.now()}`;
+
+  const baseWf = WORKFLOWS[builderWfKey];
+  WORKFLOWS[newWfKey] = {
+    name: name,
+    title: `${name} Workflow`,
+    mode: baseWf.mode,
+    track: baseWf.track,
+    deliverable: `${name} Output Package`,
+    sample: `Execute custom ${name} operational workflow.`,
+    desc: `Custom operator created via builder based on ${baseWf.name}.`,
+    tasks: builderTasks
+  };
+
+  DTITLE[newWfKey] = `${name} Output Deliverable`;
+  FINAL[newWfKey] = `CUSTOM OPERATOR DELIVERABLE\nOperator: ${name}\nTitle: ${title}\nTasks Executed: ${builderTasks.length}\n\nNOTE: illustrative simulation based on public domain information for Movellus.`;
+
+  EMPLOYEES.push({
+    id: `emp_${Date.now()}`,
+    name: name,
+    title: title,
+    wf: newWfKey,
+    handled: 1,
+    hrs: 4,
+    win: 'Custom Workflow',
+    status: 'idle'
+  });
+
+  renderEcon();
+  renderRoster();
+  switchTab('roster');
+}
+
+window.onload = init;
+</script>
+</body>
+</html>
