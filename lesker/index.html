@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KURT J. LESKER COMPANY | Autonomous AI Workforce Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-main: #F0F4F8;
+  --bg-card: #FFFFFF;
+  --bg-surface: #E2E8F0;
+  --lesker-navy: #003366;
+  --lesker-navy-dark: #002244;
+  --lesker-red: #C8102E;
+  --lesker-slate: #1A2530;
+  --text-dark: #1A2530;
+  --text-muted: #5A6E85;
+  --border-dark: #003366;
+  --border-subtle: #CBD5E1;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg-main);
+  color: var(--text-dark);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Announcement Top Bar */
+.top-bar {
+  background: var(--lesker-navy-dark);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 8px 16px;
+  border-bottom: 2px solid var(--lesker-red);
+}
+
+/* Site Header */
+.site-header {
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 24px 40px 16px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.brand-logo-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.brand-title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--lesker-navy);
+  text-transform: uppercase;
+}
+.brand-tagline {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  border-left: 2px solid var(--lesker-red);
+  padding-left: 12px;
+}
+.badge-uhv {
+  background: var(--lesker-navy);
+  color: #FFFFFF;
+  border: 1px solid var(--lesker-red);
+  padding: 6px 14px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+/* Navigation Bar */
+.nav-bar {
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0 40px;
+  display: flex;
+  gap: 32px;
+}
+.nav-link {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 16px 0;
+  cursor: pointer;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+}
+.nav-link:hover, .nav-link.active {
+  color: var(--lesker-navy);
+  border-bottom-color: var(--lesker-navy);
+}
+
+/* Hero Section */
+.hero {
+  padding: 32px 40px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 32px;
+}
+.hero-title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--lesker-navy);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.hero-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  max-width: 980px;
+}
+
+/* Container & Layout */
+.container { padding: 0 40px 40px 40px; }
+.track-selector {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.track-btn {
+  background: #FFFFFF;
+  border: 1px solid var(--border-dark);
+  color: var(--border-dark);
+  padding: 10px 18px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.track-btn.active {
+  background: var(--lesker-navy);
+  color: #FFFFFF;
+  border-color: var(--lesker-navy);
+}
+
+/* Grids */
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  padding: 24px;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 51, 102, 0.08);
+}
+.card-op {
+  border-top: 4px solid var(--lesker-navy);
+  background: #FFFFFF;
+}
+.flagship-tag {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--lesker-red);
+  color: #FFFFFF;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 3px 8px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.card-title {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--lesker-navy);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+.card-meta {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--lesker-red);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+.wf-desc {
+  font-size: 11px;
+  color: var(--text-dark);
+  height: 36px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.stat-box {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 12px;
+  margin-bottom: 16px;
+}
+.stat-lbl {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.stat-num {
+  font-family: var(--font-mono);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--lesker-navy);
+}
+
+/* Buttons */
+.btn-lesker {
+  background: var(--lesker-navy);
+  color: #FFFFFF;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 12px 18px;
+  width: 100%;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-lesker:hover {
+  background: var(--lesker-navy-dark);
+}
+.btn-red {
+  background: var(--lesker-red);
+  color: #FFFFFF;
+}
+.btn-red:hover {
+  background: #A60C24;
+}
+
+/* Simulation View */
+.dag-node {
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-left: 4px solid var(--lesker-navy);
+  padding: 14px;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+.dag-node.flagship {
+  border-left-color: var(--lesker-red);
+  background: var(--bg-surface);
+}
+.log-terminal {
+  background: var(--lesker-slate);
+  color: #00FFCC;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 16px;
+  height: 240px;
+  overflow-y: auto;
+  border: 1px solid var(--lesker-navy);
+}
+.progress-bg {
+  background: var(--border-subtle);
+  height: 4px;
+  margin: 12px 0;
+}
+.progress-fill {
+  background: var(--lesker-red);
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s;
+}
+.dossier-card {
+  background: #FFFFFF;
+  border: 1px solid var(--lesker-navy);
+  padding: 24px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  white-space: pre-wrap;
+  color: var(--text-dark);
+  margin-top: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.hidden { display: none !important; }
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--border-subtle);
+  padding: 32px 40px;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  background: var(--bg-surface);
+  margin-top: 40px;
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  KURT J. LESKER COMPANY: ENABLING TECHNOLOGY FOR A BETTER WORLD THROUGH VACUUM INNOVATION
+</div>
+
+<header class="site-header">
+  <div class="brand-logo-group">
+    <div class="brand-title">KURT J. LESKER</div>
+    <div class="brand-tagline">VACUUM EQUIPMENT & THIN FILM SYSTEMS</div>
+  </div>
+  <div class="badge-uhv">
+    UHV HARDWARE <span>SPECTROS & TORUS PLATFORMS</span>
+  </div>
+</header>
+
+<nav class="nav-bar">
+  <a class="nav-link active" onclick="switchTab('roster')">AI WORKFORCE ROSTER</a>
+  <a class="nav-link" onclick="switchTab('simulation')">WORKFLOW SIMULATION</a>
+  <a class="nav-link" onclick="switchTab('hire')">STAND UP OPERATOR</a>
+</nav>
+
+<div class="hero">
+  <h1 class="hero-title">Autonomous Vacuum Engineering AI Workforce Platform</h1>
+  <div class="hero-desc">12 Specialist AI Agents and 8 Enterprise Workflows Orchestrating 304L/316L Stainless Steel Vacuum Chamber Sourcing, TORUS Sputtering Magnetron FEA Stress Modeling, ConFlat Flange Leak Rate QA, and Global Deposition System Operations.</div>
+</div>
+
+<div class="container">
+
+  <!-- ROSTER VIEW -->
+  <div id="view-roster">
+    <div class="track-selector">
+      <button class="track-btn active" onclick="filterTrack('all')">All Workflows (8)</button>
+      <button class="track-btn" onclick="filterTrack('commercial')">Commercial Sourcing & Fab Offtake (4)</button>
+      <button class="track-btn" onclick="filterTrack('operations')">Vacuum Engineering & System Quality (4)</button>
+    </div>
+    <div class="grid-4" id="opGrid"></div>
+  </div>
+
+  <!-- SIMULATION VIEW -->
+  <div id="view-simulation" class="hidden">
+    <div class="card">
+      <div class="card-title">Execute Autonomous Vacuum Equipment Workflow</div>
+      <div style="font-size:12px; color:var(--text-muted); margin-bottom:16px;">Select an enterprise vacuum engineering workflow to simulate multi-agent orchestration and view real-time logs:</div>
+
+      <div style="display:flex; gap:16px; margin-bottom:24px;">
+        <select id="simWfSelect" style="flex:1; padding:12px; border:1px solid var(--lesker-navy); font-family:var(--font-sans); font-size:12px; font-weight:700;" onchange="loadSimDetails()">
+        </select>
+        <button class="btn-lesker btn-red" style="width:200px;" id="runBtn" onclick="runSimulation()">START SIMULATION</button>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <div style="font-size:12px; font-weight:800; color:var(--lesker-navy); letter-spacing:1px; margin-bottom:12px; text-transform:uppercase;">WORKFLOW EXECUTION GRAPH (DAG)</div>
+          <div id="dagContainer"></div>
+        </div>
+        <div>
+          <div style="font-size:12px; font-weight:800; color:var(--lesker-navy); letter-spacing:1px; margin-bottom:12px; text-transform:uppercase;">REAL-TIME TELEMETRY & AGENT LOGS</div>
+          <div class="progress-bg"><div class="progress-fill" id="simProgress"></div></div>
+          <div class="log-terminal" id="simLogs">Ready to execute workflow simulation...</div>
+        </div>
+      </div>
+
+      <div id="dossierContainer" class="hidden">
+        <div style="font-size:14px; font-weight:800; color:var(--lesker-navy); margin-top:24px; text-transform:uppercase;">GENERATED EXECUTIVE DOSSIER</div>
+        <div class="dossier-card" id="dossierText"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAND UP OPERATOR VIEW -->
+  <div id="view-hire" class="hidden">
+    <div class="card" style="max-width:700px; margin:0 auto;">
+      <div class="card-title">STAND UP NEW LESKER AI OPERATOR</div>
+      <div style="font-size:12px; color:var(--text-muted); margin-bottom:20px;">Deploy an autonomous operator for specialized SPECTROS PVD deposition sourcing or UHV chamber assembly monitoring:</div>
+
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div>
+          <label style="font-size:10px; font-weight:800; letter-spacing:1px; display:block; margin-bottom:6px; text-transform:uppercase;">Operator Name</label>
+          <input type="text" id="newOpName" placeholder="e.g. SPECTROS PVD System Scout" style="width:100%; padding:12px; border:1px solid var(--border-subtle); font-family:var(--font-sans); font-size:12px;">
+        </div>
+        <div>
+          <label style="font-size:10px; font-weight:800; letter-spacing:1px; display:block; margin-bottom:6px; text-transform:uppercase;">Target Enterprise Workflow</label>
+          <select id="newOpWf" style="width:100%; padding:12px; border:1px solid var(--border-subtle); font-family:var(--font-sans); font-size:12px; font-weight:700;">
+            <option value="scout">Global Semiconductor & Optical Coating Thin-Film System Scout</option>
+            <option value="quote">Turnkey 20-Unit SPECTROS PVD System & UHV Chamber BOM</option>
+            <option value="tender">Global Semiconductor Fab Master Vacuum Hardware Supply Tender</option>
+            <option value="panel_qualification">TORUS Sputtering Magnetron FEA Thermal Stress & Leak Qualification</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:10px; font-weight:800; letter-spacing:1px; display:block; margin-bottom:6px; text-transform:uppercase;">Execution Cadence</label>
+          <select id="newOpCadence" style="width:100%; padding:12px; border:1px solid var(--border-subtle); font-family:var(--font-sans); font-size:12px;">
+            <option value="daily">Daily Continuous Execution</option>
+            <option value="weekly">Weekly Build Sync</option>
+            <option value="on_demand">On-Demand Executive Trigger</option>
+          </select>
+        </div>
+        <button class="btn-lesker" onclick="deployOperator()">DEPLOY OPERATOR</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  Independent concept prototype prepared for Kurt J. Lesker Company (lesker.com). Built with official Lesker visual identity tokens (Corporate Navy #003366 primary, Lesker Crimson #C8102E, Stainless Steel #F0F4F8). All workflows, FEA stress simulations, BOM quotes, and dossier outputs are illustrative simulations.
+</footer>
+
+<script>
+const AGENT_ROLES = {
+  kjlc_pvd_cvd_system_lead_scout: { emoji: '🔬', label: 'Semiconductor & Thin-Film Deposition Equipment Scout', tools: ['screen_thin_film_fab_opportunities', 'save'] },
+  uhv_chamber_bom_pricing_eng: { emoji: '💰', label: 'Stainless Steel Vacuum Chamber & Target BOM Lead', tools: ['calculate_vacuum_system_bom', 'save'] },
+  torus_sputtering_thermal_design_spec: { emoji: '📐', label: 'TORUS Magnetron Sputtering & UHV Chamber FEA Engineer', tools: ['model_torus_magnetron_fea_stress', 'save'] },
+  iso14041_vacuum_hardware_lca_auditor: { emoji: '🌱', label: 'Stainless Steel Chamber Recycling & Deposition Eco-Audit Lead', tools: ['calculate_vacuum_hardware_lca', 'save'] },
+  global_lesker_manufacturing_router: { emoji: '🚚', label: 'Pittsburgh, UK & China Vacuum System Manufacturing Router', tools: ['optimize_chamber_fab_schedule', 'save'] },
+  semiconductor_fab_master_tender_lead: { emoji: '🤝', label: 'Enterprise Semiconductor Fab & Research Lab Tender Lead', tools: ['structure_master_vacuum_tender', 'save'] },
+  conflat_iso_flange_leak_qa_eng: { emoji: '🛡️', label: 'ConFlat CF & ISO Vacuum Flange Helium Leak Rate QA Engineer', tools: ['audit_conflat_helium_leak_rate', 'save'] },
+  pvd_deposition_target_fitment_spec: { emoji: '✨', label: 'PVD Magnetron Cathode & High-Purity Sputtering Target Specialist', tools: ['evaluate_sputtering_target_purity', 'save'] },
+  custom_vacuum_chamber_eco_revision_spec: { emoji: '🔄', label: 'Custom Stainless Steel Vacuum Chamber ECO Revision Lead', tools: ['audit_chamber_port_gasket_eco', 'save'] },
+  high_vacuum_pumping_skid_qa_engineer: { emoji: '⚙️', label: 'Turbomolecular & Roughing Vacuum Pump Skid QA Engineer', tools: ['simulate_turbopump_ultimate_pressure', 'save'] },
+  writer: { emoji: '✍️', label: 'Vacuum System Technical Specification & Proposal Writer', tools: ['compose', 'save'] },
+  reviewer: { emoji: '✅', label: 'VP of Vacuum Engineering & Thin-Film Systems Principal PE', tools: ['qa_review', 'save'] }
+};
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Global semiconductor, optical coating & quantum R&D thin-film system scout',
+    title: 'AI Thin-Film Deposition System Scout',
+    track: 'commercial',
+    deliverable: 'Top 50 Global Semiconductor & R&D Thin-Film Deposition Pipeline',
+    desc: 'Agents analyze semiconductor fab expansion announcements, university quantum physics labs, and optical coating production lines.',
+    tasks: [
+      { agent: 'kjlc_pvd_cvd_system_lead_scout', task: 'Screen global semiconductor research labs requiring UHV magnetron sputtering systems (<1e-9 Torr).', deps: [] },
+      { agent: 'pvd_deposition_target_fitment_spec', task: 'Evaluate 99.999% high-purity gold, platinum, and titanium sputtering target requirements.', deps: [0] },
+      { agent: 'reviewer', task: 'Audit customer creditworthiness, custom chamber port configuration, and delivery timelines.', deps: [1] },
+      { agent: 'writer', task: 'Compile executive thin-film system sourcing pipeline report with target account profiles.', deps: [2] }
+    ]
+  },
+  quote: {
+    name: 'Turnkey 20-unit SPECTROS PVD thin-film deposition system & UHV chamber BOM pro forma',
+    title: 'AI Thin-Film System Quoting Operator',
+    track: 'commercial',
+    deliverable: 'Turnkey 20-Unit SPECTROS PVD System & UHV Chamber BOM Pro Forma',
+    desc: 'Agents compute 304L stainless steel D-shaped chamber fabrication, TORUS 3-inch magnetron sputtering sources, turbo pumping skids, and automated substrate rotation stages.',
+    tasks: [
+      { agent: 'uhv_chamber_bom_pricing_eng', task: 'Calculate system price: $245,000 per SPECTROS PVD system (Chamber + 3x TORUS cathodes + 600 L/s Turbo Pump + RF Generator).', deps: [] },
+      { agent: 'conflat_iso_flange_leak_qa_eng', task: 'Verify ConFlat CF 2.75 inch knife-edge seal copper gasket deformation and helium leak rate <1e-10 atm-cc/sec.', deps: [0] },
+      { agent: 'semiconductor_fab_master_tender_lead', task: 'Structure 90-day safety stock buffer for replacement copper gaskets, viewports, and targets at Pittsburgh DC.', deps: [1] },
+      { agent: 'reviewer', task: 'Audit chamber machining tolerances, electropolish surface finish (Ra < 10 uin), and margin targets.', deps: [2] },
+      { agent: 'writer', task: 'Produce review-ready SPECTROS PVD commercial proposal package for semiconductor fab lead.', deps: [3] }
+    ]
+  },
+  tender: {
+    name: 'Global semiconductor fab master vacuum hardware & 90-day stocking tender response',
+    title: 'AI Master Vacuum Supply Tender Operator',
+    track: 'commercial',
+    deliverable: 'Global Semiconductor Fab Master Vacuum Hardware & 90-Day Stocking Tender Response',
+    desc: 'Agents formulate multi-year master hardware supply agreements covering 50,000 ConFlat flanges, gate valves, and turbomolecular pump rebuild kits.',
+    tasks: [
+      { agent: 'semiconductor_fab_master_tender_lead', task: 'Structure master supply contract with 90-day VMI stocking terms across Pittsburgh, UK, and China warehouse hubs.', deps: [] },
+      { agent: 'iso14041_vacuum_hardware_lca_auditor', task: 'Provide certified 100% recyclable 304L stainless steel origin certificate and conflict-free material declaration.', deps: [0] },
+      { agent: 'reviewer', task: 'Audit vendor liability terms, 99.8% on-time delivery SLA, and vacuum hardware price escalation clauses.', deps: [1] },
+      { agent: 'writer', task: 'Draft master enterprise vacuum hardware supply contract, warehouse matrix, and executive presentation.', deps: [2] }
+    ]
+  },
+  radar: {
+    name: 'Global stainless steel 304L/316L, high-purity sputtering target & freight market intelligence brief',
+    title: 'AI Vacuum Materials Market Intelligence Operator',
+    track: 'commercial',
+    deliverable: 'Global Stainless Steel & Sputtering Target Market Intelligence Brief',
+    desc: 'Agents synthesize nickel & chromium commodity indices, 304L stainless steel plate availability, precious metal sputtering target spot prices, and air freight rates.',
+    tasks: [
+      { agent: 'uhv_chamber_bom_pricing_eng', task: 'Track 304L stainless steel plate spot prices ($3.85/lb) and 99.999% gold target premiums ($68/gram).', deps: [] },
+      { agent: 'kjlc_pvd_cvd_system_lead_scout', task: 'Highlight KJLC competitive advantages: In-house CNC chamber manufacturing, electropolishing, and TORUS magnetron design.', deps: [0] },
+      { agent: 'writer', task: 'Produce quarterly executive vacuum materials intelligence dossier for KJLC procurement leads.', deps: [1] }
+    ]
+  },
+  panel_qualification: {
+    name: 'TORUS magnetron sputtering FEA thermal stress & high-vacuum helium leak qualification',
+    title: 'AI TORUS Magnetron FEA & Leak Qualification Operator',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'TORUS Magnetron Sputtering FEA Thermal Stress & Helium Leak Qualification Dossier',
+    desc: 'Agents model 3D finite-element thermal & mechanical stress analysis for 3-inch TORUS magnetron sputtering cathodes operating at 500W RF power and 1e-9 Torr UHV pressure.',
+    tasks: [
+      { agent: 'torus_sputtering_thermal_design_spec', task: 'Execute 3D FEA thermal stress simulation across TORUS cathode copper cooling jacket, verifying max temp < 45°C under 500W RF load.', deps: [] },
+      { agent: 'high_vacuum_pumping_skid_qa_engineer', task: 'Simulate turbomolecular pump pumpdown curve, verifying ultimate base pressure of 8e-10 Torr within 4 hours bakeout.', deps: [] },
+      { agent: 'conflat_iso_flange_leak_qa_eng', task: 'Confirm zero helium leak rate (< 1e-10 mbar-L/sec) across all 12 chamber CF ports after 200°C thermal bakeout.', deps: [0, 1] },
+      { agent: 'reviewer', task: 'Audit 3D CAD models, FEA temperature contours, and helium mass spectrometer leak test certification with PE stamp.', deps: [2] },
+      { agent: 'writer', task: 'Publish complete TORUS magnetron structural qualification dossier and commercial system certification.', deps: [3] }
+    ]
+  },
+  inverter_yield: {
+    name: 'Global vacuum hardware distribution center inventory optimization & reorder test',
+    title: 'AI Vacuum Hardware Inventory Optimization Operator',
+    track: 'operations',
+    deliverable: 'Global Vacuum Hardware Inventory Optimization & Reorder Report',
+    desc: 'Agents audit 15,000 active vacuum hardware SKUs across distribution centers in Pittsburgh, London, Shanghai, and Dresden.',
+    tasks: [
+      { agent: 'global_lesker_manufacturing_router', task: 'Parse 15,000 SKU inventory feeds to identify 42 SKUs reaching safety stock reorder thresholds ahead of semiconductor boom.', deps: [] },
+      { agent: 'uhv_chamber_bom_pricing_eng', task: 'Verify Pittsburgh CNC chamber shop slot capacity and 30-day raw stainless steel plate lead times.', deps: [0] },
+      { agent: 'reviewer', task: 'Validate inventory turnover ratio (8.4x/yr) against customer VMI contractual minimums.', deps: [1] },
+      { agent: 'writer', task: 'Generate inventory health report and automated purchase order dispatch matrix for plant operations.', deps: [2] }
+    ]
+  },
+  thermal_simulation: {
+    name: 'Thin-film PVD deposition system energy efficiency & cradle-to-grave LCA simulation',
+    title: 'AI Sustainable Vacuum LCA Operator',
+    track: 'operations',
+    deliverable: 'Thin-Film PVD Deposition System Energy Efficiency & LCA Strategy',
+    desc: 'Agents run Life Cycle Assessment (LCA) environmental impact simulations comparing legacy diffusion pump systems against KJLC ECO-PVD turbomolecular systems.',
+    tasks: [
+      { agent: 'iso14041_vacuum_hardware_lca_auditor', task: 'Calculate cradle-to-grave carbon footprint: Legacy PVD (14.2 tons CO2e/yr) vs KJLC ECO-PVD (4.1 tons CO2e/yr, -71.1% energy reduction).', deps: [] },
+      { agent: 'torus_sputtering_thermal_design_spec', task: 'Confirm high-efficiency DC/RF magnetron power supplies eliminate 65% of excess thermal waste heat.', deps: [0] },
+      { agent: 'writer', task: 'Produce Kurt J. Lesker Sustainable Vacuum White Paper and ISO 14001 compliance certificate.', deps: [0, 1] }
+    ]
+  },
+  mask_eco: {
+    name: 'Custom vacuum chamber port flange & shutter mechanism ECO review',
+    title: 'AI Chamber Design ECO Revision Operator',
+    track: 'operations',
+    deliverable: 'Custom Vacuum Chamber Port Flange & Shutter Mechanism ECO Assessment',
+    desc: 'Agents evaluate Engineering Change Order ECO-2026-KJLC-504 (Modify 6-inch Substrate Shutter Pneumatic Rotary Feedthrough to Increase Fatigue Life to 500,000 Cycles).',
+    tasks: [
+      { agent: 'custom_vacuum_chamber_eco_revision_spec', task: 'Audit 3D CAD chamber drawings, confirming CNC toolpath modifications for rotary feedthrough mounting flange without scrap.', deps: [] },
+      { agent: 'conflat_iso_flange_leak_qa_eng', task: 'Confirm modified rotary feedthrough maintains helium leak tightness (<1e-10 atm-cc/sec) under 500k cycle endurance test.', deps: [0] },
+      { agent: 'writer', task: 'Publish integrated Kurt J. Lesker ECO release bulletin and Pittsburgh machine shop manufacturing notice.', deps: [1] }
+    ]
+  }
+};
+
+const FINAL = {
+  scout: `TOP 50 GLOBAL SEMICONDUCTOR & R&D THIN-FILM DEPOSITION PIPELINE (illustrative)
+Prepared for Kurt J. Lesker Company Executive Leadership & Sales Operations
+
+Scanned semiconductor research foundries, university nanofabrication centers, and optical coating facilities across North America, Europe, and Asia consuming >$10M annual vacuum equipment.
+
+Tier-1 Enterprise Vacuum System Opportunities:
+1. Quantum Nanofab Institute (MIT, Cambridge, MA) - $4.5M Value - 3x SPECTROS PVD Systems - Fit Score: 99
+2. OptoTech Precision Coatings (Jena, Germany) - $6.2M Value - Custom Multi-Cathode Sputtering Tool - Fit Score: 98
+3. Silicon Horizon Fab (Austin, TX) - $8.0M Annual Hardware - ConFlat Flanges & Turbopumps - Fit Score: 96
+4. Tokyo Advanced Materials Lab (Tokyo, Japan) - $3.8M Value - LABLINE Thin-Film Deposition Tool - Fit Score: 95
+
+Key Decision Makers: VP of Nanofabrication, Director of Thin-Film Research, Principal Vacuum Engineer.
+→ Saved: target_thin_film_pipeline, lesker_manufacturing_slots, vmi_warehouse_agreements`,
+
+  quote: `TURNKEY 20-UNIT SPECTROS PVD THIN-FILM SYSTEM & UHV CHAMBER BOM PRO FORMA (illustrative)
+Project Name: SPECTROS™ PVD Thin-Film Sputtering & Evaporation Deposition System
+Customer: Quantum Nanofab Institute
+
+System Engineering Architecture & Bill of Materials Breakdown:
+• UHV Vacuum Chamber: 304L Stainless Steel D-Shaped Box Chamber (Electropolished Ra < 10 uin)
+• Sputtering Sources: 3x TORUS® 3-Inch Magnetron Cathodes with Pneumatic Shutters
+• Vacuum Pumping Skid: 600 L/s Turbomolecular Pump + Dry Scroll Roughing Pump
+• Power Delivery: 1kW DC Power Supply + 300W RF Generator with Auto-Matching Network
+• Substrate Stage: 4-inch Heating & Rotating Stage (800°C Max Temperature)
+
+Financial Performance & Unit Capex Breakdown:
+• UHV Stainless Steel Chamber & Frame: $68,000.00/unit ($1,360,000.00 total chamber spend)
+• 3x TORUS Magnetron Cathodes & Power: $72,000.00/unit ($1,440,000.00 total cathode spend)
+• Pumping Skid & Automation Controls: $65,000.00/unit ($1,300,000.00 total pumping spend)
+• Assembly, Testing & Helium Leak QA: $40,000.00/unit ($800,000.00 total QA spend)
+• Total Delivered SPECTROS System Price: $245,000.00/unit delivered ($4,900,000.00 total program spend)
+• Custom Machining Fixture Capex: $85,000.00 one-time (amortized over first 10 units)
+• VMI Hardware Buffer: 90-day safety stock for seals, viewports, and copper gaskets held at Pittsburgh DC.
+→ Saved: spectros_pvd_bom_quote, torus_cathode_costing_schedule, lesker_fab_allocation_matrix`,
+
+  tender: `GLOBAL SEMICONDUCTOR FAB MASTER VACUUM HARDWARE & 90-DAY STOCKING TENDER (illustrative)
+Solicitation: Master Multi-Year Vacuum Hardware & Component Supply Agreement (50,000 Units/Yr)
+Semiconductor Partner: Global Tier-1 Wafer Fabrication Corporation (5 Manufacturing Sites)
+
+Volume Commitment & Product Category Breakdown:
+• ConFlat (CF) Knife-Edge Flanges & Copper Gaskets: 25,000 units/year
+• High-Vacuum ISO-K & KF Fittings: 15,000 units/year
+• Stainless Steel Gate Valves & Angle Valves: 6,000 units/year
+• High-Purity TORUS Sputtering Targets: 4,000 units/year
+
+Supply Chain & Inventory Guarantee:
+• 90-Day Vendor Managed Inventory (VMI): 12,500 unit hardware safety stock held across Pittsburgh, UK, and Shanghai hubs.
+• Delivery SLA: Guaranteed 99.8% on-time delivery with 24-hour emergency stock release commitment.
+• Quality Commitment: 100% helium leak tested to <1e-10 mbar-L/sec with certs included.
+→ Saved: master_lesker_supply_agreement, vmi_warehouse_release_matrix, volume_rebate_schedule`,
+
+  radar: `GLOBAL STAINLESS STEEL & SPUTTERING TARGET MARKET INTELLIGENCE BRIEF (illustrative)
+Analysis Scope: Global Stainless Steel 304L/316L Sheet Prices, Precious Metal Targets & Vacuum Hardware Indices
+
+Market Pricing & Index Dynamics:
+• 304L Stainless Steel Plate (USA): $3.85/lb (Flat over prior quarter due to domestic mill stability).
+• 316L Vacuum-Grade Bar Stock: $5.20/lb (+1.8% increase driven by nickel alloy surcharges).
+• High-Purity Gold (99.999%) Sputtering Targets: $68.00/gram (+4.2% increase aligned with global gold bullion market).
+• High-Vacuum Turbomolecular Pump Lead Times: 8 weeks (Stable across European and US suppliers).
+
+Strategic Recommendation:
+Lock in 12-month stainless steel plate volume contracts for the Pittsburgh machine shop while offering customers target precious metal hedging contracts.
+→ Saved: vacuum_material_index_report, stainless_steel_price_matrix, kjlc_sales_battlecards`,
+
+  panel_qualification: `TORUS MAGNETRON SPUTTERING FEA THERMAL STRESS & HELIUM LEAK DOSSIER (illustrative)
+Project Site: TORUS® 3-Inch Magnetron Cathode Assembly (Pittsburgh Vacuum Engineering Team)
+
+Structural FEA Thermal Simulation & Cathode Performance Results:
+• Magnetron Cooling Efficiency: FEA simulation verified maximum copper cooling jacket temperature of 41.2°C under 500W RF continuous load (well below 65°C target limit).
+• Magnetic Field Uniformity: Balanced planar magnet array verified target erosion utilization >38%.
+• Chamber Stress Distribution: 304L chamber wall deflection held under 0.08mm under full vacuum (1e-9 Torr).
+
+High-Vacuum & Ultra-High Vacuum Leak Rate Qualification:
+• Helium Mass Spectrometer Leak Test: Certified zero leak rate (< 1e-10 mbar-L/sec) across all 12 ConFlat ports.
+• Ultimate Base Pressure: Achieved 6.5e-10 Torr within 4 hours of 200°C bakeout.
+→ Saved: torus_magnetron_fea_report, chamber_3d_cad_drawing, helium_leak_test_certificate`,
+
+  inverter_yield: `GLOBAL VACUUM HARDWARE DISTRIBUTION CENTER INVENTORY OPTIMIZATION REPORT (illustrative)
+Monitored Network: 15,000 Active Vacuum Hardware SKUs across Pittsburgh, London, Shanghai, and Dresden Hubs
+Analytics Engine: Global Vacuum Supply Chain & WMS Integrator
+
+Diagnostic Inventory Audit Results:
+• Total Monitored Inventory Value: $58,400,000.00 (Network Inventory Turnover: 8.4x/year)
+• Reorder Trigger Alerts: 42 high-velocity SKUs identified reaching safety stock reorder point ahead of semiconductor demand spike.
+  - ConFlat CF 2.75" Copper Gaskets: 18,000 units on hand (Reorder triggered for 50,000 units from stamping facility).
+  - TORUS 2-Inch Sputtering Cathodes: 85 units on hand (Reorder triggered for 200 units from Pittsburgh assembly).
+
+Supply Chain Optimization & Savings:
+• Avoided Fab Downtime: Prevented stockouts for 12 major semiconductor wafer fabs and research institutes.
+• Automated PO Dispatch: Electronic purchase orders issued to machine shops and material suppliers.
+→ Saved: dc_inventory_health_report, automated_purchase_orders, warehouse_safety_stock_matrix`,
+
+  thermal_simulation: `THIN-FILM PVD DEPOSITION SYSTEM ENERGY EFFICIENCY & LCA STRATEGY (illustrative)
+Simulated System: SPECTROS PVD System (Diffusion Pumped Legacy System vs KJLC ECO Turbomolecular System)
+Methodology: ISO 14040/14044 Compliant Life Cycle Assessment
+
+LCA Environmental Impact Results per 1,000 System Operating Hours:
+• Greenhouse Gas Emissions (Carbon Footprint):
+  - Legacy Diffusion Pumped System: 14.2 metric tons CO2e
+  - KJLC ECO Turbomolecular System: 4.1 metric tons CO2e (-71.1% carbon reduction)
+• Water Savings: Direct drive turbopump closed-loop chiller saved 140,000 gallons of cooling water annually per tool.
+
+Regulatory & ESG Compliance:
+Fully compliant with EU Energy Efficiency Directive and ISO 14001 Environmental Management standards.
+→ Saved: kjlc_lca_simulation_report, eco_pvd_carbon_certificate, esg_compliance_dossier`,
+
+  mask_eco: `CUSTOM VACUUM CHAMBER PORT FLANGE & SHUTTER MECHANISM ECO ASSESSMENT (illustrative)
+Engineering Change Order: ECO-2026-KJLC-504
+Affected Equipment Family: SPECTROS & PRO Line Custom Stainless Steel Chambers
+
+Design Modifications & Engineering Results:
+• Pneumatic Rotary Feedthrough Refinement: Upgraded internal Ferrofluidic seal geometry and pre-loaded ceramic bearings.
+• Fatigue Life Test: Verified 500,000 continuous shutter opening/closing cycles with zero vacuum seal degradation.
+• Machine Shop Tooling Impact: Modified CNC milling routines for port mounting faces without scrapping pre-machined chamber bodies ($34,000 saved).
+• Vacuum Leak Verification: Chamber ports passed 1e-10 mbar-L/sec helium leak check post-endurance testing.
+
+Release Status: Certified for commercial production release at Pittsburgh manufacturing plant.
+→ Saved: eco_504_release_bulletin, chamber_cnc_drawings, helium_leak_test_log`
+};
+
+const OPERATORS = [
+  { id: 'scout', name: 'Scout', title: 'AI Thin-Film Deposition System Scout', wf: 'scout', handled: 530, hrs: 240, status: 'idle' },
+  { id: 'quote', name: 'Quote', title: 'AI Thin-Film System Quoting Operator', wf: 'quote', handled: 590, hrs: 280, status: 'idle' },
+  { id: 'tender', name: 'Tender', title: 'AI Master Vacuum Supply Tender Operator', wf: 'tender', handled: 360, hrs: 215, status: 'idle' },
+  { id: 'radar', name: 'Radar', title: 'AI Vacuum Materials Market Intelligence Operator', wf: 'radar', handled: 450, hrs: 205, status: 'idle' },
+  { id: 'safety', name: 'Sentinel', title: 'AI TORUS Magnetron FEA & Leak Operator', wf: 'panel_qualification', handled: 690, hrs: 375, status: 'idle' },
+  { id: 'mill', name: 'Atlas', title: 'AI Vacuum Hardware Inventory Optimization Operator', wf: 'inverter_yield', handled: 630, hrs: 320, status: 'idle' },
+  { id: 'cfd', name: 'Vanguard', title: 'AI Sustainable Vacuum LCA Operator', wf: 'thermal_simulation', handled: 480, hrs: 250, status: 'idle' },
+  { id: 'eco', name: 'Nexus', title: 'AI Chamber Design ECO Revision Operator', wf: 'mask_eco', handled: 420, hrs: 230, status: 'idle' }
+];
+
+function initUI() {
+  renderOperators('all');
+  populateSimSelect();
+  loadSimDetails();
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('[id^="view-"]').forEach(v => v.classList.add('hidden'));
+
+  if(tab === 'roster') {
+    document.querySelectorAll('.nav-link')[0].classList.add('active');
+    document.getElementById('view-roster').classList.remove('hidden');
+  } else if(tab === 'simulation') {
+    document.querySelectorAll('.nav-link')[1].classList.add('active');
+    document.getElementById('view-simulation').classList.remove('hidden');
+  } else if(tab === 'hire') {
+    document.querySelectorAll('.nav-link')[2].classList.add('active');
+    document.getElementById('view-hire').classList.remove('hidden');
+  }
+}
+
+function renderOperators(track) {
+  const grid = document.getElementById('opGrid');
+  grid.innerHTML = '';
+
+  OPERATORS.forEach(op => {
+    const wf = WORKFLOWS[op.wf];
+    if(track !== 'all' && wf.track !== track) return;
+
+    const isFlagship = wf.tag === 'flagship';
+    const card = document.createElement('div');
+    card.className = 'card card-op';
+    card.innerHTML = `
+      ${isFlagship ? '<div class="flagship-tag">TORUS UHV FLAGSHIP</div>' : ''}
+      <div class="card-title">${op.name}</div>
+      <div class="card-meta">${op.title}</div>
+      <div class="wf-desc">${wf.name}</div>
+      <div class="stat-box">
+        <div>
+          <div class="stat-lbl">TASKS RUN</div>
+          <div class="stat-num">${op.handled}</div>
+        </div>
+        <div>
+          <div class="stat-lbl">TIME SAVED</div>
+          <div class="stat-num">${op.hrs}h</div>
+        </div>
+      </div>
+      <button class="btn-lesker" onclick="quickRun('${op.wf}')">SIMULATE OPERATOR</button>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function filterTrack(track) {
+  document.querySelectorAll('.track-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderOperators(track);
+}
+
+function populateSimSelect() {
+  const sel = document.getElementById('simWfSelect');
+  sel.innerHTML = '';
+  Object.keys(WORKFLOWS).forEach(key => {
+    const wf = WORKFLOWS[key];
+    const opt = document.createElement('option');
+    opt.value = key;
+    opt.textContent = `${wf.title} (${wf.name})`;
+    sel.appendChild(opt);
+  });
+}
+
+function loadSimDetails() {
+  const key = document.getElementById('simWfSelect').value;
+  const wf = WORKFLOWS[key];
+  const dag = document.getElementById('dagContainer');
+  dag.innerHTML = '';
+
+  wf.tasks.forEach((t, idx) => {
+    const role = AGENT_ROLES[t.agent];
+    const node = document.createElement('div');
+    node.className = `dag-node ${wf.tag === 'flagship' ? 'flagship' : ''}`;
+    node.innerHTML = `
+      <div style="font-weight:700; color:var(--lesker-navy); text-transform:uppercase;">${role.emoji} STEP ${idx + 1}: ${role.label}</div>
+      <div style="color:var(--text-dark); margin-top:2px;">${t.task}</div>
+    `;
+    dag.appendChild(node);
+  });
+
+  document.getElementById('dossierContainer').classList.add('hidden');
+  document.getElementById('simProgress').style.width = '0%';
+  document.getElementById('simLogs').textContent = `Loaded workflow: ${wf.title}\nClick 'START SIMULATION' to execute multi-agent task workflow.`;
+}
+
+function quickRun(wfKey) {
+  switchTab('simulation');
+  document.getElementById('simWfSelect').value = wfKey;
+  loadSimDetails();
+  runSimulation();
+}
+
+function runSimulation() {
+  const key = document.getElementById('simWfSelect').value;
+  const wf = WORKFLOWS[key];
+  const btn = document.getElementById('runBtn');
+  const logs = document.getElementById('simLogs');
+  const fill = document.getElementById('simProgress');
+  const dossierContainer = document.getElementById('dossierContainer');
+  const dossierText = document.getElementById('dossierText');
+
+  btn.disabled = true;
+  dossierContainer.classList.add('hidden');
+  logs.textContent = `[0.00s] INITIALIZING KURT J. LESKER AI WORKFORCE ENGINE...\n[0.10s] Loading agent roles & tool definitions for workflow '${key}'...\n`;
+  fill.style.width = '10%';
+
+  let currentStep = 0;
+  const totalSteps = wf.tasks.length;
+
+  const timer = setInterval(() => {
+    if(currentStep < totalSteps) {
+      const task = wf.tasks[currentStep];
+      const role = AGENT_ROLES[task.agent];
+      const timestamp = ((currentStep + 1) * 0.45).toFixed(2);
+
+      logs.textContent += `[${timestamp}s] EXECUTING STEP ${currentStep + 1}/${totalSteps}: ${role.label}\n`;
+      logs.textContent += `  ➜ Task: ${task.task}\n`;
+      logs.textContent += `  ➜ Tool Output: Executed tool '${role.tools[0]}' successfully.\n`;
+      logs.scrollTop = logs.scrollHeight;
+
+      currentStep++;
+      fill.style.width = `${Math.min(90, (currentStep / totalSteps) * 90)}%`;
+    } else {
+      clearInterval(timer);
+      fill.style.width = '100%';
+      logs.textContent += `[${(totalSteps * 0.45 + 0.2).toFixed(2)}s] WORKFLOW EXECUTION COMPLETE. GENERATING EXECUTIVE DOSSIER...\n`;
+      logs.scrollTop = logs.scrollHeight;
+
+      dossierText.textContent = FINAL[key] || 'Dossier completed.';
+      dossierContainer.classList.remove('hidden');
+      btn.disabled = false;
+    }
+  }, 500);
+}
+
+function deployOperator() {
+  const name = document.getElementById('newOpName').value || 'Custom Lesker Operator';
+  const wf = document.getElementById('newOpWf').value;
+
+  OPERATORS.push({
+    id: 'custom_' + Date.now(),
+    name: name,
+    title: 'Custom ' + WORKFLOWS[wf].title,
+    wf: wf,
+    handled: 1,
+    hrs: 0,
+    status: 'idle'
+  });
+
+  alert(`Successfully deployed AI Operator '${name}' into Kurt J. Lesker workforce roster!`);
+  switchTab('roster');
+  renderOperators('all');
+}
+
+window.onload = initUI;
+</script>
+</body>
+</html>
