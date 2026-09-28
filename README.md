@@ -276,3 +276,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/onboard-logistics
 https://innvonix-tech-solutions.github.io/ai-workforce/trax-tech
 https://innvonix-tech-solutions.github.io/ai-workforce/monarca-international
 https://innvonix-tech-solutions.github.io/ai-workforce/mydefence
+https://innvonix-tech-solutions.github.io/ai-workforce/asm
