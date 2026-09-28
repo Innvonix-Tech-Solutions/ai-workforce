@@ -289,3 +289,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/movellus-inc
 https://innvonix-tech-solutions.github.io/ai-workforce/avicena-tech
 https://innvonix-tech-solutions.github.io/ai-workforce/vorago-technologies
 https://innvonix-tech-solutions.github.io/ai-workforce/ambiq
+https://innvonix-tech-solutions.github.io/ai-workforce/digital-dynamics
