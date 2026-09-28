@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avicena &mdash; AI MicroLED Optical Interconnect Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f4f9ff;--surface2:#d0e6fd;--border:#93c5fd;--accent:#0284c7;
+--accent-dim:rgba(2,132,199,.08);--accent-line:rgba(2,132,199,.30);--slate:#0b132b;--slate-line:rgba(11,19,43,.30);--text:#091424;--hi:#020914;--tert:#475569;--ok:#10b981;--ok-dim:rgba(16,185,129,.10);--gold:#00f0ff;--gold-bg:#e0fcfd;--gold-line:#99f6ff}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:48px;height:34px;border-radius:8px;background:linear-gradient(135deg,#0284c7,#00c2ff);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:12px;letter-spacing:.5px;font-family:Inter,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#0284c7}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:900px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#0369a1;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(16,185,129,.08);color:#059669;border:1px solid rgba(16,185,129,.3)}
+.tag.hero{background:var(--gold-bg);color:#007a85;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#0284c7}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#0369a1;font-size:15px;flex-shrink:0;position:relative;font-family:Inter,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#0284c7}.btn.primary{background:linear-gradient(270deg,#0284c7,#0369a1);border-color:#0284c7;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#0284c7;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#0284c7}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(16,185,129,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(16,185,129,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#0284c7}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Inter,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#0369a1;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px;font-family:Inter,sans-serif}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input,.field select{width:100%;background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);outline:none}
+.field input:focus{border-color:var(--accent)}
+.seg{display:flex;gap:6px}.seg button{flex:1;padding:9px;font-size:12px;font-weight:600;border:1px solid var(--border);border-radius:7px;background:#fff;color:var(--tert);cursor:pointer;font-family:Inter,sans-serif}
+.seg button.on{background:var(--accent-dim);color:var(--hi);border-color:var(--accent-line)}
+.foot{max-width:1180px;margin:30px auto 40px;padding:18px 24px;border-top:1px solid var(--border);font-size:11.5px;color:var(--tert);text-align:center;line-height:1.5;font-family:Inter,sans-serif}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">
+    <div class="mark">AVI</div>
+    <div>
+      <div class="htitle">Avicena &middot; AI MicroLED Optical Interconnect Workforce</div>
+      <div class="hsub">LightBundle&trade; Laser-Free Optical Links &middot; Die-to-Die, HBM Memory &amp; AI Data Center Interconnects (80fJ/bit)</div>
+    </div>
+  </div>
+  <div class="badge"><b>Avicena HQ</b> &middot; Sunnyvale, CA</div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tab-roster" onclick="switchTab('roster')">Workforce Roster</button>
+  <button class="tab" id="tab-run" onclick="switchTab('run')">Execution Engine</button>
+  <button class="tab" id="tab-builder" onclick="switchTab('builder')">Operator Builder</button>
+</div>
+
+<div class="main">
+  <div id="view-roster">
+    <div class="lead">
+      Interactive prototype of an autonomous AI workforce purpose-built for <b>Avicena</b>. Designed to commercialize the laser-free <b>LightBundle&trade;</b> optical interconnect platform. Automates Tier-1 AI chipmaker 1 Tbps eKit evaluations, TSMC 300mm microLED wafer hybrid bonding, multi-core fiber bundle alignment, and 80fJ/bit power efficiency signal integrity verification.
+    </div>
+
+    <div class="legend">
+      <span><span class="tag commercial">Track A</span> Commercial &amp; Customer Evaluation</span>
+      <span><span class="tag operations">Track B</span> MicroLED &amp; Optical Interconnect Engineering</span>
+      <span><span class="tag hero">Flagship</span> Flagship Operator</span>
+    </div>
+
+    <div class="econ" id="econ-strip"></div>
+    <div id="roster-tracks"></div>
+  </div>
+
+  <div id="view-run" class="hidden">
+    <div class="run">
+      <div class="run-head">
+        <h2 id="run-title">Select an Operator</h2>
+        <span id="run-badge"></span>
+      </div>
+      <div class="run-sub" id="run-desc">Choose an operator from the roster to launch execution.</div>
+
+      <div class="run-input">
+        <textarea id="run-prompt" rows="2" placeholder="Workflow prompt instructions..."></textarea>
+        <button class="btn primary big" id="run-btn" onclick="startRun()">Launch Run</button>
+      </div>
+
+      <div class="phases" id="run-phases"></div>
+      <div class="agent-grid" id="agent-grid"></div>
+
+      <div class="feed" id="run-feed">
+        <div class="frow">
+          <span class="ft">00:00.0</span>
+          <span class="fa">System</span>
+          <span class="fd">Engine initialized. Ready to execute workflow.</span>
+        </div>
+      </div>
+
+      <div class="result hidden" id="run-result">
+        <div class="rstats" id="result-stats"></div>
+        <div class="rout">
+          <div class="rh" id="result-title">Produced Deliverable</div>
+          <div class="rb" id="result-text"></div>
+        </div>
+      </div>
+      <div id="run-donebar" class="hidden"></div>
+    </div>
+  </div>
+
+  <div id="view-builder" class="hidden">
+    <div class="run">
+      <h2>3-Step Operator Builder</h2>
+      <div class="run-sub">Compose a new AI operator by tailoring workflow tasks and agent assignments.</div>
+
+      <div class="steps">
+        <div class="step active" id="st-1">
+          <div class="n">STEP 1</div>
+          <div class="l">Select Base Workflow</div>
+          <div class="d">Choose template workflow</div>
+        </div>
+        <div class="step" id="st-2">
+          <div class="n">STEP 2</div>
+          <div class="l">Assign Agents</div>
+          <div class="d">Configure task execution</div>
+        </div>
+        <div class="step" id="st-3">
+          <div class="n">STEP 3</div>
+          <div class="l">Deploy Operator</div>
+          <div class="d">Save to active roster</div>
+        </div>
+      </div>
+
+      <div id="bstep-1">
+        <div class="slabel">Available Workflows</div>
+        <div class="wf-grid" id="builder-wf-grid"></div>
+        <div style="margin-top:18px;text-align:right">
+          <button class="btn primary" onclick="bNext(2)">Next: Assign Agents &rarr;</button>
+        </div>
+      </div>
+
+      <div id="bstep-2" class="hidden">
+        <div class="slabel">Configure Task Assignments</div>
+        <div id="builder-tasks"></div>
+        <div style="margin-top:18px;display:flex;justify-content:space-between">
+          <button class="btn ghost" onclick="bNext(1)">&larr; Back</button>
+          <button class="btn primary" onclick="bNext(3)">Next: Operator Details &rarr;</button>
+        </div>
+      </div>
+
+      <div id="bstep-3" class="hidden">
+        <div class="slabel">Operator Profile</div>
+        <div class="field">
+          <label>Operator Name</label>
+          <input type="text" id="b-name" value="Custom Avicena Operator">
+        </div>
+        <div class="field">
+          <label>Title / Role</label>
+          <input type="text" id="b-title" value="Specialized Optical Interconnect Specialist">
+        </div>
+        <div style="margin-top:18px;display:flex;justify-content:space-between">
+          <button class="btn ghost" onclick="bNext(2)">&larr; Back</button>
+          <button class="btn primary" onclick="deployOperator()">Deploy Operator to Roster</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  Avicena AI Workforce Simulation &middot; Designed for Avicena (Sunnyvale / Silicon Valley, CA)<br>
+  Built with autonomous multi-agent architecture for LightBundle&trade; laser-free microLED optical interconnects, multi-core fiber bundle packaging, and 80fJ/bit energy efficiency.<br>
+  <i>Disclaimer: Illustrative simulation based on public domain information for Avicena. All outputs subject to human-in-the-loop review.</i>
+</div>
+
+<script>
+const TRACKS = [
+  ['commercial', 'Commercial & Customer Evaluation'],
+  ['engineering', 'MicroLED & Optical Interconnect Engineering']
+];
+
+const AGENT_ROLES = {
+  chipmaker_scout: { emoji: '🎯', label: 'AI Chipmaker & Hyperscale Scout', tools: ['source_chipmaker_accounts', 'save'] },
+  ekit_eval_lead: { emoji: '📦', label: 'LightBundle™ 1Tbps eKit Lead', tools: ['deploy_ekit', 'profile_ekit_telemetry', 'save'] },
+  microled_array_arch: { emoji: '🔬', label: 'MicroLED Array Architect', tools: ['design_microled_matrix', 'simulate_microled_efficiency', 'save'] },
+  fiber_bundle_lead: { emoji: '🧵', label: 'Multi-Core Fiber Alignment Eng', tools: ['align_fiber_bundle', 'measure_insertion_loss', 'save'] },
+  cmos_pd_lead: { emoji: '📐', label: 'CMOS Photodetector & Rx Lead', tools: ['verify_photodetector_rx', 'check_ber_performance', 'save'] },
+  tsmc_foundry_mgr: { emoji: '🏭', label: 'TSMC 300mm Fab & Bonding Mgr', tools: ['schedule_tsmc_wafer_run', 'audit_cu_bonding', 'save'] },
+  signal_integrity_lead: { emoji: '⚡', label: '80fJ/bit Signal Integrity Lead', tools: ['measure_eye_diagram', 'verify_80fj_power', 'save'] },
+  nre_pricing_lead: { emoji: '🧮', label: 'LightBundle™ JDA & NRE Lead', tools: ['build_nre_quote', 'analyze_total_cost_ownership', 'save'] },
+  connectorized_mpo_lead: { emoji: '🔌', label: 'Connectorized MPO Specialist', tools: ['test_mpo_connector', 'verify_detachable_interface', 'save'] },
+  interconnect_intel: { emoji: '🛰️', label: 'Copper vs Laser vs LightBundle Analyst', tools: ['profile_laser_vs_microled', 'benchmark_copper_limits', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'Technical JDA & Proposal Writer', tools: ['compose_jda_proposal', 'save'] },
+  qa_reviewer: { emoji: '✅', label: 'Final QA & Package Reviewer', tools: ['qa_audit', 'save'] }
+};
+
+const WORKFLOWS = {
+  ekit_chipmaker_evaluation: {
+    name: '1 Tbps LightBundle eKit Eval',
+    title: '1 Tbps LightBundle™ eKit Evaluation & AI Chipmaker JDA Proposal',
+    mode: 'sequential',
+    track: 'commercial',
+    tag: 'flagship',
+    deliverable: '1 Tbps LightBundle™ eKit Customer Evaluation & JDA Proposal',
+    sample: 'Evaluate 1 Tbps LightBundle laser-free microLED optical link eKit for Tier-1 AI GPU chipmaker.',
+    desc: 'Multi-agent customer evaluation engine mapping eKit throughput, microLED matrix setup, and BER < 1e-12 signal integrity.',
+    tasks: [
+      { agent: 'chipmaker_scout', task: 'Source Tier-1 AI accelerator & GPU chipmaker accounts for optical interconnect evaluation', deps: [] },
+      { agent: 'ekit_eval_lead', task: 'Deploy 1 Tbps LightBundle™ evaluation kit (eKit) to customer laboratory', deps: [0] },
+      { agent: 'microled_array_arch', task: 'Configure laser-free microLED transmitter matrix for die-to-die optical link', deps: [1] },
+      { agent: 'signal_integrity_lead', task: 'Measure 80 fJ/bit energy efficiency and BER < 1e-12 signal integrity', deps: [2] },
+      { agent: 'nre_pricing_lead', task: 'Structure volume LightBundle™ module pricing and NRE customization terms', deps: [3] },
+      { agent: 'proposal_writer', task: 'Draft Joint Development Agreement (JDA) and executive technical proposal package', deps: [4] },
+      { agent: 'qa_reviewer', task: 'Finalize eKit customer evaluation package and executive summary', deps: [5] }
+    ]
+  },
+  jda_nre_pricing_model: {
+    name: 'LightBundle Module NRE Pricing',
+    title: 'LightBundle™ Module & NRE Customization Quoting',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'LightBundle™ Custom Module & NRE Quoting Package',
+    sample: 'Price custom 3.2 Tbps LightBundle optical interconnect module for hyperscale AI data center switch.',
+    desc: 'Cost modeling for custom microLED arrays, multi-core fiber assembly, and TSMC 300mm wafer runs.',
+    tasks: [
+      { agent: 'nre_pricing_lead', task: 'Calculate microLED array NRE, fiber bundle assembly costs, and TSMC wafer volume discounts', deps: [] },
+      { agent: 'signal_integrity_lead', task: 'Model total cost of ownership (TCO) power savings for 100,000-XPU AI cluster', deps: [0] },
+      { agent: 'proposal_writer', task: 'Structure NRE commercial proposal and volume delivery milestone schedule', deps: [1] },
+      { agent: 'qa_reviewer', task: 'Validate LightBundle™ quotation dossier for customer sign-off', deps: [2] }
+    ]
+  },
+  interconnect_benchmark_radar: {
+    name: 'Interconnect Competitive Radar',
+    title: 'Laser-Free LightBundle™ vs Copper DAC & EML Laser Radar',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Laser-Free LightBundle™ vs Copper DAC & Laser Transceiver Brief',
+    sample: 'Benchmark LightBundle microLED links against copper DAC distance limits and EML laser failure rates.',
+    desc: 'Parallel competitive analysis contrasting laser-free microLED interconnects vs copper & laser optics.',
+    tasks: [
+      { agent: 'interconnect_intel', task: 'Benchmark LightBundle™ against copper DAC reach limits, Retimers, and EML/CPO laser cost/thermal penalty', deps: [] },
+      { agent: 'chipmaker_scout', task: 'Survey hyperscaler AI data center interconnect roadmaps (800G, 1.6T, 3.2T links)', deps: [] },
+      { agent: 'proposal_writer', task: 'Publish competitive optical interconnect intelligence briefing', deps: [0, 1] },
+      { agent: 'qa_reviewer', task: 'Verify competitive benchmarks and market positioning', deps: [2] }
+    ]
+  },
+  mpo_connectorized_kit: {
+    name: 'Detachable MPO Kit Validation',
+    title: 'Detachable Connectorized MPO LightBundle™ Kit Validation',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Connectorized MPO LightBundle™ Interface Qualification Charter',
+    sample: 'Qualify detachable MPO optical interface for field serviceability in high-density AI server chassis.',
+    desc: 'Detachable optical connector validation for high-density AI rack assembly and servicing.',
+    tasks: [
+      { agent: 'ekit_eval_lead', task: 'Test detachable MPO optical interface for field serviceability in high-density AI racks', deps: [] },
+      { agent: 'fiber_bundle_lead', task: 'Verify multi-fiber push-on (MPO) connector mating cycles and insertion loss stability', deps: [] },
+      { agent: 'connectorized_mpo_lead', task: 'Qualify mechanical strain relief and thermal expansion across AI server chassis', deps: [0, 1] },
+      { agent: 'qa_reviewer', task: 'Complete connectorized MPO LightBundle™ qualification package', deps: [2] }
+    ]
+  },
+  lightbundle_microled_array: {
+    name: 'MicroLED Array Integration',
+    title: 'Laser-Free MicroLED Transmitter & CMOS Driver Integration',
+    mode: 'sequential',
+    track: 'engineering',
+    deliverable: 'Sub-Micron MicroLED Transmitter & CMOS Receiver Integration Report',
+    sample: 'Integrate sub-micron blue microLED matrix with CMOS driver backplane IC.',
+    desc: 'Sub-micron microLED array integration on CMOS driver ICs for high-bandwidth optical TX.',
+    tasks: [
+      { agent: 'microled_array_arch', task: 'Design high-density sub-micron blue microLED matrix array for optical TX', deps: [] },
+      { agent: 'cmos_pd_lead', task: 'Integrate CMOS receiver photodetector array with low-noise transimpedance amplifiers (TIA)', deps: [0] },
+      { agent: 'tsmc_foundry_mgr', task: 'Execute TSMC 300mm wafer fabrication and microLED-to-CMOS hybrid bonding', deps: [1] },
+      { agent: 'qa_reviewer', task: 'Publish microLED transmitter & CMOS driver integration report', deps: [2] }
+    ]
+  },
+  multi_core_fiber_alignment: {
+    name: 'Multi-Core Fiber Alignment',
+    title: 'Multi-Core Fiber Bundle Automated Alignment & Packaging',
+    mode: 'dag',
+    track: 'engineering',
+    deliverable: 'Multi-Core Fiber Bundle Automated Alignment Validation Report',
+    sample: 'Align 64-channel multi-core optical fiber bundle to microLED transmitter die with < 0.5dB loss.',
+    desc: 'Parallel automated optical alignment and fiber bundle packaging for ultra-dense optical links.',
+    tasks: [
+      { agent: 'fiber_bundle_lead', task: 'Setup sub-micron active optical alignment of multi-core fiber bundle to microLED array', deps: [] },
+      { agent: 'cmos_pd_lead', task: 'Align fiber bundle array to CMOS photodetector RX die with optical epoxy curing', deps: [] },
+      { agent: 'connectorized_mpo_lead', task: 'Measure multi-channel optical crosstalk and insertion loss (< 0.5dB/channel)', deps: [0, 1] },
+      { agent: 'qa_reviewer', task: 'Finalize fiber bundle alignment and packaging validation report', deps: [2] }
+    ]
+  },
+  tsmc_300mm_hybrid_bonding: {
+    name: 'TSMC 300mm Hybrid Bonding',
+    title: 'TSMC 300mm Wafer Fabrication & Cu-Cu Hybrid Bonding',
+    mode: 'sequential',
+    track: 'engineering',
+    deliverable: 'TSMC 300mm Wafer Cu-Cu Hybrid Bonding Qualification Certificate',
+    sample: 'Qualify TSMC 300mm wafer Cu-Cu hybrid bonding for microLED-on-CMOS ICs.',
+    desc: 'Wafer-level 300mm hybrid bonding verification with TSMC foundry partners.',
+    tasks: [
+      { agent: 'tsmc_foundry_mgr', task: 'Qualify TSMC 300mm wafer-level Cu-Cu hybrid bonding for microLED-on-CMOS ICs', deps: [] },
+      { agent: 'microled_array_arch', task: 'Inspect pixel interconnect contact yield across 300mm wafer surface', deps: [0] },
+      { agent: 'signal_integrity_lead', task: 'Perform wafer-level electro-optical probing and thermal endurance burn-in', deps: [1] },
+      { agent: 'qa_reviewer', task: 'Generate TSMC 300mm wafer hybrid bonding qualification certificate', deps: [2] }
+    ]
+  },
+  signal_integrity_80fj: {
+    name: '80 fJ/bit Signal Integrity',
+    title: '80 fJ/bit Ultra-Low Power & Bit Error Rate (BER) Calibration',
+    mode: 'dag',
+    track: 'engineering',
+    deliverable: '80 fJ/bit Ultra-Low Power Signal Integrity & BER Calibration Report',
+    sample: 'Calibrate 80 fJ/bit link power efficiency and BER < 1e-12 performance at 1 Tbps aggregate speed.',
+    desc: 'Parallel signal integrity, eye diagram, BER, and ultra-low power verification.',
+    tasks: [
+      { agent: 'signal_integrity_lead', task: 'Characterize 80 fJ/bit energy efficiency across 1 Tbps aggregate LightBundle™ link', deps: [] },
+      { agent: 'cmos_pd_lead', task: 'Measure optical eye diagram opening, jitter, and BER < 1e-12 performance', deps: [] },
+      { agent: 'ekit_eval_lead', task: 'Validate laser-free thermal stability without active cooling or TEC loops', deps: [0, 1] },
+      { agent: 'qa_reviewer', task: 'Finalize signal integrity & power efficiency validation report', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  ekit_chipmaker_evaluation: '1 Tbps LightBundle™ eKit Evaluation & AI Chipmaker JDA Proposal',
+  jda_nre_pricing_model: 'LightBundle™ Custom Module & NRE Quoting Package',
+  interconnect_benchmark_radar: 'Laser-Free LightBundle™ vs Copper DAC & Laser Transceiver Brief',
+  mpo_connectorized_kit: 'Connectorized MPO LightBundle™ Interface Qualification Charter',
+  lightbundle_microled_array: 'Sub-Micron MicroLED Transmitter & CMOS Receiver Integration Report',
+  multi_core_fiber_alignment: 'Multi-Core Fiber Bundle Automated Alignment Validation Report',
+  tsmc_300mm_hybrid_bonding: 'TSMC 300mm Wafer Cu-Cu Hybrid Bonding Qualification Certificate',
+  signal_integrity_80fj: '80 fJ/bit Ultra-Low Power Signal Integrity & BER Calibration Report'
+};
+
+const TOOLS = {
+  source_chipmaker_accounts: ()=>'Sourced 16 Tier-1 AI chipmaker accounts (Nvidia, Broadcom, Marvell, AMD, Intel).',
+  deploy_ekit: ()=>'Deployed 1 Tbps LightBundle eKit to customer AI hardware validation lab.',
+  profile_ekit_telemetry: ()=>'Profiled eKit telemetry: verified 1.024 Tbps aggregate throughput across 32 optical channels.',
+  design_microled_matrix: ()=>'Designed sub-micron microLED array: 2.5µm emitter pitch, 850nm/450nm optical wavelength.',
+  simulate_microled_efficiency: ()=>'Simulated microLED efficiency: 22% wall-plug efficiency achieved at sub-micron dimensions.',
+  align_fiber_bundle: ()=>'Aligned multi-core fiber bundle: achieved < 0.3µm alignment precision using automated hexapod.',
+  measure_insertion_loss: ()=>'Measured insertion loss: < 0.45dB per optical channel across 64-core fiber bundle.',
+  verify_photodetector_rx: ()=>'Verified CMOS photodetector RX: 0.8 A/W responsivity with integrated low-noise TIA.',
+  check_ber_performance: ()=>'Checked BER performance: BER < 1e-12 error rate confirmed without FEC overhead.',
+  schedule_tsmc_wafer_run: ()=>'Scheduled TSMC 300mm fab lot: 20 wafers queued for Cu-Cu hybrid bonding.',
+  audit_cu_bonding: ()=>'Audited Cu-Cu hybrid bonding: 99.6% electrical contact yield across 300mm wafer.',
+  measure_eye_diagram: ()=>'Measured optical eye diagram: wide open eye at 32 Gbps/lane with 3.2ps deterministic jitter.',
+  verify_80fj_power: ()=>'Verified 80 fJ/bit power consumption: 82 fJ/bit total link energy achieved at room temp.',
+  build_nre_quote: ()=>'Built JDA quote: $4.5M custom LightBundle module development & NRE package.',
+  analyze_total_cost_ownership: ()=>'Analyzed TCO savings: 100k-XPU AI cluster saves $14M annually in optical link power.',
+  test_mpo_connector: ()=>'Tested MPO connector: passed 500 mating cycles with zero degradation in optical power.',
+  verify_detachable_interface: ()=>'Verified detachable interface: quick-release MPO connector validated for AI server chassis.',
+  profile_laser_vs_microled: ()=>'Profiled laser vs microLED: laser-free microLED eliminates TEC coolers and un-cooled laser failures.',
+  benchmark_copper_limits: ()=>'Benchmarked copper DAC vs LightBundle: 10x longer reach, 50x lower cable bundle weight.',
+  compose_jda_proposal: ()=>'Composed JDA proposal: compiled comprehensive 18-month LightBundle integration roadmap.',
+  qa_audit: ()=>'Executed QA audit: verified specifications, eye diagram metrics, and complete deliverable package.',
+  save: ()=>'Saved deliverable artifact to Avicena technical repository.'
+};
+
+const FINAL = {
+  ekit_chipmaker_evaluation: `AVICENA LIGHTBUNDLE™ 1 TBPS eKIT CUSTOMER EVALUATION REPORT
+Customer: Tier-1 AI Accelerator Chipmaker (Data Center Architecture)
+Evaluation Date: September 2026
+
+1. EXECUTIVE SYSTEM PERFORMANCE METRICS
+- Aggregate Throughput: 1.024 Tbps across 32 optical channels (32 Gbps per lane).
+- Energy Consumption: 82 fJ / bit total link power (10x-100x lower than laser transceivers).
+- Bit Error Rate (BER): < 1e-12 un-equalized error rate (zero FEC latency penalty).
+- Laser-Free Architecture: Sub-micron microLED array directly coupled to multi-core fiber bundle.
+
+2. LIGHTBUNDLE™ CONNECTORIZED MPO INTERFACE
+- Detachable Optical Form Factor: Standard MPO connectorized interface passed 500 mating cycles.
+- Thermal Operating Range: 0°C to 105°C continuous operation without TEC coolers or wavelength drift.
+
+3. COMMERCIAL ROADMAP & JDA PROPOSAL
+- Selection Verdict: PASSED Customer Evaluation for 3.2 Tbps Next-Gen AI Switch Integration.
+- Phase 1 JDA: $4.5M NRE customization charter for TSMC 300mm hybrid-bonded optical engine.
+
+NOTE: illustrative simulation based on public domain information for Avicena.`,
+
+  jda_nre_pricing_model: `AVICENA LIGHTBUNDLE™ MODULE & NRE COMMERCIAL QUOTATION
+Customer: Hyperscale AI Data Center Operator
+
+1. CUSTOM MODULE NRE BREAKDOWN
+- Custom Sub-Micron MicroLED Array Mask Set (TSMC 300mm): $2,200,000
+- Multi-Core Fiber Bundle Tooling & Assembly Setup: $1,400,000
+- eKit Hardware Delivery (5 Evaluation Sets): $900,000
+- Total Initial NRE Investment: $4,500,000
+
+2. TOTAL COST OF OWNERSHIP (TCO) ADVANTAGE
+- Power Savings: $14.2M annual electricity reduction for 100,000-XPU AI data center cluster.
+
+NOTE: illustrative simulation based on public domain information for Avicena.`,
+
+  interconnect_benchmark_radar: `AVICENA COMPETITIVE RADAR: LASER-FREE LIGHTBUNDLE™ VS COPPER & LASER OPTICS
+
+1. TECHNICAL MATRIX COMPARISON
+- Avicena LightBundle™: 80 fJ/bit | Laser-Free MicroLED | 100m Reach | 100% Uncooled | Detachable MPO
+- Copper DAC Cables: 300 fJ/bit | Retimers Required | < 2m Reach Limit | Extremely Heavy Cable Bundles
+- EML / CPO Laser Optics: 15-30 pJ/bit | Thermal Laser Failure Risk | Complex TEC Coolers Required | High Cost
+
+NOTE: illustrative simulation based on public domain information for Avicena.`,
+
+  mpo_connectorized_kit: `CONNECTORIZED MPO LIGHTBUNDLE™ INTERFACE QUALIFICATION REPORT
+
+1. CONNECTOR PERFORMANCE METRICS
+- Connector Type: Standard Detachable MPO Optical Interface.
+- Insertion Loss: < 0.42dB average across 32 optical fibers.
+- Field Serviceability: Quick-release latching validated for high-density 1U AI server chassis.
+
+NOTE: illustrative simulation based on public domain information for Avicena.`,
+
+  lightbundle_microled_array: `SUB-MICRON MICROLED TRANSMITTER & CMOS RECEIVER REPORT
+
+1. SILICON FABRICATION METRICS
+- MicroLED Emitter Size: Sub-micron 2.5µm diameter.
+- CMOS Integration: TSMC 300mm Cu-Cu hybrid bonding to 65nm CMOS receiver driver IC.
+- Interconnect Yield: 99.6% functional optical channel yield across 300mm wafer.
+
+NOTE: illustrative simulation based on public domain information for Avicena.`,
+
+  multi_core_fiber_alignment: `MULTI-CORE FIBER BUNDLE AUTOMATED ALIGNMENT REPORT
+
+1. ALIGNMENT & PACKAGING SPECIFICATIONS
+- Alignment Precision: 0.28µm active optical alignment accuracy achieved via automated hexapod.
+- Channel Crosstalk: < -38dB inter-core optical isolation across 64-fiber bundle.
+
+NOTE: illustrative simulation based on public domain information for Avicena.`,
+
+  tsmc_300mm_hybrid_bonding: `TSMC 300mm WAFER HYBRID BONDING QUALIFICATION CERTIFICATE
+
+1. QUALIFICATION METRICS
+- Wafer Platform: TSMC 300mm (12-inch) Cu-Cu Direct Hybrid Bonding.
+- Contact Resistance: < 0.08 ohms per microLED interconnect pad.
+- Reliability: Passed 1,500 cycles thermal shock (-40°C to 125°C).
+
+NOTE: illustrative simulation based on public domain information for Avicena.`,
+
+  signal_integrity_80fj: `80 fJ/bit SIGNAL INTEGRITY & POWER EFFICIENCY REPORT
+
+1. LINK POWER & EYE DIAGRAM METRICS
+- Total Link Energy Consumption: 82 fJ / bit (TX MicroLED + RX CMOS TIA).
+- Eye Height: 140mV wide open eye diagram at 32 Gbps / channel.
+
+NOTE: illustrative simulation based on public domain information for Avicena.`
+};
+
+const EMPLOYEES = [
+  { id: 'emp_1', name: 'eKit-Director', title: 'eKit Deployment Director', wf: 'ekit_chipmaker_evaluation', handled: 42, hrs: 580, win: '1 Tbps LightBundle', status: 'idle' },
+  { id: 'emp_2', name: 'JDA-Quoter', title: 'LightBundle JDA & NRE Lead', wf: 'jda_nre_pricing_model', handled: 36, hrs: 410, win: '85% Turnaround Cut', status: 'idle' },
+  { id: 'emp_3', name: 'Radar-Analyst', title: 'Interconnect Market Intel Analyst', wf: 'interconnect_benchmark_radar', handled: 48, hrs: 490, win: 'Laser-Free Advantage', status: 'idle' },
+  { id: 'emp_4', name: 'MPO-Specialist', title: 'Connectorized MPO Interface Lead', wf: 'mpo_connectorized_kit', handled: 31, hrs: 390, win: 'Detachable MPO', status: 'idle' },
+  { id: 'emp_5', name: 'MicroLED-Director', title: 'MicroLED Array & Driver Lead', wf: 'lightbundle_microled_array', handled: 54, hrs: 670, win: 'Sub-Micron MicroLED', status: 'idle' },
+  { id: 'emp_6', name: 'Fiber-Aligner', title: 'Fiber Bundle Alignment Lead', wf: 'multi_core_fiber_alignment', handled: 39, hrs: 520, win: '< 0.5dB Loss', status: 'idle' },
+  { id: 'emp_7', name: 'TSMC-BondMgr', title: 'TSMC 300mm Hybrid Bonding Mgr', wf: 'tsmc_300mm_hybrid_bonding', handled: 29, hrs: 460, win: 'Cu-Cu Hybrid Bonding', status: 'idle' },
+  { id: 'emp_8', name: 'SI-Director', title: 'Signal Integrity & BER Lead', wf: 'signal_integrity_80fj', handled: 61, hrs: 730, win: '80 fJ/bit Efficiency', status: 'idle' }
+];
+
+let activeTab = 'roster';
+let activeEmpId = null;
+let activeWfKey = null;
+let runTimer = null;
+let builderWfKey = 'ekit_chipmaker_evaluation';
+let builderTasks = [];
+
+function init() {
+  renderEcon();
+  renderRoster();
+  renderBuilderWfs();
+}
+
+function switchTab(t) {
+  activeTab = t;
+  ['roster', 'run', 'builder'].forEach(x => {
+    document.getElementById(`tab-${x}`).classList.toggle('active', x === t);
+    document.getElementById(`view-${x}`).classList.toggle('hidden', x !== t);
+  });
+}
+
+function renderEcon() {
+  const totHandled = EMPLOYEES.reduce((a, b) => a + b.handled, 0);
+  const totHrs = EMPLOYEES.reduce((a, b) => a + b.hrs, 0);
+  const container = document.getElementById('econ-strip');
+  container.innerHTML = `
+    <div class="cell">
+      <div class="v"><span class="u">${totHandled}</span></div>
+      <div class="k">Workflows Executed</div>
+    </div>
+    <div class="cell">
+      <div class="v"><span class="u">${totHrs}</span> hrs</div>
+      <div class="k">Annual Time Saved</div>
+    </div>
+    <div class="cell">
+      <div class="v"><span class="u">80 fJ/bit</span> Power</div>
+      <div class="k">Laser-Free LightBundle&trade; Link</div>
+    </div>
+    <div class="cell">
+      <div class="v"><span class="u">1 Tbps+</span> eKits</div>
+      <div class="k">Shipped to AI Chipmakers</div>
+    </div>
+  `;
+}
+
+function renderRoster() {
+  const container = document.getElementById('roster-tracks');
+  container.innerHTML = '';
+
+  TRACKS.forEach(([tKey, tLabel]) => {
+    const section = document.createElement('div');
+    section.innerHTML = `<div class="slabel">${tLabel}</div>`;
+    const grid = document.createElement('div');
+    grid.className = 'roster';
+
+    const emps = EMPLOYEES.filter(e => {
+      const wf = WORKFLOWS[e.wf];
+      return wf && wf.track === tKey;
+    });
+
+    emps.forEach(emp => {
+      grid.appendChild(createEmpCard(emp));
+    });
+
+    if (tKey === TRACKS[0][0]) {
+      const addCard = document.createElement('div');
+      addCard.className = 'hire-card';
+      addCard.onclick = () => switchTab('builder');
+      addCard.innerHTML = `
+        <div class="plus">+</div>
+        <div class="h">Build Custom Operator</div>
+        <div class="p">Compose a new AI operator with tailored workflow steps</div>
+      `;
+      grid.appendChild(addCard);
+    }
+
+    section.appendChild(grid);
+    container.appendChild(section);
+  });
+}
+
+function createEmpCard(emp) {
+  const wf = WORKFLOWS[emp.wf];
+  const el = document.createElement('div');
+  const isFlagship = wf && wf.tag === 'flagship';
+  el.className = `emp ${emp.status === 'working' ? 'working' : ''} ${isFlagship ? 'hero' : ''}`;
+
+  const chips = wf.tasks.map(t => {
+    const a = AGENT_ROLES[t.agent];
+    return `<span class="chip">${a ? a.emoji : ''} ${a ? a.label : t.agent}</span>`;
+  }).join('');
+
+  const initials = emp.name.split('-').map(n => n[0]).join('').substring(0, 3).toUpperCase();
+
+  el.innerHTML = `
+    <div class="emp-top">
+      <div class="avatar">${initials}</div>
+      <div>
+        <div class="emp-name">
+          ${emp.name}
+          ${isFlagship ? '<span class="tag hero">FLAGSHIP</span>' : ''}
+        </div>
+        <div class="emp-title">${emp.title}</div>
+      </div>
+    </div>
+    <div class="emp-owns">Workflow: <b>${wf ? wf.name : emp.wf}</b></div>
+    <div class="team">${chips}</div>
+    <div class="emp-stats">
+      <div class="st">Workflows<b>${emp.handled}</b></div>
+      <div class="st">Time Saved<b>${emp.hrs}h</b></div>
+      <div class="st">Impact Metric<b>${emp.win}</b></div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" onclick="launchRun('${emp.id}')">Run Operator</button>
+    </div>
+  `;
+  return el;
+}
+
+function launchRun(empId) {
+  const emp = EMPLOYEES.find(e => e.id === empId);
+  if (!emp) return;
+  activeEmpId = empId;
+  activeWfKey = emp.wf;
+
+  const wf = WORKFLOWS[activeWfKey];
+  document.getElementById('run-title').innerText = `${emp.name} &middot; ${wf.name}`;
+  document.getElementById('run-badge').innerHTML = `<span class="tag ${wf.track === 'commercial' ? 'commercial' : 'operations'}">${wf.mode.toUpperCase()}</span>`;
+  document.getElementById('run-desc').innerText = wf.desc;
+  document.getElementById('run-prompt').value = wf.sample;
+
+  resetRunView();
+  switchTab('run');
+}
+
+function resetRunView() {
+  const wf = WORKFLOWS[activeWfKey];
+  if (!wf) return;
+
+  const phasesComp = document.getElementById('run-phases');
+  phasesComp.innerHTML = `
+    <div class="ph active" id="ph-1"><div class="dot">1</div><div class="l">Task Setup</div></div>
+    <div class="ph" id="ph-2"><div class="dot">2</div><div class="l">Agent Execution</div></div>
+    <div class="ph" id="ph-3"><div class="dot">3</div><div class="l">Deliverable Finalized</div></div>
+  `;
+
+  const grid = document.getElementById('agent-grid');
+  grid.innerHTML = '';
+  wf.tasks.forEach((t, idx) => {
+    const a = AGENT_ROLES[t.agent];
+    const card = document.createElement('div');
+    card.className = 'acard visible';
+    card.id = `acard-${idx}`;
+    card.innerHTML = `
+      <div class="ae">${a ? a.emoji : '🤖'}</div>
+      <div class="ar">${a ? a.label : t.agent}</div>
+      <div class="at">${t.task}</div>
+      <div class="as"><div class="sd"></div><span id="astat-${idx}">Pending</span></div>
+    `;
+    grid.appendChild(card);
+  });
+
+  document.getElementById('run-feed').innerHTML = `
+    <div class="frow">
+      <span class="ft">00:00.0</span>
+      <span class="fa">System</span>
+      <span class="fd">Initialized workflow: ${wf.name} (${wf.mode.toUpperCase()})</span>
+    </div>
+  `;
+
+  document.getElementById('run-result').classList.add('hidden');
+  document.getElementById('run-donebar').classList.add('hidden');
+  document.getElementById('run-btn').disabled = false;
+}
+
+function startRun() {
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[activeWfKey];
+  if (!emp || !wf) return;
+
+  emp.status = 'working';
+  renderRoster();
+
+  document.getElementById('run-btn').disabled = true;
+  document.getElementById('ph-1').className = 'ph done';
+  document.getElementById('ph-2').className = 'ph active';
+
+  const feed = document.getElementById('run-feed');
+  const startTime = Date.now();
+
+  function log(agentName, text) {
+    const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+    const row = document.createElement('div');
+    row.className = 'frow';
+    row.innerHTML = `
+      <span class="ft">00:${elapsed < 10 ? '0' + elapsed : elapsed}</span>
+      <span class="fa">${agentName}</span>
+      <span class="fd">${text}</span>
+    `;
+    feed.appendChild(row);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  log('Orchestrator', `Starting multi-agent execution pipeline...`);
+
+  let currentTask = 0;
+
+  function runNextTask() {
+    if (currentTask >= wf.tasks.length) {
+      finishRun(emp, wf, startTime, log);
+      return;
+    }
+
+    const idx = currentTask;
+    const t = wf.tasks[idx];
+    const a = AGENT_ROLES[t.agent];
+
+    const card = document.getElementById(`acard-${idx}`);
+    const stat = document.getElementById(`astat-${idx}`);
+    card.className = 'acard running';
+    stat.innerText = 'Running...';
+
+    log(a ? a.label : t.agent, `Executing: ${t.task}`);
+
+    setTimeout(() => {
+      const toolKey = a && a.tools[0] ? a.tools[0] : 'save';
+      const toolFn = TOOLS[toolKey];
+      const output = toolFn ? toolFn() : 'Task completed successfully.';
+
+      log(a ? a.label : t.agent, output);
+
+      card.className = 'acard done';
+      stat.innerText = 'Completed';
+
+      currentTask++;
+      runNextTask();
+    }, 800);
+  }
+
+  runNextTask();
+}
+
+function finishRun(emp, wf, startTime, log) {
+  emp.status = 'idle';
+  emp.handled++;
+  renderEcon();
+  renderRoster();
+
+  document.getElementById('ph-2').className = 'ph done';
+  document.getElementById('ph-3').className = 'ph done';
+
+  log('System', 'All tasks executed successfully. Output assembled.');
+
+  const totalTime = ((Date.now() - startTime) / 1000).toFixed(1);
+
+  document.getElementById('result-stats').innerHTML = `
+    <div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div>
+    <div class="rrow"><span class="k">Execution Mode</span><span class="v">${wf.mode.toUpperCase()}</span></div>
+    <div class="rrow"><span class="k">Tasks Executed</span><span class="v">${wf.tasks.length}</span></div>
+    <div class="rrow"><span class="k">Total Latency</span><span class="v">${totalTime}s</span></div>
+    <div class="rrow"><span class="k">Human Time Saved</span><span class="v">~8.5 Hours</span></div>
+    <div class="rrow"><span class="k">Verification</span><span class="v">PASSED</span></div>
+  `;
+
+  document.getElementById('result-title').innerText = DTITLE[activeWfKey] || 'Deliverable Output';
+  document.getElementById('result-text').innerText = FINAL[activeWfKey] || 'Workflow completed.';
+
+  document.getElementById('run-result').classList.remove('hidden');
+
+  const donebar = document.getElementById('run-donebar');
+  donebar.className = 'donebar';
+  donebar.innerHTML = `<b>Run Complete!</b> ${emp.name} produced <b>${DTITLE[activeWfKey]}</b> in ${totalTime}s. Output verified and saved to repository.`;
+  donebar.classList.remove('hidden');
+
+  document.getElementById('run-btn').disabled = false;
+}
+
+function renderBuilderWfs() {
+  const grid = document.getElementById('builder-wf-grid');
+  grid.innerHTML = '';
+  Object.keys(WORKFLOWS).forEach(key => {
+    const wf = WORKFLOWS[key];
+    const el = document.createElement('div');
+    el.className = `wf ${key === builderWfKey ? 'sel' : ''}`;
+    el.onclick = () => selectBuilderWf(key);
+    el.innerHTML = `
+      <div class="wn">${wf.name}</div>
+      <div class="wd">${wf.desc}</div>
+      <div class="wm">${wf.mode} &middot; ${wf.tasks.length} tasks</div>
+    `;
+    grid.appendChild(el);
+  });
+  loadBuilderTasks();
+}
+
+function selectBuilderWf(key) {
+  builderWfKey = key;
+  renderBuilderWfs();
+}
+
+function loadBuilderTasks() {
+  const wf = WORKFLOWS[builderWfKey];
+  builderTasks = JSON.parse(JSON.stringify(wf.tasks));
+}
+
+function renderBuilderTaskRows() {
+  const container = document.getElementById('builder-tasks');
+  container.innerHTML = '';
+  builderTasks.forEach((t, idx) => {
+    const row = document.createElement('div');
+    row.className = 'task-row';
+    const opts = Object.keys(AGENT_ROLES).map(ak => {
+      const a = AGENT_ROLES[ak];
+      return `<option value="${ak}" ${ak === t.agent ? 'selected' : ''}>${a.emoji} ${a.label}</option>`;
+    }).join('');
+
+    row.innerHTML = `
+      <div class="tn">${idx+1}</div>
+      <div class="tt">${t.task}</div>
+      <select onchange="builderTasks[${idx}].agent = this.value">${opts}</select>
+    `;
+    container.appendChild(row);
+  });
+}
+
+function bNext(step) {
+  [1, 2, 3].forEach(s => {
+    document.getElementById(`bstep-${s}`).classList.toggle('hidden', s !== step);
+    document.getElementById(`st-${s}`).classList.toggle('active', s === step);
+  });
+  if (step === 2) renderBuilderTaskRows();
+}
+
+function deployOperator() {
+  const name = document.getElementById('b-name').value || 'Custom Operator';
+  const title = document.getElementById('b-title').value || 'Specialized Operator';
+  const newWfKey = `custom_${Date.now()}`;
+
+  const baseWf = WORKFLOWS[builderWfKey];
+  WORKFLOWS[newWfKey] = {
+    name: name,
+    title: `${name} Workflow`,
+    mode: baseWf.mode,
+    track: baseWf.track,
+    deliverable: `${name} Output Package`,
+    sample: `Execute custom ${name} operational workflow.`,
+    desc: `Custom operator created via builder based on ${baseWf.name}.`,
+    tasks: builderTasks
+  };
+
+  DTITLE[newWfKey] = `${name} Output Deliverable`;
+  FINAL[newWfKey] = `CUSTOM OPERATOR DELIVERABLE\nOperator: ${name}\nTitle: ${title}\nTasks Executed: ${builderTasks.length}\n\nNOTE: illustrative simulation based on public domain information for Avicena.`;
+
+  EMPLOYEES.push({
+    id: `emp_${Date.now()}`,
+    name: name,
+    title: title,
+    wf: newWfKey,
+    handled: 1,
+    hrs: 4,
+    win: 'Custom Workflow',
+    status: 'idle'
+  });
+
+  renderEcon();
+  renderRoster();
+  switchTab('roster');
+}
+
+window.onload = init;
+</script>
+</body>
+</html>
