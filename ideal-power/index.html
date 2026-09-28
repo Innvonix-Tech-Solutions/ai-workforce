@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ideal Power &mdash; AI B-TRAN&reg; Bidirectional Semiconductor Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f0fbf6;--surface2:#c8f5dc;--border:#8adfb5;--accent:#003366;
+--accent-dim:rgba(0,51,102,.08);--accent-line:rgba(0,51,102,.30);--slate:#003366;--slate-line:rgba(0,51,102,.30);--text:#091e14;--hi:#010e08;--tert:#455e51;--ok:#10b981;--ok-dim:rgba(16,185,129,.10);--gold:#00c853;--gold-bg:#e8f5e9;--gold-line:#a5d6a7}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:48px;height:34px;border-radius:8px;background:linear-gradient(135deg,#003366,#00c853);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:12px;letter-spacing:.5px;font-family:Inter,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#003366}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:900px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#003366;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(16,185,129,.08);color:#059669;border:1px solid rgba(16,185,129,.3)}
+.tag.hero{background:var(--gold-bg);color:#1b5e20;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#003366}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#003366;font-size:15px;flex-shrink:0;position:relative;font-family:Inter,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#003366}.btn.primary{background:linear-gradient(270deg,#003366,#002244);border-color:#003366;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#003366;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#003366}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(16,185,129,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(16,185,129,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#003366}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Inter,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#003366;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px;font-family:Inter,sans-serif}.field label{display:block;font-size:12px;font-weight:600;color:var(--hi);margin-bottom:6px}
+.field input,.field select{width:100%;background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);outline:none}
+.field input:focus{border-color:var(--accent)}
+.seg{display:flex;gap:6px}.seg button{flex:1;padding:9px;font-size:12px;font-weight:600;border:1px solid var(--border);border-radius:7px;background:#fff;color:var(--tert);cursor:pointer;font-family:Inter,sans-serif}
+.seg button.on{background:var(--accent-dim);color:var(--hi);border-color:var(--accent-line)}
+.foot{max-width:1180px;margin:30px auto 40px;padding:18px 24px;border-top:1px solid var(--border);font-size:11.5px;color:var(--tert);text-align:center;line-height:1.5;font-family:Inter,sans-serif}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">
+    <div class="mark">IPWR</div>
+    <div>
+      <div class="htitle">Ideal Power &middot; AI B-TRAN&reg; Bidirectional Semiconductor Workforce</div>
+      <div class="hsub">B-TRAN&reg; Double-Sided Power Switch &middot; Solid-State Circuit Breakers (SSCB), EV Inverters &amp; BESS (50%+ Loss Cut)</div>
+    </div>
+  </div>
+  <div class="badge"><b>Ideal Power HQ</b> &middot; Austin, TX</div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tab-roster" onclick="switchTab('roster')">Workforce Roster</button>
+  <button class="tab" id="tab-run" onclick="switchTab('run')">Execution Engine</button>
+  <button class="tab" id="tab-builder" onclick="switchTab('builder')">Operator Builder</button>
+</div>
+
+<div class="main">
+  <div id="view-roster">
+    <div class="lead">
+      Interactive prototype of an autonomous AI workforce purpose-built for <b>Ideal Power (NASDAQ: IPWR)</b>. Designed to commercialize patented <b>B-TRAN&reg;</b> bidirectional semiconductor technology. Automates EV inverter &amp; Battery Disconnect Unit (BDU) evaluations, Solid-State Circuit Breaker (SSCB) microsecond fault interruption testing, SIMPACT&trade; driver IC integration, and wafer foundry volume production quoting.
+    </div>
+
+    <div class="legend">
+      <span><span class="tag commercial">Track A</span> Commercial &amp; Automotive BD Engine</span>
+      <span><span class="tag operations">Track B</span> B-TRAN&reg; Semiconductor &amp; Power Engineering</span>
+      <span><span class="tag hero">Flagship</span> Flagship Operator</span>
+    </div>
+
+    <div class="econ" id="econ-strip"></div>
+    <div id="roster-tracks"></div>
+  </div>
+
+  <div id="view-run" class="hidden">
+    <div class="run">
+      <div class="run-head">
+        <h2 id="run-title">Select an Operator</h2>
+        <span id="run-badge"></span>
+      </div>
+      <div class="run-sub" id="run-desc">Choose an operator from the roster to launch execution.</div>
+
+      <div class="run-input">
+        <textarea id="run-prompt" rows="2" placeholder="Workflow prompt instructions..."></textarea>
+        <button class="btn primary big" id="run-btn" onclick="startRun()">Launch Run</button>
+      </div>
+
+      <div class="phases" id="run-phases"></div>
+      <div class="agent-grid" id="agent-grid"></div>
+
+      <div class="feed" id="run-feed">
+        <div class="frow">
+          <span class="ft">00:00.0</span>
+          <span class="fa">System</span>
+          <span class="fd">Engine initialized. Ready to execute workflow.</span>
+        </div>
+      </div>
+
+      <div class="result hidden" id="run-result">
+        <div class="rstats" id="result-stats"></div>
+        <div class="rout">
+          <div class="rh" id="result-title">Produced Deliverable</div>
+          <div class="rb" id="result-text"></div>
+        </div>
+      </div>
+      <div id="run-donebar" class="hidden"></div>
+    </div>
+  </div>
+
+  <div id="view-builder" class="hidden">
+    <div class="run">
+      <h2>3-Step Operator Builder</h2>
+      <div class="run-sub">Compose a new AI operator by tailoring workflow tasks and agent assignments.</div>
+
+      <div class="steps">
+        <div class="step active" id="st-1">
+          <div class="n">STEP 1</div>
+          <div class="l">Select Base Workflow</div>
+          <div class="d">Choose template workflow</div>
+        </div>
+        <div class="step" id="st-2">
+          <div class="n">STEP 2</div>
+          <div class="l">Assign Agents</div>
+          <div class="d">Configure task execution</div>
+        </div>
+        <div class="step" id="st-3">
+          <div class="n">STEP 3</div>
+          <div class="l">Deploy Operator</div>
+          <div class="d">Save to active roster</div>
+        </div>
+      </div>
+
+      <div id="bstep-1">
+        <div class="slabel">Available Workflows</div>
+        <div class="wf-grid" id="builder-wf-grid"></div>
+        <div style="margin-top:18px;text-align:right">
+          <button class="btn primary" onclick="bNext(2)">Next: Assign Agents &rarr;</button>
+        </div>
+      </div>
+
+      <div id="bstep-2" class="hidden">
+        <div class="slabel">Configure Task Assignments</div>
+        <div id="builder-tasks"></div>
+        <div style="margin-top:18px;display:flex;justify-content:space-between">
+          <button class="btn ghost" onclick="bNext(1)">&larr; Back</button>
+          <button class="btn primary" onclick="bNext(3)">Next: Operator Details &rarr;</button>
+        </div>
+      </div>
+
+      <div id="bstep-3" class="hidden">
+        <div class="slabel">Operator Profile</div>
+        <div class="field">
+          <label>Operator Name</label>
+          <input type="text" id="b-name" value="Custom Ideal Power Operator">
+        </div>
+        <div class="field">
+          <label>Title / Role</label>
+          <input type="text" id="b-title" value="Specialized B-TRAN Semiconductor Specialist">
+        </div>
+        <div style="margin-top:18px;display:flex;justify-content:space-between">
+          <button class="btn ghost" onclick="bNext(2)">&larr; Back</button>
+          <button class="btn primary" onclick="deployOperator()">Deploy Operator to Roster</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  Ideal Power AI Workforce Simulation &middot; Designed for Ideal Power Inc. (Austin, TX)<br>
+  Built with autonomous multi-agent architecture for B-TRAN&reg; bidirectional power semiconductors, SIMPACT&trade; gate drivers, and Solid-State Circuit Breakers (SSCB).<br>
+  <i>Disclaimer: Illustrative simulation based on public domain information for Ideal Power. All outputs subject to human-in-the-loop review.</i>
+</div>
+
+<script>
+const TRACKS = [
+  ['commercial', 'Commercial & Automotive BD Engine'],
+  ['engineering', 'B-TRAN® Semiconductor & Power Engineering']
+];
+
+const AGENT_ROLES = {
+  ev_oem_scout: { emoji: '🎯', label: 'EV & Spaceflight OEM Scout', tools: ['source_ev_oem_accounts', 'save'] },
+  eval_kit_lead: { emoji: '📦', label: 'B-TRAN® Evaluation Board Lead', tools: ['deploy_btran_ekit', 'profile_ekit_waveforms', 'save'] },
+  btran_device_arch: { emoji: '🔬', label: 'B-TRAN® Silicon Architect', tools: ['design_double_sided_die', 'simulate_btran_conduction', 'save'] },
+  simpact_driver_lead: { emoji: '⚡', label: 'SIMPACT™ Gate Driver Lead', tools: ['configure_simpact_driver', 'verify_gate_drive_timing', 'save'] },
+  sscb_fault_lead: { emoji: '⚡', label: 'Solid-State Circuit Breaker Specialist', tools: ['simulate_microsecond_fault', 'test_sscb_interruption', 'save'] },
+  thermal_loss_lead: { emoji: '🔥', label: 'Power Loss & Thermal Lead', tools: ['measure_conduction_losses', 'profile_thermal_dissipation', 'save'] },
+  wafer_foundry_mgr: { emoji: '🏭', label: 'Double-Sided Wafer Fab Ops Mgr', tools: ['schedule_btran_wafer_run', 'audit_die_yield', 'save'] },
+  nre_pricing_lead: { emoji: '🧮', label: 'B-TRAN® Module & Wafer Quoting Lead', tools: ['build_btran_quote', 'analyze_tco_savings', 'save'] },
+  automotive_qa_lead: { emoji: '🚗', label: 'ISO 26262 & AEC-Q101 QA Specialist', tools: ['verify_aec_q101_compliance', 'audit_iso26262_safety', 'save'] },
+  power_semiconductor_intel: { emoji: '🛰️', label: 'B-TRAN® vs IGBT/SiC Analyst', tools: ['profile_competing_igbt_sic', 'benchmark_btran_loss_reduction', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'Technical JDA & Proposal Writer', tools: ['compose_btran_proposal', 'save'] },
+  qa_reviewer: { emoji: '✅', label: 'Final Deliverable QA Reviewer', tools: ['qa_audit', 'save'] }
+};
+
+const WORKFLOWS = {
+  ev_inverter_btran_eval: {
+    name: 'EV Inverter & BDU B-TRAN Eval',
+    title: 'EV Traction Inverter & BDU B-TRAN® Evaluation & JDA Proposal',
+    mode: 'sequential',
+    track: 'commercial',
+    tag: 'flagship',
+    deliverable: 'EV Traction Inverter & BDU B-TRAN® Evaluation Package',
+    sample: 'Evaluate double-sided B-TRAN semiconductor switch for Tier-1 EV traction inverter and BDU.',
+    desc: 'Multi-agent customer evaluation engine mapping 50%+ conduction loss reduction, SIMPACT driver setup, and B-TRAN module pricing.',
+    tasks: [
+      { agent: 'ev_oem_scout', task: 'Source Tier-1 EV automotive OEMs and Battery Disconnect Unit (BDU) manufacturers', deps: [] },
+      { agent: 'eval_kit_lead', task: 'Deploy B-TRAN® evaluation kit (eKit) with SIMPACT™ intelligent gate driver to customer R&D lab', deps: [0] },
+      { agent: 'btran_device_arch', task: 'Configure 1200V / 100A double-sided B-TRAN® power switch module for EV traction inverter', deps: [1] },
+      { agent: 'thermal_loss_lead', task: 'Quantify 50%+ reduction in conduction losses vs SiC MOSFET & IGBT baseline', deps: [2] },
+      { agent: 'nre_pricing_lead', task: 'Build custom B-TRAN® power module NRE quote and volume production tier pricing', deps: [3] },
+      { agent: 'proposal_writer', task: 'Compose technical EV inverter JDA proposal and B-TRAN® evaluation package', deps: [4] },
+      { agent: 'qa_reviewer', task: 'Perform final QA audit and package deliverable', deps: [5] }
+    ]
+  },
+  btran_commercial_quoting: {
+    name: 'B-TRAN Commercial Quoting',
+    title: 'B-TRAN® Module & Double-Sided Wafer Commercial Quoting',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'B-TRAN® Module & Double-Sided Wafer Commercial Quotation',
+    sample: 'Calculate commercial volume die and module pricing for 100,000 unit B-TRAN production run.',
+    desc: 'Automated pricing for double-sided wafer processing, SIMPACT driver ICs, and power module packaging.',
+    tasks: [
+      { agent: 'nre_pricing_lead', task: 'Calculate double-sided wafer fabrication NRE, SIMPACT™ driver licensing, and module packaging fees', deps: [] },
+      { agent: 'thermal_loss_lead', task: 'Estimate lifetime EV battery range extension and thermal cooling cost savings ROI', deps: [0] },
+      { agent: 'proposal_writer', task: 'Structure commercial agreement contract and volume delivery milestone schedule', deps: [1] },
+      { agent: 'qa_reviewer', task: 'Finalize B-TRAN® quotation package for customer procurement approval', deps: [2] }
+    ]
+  },
+  btran_vs_igbt_sic_radar: {
+    name: 'B-TRAN vs IGBT/SiC Radar',
+    title: 'Bidirectional B-TRAN® vs Conventional IGBT & SiC MOSFET Radar',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Bidirectional B-TRAN® vs Conventional IGBT & SiC MOSFET Radar Brief',
+    sample: 'Benchmark B-TRAN bidirectional switch against conventional 4-device back-to-back IGBT/SiC circuits.',
+    desc: 'Parallel competitive analysis contrasting single-die B-TRAN vs discrete power transistor assemblies.',
+    tasks: [
+      { agent: 'power_semiconductor_intel', task: 'Benchmark B-TRAN® against back-to-back IGBTs, SiC MOSFETs, and antiparallel diodes', deps: [] },
+      { agent: 'ev_oem_scout', task: 'Survey EV OEM & grid storage pain points in 4-device discrete power assembly complexity', deps: [] },
+      { agent: 'proposal_writer', task: 'Publish competitive power semiconductor intelligence report', deps: [0, 1] },
+      { agent: 'qa_reviewer', task: 'Verify competitive benchmarks and market positioning', deps: [2] }
+    ]
+  },
+  automotive_aec_q101_qual: {
+    name: 'Automotive AEC-Q101 Qual',
+    title: 'Automotive AEC-Q101 & ISO 26262 ASIL-D Qualification',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Automotive AEC-Q101 & ISO 26262 ASIL-D Qualification Dossier',
+    sample: 'Compile AEC-Q101 reliability test suite for B-TRAN high-voltage EV disconnect switches.',
+    desc: 'Automotive reliability and functional safety compliance auditing for EV power electronics.',
+    tasks: [
+      { agent: 'automotive_qa_lead', task: 'Audit B-TRAN® power module compliance with AEC-Q101 semiconductor qualification standards', deps: [] },
+      { agent: 'btran_device_arch', task: 'Verify ISO 26262 ASIL-D functional safety compliance for EV high-voltage disconnects', deps: [] },
+      { agent: 'proposal_writer', task: 'Compile automotive qualification & reliability dossier', deps: [0, 1] },
+      { agent: 'qa_reviewer', task: 'Finalize automotive qualification certification package', deps: [2] }
+    ]
+  },
+  sscb_fault_interruption: {
+    name: 'SSCB Microsecond Fault Cut',
+    title: 'Solid-State Circuit Breaker (SSCB) Sub-Microsecond Fault Interruption',
+    mode: 'sequential',
+    track: 'engineering',
+    deliverable: 'Solid-State Circuit Breaker (SSCB) Sub-Microsecond Fault Interruption Report',
+    sample: 'Simulate microsecond-scale (< 1µs) fault interruption under 1000V DC for solid-state circuit breaker.',
+    desc: 'Microsecond fault clearing validation for grid, microgrid, and industrial solid-state circuit breakers.',
+    tasks: [
+      { agent: 'sscb_fault_lead', task: 'Configure B-TRAN® bidirectional switch in Solid-State Circuit Breaker (SSCB) topology', deps: [] },
+      { agent: 'thermal_loss_lead', task: 'Simulate microsecond-scale (< 1µs) ultra-fast short-circuit fault interruption under 1000V DC', deps: [0] },
+      { agent: 'automotive_qa_lead', task: 'Verify zero arc formation and thermal dissipation during high-current fault clearing', deps: [1] },
+      { agent: 'qa_reviewer', task: 'Publish SSCB fault interruption performance report', deps: [2] }
+    ]
+  },
+  double_sided_wafer_fab: {
+    name: 'Double-Sided Wafer Processing',
+    title: 'B-TRAN® Double-Sided Silicon Wafer Processing & Yield Optimization',
+    mode: 'sequential',
+    track: 'engineering',
+    deliverable: 'B-TRAN® Double-Sided Silicon Wafer Processing & Yield Certificate',
+    sample: 'Optimize double-sided lithography and backside alignment for 200mm B-TRAN wafer production.',
+    desc: 'End-to-end double-sided wafer fabrication engineering with commercial semiconductor foundries.',
+    tasks: [
+      { agent: 'btran_device_arch', task: 'Optimize double-sided wafer photolithography and backside alignment for B-TRAN® PNP structure', deps: [] },
+      { agent: 'wafer_foundry_mgr', task: 'Audit wafer-level electrical yield, carrier lifetime, and Vce(sat) forward voltage drop', deps: [0] },
+      { agent: 'thermal_loss_lead', task: 'Characterize low forward voltage drop (Vce(sat) < 0.5V @ 100A) across 200mm wafers', deps: [1] },
+      { agent: 'qa_reviewer', task: 'Generate double-sided wafer fab qualification certificate', deps: [2] }
+    ]
+  },
+  simpact_driver_integration: {
+    name: 'SIMPACT Driver Integration',
+    title: 'SIMPACT™ Intelligent Gate Driver IC Co-Design & Timing Tuning',
+    mode: 'dag',
+    track: 'engineering',
+    deliverable: 'SIMPACT™ Intelligent Gate Driver IC Co-Design & Timing Charter',
+    sample: 'Co-design SIMPACT intelligent gate driver ASIC for fast double-sided B-TRAN gate switching.',
+    desc: 'Parallel gate driver ASIC co-design, dead-time tuning, and switching loss optimization.',
+    tasks: [
+      { agent: 'simpact_driver_lead', task: 'Co-design SIMPACT™ intelligent gate driver ASIC for double-sided B-TRAN® control', deps: [] },
+      { agent: 'eval_kit_lead', task: 'Optimize gate turn-on / turn-off timing and dv/dt control to prevent voltage overshoot', deps: [] },
+      { agent: 'thermal_loss_lead', task: 'Measure gate drive energy consumption and total switching loss metrics', deps: [0, 1] },
+      { agent: 'qa_reviewer', task: 'Complete SIMPACT™ gate driver integration charter', deps: [2] }
+    ]
+  },
+  btran_evaluation_board: {
+    name: 'B-TRAN eKit Hardware Testing',
+    title: 'B-TRAN® Evaluation Board (eKit) Hardware Assembly & Testing',
+    mode: 'dag',
+    track: 'engineering',
+    deliverable: 'B-TRAN® Evaluation Board (eKit) Hardware Validation Report',
+    sample: 'Validate bidirectional switching waveforms on 1200V B-TRAN evaluation board at full rated power.',
+    desc: 'Parallel evaluation board hardware assembly, current waveform profiling, and thermal imaging.',
+    tasks: [
+      { agent: 'eval_kit_lead', task: 'Assemble 1200V B-TRAN® evaluation board with integrated SIMPACT™ driver and current sensors', deps: [] },
+      { agent: 'simpact_driver_lead', task: 'Validate bidirectional current conduction and dual-voltage blocking switching waveforms', deps: [] },
+      { agent: 'thermal_loss_lead', task: 'Perform thermal imaging and continuous full-power endurance testing', deps: [0, 1] },
+      { agent: 'qa_reviewer', task: 'Finalize B-TRAN® evaluation board validation report', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  ev_inverter_btran_eval: 'EV Traction Inverter & BDU B-TRAN® Evaluation Package',
+  btran_commercial_quoting: 'B-TRAN® Module & Double-Sided Wafer Commercial Quotation',
+  btran_vs_igbt_sic_radar: 'Bidirectional B-TRAN® vs Conventional IGBT & SiC MOSFET Radar Brief',
+  automotive_aec_q101_qual: 'Automotive AEC-Q101 & ISO 26262 ASIL-D Qualification Dossier',
+  sscb_fault_interruption: 'Solid-State Circuit Breaker (SSCB) Sub-Microsecond Fault Interruption Report',
+  double_sided_wafer_fab: 'B-TRAN® Double-Sided Silicon Wafer Processing & Yield Certificate',
+  simpact_driver_integration: 'SIMPACT™ Intelligent Gate Driver IC Co-Design & Timing Charter',
+  btran_evaluation_board: 'B-TRAN® Evaluation Board (eKit) Hardware Validation Report'
+};
+
+const TOOLS = {
+  source_ev_oem_accounts: ()=>'Sourced 16 EV automotive OEMs & BDU manufacturers (Tesla, Rivian, GM, BorgWarner, Eaton).',
+  deploy_btran_ekit: ()=>'Deployed 1200V B-TRAN evaluation board with SIMPACT gate driver to customer R&D lab.',
+  profile_ekit_waveforms: ()=>'Profiled eKit waveforms: verified bidirectional switching waveforms at 1200V / 100A.',
+  design_double_sided_die: ()=>'Designed double-sided B-TRAN die: symmetric PNP structure with top/bottom emitter-base contacts.',
+  simulate_btran_conduction: ()=>'Simulated B-TRAN conduction: Vce(sat) = 0.42V @ 100A (50% lower than IGBT baseline).',
+  configure_simpact_driver: ()=>'Configured SIMPACT driver: programmed multi-state gate control for optimal turn-on/off.',
+  verify_gate_drive_timing: ()=>'Verified gate drive timing: 120ns dead time with zero shoot-through current.',
+  simulate_microsecond_fault: ()=>'Simulated short-circuit fault: detected 2,000A fault current step in 350ns.',
+  test_sscb_interruption: ()=>'Tested SSCB fault interruption: safely cleared 2kA short-circuit in < 900ns without arcing.',
+  measure_conduction_losses: ()=>'Measured conduction losses: 52% lower power loss vs 1200V SiC MOSFET pair.',
+  profile_thermal_dissipation: ()=>'Profiled thermal dissipation: junction temp max 115°C under continuous 100A load.',
+  schedule_btran_wafer_run: ()=>'Scheduled B-TRAN double-sided wafer lot: 25 200mm wafers queued at foundry partner.',
+  audit_die_yield: ()=>'Audited die yield: 98.8% functional B-TRAN die yield across double-sided processed wafer.',
+  build_btran_quote: ()=>'Built B-TRAN quote: $14.50/die for 1200V/100A double-sided switch at 100k unit volume.',
+  analyze_tco_savings: ()=>'Analyzed TCO savings: EV OEM saves $850 per vehicle in battery size & cooling system cost.',
+  verify_aec_q101_compliance: ()=>'Verified AEC-Q101 compliance: passed 1,000 hours HTRB and temperature cycling.',
+  audit_iso26262_safety: ()=>'Audited ISO 26262 ASIL-D safety: redundant gate drive fault reporting certified.',
+  profile_competing_igbt_sic: ()=>'Profiled competing IGBT & SiC MOSFETs: benchmarked Infineon, Wolfspeed, STMicro.',
+  benchmark_btran_loss_reduction: ()=>'Benchmarked B-TRAN loss reduction: 1 B-TRAN die replaces 2 IGBTs + 2 diodes, saving 58% board space.',
+  compose_btran_proposal: ()=>'Composed B-TRAN proposal: compiled technical evaluation report & JDA agreement.',
+  qa_audit: ()=>'Executed QA audit: verified specifications, loss benchmarks, and complete deliverable package.',
+  save: ()=>'Saved deliverable artifact to Ideal Power technical repository.'
+};
+
+const FINAL = {
+  ev_inverter_btran_eval: `IDEAL POWER B-TRAN® EV INVERTER & BDU TECHNICAL EVALUATION REPORT
+Target Customer: Tier-1 EV Automotive OEM & Powertrain Integrator
+Device Architecture: Ideal Power B-TRAN® 1200V / 100A Bidirectional Power Switch
+Evaluation Date: September 2026
+
+1. EXECUTIVE CONDUCTION LOSS & EFFICIENCY ANALYSIS
+- Baseline Topology (Back-to-Back SiC MOSFETs + Diodes): 4 Discrete Devices, Vce/Vds drop = 1.15V @ 100A.
+- B-TRAN® Topology: Single Double-Sided B-TRAN® Die, Forward Drop Vce(sat) = 0.42V @ 100A.
+- Conduction Loss Reduction: 52.4% reduction in total conduction losses across drive cycle.
+- EV Vehicle Impact: +7.2% EV battery range extension ($850 system cost savings per vehicle).
+
+2. SIMPACT™ INTELLIGENT GATE DRIVER INTEGRATION
+- Gate Control: Programmable multi-state turn-on/off driver ASIC.
+- Timing: 120ns dead-time management with zero shoot-through current.
+
+3. COMMERCIAL NRE & PRODUCTION ROADMAP
+- Selection Verdict: RECOMMENDED for Tier-1 EV Traction Inverter & BDU Production.
+- Production Die Pricing: $14.50 / die (100,000 unit volume tier).
+
+NOTE: illustrative simulation based on public domain information for Ideal Power.`,
+
+  btran_commercial_quoting: `IDEAL POWER B-TRAN® COMMERCIAL MODULE & WAFER QUOTATION
+Customer: Renewable Energy Storage & EV Powertrain OEM
+
+1. COMMERCIAL VOLUME DIE & MODULE PRICING
+- B-TRAN® 1200V/100A Bare Die (200mm Wafer): $14.50 / die (100k+ volume)
+- B-TRAN® Power Module with SIMPACT™ Driver IC: $42.00 / module (50k+ volume)
+
+2. TCO & BATTERY COST SAVINGS
+- Estimated Customer Savings: $8.5M per 10,000 EV vehicles produced.
+
+NOTE: illustrative simulation based on public domain information for Ideal Power.`,
+
+  btran_vs_igbt_sic_radar: `IDEAL POWER BENCHMARK: B-TRAN® VS CONVENTIONAL IGBT & SiC MOSFETs
+
+1. TECHNICAL MATRIX COMPARISON
+- Ideal Power B-TRAN®: Bidirectional (1 Die) | Vce = 0.42V | 52% Lower Losses | Ultra-Fast SSCB
+- Back-to-Back SiC MOSFETs: Unidirectional Pair (2 Dies + Diodes) | Vds = 1.15V | Higher Cost | Complex Wiring
+- Conventional IGBTs: Unidirectional Pair (2 Dies + Diodes) | Vce = 1.65V | High Losses | Slow Switching
+
+NOTE: illustrative simulation based on public domain information for Ideal Power.`,
+
+  automotive_aec_q101_qual: `AUTOMOTIVE AEC-Q101 & ISO 26262 ASIL-D QUALIFICATION REPORT
+
+1. AUTOMOTIVE RELIABILITY METRICS
+- Qualification Standard: AEC-Q101 discrete semiconductor qualification passed.
+- High Temp Reverse Bias (HTRB): Passed 1,000 hours at 150°C junction temperature.
+
+NOTE: illustrative simulation based on public domain information for Ideal Power.`,
+
+  sscb_fault_interruption: `SOLID-STATE CIRCUIT BREAKER (SSCB) FAULT INTERRUPTION REPORT
+
+1. FAULT CLEARING PERFORMANCE
+- DC Voltage Level: 1000V DC Grid Simulation.
+- Fault Current Interruption Speed: 2,000A short-circuit fault cleared in 850ns without arcing.
+
+NOTE: illustrative simulation based on public domain information for Ideal Power.`,
+
+  double_sided_wafer_fab: `B-TRAN® DOUBLE-SIDED SILICON WAFER FAB QUALIFICATION REPORT
+
+1. WAFER FABRICATION YIELD METRICS
+- Wafer Diameter: 200mm (8-inch) double-sided processed silicon wafers.
+- Die Yield: 98.8% electrical yield across 200mm wafer.
+
+NOTE: illustrative simulation based on public domain information for Ideal Power.`,
+
+  simpact_driver_integration: `SIMPACT™ INTELLIGENT GATE DRIVER INTEGRATION REPORT
+
+1. GATE DRIVER PERFORMANCE
+- Driver Architecture: Integrated ASIC with isolated gate control.
+- Switching Losses: Reduced switching losses by 38% via adaptive gate current shaping.
+
+NOTE: illustrative simulation based on public domain information for Ideal Power.`,
+
+  btran_evaluation_board: `B-TRAN® EVALUATION BOARD (eKit) HARDWARE VALIDATION REPORT
+
+1. HARDWARE TESTING METRICS
+- Rating: 1200V / 100A continuous operation.
+- Thermal Dissipation: Maximum heatsink temperature 68°C at full 100A load.
+
+NOTE: illustrative simulation based on public domain information for Ideal Power.`
+};
+
+const EMPLOYEES = [
+  { id: 'emp_1', name: 'EV-Director', title: 'EV Inverter BD Operator', wf: 'ev_inverter_btran_eval', handled: 44, hrs: 630, win: '50%+ Loss Cut', status: 'idle' },
+  { id: 'emp_2', name: 'NRE-Quoter', title: 'B-TRAN® Commercial Quoting Lead', wf: 'btran_commercial_quoting', handled: 36, hrs: 380, win: '85% Quote Speed', status: 'idle' },
+  { id: 'emp_3', name: 'Radar-Analyst', title: 'Power Semiconductor Intel Analyst', wf: 'btran_vs_igbt_sic_radar', handled: 41, hrs: 420, win: '1 Die vs 4 Devices', status: 'idle' },
+  { id: 'emp_4', name: 'AutoQA-Mgr', title: 'Automotive AEC-Q101 Qual Lead', wf: 'automotive_aec_q101_qual', handled: 32, hrs: 470, win: 'AEC-Q101 Ready', status: 'idle' },
+  { id: 'emp_5', name: 'SSCB-Lead', title: 'Solid-State Circuit Breaker Lead', wf: 'sscb_fault_interruption', handled: 58, hrs: 720, win: '< 1µs Fault Cut', status: 'idle' },
+  { id: 'emp_6', name: 'Fab-Specialist', title: 'Double-Sided Wafer Fab Lead', wf: 'double_sided_wafer_fab', handled: 49, hrs: 660, win: 'Vce(sat) < 0.5V', status: 'idle' },
+  { id: 'emp_7', name: 'Driver-Lead', title: 'SIMPACT™ Gate Driver Specialist', wf: 'simpact_driver_integration', handled: 37, hrs: 510, win: 'Intelligent Driver', status: 'idle' },
+  { id: 'emp_8', name: 'eKit-Specialist', title: 'B-TRAN® Evaluation Kit Lead', wf: 'btran_evaluation_board', handled: 61, hrs: 740, win: 'Plug-and-Play eKit', status: 'idle' }
+];
+
+let activeTab = 'roster';
+let activeEmpId = null;
+let activeWfKey = null;
+let runTimer = null;
+let builderWfKey = 'ev_inverter_btran_eval';
+let builderTasks = [];
+
+function init() {
+  renderEcon();
+  renderRoster();
+  renderBuilderWfs();
+}
+
+function switchTab(t) {
+  activeTab = t;
+  ['roster', 'run', 'builder'].forEach(x => {
+    document.getElementById(`tab-${x}`).classList.toggle('active', x === t);
+    document.getElementById(`view-${x}`).classList.toggle('hidden', x !== t);
+  });
+}
+
+function renderEcon() {
+  const totHandled = EMPLOYEES.reduce((a, b) => a + b.handled, 0);
+  const totHrs = EMPLOYEES.reduce((a, b) => a + b.hrs, 0);
+  const container = document.getElementById('econ-strip');
+  container.innerHTML = `
+    <div class="cell">
+      <div class="v"><span class="u">${totHandled}</span></div>
+      <div class="k">Workflows Executed</div>
+    </div>
+    <div class="cell">
+      <div class="v"><span class="u">${totHrs}</span> hrs</div>
+      <div class="k">Annual Time Saved</div>
+    </div>
+    <div class="cell">
+      <div class="v"><span class="u">50%+</span> Cut</div>
+      <div class="k">Conduction Loss Reduction</div>
+    </div>
+    <div class="cell">
+      <div class="v"><span class="u">&lt; 1&mu;s</span> SSCB</div>
+      <div class="k">Ultra-Fast Fault Interruption</div>
+    </div>
+  `;
+}
+
+function renderRoster() {
+  const container = document.getElementById('roster-tracks');
+  container.innerHTML = '';
+
+  TRACKS.forEach(([tKey, tLabel]) => {
+    const section = document.createElement('div');
+    section.innerHTML = `<div class="slabel">${tLabel}</div>`;
+    const grid = document.createElement('div');
+    grid.className = 'roster';
+
+    const emps = EMPLOYEES.filter(e => {
+      const wf = WORKFLOWS[e.wf];
+      return wf && wf.track === tKey;
+    });
+
+    emps.forEach(emp => {
+      grid.appendChild(createEmpCard(emp));
+    });
+
+    if (tKey === TRACKS[0][0]) {
+      const addCard = document.createElement('div');
+      addCard.className = 'hire-card';
+      addCard.onclick = () => switchTab('builder');
+      addCard.innerHTML = `
+        <div class="plus">+</div>
+        <div class="h">Build Custom Operator</div>
+        <div class="p">Compose a new AI operator with tailored workflow steps</div>
+      `;
+      grid.appendChild(addCard);
+    }
+
+    section.appendChild(grid);
+    container.appendChild(section);
+  });
+}
+
+function createEmpCard(emp) {
+  const wf = WORKFLOWS[emp.wf];
+  const el = document.createElement('div');
+  const isFlagship = wf && wf.tag === 'flagship';
+  el.className = `emp ${emp.status === 'working' ? 'working' : ''} ${isFlagship ? 'hero' : ''}`;
+
+  const chips = wf.tasks.map(t => {
+    const a = AGENT_ROLES[t.agent];
+    return `<span class="chip">${a ? a.emoji : ''} ${a ? a.label : t.agent}</span>`;
+  }).join('');
+
+  const initials = emp.name.split('-').map(n => n[0]).join('').substring(0, 3).toUpperCase();
+
+  el.innerHTML = `
+    <div class="emp-top">
+      <div class="avatar">${initials}</div>
+      <div>
+        <div class="emp-name">
+          ${emp.name}
+          ${isFlagship ? '<span class="tag hero">FLAGSHIP</span>' : ''}
+        </div>
+        <div class="emp-title">${emp.title}</div>
+      </div>
+    </div>
+    <div class="emp-owns">Workflow: <b>${wf ? wf.name : emp.wf}</b></div>
+    <div class="team">${chips}</div>
+    <div class="emp-stats">
+      <div class="st">Workflows<b>${emp.handled}</b></div>
+      <div class="st">Time Saved<b>${emp.hrs}h</b></div>
+      <div class="st">Impact Metric<b>${emp.win}</b></div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" onclick="launchRun('${emp.id}')">Run Operator</button>
+    </div>
+  `;
+  return el;
+}
+
+function launchRun(empId) {
+  const emp = EMPLOYEES.find(e => e.id === empId);
+  if (!emp) return;
+  activeEmpId = empId;
+  activeWfKey = emp.wf;
+
+  const wf = WORKFLOWS[activeWfKey];
+  document.getElementById('run-title').innerText = `${emp.name} &middot; ${wf.name}`;
+  document.getElementById('run-badge').innerHTML = `<span class="tag ${wf.track === 'commercial' ? 'commercial' : 'operations'}">${wf.mode.toUpperCase()}</span>`;
+  document.getElementById('run-desc').innerText = wf.desc;
+  document.getElementById('run-prompt').value = wf.sample;
+
+  resetRunView();
+  switchTab('run');
+}
+
+function resetRunView() {
+  const wf = WORKFLOWS[activeWfKey];
+  if (!wf) return;
+
+  const phasesComp = document.getElementById('run-phases');
+  phasesComp.innerHTML = `
+    <div class="ph active" id="ph-1"><div class="dot">1</div><div class="l">Task Setup</div></div>
+    <div class="ph" id="ph-2"><div class="dot">2</div><div class="l">Agent Execution</div></div>
+    <div class="ph" id="ph-3"><div class="dot">3</div><div class="l">Deliverable Finalized</div></div>
+  `;
+
+  const grid = document.getElementById('agent-grid');
+  grid.innerHTML = '';
+  wf.tasks.forEach((t, idx) => {
+    const a = AGENT_ROLES[t.agent];
+    const card = document.createElement('div');
+    card.className = 'acard visible';
+    card.id = `acard-${idx}`;
+    card.innerHTML = `
+      <div class="ae">${a ? a.emoji : '🤖'}</div>
+      <div class="ar">${a ? a.label : t.agent}</div>
+      <div class="at">${t.task}</div>
+      <div class="as"><div class="sd"></div><span id="astat-${idx}">Pending</span></div>
+    `;
+    grid.appendChild(card);
+  });
+
+  document.getElementById('run-feed').innerHTML = `
+    <div class="frow">
+      <span class="ft">00:00.0</span>
+      <span class="fa">System</span>
+      <span class="fd">Initialized workflow: ${wf.name} (${wf.mode.toUpperCase()})</span>
+    </div>
+  `;
+
+  document.getElementById('run-result').classList.add('hidden');
+  document.getElementById('run-donebar').classList.add('hidden');
+  document.getElementById('run-btn').disabled = false;
+}
+
+function startRun() {
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[activeWfKey];
+  if (!emp || !wf) return;
+
+  emp.status = 'working';
+  renderRoster();
+
+  document.getElementById('run-btn').disabled = true;
+  document.getElementById('ph-1').className = 'ph done';
+  document.getElementById('ph-2').className = 'ph active';
+
+  const feed = document.getElementById('run-feed');
+  const startTime = Date.now();
+
+  function log(agentName, text) {
+    const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+    const row = document.createElement('div');
+    row.className = 'frow';
+    row.innerHTML = `
+      <span class="ft">00:${elapsed < 10 ? '0' + elapsed : elapsed}</span>
+      <span class="fa">${agentName}</span>
+      <span class="fd">${text}</span>
+    `;
+    feed.appendChild(row);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  log('Orchestrator', `Starting multi-agent execution pipeline...`);
+
+  let currentTask = 0;
+
+  function runNextTask() {
+    if (currentTask >= wf.tasks.length) {
+      finishRun(emp, wf, startTime, log);
+      return;
+    }
+
+    const idx = currentTask;
+    const t = wf.tasks[idx];
+    const a = AGENT_ROLES[t.agent];
+
+    const card = document.getElementById(`acard-${idx}`);
+    const stat = document.getElementById(`astat-${idx}`);
+    card.className = 'acard running';
+    stat.innerText = 'Running...';
+
+    log(a ? a.label : t.agent, `Executing: ${t.task}`);
+
+    setTimeout(() => {
+      const toolKey = a && a.tools[0] ? a.tools[0] : 'save';
+      const toolFn = TOOLS[toolKey];
+      const output = toolFn ? toolFn() : 'Task completed successfully.';
+
+      log(a ? a.label : t.agent, output);
+
+      card.className = 'acard done';
+      stat.innerText = 'Completed';
+
+      currentTask++;
+      runNextTask();
+    }, 800);
+  }
+
+  runNextTask();
+}
+
+function finishRun(emp, wf, startTime, log) {
+  emp.status = 'idle';
+  emp.handled++;
+  renderEcon();
+  renderRoster();
+
+  document.getElementById('ph-2').className = 'ph done';
+  document.getElementById('ph-3').className = 'ph done';
+
+  log('System', 'All tasks executed successfully. Output assembled.');
+
+  const totalTime = ((Date.now() - startTime) / 1000).toFixed(1);
+
+  document.getElementById('result-stats').innerHTML = `
+    <div class="rrow"><span class="k">Workflow</span><span class="v">${wf.name}</span></div>
+    <div class="rrow"><span class="k">Execution Mode</span><span class="v">${wf.mode.toUpperCase()}</span></div>
+    <div class="rrow"><span class="k">Tasks Executed</span><span class="v">${wf.tasks.length}</span></div>
+    <div class="rrow"><span class="k">Total Latency</span><span class="v">${totalTime}s</span></div>
+    <div class="rrow"><span class="k">Human Time Saved</span><span class="v">~8.5 Hours</span></div>
+    <div class="rrow"><span class="k">Verification</span><span class="v">PASSED</span></div>
+  `;
+
+  document.getElementById('result-title').innerText = DTITLE[activeWfKey] || 'Deliverable Output';
+  document.getElementById('result-text').innerText = FINAL[activeWfKey] || 'Workflow completed.';
+
+  document.getElementById('run-result').classList.remove('hidden');
+
+  const donebar = document.getElementById('run-donebar');
+  donebar.className = 'donebar';
+  donebar.innerHTML = `<b>Run Complete!</b> ${emp.name} produced <b>${DTITLE[activeWfKey]}</b> in ${totalTime}s. Output verified and saved to repository.`;
+  donebar.classList.remove('hidden');
+
+  document.getElementById('run-btn').disabled = false;
+}
+
+function renderBuilderWfs() {
+  const grid = document.getElementById('builder-wf-grid');
+  grid.innerHTML = '';
+  Object.keys(WORKFLOWS).forEach(key => {
+    const wf = WORKFLOWS[key];
+    const el = document.createElement('div');
+    el.className = `wf ${key === builderWfKey ? 'sel' : ''}`;
+    el.onclick = () => selectBuilderWf(key);
+    el.innerHTML = `
+      <div class="wn">${wf.name}</div>
+      <div class="wd">${wf.desc}</div>
+      <div class="wm">${wf.mode} &middot; ${wf.tasks.length} tasks</div>
+    `;
+    grid.appendChild(el);
+  });
+  loadBuilderTasks();
+}
+
+function selectBuilderWf(key) {
+  builderWfKey = key;
+  renderBuilderWfs();
+}
+
+function loadBuilderTasks() {
+  const wf = WORKFLOWS[builderWfKey];
+  builderTasks = JSON.parse(JSON.stringify(wf.tasks));
+}
+
+function renderBuilderTaskRows() {
+  const container = document.getElementById('builder-tasks');
+  container.innerHTML = '';
+  builderTasks.forEach((t, idx) => {
+    const row = document.createElement('div');
+    row.className = 'task-row';
+    const opts = Object.keys(AGENT_ROLES).map(ak => {
+      const a = AGENT_ROLES[ak];
+      return `<option value="${ak}" ${ak === t.agent ? 'selected' : ''}>${a.emoji} ${a.label}</option>`;
+    }).join('');
+
+    row.innerHTML = `
+      <div class="tn">${idx+1}</div>
+      <div class="tt">${t.task}</div>
+      <select onchange="builderTasks[${idx}].agent = this.value">${opts}</select>
+    `;
+    container.appendChild(row);
+  });
+}
+
+function bNext(step) {
+  [1, 2, 3].forEach(s => {
+    document.getElementById(`bstep-${s}`).classList.toggle('hidden', s !== step);
+    document.getElementById(`st-${s}`).classList.toggle('active', s === step);
+  });
+  if (step === 2) renderBuilderTaskRows();
+}
+
+function deployOperator() {
+  const name = document.getElementById('b-name').value || 'Custom Operator';
+  const title = document.getElementById('b-title').value || 'Specialized Operator';
+  const newWfKey = `custom_${Date.now()}`;
+
+  const baseWf = WORKFLOWS[builderWfKey];
+  WORKFLOWS[newWfKey] = {
+    name: name,
+    title: `${name} Workflow`,
+    mode: baseWf.mode,
+    track: baseWf.track,
+    deliverable: `${name} Output Package`,
+    sample: `Execute custom ${name} operational workflow.`,
+    desc: `Custom operator created via builder based on ${baseWf.name}.`,
+    tasks: builderTasks
+  };
+
+  DTITLE[newWfKey] = `${name} Output Deliverable`;
+  FINAL[newWfKey] = `CUSTOM OPERATOR DELIVERABLE\nOperator: ${name}\nTitle: ${title}\nTasks Executed: ${builderTasks.length}\n\nNOTE: illustrative simulation based on public domain information for Ideal Power.`;
+
+  EMPLOYEES.push({
+    id: `emp_${Date.now()}`,
+    name: name,
+    title: title,
+    wf: newWfKey,
+    handled: 1,
+    hrs: 4,
+    win: 'Custom Workflow',
+    status: 'idle'
+  });
+
+  renderEcon();
+  renderRoster();
+  switchTab('roster');
+}
+
+window.onload = init;
+</script>
+</body>
+</html>
