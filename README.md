@@ -291,3 +291,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/vorago-technologies
 https://innvonix-tech-solutions.github.io/ai-workforce/ambiq
 https://innvonix-tech-solutions.github.io/ai-workforce/digital-dynamics
 https://innvonix-tech-solutions.github.io/ai-workforce/ideal-power
+https://innvonix-tech-solutions.github.io/ai-workforce/msrfsr
