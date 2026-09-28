@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AMBIQ | Autonomous Semiconductor AI Workforce Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-main: #F4F7F6;
+  --bg-card: #FFFFFF;
+  --bg-surface: #EAEFEF;
+  --ambiq-teal: #00A896;
+  --ambiq-teal-dark: #008080;
+  --ambiq-slate: #121E24;
+  --ambiq-cyan: #00E5FF;
+  --text-dark: #121E24;
+  --text-muted: #5A6E78;
+  --border-dark: #121E24;
+  --border-subtle: #D1DCDC;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg-main);
+  color: var(--text-dark);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Announcement Top Bar */
+.top-bar {
+  background: var(--ambiq-slate);
+  color: var(--ambiq-cyan);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 8px 16px;
+  border-bottom: 2px solid var(--ambiq-teal);
+}
+
+/* Site Header */
+.site-header {
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 24px 40px 16px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.brand-logo-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.brand-title {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: var(--ambiq-teal-dark);
+  text-transform: uppercase;
+}
+.brand-tagline {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  border-left: 2px solid var(--ambiq-teal);
+  padding-left: 12px;
+}
+.badge-spot {
+  background: var(--ambiq-slate);
+  color: #FFFFFF;
+  border: 1px solid var(--ambiq-teal);
+  padding: 6px 14px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.badge-spot span { color: var(--ambiq-cyan); }
+
+/* Navigation Tabs */
+.nav-bar {
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0 40px;
+  display: flex;
+  gap: 32px;
+}
+.nav-link {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 16px 0;
+  cursor: pointer;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+}
+.nav-link:hover, .nav-link.active {
+  color: var(--ambiq-teal-dark);
+  border-bottom-color: var(--ambiq-teal);
+}
+
+/* Hero Section */
+.hero {
+  padding: 32px 40px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 32px;
+}
+.hero-title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--ambiq-slate);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.hero-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  max-width: 980px;
+}
+
+/* Container & Layout */
+.container { padding: 0 40px 40px 40px; }
+.track-selector {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.track-btn {
+  background: #FFFFFF;
+  border: 1px solid var(--border-dark);
+  color: var(--border-dark);
+  padding: 10px 18px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.track-btn.active {
+  background: var(--ambiq-slate);
+  color: #FFFFFF;
+  border-color: var(--ambiq-slate);
+}
+
+/* Grids */
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  padding: 24px;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(18, 30, 36, 0.08);
+}
+.card-op {
+  border-top: 4px solid var(--ambiq-teal);
+  background: #FFFFFF;
+}
+.flagship-tag {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--ambiq-slate);
+  color: var(--ambiq-cyan);
+  font-size: 9px;
+  font-weight: 800;
+  padding: 3px 8px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border: 1px solid var(--ambiq-teal);
+}
+.card-title {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--ambiq-slate);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+.card-meta {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ambiq-teal-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+.wf-desc {
+  font-size: 11px;
+  color: var(--text-dark);
+  height: 36px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.stat-box {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 12px;
+  margin-bottom: 16px;
+}
+.stat-lbl {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.stat-num {
+  font-family: var(--font-mono);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ambiq-slate);
+}
+
+/* Buttons */
+.btn-ambiq {
+  background: var(--ambiq-slate);
+  color: #FFFFFF;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 12px 18px;
+  width: 100%;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-ambiq:hover {
+  background: var(--ambiq-teal-dark);
+}
+.btn-cyan {
+  background: var(--ambiq-teal);
+  color: #FFFFFF;
+}
+.btn-cyan:hover {
+  background: var(--ambiq-teal-dark);
+}
+
+/* Simulation View */
+.dag-node {
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-left: 4px solid var(--ambiq-teal);
+  padding: 14px;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+.dag-node.flagship {
+  border-left-color: var(--ambiq-cyan);
+  background: var(--bg-surface);
+}
+.log-terminal {
+  background: var(--ambiq-slate);
+  color: #00FF99;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 16px;
+  height: 240px;
+  overflow-y: auto;
+  border: 1px solid var(--ambiq-teal);
+}
+.progress-bg {
+  background: var(--border-subtle);
+  height: 4px;
+  margin: 12px 0;
+}
+.progress-fill {
+  background: var(--ambiq-teal);
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s;
+}
+.dossier-card {
+  background: #FFFFFF;
+  border: 1px solid var(--ambiq-slate);
+  padding: 24px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  white-space: pre-wrap;
+  color: var(--text-dark);
+  margin-top: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.hidden { display: none !important; }
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--border-subtle);
+  padding: 32px 40px;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  background: var(--bg-surface);
+  margin-top: 40px;
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  SPOT TECHNOLOGY PLATFORM: SUBTHRESHOLD POWER OPTIMIZED MCUS FOR EDGE AI & WEARABLES
+</div>
+
+<header class="site-header">
+  <div class="brand-logo-group">
+    <div class="brand-title">AMBIQ</div>
+    <div class="brand-tagline">ULTRA-LOW POWER SEMICONDUCTOR SOLUTIONS</div>
+  </div>
+  <div class="badge-spot">
+    SPOT PLATFORM <span>APOLLO510 ENGINE</span>
+  </div>
+</header>
+
+<nav class="nav-bar">
+  <a class="nav-link active" onclick="switchTab('roster')">AI WORKFORCE ROSTER</a>
+  <a class="nav-link" onclick="switchTab('simulation')">WORKFLOW SIMULATION</a>
+  <a class="nav-link" onclick="switchTab('hire')">STAND UP OPERATOR</a>
+</nav>
+
+<div class="hero">
+  <h1 class="hero-title">Autonomous Semiconductor AI Workforce Platform</h1>
+  <div class="hero-desc">12 Specialist AI Agents and 8 Enterprise Workflows Orchestrating TSMC Wafer Melt Sourcing, SPOT Subthreshold FEA Power Optimization, Apollo510 Silicon Stepping, and Global OSAT WLCSP/BGA Packaging Operations.</div>
+</div>
+
+<div class="container">
+
+  <!-- ROSTER VIEW -->
+  <div id="view-roster">
+    <div class="track-selector">
+      <button class="track-btn active" onclick="filterTrack('all')">All Workflows (8)</button>
+      <button class="track-btn" onclick="filterTrack('commercial')">Commercial Silicon Sourcing & OEM Offtake (4)</button>
+      <button class="track-btn" onclick="filterTrack('operations')">SPOT Silicon Engineering & OSAT Quality (4)</button>
+    </div>
+    <div class="grid-4" id="opGrid"></div>
+  </div>
+
+  <!-- SIMULATION VIEW -->
+  <div id="view-simulation" class="hidden">
+    <div class="card">
+      <div class="card-title">Execute Autonomous Silicon & Packaging Workflow</div>
+      <div style="font-size:12px; color:var(--text-muted); margin-bottom:16px;">Select an enterprise semiconductor workflow to simulate multi-agent orchestration and view real-time logs:</div>
+
+      <div style="display:flex; gap:16px; margin-bottom:24px;">
+        <select id="simWfSelect" style="flex:1; padding:12px; border:1px solid var(--ambiq-slate); font-family:var(--font-sans); font-size:12px; font-weight:700;" onchange="loadSimDetails()">
+        </select>
+        <button class="btn-ambiq btn-cyan" style="width:200px;" id="runBtn" onclick="runSimulation()">START SIMULATION</button>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <div style="font-size:12px; font-weight:800; color:var(--ambiq-slate); letter-spacing:1px; margin-bottom:12px; text-transform:uppercase;">WORKFLOW EXECUTION GRAPH (DAG)</div>
+          <div id="dagContainer"></div>
+        </div>
+        <div>
+          <div style="font-size:12px; font-weight:800; color:var(--ambiq-slate); letter-spacing:1px; margin-bottom:12px; text-transform:uppercase;">REAL-TIME TELEMETRY & AGENT LOGS</div>
+          <div class="progress-bg"><div class="progress-fill" id="simProgress"></div></div>
+          <div class="log-terminal" id="simLogs">Ready to execute workflow simulation...</div>
+        </div>
+      </div>
+
+      <div id="dossierContainer" class="hidden">
+        <div style="font-size:14px; font-weight:800; color:var(--ambiq-slate); margin-top:24px; text-transform:uppercase;">GENERATED EXECUTIVE DOSSIER</div>
+        <div class="dossier-card" id="dossierText"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAND UP OPERATOR VIEW -->
+  <div id="view-hire" class="hidden">
+    <div class="card" style="max-width:700px; margin:0 auto;">
+      <div class="card-title">STAND UP NEW AMBIQ AI OPERATOR</div>
+      <div style="font-size:12px; color:var(--text-muted); margin-bottom:20px;">Deploy an autonomous operator for specialized Apollo MCU wafer sourcing or OSAT packaging monitoring:</div>
+
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div>
+          <label style="font-size:10px; font-weight:800; letter-spacing:1px; display:block; margin-bottom:6px; text-transform:uppercase;">Operator Name</label>
+          <input type="text" id="newOpName" placeholder="e.g. Apollo510 Wafer Scout" style="width:100%; padding:12px; border:1px solid var(--border-subtle); font-family:var(--font-sans); font-size:12px;">
+        </div>
+        <div>
+          <label style="font-size:10px; font-weight:800; letter-spacing:1px; display:block; margin-bottom:6px; text-transform:uppercase;">Target Enterprise Workflow</label>
+          <select id="newOpWf" style="width:100%; padding:12px; border:1px solid var(--border-subtle); font-family:var(--font-sans); font-size:12px; font-weight:700;">
+            <option value="scout">Global Tier-1 Smartwatch & Hearable MCU Opportunity Scout</option>
+            <option value="quote">Turnkey 25M Unit Apollo510 MCU WLCSP Die Packaging BOM</option>
+            <option value="tender">Global Wearable OEM Master Silicon Supply Tender</option>
+            <option value="panel_qualification">Apollo510 SPOT Subthreshold FEA Power Simulation & ATE Test Qualification</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:10px; font-weight:800; letter-spacing:1px; display:block; margin-bottom:6px; text-transform:uppercase;">Execution Cadence</label>
+          <select id="newOpCadence" style="width:100%; padding:12px; border:1px solid var(--border-subtle); font-family:var(--font-sans); font-size:12px;">
+            <option value="daily">Daily Continuous Execution</option>
+            <option value="weekly">Weekly Tapeout Sync</option>
+            <option value="on_demand">On-Demand Executive Trigger</option>
+          </select>
+        </div>
+        <button class="btn-ambiq" onclick="deployOperator()">DEPLOY OPERATOR</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  Independent concept prototype prepared for Ambiq Micro, Inc. (ambiq.com). Built with official Ambiq visual identity tokens (Electric Teal #00A896 primary, Silicon Slate #121E24, Energy Cyan #00E5FF). All workflows, SPOT power FEA simulations, BOM quotes, and dossier outputs are illustrative simulations.
+</footer>
+
+<script>
+const AGENT_ROLES = {
+  ambiq_edge_ai_mcu_lead_scout: { emoji: '⚡', label: 'Edge AI Smartwatch & Wearable Semiconductor Scout', tools: ['screen_wearable_mcu_oems', 'save'] },
+  subthreshold_wafer_bom_pricing_eng: { emoji: '💰', label: 'TSMC Wafer Melt, WLCSP Die Packaging & IC BOM Lead', tools: ['calculate_silicon_wafer_bom', 'save'] },
+  apollo_mcu_silicon_design_spec: { emoji: '📐', label: 'Apollo510 SPOT Subthreshold Power & Transistor Engineer', tools: ['model_spot_subthreshold_power', 'save'] },
+  iso26262_semiconductor_lca_auditor: { emoji: '🌱', label: 'Low-Power Silicon Carbon Footprint & Conflict Mineral Auditor', tools: ['calculate_semiconductor_lca', 'save'] },
+  global_semiconductor_foundry_router: { emoji: '🚚', label: 'TSMC Wafer Fab Slot & OSAT Assembly Router', tools: ['optimize_wafer_die_bank', 'save'] },
+  tier1_oem_master_semiconductor_tender_lead: { emoji: '🤝', label: 'Wearable & IoT OEM Tier-1 Master Silicon Tender Lead', tools: ['structure_master_silicon_tender', 'save'] },
+  wlcsp_bga_package_qualification_eng: { emoji: '🔬', label: 'WLCSP & BGA IC Package Reliability & Solder QA Engineer', tools: ['audit_wlcsp_thermal_cycling', 'save'] },
+  neuralspot_ai_accelerator_fitment_spec: { emoji: '🧠', label: 'neuralSPOT AI Neural Network & Low-Energy Sensor Specialist', tools: ['evaluate_neuralspot_inference', 'save'] },
+  silicon_stepping_eco_revision_spec: { emoji: '🔄', label: 'Photolithography Mask & Silicon Stepping ECO Revision Lead', tools: ['audit_silicon_metal_mask_eco', 'save'] },
+  high_speed_wafer_probe_testing_qa_engineer: { emoji: '⚙️', label: 'High-Speed Automated Wafer Probe & ATE Test QA Engineer', tools: ['simulate_ate_wafer_probe_yield', 'save'] },
+  writer: { emoji: '✍️', label: 'Semiconductor Technical Specification & OEM Proposal Writer', tools: ['compose', 'save'] },
+  reviewer: { emoji: '✅', label: 'VP of Silicon Engineering & Semiconductor Principal PE', tools: ['qa_review', 'save'] }
+};
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Global tier-1 smartwatch, hearable & medical wearable MCU opportunity scout',
+    title: 'AI Wearable Silicon Sourcing Scout',
+    track: 'commercial',
+    deliverable: 'Top 50 Global Tier-1 Wearable & Medical IoT Silicon Pipeline',
+    desc: 'Agents analyze smartwatch OEM roadmaps, hearable voice trigger specifications, and continuous health monitoring sensor hubs.',
+    tasks: [
+      { agent: 'ambiq_edge_ai_mcu_lead_scout', task: 'Screen global wearable OEMs requiring under 5 microamps/MHz active power MCU compute.', deps: [] },
+      { agent: 'neuralspot_ai_accelerator_fitment_spec', task: 'Evaluate neuralSPOT AI speech recognition model execution efficiency on Apollo510.', deps: [0] },
+      { agent: 'reviewer', task: 'Audit OEM credit rating, multi-year silicon volume forecasts, and custom WLCSP packaging feasibility.', deps: [1] },
+      { agent: 'writer', task: 'Compile executive wearable silicon sourcing pipeline brief with buyer contact profiles.', deps: [2] }
+    ]
+  },
+  quote: {
+    name: 'Turnkey 25M unit Apollo510 MCU WLCSP die packaging & TSMC wafer BOM pro forma',
+    title: 'AI Microcontroller Quoting Operator',
+    track: 'commercial',
+    deliverable: 'Turnkey 25M Unit Apollo510 MCU WLCSP Die Packaging & TSMC Wafer BOM Pro Forma',
+    desc: 'Agents compute 22nm TSMC subthreshold silicon wafer pricing, 2.5mm x 2.5mm WLCSP wafer-level ball grid array packaging capex, and final ATE test yields.',
+    tasks: [
+      { agent: 'subthreshold_wafer_bom_pricing_eng', task: 'Calculate unit price: $1.42 per Apollo510 die + $0.28 for WLCSP packaging + $0.12 for ATE testing.', deps: [] },
+      { agent: 'wlcsp_bga_package_qualification_eng', task: 'Verify WLCSP solder bump shear strength, moisture sensitivity level (MSL-1), and drop impact survival.', deps: [0] },
+      { agent: 'tier1_oem_master_semiconductor_tender_lead', task: 'Structure 90-day die bank safety stock buffer at TSMC and OSAT facilities in Taiwan.', deps: [1] },
+      { agent: 'reviewer', task: 'Audit photomask set amortization payback and SPOT subthreshold yield margin.', deps: [2] },
+      { agent: 'writer', task: 'Produce review-ready Apollo510 commercial silicon proposal package for tier-1 smartwatch OEM.', deps: [3] }
+    ]
+  },
+  tender: {
+    name: 'Global wearable OEM master silicon supply & 90-day die bank inventory tender response',
+    title: 'AI Master Silicon Supply Tender Operator',
+    track: 'commercial',
+    deliverable: 'Global Wearable OEM Master Silicon Supply & 90-Day Die Bank Tender Response',
+    desc: 'Agents formulate multi-year master silicon supply agreements covering 100 million Apollo MCUs across 4 global manufacturing OSAT plants.',
+    tasks: [
+      { agent: 'tier1_oem_master_semiconductor_tender_lead', task: 'Structure master supply contract with 90-day die bank holding terms across Taiwan and Malaysia OSAT hubs.', deps: [] },
+      { agent: 'iso26262_semiconductor_lca_auditor', task: 'Provide certified conflict-free tantalum/gold audit and 100% RoHS/REACH compliance certificate.', deps: [0] },
+      { agent: 'reviewer', task: 'Audit vendor liability limits, 99.8% on-time silicon delivery SLA, and wafer cost escalation terms.', deps: [1] },
+      { agent: 'writer', task: 'Draft master enterprise silicon supply contract, wafer allocation matrix, and executive presentation.', deps: [2] }
+    ]
+  },
+  radar: {
+    name: 'Global semiconductor silicon wafer, OSAT packaging substrate & energy market intelligence brief',
+    title: 'AI Semiconductor Market Intelligence Operator',
+    track: 'commercial',
+    deliverable: 'Global Semiconductor Silicon Wafer & OSAT Packaging Intelligence Brief',
+    desc: 'Agents synthesize IC Insights wafer fab pricing, TSMC N22/N16 process node utilization, packaging substrate lead times, and ARM IP licensing trends.',
+    tasks: [
+      { agent: 'subthreshold_wafer_bom_pricing_eng', task: 'Track 300mm silicon wafer spot prices ($120/wafer) and WLCSP redistribution layer (RDL) substrate lead times.', deps: [] },
+      { agent: 'ambiq_edge_ai_mcu_lead_scout', task: 'Highlight Ambiq SPOT competitive advantages: 10x lower energy consumption than standard Cortex-M4 MCUs.', deps: [0] },
+      { agent: 'writer', task: 'Produce quarterly executive semiconductor market intelligence dossier for Ambiq procurement leads.', deps: [1] }
+    ]
+  },
+  panel_qualification: {
+    name: 'Apollo510 SPOT subthreshold FEA power simulation & high-speed ATE test qualification',
+    title: 'AI Apollo510 SPOT FEA & Test Operator',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'Apollo510 SPOT Subthreshold FEA Power & High-Speed ATE Test Qualification Dossier',
+    desc: 'Agents model 3D finite-element thermal & voltage drop simulations across subthreshold transistor arrays operating at 0.3V to 0.5V VDD.',
+    tasks: [
+      { agent: 'apollo_mcu_silicon_design_spec', task: 'Execute 3D FEA transistor power simulation across Apollo510 die geometry, verifying 4.2 microamps/MHz active power efficiency.', deps: [] },
+      { agent: 'high_speed_wafer_probe_testing_qa_engineer', task: 'Simulate high-speed ATE wafer probe test vectors, certifying 99.2% functional die yield at 0.35V subthreshold voltage.', deps: [] },
+      { agent: 'wlcsp_bga_package_qualification_eng', task: 'Confirm WLCSP 121-ball array thermal dissipation under 100MHz peak CPU frequency.', deps: [0, 1] },
+      { agent: 'reviewer', task: 'Audit subthreshold static timing analysis (STA), voltage drop color maps, and ATE test protocol with PE stamp.', deps: [2] },
+      { agent: 'writer', task: 'Publish complete Apollo510 SPOT silicon qualification dossier and commercial ATE test certification.', deps: [3] }
+    ]
+  },
+  inverter_yield: {
+    name: 'Global OSAT assembly & foundry wafer die bank inventory optimization test',
+    title: 'AI Foundry Die Bank Optimization Operator',
+    track: 'operations',
+    deliverable: 'Global OSAT Assembly & Foundry Wafer Die Bank Optimization Report',
+    desc: 'Agents audit 35 active Apollo MCU die part numbers across TSMC wafer banks and OSAT packaging lines to prevent customer stockouts.',
+    tasks: [
+      { agent: 'global_semiconductor_foundry_router', task: 'Parse 35 Apollo MCU SKU inventory feeds to identify 5 part numbers reaching safety stock reorder thresholds ahead of holiday launch.', deps: [] },
+      { agent: 'subthreshold_wafer_bom_pricing_eng', task: 'Verify TSMC 300mm wafer fabrication lead times (12 weeks) and OSAT WLCSP bump line capacity.', deps: [0] },
+      { agent: 'reviewer', task: 'Validate foundry inventory turnover ratio (7.6x/yr) against OEM contractual VMI targets.', deps: [1] },
+      { agent: 'writer', task: 'Generate wafer bank health report and automated purchase order dispatch matrix for fab operations.', deps: [2] }
+    ]
+  },
+  thermal_simulation: {
+    name: 'Subthreshold SPOT MCU energy efficiency & cradle-to-grave silicon LCA simulation',
+    title: 'AI Sustainable Silicon LCA Operator',
+    track: 'operations',
+    deliverable: 'Subthreshold SPOT MCU Energy Efficiency & Silicon LCA Simulation Strategy',
+    desc: 'Agents run Life Cycle Assessment (LCA) environmental impact simulations comparing Ambiq SPOT MCUs against legacy standard voltage microcontrollers.',
+    tasks: [
+      { agent: 'iso26262_semiconductor_lca_auditor', task: 'Calculate cradle-to-grave carbon footprint: Legacy MCU (0.42 kg CO2e) vs Apollo510 SPOT MCU (0.08 kg CO2e, -81.0% energy reduction over 5-year battery life).', deps: [] },
+      { agent: 'apollo_mcu_silicon_design_spec', task: 'Confirm subthreshold leakage current reduction extends smartwatch battery life from 2 days to 14 days.', deps: [0] },
+      { agent: 'writer', task: 'Produce Ambiq SPOT Sustainable Silicon White Paper and ISO 14040 compliance certificate.', deps: [0, 1] }
+    ]
+  },
+  mask_eco: {
+    name: 'Silicon stepping revision & photolithography metal layer ECO review',
+    title: 'AI Photolithography ECO Revision Operator',
+    track: 'operations',
+    deliverable: 'Silicon Stepping Revision & Photolithography Metal Layer ECO Assessment',
+    desc: 'Agents evaluate Engineering Change Order ECO-2026-AMB-902 (Modify Apollo510 Metal-3 Routing Layer to Reduce Subthreshold SRAM Leakage by 18%).',
+    tasks: [
+      { agent: 'silicon_stepping_eco_revision_spec', task: 'Audit 3D GDSII photomask revision files, confirming Metal-3 optical proximity correction (OPC) changes without full mask respin.', deps: [] },
+      { agent: 'high_speed_wafer_probe_testing_qa_engineer', task: 'Confirm modified silicon stepping maintains zero ATE test vector failures under 0.3V VDD.', deps: [0] },
+      { agent: 'writer', task: 'Publish integrated Ambiq silicon stepping ECO release bulletin and TSMC fab manufacturing notice.', deps: [1] }
+    ]
+  }
+};
+
+const FINAL = {
+  scout: `TOP 50 GLOBAL TIER-1 WEARABLE & MEDICAL IOT SILICON PIPELINE (illustrative)
+Prepared for Ambiq Micro, Inc. Executive Sourcing & Sales Operations
+
+Scanned tier-1 smartwatch, hearable, medical wearable, and smart home OEMs across North America, Europe, and Asia consuming >10 million annual MCUs.
+
+Tier-1 Enterprise Semiconductor Opportunities:
+1. Apex Wearables Corp. (Cupertino, CA) - 25M Units/Yr - Apollo510 WLCSP MCU - SPOT Power Fit: 99
+2. Sonic Hearables Inc. (Copenhagen, Denmark) - 15M Units/Yr - Apollo4 Plus neuralSPOT - Fit Score: 98
+3. BioPulse Health Systems (Boston, MA) - 10M Units/Yr - Continuous ECG/EEG Sensor Hub - Fit Score: 96
+4. Nexus Smart Home IoT (Seoul, South Korea) - 30M Units/Yr - Battery-Powered Smart Locks - Fit Score: 95
+
+Key Decision Makers: VP of Silicon Procurement, Chief Semiconductor Architect, Director of Hardware Engineering.
+→ Saved: target_wearable_mcu_pipeline, tsmc_wafer_capacity_reservations, oem_master_agreements`,
+
+  quote: `TURNKEY 25M UNIT APOLLO510 MCU WLCSP DIE PACKAGING & TSMC WAFER BOM (illustrative)
+Project Name: Apollo510 Subthreshold Microcontroller (2.5mm x 2.5mm WLCSP Package)
+Customer: Apex Wearables Corp.
+
+System Engineering Architecture & Bill of Materials Breakdown:
+• Silicon Wafer Foundry: TSMC 22nm ULP Process (300mm wafers yielding 18,400 raw die/wafer)
+• Packaging Format: 121-ball Wafer Level Chip Scale Package (WLCSP, 0.25mm ball pitch)
+• Final Test: High-Speed ATE Wafer Probe & Tri-Temp Test (-40°C to +85°C)
+
+Financial Performance & Unit Capex Breakdown:
+• Unit Silicon Die Price: $1.42/unit ($35,500,000.00 annual silicon spend)
+• WLCSP Packaging & RDL Price: $0.28/unit ($7,000,000.00 annual packaging spend)
+• ATE Wafer Test Price: $0.12/unit ($3,000,000.00 annual testing spend)
+• Total Delivered MCU Price: $1.82/unit delivered ($45,500,000.00 total annual program spend)
+• Photomask Tooling Capex: $1,200,000.00 one-time (amortized over first 10 million units at $0.12/unit)
+• Wafer Die Bank Holding: 90-day safety stock buffer (6.25 million die) held at Taiwan OSAT.
+→ Saved: apollo510_silicon_bom_quote, photomask_amortization_schedule, tsmc_wafer_allocation_matrix`,
+
+  tender: `GLOBAL WEARABLE OEM MASTER SILICON SUPPLY & 90-DAY DIE BANK TENDER (illustrative)
+Solicitation: Master Multi-Year Semiconductor Supply & Wafer Bank Agreement (100,000,000 Units/Yr)
+OEM Partner: Global Fortune 500 Consumer Electronics & Wearables Corporation (4 Manufacturing Facilities)
+
+Volume Commitment & Product Category Breakdown:
+• Apollo510 High-Performance Smartwatch MCUs: 50,000,000 units/year
+• Apollo4 Plus Hearable & Voice AI SoCs: 35,000,000 units/year
+• Low-Power Sensor Hub Controllers: 15,000,000 units/year
+
+Supply Chain & Inventory Guarantee:
+• 90-Day Die Bank Safety Stock: 25.0 million die held in nitrogen-purged die banks at Taiwan and Malaysia OSAT facilities.
+• Delivery SLA: Guaranteed 99.8% on-time delivery with 24-hour emergency die release commitment.
+• Sustainability Commitment: Certified 100% conflict-free minerals and RoHS/REACH compliance.
+→ Saved: master_silicon_supply_agreement, die_bank_release_matrix, annual_volume_rebate_schedule`,
+
+  radar: `GLOBAL SEMICONDUCTOR SILICON WAFER & OSAT PACKAGING INTELLIGENCE (illustrative)
+Analysis Scope: Global Silicon Wafer Foundry Pricing, Substrate Lead Times & Subthreshold Energy Spreads
+
+Market Pricing & Index Dynamics:
+• 300mm Silicon Wafers (TSMC 22nm ULP): $120/wafer (Flat over prior quarter due to balanced foundry supply).
+• OSAT WLCSP Packaging Redistribution Layer (RDL): $0.28/die (Stable; lead times at 6 weeks).
+• Subthreshold Transistor Energy Consumption: Ambiq SPOT yields 4.2 microamps/MHz active power vs 45 microamps/MHz for standard MCUs (-90.6% energy savings).
+• ARM Cortex-M55 Core IP Royalties: Fixed tier-1 volume licensing schedule locked.
+
+Strategic Recommendation:
+Lock in 12-month TSMC 300mm wafer allocation while securing long-term WLCSP bump capacity to buffer tier-1 OEM clients against unexpected demand spikes.
+→ Saved: semiconductor_wafer_index_report, spot_power_efficiency_matrix, oem_procurement_battlecards`,
+
+  panel_qualification: `APOLLO510 SPOT SUBTHRESHOLD FEA POWER & HIGH-SPEED ATE TEST DOSSIER (illustrative)
+Project Site: Apollo510 Subthreshold Microcontroller (Studio Silicon Engineering Team)
+
+Structural FEA Power Simulation & Subthreshold Transistor Results:
+• Subthreshold Voltage Operation: FEA simulation verified stable 0.35V VDD transistor switching without logic drop out.
+• Active Power Efficiency: Verified 4.2 microamps/MHz active current consumption (beating 5.0 microamps/MHz specification).
+• Thermal Dissipation: Maximum die junction temperature increase held under 1.4°C under 100MHz peak CPU load.
+• Static Leakage Current: Deep sleep leakage held under 650 nanoamps with 384KB SRAM retention active.
+
+High-Speed ATE Wafer Probe Test Qualification:
+• Functional Die Yield: 99.2% passing yield across 18,400 die per 300mm wafer.
+• Tri-Temp Testing: 100% pass rate across -40°C, +25°C, and +85°C ambient temperature sweeps.
+→ Saved: apollo510_spot_fea_report, GDSII_die_layout_drawing, ate_wafer_probe_certification`,
+
+  inverter_yield: `GLOBAL OSAT ASSEMBLY & FOUNDRY WAFER DIE BANK OPTIMIZATION REPORT (illustrative)
+Monitored Network: 35 Active Apollo MCU Die Part Numbers across TSMC Wafer Banks and Taiwan/Malaysia OSAT Facilities
+Analytics Engine: Global Semiconductor Supply Chain & Fab Integrator
+
+Diagnostic Inventory Audit Results:
+• Total Wafer Die Bank Value Monitored: $42,800,000.00 (Network Inventory Turnover: 7.6x/year)
+• Reorder Trigger Alerts: 5 high-velocity MCU die SKUs identified reaching safety stock reorder point ahead of peak season.
+  - Apollo510 2.5mm WLCSP Die: 1.8M die on hand (Reorder triggered for 5.0M die from TSMC 22nm line).
+  - Apollo4 Plus BGA Die: 1.2M die on hand (Reorder triggered for 3.0M die from foundry).
+
+Supply Chain Optimization & Savings:
+• Avoided OEM Line Stoppage: Prevented stockouts for 6 major smartwatch and hearable accounts.
+• Automated PO Dispatch: Electronic purchase orders issued to TSMC and OSAT partners with 12-week lead time window.
+→ Saved: die_bank_health_report, automated_purchase_orders, osat_bump_capacity_matrix`,
+
+  thermal_simulation: `SUBTHRESHOLD SPOT MCU ENERGY EFFICIENCY & SILICON LCA STRATEGY (illustrative)
+Simulated IC: Apollo510 SPOT MCU vs Standard Voltage Cortex-M4 MCU (5-Year Battery Wearable Lifecycle)
+Methodology: ISO 14040/14044 Compliant Life Cycle Assessment
+
+LCA Environmental Impact Results per 1,000 Delivered Microcontrollers:
+• Greenhouse Gas Emissions (Carbon Footprint over 5-year device operating life):
+  - Standard Voltage MCU: 0.42 kg CO2e / unit (due to frequent battery recharges and higher grid draw)
+  - Apollo510 SPOT MCU: 0.08 kg CO2e / unit (-81.0% reduction)
+• Battery Elimination Impact: Extended battery life reduces lithium-ion battery replacements by 65%.
+
+Regulatory & ESG Compliance:
+Complies with EU Conflict Minerals Regulation, RoHS 3, and REACH SVHC standards.
+→ Saved: ambiq_spot_lca_simulation_report, conflict_minerals_certificate, esg_compliance_dossier`,
+
+  mask_eco: `SILICON STEPPING REVISION & PHOTOLITHOGRAPHY METAL LAYER ECO ASSESSMENT (illustrative)
+Engineering Change Order: ECO-2026-AMB-902
+Affected IC Families: Apollo510 Subthreshold Microcontroller Die Revision B0
+
+Design Changes & Semiconductor Results:
+• Metal Layer Modification: Re-routed Metal-3 optical proximity correction (OPC) traces to optimize SRAM bitline precharge voltage.
+• Leakage Reduction: Reduced subthreshold SRAM static leakage current by 18.4% (from 650nA to 530nA).
+• Photomask Impact: 3D GDSII audit confirmed change requires re-making only 2 metal layer photomasks ($90,000 mask revision saved vs $1.2M full respin).
+• ATE Test Verification: Modified silicon stepping passed 100% of subthreshold test vectors down to 0.30V VDD.
+
+Release Status: Certified for commercial TSMC wafer fab production execution.
+→ Saved: ambiq_eco_bulletin, metal3_gdsii_drawings, ate_subthreshold_test_results`
+};
+
+const OPERATORS = [
+  { id: 'scout', name: 'Scout', title: 'AI Wearable Silicon Sourcing Scout', wf: 'scout', handled: 540, hrs: 250, status: 'idle' },
+  { id: 'quote', name: 'Quote', title: 'AI Microcontroller Quoting Operator', wf: 'quote', handled: 610, hrs: 295, status: 'idle' },
+  { id: 'tender', name: 'Tender', title: 'AI Master Silicon Supply Tender Operator', wf: 'tender', handled: 380, hrs: 230, status: 'idle' },
+  { id: 'radar', name: 'Radar', title: 'AI Semiconductor Market Intelligence Operator', wf: 'radar', handled: 470, hrs: 215, status: 'idle' },
+  { id: 'safety', name: 'Sentinel', title: 'AI Apollo510 SPOT FEA & Test Operator', wf: 'panel_qualification', handled: 710, hrs: 390, status: 'idle' },
+  { id: 'mill', name: 'Atlas', title: 'AI Foundry Die Bank Optimization Operator', wf: 'inverter_yield', handled: 650, hrs: 330, status: 'idle' },
+  { id: 'cfd', name: 'Vanguard', title: 'AI Sustainable Silicon LCA Operator', wf: 'thermal_simulation', handled: 510, hrs: 260, status: 'idle' },
+  { id: 'eco', name: 'Nexus', title: 'AI Photolithography ECO Revision Operator', wf: 'mask_eco', handled: 430, hrs: 240, status: 'idle' }
+];
+
+function initUI() {
+  renderOperators('all');
+  populateSimSelect();
+  loadSimDetails();
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('[id^="view-"]').forEach(v => v.classList.add('hidden'));
+
+  if(tab === 'roster') {
+    document.querySelectorAll('.nav-link')[0].classList.add('active');
+    document.getElementById('view-roster').classList.remove('hidden');
+  } else if(tab === 'simulation') {
+    document.querySelectorAll('.nav-link')[1].classList.add('active');
+    document.getElementById('view-simulation').classList.remove('hidden');
+  } else if(tab === 'hire') {
+    document.querySelectorAll('.nav-link')[2].classList.add('active');
+    document.getElementById('view-hire').classList.remove('hidden');
+  }
+}
+
+function renderOperators(track) {
+  const grid = document.getElementById('opGrid');
+  grid.innerHTML = '';
+
+  OPERATORS.forEach(op => {
+    const wf = WORKFLOWS[op.wf];
+    if(track !== 'all' && wf.track !== track) return;
+
+    const isFlagship = wf.tag === 'flagship';
+    const card = document.createElement('div');
+    card.className = 'card card-op';
+    card.innerHTML = `
+      ${isFlagship ? '<div class="flagship-tag">SPOT FEA FLAGSHIP</div>' : ''}
+      <div class="card-title">${op.name}</div>
+      <div class="card-meta">${op.title}</div>
+      <div class="wf-desc">${wf.name}</div>
+      <div class="stat-box">
+        <div>
+          <div class="stat-lbl">TASKS RUN</div>
+          <div class="stat-num">${op.handled}</div>
+        </div>
+        <div>
+          <div class="stat-lbl">TIME SAVED</div>
+          <div class="stat-num">${op.hrs}h</div>
+        </div>
+      </div>
+      <button class="btn-ambiq" onclick="quickRun('${op.wf}')">SIMULATE OPERATOR</button>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function filterTrack(track) {
+  document.querySelectorAll('.track-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderOperators(track);
+}
+
+function populateSimSelect() {
+  const sel = document.getElementById('simWfSelect');
+  sel.innerHTML = '';
+  Object.keys(WORKFLOWS).forEach(key => {
+    const wf = WORKFLOWS[key];
+    const opt = document.createElement('option');
+    opt.value = key;
+    opt.textContent = `${wf.title} (${wf.name})`;
+    sel.appendChild(opt);
+  });
+}
+
+function loadSimDetails() {
+  const key = document.getElementById('simWfSelect').value;
+  const wf = WORKFLOWS[key];
+  const dag = document.getElementById('dagContainer');
+  dag.innerHTML = '';
+
+  wf.tasks.forEach((t, idx) => {
+    const role = AGENT_ROLES[t.agent];
+    const node = document.createElement('div');
+    node.className = `dag-node ${wf.tag === 'flagship' ? 'flagship' : ''}`;
+    node.innerHTML = `
+      <div style="font-weight:700; color:var(--ambiq-slate); text-transform:uppercase;">${role.emoji} STEP ${idx + 1}: ${role.label}</div>
+      <div style="color:var(--text-dark); margin-top:2px;">${t.task}</div>
+    `;
+    dag.appendChild(node);
+  });
+
+  document.getElementById('dossierContainer').classList.add('hidden');
+  document.getElementById('simProgress').style.width = '0%';
+  document.getElementById('simLogs').textContent = `Loaded workflow: ${wf.title}\nClick 'START SIMULATION' to execute multi-agent task workflow.`;
+}
+
+function quickRun(wfKey) {
+  switchTab('simulation');
+  document.getElementById('simWfSelect').value = wfKey;
+  loadSimDetails();
+  runSimulation();
+}
+
+function runSimulation() {
+  const key = document.getElementById('simWfSelect').value;
+  const wf = WORKFLOWS[key];
+  const btn = document.getElementById('runBtn');
+  const logs = document.getElementById('simLogs');
+  const fill = document.getElementById('simProgress');
+  const dossierContainer = document.getElementById('dossierContainer');
+  const dossierText = document.getElementById('dossierText');
+
+  btn.disabled = true;
+  dossierContainer.classList.add('hidden');
+  logs.textContent = `[0.00s] INITIALIZING AMBIQ SEMICONDUCTOR AI WORKFORCE ENGINE...\n[0.10s] Loading agent roles & tool definitions for workflow '${key}'...\n`;
+  fill.style.width = '10%';
+
+  let currentStep = 0;
+  const totalSteps = wf.tasks.length;
+
+  const timer = setInterval(() => {
+    if(currentStep < totalSteps) {
+      const task = wf.tasks[currentStep];
+      const role = AGENT_ROLES[task.agent];
+      const timestamp = ((currentStep + 1) * 0.45).toFixed(2);
+
+      logs.textContent += `[${timestamp}s] EXECUTING STEP ${currentStep + 1}/${totalSteps}: ${role.label}\n`;
+      logs.textContent += `  ➜ Task: ${task.task}\n`;
+      logs.textContent += `  ➜ Tool Output: Executed tool '${role.tools[0]}' successfully.\n`;
+      logs.scrollTop = logs.scrollHeight;
+
+      currentStep++;
+      fill.style.width = `${Math.min(90, (currentStep / totalSteps) * 90)}%`;
+    } else {
+      clearInterval(timer);
+      fill.style.width = '100%';
+      logs.textContent += `[${(totalSteps * 0.45 + 0.2).toFixed(2)}s] WORKFLOW EXECUTION COMPLETE. GENERATING EXECUTIVE DOSSIER...\n`;
+      logs.scrollTop = logs.scrollHeight;
+
+      dossierText.textContent = FINAL[key] || 'Dossier completed.';
+      dossierContainer.classList.remove('hidden');
+      btn.disabled = false;
+    }
+  }, 500);
+}
+
+function deployOperator() {
+  const name = document.getElementById('newOpName').value || 'Custom Ambiq Operator';
+  const wf = document.getElementById('newOpWf').value;
+
+  OPERATORS.push({
+    id: 'custom_' + Date.now(),
+    name: name,
+    title: 'Custom ' + WORKFLOWS[wf].title,
+    wf: wf,
+    handled: 1,
+    hrs: 0,
+    status: 'idle'
+  });
+
+  alert(`Successfully deployed AI Operator '${name}' into Ambiq workforce roster!`);
+  switchTab('roster');
+  renderOperators('all');
+}
+
+window.onload = initUI;
+</script>
+</body>
+</html>
