@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>d-Matrix | Autonomous Generative AI Semiconductor Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-main: #F8FAFC;
+  --bg-card: #FFFFFF;
+  --bg-surface: #EEF2F6;
+  --dm-blue: #0088FF;
+  --dm-cyan: #00C8FF;
+  --dm-slate: #101826;
+  --dm-dark: #090D14;
+  --dm-green: #00E676;
+  --text-dark: #101826;
+  --text-muted: #5A6E85;
+  --border-dark: #101826;
+  --border-subtle: #CBD5E1;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg-main);
+  color: var(--text-dark);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Announcement Top Bar */
+.top-bar {
+  background: var(--dm-dark);
+  color: var(--dm-cyan);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 8px 16px;
+  border-bottom: 2px solid var(--dm-blue);
+}
+
+/* Site Header */
+.site-header {
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 24px 40px 16px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.brand-logo-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.brand-title {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--dm-blue);
+  text-transform: lowercase;
+}
+.brand-title span { color: var(--dm-slate); }
+.brand-tagline {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  border-left: 2px solid var(--dm-blue);
+  padding-left: 12px;
+}
+.badge-corsair {
+  background: var(--dm-slate);
+  color: #FFFFFF;
+  border: 1px solid var(--dm-blue);
+  padding: 6px 14px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.badge-corsair span { color: var(--dm-cyan); }
+
+/* Navigation Bar */
+.nav-bar {
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0 40px;
+  display: flex;
+  gap: 32px;
+}
+.nav-link {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 16px 0;
+  cursor: pointer;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+}
+.nav-link:hover, .nav-link.active {
+  color: var(--dm-blue);
+  border-bottom-color: var(--dm-blue);
+}
+
+/* Hero Section */
+.hero {
+  padding: 32px 40px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 32px;
+}
+.hero-title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--dm-slate);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.hero-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  max-width: 980px;
+}
+
+/* Container & Layout */
+.container { padding: 0 40px 40px 40px; }
+.track-selector {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.track-btn {
+  background: #FFFFFF;
+  border: 1px solid var(--border-dark);
+  color: var(--border-dark);
+  padding: 10px 18px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.track-btn.active {
+  background: var(--dm-slate);
+  color: #FFFFFF;
+  border-color: var(--dm-slate);
+}
+
+/* Grids */
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  padding: 24px;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 24, 38, 0.08);
+}
+.card-op {
+  border-top: 4px solid var(--dm-blue);
+  background: #FFFFFF;
+}
+.flagship-tag {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--dm-slate);
+  color: var(--dm-cyan);
+  font-size: 9px;
+  font-weight: 800;
+  padding: 3px 8px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border: 1px solid var(--dm-blue);
+}
+.card-title {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--dm-slate);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+.card-meta {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--dm-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+.wf-desc {
+  font-size: 11px;
+  color: var(--text-dark);
+  height: 36px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.stat-box {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 12px;
+  margin-bottom: 16px;
+}
+.stat-lbl {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.stat-num {
+  font-family: var(--font-mono);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--dm-slate);
+}
+
+/* Buttons */
+.btn-dm {
+  background: var(--dm-slate);
+  color: #FFFFFF;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 12px 18px;
+  width: 100%;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-dm:hover {
+  background: var(--dm-blue);
+}
+.btn-cyan {
+  background: var(--dm-blue);
+  color: #FFFFFF;
+}
+.btn-cyan:hover {
+  background: #0066CC;
+}
+
+/* Simulation View */
+.dag-node {
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-left: 4px solid var(--dm-blue);
+  padding: 14px;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+.dag-node.flagship {
+  border-left-color: var(--dm-cyan);
+  background: var(--bg-surface);
+}
+.log-terminal {
+  background: var(--dm-dark);
+  color: #00FFCC;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 16px;
+  height: 240px;
+  overflow-y: auto;
+  border: 1px solid var(--dm-blue);
+}
+.progress-bg {
+  background: var(--border-subtle);
+  height: 4px;
+  margin: 12px 0;
+}
+.progress-fill {
+  background: var(--dm-blue);
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s;
+}
+.dossier-card {
+  background: #FFFFFF;
+  border: 1px solid var(--dm-slate);
+  padding: 24px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  white-space: pre-wrap;
+  color: var(--text-dark);
+  margin-top: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.hidden { display: none !important; }
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--border-subtle);
+  padding: 32px 40px;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  background: var(--bg-surface);
+  margin-top: 40px;
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  DIGITAL IN-MEMORY COMPUTE (DIMC): BREAKING THE MEMORY WALL FOR GENERATIVE AI INFERENCE
+</div>
+
+<header class="site-header">
+  <div class="brand-logo-group">
+    <div class="brand-title">d-<span>matrix</span></div>
+    <div class="brand-tagline">IN-MEMORY COMPUTE FOR GENERATIVE AI</div>
+  </div>
+  <div class="badge-corsair">
+    CORSAIR PLATFORM <span>JAYHAWK DIMC CHIPLET</span>
+  </div>
+</header>
+
+<nav class="nav-bar">
+  <a class="nav-link active" onclick="switchTab('roster')">AI WORKFORCE ROSTER</a>
+  <a class="nav-link" onclick="switchTab('simulation')">WORKFLOW SIMULATION</a>
+  <a class="nav-link" onclick="switchTab('hire')">STAND UP OPERATOR</a>
+</nav>
+
+<div class="hero">
+  <h1 class="hero-title">Autonomous AI Semiconductor Operations Platform</h1>
+  <div class="hero-desc">12 Specialist AI Agents and 8 Enterprise Workflows Orchestrating TSMC Wafer Melt Sourcing, Digital In-Memory Compute (DIMC) SRAM Stress Engineering, Jayhawk Chiplet DMX Link Interconnects, and Corsair PCIe Gen5 Datacenter Accelerator Operations.</div>
+</div>
+
+<div class="container">
+
+  <!-- ROSTER VIEW -->
+  <div id="view-roster">
+    <div class="track-selector">
+      <button class="track-btn active" onclick="filterTrack('all')">All Workflows (8)</button>
+      <button class="track-btn" onclick="filterTrack('commercial')">Commercial Sourcing & Cloud Offtake (4)</button>
+      <button class="track-btn" onclick="filterTrack('operations')">DIMC Silicon Engineering & OSAT Quality (4)</button>
+    </div>
+    <div class="grid-4" id="opGrid"></div>
+  </div>
+
+  <!-- SIMULATION VIEW -->
+  <div id="view-simulation" class="hidden">
+    <div class="card">
+      <div class="card-title">Execute Autonomous AI Silicon & Chiplet Workflow</div>
+      <div style="font-size:12px; color:var(--text-muted); margin-bottom:16px;">Select an enterprise semiconductor workflow to simulate multi-agent orchestration and view real-time logs:</div>
+
+      <div style="display:flex; gap:16px; margin-bottom:24px;">
+        <select id="simWfSelect" style="flex:1; padding:12px; border:1px solid var(--dm-slate); font-family:var(--font-sans); font-size:12px; font-weight:700;" onchange="loadSimDetails()">
+        </select>
+        <button class="btn-dm btn-cyan" style="width:200px;" id="runBtn" onclick="runSimulation()">START SIMULATION</button>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <div style="font-size:12px; font-weight:800; color:var(--dm-slate); letter-spacing:1px; margin-bottom:12px; text-transform:uppercase;">WORKFLOW EXECUTION GRAPH (DAG)</div>
+          <div id="dagContainer"></div>
+        </div>
+        <div>
+          <div style="font-size:12px; font-weight:800; color:var(--dm-slate); letter-spacing:1px; margin-bottom:12px; text-transform:uppercase;">REAL-TIME TELEMETRY & AGENT LOGS</div>
+          <div class="progress-bg"><div class="progress-fill" id="simProgress"></div></div>
+          <div class="log-terminal" id="simLogs">Ready to execute workflow simulation...</div>
+        </div>
+      </div>
+
+      <div id="dossierContainer" class="hidden">
+        <div style="font-size:14px; font-weight:800; color:var(--dm-slate); margin-top:24px; text-transform:uppercase;">GENERATED EXECUTIVE DOSSIER</div>
+        <div class="dossier-card" id="dossierText"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAND UP OPERATOR VIEW -->
+  <div id="view-hire" class="hidden">
+    <div class="card" style="max-width:700px; margin:0 auto;">
+      <div class="card-title">STAND UP NEW d-MATRIX AI OPERATOR</div>
+      <div style="font-size:12px; color:var(--text-muted); margin-bottom:20px;">Deploy an autonomous operator for specialized Jayhawk DIMC chiplet wafer sourcing or Corsair card assembly:</div>
+
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div>
+          <label style="font-size:10px; font-weight:800; letter-spacing:1px; display:block; margin-bottom:6px; text-transform:uppercase;">Operator Name</label>
+          <input type="text" id="newOpName" placeholder="e.g. Jayhawk Chiplet Wafer Scout" style="width:100%; padding:12px; border:1px solid var(--border-subtle); font-family:var(--font-sans); font-size:12px;">
+        </div>
+        <div>
+          <label style="font-size:10px; font-weight:800; letter-spacing:1px; display:block; margin-bottom:6px; text-transform:uppercase;">Target Enterprise Workflow</label>
+          <select id="newOpWf" style="width:100%; padding:12px; border:1px solid var(--border-subtle); font-family:var(--font-sans); font-size:12px; font-weight:700;">
+            <option value="scout">Global Hyperscaler LLM Inference & GenAI Compute Scout</option>
+            <option value="quote">Turnkey 10M Unit Corsair PCIe Card & Jayhawk Chiplet BOM Pro Forma</option>
+            <option value="tender">Enterprise Cloud Datacenter Master AI Supply Tender Response</option>
+            <option value="panel_qualification">Jayhawk DIMC SRAM In-Memory Compute FEA & PCIe ATE Test Qualification</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:10px; font-weight:800; letter-spacing:1px; display:block; margin-bottom:6px; text-transform:uppercase;">Execution Cadence</label>
+          <select id="newOpCadence" style="width:100%; padding:12px; border:1px solid var(--border-subtle); font-family:var(--font-sans); font-size:12px;">
+            <option value="daily">Daily Continuous Execution</option>
+            <option value="weekly">Weekly Tapeout Sync</option>
+            <option value="on_demand">On-Demand Executive Trigger</option>
+          </select>
+        </div>
+        <button class="btn-dm" onclick="deployOperator()">DEPLOY OPERATOR</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  Independent concept prototype prepared for d-Matrix, Inc. (d-matrix.ai). Built with official d-Matrix visual identity tokens (Electric Blue #0088FF primary, Hyperscaler Slate #101826, Energy Cyan #00C8FF). All workflows, DIMC SRAM FEA simulations, BOM quotes, and dossier outputs are illustrative simulations.
+</footer>
+
+<script>
+const AGENT_ROLES = {
+  d_matrix_genai_inference_lead_scout: { emoji: '⚡', label: 'Hyperscaler Generative AI & LLM Inference Opportunity Scout', tools: ['screen_cloud_llm_inference_clusters', 'save'] },
+  dimc_chiplet_bom_pricing_eng: { emoji: '💰', label: 'TSMC Wafer Die Melt, DMX Link Interconnect & Corsair BOM Lead', tools: ['calculate_dimc_chiplet_bom', 'save'] },
+  jayhawk_dimc_silicon_design_spec: { emoji: '📐', label: 'Jayhawk In-Memory Compute SRAM & Thermal FEA Engineer', tools: ['model_dimc_sram_thermal_fea', 'save'] },
+  datacenter_llm_energy_lca_auditor: { emoji: '🌱', label: 'Generative AI Inference Energy & Carbon Footprint Auditor', tools: ['calculate_inference_energy_lca', 'save'] },
+  global_chiplet_foundry_osat_router: { emoji: '🚚', label: 'TSMC 2.5D CoWoS Wafer Fab Slot & OSAT Packaging Router', tools: ['optimize_chiplet_die_bank', 'save'] },
+  hyperscaler_master_silicon_tender_lead: { emoji: '🤝', label: 'Enterprise Cloud & Hyperscaler Master AI Compute Tender Lead', tools: ['structure_master_ai_tender', 'save'] },
+  dmx_link_interconnect_qa_eng: { emoji: '🔗', label: 'DMX Link Die-to-Die Interconnect & Microscaling QA Engineer', tools: ['audit_dmx_link_bandwidth_latency', 'save'] },
+  mx_block_fp_compiler_fitment_spec: { emoji: '🧠', label: 'Microscaling (MX) Block FP & SRAM Cache Specialist', tools: ['evaluate_mx6_quantization_fitment', 'save'] },
+  chiplet_stepping_eco_revision_spec: { emoji: '🔄', label: 'Photolithography Mask & Chiplet Stepping ECO Revision Lead', tools: ['audit_chiplet_metal_mask_eco', 'save'] },
+  high_speed_pcie_gen5_qa_engineer: { emoji: '⚙️', label: 'High-Speed PCIe Gen5 & 400G Datacenter ATE Test QA Engineer', tools: ['simulate_pcie_gen5_ate_testing', 'save'] },
+  writer: { emoji: '✍️', label: 'AI Compute Technical Specification & Hyperscaler Proposal Writer', tools: ['compose', 'save'] },
+  reviewer: { emoji: '✅', label: 'VP of Silicon Architecture & In-Memory Compute Principal PE', tools: ['qa_review', 'save'] }
+};
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Global hyperscaler LLM inference, chatbot & enterprise GenAI compute scout',
+    title: 'AI GenAI Inference Sourcing Scout',
+    track: 'commercial',
+    deliverable: 'Top 50 Global Hyperscaler & Enterprise GenAI Compute Pipeline',
+    desc: 'Agents analyze cloud provider LLM serving workloads, real-time audio/video AI inference latency SLAs, and SRAM digital in-memory compute benefits.',
+    tasks: [
+      { agent: 'd_matrix_genai_inference_lead_scout', task: 'Screen tier-1 cloud providers deploying 70B parameter LLM inference clusters.', deps: [] },
+      { agent: 'mx_block_fp_compiler_fitment_spec', task: 'Evaluate Microscaling MX6 format accuracy retention across Llama-3 and Mistral models.', deps: [0] },
+      { agent: 'reviewer', task: 'Audit hyperscaler procurement SLAs, multi-year card volume commitments, and PCIe Gen5 slot compatibility.', deps: [1] },
+      { agent: 'writer', task: 'Compile executive GenAI compute sourcing pipeline brief with buyer contact profiles.', deps: [2] }
+    ]
+  },
+  quote: {
+    name: 'Turnkey 10M unit Corsair PCIe card & Jayhawk DIMC chiplet BOM pro forma',
+    title: 'AI Compute Accelerator Quoting Operator',
+    track: 'commercial',
+    deliverable: 'Turnkey 10M Unit Corsair PCIe Card & Jayhawk DIMC Chiplet BOM Pro Forma',
+    desc: 'Agents compute TSMC 5nm Jayhawk SRAM chiplet wafer melt pricing, 2.5D CoWoS packaging, DMX Link die-to-die interconnects, and Corsair PCIe card assembly costs.',
+    tasks: [
+      { agent: 'dimc_chiplet_bom_pricing_eng', task: 'Calculate unit price: $1,450 per Corsair card (8 Jayhawk DIMC chiplets + 256GB LPDDR5X + PCIe Gen5 PCB).', deps: [] },
+      { agent: 'dmx_link_interconnect_qa_eng', task: 'Verify DMX Link die-to-die interconnect latency (<10ns) and signal integrity across chiplet substrate.', deps: [0] },
+      { agent: 'hyperscaler_master_silicon_tender_lead', task: 'Structure 90-day chiplet die bank safety stock buffer at TSMC and OSAT facilities in Taiwan.', deps: [1] },
+      { agent: 'reviewer', task: 'Audit photomask set amortization payback and DIMC SRAM yield margin.', deps: [2] },
+      { agent: 'writer', task: 'Produce review-ready Corsair AI inference accelerator commercial proposal package.', deps: [3] }
+    ]
+  },
+  tender: {
+    name: 'Enterprise cloud datacenter master AI inference supply & 90-day die bank tender response',
+    title: 'AI Master Cloud Compute Tender Operator',
+    track: 'commercial',
+    deliverable: 'Enterprise Cloud Datacenter Master AI Supply & 90-Day Die Bank Tender Response',
+    desc: 'Agents formulate multi-year master AI compute supply agreements covering 50,000 Corsair accelerator cards across 6 global datacenter regions.',
+    tasks: [
+      { agent: 'hyperscaler_master_silicon_tender_lead', task: 'Structure master supply contract with 90-day die bank holding terms across US and Taiwan OSAT hubs.', deps: [] },
+      { agent: 'datacenter_llm_energy_lca_auditor', task: 'Provide certified 10x energy reduction audit vs H100 GPU clusters and ISO 14040 carbon compliance certificate.', deps: [0] },
+      { agent: 'reviewer', task: 'Audit vendor liability limits, 99.9% accelerator uptime SLA, and wafer cost escalation terms.', deps: [1] },
+      { agent: 'writer', task: 'Draft master enterprise AI compute supply contract, card allocation matrix, and executive presentation.', deps: [2] }
+    ]
+  },
+  radar: {
+    name: 'Global AI inference silicon, HBM vs SRAM cost & TSMC CoWoS capacity market intelligence',
+    title: 'AI Silicon Market Intelligence Operator',
+    track: 'commercial',
+    deliverable: 'Global AI Inference Silicon & Packaging Market Intelligence Brief',
+    desc: 'Agents synthesize HBM3e memory pricing, TSMC CoWoS advanced packaging lead times, SRAM in-memory compute economics, and GPU cluster TCO benchmarks.',
+    tasks: [
+      { agent: 'dimc_chiplet_bom_pricing_eng', task: 'Track TSMC 5nm wafer pricing ($16,000/wafer) and CoWoS packaging substrate lead times (16 weeks).', deps: [] },
+      { agent: 'd_matrix_genai_inference_lead_scout', task: 'Highlight d-Matrix DIMC competitive advantages: 20x lower latency and 10x lower TCO than HBM-based GPUs for LLM inference.', deps: [0] },
+      { agent: 'writer', task: 'Produce quarterly executive AI compute market intelligence dossier for d-Matrix leadership.', deps: [1] }
+    ]
+  },
+  panel_qualification: {
+    name: 'Jayhawk DIMC SRAM in-memory compute FEA thermal & PCIe Gen5 ATE test qualification',
+    title: 'AI Jayhawk DIMC FEA & Test Operator',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'Jayhawk DIMC SRAM FEA Thermal & PCIe Gen5 ATE Test Qualification Dossier',
+    desc: 'Agents model 3D finite-element thermal & voltage drop simulations across digital in-memory compute SRAM arrays processing 150 TFLOPS per chiplet.',
+    tasks: [
+      { agent: 'jayhawk_dimc_silicon_design_spec', task: 'Execute 3D FEA SRAM thermal simulation across Jayhawk chiplet geometry, verifying max die junction temp <72°C under 350W TDP.', deps: [] },
+      { agent: 'high_speed_pcie_gen5_qa_engineer', task: 'Simulate PCIe Gen5 x16 link training, certifying 32 GT/s bus throughput and zero packet drop under load.', deps: [] },
+      { agent: 'dmx_link_interconnect_qa_eng', task: 'Confirm DMX Link 1.2 TB/s aggregate die-to-die bandwidth across 8-chiplet array.', deps: [0, 1] },
+      { agent: 'reviewer', task: 'Audit DIMC SRAM static timing analysis (STA), thermal color maps, and ATE test protocol with PE stamp.', deps: [2] },
+      { agent: 'writer', task: 'Publish complete Jayhawk DIMC silicon qualification dossier and commercial Corsair card ATE test certification.', deps: [3] }
+    ]
+  },
+  inverter_yield: {
+    name: 'Global OSAT 2.5D packaging & TSMC wafer die bank inventory optimization test',
+    title: 'AI Chiplet Die Bank Optimization Operator',
+    track: 'operations',
+    deliverable: 'Global OSAT 2.5D Packaging & TSMC Wafer Die Bank Optimization Report',
+    desc: 'Agents audit 12 active Jayhawk chiplet die part numbers across TSMC wafer banks and OSAT 2.5D assembly lines to prevent cloud delivery delays.',
+    tasks: [
+      { agent: 'global_chiplet_foundry_osat_router', task: 'Parse 12 Jayhawk chiplet SKU inventory feeds to identify 3 part numbers reaching safety stock reorder thresholds.', deps: [] },
+      { agent: 'dimc_chiplet_bom_pricing_eng', task: 'Verify TSMC 5nm wafer fabrication lead times (14 weeks) and CoWoS substrate capacity.', deps: [0] },
+      { agent: 'reviewer', task: 'Validate foundry die bank turnover ratio (8.2x/yr) against cloud customer VMI contractual targets.', deps: [1] },
+      { agent: 'writer', task: 'Generate chiplet die bank health report and automated purchase order dispatch matrix for fab operations.', deps: [2] }
+    ]
+  },
+  thermal_simulation: {
+    name: 'Digital in-memory compute energy efficiency & cradle-to-grave silicon LCA simulation',
+    title: 'AI Sustainable Compute LCA Operator',
+    track: 'operations',
+    deliverable: 'Digital In-Memory Compute Energy Efficiency & Silicon LCA Simulation Strategy',
+    desc: 'Agents run Life Cycle Assessment (LCA) environmental impact simulations comparing d-Matrix Corsair DIMC cards against legacy GPU inference servers.',
+    tasks: [
+      { agent: 'datacenter_llm_energy_lca_auditor', task: 'Calculate cradle-to-grave carbon footprint: H100 GPU Server (18.4 tons CO2e/yr) vs Corsair DIMC Server (2.1 tons CO2e/yr, -88.6% carbon reduction).', deps: [] },
+      { agent: 'jayhawk_dimc_silicon_design_spec', task: 'Confirm DIMC memory-centric compute eliminates HBM power dissipation, saving 1.2 megawatt-hours per server rack annually.', deps: [0] },
+      { agent: 'writer', task: 'Produce d-Matrix Sustainable AI Compute White Paper and ISO 14040 carbon compliance certificate.', deps: [0, 1] }
+    ]
+  },
+  mask_eco: {
+    name: 'DMX Link die-to-die interconnect revision & metal layer ECO review',
+    title: 'AI Chiplet Interconnect ECO Revision Operator',
+    track: 'operations',
+    deliverable: 'DMX Link Die-to-Die Interconnect Revision & Metal Layer ECO Assessment',
+    desc: 'Agents evaluate Engineering Change Order ECO-2026-DM-701 (Modify Metal-5 Interconnect Layer on Jayhawk Chiplet to Reduce Die-to-Die Latency by 1.8ns).',
+    tasks: [
+      { agent: 'chiplet_stepping_eco_revision_spec', task: 'Audit 3D GDSII photomask revision files, confirming Metal-5 optical proximity correction (OPC) changes without full mask respin.', deps: [] },
+      { agent: 'high_speed_pcie_gen5_qa_engineer', task: 'Confirm modified chiplet stepping maintains zero DMX Link packet errors at 1.2 TB/s bandwidth.', deps: [0] },
+      { agent: 'writer', task: 'Publish integrated d-Matrix chiplet stepping ECO release bulletin and TSMC fab manufacturing notice.', deps: [1] }
+    ]
+  }
+};
+
+const FINAL = {
+  scout: `TOP 50 GLOBAL HYPERSCALER & ENTERPRISE GENAI COMPUTE PIPELINE (illustrative)
+Prepared for d-Matrix, Inc. Executive Sourcing & Datacenter Operations
+
+Scanned cloud service providers, LLM API hosts, and enterprise AI datacenter operators across North America, Europe, and Asia consuming >10,000 annual inference accelerators.
+
+Tier-1 Enterprise AI Compute Opportunities:
+1. CloudScale Hyperscale AI (Seattle, WA) - 15,000 Corsair Cards/Yr - 70B LLM Inference - DIMC Fit: 99
+2. Enterprise GenAI Labs (San Jose, CA) - 8,000 Corsair Cards/Yr - Real-Time Voice & Video AI - Fit Score: 98
+3. Nordic AI Data Centers (Stockholm, Sweden) - 6,000 Corsair Cards/Yr - Sustainable LLM Compute - Fit Score: 97
+4. Pacific Rim Cloud Services (Tokyo, Japan) - 12,000 Corsair Cards/Yr - High-Throughput Chatbot Fleet - Fit Score: 95
+
+Key Decision Makers: VP of Cloud Infrastructure, Chief AI Architect, Director of Datacenter Compute Sourcing.
+→ Saved: target_hyperscaler_pipeline, tsmc_cowos_capacity_reservations, cloud_master_supply_agreements`,
+
+  quote: `TURNKEY 10M UNIT CORSAIR PCIE CARD & JAYHAWK CHIPLET BOM PRO FORMA (illustrative)
+Project Name: Corsair™ PCIe Gen5 AI Inference Acceleration Card
+Silicon Architecture: 8x Jayhawk Digital In-Memory Compute (DIMC) SRAM Chiplets
+
+System Engineering Architecture & Bill of Materials Breakdown:
+• Silicon Chiplet Foundry: TSMC 5nm Process (300mm wafers yielding Jayhawk DIMC chiplets)
+• Advanced Packaging: 2.5D CoWoS Interposer with DMX Link Die-to-Die Interconnects
+• Capacity Memory: 256GB LPDDR5X-8533 SDRAM Module Array
+• Board Assembly: Dual-Slot PCIe Gen5 x16 Active Cooled Datacenter Form Factor (350W TDP)
+
+Financial Performance & Unit Capex Breakdown:
+• 8x Jayhawk DIMC Chiplets: $680.00/card ($6,800,000,000.00 total chiplet spend)
+• TSMC 2.5D CoWoS Interposer & Packaging: $320.00/card ($3,200,000,000.00 total packaging spend)
+• 256GB LPDDR5X & Board Assembly: $280.00/card ($2,800,000,000.00 total board spend)
+• Final ATE & PCIe Gen5 Test: $170.00/card ($1,700,000,000.00 total testing spend)
+• Total Delivered Corsair Accelerator Price: $1,450.00/card delivered ($14,500,000,000.00 program spend)
+• Photomask & Interposer Tooling Capex: $3,500,000.00 one-time (amortized over first 1 million cards)
+• Chiplet Die Bank Holding: 90-day safety stock buffer (2.0 million Jayhawk chiplets) held at Taiwan OSAT.
+→ Saved: corsair_card_bom_quote, photomask_amortization_schedule, tsmc_cowos_allocation_matrix`,
+
+  tender: `ENTERPRISE CLOUD DATACENTER MASTER AI SUPPLY & 90-DAY DIE BANK TENDER (illustrative)
+Solicitation: Master Multi-Year AI Compute Supply & Chiplet Bank Agreement (50,000 Corsair Cards/Yr)
+Hyperscaler Partner: Global Fortune 50 Enterprise Cloud Provider (6 Global Datacenter Regions)
+
+Volume Commitment & Product Category Breakdown:
+• Corsair PCIe Gen5 AI Inference Cards: 50,000 units/year
+• Jayhawk DIMC SRAM Chiplet Modules: 400,000 chiplets/year
+• D-Matrix MX Compiler & Software Suite: Site license for 100,000 server nodes
+
+Supply Chain & Inventory Guarantee:
+• 90-Day Die Bank Safety Stock: 100,000 Jayhawk chiplets held in nitrogen-purged die banks in Taiwan and US OSAT facilities.
+• Delivery SLA: Guaranteed 99.9% on-time card delivery with 24-hour emergency replacement SLA.
+• Sustainability Commitment: Certified 88.6% lower carbon footprint per inference vs H100 GPU racks.
+→ Saved: master_ai_supply_agreement, chiplet_bank_release_matrix, annual_volume_rebate_schedule`,
+
+  radar: `GLOBAL AI INFERENCE SILICON & PACKAGING MARKET INTELLIGENCE BRIEF (illustrative)
+Analysis Scope: Global AI Inference Silicon, HBM3e vs SRAM DIMC Economics & TSMC CoWoS Lead Times
+
+Market Pricing & Index Dynamics:
+• TSMC 5nm Silicon Wafers: $16,000/wafer (Flat over prior quarter due to strong foundry demand).
+• TSMC CoWoS 2.5D Packaging: $320/interposer module (Lead times stabilizing at 16 weeks).
+• HBM3e Memory Prices: $18.50/GB (High cost premium creating massive TCO advantage for d-Matrix SRAM DIMC).
+• Generative AI Latency Performance: d-Matrix DIMC delivers 20x lower latency on 70B LLM token generation vs standard GPU clusters.
+
+Strategic Recommendation:
+Lock in 12-month TSMC 5nm wafer and CoWoS interposer capacity while expanding LPDDR5X supply agreements to buffer cloud customers against memory spikes.
+→ Saved: ai_silicon_market_index_report, dimc_vs_gpu_tco_matrix, hyperscaler_procurement_battlecards`,
+
+  panel_qualification: `JAYHAWK DIMC SRAM FEA THERMAL & PCIE GEN5 ATE TEST DOSSIER (illustrative)
+Project Site: Corsair PCIe Gen5 Accelerator Card (Studio Silicon Engineering Team)
+
+Structural FEA Thermal Simulation & DIMC Transistor Results:
+• In-Memory Compute Voltage Stability: FEA simulation verified stable 0.75V VDD switching across 128MB SRAM array per chiplet.
+• Thermal Dissipation: Maximum die junction temperature held at 68.4°C under 350W full card TDP (well below 85°C thermal throttle limit).
+• DMX Link Interconnect: Verified 1.2 TB/s aggregate die-to-die bandwidth with zero CRC error rate under 100% load.
+• Power Efficiency: 150 TFLOPS per chiplet achieved at 35W power draw (4.2 TFLOPS/Watt efficiency rating).
+
+High-Speed ATE Wafer Probe & Board Test Qualification:
+• Functional Die Yield: 98.6% passing yield across TSMC 5nm Jayhawk wafers.
+• PCIe Gen5 Bus Testing: 100% pass rate across 32 GT/s link training tests.
+→ Saved: jayhawk_dimc_fea_report, GDSII_interposer_layout, pcie_gen5_ate_certification`,
+
+  inverter_yield: `GLOBAL OSAT 2.5D PACKAGING & TSMC WAFER DIE BANK OPTIMIZATION REPORT (illustrative)
+Monitored Network: 12 Active Jayhawk DIMC Chiplet Part Numbers across TSMC Wafer Banks and OSAT 2.5D Lines
+Analytics Engine: Global Semiconductor Supply Chain & Fab Integrator
+
+Diagnostic Inventory Audit Results:
+• Monitored Chiplet Bank Value: $65,400,000.00 (Network Inventory Turnover: 8.2x/year)
+• Reorder Trigger Alerts: 3 high-velocity Jayhawk chiplet SKUs identified reaching safety stock reorder point.
+  - Jayhawk DIMC 5nm Chiplet Die: 450,000 die on hand (Reorder triggered for 1.2M die from TSMC 5nm line).
+  - DMX Interconnect Bridge Die: 600,000 die on hand (Reorder triggered for 1.5M die).
+
+Supply Chain Optimization & Savings:
+• Avoided Cloud Delivery Delay: Prevented delays for 3 major hyperscaler cloud cluster rollouts.
+• Automated PO Dispatch: Electronic purchase orders issued to TSMC and OSAT partners with 14-week lead time window.
+→ Saved: chiplet_bank_health_report, automated_purchase_orders, osat_cowos_capacity_matrix`,
+
+  thermal_simulation: `DIGITAL IN-MEMORY COMPUTE ENERGY EFFICIENCY & SILICON LCA STRATEGY (illustrative)
+Simulated System: d-Matrix Corsair DIMC Server Node vs Legacy 8x H100 GPU Server Node (Annual 24/7 LLM Inference Operation)
+Methodology: ISO 14040/14044 Compliant Life Cycle Assessment
+
+LCA Environmental Impact Results per 1,000 Delivered Accelerator Cards:
+• Greenhouse Gas Emissions (Carbon Footprint over 1-year continuous LLM inference serving):
+  - 8x H100 GPU Server: 18.4 metric tons CO2e / server node
+  - d-Matrix Corsair Server: 2.1 metric tons CO2e / server node (-88.6% annual carbon footprint reduction)
+• Energy Savings: Corsair DIMC saves 1.2 megawatt-hours per server rack annually, preventing 1,450 tons CO2e per datacenter module.
+
+Regulatory & ESG Compliance:
+Complies with EU Energy Efficiency Directive for Data Centers and ISO 14064 Carbon Accounting.
+→ Saved: dmatrix_lca_simulation_report, green_datacenter_certificate, esg_compliance_dossier`,
+
+  mask_eco: `DMX LINK DIE-TO-DIE INTERCONNECT REVISION & METAL LAYER ECO ASSESSMENT (illustrative)
+Engineering Change Order: ECO-2026-DM-701
+Affected Silicon: Jayhawk Digital In-Memory Compute Chiplet Revision C0
+
+Design Changes & Semiconductor Results:
+• Metal Layer Modification: Re-routed Metal-5 signal traces on DMX Link die-to-die PHY to reduce interconnect capacitive load.
+• Latency Reduction: Decreased chiplet-to-chiplet memory access latency by 1.8 nanoseconds (from 9.5ns to 7.7ns).
+• Photomask Impact: 3D GDSII audit confirmed change requires re-making only 2 metal photomasks ($90,000 mask revision saved vs $3.5M full respin).
+• PCIe ATE Verification: Modified chiplet stepping passed 100% of DMX Link bandwidth test vectors at 32 GT/s.
+
+Release Status: Certified for commercial TSMC 5nm wafer fab production execution.
+→ Saved: dmatrix_eco_bulletin, metal5_gdsii_drawings, ate_interconnect_test_results`
+};
+
+const OPERATORS = [
+  { id: 'scout', name: 'Scout', title: 'AI GenAI Inference Sourcing Scout', wf: 'scout', handled: 580, hrs: 270, status: 'idle' },
+  { id: 'quote', name: 'Quote', title: 'AI Compute Accelerator Quoting Operator', wf: 'quote', handled: 640, hrs: 310, status: 'idle' },
+  { id: 'tender', name: 'Tender', title: 'AI Master Cloud Compute Tender Operator', wf: 'tender', handled: 410, hrs: 245, status: 'idle' },
+  { id: 'radar', name: 'Radar', title: 'AI Silicon Market Intelligence Operator', wf: 'radar', handled: 490, hrs: 230, status: 'idle' },
+  { id: 'safety', name: 'Sentinel', title: 'AI Jayhawk DIMC FEA & Test Operator', wf: 'panel_qualification', handled: 750, hrs: 410, status: 'idle' },
+  { id: 'mill', name: 'Atlas', title: 'AI Chiplet Die Bank Optimization Operator', wf: 'inverter_yield', handled: 680, hrs: 350, status: 'idle' },
+  { id: 'cfd', name: 'Vanguard', title: 'AI Sustainable Compute LCA Operator', wf: 'thermal_simulation', handled: 530, hrs: 280, status: 'idle' },
+  { id: 'eco', name: 'Nexus', title: 'AI Chiplet Interconnect ECO Revision Operator', wf: 'mask_eco', handled: 460, hrs: 255, status: 'idle' }
+];
+
+function initUI() {
+  renderOperators('all');
+  populateSimSelect();
+  loadSimDetails();
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('[id^="view-"]').forEach(v => v.classList.add('hidden'));
+
+  if(tab === 'roster') {
+    document.querySelectorAll('.nav-link')[0].classList.add('active');
+    document.getElementById('view-roster').classList.remove('hidden');
+  } else if(tab === 'simulation') {
+    document.querySelectorAll('.nav-link')[1].classList.add('active');
+    document.getElementById('view-simulation').classList.remove('hidden');
+  } else if(tab === 'hire') {
+    document.querySelectorAll('.nav-link')[2].classList.add('active');
+    document.getElementById('view-hire').classList.remove('hidden');
+  }
+}
+
+function renderOperators(track) {
+  const grid = document.getElementById('opGrid');
+  grid.innerHTML = '';
+
+  OPERATORS.forEach(op => {
+    const wf = WORKFLOWS[op.wf];
+    if(track !== 'all' && wf.track !== track) return;
+
+    const isFlagship = wf.tag === 'flagship';
+    const card = document.createElement('div');
+    card.className = 'card card-op';
+    card.innerHTML = `
+      ${isFlagship ? '<div class="flagship-tag">DIMC FEA FLAGSHIP</div>' : ''}
+      <div class="card-title">${op.name}</div>
+      <div class="card-meta">${op.title}</div>
+      <div class="wf-desc">${wf.name}</div>
+      <div class="stat-box">
+        <div>
+          <div class="stat-lbl">TASKS RUN</div>
+          <div class="stat-num">${op.handled}</div>
+        </div>
+        <div>
+          <div class="stat-lbl">TIME SAVED</div>
+          <div class="stat-num">${op.hrs}h</div>
+        </div>
+      </div>
+      <button class="btn-dm" onclick="quickRun('${op.wf}')">SIMULATE OPERATOR</button>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function filterTrack(track) {
+  document.querySelectorAll('.track-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderOperators(track);
+}
+
+function populateSimSelect() {
+  const sel = document.getElementById('simWfSelect');
+  sel.innerHTML = '';
+  Object.keys(WORKFLOWS).forEach(key => {
+    const wf = WORKFLOWS[key];
+    const opt = document.createElement('option');
+    opt.value = key;
+    opt.textContent = `${wf.title} (${wf.name})`;
+    sel.appendChild(opt);
+  });
+}
+
+function loadSimDetails() {
+  const key = document.getElementById('simWfSelect').value;
+  const wf = WORKFLOWS[key];
+  const dag = document.getElementById('dagContainer');
+  dag.innerHTML = '';
+
+  wf.tasks.forEach((t, idx) => {
+    const role = AGENT_ROLES[t.agent];
+    const node = document.createElement('div');
+    node.className = `dag-node ${wf.tag === 'flagship' ? 'flagship' : ''}`;
+    node.innerHTML = `
+      <div style="font-weight:700; color:var(--dm-slate); text-transform:uppercase;">${role.emoji} STEP ${idx + 1}: ${role.label}</div>
+      <div style="color:var(--text-dark); margin-top:2px;">${t.task}</div>
+    `;
+    dag.appendChild(node);
+  });
+
+  document.getElementById('dossierContainer').classList.add('hidden');
+  document.getElementById('simProgress').style.width = '0%';
+  document.getElementById('simLogs').textContent = `Loaded workflow: ${wf.title}\nClick 'START SIMULATION' to execute multi-agent task workflow.`;
+}
+
+function quickRun(wfKey) {
+  switchTab('simulation');
+  document.getElementById('simWfSelect').value = wfKey;
+  loadSimDetails();
+  runSimulation();
+}
+
+function runSimulation() {
+  const key = document.getElementById('simWfSelect').value;
+  const wf = WORKFLOWS[key];
+  const btn = document.getElementById('runBtn');
+  const logs = document.getElementById('simLogs');
+  const fill = document.getElementById('simProgress');
+  const dossierContainer = document.getElementById('dossierContainer');
+  const dossierText = document.getElementById('dossierText');
+
+  btn.disabled = true;
+  dossierContainer.classList.add('hidden');
+  logs.textContent = `[0.00s] INITIALIZING d-MATRIX AI SEMICONDUCTOR WORKFORCE ENGINE...\n[0.10s] Loading agent roles & tool definitions for workflow '${key}'...\n`;
+  fill.style.width = '10%';
+
+  let currentStep = 0;
+  const totalSteps = wf.tasks.length;
+
+  const timer = setInterval(() => {
+    if(currentStep < totalSteps) {
+      const task = wf.tasks[currentStep];
+      const role = AGENT_ROLES[task.agent];
+      const timestamp = ((currentStep + 1) * 0.45).toFixed(2);
+
+      logs.textContent += `[${timestamp}s] EXECUTING STEP ${currentStep + 1}/${totalSteps}: ${role.label}\n`;
+      logs.textContent += `  ➜ Task: ${task.task}\n`;
+      logs.textContent += `  ➜ Tool Output: Executed tool '${role.tools[0]}' successfully.\n`;
+      logs.scrollTop = logs.scrollHeight;
+
+      currentStep++;
+      fill.style.width = `${Math.min(90, (currentStep / totalSteps) * 90)}%`;
+    } else {
+      clearInterval(timer);
+      fill.style.width = '100%';
+      logs.textContent += `[${(totalSteps * 0.45 + 0.2).toFixed(2)}s] WORKFLOW EXECUTION COMPLETE. GENERATING EXECUTIVE DOSSIER...\n`;
+      logs.scrollTop = logs.scrollHeight;
+
+      dossierText.textContent = FINAL[key] || 'Dossier completed.';
+      dossierContainer.classList.remove('hidden');
+      btn.disabled = false;
+    }
+  }, 500);
+}
+
+function deployOperator() {
+  const name = document.getElementById('newOpName').value || 'Custom d-Matrix Operator';
+  const wf = document.getElementById('newOpWf').value;
+
+  OPERATORS.push({
+    id: 'custom_' + Date.now(),
+    name: name,
+    title: 'Custom ' + WORKFLOWS[wf].title,
+    wf: wf,
+    handled: 1,
+    hrs: 0,
+    status: 'idle'
+  });
+
+  alert(`Successfully deployed AI Operator '${name}' into d-Matrix workforce roster!`);
+  switchTab('roster');
+  renderOperators('all');
+}
+
+window.onload = initUI;
+</script>
+</body>
+</html>
