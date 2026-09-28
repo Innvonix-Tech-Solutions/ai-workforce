@@ -277,3 +277,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/trax-tech
 https://innvonix-tech-solutions.github.io/ai-workforce/monarca-international
 https://innvonix-tech-solutions.github.io/ai-workforce/mydefence
 https://innvonix-tech-solutions.github.io/ai-workforce/asm
+https://innvonix-tech-solutions.github.io/ai-workforce/energetiq-technology
