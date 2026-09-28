@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seven Seas Group — AI Global Ship Supply & Maritime Logistics Workforce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&family=Work+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050d18;
+  --surface:#0a1728;
+  --surface-2:#11223b;
+  --surface-3:#1c3252;
+  --border:#244068;
+  --border-soft:#0e1d33;
+  --text:#f0f6fc;
+  --muted:#94a3b8;
+  --muted-2:#64748b;
+  --accent:#00b4d8;
+  --accent-dim:rgba(0,180,216,0.14);
+  --accent-line:rgba(0,180,216,0.38);
+  --accent-glow:rgba(0,180,216,0.25);
+  --accent2:#f5a623;
+  --accent2-bg:rgba(245,166,35,0.08);
+  --accent3:#38bdf8;
+  --danger:#ef4444;
+  --ok:#10b981;
+  --font-display:'Rajdhani',sans-serif;
+  --font-body:'Work Sans',sans-serif;
+  --font-mono:'Roboto Mono',monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 550px at 88% -8%, rgba(0,180,216,0.18), transparent 55%),
+    radial-gradient(900px 480px at 5% 5%, rgba(245,166,35,0.08), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+::selection{background:rgba(0,180,216,0.3);}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px;}
+.hidden{display:none!important;}
+
+.masthead{border-bottom:1px solid var(--border-soft);padding:24px 0 20px;}
+.mark-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mark{display:flex;align-items:center;gap:14px;}
+.mark-badge{
+  width:46px;height:44px;border-radius:6px;
+  background:linear-gradient(135deg,#005b82,#00b4d8);
+  border:1px solid var(--accent);
+  display:flex;align-items:center;justify-content:center;
+  color:#000;font-family:var(--font-display);font-weight:800;font-size:18px;letter-spacing:1px;
+  box-shadow:0 0 22px rgba(0,180,216,0.4);
+}
+.mark-title{font-family:var(--font-display);font-size:22px;font-weight:700;color:#fff;letter-spacing:1px;line-height:1.1;}
+.mark-sub{font-size:12px;color:var(--muted);margin-top:2px;letter-spacing:0.5px;}
+.pill-live{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--accent-dim);border:1px solid var(--accent-line);
+  padding:5px 12px;border-radius:20px;font-size:11px;color:var(--accent);font-family:var(--font-mono);
+}
+.pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);}
+
+.hero{padding:30px 0 20px;}
+.hero-title{font-family:var(--font-display);font-size:32px;font-weight:700;color:#fff;line-height:1.25;margin-bottom:10px;letter-spacing:0.5px;}
+.hero-desc{font-size:14px;color:var(--muted);max-width:920px;line-height:1.65;}
+
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:26px 0 34px;}
+.metric-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px 20px;
+  transition:all .2s ease;
+}
+.metric-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.4);}
+.metric-val{font-family:var(--font-display);font-size:26px;font-weight:700;color:var(--accent2);}
+.metric-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:4px;}
+
+.nav-tabs{display:flex;gap:12px;border-bottom:1px solid var(--border);margin-bottom:26px;}
+.tab-btn{
+  background:transparent;border:none;color:var(--muted);font-family:var(--font-display);
+  font-size:14px;font-weight:600;padding:12px 18px;cursor:pointer;letter-spacing:1px;
+  border-bottom:2px solid transparent;transition:all .2s;
+}
+.tab-btn:hover{color:var(--text);}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+.roster-sec{margin-bottom:30px;}
+.track-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.track-title{font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff;display:flex;align-items:center;gap:10px;letter-spacing:0.5px;}
+.track-tag{font-size:10px;padding:3px 10px;border-radius:4px;background:var(--surface-2);color:var(--accent2);border:1px solid var(--border);font-family:var(--font-mono);}
+.cards-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+
+.op-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px;
+  display:flex;flex-direction:column;justify-content:space-between;gap:16px;
+  transition:all .2s ease;position:relative;overflow:hidden;
+}
+.op-card:hover{border-color:var(--accent-line);box-shadow:0 8px 24px rgba(0,0,0,0.5);}
+.op-card.flagship{border-color:var(--accent);background:linear-gradient(145deg, var(--surface), #0e243d);}
+.op-card.flagship::before{
+  content:'';position:absolute;top:0;right:0;width:120px;height:120px;
+  background:radial-gradient(circle at 100% 0%, var(--accent-glow), transparent 70%);
+  pointer-events:none;
+}
+
+.flag-badge{
+  position:absolute;top:14px;right:14px;background:linear-gradient(135deg,var(--accent),#007aa3);
+  color:#000;font-weight:700;font-size:10px;padding:3px 8px;border-radius:4px;
+  text-transform:uppercase;letter-spacing:0.8px;font-family:var(--font-mono);
+}
+
+.op-top{display:flex;gap:14px;}
+.op-icon{
+  width:46px;height:46px;border-radius:8px;background:var(--surface-2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;
+}
+.op-meta{flex:1;}
+.op-title{font-family:var(--font-display);font-size:17px;font-weight:700;color:#fff;line-height:1.2;margin-bottom:4px;}
+.op-role{font-size:11px;color:var(--accent2);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.5px;}
+
+.op-desc{font-size:13px;color:var(--muted);line-height:1.5;margin-top:8px;}
+
+.op-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+.tag{font-size:11px;background:var(--surface-2);border:1px solid var(--border);color:var(--text);padding:3px 8px;border-radius:4px;}
+
+.op-foot{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--border-soft);}
+.op-cadence{font-size:11px;color:var(--muted-2);font-family:var(--font-mono);}
+
+.btn{
+  background:var(--surface-2);border:1px solid var(--border);color:var(--text);
+  font-family:var(--font-body);font-size:12px;font-weight:600;padding:8px 14px;border-radius:5px;
+  cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px;
+}
+.btn:hover{background:var(--surface-3);border-color:var(--accent);color:#fff;}
+.btn-primary{background:linear-gradient(135deg,#007aa3,#00b4d8);border-color:var(--accent);color:#000;font-weight:700;}
+.btn-primary:hover{background:linear-gradient(135deg,#0091c2,#33c9e8);box-shadow:0 0 16px rgba(0,180,216,0.4);color:#000;}
+
+/* DYNEX Builder Section */
+.builder-box{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px;margin-bottom:30px;
+}
+.builder-hdr{margin-bottom:20px;}
+.builder-hdr h3{font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--accent);margin:0 0 6px 0;}
+.builder-hdr p{font-size:13px;color:var(--muted);margin:0;}
+
+.b-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;}
+.b-step{background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:16px;}
+.b-step-num{font-family:var(--font-mono);font-size:10px;color:var(--accent2);text-transform:uppercase;margin-bottom:6px;}
+.b-step-title{font-family:var(--font-display);font-size:15px;font-weight:700;color:#fff;margin-bottom:12px;}
+
+.form-group{margin-bottom:12px;}
+.form-label{display:block;font-size:11px;color:var(--muted);margin-bottom:4px;font-family:var(--font-mono);}
+.form-control{
+  width:100%;background:var(--surface-3);border:1px solid var(--border);color:#fff;
+  padding:8px 12px;border-radius:5px;font-size:12px;font-family:var(--font-body);
+}
+.form-control:focus{outline:none;border-color:var(--accent);}
+
+.radio-group{display:flex;gap:12px;margin-top:6px;}
+.radio-label{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text);cursor:pointer;}
+
+.preview-card{
+  background:var(--surface-3);border:1px dashed var(--accent-line);border-radius:6px;padding:14px;margin-top:12px;
+}
+
+/* Execution Modal & Output */
+.modal-overlay{
+  position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);
+  display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;
+  backdrop-filter:blur(6px);
+}
+.modal-body{
+  background:var(--surface);border:1px solid var(--accent);border-radius:10px;
+  width:100%;max-width:940px;max-height:90vh;overflow-y:auto;padding:28px;
+  box-shadow:0 0 40px rgba(0,0,0,0.9);
+}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:14px;}
+.modal-title{font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--accent);}
+.modal-close{background:transparent;border:none;color:var(--muted);font-size:22px;cursor:pointer;}
+.modal-close:hover{color:#fff;}
+
+.progress-bar-wrap{background:var(--surface-2);height:8px;border-radius:4px;overflow:hidden;margin-bottom:16px;}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;transition:width 0.4s ease;}
+
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px;}
+.t-node{background:var(--surface-2);border:1px solid var(--border);padding:10px;border-radius:6px;font-size:11px;text-align:center;}
+.t-node.active{border-color:var(--accent);color:var(--accent);}
+.t-node.done{border-color:var(--ok);color:var(--ok);}
+
+.terminal-box{
+  background:#030810;border:1px solid var(--border);border-radius:6px;padding:14px;
+  font-family:var(--font-mono);font-size:11px;color:#38bdf8;height:170px;overflow-y:auto;margin-bottom:20px;
+  line-height:1.6;
+}
+
+.output-panel{
+  background:var(--surface-2);border:1px solid var(--accent-line);border-radius:8px;padding:20px;margin-bottom:20px;
+}
+.output-title{font-family:var(--font-display);font-size:16px;font-weight:700;color:#fff;margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:8px;}
+
+.spec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+.spec-box{background:var(--surface-3);border:1px solid var(--border);padding:12px;border-radius:6px;}
+.spec-box-lbl{font-size:10px;color:var(--muted);font-family:var(--font-mono);text-transform:uppercase;}
+.spec-box-val{font-size:14px;font-weight:700;color:var(--accent2);margin-top:2px;}
+
+.footer{border-top:1px solid var(--border-soft);padding:30px 0;margin-top:40px;color:var(--muted-2);font-size:12px;text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="wrap mark-row">
+    <div class="mark">
+      <div class="mark-badge">SSG</div>
+      <div>
+        <div class="mark-title">SEVEN SEAS GROUP</div>
+        <div class="mark-sub">Global Ship Supply, Maritime Logistics &amp; Crewing — Dubai Investments Park HQ</div>
+      </div>
+    </div>
+    <div class="pill-live">
+      <span class="pulse-dot"></span> fleet active &bull; 600+ Ports &bull; Dubai DIP Hub
+    </div>
+  </div>
+</div>
+
+<div class="wrap hero">
+  <h1 class="hero-title">AI Global Ship Supply &amp; Maritime Logistics Console</h1>
+  <p class="hero-desc">
+    Deploy specialized AI operators across IMPA/ISSA ship supply requisitions, Dubai DIP cold-chain 3PL/4PL warehousing, emergency port husbanding, luxury cruise fleet provisioning, and MLC 2006 crewing compliance. Operating across 600+ ports in 60 countries.
+  </p>
+</div>
+
+<div class="wrap">
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-val">8 SPECIALISTS</div>
+      <div class="metric-lbl">Autonomous Maritime AI Operators</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">600+ PORTS</div>
+      <div class="metric-lbl">Global Supply Coverage</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">100% IMPA MATCH</div>
+      <div class="metric-lbl">Deck, Engine &amp; Cabin Requisitions</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val">ISO 22000</div>
+      <div class="metric-lbl">HACCP Cold-Chain Certified</div>
+    </div>
+  </div>
+
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('roster')">OPERATOR ROSTER</button>
+    <button class="tab-btn" onclick="switchTab('builder')">DYNEX BUILDER</button>
+  </div>
+
+  <!-- ROSTER TAB -->
+  <div id="tab-roster" class="tab-content">
+    <!-- TRACK 1 -->
+    <div class="roster-sec">
+      <div class="track-hdr">
+        <div class="track-title">
+          <span>⚓ TRACK 1: GLOBAL SHIP SUPPLY &amp; MARITIME LOGISTICS</span>
+        </div>
+        <span class="track-tag">4 OPERATORS ACTIVE</span>
+      </div>
+      <div class="cards-grid">
+        
+        <!-- OP 1 (FLAGSHIP) -->
+        <div class="op-card flagship">
+          <span class="flag-badge">FLAGSHIP OPERATOR</span>
+          <div class="op-top">
+            <div class="op-icon">⚓</div>
+            <div class="op-meta">
+              <div class="op-title">600-Port Provisions &amp; Technical Store Specifier</div>
+              <div class="op-role">Track 1 &bull; IMPA/ISSA Global Supply Engine</div>
+            </div>
+          </div>
+          <div class="op-desc">
+            Synthesizes vessel supply requisitions across 600+ global ports, matching IMPA and ISSA marine catalog numbers for fresh/frozen provisions, deck/engine technical stores, and safety equipment.
+          </div>
+          <div class="op-tags">
+            <span class="tag">IMPA / ISSA Catalogs</span>
+            <span class="tag">Deck &amp; Engine Stores</span>
+            <span class="tag">Fresh &amp; Frozen Provisions</span>
+            <span class="tag">600+ Port Match</span>
+          </div>
+          <div class="op-foot">
+            <span class="op-cadence">Cadence: Vessel Arrival Triggered</span>
+            <button class="btn btn-primary" onclick="openSim('op1')">▶ Run Live Simulation</button>
+          </div>
+        </div>
+
+        <!-- OP 2 -->
+        <div class="op-card">
+          <div class="op-top">
+            <div class="op-icon">❄️</div>
+            <div class="op-meta">
+              <div class="op-title">Dubai DIP Cold-Chain &amp; 3PL/4PL Warehouse Coordinator</div>
+              <div class="op-role">Track 1 &bull; Temperature-Controlled Logistics</div>
+            </div>
+          </div>
+          <div class="op-desc">
+            Manages temperature-controlled warehousing (-25°C deep freeze to +4°C chilled at DIP), bonded goods customs clearance, and last-mile port launch boat delivery schedules.
+          </div>
+          <div class="op-tags">
+            <span class="tag">DIP Warehouse</span>
+            <span class="tag">Deep Freeze (-25°C)</span>
+            <span class="tag">Bonded Customs</span>
+            <span class="tag">Launch Boat Routing</span>
+          </div>
+          <div class="op-foot">
+            <span class="op-cadence">Cadence: Continuous 24/7 Monitor</span>
+            <button class="btn" onclick="openSim('op2')">▶ Run Simulation</button>
+          </div>
+        </div>
+
+        <!-- OP 3 -->
+        <div class="op-card">
+          <div class="op-top">
+            <div class="op-icon">⚙️</div>
+            <div class="op-meta">
+              <div class="op-title">Emergency Port Husbanding &amp; Technical Spares Dispatcher</div>
+              <div class="op-role">Track 1 &bull; Urgent Vessel Spares &amp; Dry-Dock</div>
+            </div>
+          </div>
+          <div class="op-desc">
+            Coordinates urgent air-freight spare parts clearance, dry-docking technical supplies, vessel husbanding services, and 24/7 emergency dispatch across MEA, European, and APAC ports.
+          </div>
+          <div class="op-tags">
+            <span class="tag">Air-Freight Clearance</span>
+            <span class="tag">Dry-Dock Supplies</span>
+            <span class="tag">Vessel Husbanding</span>
+            <span class="tag">AOG / Urgent Dispatch</span>
+          </div>
+          <div class="op-foot">
+            <span class="op-cadence">Cadence: On-Demand / Urgent</span>
+            <button class="btn" onclick="openSim('op3')">▶ Run Simulation</button>
+          </div>
+        </div>
+
+        <!-- OP 4 -->
+        <div class="op-card">
+          <div class="op-top">
+            <div class="op-icon">🛳️</div>
+            <div class="op-meta">
+              <div class="op-title">Cruise Line Fleet &amp; Bonded Provisioning Executive</div>
+              <div class="op-role">Track 1 &bull; Hospitality &amp; High-Volume Cruise</div>
+            </div>
+          </div>
+          <div class="op-desc">
+            Manages high-volume luxury cruise ship provisioning schedules, HACCP food safety compliance, multi-ton palletized deck loads, and tax-free bonded store logistics.
+          </div>
+          <div class="op-tags">
+            <span class="tag">Luxury Cruise Fleets</span>
+            <span class="tag">HACCP Certified</span>
+            <span class="tag">Multi-Ton Pallet Loads</span>
+            <span class="tag">Tax-Free Bonded</span>
+          </div>
+          <div class="op-foot">
+            <span class="op-cadence">Cadence: Voyage-Scheduled</span>
+            <button class="btn" onclick="openSim('op4')">▶ Run Simulation</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TRACK 2 -->
+    <div class="roster-sec">
+      <div class="track-hdr">
+        <div class="track-title">
+          <span>👨‍✈️ TRACK 2: MARINE CREWING &amp; MARITIME QUALITY</span>
+        </div>
+        <span class="track-tag">4 OPERATORS ACTIVE</span>
+      </div>
+      <div class="cards-grid">
+        
+        <!-- OP 5 -->
+        <div class="op-card">
+          <div class="op-top">
+            <div class="op-icon">👨‍✈️</div>
+            <div class="op-meta">
+              <div class="op-title">Seafarer Sourcing &amp; MLC 2006 Compliance Specialist</div>
+              <div class="op-role">Track 2 &bull; Crew Recruitment &amp; Flag State</div>
+            </div>
+          </div>
+          <div class="op-desc">
+            Screens seafarer credentials, STCW safety certifications, flag-state endorsements, and Maritime Labour Convention (MLC 2006) compliance for cruise lines and merchant fleets.
+          </div>
+          <div class="op-tags">
+            <span class="tag">MLC 2006 Certified</span>
+            <span class="tag">STCW Safety Checks</span>
+            <span class="tag">Flag State Vetting</span>
+            <span class="tag">Cruise Crew Sourcing</span>
+          </div>
+          <div class="op-foot">
+            <span class="op-cadence">Cadence: Contract Cycle</span>
+            <button class="btn" onclick="openSim('op5')">▶ Run Simulation</button>
+          </div>
+        </div>
+
+        <!-- OP 6 -->
+        <div class="op-card">
+          <div class="op-top">
+            <div class="op-icon">🛡️</div>
+            <div class="op-meta">
+              <div class="op-title">HACCP &amp; ISO 22000 Marine Food Safety Auditor</div>
+              <div class="op-role">Track 2 &bull; Cold-Chain Telemetry &amp; Quality QA</div>
+            </div>
+          </div>
+          <div class="op-desc">
+            Monitors food safety standards across global supply hubs, cold-chain temperature telemetry, ISO 22000 compliance, and vessel delivery inspection records.
+          </div>
+          <div class="op-tags">
+            <span class="tag">ISO 22000 Food Safety</span>
+            <span class="tag">HACCP Protocol</span>
+            <span class="tag">Thermal Telemetry</span>
+            <span class="tag">Vessel Inspection QA</span>
+          </div>
+          <div class="op-foot">
+            <span class="op-cadence">Cadence: Daily Quality Audit</span>
+            <button class="btn" onclick="openSim('op6')">▶ Run Simulation</button>
+          </div>
+        </div>
+
+        <!-- OP 7 -->
+        <div class="op-card">
+          <div class="op-top">
+            <div class="op-icon">🌿</div>
+            <div class="op-meta">
+              <div class="op-title">Decarbonization &amp; Green Marine Supply Analyst</div>
+              <div class="op-role">Track 2 &bull; Scope 3 &amp; Solar Facility Energy</div>
+            </div>
+          </div>
+          <div class="op-desc">
+            Tracks Scope 3 CO2 logistics emissions, solar-powered DIP warehouse energy metrics, eco-friendly bio-degradable packaging, and EU ETS maritime compliance.
+          </div>
+          <div class="op-tags">
+            <span class="tag">Scope 3 CO2 Emissions</span>
+            <span class="tag">Solar Warehouse Metric</span>
+            <span class="tag">Eco Packaging</span>
+            <span class="tag">EU ETS Maritime</span>
+          </div>
+          <div class="op-foot">
+            <span class="op-cadence">Cadence: Monthly Sustainability</span>
+            <button class="btn" onclick="openSim('op7')">▶ Run Simulation</button>
+          </div>
+        </div>
+
+        <!-- OP 8 -->
+        <div class="op-card">
+          <div class="op-top">
+            <div class="op-icon">💱</div>
+            <div class="op-meta">
+              <div class="op-title">Global Marine Supplier Tariff &amp; FX Estimator</div>
+              <div class="op-role">Track 2 &bull; Multi-Currency Port Pricing</div>
+            </div>
+          </div>
+          <div class="op-desc">
+            Calculates multi-currency port tariffs (AED, USD, EUR, SGD), port launch fees, customs duties, and volume pricing discounts for commercial vessel fleets.
+          </div>
+          <div class="op-tags">
+            <span class="tag">AED/USD/EUR/SGD FX</span>
+            <span class="tag">Port Launch Fees</span>
+            <span class="tag">Customs Duties</span>
+            <span class="tag">Fleet Discount Matrix</span>
+          </div>
+          <div class="op-foot">
+            <span class="op-cadence">Cadence: Real-Time Pricing</span>
+            <button class="btn" onclick="openSim('op8')">▶ Run Simulation</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- DYNEX BUILDER TAB -->
+  <div id="tab-builder" class="tab-content hidden">
+    <div class="builder-box">
+      <div class="builder-hdr">
+        <h3>DYNEX 3-Step Custom Operator Builder</h3>
+        <p>Configure a custom AI operator tailored to Seven Seas Group's global maritime supply and logistics standards.</p>
+      </div>
+
+      <div class="b-steps">
+        <!-- STEP 1 -->
+        <div class="b-step">
+          <div class="b-step-num">STEP 1</div>
+          <div class="b-step-title">Select Baseline Template</div>
+          <div class="form-group">
+            <label class="form-label">OPERATOR TEMPLATE</label>
+            <select id="bS1" class="form-control" onchange="updateBuilderPreview()">
+              <option value="impa">IMPA/ISSA Ship Supply Requisitioner</option>
+              <option value="coldchain">600-Port Cold-Chain Logistics Engine</option>
+              <option value="cruise">Cruise Fleet Provisioning Auditor</option>
+              <option value="mlc">MLC 2006 Crewing Compliance Manager</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="b-step">
+          <div class="b-step-num">STEP 2</div>
+          <div class="b-step-title">Assign Agent Pipeline</div>
+          <div class="form-group">
+            <label class="form-label">PRIMARY TASK AGENT</label>
+            <select id="bS2" class="form-control" onchange="updateBuilderPreview()">
+              <option value="impa_spec">⚓ IMPA/ISSA Store Specifier (Deck/Engine/Provisions)</option>
+              <option value="dip_cold">❄️ Cold-Chain &amp; 3PL Port Launch Routing Engine</option>
+              <option value="haccp_audit">🛳️ Luxury Cruise Fleet HACCP Provisioning Auditor</option>
+              <option value="mlc_seafarer">👨‍✈️ MLC 2006 &amp; STCW Seafarer Sourcing Specialist</option>
+              <option value="fx_estimator">💱 Global Port Tariff &amp; Multi-Currency FX Estimator</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">EXECUTION MODE</label>
+            <div class="radio-group">
+              <label class="radio-label"><input type="radio" name="bMode" value="sequential" checked onchange="updateBuilderPreview()"> Sequential</label>
+              <label class="radio-label"><input type="radio" name="bMode" value="dag" onchange="updateBuilderPreview()"> DAG Parallel</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="b-step">
+          <div class="b-step-num">STEP 3</div>
+          <div class="b-step-title">Deploy Operator</div>
+          <div class="form-group">
+            <label class="form-label">OPERATOR NAME</label>
+            <input type="text" id="bName" class="form-control" value="Seven Seas Jebel Ali Port Dispatcher" oninput="updateBuilderPreview()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">ROLE TITLE</label>
+            <input type="text" id="bRole" class="form-control" value="Senior Port Supply &amp; Logistics Manager" oninput="updateBuilderPreview()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">CADENCE</label>
+            <select id="bCadence" class="form-control" onchange="updateBuilderPreview()">
+              <option value="Port-Arrival">Port-Arrival Triggered</option>
+              <option value="Continuous">Continuous 24/7</option>
+              <option value="On-Demand">On-Demand</option>
+              <option value="Voyage-Scheduled">Voyage-Scheduled</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" style="width:100%;margin-top:10px;" onclick="hireOperator()">DEPLOY TO SEVEN SEAS ROSTER</button>
+        </div>
+      </div>
+
+      <!-- PREVIEW CARD -->
+      <div class="preview-card">
+        <div style="font-size:11px;color:var(--accent2);font-family:var(--font-mono);margin-bottom:6px;">LIVE PREVIEW</div>
+        <div id="prevTitle" style="font-family:var(--font-display);font-size:16px;font-weight:700;color:#fff;">Seven Seas Jebel Ali Port Dispatcher</div>
+        <div id="prevRole" style="font-size:12px;color:var(--accent);font-family:var(--font-mono);">Senior Port Supply &amp; Logistics Manager</div>
+        <div id="prevPipeline" style="font-size:12px;color:var(--muted);margin-top:6px;">Pipeline: IMPA/ISSA Store Specifier &bull; Mode: Sequential &bull; Cadence: Port-Arrival</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- EXECUTION MODAL -->
+<div id="simModal" class="modal-overlay hidden">
+  <div class="modal-body">
+    <div class="modal-hdr">
+      <div id="modalTitle" class="modal-title">Seven Seas 600-Port Provisions &amp; Technical Store Engine</div>
+      <button class="modal-close" onclick="closeSim()">&times;</button>
+    </div>
+
+    <div class="progress-bar-wrap">
+      <div id="pBar" class="progress-bar"></div>
+    </div>
+
+    <div class="timeline">
+      <div id="t1" class="t-node">1. IMPA Requisition</div>
+      <div id="t2" class="t-node">2. DIP Stock Audit</div>
+      <div id="t3" class="t-node">3. Customs &amp; Launch</div>
+      <div id="t4" class="t-node">4. Port Delivery</div>
+    </div>
+
+    <div id="term" class="terminal-box">
+      [SYSTEM READY] Seven Seas Maritime AI Operator initialised...<br>
+    </div>
+
+    <div id="outPanel" class="output-panel hidden">
+      <div class="output-title">RE-VIEW READY DELIVERABLE: VESSEL PORT SUPPLY MANIFEST &amp; DELIVERY NOTE</div>
+      
+      <div class="spec-grid">
+        <div class="spec-box">
+          <div class="spec-box-lbl">VESSEL &amp; PORT</div>
+          <div class="spec-box-val">M/V Ocean Sovereign &bull; Jebel Ali B42</div>
+        </div>
+        <div class="spec-box">
+          <div class="spec-box-lbl">IMPA REQUISITION MATCH</div>
+          <div class="spec-box-val">142 IMPA Items + 12.5T Provisions</div>
+        </div>
+        <div class="spec-box">
+          <div class="spec-box-lbl">COLD-CHAIN STATUS</div>
+          <div class="spec-box-val">-22.4°C Verified (HACCP Pass)</div>
+        </div>
+      </div>
+
+      <div style="font-size:13px;color:var(--text);line-height:1.6;background:var(--surface-3);padding:14px;border-radius:6px;border:1px solid var(--border);margin-bottom:16px;">
+        <strong>Order Scope:</strong> 142 IMPA Technical Store Items (Engine Gaskets, Deck Valves, Cabin Stores) + 12.5 Metric Tons Fresh &amp; Frozen Provisions.<br>
+        <strong>DIP Warehouse Dispatch:</strong> Picked from Dubai Investments Park Hub (Cold Room #3, -22.4°C deep freeze).<br>
+        <strong>Financial Summary:</strong> Subtotal AED 348,500 ($94,900 USD) &bull; Zero Duty Bonded Customs Clearance &bull; Launch Boat ETA 04:30 GST.<br>
+        <strong>Compliance Status:</strong> HACCP Food Safety Certificate attached &bull; ISO 22000 Quality Seal verified.
+      </div>
+
+      <div style="display:flex;gap:12px;">
+        <button class="btn btn-primary" onclick="alert('Vessel Delivery Note (PDF) downloaded to local disk.')">📥 Download Vessel Delivery Note (PDF)</button>
+        <button class="btn" onclick="alert('IMPA Requisition Manifest exported successfully.')">⚓ Export IMPA Requisition Manifest</button>
+        <button class="btn" onclick="alert('Port Dispatch Summary copied to clipboard.')">📋 Copy Port Dispatch Summary</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer wrap">
+  &copy; 2026 Seven Seas Group. Designed for Global Ship Supply, Maritime Logistics &amp; Crewing in Dubai, UAE. Interactive Executive AI Workforce Prototype.
+</div>
+
+<script>
+function switchTab(tabId){
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+  if(tabId === 'roster'){
+    document.querySelectorAll('.tab-btn')[0].classList.add('active');
+    document.getElementById('tab-roster').classList.remove('hidden');
+  } else {
+    document.querySelectorAll('.tab-btn')[1].classList.add('active');
+    document.getElementById('tab-builder').classList.remove('hidden');
+  }
+}
+
+function updateBuilderPreview(){
+  const name = document.getElementById('bName').value || 'Custom Seven Seas Operator';
+  const role = document.getElementById('bRole').value || 'Specialist Lead';
+  const agentSelect = document.getElementById('bS2');
+  const agentText = agentSelect.options[agentSelect.selectedIndex].text;
+  const mode = document.querySelector('input[name="bMode"]:checked').value;
+  const cadence = document.getElementById('bCadence').value;
+
+  document.getElementById('prevTitle').innerText = name;
+  document.getElementById('prevRole').innerText = role;
+  document.getElementById('prevPipeline').innerText = `Pipeline: ${agentText} • Mode: ${mode.toUpperCase()} • Cadence: ${cadence}`;
+}
+
+function hireOperator(){
+  const name = document.getElementById('bName').value || 'Custom Seven Seas Operator';
+  const role = document.getElementById('bRole').value || 'Specialist Lead';
+  
+  alert(`Operator "${name}" deployed successfully to Seven Seas Group active maritime roster!`);
+  switchTab('roster');
+}
+
+let simTimer = null;
+function openSim(opId){
+  document.getElementById('simModal').classList.remove('hidden');
+  document.getElementById('outPanel').classList.add('hidden');
+  document.getElementById('pBar').style.width = '0%';
+  
+  const term = document.getElementById('term');
+  term.innerHTML = '[SYSTEM START] Initializing Seven Seas Maritime Simulation Kernel...<br>';
+
+  const nodes = ['t1', 't2', 't3', 't4'];
+  nodes.forEach(n => {
+    document.getElementById(n).className = 't-node';
+  });
+
+  let step = 0;
+  const logs = [
+    "[PHASE 1] Ingesting vessel supply requisition for M/V Ocean Sovereign... Parsing 142 IMPA/ISSA catalog item numbers.",
+    "[PHASE 2] Cross-checking DIP (Dubai Investments Park) 3PL inventory: Provisions verified in Cold Room #3 at -22.4°C.",
+    "[PHASE 3] Clearing bonded customs at Port of Jebel Ali... Staging launch boat routing for Berth 42 delivery at 04:30 GST.",
+    "[PHASE 4] Generating multi-currency invoice (AED 348,500 / $94,900 USD), HACCP food safety audit certificate, and vessel delivery note.",
+    "[COMPLETE] Vessel Port Supply Manifest & Delivery Note finalized."
+  ];
+
+  simTimer = setInterval(() => {
+    step++;
+    if(step <= 4){
+      document.getElementById('pBar').style.width = (step * 25) + '%';
+      document.getElementById('t' + step).classList.add('active');
+      if(step > 1) document.getElementById('t' + (step - 1)).classList.remove('active').classList.add('done');
+      term.innerHTML += logs[step-1] + '<br>';
+      term.scrollTop = term.scrollHeight;
+    } else {
+      clearInterval(simTimer);
+      document.getElementById('t4').classList.remove('active').classList.add('done');
+      term.innerHTML += logs[4] + '<br>';
+      document.getElementById('outPanel').classList.remove('hidden');
+    }
+  }, 1000);
+}
+
+function closeSim(){
+  if(simTimer) clearInterval(simTimer);
+  document.getElementById('simModal').classList.add('hidden');
+}
+</script>
+</body>
+</html>
