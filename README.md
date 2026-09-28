@@ -284,3 +284,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/tatcha
 https://innvonix-tech-solutions.github.io/ai-workforce/mattson-technology
 https://innvonix-tech-solutions.github.io/ai-workforce/semi
 https://innvonix-tech-solutions.github.io/ai-workforce/silicon-catalyst
+https://innvonix-tech-solutions.github.io/ai-workforce/mojo-vision
