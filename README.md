@@ -281,3 +281,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/energetiq-technology
 https://innvonix-tech-solutions.github.io/ai-workforce/gct-semiconductor
 https://innvonix-tech-solutions.github.io/ai-workforce/silanna-semiconductor
 https://innvonix-tech-solutions.github.io/ai-workforce/tatcha
+https://innvonix-tech-solutions.github.io/ai-workforce/mattson-technology
