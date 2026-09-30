@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DR. BRONNER'S | Autonomous AI Workforce Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-main: #FDFBF7;
+  --bg-topbar: #002B49;
+  --bg-surface: #F4EFE6;
+  --bronner-blue: #004A8D;
+  --bronner-blue-hover: #003366;
+  --bronner-green: #2E7D32;
+  --bronner-gold: #D97706;
+  --bronner-dark: #002B49;
+  --text-dark: #002B49;
+  --text-muted: #5A6E7D;
+  --border-subtle: #E2DACD;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg-main);
+  color: var(--text-dark);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Top Announcement Bar */
+.announcement-bar {
+  background-color: var(--bg-topbar);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 10px 16px;
+}
+.announcement-bar span { color: var(--bronner-gold); }
+
+/* Header */
+.site-header {
+  background: #FFFFFF;
+  border-bottom: 2px solid var(--bronner-blue);
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.brand-logo-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.brand-logo {
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: var(--bronner-blue);
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.brand-logo span { color: var(--bronner-green); }
+.badge-certified {
+  background: var(--bronner-green);
+  color: #FFFFFF;
+  padding: 6px 14px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border-radius: 4px;
+}
+
+/* Simple Hero Section */
+.simple-hero {
+  padding: 32px 40px 24px 40px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  text-align: center;
+}
+.hero-title {
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--bronner-blue);
+  margin-bottom: 8px;
+}
+.hero-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Main Container */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 40px 40px 40px;
+}
+
+/* Intuitive Filter Bar */
+.filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.filter-group {
+  display: flex;
+  gap: 10px;
+}
+.filter-pill {
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-dark);
+  padding: 10px 20px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+.filter-pill.active {
+  background: var(--bronner-blue);
+  color: #FFFFFF;
+  border-color: var(--bronner-blue);
+}
+.btn-quick-hire {
+  background: var(--bronner-green);
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 20px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+.btn-quick-hire:hover {
+  background: #236327;
+}
+
+/* Simplified Operator Cards Grid */
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+.op-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-top: 5px solid var(--bronner-blue);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.op-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0,74,141,0.08);
+}
+.op-card.flagship {
+  border-top-color: var(--bronner-green);
+}
+.op-badge {
+  display: inline-block;
+  background: var(--bronner-blue);
+  color: #FFFFFF;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  align-self: flex-start;
+  margin-bottom: 12px;
+}
+.op-badge.flagship-badge {
+  background: var(--bronner-green);
+}
+.op-name {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--bronner-blue);
+  margin-bottom: 4px;
+}
+.op-role {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+.op-wf-name {
+  font-size: 11px;
+  color: var(--text-dark);
+  line-height: 1.4;
+  margin-bottom: 16px;
+  height: 34px;
+  overflow: hidden;
+}
+.op-metrics {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 12px;
+  margin-bottom: 16px;
+}
+.metric-item {
+  display: flex;
+  flex-direction: column;
+}
+.metric-lbl {
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.metric-val {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--bronner-blue);
+}
+
+/* Action Button */
+.btn-run {
+  background: var(--bronner-blue);
+  color: #FFFFFF;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 12px;
+  width: 100%;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.btn-run:hover {
+  background: var(--bronner-blue-hover);
+}
+
+/* Modal Popup */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 43, 73, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  max-width: 650px;
+  width: 100%;
+  padding: 32px;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.modal-close {
+  position: absolute;
+  top: 20px; right: 20px;
+  background: var(--bg-surface);
+  border: none;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.modal-title {
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  color: var(--bronner-blue);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.modal-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+.modal-progress-bar {
+  background: var(--border-subtle);
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.modal-progress-fill {
+  background: var(--bronner-green);
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s;
+}
+.modal-status {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--bronner-dark);
+  margin-bottom: 20px;
+}
+.result-box {
+  background: var(--bg-surface);
+  border-radius: 8px;
+  padding: 20px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  color: var(--text-dark);
+  border: 1px solid var(--border-subtle);
+}
+
+.hidden { display: none !important; }
+
+.site-footer {
+  border-top: 2px solid var(--bronner-blue);
+  padding: 32px 40px;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  background: var(--bg-surface);
+  margin-top: 40px;
+}
+</style>
+</head>
+<body>
+
+<div class="announcement-bar">
+  ALL-ONE! <span>REGENERATIVE ORGANIC CERTIFIED®</span> PURE-CASTILE MAGIC SOAPS FOR EARTH & HUMANITY
+</div>
+
+<header class="site-header">
+  <div class="brand-logo-area">
+    <span style="font-size:24px;">✨</span>
+    <a href="#" class="brand-logo">DR. BRONNER'S <span>MAGIC SOAPS</span></a>
+  </div>
+  <div class="badge-certified">REGENERATIVE ORGANIC CERTIFIED®</div>
+</header>
+
+<div class="simple-hero">
+  <h1 class="hero-title">AUTONOMOUS WORKFORCE ENGINE</h1>
+  <div class="hero-sub">Select an operator below to execute 1-click automated workflows across organic oil sourcing, 100% PCR bottle engineering, and fair trade retail supply.</div>
+</div>
+
+<div class="container">
+  
+  <div class="filter-bar">
+    <div class="filter-group">
+      <button class="filter-pill active" onclick="filterTrack('all')">All Operators (8)</button>
+      <button class="filter-pill" onclick="filterTrack('commercial')">Organic Sourcing & Fair Trade (4)</button>
+      <button class="filter-pill" onclick="filterTrack('operations')">Engineering & PCR Quality (4)</button>
+    </div>
+    <button class="btn-quick-hire" onclick="openHireModal()">+ Stand Up New Operator</button>
+  </div>
+
+  <div class="grid-4" id="opGrid"></div>
+
+</div>
+
+<!-- Interactive Execution Popup Modal -->
+<div class="modal-overlay" id="execModal">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeExecModal()">✕</button>
+    <div class="modal-title" id="mTitle">Executing Workflow</div>
+    <div class="modal-sub" id="mSub">Running multi-agent automation...</div>
+    <div class="modal-progress-bar"><div class="modal-progress-fill" id="mFill"></div></div>
+    <div class="modal-status" id="mStatus">Initializing agents...</div>
+    <div class="result-box hidden" id="mResult"></div>
+  </div>
+</div>
+
+<!-- Stand Up Operator Modal -->
+<div class="modal-overlay" id="hireModal">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeHireModal()">✕</button>
+    <div class="modal-title">Stand Up New AI Operator</div>
+    <div class="modal-sub">Deploy an autonomous operator for custom Dr. Bronner's workflows:</div>
+    
+    <div style="display:flex; flex-direction:column; gap:16px; margin-top:16px;">
+      <div>
+        <label style="font-size:10px; font-weight:800; letter-spacing:1px; display:block; margin-bottom:6px; text-transform:uppercase;">Operator Name</label>
+        <input type="text" id="newOpName" placeholder="e.g. Fair Trade Coconut Oil Scout" style="width:100%; padding:12px; border:1px solid var(--border-subtle); border-radius:8px; font-family:var(--font-sans); font-size:12px;">
+      </div>
+      <div>
+        <label style="font-size:10px; font-weight:800; letter-spacing:1px; display:block; margin-bottom:6px; text-transform:uppercase;">Target Workflow</label>
+        <select id="newOpWf" style="width:100%; padding:12px; border:1px solid var(--border-subtle); border-radius:8px; font-family:var(--font-sans); font-size:12px; font-weight:800;">
+          <option value="scout">Global Regenerative Organic & Fair Trade Coconut/Palm Oil Scout</option>
+          <option value="quote">Turnkey 50M Unit Pure-Castile Soap 100% PCR Bottle BOM</option>
+          <option value="tender">Global Natural Grocery & Retailer Master Supply Tender</option>
+          <option value="panel_qualification">Studio Dr. Bronner's 100% PCR Bottle FEA Drop Dynamics Qualification</option>
+        </select>
+      </div>
+      <button class="btn-run" style="margin-top:8px;" onclick="deployOperator()">Deploy Operator</button>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  Independent concept prototype prepared for Dr. Bronner's Magic Soaps (drbronner.com). Built with official Dr. Bronner's visual identity tokens (Royal Blue #004A8D primary, Regenerative Organic Green #2E7D32, Warm Parchment #FDFBF7). All workflows, FEA drop calculations, BOM quotes, and dossier outputs are illustrative simulations.
+</footer>
+
+<script>
+const AGENT_ROLES = {
+  regenerative_organic_oil_scout: { emoji: '🌿', label: 'Fair Trade Organic Coconut, Palm & Olive Oil Scout', tools: ['screen_organic_oil_farms', 'save'] },
+  soap_pcr_bottle_bom_pricing_eng: { emoji: '💰', label: '100% PCR Plastic Bottle & Label BOM Cost Lead', tools: ['calculate_drbronner_bom', 'save'] },
+  studio_bronner_structural_pcr_spec: { emoji: '📐', label: 'Studio Dr. Bronner 100% PCR Bottle & FEA Engineer', tools: ['model_fea_pcr_bottle_drop_dynamics', 'save'] },
+  regenerative_ag_lca_auditor: { emoji: '🌱', label: 'Regenerative Organic Ag & Carbon Footprint Auditor', tools: ['calculate_ag_lca_carbon', 'save'] },
+  fair_trade_supply_chain_router: { emoji: '🚚', label: 'Natural Grocery & Retailer Replenishment Router', tools: ['optimize_retail_inventory', 'save'] },
+  natural_retail_master_tender_lead: { emoji: '🤝', label: 'Natural Grocery Master Retail Tender Operator', tools: ['structure_master_tender', 'save'] },
+  pcr_resin_container_qualification_eng: { emoji: '🧪', label: '100% PCR Resin Stress & Wall Thickness QA Engineer', tools: ['audit_pcr_resin_cracking', 'save'] },
+  flip_top_cap_fitment_spec: { emoji: '✨', label: 'Flip-Top Cap Dispensing & Orifice Flow Specialist', tools: ['evaluate_cap_orifice_flow', 'save'] },
+  dense_label_eco_revision_spec: { emoji: '📜', label: 'Moral ABC Dense Label & ECO Revision Lead', tools: ['audit_moral_abc_label_eco', 'save'] },
+  saponification_line_qa_engineer: { emoji: '⚙️', label: 'High-Speed Saponification & Bottle Filling QA Engineer', tools: ['simulate_soap_filling_capping', 'save'] },
+  writer: { emoji: '✍️', label: 'Constructive Capitalism Dossier & Proposal Writer', tools: ['compose', 'save'] },
+  reviewer: { emoji: '✅', label: 'Director of Soap R&D Operations & Packaging Principal PE', tools: ['qa_review', 'save'] }
+};
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Global regenerative organic & fair trade coconut/palm oil scout',
+    title: 'AI Fair Trade Organic Sourcing Scout',
+    track: 'commercial',
+    deliverable: 'Top 50 Global Regenerative Organic & Fair Trade Oil Supplier Audit',
+    desc: 'Agents screen worldwide organic coconut co-ops in Sri Lanka, fair trade palm farms in Ghana, and regenerative olive groves in Palestine.'
+  },
+  quote: {
+    name: 'Turnkey 50M unit Pure-Castile Soap 100% PCR bottle & label BOM pro forma',
+    title: 'AI Pure-Castile Soap Quoting Operator',
+    track: 'commercial',
+    deliverable: 'Turnkey 50M Unit Pure-Castile Soap 100% PCR Bottle & Label BOM Pro Forma',
+    desc: 'Agents compute 32 oz 100% post-consumer recycled (PCR) PET bottles, flip-top caps, and Moral ABC dense text wrap-around labels.'
+  },
+  tender: {
+    name: 'Global natural grocery & retailer master supply & VMI tender response',
+    title: 'AI Master Retail Supply Tender Operator',
+    track: 'commercial',
+    deliverable: 'Global Natural Grocery & Retailer Master Supply & VMI Tender Response',
+    desc: 'Agents formulate multi-year master supply agreements covering 100 million liquid soap bottles, bar soaps, and organic coconut oil jars.'
+  },
+  radar: {
+    name: 'Global organic oils, essential oil energy & PCR resin market intelligence brief',
+    title: 'AI Soap Materials Market Intelligence Operator',
+    track: 'commercial',
+    deliverable: 'Global Organic Oils & PCR Resin Market Intelligence Brief',
+    desc: 'Agents synthesize market spot prices for organic coconut oil, organic peppermint essential oil, food-grade PCR PET resin, and ocean freight rates.'
+  },
+  panel_qualification: {
+    name: 'Studio Dr. Bronner 100% PCR bottle FEA drop dynamics & high-speed line qualification',
+    title: 'AI Studio Dr. Bronner FEA Operator',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'Studio Dr. Bronner 100% PCR Bottle FEA Drop Dynamics & Line Qualification Dossier',
+    desc: 'Agents execute 3D finite-element stress analysis for 32 oz 100% PCR plastic bottles under 350 lbs stacking force and 600 bpm filling lines.'
+  },
+  inverter_yield: {
+    name: 'Global distribution center inventory optimization & safety stock router',
+    title: 'AI Supply Chain Inventory Optimization Operator',
+    track: 'operations',
+    deliverable: 'Global Distribution Center Inventory Optimization & Safety Stock Report',
+    desc: 'Agents audit 800 active organic soap SKUs across distribution centers in Vista, Indiana, Germany, and Australia.'
+  },
+  thermal_simulation: {
+    name: 'Regenerative organic agriculture & cradle-to-grave LCA sustainability auditor',
+    title: 'AI Sustainable Soap LCA Operator',
+    track: 'operations',
+    deliverable: 'Regenerative Organic Agriculture & Cradle-to-Grave LCA Strategy',
+    desc: 'Agents run Life Cycle Assessment (LCA) environmental impact simulations comparing conventional palm oil soaps against Dr. Bronner Regenerative Organic soaps.'
+  },
+  mask_eco: {
+    name: 'Custom 100% PCR bottle neck thread & flip-top cap ECO revision lead',
+    title: 'AI Bottle Design ECO Revision Operator',
+    track: 'operations',
+    deliverable: 'Custom 100% PCR Bottle Neck Thread & Flip-Top Cap ECO Assessment',
+    desc: 'Agents evaluate Engineering Change Order ECO-2026-DRB-401 (Refine 28-400 Bottle Neck Thread Lead to Prevent Cap Back-Off During Shipping).'
+  }
+};
+
+const FINAL = {
+  scout: `TOP 50 GLOBAL REGENERATIVE ORGANIC & FAIR TRADE OIL AUDIT (illustrative)
+Prepared for Dr. Bronner's Magic Soaps Executive Leadership
+
+Audit Summary:
+• Evaluated 50 organic farmer co-ops in Sri Lanka (Serendipol), Ghana (Serendipalm), and Palestine (Canaan Fair Trade).
+• USDA Organic & Regenerative Organic Certified® Compliance: 100% verified.
+• Fair Trade Premium: $1.85M paid into community development funds for clean water wells and schools.
+
+Key Recommendations:
+1. Expand regenerative organic hemp seed farming in Oregon and Washington.
+2. Secure 12-month fixed pricing for organic peppermint essential oil.
+
+→ Saved: fair_trade_oil_audit_2026, organic_certification_dossier, drbronner_supplier_matrix`,
+
+  quote: `TURNKEY 50M UNIT PURE-CASTILE SOAP 100% PCR BOTTLE BOM PRO FORMA (illustrative)
+Program: 32 oz Peppermint Pure-Castile Liquid Soap 100% PCR Fleet
+
+Packaging System Architecture & Bill of Materials:
+• Primary Bottle: 50,000,000 Custom 32 oz 100% PCR PET Clear Bottles @ $0.38/unit
+• Closure: 50,000,000 Polypropylene Flip-Top Dispensing Caps (28-400 finish) @ $0.08/unit
+• Labeling: 50,000,000 Water-Soluble Moral ABC Dense Text Labels @ $0.05/unit
+• Secondary Packaging: 4,166,666 100% Recyclable Corrugated Master Shippers (12-pack) @ $0.85/case
+• Tooling Capex: $145,000 one-time blow mold tooling capex for 100% PCR PET bottle preforms
+
+Financial Performance:
+• Total Unit Packaging Capex: $0.58/unit delivered ($29,000,000 total annual program spend)
+• VMI Holding Agreement: 90-day safety stock (12.5M units) held at Vista logistics center.
+
+→ Saved: drbronner_pcr_bottle_bom, moral_abc_label_schedule, procurement_dossier`,
+
+  tender: `GLOBAL NATURAL GROCERY & RETAILER MASTER SUPPLY TENDER RESPONSE (illustrative)
+Scope: Master Multi-Year Magic Soaps Supply Agreement (100,000,000 Units/Yr)
+
+Volume & Product Breakdown:
+• Pure-Castile Liquid Soaps (32 oz & 16 oz): 60,000,000 units/year
+• Pure-Castile Bar Soaps (5 oz): 25,000,000 units/year
+• Organic Coconut Oil & Body Balms: 15,000,000 units/year
+
+Supply Chain Guarantee:
+• 90-Day Vendor Managed Inventory (VMI): 25 million unit safety stock held across distribution hubs.
+• Delivery SLA: 99.8% guaranteed on-time delivery with 24-hour emergency stock release SLA.
+• Sustainability Commitment: Certified 100% PCR bottles and 100% post-consumer recycled paper wrap.
+
+→ Saved: master_drbronner_supply_agreement, vmi_warehouse_release_matrix, executive_dossier`,
+
+  radar: `GLOBAL ORGANIC OILS & PCR RESIN MARKET INTELLIGENCE BRIEF (illustrative)
+
+Market Pricing & Index Dynamics:
+• Organic Virgin Coconut Oil (Sri Lanka): $1,420/ton (Stable; long-term fair-trade co-op contracts locked).
+• Organic Palm Oil (Ghana): $1,180/ton (Flat).
+• Food-Grade 100% PCR PET Resin: $0.82/lb (-1.2% decrease due to increased recycling collection).
+• Organic Peppermint Essential Oil: $42.00/kg (Stable).
+
+Strategic Recommendation:
+Lock in 18-month fixed organic oil contracts while expanding 100% PCR resin supplier agreements to buffer against resin spikes.
+
+→ Saved: drbronner_oil_commodity_index, pcr_resin_radar_report`,
+
+  panel_qualification: `STUDIO DR. BRONNER 100% PCR BOTTLE FEA DROP DYNAMICS & LINE DOSSIER (illustrative)
+Project: 32 oz 100% PCR PET Liquid Soap Bottle (Studio Dr. Bronner Design Team)
+
+Structural FEA Stress Simulation & Drop Test Results:
+• Top-Load Crush Resistance: FEA verified maximum vertical crush strength of 380 lbs (exceeding 350 lbs pallet requirement).
+• Drop Impact Dynamics: Zero failure rate across 200 bottle 6-foot drop tests onto hard concrete.
+• Wall Thickness Distribution: Minimum 0.55mm wall thickness maintained across 100% PCR bottle base radii.
+
+High-Speed Filling Line Integration:
+• Line Velocity: 600 bottles/minute continuous run with zero starwheel tipping or jam events.
+• Cap Torque Integration: Flip-top cap sealed at 18 in-lbs torque with zero thread stripping.
+
+→ Saved: drbronner_fea_report, pcr_bottle_3d_cad_drawing, filling_line_commissioning_certificate`,
+
+  inverter_yield: `GLOBAL DISTRIBUTION CENTER INVENTORY OPTIMIZATION REPORT (illustrative)
+Network Scope: 800 Active Magic Soap SKUs across Vista, Indiana, Germany, and Australia Hubs
+
+Diagnostic Inventory Audit Results:
+• Monitored Inventory Value: $52,400,000.00 (Network Inventory Turnover: 8.4x/year)
+• Reorder Trigger Alerts: 14 high-velocity SKUs identified reaching safety stock reorder point.
+  - Peppermint Pure-Castile Liquid Soap 32 oz: 145,000 units on hand (Reorder triggered for 400,000 units).
+  - Baby Unscented Pure-Castile Bar Soap: 92,000 units on hand (Reorder triggered for 250,000 units).
+
+→ Saved: inventory_health_report, automated_purchase_orders, safety_stock_matrix`,
+
+  thermal_simulation: `REGENERATIVE ORGANIC AGRICULTURE & CRADLE-TO-GRAVE LCA DOSSIER (illustrative)
+Simulated Package: 32 oz Liquid Soap (Conventional Palm Soap vs Dr. Bronner Regenerative Organic Soap)
+Methodology: ISO 14040/14044 Life Cycle Assessment
+
+Environmental Impact Results per 1,000 Units:
+• Conventional Soap System: 2.45 kg CO2e / unit
+• Dr. Bronner Regenerative System: -0.15 kg CO2e / unit (Carbon negative topsoil sequestration!)
+• Water Usage: Regenerative soil farming reduced irrigation water consumption by 54.2%.
+• Energy Consumption: 100% PCR bottle reduced primary energy demand from 24.5 MJ to 8.2 MJ per bottle.
+
+→ Saved: drbronner_lca_simulation_report, carbon_negative_certificate, esg_compliance_dossier`,
+
+  mask_eco: `CUSTOM 100% PCR BOTTLE NECK THREAD & FLIP-TOP CAP ECO ASSESSMENT (illustrative)
+Engineering Change Order: ECO-2026-DRB-401
+Affected Line: 32 oz Pure-Castile Liquid Soap Bottle Family
+
+Geotechnical & Design Results:
+• Bottle Neck Thread Refinement: Modified 28-400 thread pitch by 0.3mm to increase cap back-off resistance under thermal shipping stress.
+• Flip-Top Hinge Endurance: Certified zero hinge snapping across 5,000 opening/closing cycles.
+• Blow Mold Tooling Impact: Re-cut neck ring mold inserts via CNC machining with zero scrap of master preform molds ($26,000 saved).
+
+Release Status: Certified for commercial production release at Vista manufacturing plant.
+
+→ Saved: eco_401_release_bulletin, bottle_neck_cnc_drawings, cap_test_log`
+};
+
+const OPERATORS = [
+  { id: 'scout', name: 'Scout', title: 'AI Fair Trade Organic Sourcing Scout', wf: 'scout', handled: 560, hrs: 255, status: 'idle' },
+  { id: 'quote', name: 'Quote', title: 'AI Pure-Castile Soap Quoting Operator', wf: 'quote', handled: 630, hrs: 305, status: 'idle' },
+  { id: 'tender', name: 'Tender', title: 'AI Master Retail Supply Tender Operator', wf: 'tender', handled: 390, hrs: 235, status: 'idle' },
+  { id: 'radar', name: 'Radar', title: 'AI Soap Materials Market Intelligence Operator', wf: 'radar', handled: 480, hrs: 220, status: 'idle' },
+  { id: 'safety', name: 'Sentinel', title: 'AI Studio Dr. Bronner FEA Operator', wf: 'panel_qualification', handled: 740, hrs: 395, status: 'idle' },
+  { id: 'mill', name: 'Atlas', title: 'AI Supply Chain Inventory Optimization Operator', wf: 'inverter_yield', handled: 660, hrs: 335, status: 'idle' },
+  { id: 'cfd', name: 'Vanguard', title: 'AI Sustainable Soap LCA Operator', wf: 'thermal_simulation', handled: 510, hrs: 265, status: 'idle' },
+  { id: 'eco', name: 'Nexus', title: 'AI Bottle Design ECO Revision Operator', wf: 'mask_eco', handled: 440, hrs: 240, status: 'idle' }
+];
+
+function initUI() {
+  renderOperators('all');
+}
+
+function renderOperators(track) {
+  const grid = document.getElementById('opGrid');
+  grid.innerHTML = '';
+
+  OPERATORS.forEach(op => {
+    const wf = WORKFLOWS[op.wf];
+    if(track !== 'all' && wf.track !== track) return;
+
+    const isFlagship = wf.tag === 'flagship';
+    const card = document.createElement('div');
+    card.className = `op-card ${isFlagship ? 'flagship' : ''}`;
+    card.innerHTML = `
+      <div class="op-badge ${isFlagship ? 'flagship-badge' : ''}">${isFlagship ? 'STUDIO BRONNER FLAGSHIP FEA' : 'ORGANIC SOAP WORKFLOW'}</div>
+      <div>
+        <div class="op-name">${op.name}</div>
+        <div class="op-role">${op.title}</div>
+        <div class="op-wf-name">${wf.name}</div>
+      </div>
+      <div class="op-metrics">
+        <div class="metric-item">
+          <div class="metric-lbl">TASKS RUN</div>
+          <div class="metric-val">${op.handled}</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-lbl">TIME SAVED</div>
+          <div class="metric-val">${op.hrs}h</div>
+        </div>
+      </div>
+      <button class="btn-run" onclick="runOneClick('${op.wf}', '${op.name}')">RUN WORKFLOW</button>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function filterTrack(track) {
+  document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderOperators(track);
+}
+
+function runOneClick(wfKey, opName) {
+  const modal = document.getElementById('execModal');
+  const title = document.getElementById('mTitle');
+  const sub = document.getElementById('mSub');
+  const fill = document.getElementById('mFill');
+  const status = document.getElementById('mStatus');
+  const result = document.getElementById('mResult');
+  const wf = WORKFLOWS[wfKey];
+
+  title.textContent = `Running ${opName}`;
+  sub.textContent = wf.name;
+  fill.style.width = '10%';
+  status.textContent = 'Initializing AI Agents & Organic Sourcing Tools...';
+  result.classList.add('hidden');
+  modal.classList.add('active');
+
+  setTimeout(() => {
+    fill.style.width = '55%';
+    status.textContent = 'Executing multi-agent verification & fair trade audits...';
+  }, 700);
+
+  setTimeout(() => {
+    fill.style.width = '100%';
+    status.textContent = 'Workflow Complete! Generated Executive Summary:';
+    result.textContent = FINAL[wfKey] || 'Workflow completed cleanly.';
+    result.classList.remove('hidden');
+  }, 1400);
+}
+
+function closeExecModal() {
+  document.getElementById('execModal').classList.remove('active');
+}
+
+function openHireModal() {
+  document.getElementById('hireModal').classList.add('active');
+}
+
+function closeHireModal() {
+  document.getElementById('hireModal').classList.remove('active');
+}
+
+function deployOperator() {
+  const name = document.getElementById('newOpName').value || 'Custom Dr. Bronner Operator';
+  const wf = document.getElementById('newOpWf').value;
+
+  OPERATORS.push({
+    id: 'custom_' + Date.now(),
+    name: name,
+    title: 'Custom ' + WORKFLOWS[wf].title,
+    wf: wf,
+    handled: 1,
+    hrs: 0,
+    status: 'idle'
+  });
+
+  closeHireModal();
+  alert(`Successfully deployed AI Operator '${name}'!`);
+  renderOperators('all');
+}
+
+window.onload = initUI;
+</script>
+</body>
+</html>
