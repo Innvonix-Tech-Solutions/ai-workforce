@@ -300,3 +300,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/seven-seas-group
 https://innvonix-tech-solutions.github.io/ai-workforce/drunkelephant
 https://innvonix-tech-solutions.github.io/ai-workforce/drbronner
 https://innvonix-tech-solutions.github.io/ai-workforce/livingproof
+https://innvonix-tech-solutions.github.io/ai-workforce/giatec-scientific
