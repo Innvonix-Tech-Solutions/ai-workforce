@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LIVING PROOF | Autonomous AI Workforce Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-main: #FAFAFA;
+  --bg-topbar: #111827;
+  --bg-surface: #F3F4F6;
+  --lp-slate: #1F2937;
+  --lp-slate-dark: #111827;
+  --lp-cyan: #00A3A6;
+  --lp-cyan-hover: #008487;
+  --lp-grey: #9CA3AF;
+  --text-dark: #111827;
+  --text-muted: #6B7280;
+  --border-subtle: #E5E7EB;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg-main);
+  color: var(--text-dark);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Announcement Top Bar */
+.announcement-bar {
+  background-color: var(--bg-topbar);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 10px 16px;
+}
+.announcement-bar span { color: var(--lp-cyan); }
+
+/* Header */
+.site-header {
+  background: #FFFFFF;
+  border-bottom: 2px solid var(--lp-slate);
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.brand-logo-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.brand-logo {
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: var(--lp-slate);
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.brand-logo span { color: var(--lp-cyan); }
+.badge-unilever {
+  background: var(--lp-slate);
+  color: #FFFFFF;
+  padding: 6px 14px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border-radius: 4px;
+}
+.badge-unilever span { color: var(--lp-cyan); }
+
+/* Simple Hero Section */
+.simple-hero {
+  padding: 32px 40px 24px 40px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  text-align: center;
+}
+.hero-title {
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--lp-slate);
+  margin-bottom: 8px;
+}
+.hero-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Main Container */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 40px 40px 40px;
+}
+
+/* Intuitive Filter Bar */
+.filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.filter-group {
+  display: flex;
+  gap: 10px;
+}
+.filter-pill {
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-dark);
+  padding: 10px 20px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+.filter-pill.active {
+  background: var(--lp-slate);
+  color: #FFFFFF;
+  border-color: var(--lp-slate);
+}
+.btn-quick-hire {
+  background: var(--lp-cyan);
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 20px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+.btn-quick-hire:hover {
+  background: var(--lp-cyan-hover);
+}
+
+/* Simplified Operator Cards Grid */
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+.op-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-top: 5px solid var(--lp-slate);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.op-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(31,41,55,0.08);
+}
+.op-card.flagship {
+  border-top-color: var(--lp-cyan);
+}
+.op-badge {
+  display: inline-block;
+  background: var(--lp-slate);
+  color: #FFFFFF;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  align-self: flex-start;
+  margin-bottom: 12px;
+}
+.op-badge.flagship-badge {
+  background: var(--lp-cyan);
+  color: #FFFFFF;
+}
+.op-name {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--lp-slate);
+  margin-bottom: 4px;
+}
+.op-role {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+.op-wf-name {
+  font-size: 11px;
+  color: var(--text-dark);
+  line-height: 1.4;
+  margin-bottom: 16px;
+  height: 34px;
+  overflow: hidden;
+}
+.op-metrics {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 12px;
+  margin-bottom: 16px;
+}
+.metric-item {
+  display: flex;
+  flex-direction: column;
+}
+.metric-lbl {
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.metric-val {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--lp-slate);
+}
+
+/* Action Button */
+.btn-run {
+  background: var(--lp-slate);
+  color: #FFFFFF;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 12px;
+  width: 100%;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.btn-run:hover {
+  background: var(--lp-cyan);
+}
+
+/* Modal Popup */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(17, 24, 39, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  max-width: 650px;
+  width: 100%;
+  padding: 32px;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.modal-close {
+  position: absolute;
+  top: 20px; right: 20px;
+  background: var(--bg-surface);
+  border: none;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.modal-title {
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  color: var(--lp-slate);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.modal-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+.modal-progress-bar {
+  background: var(--border-subtle);
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.modal-progress-fill {
+  background: var(--lp-cyan);
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s;
+}
+.modal-status {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--lp-slate-dark);
+  margin-bottom: 20px;
+}
+.result-box {
+  background: var(--bg-surface);
+  border-radius: 8px;
+  padding: 20px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  color: var(--text-dark);
+  border: 1px solid var(--border-subtle);
+}
+
+.hidden { display: none !important; }
+
+.site-footer {
+  border-top: 2px solid var(--lp-slate);
+  padding: 32px 40px;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  background: var(--bg-surface);
+  margin-top: 40px;
+}
+</style>
+</head>
+<body>
+
+<div class="announcement-bar">
+  SCIENCE IN ACTION: <span>BIOTECH HAIRCARE POWERED BY MIT INNOVATION</span>
+</div>
+
+<header class="site-header">
+  <div class="brand-logo-area">
+    <span style="font-size:24px;">🧪</span>
+    <a href="#" class="brand-logo">LIVING <span>PROOF</span></a>
+  </div>
+  <div class="badge-unilever">UNILEVER PRESTIGE <span>BEAUTY DIVISION</span></div>
+</header>
+
+<div class="simple-hero">
+  <h1 class="hero-title">AUTONOMOUS WORKFORCE ENGINE</h1>
+  <div class="hero-sub">Select an operator below to execute 1-click automated workflows across biotech molecule sourcing, aerosol can pressure engineering, and global salon retail distribution.</div>
+</div>
+
+<div class="container">
+  
+  <div class="filter-bar">
+    <div class="filter-group">
+      <button class="filter-pill active" onclick="filterTrack('all')">All Operators (8)</button>
+      <button class="filter-pill" onclick="filterTrack('commercial')">Commercial Sourcing & Retail (4)</button>
+      <button class="filter-pill" onclick="filterTrack('operations')">Engineering & Packaging Quality (4)</button>
+    </div>
+    <button class="btn-quick-hire" onclick="openHireModal()">+ Stand Up New Operator</button>
+  </div>
+
+  <div class="grid-4" id="opGrid"></div>
+
+</div>
+
+<!-- Interactive Execution Popup Modal -->
+<div class="modal-overlay" id="execModal">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeExecModal()">✕</button>
+    <div class="modal-title" id="mTitle">Executing Workflow</div>
+    <div class="modal-sub" id="mSub">Running multi-agent automation...</div>
+    <div class="modal-progress-bar"><div class="modal-progress-fill" id="mFill"></div></div>
+    <div class="modal-status" id="mStatus">Initializing agents...</div>
+    <div class="result-box hidden" id="mResult"></div>
+  </div>
+</div>
+
+<!-- Stand Up Operator Modal -->
+<div class="modal-overlay" id="hireModal">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeHireModal()">✕</button>
+    <div class="modal-title">Stand Up New AI Operator</div>
+    <div class="modal-sub">Deploy an autonomous operator for custom Living Proof workflows:</div>
+    
+    <div style="display:flex; flex-direction:column; gap:16px; margin-top:16px;">
+      <div>
+        <label style="font-size:10px; font-weight:800; letter-spacing:1px; display:block; margin-bottom:6px; text-transform:uppercase;">Operator Name</label>
+        <input type="text" id="newOpName" placeholder="e.g. PhD Dry Shampoo Aerosol Scout" style="width:100%; padding:12px; border:1px solid var(--border-subtle); border-radius:8px; font-family:var(--font-sans); font-size:12px;">
+      </div>
+      <div>
+        <label style="font-size:10px; font-weight:800; letter-spacing:1px; display:block; margin-bottom:6px; text-transform:uppercase;">Target Workflow</label>
+        <select id="newOpWf" style="width:100%; padding:12px; border:1px solid var(--border-subtle); border-radius:8px; font-family:var(--font-sans); font-size:12px; font-weight:800;">
+          <option value="scout">Global Sephora & Salon Retail Campaign Scout</option>
+          <option value="quote">Turnkey 15M Unit PhD Dry Shampoo Aerosol Can BOM</option>
+          <option value="tender">Unilever Prestige Global Master Salon & Retail Supply Tender</option>
+          <option value="panel_qualification">Studio Living Proof Aerosol Can FEA Pressure Qualification</option>
+        </select>
+      </div>
+      <button class="btn-run" style="margin-top:8px;" onclick="deployOperator()">Deploy Operator</button>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  Independent concept prototype prepared for Living Proof (livingproof.com) / Unilever Prestige Division. Built with official Living Proof visual identity tokens (Slate Charcoal #1F2937 primary, PhD Cyan #00A3A6, Lab White #FAFAFA). All workflows, FEA pressure calculations, BOM quotes, and dossier outputs are illustrative simulations.
+</footer>
+
+<script>
+const AGENT_ROLES = {
+  living_proof_biotech_polymer_scout: { emoji: '🧪', label: 'MIT Biotech Hair Polymer & Molecule Sourcing Scout', tools: ['screen_biotech_polymers', 'save'] },
+  haircare_aerosol_bom_pricing_eng: { emoji: '💰', label: 'Aerosol Can, Recyclable Bottle & Valve BOM Cost Lead', tools: ['calculate_lp_bom', 'save'] },
+  studio_lp_aerosol_packaging_spec: { emoji: '📐', label: 'Studio Living Proof Aerosol FEA Pressure Engineer', tools: ['model_fea_aerosol_can_pressure', 'save'] },
+  recyclable_aluminum_lca_compliance_auditor: { emoji: '🌱', label: 'Recyclable Aluminum Can & Polymer LCA Auditor', tools: ['calculate_lp_lca_carbon', 'save'] },
+  unilever_prestige_haircare_supply_router: { emoji: '🚚', label: 'Salon & Sephora Global Replenishment Router', tools: ['optimize_salon_inventory', 'save'] },
+  prestige_salon_master_tender_lead: { emoji: '🤝', label: 'Unilever Prestige Master Salon Tender Operator', tools: ['structure_master_tender', 'save'] },
+  aerosol_can_integrity_qualification_eng: { emoji: '🛡️', label: 'Aerosol Can Burst Pressure & Crimp QA Engineer', tools: ['audit_aerosol_crimp_leakage', 'save'] },
+  spray_actuator_dispensing_fitment_spec: { emoji: '✨', label: 'Spray Actuator Orifice & Particle Size Specialist', tools: ['evaluate_actuator_spray_pattern', 'save'] },
+  recycled_packaging_eco_revision_spec: { emoji: '♻️', label: 'PCR Aluminum Can & Valve ECO Revision Lead', tools: ['audit_can_recyclability_eco', 'save'] },
+  high_speed_aerosol_filling_qa_engineer: { emoji: '⚙️', label: 'High-Speed Aerosol Gassing & Liquid Filling QA Engineer', tools: ['simulate_aerosol_gassing_line', 'save'] },
+  writer: { emoji: '✍️', label: 'Science in Action Dossier & Proposal Writer', tools: ['compose', 'save'] },
+  reviewer: { emoji: '✅', label: 'Director of Haircare R&D Operations & Packaging Principal PE', tools: ['qa_review', 'save'] }
+};
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Global Sephora & salon retail campaign scout',
+    title: 'AI Prestige Salon Campaign Scout',
+    track: 'commercial',
+    deliverable: 'Top 50 Global Sephora & Salon Retail Campaign Audit',
+    desc: 'Agents screen worldwide Sephora endcaps, professional hair salons, and biotech hair molecule launches.'
+  },
+  quote: {
+    name: 'Turnkey 15M unit PhD Dry Shampoo aerosol can BOM pro forma',
+    title: 'AI Biotech Haircare Quoting Operator',
+    track: 'commercial',
+    deliverable: 'Turnkey 15M Unit PhD Dry Shampoo Aerosol Can BOM Pro Forma',
+    desc: 'Agents compute custom seamless aluminum aerosol cans, precision spray actuators, propellant gas blends, and 100% recyclable outer cartons.'
+  },
+  tender: {
+    name: 'Unilever Prestige global master salon & retail supply tender response',
+    title: 'AI Master Supply Tender Operator',
+    track: 'commercial',
+    deliverable: 'Unilever Prestige Global Master Salon & Retail Supply Tender Response',
+    desc: 'Agents formulate multi-year master supply agreements covering 50 million aerosol dry shampoo cans, shampoo bottles, and hair treatment tubes.'
+  },
+  radar: {
+    name: 'Global haircare polymers, propellant & packaging material market intelligence brief',
+    title: 'AI Haircare Materials Market Intelligence Operator',
+    track: 'commercial',
+    deliverable: 'Global Haircare Polymers & Aluminum Market Intelligence Brief',
+    desc: 'Agents synthesize market spot prices for biotech hair conditioning polymers, aluminum ingot indices, aerosol propellants, and ocean freight rates.'
+  },
+  panel_qualification: {
+    name: 'Studio Living Proof aerosol can FEA pressure & high-speed line qualification',
+    title: 'AI Studio Living Proof FEA Operator',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'Studio Living Proof Aerosol Can FEA Pressure & Line Qualification Dossier',
+    desc: 'Agents execute 3D finite-element stress analysis for aluminum aerosol cans under 180 psi internal pressure and 500 cpm gassing lines.'
+  },
+  inverter_yield: {
+    name: 'Global distribution center inventory optimization & safety stock router',
+    title: 'AI Supply Chain Inventory Optimization Operator',
+    track: 'operations',
+    deliverable: 'Global Distribution Center Inventory Optimization & Safety Stock Report',
+    desc: 'Agents audit 1,200 active prestige haircare SKUs across regional distribution centers to prevent out-of-stock events during holiday sales.'
+  },
+  thermal_simulation: {
+    name: 'Recyclable aluminum can & cradle-to-grave LCA sustainability auditor',
+    title: 'AI Sustainable Haircare LCA Operator',
+    track: 'operations',
+    deliverable: 'Recyclable Aluminum Can & Cradle-to-Grave LCA Simulation Strategy',
+    desc: 'Agents run Life Cycle Assessment (LCA) environmental impact simulations comparing standard aerosol cans against 100% PCR aluminum cans.'
+  },
+  mask_eco: {
+    name: 'Custom aerosol valve & spray actuator ECO revision lead',
+    title: 'AI Actuator Design ECO Revision Operator',
+    track: 'operations',
+    deliverable: 'Custom Aerosol Valve & Spray Actuator ECO Assessment',
+    desc: 'Agents evaluate Engineering Change Order ECO-2026-LP-803 (Refine Spray Actuator Orifice Diameter to Optimize Powder Dispersion).'
+  }
+};
+
+const FINAL = {
+  scout: `TOP 50 GLOBAL SEPHORA & SALON RETAIL CAMPAIGN AUDIT (illustrative)
+Prepared for Living Proof / Unilever Prestige Division Executive Leadership
+
+Audit Summary:
+• Evaluated 50 flagship Sephora endcaps and premium salons in North America, Europe, and Asia.
+• Biotech Molecule Compliance: 100% verified patented silicone-free hair protection polymers.
+• Aerosol Actuator Spray Pattern: 99.8% zero-clog rate across Perfect hair Day (PhD) Dry Shampoo testers.
+
+Key Recommendations:
+1. Scale recyclable aerosol canister displays across Top 30 Sephora doors.
+2. Maintain 90-day safety stock buffer ahead of Q4 holiday travel surge.
+
+→ Saved: sephora_salon_audit_2026, biotech_polymer_dossier, lp_retail_matrix`,
+
+  quote: `TURNKEY 15M UNIT PHD DRY SHAMPOO AEROSOL CAN BOM PRO FORMA (illustrative)
+Program: Perfect hair Day™ (PhD) 4.0 oz Aerosol Can Fleet
+
+Packaging System Architecture & Bill of Materials:
+• Seamless Aluminum Can: 15,000,000 Custom Monobloc Aluminum Cans @ $0.48/unit
+• Aerosol Valve & Actuator: 15,000,000 Precision Powder Spray Valves @ $0.14/unit
+• Overcap Assembly: 15,000,000 Matte Slate Polypropylene Overcaps @ $0.06/unit
+• Secondary Packaging: 1,250,000 100% Recyclable FSC Cartons (12-pack) @ $0.45/case
+• Tooling Capex: $135,000 one-time impact extrusion tooling capex for aluminum cans
+
+Financial Performance:
+• Total Unit Packaging Capex: $0.72/unit delivered ($10,800,000 total annual program spend)
+• VMI Holding Agreement: 90-day safety stock (3.75M units) held at Boston logistics center.
+
+→ Saved: phd_dry_shampoo_bom, aerosol_can_tooling_schedule, procurement_dossier`,
+
+  tender: `UNILEVER PRESTIGE GLOBAL MASTER SALON TENDER RESPONSE (illustrative)
+Scope: Master Multi-Year Haircare Packaging Supply Agreement (50,000,000 Units/Yr)
+
+Volume & Product Breakdown:
+• PhD Dry Shampoo & Aerosol Hairsprays: 22,000,000 units/year
+• Full & Restore Shampoo/Conditioner Bottles: 18,000,000 units/year
+• Triple Bond Complex Treatment Tubes: 10,000,000 units/year
+
+Supply Chain Guarantee:
+• 90-Day Vendor Managed Inventory (VMI): 12.5 million unit safety stock held across distribution centers.
+• Delivery SLA: 99.8% guaranteed on-time delivery with 24-hour emergency stock release SLA.
+• Sustainability Commitment: Certified 100% recyclable aluminum cans and PCR plastic bottles.
+
+→ Saved: master_lp_supply_agreement, vmi_warehouse_release_matrix, executive_dossier`,
+
+  radar: `GLOBAL HAIRCARE POLYMERS & ALUMINUM MARKET INTELLIGENCE BRIEF (illustrative)
+
+Market Pricing & Index Dynamics:
+• Biotech Conditioning Polymers (MIT Patent Sourcing): $18.50/kg (Stable; long-term fixed licensing locked).
+• Monobloc Aluminum Can Ingot Index: $2,420/ton (+1.8% increase due to global energy surcharges).
+• Hydrocarbon Aerosol Propellants (DME/Isobutane): $0.92/kg (Flat).
+• Ocean Freight Spot Rates: $2,150/40ft container (Stable).
+
+Strategic Recommendation:
+Lock in 12-month fixed aluminum ingot contracts while scaling PCR aluminum cans to buffer against raw metal spikes.
+
+→ Saved: lp_material_commodity_index, aluminum_can_radar_report`,
+
+  panel_qualification: `STUDIO LIVING PROOF AEROSOL CAN FEA PRESSURE & LINE DOSSIER (illustrative)
+Project: Perfect hair Day™ Dry Shampoo 4.0 oz Can (Studio Living Proof Design Team)
+
+Structural FEA Stress Simulation & Pressure Test Results:
+• Internal Burst Pressure: FEA verified maximum internal pressure threshold of 210 psi (exceeding 180 psi DOT-2Q specification).
+• Drop Impact Dynamics: Zero deformation failure rate across 200 can drop tests from 1.5 meters onto concrete.
+• Wall Thickness Distribution: Minimum 0.38mm wall thickness maintained across aluminum can shoulder radii.
+
+High-Speed Aerosol Gassing Line Integration:
+• Line Velocity: 500 cans/minute continuous run with zero starwheel jam events.
+• Valve Crimp Quality: 1-inch valve crimp sealed under 1.05-inch crimp height with zero propellant leakage.
+
+→ Saved: studio_lp_fea_report, aerosol_can_3d_cad_drawing, gassing_line_commissioning_certificate`,
+
+  inverter_yield: `GLOBAL DISTRIBUTION CENTER INVENTORY OPTIMIZATION REPORT (illustrative)
+Network Scope: 1,200 Active Haircare SKUs across Boston, London, and Frankfurt Distribution Centers
+
+Diagnostic Inventory Audit Results:
+• Monitored Inventory Value: $62,400,000.00 (Network Inventory Turnover: 8.8x/year)
+• Reorder Trigger Alerts: 16 high-velocity SKUs identified reaching safety stock reorder point.
+  - Perfect hair Day Dry Shampoo 4.0 oz: 95,000 units on hand (Reorder triggered for 250,000 units).
+  - Triple Bond Complex 45ml: 42,000 units on hand (Reorder triggered for 120,000 units).
+
+→ Saved: inventory_health_report, automated_purchase_orders, safety_stock_matrix`,
+
+  thermal_simulation: `RECYCLABLE ALUMINUM CAN & CRADLE-TO-GRAVE LCA DOSSIER (illustrative)
+Simulated Package: PhD Dry Shampoo 4.0 oz (Virgin Aluminum Can vs 100% PCR Aluminum Can)
+Methodology: ISO 14040/14044 Life Cycle Assessment
+
+Environmental Impact Results per 1,000 Units:
+• Virgin Aluminum Aerosol Can: 1.12 kg CO2e / unit
+• 100% PCR Aluminum Aerosol Can: 0.32 kg CO2e / unit (-71.4% carbon footprint reduction)
+• Energy Consumption: Primary energy demand drops from 22.5 MJ to 6.4 MJ per can.
+
+→ Saved: lp_lca_simulation_report, carbon_footprint_certificate, unilever_esg_dossier`,
+
+  mask_eco: `CUSTOM AEROSOL VALVE & SPRAY ACTUATOR ECO ASSESSMENT (illustrative)
+Engineering Change Order: ECO-2026-LP-803
+Affected Line: Perfect hair Day™ Dry Shampoo Aerosol Can Family
+
+Geotechnical & Design Results:
+• Actuator Spray Orifice Refinement: Reduced orifice diameter by 0.05mm to optimize starch powder atomization and eliminate white residue.
+• Valve Stem Seal Tension: Enhanced internal Buna-N gasket tension to prevent propellant seepage over 24-month shelf life.
+• Tooling Audit: Re-cut actuator core pin inserts via CNC machining with zero scrap of master mold bases ($22,000 saved).
+
+Release Status: Certified for commercial factory production release.
+
+→ Saved: eco_803_release_bulletin, actuator_tooling_cnc_drawings, spray_test_log`
+};
+
+const OPERATORS = [
+  { id: 'scout', name: 'Scout', title: 'AI Prestige Salon Campaign Scout', wf: 'scout', handled: 520, hrs: 240, status: 'idle' },
+  { id: 'quote', name: 'Quote', title: 'AI Biotech Haircare Quoting Operator', wf: 'quote', handled: 590, hrs: 285, status: 'idle' },
+  { id: 'tender', name: 'Tender', title: 'AI Master Supply Tender Operator', wf: 'tender', handled: 350, hrs: 215, status: 'idle' },
+  { id: 'radar', name: 'Radar', title: 'AI Haircare Materials Market Intelligence Operator', wf: 'radar', handled: 440, hrs: 200, status: 'idle' },
+  { id: 'safety', name: 'Sentinel', title: 'AI Studio Living Proof FEA Operator', wf: 'panel_qualification', handled: 680, hrs: 370, status: 'idle' },
+  { id: 'mill', name: 'Atlas', title: 'AI Supply Chain Inventory Optimization Operator', wf: 'inverter_yield', handled: 610, hrs: 310, status: 'idle' },
+  { id: 'cfd', name: 'Vanguard', title: 'AI Sustainable Haircare LCA Operator', wf: 'thermal_simulation', handled: 460, hrs: 240, status: 'idle' },
+  { id: 'eco', name: 'Nexus', title: 'AI Actuator Design ECO Revision Operator', wf: 'mask_eco', handled: 400, hrs: 220, status: 'idle' }
+];
+
+function initUI() {
+  renderOperators('all');
+}
+
+function renderOperators(track) {
+  const grid = document.getElementById('opGrid');
+  grid.innerHTML = '';
+
+  OPERATORS.forEach(op => {
+    const wf = WORKFLOWS[op.wf];
+    if(track !== 'all' && wf.track !== track) return;
+
+    const isFlagship = wf.tag === 'flagship';
+    const card = document.createElement('div');
+    card.className = `op-card ${isFlagship ? 'flagship' : ''}`;
+    card.innerHTML = `
+      <div class="op-badge ${isFlagship ? 'flagship-badge' : ''}">${isFlagship ? 'STUDIO LP FLAGSHIP FEA' : 'AEROSOL WORKFLOW'}</div>
+      <div>
+        <div class="op-name">${op.name}</div>
+        <div class="op-role">${op.title}</div>
+        <div class="op-wf-name">${wf.name}</div>
+      </div>
+      <div class="op-metrics">
+        <div class="metric-item">
+          <div class="metric-lbl">TASKS RUN</div>
+          <div class="metric-val">${op.handled}</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-lbl">TIME SAVED</div>
+          <div class="metric-val">${op.hrs}h</div>
+        </div>
+      </div>
+      <button class="btn-run" onclick="runOneClick('${op.wf}', '${op.name}')">RUN WORKFLOW</button>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function filterTrack(track) {
+  document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderOperators(track);
+}
+
+function runOneClick(wfKey, opName) {
+  const modal = document.getElementById('execModal');
+  const title = document.getElementById('mTitle');
+  const sub = document.getElementById('mSub');
+  const fill = document.getElementById('mFill');
+  const status = document.getElementById('mStatus');
+  const result = document.getElementById('mResult');
+  const wf = WORKFLOWS[wfKey];
+
+  title.textContent = `Running ${opName}`;
+  sub.textContent = wf.name;
+  fill.style.width = '10%';
+  status.textContent = 'Initializing AI Agents & Biotech Tools...';
+  result.classList.add('hidden');
+  modal.classList.add('active');
+
+  setTimeout(() => {
+    fill.style.width = '55%';
+    status.textContent = 'Executing multi-agent verification & pressure audits...';
+  }, 700);
+
+  setTimeout(() => {
+    fill.style.width = '100%';
+    status.textContent = 'Workflow Complete! Generated Executive Summary:';
+    result.textContent = FINAL[wfKey] || 'Workflow completed cleanly.';
+    result.classList.remove('hidden');
+  }, 1400);
+}
+
+function closeExecModal() {
+  document.getElementById('execModal').classList.remove('active');
+}
+
+function openHireModal() {
+  document.getElementById('hireModal').classList.add('active');
+}
+
+function closeHireModal() {
+  document.getElementById('hireModal').classList.remove('active');
+}
+
+function deployOperator() {
+  const name = document.getElementById('newOpName').value || 'Custom Living Proof Operator';
+  const wf = document.getElementById('newOpWf').value;
+
+  OPERATORS.push({
+    id: 'custom_' + Date.now(),
+    name: name,
+    title: 'Custom ' + WORKFLOWS[wf].title,
+    wf: wf,
+    handled: 1,
+    hrs: 0,
+    status: 'idle'
+  });
+
+  closeHireModal();
+  alert(`Successfully deployed AI Operator '${name}'!`);
+  renderOperators('all');
+}
+
+window.onload = initUI;
+</script>
+</body>
+</html>
