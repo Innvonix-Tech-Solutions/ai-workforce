@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neora AI Workforce Enterprise Operations Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        neora: {
+                            deep: '#1F4E5B',
+                            teal: '#00A896',
+                            pearl: '#E6F4F1',
+                            dark: '#111827',
+                            gold: '#D97706',
+                            slate: '#0F172A',
+                            light: '#F8FAFC'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .gradient-neora { background: linear-gradient(135deg, #1F4E5B 0%, #00A896 100%); }
+        .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #F1F5F9; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #00A896; border-radius: 3px; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col custom-scrollbar">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-neora-deep text-white sticky top-0 z-40 shadow-lg border-b border-neora-teal/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="w-10 h-10 rounded-xl bg-neora-teal flex items-center justify-center font-bold text-white shadow-md text-xl">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-bold text-lg tracking-wider text-white uppercase">NEORA</span>
+                        <span class="bg-neora-teal/30 text-neora-pearl text-xs font-semibold px-2 py-0.5 rounded border border-neora-teal/40">AI WORKFORCE 2.0</span>
+                    </div>
+                    <p class="text-xs text-neora-pearl/80">Global Anti-Aging R&D, Airless Packaging & Supply Chain Autonomous Operations</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <div class="hidden md:flex items-center space-x-4 text-xs font-mono">
+                    <div class="bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-700/50 flex items-center space-x-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span class="text-slate-300">SYSTEM: ONLINE</span>
+                    </div>
+                    <div class="bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-700/50 text-slate-300">
+                        LATENCY: <span class="text-neora-teal font-bold">14ms</span>
+                    </div>
+                    <div class="bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-700/50 text-slate-300">
+                        ACTIVE AGENTS: <span class="text-neora-teal font-bold">12/12</span>
+                    </div>
+                </div>
+                <button onclick="openExecutionModal('panel_qualification')" class="bg-neora-teal hover:bg-teal-500 text-white font-semibold text-xs px-4 py-2 rounded-lg transition-all shadow-md flex items-center space-x-2">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>RUN FLAGSHIP WORKFLOW</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full space-y-6">
+
+        <!-- Executive Metrics Header -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase">Patented Formulations</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-1">SIG-1273 & EHT</h3>
+                    <p class="text-xs text-emerald-600 font-medium mt-1"><i class="fa-solid fa-check-circle"></i> 100% QA Validated</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-neora-pearl text-neora-deep flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-flask"></i>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase">Airless Pump Yield</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-1">99.94%</h3>
+                    <p class="text-xs text-emerald-600 font-medium mt-1"><i class="fa-solid fa-arrow-trend-up"></i> +0.4% this quarter</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-pump-soap"></i>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase">Direct Sales Nodes</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-1">5 Regional Hubs</h3>
+                    <p class="text-xs text-neora-teal font-medium mt-1"><i class="fa-solid fa-globe"></i> US, CA, MX, CO, APAC</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-neora-pearl text-neora-teal flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-truck-fast"></i>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase">Active AI Agents</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-1">12 Specialists</h3>
+                    <p class="text-xs text-blue-600 font-medium mt-1"><i class="fa-solid fa-shield-halved"></i> 8 Enterprise Workflows</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-microchip"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="flex border-b border-slate-200 space-x-8 text-sm font-semibold">
+            <button onclick="switchTab('workflows')" id="tab-workflows" class="pb-3 border-b-2 border-neora-deep text-neora-deep flex items-center space-x-2">
+                <i class="fa-solid fa-diagram-project"></i>
+                <span>Enterprise Workflows (8)</span>
+            </button>
+            <button onclick="switchTab('agents')" id="tab-agents" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Specialist AI Agents (12)</span>
+            </button>
+            <button onclick="switchTab('operators')" id="tab-operators" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2">
+                <i class="fa-solid fa-id-card"></i>
+                <span>Human Operators & Supervisors (8)</span>
+            </button>
+            <button onclick="switchTab('analytics')" id="tab-analytics" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Live R&D & Supply Telemetry</span>
+            </button>
+        </div>
+
+        <!-- TAB 1: WORKFLOWS -->
+        <div id="view-workflows" class="space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">Neora Enterprise Workflows</h2>
+                    <p class="text-sm text-slate-500">Autonomous workflow orchestration spanning dual tracks: Commercial Sourcing & Direct Sales, and Neora R&D Engineering.</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <span class="text-xs text-slate-500 font-medium">Filter Track:</span>
+                    <button onclick="filterWorkflows('all', this)" class="wf-filter-btn active bg-neora-deep text-white text-xs font-semibold px-3 py-1.5 rounded-lg">All Tracks</button>
+                    <button onclick="filterWorkflows('commercial', this)" class="wf-filter-btn bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-slate-300">Commercial & Direct Sales</button>
+                    <button onclick="filterWorkflows('rd', this)" class="wf-filter-btn bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-slate-300">R&D & Packaging Engineering</button>
+                </div>
+            </div>
+
+            <div id="workflows-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- TAB 2: AGENTS -->
+        <div id="view-agents" class="hidden space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">Specialist AI Agents (12)</h2>
+                    <p class="text-sm text-slate-500">Autonomous domain experts configured for skincare formulation, airless packaging FEA, and global fulfillment.</p>
+                </div>
+                <div class="relative w-72">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-sm"></i>
+                    <input type="text" id="agent-search" oninput="searchAgents()" placeholder="Search agents by role or skill..." class="w-full pl-9 pr-4 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-neora-teal">
+                </div>
+            </div>
+
+            <div id="agents-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- TAB 3: OPERATORS -->
+        <div id="view-operators" class="hidden space-y-6">
+            <div>
+                <h2 class="text-xl font-bold text-slate-900">Human Operators & Supervisors (8)</h2>
+                <p class="text-sm text-slate-500">Enterprise operators styled in Neora Deep Teal branding controlling autonomous workflow execution.</p>
+            </div>
+
+            <div id="operators-grid" class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- TAB 4: ANALYTICS -->
+        <div id="view-analytics" class="hidden space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4"><i class="fa-solid fa-chart-area text-neora-teal mr-2"></i>Airless Pump Dispensing Pressure Stability (PSI)</h3>
+                    <canvas id="chart-pressure" height="200"></canvas>
+                </div>
+                <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4"><i class="fa-solid fa-chart-pie text-neora-deep mr-2"></i>Global Direct Sales Fulfillment Distribution</h3>
+                    <canvas id="chart-sales" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Execution Modal -->
+    <div id="execution-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-3xl w-full shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="bg-neora-deep text-white px-6 py-4 flex items-center justify-between border-b border-neora-teal/30">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-lg bg-neora-teal flex items-center justify-center font-bold text-white">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <div>
+                        <h3 id="modal-wf-title" class="font-bold text-base">Running Workflow</h3>
+                        <p id="modal-wf-track" class="text-xs text-neora-pearl">Track Status</p>
+                    </div>
+                </div>
+                <button onclick="closeExecutionModal()" class="text-slate-300 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-6 flex-grow custom-scrollbar">
+                <!-- Timeline Progress -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">Workflow Execution Steps</h4>
+                    <div id="modal-timeline" class="space-y-3">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Live Logs Console -->
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500">Live Agent Console Output</h4>
+                        <span class="text-xs font-mono text-neora-teal" id="modal-status-text">INITIALIZING...</span>
+                    </div>
+                    <div id="modal-console" class="bg-slate-950 text-emerald-400 font-mono text-xs p-4 rounded-xl h-44 overflow-y-auto custom-scrollbar border border-slate-800">
+                        <p class="text-slate-500">[00:00:00] Neora AI Agent Core initialized.</p>
+                    </div>
+                </div>
+
+                <!-- Executive Summary -->
+                <div id="modal-summary-box" class="bg-neora-pearl/50 border border-neora-teal/30 rounded-xl p-4 hidden">
+                    <h4 class="text-sm font-bold text-neora-deep flex items-center space-x-2">
+                        <i class="fa-solid fa-file-contract text-neora-teal"></i>
+                        <span>Executive Summary & Resolution</span>
+                    </h4>
+                    <p id="modal-summary-text" class="text-xs text-slate-700 mt-2 leading-relaxed font-sans">
+                        Executive summary text goes here.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 px-6 py-4 border-t border-slate-200 flex items-center justify-between">
+                <span class="text-xs text-slate-500 font-mono">NEORA AI OPERATIONAL PROTOCOL</span>
+                <button onclick="closeExecutionModal()" class="bg-slate-800 hover:bg-slate-900 text-white font-semibold text-xs px-5 py-2 rounded-lg">Close Window</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Data & Logic -->
+    <script>
+        const AGENT_ROLES = [
+            {
+                id: 'neora_sig1273_botanical_scout',
+                name: 'neora_sig1273_botanical_scout',
+                title: 'SIG-1273 & EHT Patented Active Ingredient Sourcing Scout',
+                category: 'Formulation & Bio-actives',
+                icon: 'fa-flask-vial',
+                description: 'Specializes in patented dual-action phytol molecules (SIG-1273) and coffee-derived brain health bio-actives (EHT). Assesses purity, supply sustainability, and Princeton lab compliance.'
+            },
+            {
+                id: 'skincare_airless_bom_pricing_eng',
+                name: 'skincare_airless_bom_pricing_eng',
+                title: 'Airless Bottle & Recyclable Packaging BOM Cost Lead',
+                category: 'Commercial Sourcing',
+                icon: 'fa-calculator',
+                description: 'Calculates structural packaging bill of materials (BOM), resin pricing fluctuations, PCR container cost targets, and volume tiered discounts for global e-commerce packaging.'
+            },
+            {
+                id: 'studio_neora_airless_packaging_spec',
+                name: 'studio_neora_airless_packaging_spec',
+                title: 'Studio Neora Airless Pump FEA Pressure & Structural Engineer',
+                category: 'R&D Packaging Engineering',
+                icon: 'fa-cubes',
+                description: 'Performs finite element analysis (FEA) on airless bottle pumps, wall structural integrity, internal piston vacuum seal integrity, and dosage volumetric precision.'
+            },
+            {
+                id: 'clean_formula_lca_compliance_auditor',
+                name: 'clean_formula_lca_compliance_auditor',
+                title: 'Clean Skincare & Refill Pod System LCA Auditor',
+                category: 'Sustainability & Compliance',
+                icon: 'fa-leaf text-emerald-600',
+                description: 'Executes Life Cycle Assessment (LCA) on clean formulas, recyclable packaging materials, refillable pod systems, and global environmental impact compliance.'
+            },
+            {
+                id: 'neora_global_supply_chain_router',
+                name: 'neora_global_supply_chain_router',
+                title: 'Global Direct Sales & Brand Partner Fulfillment Router',
+                category: 'Supply Chain Ops',
+                icon: 'fa-route',
+                description: 'Orchestrates multi-channel direct selling logistics, regional warehouse inventory balancing across US, CA, MX, CO, and APAC Brand Partner distribution points.'
+            },
+            {
+                id: 'direct_sales_master_tender_lead',
+                name: 'direct_sales_master_tender_lead',
+                title: 'Enterprise Multi-Channel Master Supply Tender Operator',
+                category: 'Commercial Sourcing',
+                icon: 'fa-file-signature',
+                description: 'Manages master supplier tenders for primary packaging bottles, pumps, and secondary boxes across international contract manufacturing partners.'
+            },
+            {
+                id: 'airless_pump_qualification_eng',
+                name: 'airless_pump_qualification_eng',
+                title: 'Airless Pump Piston Leakage & Vacuum Seal QA Engineer',
+                category: 'Quality Assurance',
+                icon: 'fa-shield-halved',
+                description: 'Conducts vacuum decay testing, viscosity dispensing consistency checks, and leak rate verification for high-density night cream and serum formulas.'
+            },
+            {
+                id: 'twist_cap_dispensing_fitment_spec',
+                name: 'twist_cap_dispensing_fitment_spec',
+                title: 'Twist-Up Cap Mechanism & Precision Dispensing Specialist',
+                category: 'R&D Packaging Engineering',
+                icon: 'fa-gear',
+                description: 'Engineers ergonomic twist-up locking caps, anti-clog dispensing nozzles, and user experience feedback for Neora anti-aging product lines.'
+            },
+            {
+                id: 'custom_mold_eco_revision_spec',
+                name: 'custom_mold_eco_revision_spec',
+                title: 'Custom Airless Container Mold ECO Revision Lead',
+                category: 'Tooling & Tooling ECO',
+                icon: 'fa-drafting-compass',
+                description: 'Manages Engineering Change Orders (ECO) for multi-cavity injection molds, steel tooling tolerances, and gate location thermal adjustments.'
+            },
+            {
+                id: 'high_speed_cream_filling_qa_engineer',
+                name: 'high_speed_cream_filling_qa_engineer',
+                title: 'High-Speed Lotion & Night Cream Filling Line QA Engineer',
+                category: 'Manufacturing QA',
+                icon: 'fa-industry',
+                description: 'Monitors high-speed rotary filling line throughput, nitrogen flushing parameters, inline weight checks, and airless piston seated depth.'
+            },
+            {
+                id: 'writer',
+                name: 'writer',
+                title: 'Anti-Aging Skincare Technical Dossier & Proposal Writer',
+                category: 'Documentation & Regulatory',
+                icon: 'fa-pen-nib',
+                description: 'Synthesizes technical data, clinical trial outcomes, and regulatory packaging specifications into comprehensive executive dossiers.'
+            },
+            {
+                id: 'reviewer',
+                name: 'reviewer',
+                title: 'Director of Skincare R&D Operations & Packaging Principal PE',
+                category: 'Executive Oversight',
+                icon: 'fa-user-check',
+                description: 'Provides final executive sign-off, sign-off compliance validation, cost tolerance checks, and commercial launch readiness authorization.'
+            }
+        ];
+
+        const WORKFLOWS = [
+            {
+                id: 'scout',
+                title: 'SIG-1273 & Botanical Bio-Active Ingredient Sourcing',
+                track: 'commercial',
+                trackLabel: 'Commercial Sourcing & Direct Sales',
+                description: 'Screening raw botanical suppliers for SIG-1273 phytol molecule purity and EHT coffee-extract bioavailability.',
+                leadAgent: 'neora_sig1273_botanical_scout',
+                steps: [
+                    { step: 'Supplier Certificate Analysis', agent: 'neora_sig1273_botanical_scout' },
+                    { step: 'Clean Formula LCA Audit', agent: 'clean_formula_lca_compliance_auditor' },
+                    { step: 'Executive Dossier Compilation', agent: 'writer' }
+                ],
+                summary: 'Successfully verified 3 primary suppliers for SIG-1273 botanical compound with 99.8% purity compliance. Zero heavy metal contaminants detected. LCA score approved for clean skincare certification.'
+            },
+            {
+                id: 'quote',
+                title: 'Airless Bottle & Recyclable Packaging BOM Costing',
+                track: 'commercial',
+                trackLabel: 'Commercial Sourcing & Direct Sales',
+                description: 'Automated cost breakdown for 50ml PCR airless bottle assemblies, dual-chamber pumps, and outer cartons.',
+                leadAgent: 'skincare_airless_bom_pricing_eng',
+                steps: [
+                    { step: 'BOM Component Cost Breakdown', agent: 'skincare_airless_bom_pricing_eng' },
+                    { step: 'Mold ECO Cost Impact Assessment', agent: 'custom_mold_eco_revision_spec' },
+                    { step: 'Executive Pricing Review', agent: 'reviewer' }
+                ],
+                summary: 'Packaging BOM cost optimized to $0.84 per unit across 2,000,000 unit production run, delivering a 6.2% margin expansion for fiscal Q4 distribution.'
+            },
+            {
+                id: 'tender',
+                title: 'Global Direct Sales & Brand Partner Supply Tender',
+                track: 'commercial',
+                trackLabel: 'Commercial Sourcing & Direct Sales',
+                description: 'Master contract tendering for fulfillment across North America, Latin America, and Asia-Pacific regional warehouses.',
+                leadAgent: 'direct_sales_master_tender_lead',
+                steps: [
+                    { step: 'Tender Requirements Dispatch', agent: 'direct_sales_master_tender_lead' },
+                    { step: 'Global Route Cost Optimization', agent: 'neora_global_supply_chain_router' },
+                    { step: 'Final Tender Authorization', agent: 'reviewer' }
+                ],
+                summary: 'Master supply tender awarded to 2 primary logistics providers, reducing international transit times by 3.5 days and lowering customs clearance delays by 42%.'
+            },
+            {
+                id: 'radar',
+                title: 'Real-Time Airless Pump Leakage & Thermal QA Radar',
+                track: 'commercial',
+                trackLabel: 'Commercial Sourcing & Direct Sales',
+                description: 'Continuous online sensor monitoring of bottle piston pressure, seal integrity, and ambient warehouse temperature.',
+                leadAgent: 'airless_pump_qualification_eng',
+                steps: [
+                    { step: 'Sensor Telemetry Ingestion', agent: 'airless_pump_qualification_eng' },
+                    { step: 'Line Filling Pressure Analysis', agent: 'high_speed_cream_filling_qa_engineer' },
+                    { step: 'Quality Exception Dispatch', agent: 'writer' }
+                ],
+                summary: 'Real-time telemetry scan across 12 filling lines completed with 0.002% exception rate. All batch lots meet Neora stringent airless seal standards.'
+            },
+            {
+                id: 'panel_qualification',
+                title: 'Neora Airless Pump Dispensing Qualification Protocol',
+                track: 'rd',
+                trackLabel: 'Neora R&D Engineering, PCR & Supply Chain Ops',
+                flagship: true,
+                description: 'Flagship R&D protocol evaluating FEA structural pressure, drop impact, piston actuation force, and 0.5ml precision dispensing.',
+                leadAgent: 'studio_neora_airless_packaging_spec',
+                steps: [
+                    { step: 'FEA Vacuum & Pressure Simulation', agent: 'studio_neora_airless_packaging_spec' },
+                    { step: 'Twist Cap Ergonomics & Fitment Check', agent: 'twist_cap_dispensing_fitment_spec' },
+                    { step: 'Piston Leakage & QA Vacuum Decay', agent: 'airless_pump_qualification_eng' },
+                    { step: 'R&D Principal Final Sign-off', agent: 'reviewer' }
+                ],
+                summary: 'FLAGSHIP PROTOCOL PASSED: Neora 50ml airless pump system achieved 100% vacuum seal stability under 0.8 bar negative pressure test. Actuation force measured at a smooth 4.2N, guaranteeing exact 0.5ml dose dispensing per pump.'
+            },
+            {
+                id: 'inverter_yield',
+                title: 'High-Speed Lotion Filling & Vacuum Piston Yield Optimization',
+                track: 'rd',
+                trackLabel: 'Neora R&D Engineering, PCR & Supply Chain Ops',
+                description: 'Automated calibration of inline filling nozzles, nitrogen micro-purging, and piston placement accuracy.',
+                leadAgent: 'high_speed_cream_filling_qa_engineer',
+                steps: [
+                    { step: 'Filling Line Throughput Audit', agent: 'high_speed_cream_filling_qa_engineer' },
+                    { step: 'Airless Vacuum Seal Verification', agent: 'airless_pump_qualification_eng' },
+                    { step: 'Yield Optimization Dossier', agent: 'writer' }
+                ],
+                summary: 'Filling line speed increased to 180 units per minute with zero micro-bubble aeration in night cream emulsion. Overall line yield boosted to 99.94%.'
+            },
+            {
+                id: 'thermal_simulation',
+                title: 'Airless Container Structural Vacuum FEA & Drop Simulation',
+                track: 'rd',
+                trackLabel: 'Neora R&D Engineering, PCR & Supply Chain Ops',
+                description: 'Virtual stress testing of 100% PCR container sidewalls under high altitude aircraft cargo pressure drops.',
+                leadAgent: 'studio_neora_airless_packaging_spec',
+                steps: [
+                    { step: 'Finite Element Wall Stress Model', agent: 'studio_neora_airless_packaging_spec' },
+                    { step: 'Eco Refill Pod LCA Assessment', agent: 'clean_formula_lca_compliance_auditor' },
+                    { step: 'Engineering Validation Sign-off', agent: 'reviewer' }
+                ],
+                summary: 'Simulated 1.5-meter drop test and 35,000 ft altitude decompression without structural buckling or valve bypass. Wall thickness optimized from 1.8mm to 1.5mm, reducing plastic mass by 14%.'
+            },
+            {
+                id: 'mask_eco',
+                title: 'PCR Refill Pod & Airless Bottle ECO Mold Engineering Change',
+                track: 'rd',
+                trackLabel: 'Neora R&D Engineering, PCR & Supply Chain Ops',
+                description: 'Managing Engineering Change Orders for custom multi-cavity bottle injection molds to accommodate 50% post-consumer resin.',
+                leadAgent: 'custom_mold_eco_revision_spec',
+                steps: [
+                    { step: 'Tooling CAD & ECO Modification', agent: 'custom_mold_eco_revision_spec' },
+                    { step: 'Cap Mechanism Fitment Audit', agent: 'twist_cap_dispensing_fitment_spec' },
+                    { step: 'ECO Master Approval', agent: 'reviewer' }
+                ],
+                summary: 'ECO-2026-881 approved. Injection mold core pins modified for PCR shrinkage tolerances. Production tooling release confirmed for Q3 commercial deployment.'
+            }
+        ];
+
+        const EMPLOYEES = [
+            {
+                id: 'scout',
+                name: 'Dr. Elena Vance',
+                role: 'SIG-1273 Bio-Active Sourcing Specialist',
+                dept: 'Bio-actives R&D',
+                avatarBg: 'bg-neora-deep',
+                initials: 'EV',
+                agent: 'neora_sig1273_botanical_scout',
+                status: 'Active'
+            },
+            {
+                id: 'quote',
+                name: 'Marcus Thorne',
+                role: 'Airless Packaging Cost Engineer',
+                dept: 'Commercial Sourcing',
+                avatarBg: 'bg-neora-deep',
+                initials: 'MT',
+                agent: 'skincare_airless_bom_pricing_eng',
+                status: 'Active'
+            },
+            {
+                id: 'tender',
+                name: 'Sophia Reynolds',
+                role: 'Global Direct Sales Supply Lead',
+                dept: 'Global Logistics',
+                avatarBg: 'bg-neora-deep',
+                initials: 'SR',
+                agent: 'direct_sales_master_tender_lead',
+                status: 'Active'
+            },
+            {
+                id: 'radar',
+                name: 'David Chen',
+                role: 'Packaging QA Sentinel Lead',
+                dept: 'Quality Operations',
+                avatarBg: 'bg-neora-deep',
+                initials: 'DC',
+                agent: 'airless_pump_qualification_eng',
+                status: 'Active'
+            },
+            {
+                id: 'safety',
+                name: 'Aria Montgomery',
+                role: 'Clean Formula & LCA Auditor',
+                dept: 'Sustainability',
+                avatarBg: 'bg-neora-deep',
+                initials: 'AM',
+                agent: 'clean_formula_lca_compliance_auditor',
+                status: 'Active'
+            },
+            {
+                id: 'mill',
+                name: 'Carlos Mendez',
+                role: 'High-Speed Cream Filling Specialist',
+                dept: 'Manufacturing Plant',
+                avatarBg: 'bg-neora-deep',
+                initials: 'CM',
+                agent: 'high_speed_cream_filling_qa_engineer',
+                status: 'Active'
+            },
+            {
+                id: 'cfd',
+                name: 'Dr. Rahul Patel',
+                role: 'FEA Vacuum & Structural Specialist',
+                dept: 'Packaging R&D',
+                avatarBg: 'bg-neora-deep',
+                initials: 'RP',
+                agent: 'studio_neora_airless_packaging_spec',
+                status: 'Active'
+            },
+            {
+                id: 'eco',
+                name: 'Hannah Sterling',
+                role: 'Eco Mold Revision Director',
+                dept: 'Tooling Engineering',
+                avatarBg: 'bg-neora-deep',
+                initials: 'HS',
+                agent: 'custom_mold_eco_revision_spec',
+                status: 'Active'
+            }
+        ];
+
+        // Render Functions
+        function renderWorkflows(trackFilter = 'all') {
+            const container = document.getElementById('workflows-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const filtered = trackFilter === 'all' 
+                ? WORKFLOWS 
+                : WORKFLOWS.filter(w => w.track === trackFilter);
+
+            filtered.forEach(wf => {
+                const leadAgentObj = AGENT_ROLES.find(a => a.id === wf.leadAgent) || {};
+                const card = document.createElement('div');
+                card.className = `bg-white rounded-xl border ${wf.flagship ? 'border-neora-teal ring-2 ring-neora-teal/20' : 'border-slate-200'} shadow-sm p-6 hover:shadow-md transition-all flex flex-col justify-between`;
+                
+                let stepsHtml = wf.steps.map((s, idx) => `
+                    <div class="flex items-center space-x-2 text-xs text-slate-600 bg-slate-50 p-2 rounded border border-slate-100">
+                        <span class="w-5 h-5 rounded-full bg-neora-pearl text-neora-deep font-bold flex items-center justify-center text-[10px]">${idx + 1}</span>
+                        <span class="font-medium text-slate-800">${s.step}</span>
+                        <span class="text-slate-400 font-mono text-[10px] ml-auto">(${s.agent})</span>
+                    </div>
+                `).join('');
+
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full ${wf.track === 'commercial' ? 'bg-blue-50 text-blue-700 border border-blue-200' : 'bg-teal-50 text-teal-700 border border-teal-200'}">
+                                ${wf.trackLabel}
+                            </span>
+                            ${wf.flagship ? '<span class="bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase flex items-center gap-1"><i class="fa-solid fa-star text-amber-600"></i> FLAGSHIP</span>' : ''}
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">${wf.title}</h3>
+                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">${wf.description}</p>
+                        
+                        <div class="space-y-2 mb-4">
+                            <p class="text-[11px] font-bold uppercase text-slate-400 tracking-wider">Execution Pipeline</p>
+                            ${stepsHtml}
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between mt-2">
+                        <div class="text-xs text-slate-500">
+                            <span>Lead: </span>
+                            <span class="font-mono text-neora-deep font-semibold">${leadAgentObj.name || wf.leadAgent}</span>
+                        </div>
+                        <button onclick="openExecutionModal('${wf.id}')" class="bg-neora-deep hover:bg-slate-800 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-all flex items-center space-x-1.5 shadow-sm">
+                            <i class="fa-solid fa-play text-[10px]"></i>
+                            <span>Execute</span>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderAgents(searchQuery = '') {
+            const container = document.getElementById('agents-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const filtered = AGENT_ROLES.filter(a => 
+                a.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                a.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                a.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                a.description.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+
+            filtered.forEach(agent => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:border-neora-teal transition-all flex flex-col justify-between';
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center space-x-3 mb-3">
+                            <div class="w-10 h-10 rounded-lg bg-neora-pearl text-neora-deep flex items-center justify-center text-lg shadow-inner">
+                                <i class="fa-solid ${agent.icon}"></i>
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-neora-teal">${agent.category}</span>
+                                <h4 class="font-mono text-xs font-bold text-slate-900 truncate max-w-[200px]" title="${agent.name}">${agent.name}</h4>
+                            </div>
+                        </div>
+                        <h5 class="text-sm font-bold text-slate-800 mb-2 leading-snug">${agent.title}</h5>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4">${agent.description}</p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                        <span class="text-emerald-600 font-medium flex items-center gap-1">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Ready
+                        </span>
+                        <span class="font-mono text-[10px] text-slate-400">AGY-V2.0</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderOperators() {
+            const container = document.getElementById('operators-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            EMPLOYEES.forEach(emp => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center justify-between';
+                card.innerHTML = `
+                    <div class="w-full flex flex-col items-center">
+                        <div class="w-16 h-16 rounded-2xl ${emp.avatarBg} text-white font-bold text-xl flex items-center justify-center shadow-lg mb-3 border-2 border-neora-teal">
+                            ${emp.initials}
+                        </div>
+                        <h4 class="font-bold text-sm text-slate-900">${emp.name}</h4>
+                        <span class="text-xs text-neora-teal font-medium mb-1">${emp.dept}</span>
+                        <p class="text-xs font-semibold text-slate-700 mb-3 px-2 py-0.5 bg-slate-100 rounded">${emp.role}</p>
+                    </div>
+                    <div class="w-full pt-3 border-t border-slate-100 text-xs">
+                        <p class="text-[10px] text-slate-400 font-mono mb-1">Assigned Agent</p>
+                        <p class="font-mono text-[11px] text-neora-deep font-semibold truncate" title="${emp.agent}">${emp.agent}</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Tab Switching
+        function switchTab(tabId) {
+            ['workflows', 'agents', 'operators', 'analytics'].forEach(id => {
+                const view = document.getElementById(`view-${id}`);
+                const tabBtn = document.getElementById(`tab-${id}`);
+                if (id === tabId) {
+                    if (view) view.classList.remove('hidden');
+                    if (tabBtn) {
+                        tabBtn.classList.add('border-neora-deep', 'text-neora-deep');
+                        tabBtn.classList.remove('border-transparent', 'text-slate-500');
+                    }
+                } else {
+                    if (view) view.classList.add('hidden');
+                    if (tabBtn) {
+                        tabBtn.classList.remove('border-neora-deep', 'text-neora-deep');
+                        tabBtn.classList.add('border-transparent', 'text-slate-500');
+                    }
+                }
+            });
+
+            if (tabId === 'analytics') {
+                initCharts();
+            }
+        }
+
+        function filterWorkflows(track, btnEl) {
+            document.querySelectorAll('.wf-filter-btn').forEach(btn => {
+                btn.classList.remove('bg-neora-deep', 'text-white');
+                btn.classList.add('bg-slate-200', 'text-slate-700');
+            });
+            if (btnEl) {
+                btnEl.classList.remove('bg-slate-200', 'text-slate-700');
+                btnEl.classList.add('bg-neora-deep', 'text-white');
+            }
+            renderWorkflows(track);
+        }
+
+        function searchAgents() {
+            const query = document.getElementById('agent-search').value;
+            renderAgents(query);
+        }
+
+        // Execution Modal Logic
+        let modalTimer = null;
+        function openExecutionModal(workflowId) {
+            const wf = WORKFLOWS.find(w => w.id === workflowId);
+            if (!wf) return;
+
+            document.getElementById('modal-wf-title').innerText = wf.title;
+            document.getElementById('modal-wf-track').innerText = wf.trackLabel;
+            document.getElementById('modal-status-text').innerText = 'EXECUTING PROTOCOL...';
+            document.getElementById('modal-summary-box').classList.add('hidden');
+
+            const timeline = document.getElementById('modal-timeline');
+            timeline.innerHTML = '';
+            wf.steps.forEach((s, idx) => {
+                const stepEl = document.createElement('div');
+                stepEl.id = `step-node-${idx}`;
+                stepEl.className = 'flex items-center space-x-3 p-3 rounded-lg border border-slate-200 bg-slate-50 transition-all';
+                stepEl.innerHTML = `
+                    <div id="step-icon-${idx}" class="w-7 h-7 rounded-full bg-slate-300 text-slate-600 font-bold text-xs flex items-center justify-center">
+                        ${idx + 1}
+                    </div>
+                    <div class="flex-grow">
+                        <h5 class="text-xs font-bold text-slate-800">${s.step}</h5>
+                        <p class="text-[10px] font-mono text-neora-teal">Agent: ${s.agent}</p>
+                    </div>
+                    <span id="step-status-${idx}" class="text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-200 text-slate-600">QUEUED</span>
+                `;
+                timeline.appendChild(stepEl);
+            });
+
+            const consoleBox = document.getElementById('modal-console');
+            consoleBox.innerHTML = `<p class="text-slate-500">[00:00:00] Initializing Neora Workflow Engine (${wf.id})...</p>`;
+
+            document.getElementById('execution-modal').classList.remove('hidden');
+
+            // Simulate Execution Steps
+            let currentStep = 0;
+            if (modalTimer) clearInterval(modalTimer);
+
+            modalTimer = setInterval(() => {
+                if (currentStep < wf.steps.length) {
+                    const stepData = wf.steps[currentStep];
+                    
+                    // Update Step UI
+                    const stepNode = document.getElementById(`step-node-${currentStep}`);
+                    const stepIcon = document.getElementById(`step-icon-${currentStep}`);
+                    const stepStatus = document.getElementById(`step-status-${currentStep}`);
+
+                    if (stepNode) {
+                        stepNode.classList.remove('bg-slate-50', 'border-slate-200');
+                        stepNode.classList.add('bg-teal-50', 'border-neora-teal');
+                    }
+
+                    if (stepIcon) {
+                        stepIcon.classList.remove('bg-slate-300', 'text-slate-600');
+                        stepIcon.classList.add('bg-neora-teal', 'text-white');
+                    }
+
+                    if (stepStatus) {
+                        stepStatus.classList.remove('bg-slate-200', 'text-slate-600');
+                        stepStatus.classList.add('bg-emerald-100', 'text-emerald-800');
+                        stepStatus.innerText = 'PASSED';
+                    }
+
+                    // Append Console Log
+                    const timestamp = new Date().toISOString().substring(11, 19);
+                    consoleBox.innerHTML += `<p class="text-emerald-400">[${timestamp}] Step ${currentStep + 1} COMPLETE: ${stepData.step} (${stepData.agent})</p>`;
+                    consoleBox.scrollTop = consoleBox.scrollHeight;
+
+                    currentStep++;
+                } else {
+                    clearInterval(modalTimer);
+                    document.getElementById('modal-status-text').innerText = 'WORKFLOW COMPLETED';
+                    const timestamp = new Date().toISOString().substring(11, 19);
+                    consoleBox.innerHTML += `<p class="text-neora-teal font-bold">[${timestamp}] SUCCESS: All steps validated under Neora Quality Standards.</p>`;
+                    consoleBox.scrollTop = consoleBox.scrollHeight;
+
+                    // Show Summary
+                    document.getElementById('modal-summary-text').innerText = wf.summary;
+                    document.getElementById('modal-summary-box').classList.remove('hidden');
+                }
+            }, 900);
+        }
+
+        function closeExecutionModal() {
+            if (modalTimer) clearInterval(modalTimer);
+            document.getElementById('execution-modal').classList.add('hidden');
+        }
+
+        // Charts Initialization
+        let chart1, chart2;
+        function initCharts() {
+            if (chart1) chart1.destroy();
+            if (chart2) chart2.destroy();
+
+            const ctx1 = document.getElementById('chart-pressure');
+            if (ctx1) {
+                chart1 = new Chart(ctx1.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['Batch 101', 'Batch 102', 'Batch 103', 'Batch 104', 'Batch 105', 'Batch 106'],
+                        datasets: [{
+                            label: 'Vacuum Piston Pressure (PSI)',
+                            data: [14.2, 14.5, 14.3, 14.6, 14.4, 14.5],
+                            borderColor: '#00A896',
+                            backgroundColor: 'rgba(0, 168, 150, 0.1)',
+                            fill: true,
+                            tension: 0.3
+                        }]
+                    },
+                    options: { responsive: true, plugins: { legend: { display: false } } }
+                });
+            }
+
+            const ctx2 = document.getElementById('chart-sales');
+            if (ctx2) {
+                chart2 = new Chart(ctx2.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['North America (US/CA)', 'Mexico & LATAM', 'Asia-Pacific', 'European Partners'],
+                        datasets: [{
+                            data: [45, 25, 20, 10],
+                            backgroundColor: ['#1F4E5B', '#00A896', '#3B82F6', '#64748B']
+                        }]
+                    },
+                    options: { responsive: true }
+                });
+            }
+        }
+
+        // Init on Load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderWorkflows();
+            renderAgents();
+            renderOperators();
+        });
+    </script>
+</body>
+</html>
