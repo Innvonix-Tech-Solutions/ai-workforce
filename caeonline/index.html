@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAE AI Workforce Enterprise Simulation & Training Operations Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cae: {
+                            deep: '#004b87',
+                            cyan: '#00a3e0',
+                            navy: '#0b2545',
+                            pearl: '#eef6fc',
+                            dark: '#0f172a',
+                            gold: '#d97706',
+                            slate: '#1e293b',
+                            light: '#f8fafc'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .gradient-cae { background: linear-gradient(135deg, #004b87 0%, #00a3e0 100%); }
+        .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #00a3e0; border-radius: 3px; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col custom-scrollbar">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-cae-deep text-white sticky top-0 z-40 shadow-lg border-b border-cae-cyan/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="w-10 h-10 rounded-xl bg-cae-cyan flex items-center justify-center font-bold text-white shadow-md text-xl">
+                    <i class="fa-solid fa-plane"></i>
+                </div>
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-bold text-lg tracking-wider text-white uppercase">CAE</span>
+                        <span class="bg-cae-cyan/30 text-cae-pearl text-xs font-semibold px-2 py-0.5 rounded border border-cae-cyan/40">AI WORKFORCE 2.0</span>
+                    </div>
+                    <p class="text-xs text-cae-pearl/80">Flight Simulation, Defense Synthetic Environments & Healthcare Operations</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <div class="hidden md:flex items-center space-x-4 text-xs font-mono">
+                    <div class="bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-700/50 flex items-center space-x-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span class="text-slate-300">SYSTEM: ONLINE</span>
+                    </div>
+                    <div class="bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-700/50 text-slate-300">
+                        LATENCY: <span class="text-cae-cyan font-bold">12ms</span>
+                    </div>
+                    <div class="bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-700/50 text-slate-300">
+                        ACTIVE AGENTS: <span class="text-cae-cyan font-bold">12/12</span>
+                    </div>
+                </div>
+                <button onclick="openExecutionModal('panel_qualification')" class="bg-cae-cyan hover:bg-cyan-500 text-white font-semibold text-xs px-4 py-2 rounded-lg transition-all shadow-md flex items-center space-x-2">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>RUN FLAGSHIP WORKFLOW</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full space-y-6">
+
+        <!-- Executive Metrics Header -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase">Simulator Level D Status</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-1">FAA / EASA Cert</h3>
+                    <p class="text-xs text-emerald-600 font-medium mt-1"><i class="fa-solid fa-check-circle"></i> 100% Qualification Yield</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-cae-pearl text-cae-deep flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-plane-departure"></i>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase">Visual Engine Fidelity</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-1">Medallion-6000XR</h3>
+                    <p class="text-xs text-emerald-600 font-medium mt-1"><i class="fa-solid fa-chart-line"></i> 60 FPS Ultra-HD Sync</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-vr-cardboard"></i>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase">Global Training Hubs</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-1">60+ Centers</h3>
+                    <p class="text-xs text-cae-cyan font-medium mt-1"><i class="fa-solid fa-globe"></i> Civil & Defense Global Network</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-cae-pearl text-cae-cyan flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase">Active AI Specialists</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-1">12 Agents</h3>
+                    <p class="text-xs text-blue-600 font-medium mt-1"><i class="fa-solid fa-shield-halved"></i> 8 Enterprise Workflows</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-microchip"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="flex border-b border-slate-200 space-x-8 text-sm font-semibold">
+            <button onclick="switchTab('workflows')" id="tab-workflows" class="pb-3 border-b-2 border-cae-deep text-cae-deep flex items-center space-x-2">
+                <i class="fa-solid fa-diagram-project"></i>
+                <span>Enterprise Workflows (8)</span>
+            </button>
+            <button onclick="switchTab('agents')" id="tab-agents" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Specialist AI Agents (12)</span>
+            </button>
+            <button onclick="switchTab('operators')" id="tab-operators" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2">
+                <i class="fa-solid fa-id-card"></i>
+                <span>Human Operators & Supervisors (8)</span>
+            </button>
+            <button onclick="switchTab('analytics')" id="tab-analytics" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Live Simulation & Telemetry</span>
+            </button>
+        </div>
+
+        <!-- TAB 1: WORKFLOWS -->
+        <div id="view-workflows" class="space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">CAE Enterprise Workflows</h2>
+                    <p class="text-sm text-slate-500">Autonomous workflow orchestration spanning dual tracks: Civil Aviation & Defense Synthetic Training, and CAE Simulation Engineering & Healthcare Ops.</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <span class="text-xs text-slate-500 font-medium">Filter Track:</span>
+                    <button onclick="filterWorkflows('all', this)" class="wf-filter-btn active bg-cae-deep text-white text-xs font-semibold px-3 py-1.5 rounded-lg">All Tracks</button>
+                    <button onclick="filterWorkflows('commercial', this)" class="wf-filter-btn bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-slate-300">Civil Aviation & Defense</button>
+                    <button onclick="filterWorkflows('rd', this)" class="wf-filter-btn bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-slate-300">Simulation Engineering & Healthcare</button>
+                </div>
+            </div>
+
+            <div id="workflows-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- TAB 2: AGENTS -->
+        <div id="view-agents" class="hidden space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">Specialist AI Agents (12)</h2>
+                    <p class="text-sm text-slate-500">Autonomous domain experts configured for full flight dynamics, visual rendering, synthetic environments, and healthcare simulators.</p>
+                </div>
+                <div class="relative w-72">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-sm"></i>
+                    <input type="text" id="agent-search" oninput="searchAgents()" placeholder="Search agents by role or skill..." class="w-full pl-9 pr-4 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-cae-cyan">
+                </div>
+            </div>
+
+            <div id="agents-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- TAB 3: OPERATORS -->
+        <div id="view-operators" class="hidden space-y-6">
+            <div>
+                <h2 class="text-xl font-bold text-slate-900">Human Operators & Supervisors (8)</h2>
+                <p class="text-sm text-slate-500">Enterprise operators styled in CAE Deep Aviation Blue branding controlling autonomous workflow execution.</p>
+            </div>
+
+            <div id="operators-grid" class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- TAB 4: ANALYTICS -->
+        <div id="view-analytics" class="hidden space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4"><i class="fa-solid fa-chart-area text-cae-cyan mr-2"></i>Flight Simulator Motion Platform Response Latency (ms)</h3>
+                    <canvas id="chart-pressure" height="200"></canvas>
+                </div>
+                <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4"><i class="fa-solid fa-chart-pie text-cae-deep mr-2"></i>Global Training Center Capacity Allocation</h3>
+                    <canvas id="chart-sales" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Execution Modal -->
+    <div id="execution-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-3xl w-full shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="bg-cae-deep text-white px-6 py-4 flex items-center justify-between border-b border-cae-cyan/30">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-lg bg-cae-cyan flex items-center justify-center font-bold text-white">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <div>
+                        <h3 id="modal-wf-title" class="font-bold text-base">Running Workflow</h3>
+                        <p id="modal-wf-track" class="text-xs text-cae-pearl">Track Status</p>
+                    </div>
+                </div>
+                <button onclick="closeExecutionModal()" class="text-slate-300 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-6 flex-grow custom-scrollbar">
+                <!-- Timeline Progress -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">Workflow Execution Steps</h4>
+                    <div id="modal-timeline" class="space-y-3">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Live Logs Console -->
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500">Live Agent Console Output</h4>
+                        <span class="text-xs font-mono text-cae-cyan" id="modal-status-text">INITIALIZING...</span>
+                    </div>
+                    <div id="modal-console" class="bg-slate-950 text-emerald-400 font-mono text-xs p-4 rounded-xl h-44 overflow-y-auto custom-scrollbar border border-slate-800">
+                        <p class="text-slate-500">[00:00:00] CAE AI Agent Core initialized.</p>
+                    </div>
+                </div>
+
+                <!-- Executive Summary -->
+                <div id="modal-summary-box" class="bg-cae-pearl/50 border border-cae-cyan/30 rounded-xl p-4 hidden">
+                    <h4 class="text-sm font-bold text-cae-deep flex items-center space-x-2">
+                        <i class="fa-solid fa-file-contract text-cae-cyan"></i>
+                        <span>Executive Summary & Resolution</span>
+                    </h4>
+                    <p id="modal-summary-text" class="text-xs text-slate-700 mt-2 leading-relaxed font-sans">
+                        Executive summary text goes here.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 px-6 py-4 border-t border-slate-200 flex items-center justify-between">
+                <span class="text-xs text-slate-500 font-mono">CAE AI OPERATIONAL PROTOCOL</span>
+                <button onclick="closeExecutionModal()" class="bg-slate-800 hover:bg-slate-900 text-white font-semibold text-xs px-5 py-2 rounded-lg">Close Window</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Data & Logic -->
+    <script>
+        const AGENT_ROLES = [
+            {
+                id: 'cae_level_d_ffs_flight_dynamics_eng',
+                name: 'cae_level_d_ffs_flight_dynamics_eng',
+                title: 'Full Flight Simulator Level D Flight Dynamics Lead',
+                category: 'Aerodynamic Modeling',
+                icon: 'fa-plane-up',
+                description: 'Engineers 6-DOF aerodynamic flight dynamics algorithms, stall characteristics, and wind shear modeling for FAA and EASA Level D Full Flight Simulators.'
+            },
+            {
+                id: 'cae_medallion6000_visual_render_spec',
+                name: 'cae_medallion6000_visual_render_spec',
+                title: 'CAE Medallion-6000XR Visual System & Terrain Specialist',
+                category: 'Visual & Graphics Engineering',
+                icon: 'fa-vr-cardboard',
+                description: 'Manages multi-channel image generator (IG) rendering, high-resolution satellite terrain databases, airport scene modeling, and night-vision goggle (NVG) simulation.'
+            },
+            {
+                id: 'cae_synthetic_battlefield_ste_router',
+                name: 'cae_synthetic_battlefield_ste_router',
+                title: 'Defense Multi-Domain Synthetic Environment (STE) Router',
+                category: 'Defense Synthetic Systems',
+                icon: 'fa-shield-halved',
+                description: 'Orchestrates joint military synthetic battlefield networks across air, land, sea, space, and cyber domains using DIS and HLA interoperability protocols.'
+            },
+            {
+                id: 'cae_apollo_patient_simulator_qa',
+                name: 'cae_apollo_patient_simulator_qa',
+                title: 'CAE Healthcare Apollo Patient Simulator QA Specialist',
+                category: 'Healthcare Simulation',
+                icon: 'fa-heart-pulse',
+                description: 'Validates physiological modeling, automated pharmacological responses, airway management mechanics, and CPR feedback for Apollo and Lucina patient mannequins.'
+            },
+            {
+                id: 'cae_rise_predictive_pilot_analytics',
+                name: 'cae_rise_predictive_pilot_analytics',
+                title: 'CAE Rise Predictive Pilot Performance Analytics Lead',
+                category: 'Pilot Competency Analytics',
+                icon: 'fa-chart-pie',
+                description: 'Analyzes telemetry metrics from commercial airline training sessions, identifying pilot procedural drift and optimizing competency-based training programs.'
+            },
+            {
+                id: 'cae_motion_actuator_kinematics_lead',
+                name: 'cae_motion_actuator_kinematics_lead',
+                title: 'Electric 6-DOF Motion Platform & Cueing Kinematics Lead',
+                category: 'Hardware Motion Systems',
+                icon: 'fa-arrows-spin',
+                description: 'Controls electric servo-actuator motion platforms, vestibular motion cueing algorithms, and vibration noise isolation for full flight simulators.'
+            },
+            {
+                id: 'cae_avionics_bus_arinc429_auditor',
+                name: 'cae_avionics_bus_arinc429_auditor',
+                title: 'Avionics Bus (ARINC 429 / MIL-STD-1553) Data Bridge Lead',
+                category: 'Avionics Interfaces',
+                icon: 'fa-network-wired',
+                description: 'Audits real-time data bus bridges connecting re-hosted flight management systems (FMS), glass cockpit displays, and simulated aircraft hardware.'
+            },
+            {
+                id: 'cae_tactical_sensor_flir_radar_spec',
+                name: 'cae_tactical_sensor_flir_radar_spec',
+                title: 'Tactical FLIR, Synthetic Aperture Radar & EW Specialist',
+                category: 'Defense Sensor Systems',
+                icon: 'fa-satellite-dish',
+                description: 'Simulates forward-looking infrared (FLIR), threat radar emitters, electronic countermeasures (ECM), and weapon delivery scoring for military aircraft.'
+            },
+            {
+                id: 'cae_surgical_ultrasound_sim_lead',
+                name: 'cae_surgical_ultrasound_sim_lead',
+                title: 'Surgical & Ultrasound Haptic Simulation Systems Lead',
+                category: 'Healthcare Simulation',
+                icon: 'fa-hand-sparkles',
+                description: 'Engineers force-feedback haptic devices and real-time volumetric ultrasound image generation for endoscopic and interventional medical training.'
+            },
+            {
+                id: 'cae_global_training_center_router',
+                name: 'cae_global_training_center_router',
+                title: 'Global Flight Academy & Training Center Capacity Router',
+                category: 'Global Ops & Logistics',
+                icon: 'fa-route',
+                description: 'Schedules full flight simulator bay capacity, instructor availability, and cadet training tracks across 60+ CAE global civil aviation hubs.'
+            },
+            {
+                id: 'writer',
+                name: 'writer',
+                title: 'Aviation Technical Qualification Dossier & Proposal Writer',
+                category: 'Documentation & Regulatory',
+                icon: 'fa-pen-nib',
+                description: 'Synthesizes simulator qualification test guide (QTG) results, FAA/EASA regulatory filings, and defense master proposals.'
+            },
+            {
+                id: 'reviewer',
+                name: 'reviewer',
+                title: 'Director of Simulation Engineering & FAA/EASA Principal PE',
+                category: 'Executive Oversight',
+                icon: 'fa-user-check',
+                description: 'Provides final executive sign-off for simulator Level D certification, military mission readiness, and medical safety compliance.'
+            }
+        ];
+
+        const WORKFLOWS = [
+            {
+                id: 'scout',
+                title: 'CAE Rise Pilot Performance & Flight Training Analytics',
+                track: 'commercial',
+                trackLabel: 'Civil Aviation & Defense Synthetic Training',
+                description: 'Automated ingestion of flight simulator session telemetry to grade pilot crew resource management and maneuver precision.',
+                leadAgent: 'cae_rise_predictive_pilot_analytics',
+                steps: [
+                    { step: 'Flight Session Telemetry Ingestion', agent: 'cae_rise_predictive_pilot_analytics' },
+                    { step: 'Global Center Scheduling Balance', agent: 'cae_global_training_center_router' },
+                    { step: 'Competency Dossier Generation', agent: 'writer' }
+                ],
+                summary: 'Analyzed 1,450 flight hours across Boeing 737 MAX and Airbus A320 simulators. Identified 12% improvement in approach precision under crosswind conditions. Training syllabus updated.'
+            },
+            {
+                id: 'quote',
+                title: 'Civil Aviation Full Flight Simulator (FFS) BOM & Assembly Costing',
+                track: 'commercial',
+                trackLabel: 'Civil Aviation & Defense Synthetic Training',
+                description: 'Automated cost calculation for Level D full flight simulator bay structures, motion actuators, visual domes, and cockpit shells.',
+                leadAgent: 'cae_motion_actuator_kinematics_lead',
+                steps: [
+                    { step: 'Actuator & Dome BOM Breakdown', agent: 'cae_motion_actuator_kinematics_lead' },
+                    { step: 'Avionics Bus Interface Costing', agent: 'cae_avionics_bus_arinc429_auditor' },
+                    { step: 'Executive Pricing Review', agent: 'reviewer' }
+                ],
+                summary: 'Full Flight Simulator (FFS) unit BOM cost optimized to $9.45M with a 14-month delivery timeline, maintaining 18.5% gross margin target.'
+            },
+            {
+                id: 'tender',
+                title: 'Defense Multi-Domain Synthetic Environment (STE) Master Tender',
+                track: 'commercial',
+                trackLabel: 'Civil Aviation & Defense Synthetic Training',
+                description: 'Master proposal generation for military multi-domain flight, tactical land, and joint sensor operator synthetic training.',
+                leadAgent: 'cae_synthetic_battlefield_ste_router',
+                steps: [
+                    { step: 'Synthetic Environment Requirements Map', agent: 'cae_synthetic_battlefield_ste_router' },
+                    { step: 'Tactical FLIR & EW Sensor Integration', agent: 'cae_tactical_sensor_flir_radar_spec' },
+                    { step: 'Master Tender Sign-off', agent: 'reviewer' }
+                ],
+                summary: 'Master defense proposal submitted for international multi-domain STE program. Validated 100,000 entity joint military exercise capability with low latency.'
+            },
+            {
+                id: 'radar',
+                title: 'Real-Time Flight Simulator Visual Telemetry & Latency QA Radar',
+                track: 'commercial',
+                trackLabel: 'Civil Aviation & Defense Synthetic Training',
+                description: 'Continuous monitoring of visual image generator frame rates, motion platform response delay, and cockpit display sync.',
+                leadAgent: 'cae_medallion6000_visual_render_spec',
+                steps: [
+                    { step: 'Medallion-6000XR Frame Rate Audit', agent: 'cae_medallion6000_visual_render_spec' },
+                    { step: '6-DOF Motion Latency Verification', agent: 'cae_motion_actuator_kinematics_lead' },
+                    { step: 'Quality Alert Generation', agent: 'writer' }
+                ],
+                summary: 'Real-time telemetry verified 60 FPS uncompromised rendering across 42 active flight bays. Visual-to-motion latency measured at 8.2ms, well within 15ms FAA threshold.'
+            },
+            {
+                id: 'panel_qualification',
+                title: 'FAA/EASA Level D Full Flight Simulator Qualification Protocol',
+                track: 'rd',
+                trackLabel: 'CAE Simulation Engineering, Level D Qualification & Healthcare Ops',
+                flagship: true,
+                description: 'Flagship qualification protocol verifying aerodynamic flight dynamics, automatic QTG test cases, motion cueing, and visual alignment.',
+                leadAgent: 'cae_level_d_ffs_flight_dynamics_eng',
+                steps: [
+                    { step: 'Aerodynamic Model & QTG Automated Run', agent: 'cae_level_d_ffs_flight_dynamics_eng' },
+                    { step: 'Medallion-6000XR Visual Scene Alignment', agent: 'cae_medallion6000_visual_render_spec' },
+                    { step: 'Avionics ARINC 429 Bus Data Sync Check', agent: 'cae_avionics_bus_arinc429_auditor' },
+                    { step: 'FAA/EASA Level D Principal Sign-off', agent: 'reviewer' }
+                ],
+                summary: 'FLAGSHIP PROTOCOL PASSED: CAE Level D Full Flight Simulator achieved 100% QTG automated match against flight test data. Motion-visual synchronization latency verified at 8.2ms, earning zero-reservation FAA/EASA Level D certification authorization.'
+            },
+            {
+                id: 'inverter_yield',
+                title: 'Electric 6-DOF Motion Platform Calibration & Cueing Yield Optimization',
+                track: 'rd',
+                trackLabel: 'CAE Simulation Engineering, Level D Qualification & Healthcare Ops',
+                description: 'Automated calibration of electric servo actuators, acceleration washout algorithms, and smooth motion cueing.',
+                leadAgent: 'cae_motion_actuator_kinematics_lead',
+                steps: [
+                    { step: 'Servo Actuator Harmonic Frequency Check', agent: 'cae_motion_actuator_kinematics_lead' },
+                    { step: 'Flight Model Motion Cueing Sync', agent: 'cae_level_d_ffs_flight_dynamics_eng' },
+                    { step: 'Motion Calibration Dossier', agent: 'writer' }
+                ],
+                summary: 'Electric 6-DOF motion platform calibrated to 99.98% position accuracy. Parasitic mechanical noise reduced by 4.1 dB, eliminating false motion cues during stall buffets.'
+            },
+            {
+                id: 'thermal_simulation',
+                title: 'CAE Medallion-6000XR Visual Engine Thermal & Frame-rate Stress Test',
+                track: 'rd',
+                trackLabel: 'CAE Simulation Engineering, Level D Qualification & Healthcare Ops',
+                description: 'High-stress thermal and computational load simulation of multi-projector 4K visual channels under dense weather conditions.',
+                leadAgent: 'cae_medallion6000_visual_render_spec',
+                steps: [
+                    { step: 'Multi-GPU Thermal Load Modeling', agent: 'cae_medallion6000_visual_render_spec' },
+                    { step: 'Tactical Sensor Render Testing', agent: 'cae_tactical_sensor_flir_radar_spec' },
+                    { step: 'Visual System Engineering Approval', agent: 'reviewer' }
+                ],
+                summary: 'Visual image generator stress test passed at 60 FPS in 4K resolution under heavy fog, storm particulate, and 1,000 active scene entities. Thermal dissipation stabilized at 62 deg C.'
+            },
+            {
+                id: 'mask_eco',
+                title: 'Healthcare High-Fidelity Patient Simulator Sensor ECO Revision',
+                track: 'rd',
+                trackLabel: 'CAE Simulation Engineering, Level D Qualification & Healthcare Ops',
+                description: 'Engineering Change Order management for Apollo patient mannequin airway pressure sensors and fluid dispensing mechanics.',
+                leadAgent: 'cae_apollo_patient_simulator_qa',
+                steps: [
+                    { step: 'Mannequin Sensor & Airway Redesign', agent: 'cae_apollo_patient_simulator_qa' },
+                    { step: 'Haptic Surgical Feedback Check', agent: 'cae_surgical_ultrasound_sim_lead' },
+                    { step: 'ECO Engineering Approval', agent: 'reviewer' }
+                ],
+                summary: 'ECO-2026-CAE-409 approved. Upgraded respiratory airway sensors on Apollo medical mannequin line, improving pharmacological reaction precision by 18%.'
+            }
+        ];
+
+        const EMPLOYEES = [
+            {
+                id: 'scout',
+                name: 'Captain Elena Vance',
+                role: 'Pilot Competency Analytics Specialist',
+                dept: 'Civil Aviation Training',
+                avatarBg: 'bg-cae-deep',
+                initials: 'EV',
+                agent: 'cae_rise_predictive_pilot_analytics',
+                status: 'Active'
+            },
+            {
+                id: 'quote',
+                name: 'Marcus Thorne',
+                role: 'FFS Procurement & Cost Lead',
+                dept: 'Commercial Sourcing',
+                avatarBg: 'bg-cae-deep',
+                initials: 'MT',
+                agent: 'cae_motion_actuator_kinematics_lead',
+                status: 'Active'
+            },
+            {
+                id: 'tender',
+                name: 'Sophia Reynolds',
+                role: 'Defense Training Contracts Director',
+                dept: 'Defense & Security',
+                avatarBg: 'bg-cae-deep',
+                initials: 'SR',
+                agent: 'cae_synthetic_battlefield_ste_router',
+                status: 'Active'
+            },
+            {
+                id: 'radar',
+                name: 'David Chen',
+                role: 'Simulator Operations Sentinel',
+                dept: 'Quality Operations',
+                avatarBg: 'bg-cae-deep',
+                initials: 'DC',
+                agent: 'cae_medallion6000_visual_render_spec',
+                status: 'Active'
+            },
+            {
+                id: 'safety',
+                name: 'Dr. Aria Montgomery',
+                role: 'Healthcare Simulation QA Director',
+                dept: 'CAE Healthcare Operations',
+                avatarBg: 'bg-cae-deep',
+                initials: 'AM',
+                agent: 'cae_apollo_patient_simulator_qa',
+                status: 'Active'
+            },
+            {
+                id: 'mill',
+                name: 'Carlos Mendez',
+                role: 'Motion Platform Calibration Engineer',
+                dept: 'Hardware Engineering',
+                avatarBg: 'bg-cae-deep',
+                initials: 'CM',
+                agent: 'cae_motion_actuator_kinematics_lead',
+                status: 'Active'
+            },
+            {
+                id: 'cfd',
+                name: 'Dr. Rahul Patel',
+                role: 'Flight Dynamics & Aerodynamics Specialist',
+                dept: 'Simulation R&D',
+                avatarBg: 'bg-cae-deep',
+                initials: 'RP',
+                agent: 'cae_level_d_ffs_flight_dynamics_eng',
+                status: 'Active'
+            },
+            {
+                id: 'eco',
+                name: 'Hannah Sterling',
+                role: 'Hardware & Visual System ECO Director',
+                dept: 'Engineering Operations',
+                avatarBg: 'bg-cae-deep',
+                initials: 'HS',
+                agent: 'cae_avionics_bus_arinc429_auditor',
+                status: 'Active'
+            }
+        ];
+
+        // Render Functions
+        function renderWorkflows(trackFilter = 'all') {
+            const container = document.getElementById('workflows-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const filtered = trackFilter === 'all' 
+                ? WORKFLOWS 
+                : WORKFLOWS.filter(w => w.track === trackFilter);
+
+            filtered.forEach(wf => {
+                const leadAgentObj = AGENT_ROLES.find(a => a.id === wf.leadAgent) || {};
+                const card = document.createElement('div');
+                card.className = `bg-white rounded-xl border ${wf.flagship ? 'border-cae-cyan ring-2 ring-cae-cyan/20' : 'border-slate-200'} shadow-sm p-6 hover:shadow-md transition-all flex flex-col justify-between`;
+                
+                let stepsHtml = wf.steps.map((s, idx) => `
+                    <div class="flex items-center space-x-2 text-xs text-slate-600 bg-slate-50 p-2 rounded border border-slate-100">
+                        <span class="w-5 h-5 rounded-full bg-cae-pearl text-cae-deep font-bold flex items-center justify-center text-[10px]">${idx + 1}</span>
+                        <span class="font-medium text-slate-800">${s.step}</span>
+                        <span class="text-slate-400 font-mono text-[10px] ml-auto">(${s.agent})</span>
+                    </div>
+                `).join('');
+
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full ${wf.track === 'commercial' ? 'bg-blue-50 text-blue-700 border border-blue-200' : 'bg-cyan-50 text-cyan-700 border border-cyan-200'}">
+                                ${wf.trackLabel}
+                            </span>
+                            ${wf.flagship ? '<span class="bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase flex items-center gap-1"><i class="fa-solid fa-star text-amber-600"></i> FLAGSHIP</span>' : ''}
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">${wf.title}</h3>
+                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">${wf.description}</p>
+                        
+                        <div class="space-y-2 mb-4">
+                            <p class="text-[11px] font-bold uppercase text-slate-400 tracking-wider">Execution Pipeline</p>
+                            ${stepsHtml}
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between mt-2">
+                        <div class="text-xs text-slate-500">
+                            <span>Lead: </span>
+                            <span class="font-mono text-cae-deep font-semibold">${leadAgentObj.name || wf.leadAgent}</span>
+                        </div>
+                        <button onclick="openExecutionModal('${wf.id}')" class="bg-cae-deep hover:bg-slate-800 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-all flex items-center space-x-1.5 shadow-sm">
+                            <i class="fa-solid fa-play text-[10px]"></i>
+                            <span>Execute</span>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderAgents(searchQuery = '') {
+            const container = document.getElementById('agents-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const filtered = AGENT_ROLES.filter(a => 
+                a.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                a.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                a.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                a.description.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+
+            filtered.forEach(agent => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:border-cae-cyan transition-all flex flex-col justify-between';
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center space-x-3 mb-3">
+                            <div class="w-10 h-10 rounded-lg bg-cae-pearl text-cae-deep flex items-center justify-center text-lg shadow-inner">
+                                <i class="fa-solid ${agent.icon}"></i>
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-cae-cyan">${agent.category}</span>
+                                <h4 class="font-mono text-xs font-bold text-slate-900 truncate max-w-[200px]" title="${agent.name}">${agent.name}</h4>
+                            </div>
+                        </div>
+                        <h5 class="text-sm font-bold text-slate-800 mb-2 leading-snug">${agent.title}</h5>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4">${agent.description}</p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                        <span class="text-emerald-600 font-medium flex items-center gap-1">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Ready
+                        </span>
+                        <span class="font-mono text-[10px] text-slate-400">AGY-V2.0</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderOperators() {
+            const container = document.getElementById('operators-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            EMPLOYEES.forEach(emp => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center justify-between';
+                card.innerHTML = `
+                    <div class="w-full flex flex-col items-center">
+                        <div class="w-16 h-16 rounded-2xl ${emp.avatarBg} text-white font-bold text-xl flex items-center justify-center shadow-lg mb-3 border-2 border-cae-cyan">
+                            ${emp.initials}
+                        </div>
+                        <h4 class="font-bold text-sm text-slate-900">${emp.name}</h4>
+                        <span class="text-xs text-cae-cyan font-medium mb-1">${emp.dept}</span>
+                        <p class="text-xs font-semibold text-slate-700 mb-3 px-2 py-0.5 bg-slate-100 rounded">${emp.role}</p>
+                    </div>
+                    <div class="w-full pt-3 border-t border-slate-100 text-xs">
+                        <p class="text-[10px] text-slate-400 font-mono mb-1">Assigned Agent</p>
+                        <p class="font-mono text-[11px] text-cae-deep font-semibold truncate" title="${emp.agent}">${emp.agent}</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Tab Switching
+        function switchTab(tabId) {
+            ['workflows', 'agents', 'operators', 'analytics'].forEach(id => {
+                const view = document.getElementById(`view-${id}`);
+                const tabBtn = document.getElementById(`tab-${id}`);
+                if (id === tabId) {
+                    if (view) view.classList.remove('hidden');
+                    if (tabBtn) {
+                        tabBtn.classList.add('border-cae-deep', 'text-cae-deep');
+                        tabBtn.classList.remove('border-transparent', 'text-slate-500');
+                    }
+                } else {
+                    if (view) view.classList.add('hidden');
+                    if (tabBtn) {
+                        tabBtn.classList.remove('border-cae-deep', 'text-cae-deep');
+                        tabBtn.classList.add('border-transparent', 'text-slate-500');
+                    }
+                }
+            });
+
+            if (tabId === 'analytics') {
+                initCharts();
+            }
+        }
+
+        function filterWorkflows(track, btnEl) {
+            document.querySelectorAll('.wf-filter-btn').forEach(btn => {
+                btn.classList.remove('bg-cae-deep', 'text-white');
+                btn.classList.add('bg-slate-200', 'text-slate-700');
+            });
+            if (btnEl) {
+                btnEl.classList.remove('bg-slate-200', 'text-slate-700');
+                btnEl.classList.add('bg-cae-deep', 'text-white');
+            }
+            renderWorkflows(track);
+        }
+
+        function searchAgents() {
+            const query = document.getElementById('agent-search').value;
+            renderAgents(query);
+        }
+
+        // Execution Modal Logic
+        let modalTimer = null;
+        function openExecutionModal(workflowId) {
+            const wf = WORKFLOWS.find(w => w.id === workflowId);
+            if (!wf) return;
+
+            document.getElementById('modal-wf-title').innerText = wf.title;
+            document.getElementById('modal-wf-track').innerText = wf.trackLabel;
+            document.getElementById('modal-status-text').innerText = 'EXECUTING PROTOCOL...';
+            document.getElementById('modal-summary-box').classList.add('hidden');
+
+            const timeline = document.getElementById('modal-timeline');
+            timeline.innerHTML = '';
+            wf.steps.forEach((s, idx) => {
+                const stepEl = document.createElement('div');
+                stepEl.id = `step-node-${idx}`;
+                stepEl.className = 'flex items-center space-x-3 p-3 rounded-lg border border-slate-200 bg-slate-50 transition-all';
+                stepEl.innerHTML = `
+                    <div id="step-icon-${idx}" class="w-7 h-7 rounded-full bg-slate-300 text-slate-600 font-bold text-xs flex items-center justify-center">
+                        ${idx + 1}
+                    </div>
+                    <div class="flex-grow">
+                        <h5 class="text-xs font-bold text-slate-800">${s.step}</h5>
+                        <p class="text-[10px] font-mono text-cae-cyan">Agent: ${s.agent}</p>
+                    </div>
+                    <span id="step-status-${idx}" class="text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-200 text-slate-600">QUEUED</span>
+                `;
+                timeline.appendChild(stepEl);
+            });
+
+            const consoleBox = document.getElementById('modal-console');
+            consoleBox.innerHTML = `<p class="text-slate-500">[00:00:00] Initializing CAE Workflow Engine (${wf.id})...</p>`;
+
+            document.getElementById('execution-modal').classList.remove('hidden');
+
+            // Simulate Execution Steps
+            let currentStep = 0;
+            if (modalTimer) clearInterval(modalTimer);
+
+            modalTimer = setInterval(() => {
+                if (currentStep < wf.steps.length) {
+                    const stepData = wf.steps[currentStep];
+                    
+                    // Update Step UI
+                    const stepNode = document.getElementById(`step-node-${currentStep}`);
+                    const stepIcon = document.getElementById(`step-icon-${currentStep}`);
+                    const stepStatus = document.getElementById(`step-status-${currentStep}`);
+
+                    if (stepNode) {
+                        stepNode.classList.remove('bg-slate-50', 'border-slate-200');
+                        stepNode.classList.add('bg-cyan-50', 'border-cae-cyan');
+                    }
+
+                    if (stepIcon) {
+                        stepIcon.classList.remove('bg-slate-300', 'text-slate-600');
+                        stepIcon.classList.add('bg-cae-cyan', 'text-white');
+                    }
+
+                    if (stepStatus) {
+                        stepStatus.classList.remove('bg-slate-200', 'text-slate-600');
+                        stepStatus.classList.add('bg-emerald-100', 'text-emerald-800');
+                        stepStatus.innerText = 'PASSED';
+                    }
+
+                    // Append Console Log
+                    const timestamp = new Date().toISOString().substring(11, 19);
+                    consoleBox.innerHTML += `<p class="text-emerald-400">[${timestamp}] Step ${currentStep + 1} COMPLETE: ${stepData.step} (${stepData.agent})</p>`;
+                    consoleBox.scrollTop = consoleBox.scrollHeight;
+
+                    currentStep++;
+                } else {
+                    clearInterval(modalTimer);
+                    document.getElementById('modal-status-text').innerText = 'WORKFLOW COMPLETED';
+                    const timestamp = new Date().toISOString().substring(11, 19);
+                    consoleBox.innerHTML += `<p class="text-cae-cyan font-bold">[${timestamp}] SUCCESS: All steps validated under CAE Simulation Standards.</p>`;
+                    consoleBox.scrollTop = consoleBox.scrollHeight;
+
+                    // Show Summary
+                    document.getElementById('modal-summary-text').innerText = wf.summary;
+                    document.getElementById('modal-summary-box').classList.remove('hidden');
+                }
+            }, 900);
+        }
+
+        function closeExecutionModal() {
+            if (modalTimer) clearInterval(modalTimer);
+            document.getElementById('execution-modal').classList.add('hidden');
+        }
+
+        // Charts Initialization
+        let chart1, chart2;
+        function initCharts() {
+            if (chart1) chart1.destroy();
+            if (chart2) chart2.destroy();
+
+            const ctx1 = document.getElementById('chart-pressure');
+            if (ctx1) {
+                chart1 = new Chart(ctx1.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['FFS Bay 1', 'FFS Bay 2', 'FFS Bay 3', 'FFS Bay 4', 'FFS Bay 5', 'FFS Bay 6'],
+                        datasets: [{
+                            label: 'Motion Platform Latency (ms)',
+                            data: [8.1, 8.4, 8.2, 8.5, 8.3, 8.2],
+                            borderColor: '#00a3e0',
+                            backgroundColor: 'rgba(0, 163, 224, 0.1)',
+                            fill: true,
+                            tension: 0.3
+                        }]
+                    },
+                    options: { responsive: true, plugins: { legend: { display: false } } }
+                });
+            }
+
+            const ctx2 = document.getElementById('chart-sales');
+            if (ctx2) {
+                chart2 = new Chart(ctx2.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Commercial Civil Airlines', 'Defense Multi-Domain STE', 'CAE Healthcare Simulators', 'Business Aviation Academies'],
+                        datasets: [{
+                            data: [50, 25, 15, 10],
+                            backgroundColor: ['#004b87', '#00a3e0', '#3b82f6', '#64748b']
+                        }]
+                    },
+                    options: { responsive: true }
+                });
+            }
+        }
+
+        // Init on Load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderWorkflows();
+            renderAgents();
+            renderOperators();
+        });
+    </script>
+</body>
+</html>
