@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MANSCAPED AI Workforce Enterprise Operations Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        manscaped: {
+                            black: '#111111',
+                            gold: '#C5A059',
+                            goldlight: '#D4AF37',
+                            surface: '#18181B',
+                            pearl: '#F4F4F5',
+                            dark: '#09090B',
+                            slate: '#27272A',
+                            light: '#FAFAFA'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .gradient-manscaped { background: linear-gradient(135deg, #111111 0%, #27272A 50%, #C5A059 100%); }
+        .glass-panel { background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(12px); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #18181B; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #C5A059; border-radius: 3px; }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col custom-scrollbar">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-manscaped-black text-white sticky top-0 z-40 shadow-xl border-b border-manscaped-gold/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="w-10 h-10 rounded-xl bg-manscaped-gold flex items-center justify-center font-bold text-zinc-950 shadow-lg text-xl">
+                    <i class="fa-solid fa-scissors"></i>
+                </div>
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-extrabold text-lg tracking-wider text-white uppercase">MANSCAPED</span>
+                        <span class="bg-manscaped-gold/20 text-manscaped-gold text-xs font-semibold px-2 py-0.5 rounded border border-manscaped-gold/30">AI WORKFORCE 2.0</span>
+                    </div>
+                    <p class="text-xs text-zinc-400">Precision Hardware R&D, SkinSafe QA & Global Omnichannel Fulfillment</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <div class="hidden md:flex items-center space-x-4 text-xs font-mono">
+                    <div class="bg-zinc-900/80 px-3 py-1.5 rounded-lg border border-zinc-800 flex items-center space-x-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span class="text-zinc-300">SYSTEM: ONLINE</span>
+                    </div>
+                    <div class="bg-zinc-900/80 px-3 py-1.5 rounded-lg border border-zinc-800 text-zinc-300">
+                        LATENCY: <span class="text-manscaped-gold font-bold">11ms</span>
+                    </div>
+                    <div class="bg-zinc-900/80 px-3 py-1.5 rounded-lg border border-zinc-800 text-zinc-300">
+                        ACTIVE AGENTS: <span class="text-manscaped-gold font-bold">12/12</span>
+                    </div>
+                </div>
+                <button onclick="openExecutionModal('panel_qualification')" class="bg-manscaped-gold hover:bg-yellow-600 text-zinc-950 font-bold text-xs px-4 py-2 rounded-lg transition-all shadow-md flex items-center space-x-2">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>RUN FLAGSHIP WORKFLOW</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full space-y-6">
+
+        <!-- Executive Metrics Header -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="bg-zinc-900 rounded-xl p-5 border border-zinc-800 shadow-md flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-zinc-400 uppercase">SkinSafe Technology</p>
+                    <h3 class="text-2xl font-bold text-white mt-1">Lawn Mower 5.0</h3>
+                    <p class="text-xs text-emerald-400 font-medium mt-1"><i class="fa-solid fa-check-circle"></i> Dual Ceramic Blade QA</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-zinc-800 text-manscaped-gold flex items-center justify-center text-xl font-bold border border-zinc-700">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+            </div>
+
+            <div class="bg-zinc-900 rounded-xl p-5 border border-zinc-800 shadow-md flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-zinc-400 uppercase">Waterproof Rating</p>
+                    <h3 class="text-2xl font-bold text-white mt-1">IPX7 Certified</h3>
+                    <p class="text-xs text-emerald-400 font-medium mt-1"><i class="fa-solid fa-water"></i> 100% Submersion Validated</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-emerald-950/60 text-emerald-400 flex items-center justify-center text-xl font-bold border border-emerald-800/40">
+                    <i class="fa-solid fa-droplet"></i>
+                </div>
+            </div>
+
+            <div class="bg-zinc-900 rounded-xl p-5 border border-zinc-800 shadow-md flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-zinc-400 uppercase">Omnichannel Hubs</p>
+                    <h3 class="text-2xl font-bold text-white mt-1">DTC + Retail</h3>
+                    <p class="text-xs text-manscaped-gold font-medium mt-1"><i class="fa-solid fa-store"></i> Target, Walmart, Amazon</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-zinc-800 text-manscaped-gold flex items-center justify-center text-xl font-bold border border-zinc-700">
+                    <i class="fa-solid fa-truck-ramp-box"></i>
+                </div>
+            </div>
+
+            <div class="bg-zinc-900 rounded-xl p-5 border border-zinc-800 shadow-md flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-zinc-400 uppercase">Active AI Specialists</p>
+                    <h3 class="text-2xl font-bold text-white mt-1">12 Agents</h3>
+                    <p class="text-xs text-blue-400 font-medium mt-1"><i class="fa-solid fa-microchip"></i> 8 Enterprise Workflows</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-blue-950/60 text-blue-400 flex items-center justify-center text-xl font-bold border border-blue-800/40">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="flex border-b border-zinc-800 space-x-8 text-sm font-semibold">
+            <button onclick="switchTab('workflows')" id="tab-workflows" class="pb-3 border-b-2 border-manscaped-gold text-manscaped-gold flex items-center space-x-2">
+                <i class="fa-solid fa-diagram-project"></i>
+                <span>Enterprise Workflows (8)</span>
+            </button>
+            <button onclick="switchTab('agents')" id="tab-agents" class="pb-3 border-b-2 border-transparent text-zinc-400 hover:text-zinc-200 flex items-center space-x-2">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Specialist AI Agents (12)</span>
+            </button>
+            <button onclick="switchTab('operators')" id="tab-operators" class="pb-3 border-b-2 border-transparent text-zinc-400 hover:text-zinc-200 flex items-center space-x-2">
+                <i class="fa-solid fa-id-card"></i>
+                <span>Human Operators & Supervisors (8)</span>
+            </button>
+            <button onclick="switchTab('analytics')" id="tab-analytics" class="pb-3 border-b-2 border-transparent text-zinc-400 hover:text-zinc-200 flex items-center space-x-2">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Live Hardware & Supply Telemetry</span>
+            </button>
+        </div>
+
+        <!-- TAB 1: WORKFLOWS -->
+        <div id="view-workflows" class="space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-bold text-white">MANSCAPED Enterprise Workflows</h2>
+                    <p class="text-sm text-zinc-400">Autonomous workflow orchestration spanning dual tracks: DTC Subscription & Global Retail Supply Chain, and Hardware R&D & SkinSafe QA.</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <span class="text-xs text-zinc-400 font-medium">Filter Track:</span>
+                    <button onclick="filterWorkflows('all', this)" class="wf-filter-btn active bg-manscaped-gold text-zinc-950 font-bold text-xs px-3 py-1.5 rounded-lg">All Tracks</button>
+                    <button onclick="filterWorkflows('commercial', this)" class="wf-filter-btn bg-zinc-800 text-zinc-300 text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-zinc-700">DTC & Global Retail Supply</button>
+                    <button onclick="filterWorkflows('rd', this)" class="wf-filter-btn bg-zinc-800 text-zinc-300 text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-zinc-700">Hardware R&D & SkinSafe QA</button>
+                </div>
+            </div>
+
+            <div id="workflows-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- TAB 2: AGENTS -->
+        <div id="view-agents" class="hidden space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-bold text-white">Specialist AI Agents (12)</h2>
+                    <p class="text-sm text-zinc-400">Autonomous domain experts configured for SkinSafe ceramic blades, IPX7 waterproofing, 7,000 RPM motor FEA, and DTC logistics.</p>
+                </div>
+                <div class="relative w-72">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-zinc-500 text-sm"></i>
+                    <input type="text" id="agent-search" oninput="searchAgents()" placeholder="Search agents by role or skill..." class="w-full pl-9 pr-4 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-sm text-zinc-200 focus:outline-none focus:ring-2 focus:ring-manscaped-gold">
+                </div>
+            </div>
+
+            <div id="agents-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- TAB 3: OPERATORS -->
+        <div id="view-operators" class="hidden space-y-6">
+            <div>
+                <h2 class="text-xl font-bold text-white">Human Operators & Supervisors (8)</h2>
+                <p class="text-sm text-zinc-400">Enterprise operators styled in MANSCAPED Obsidian Black and Gold controlling autonomous workflow execution.</p>
+            </div>
+
+            <div id="operators-grid" class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- TAB 4: ANALYTICS -->
+        <div id="view-analytics" class="hidden space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-zinc-900 rounded-xl p-6 border border-zinc-800 shadow-md">
+                    <h3 class="text-lg font-bold text-white mb-4"><i class="fa-solid fa-chart-area text-manscaped-gold mr-2"></i>Trimmer 7,000 RPM Motor Torque & Acoustic Stability (dB)</h3>
+                    <canvas id="chart-pressure" height="200"></canvas>
+                </div>
+                <div class="bg-zinc-900 rounded-xl p-6 border border-zinc-800 shadow-md">
+                    <h3 class="text-lg font-bold text-white mb-4"><i class="fa-solid fa-chart-pie text-manscaped-gold mr-2"></i>Global Omnichannel Fulfillment Distribution</h3>
+                    <canvas id="chart-sales" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Execution Modal -->
+    <div id="execution-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-zinc-900 rounded-2xl max-w-3xl w-full shadow-2xl overflow-hidden flex flex-col max-h-[90vh] border border-zinc-800">
+            <div class="bg-manscaped-black text-white px-6 py-4 flex items-center justify-between border-b border-manscaped-gold/30">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-lg bg-manscaped-gold flex items-center justify-center font-bold text-zinc-950">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <div>
+                        <h3 id="modal-wf-title" class="font-bold text-base text-white">Running Workflow</h3>
+                        <p id="modal-wf-track" class="text-xs text-manscaped-gold">Track Status</p>
+                    </div>
+                </div>
+                <button onclick="closeExecutionModal()" class="text-zinc-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-6 flex-grow custom-scrollbar">
+                <!-- Timeline Progress -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3">Workflow Execution Steps</h4>
+                    <div id="modal-timeline" class="space-y-3">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Live Logs Console -->
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-zinc-400">Live Agent Console Output</h4>
+                        <span class="text-xs font-mono text-manscaped-gold" id="modal-status-text">INITIALIZING...</span>
+                    </div>
+                    <div id="modal-console" class="bg-black text-emerald-400 font-mono text-xs p-4 rounded-xl h-44 overflow-y-auto custom-scrollbar border border-zinc-800">
+                        <p class="text-zinc-500">[00:00:00] MANSCAPED AI Agent Core initialized.</p>
+                    </div>
+                </div>
+
+                <!-- Executive Summary -->
+                <div id="modal-summary-box" class="bg-zinc-800/80 border border-manscaped-gold/40 rounded-xl p-4 hidden">
+                    <h4 class="text-sm font-bold text-manscaped-gold flex items-center space-x-2">
+                        <i class="fa-solid fa-file-contract text-manscaped-gold"></i>
+                        <span>Executive Summary & Resolution</span>
+                    </h4>
+                    <p id="modal-summary-text" class="text-xs text-zinc-200 mt-2 leading-relaxed font-sans">
+                        Executive summary text goes here.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-zinc-950 px-6 py-4 border-t border-zinc-800 flex items-center justify-between">
+                <span class="text-xs text-zinc-500 font-mono">MANSCAPED AI OPERATIONAL PROTOCOL</span>
+                <button onclick="closeExecutionModal()" class="bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-xs px-5 py-2 rounded-lg">Close Window</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Data & Logic -->
+    <script>
+        const AGENT_ROLES = [
+            {
+                id: 'manscaped_skinsafe_blade_eng',
+                name: 'manscaped_skinsafe_blade_eng',
+                title: 'SkinSafe Dual-Ceramic Blade Geometry & Shear Engineer',
+                category: 'Blade Hardware Engineering',
+                icon: 'fa-shield-halved',
+                description: 'Engineers proprietary SkinSafe ceramic dual-blade teeth geometry, rounded safety tips, and micro-trimmer friction tolerance.'
+            },
+            {
+                id: 'manscaped_lawnmower_bom_pricing_eng',
+                name: 'manscaped_lawnmower_bom_pricing_eng',
+                title: 'Lawnmower 5.0 Ultra Hardware & Packaging BOM Lead',
+                category: 'Hardware Sourcing & BOM',
+                icon: 'fa-calculator',
+                description: 'Calculates electronic component bill of materials (BOM), Li-ion battery pricing, soft-touch casing costs, and retail packaging margins.'
+            },
+            {
+                id: 'manscaped_ipx7_waterproof_seal_spec',
+                name: 'manscaped_ipx7_waterproof_seal_spec',
+                title: 'Studio Manscaped IPX7 Waterproofing & Seal Integrity Engineer',
+                category: 'Enclosure Engineering',
+                icon: 'fa-droplet',
+                description: 'Performs finite element analysis (FEA) and pressure decay testing on internal silicone O-rings, IPX7 immersion seals, and charging ports.'
+            },
+            {
+                id: 'manscaped_clean_formulation_lca_auditor',
+                name: 'manscaped_clean_formulation_lca_auditor',
+                title: 'Clean Grooming Formulations & Eco-Packaging LCA Auditor',
+                category: 'Sustainability & Formulations',
+                icon: 'fa-leaf text-emerald-400',
+                description: 'Audits Crop Preserver and Crop Reviver clean formulations, aluminum container recyclability, and global environmental impact compliance.'
+            },
+            {
+                id: 'manscaped_dtc_global_retail_router',
+                name: 'manscaped_dtc_global_retail_router',
+                title: 'DTC Subscription & Global Omnichannel Retail Logistics Router',
+                category: 'Global Supply Logistics',
+                icon: 'fa-truck-fast',
+                description: 'Orchestrates direct-to-consumer replenishment subscriptions and retail inventory routing across Target, Walmart, Best Buy, and Amazon.'
+            },
+            {
+                id: 'manscaped_master_contract_tender_lead',
+                name: 'manscaped_master_contract_tender_lead',
+                title: 'Enterprise Injection Mold & Battery Master Supply Tender Lead',
+                category: 'Contract Procurement',
+                icon: 'fa-file-signature',
+                description: 'Manages master supplier tenders for high-precision injection mold tooling, Li-ion battery cells, and electric motors.'
+            },
+            {
+                id: 'manscaped_motor_torque_rpm_qa_engineer',
+                name: 'manscaped_motor_torque_rpm_qa_engineer',
+                title: '7,000 RPM Quiet-Stroke Motor Torque & Acoustic QA Engineer',
+                category: 'Motor & Drive Testing',
+                icon: 'fa-gauge-high',
+                description: 'Validates 7,000 RPM quiet-stroke motor torque stability, noise dampeners, and power management efficiency under heavy hair density.'
+            },
+            {
+                id: 'manscaped_led_spotlight_optics_spec',
+                name: 'manscaped_led_spotlight_optics_spec',
+                title: 'Dual-Temperature LED Spotlight & Optical Reflector Specialist',
+                category: 'Optics & Electronics',
+                icon: 'fa-lightbulb',
+                description: 'Engineers 4,000K dual-temperature LED spotlights, reflector optics, and low-power battery drain circuits for precision grooming.'
+            },
+            {
+                id: 'manscaped_custom_mold_eco_revision_spec',
+                name: 'manscaped_custom_mold_eco_revision_spec',
+                title: 'Custom Trimmer Ergonomic Casing ECO Tooling Revision Lead',
+                category: 'Tooling ECO Revision',
+                icon: 'fa-drafting-compass',
+                description: 'Manages Engineering Change Orders (ECO) for multi-cavity plastic injection molds, soft-touch grip overmolding, and snap-fit tolerances.'
+            },
+            {
+                id: 'manscaped_high_speed_filling_qa_engineer',
+                name: 'manscaped_high_speed_filling_qa_engineer',
+                title: 'High-Speed Crop Preserver & Crop Reviver Filling Line QA Lead',
+                category: 'Liquid Packaging QA',
+                icon: 'fa-bottle-droplet',
+                description: 'Monitors high-speed lotion and toner filling lines, nitrogen purges, induction seal integrity, and pump dispensing volumes.'
+            },
+            {
+                id: 'writer',
+                name: 'writer',
+                title: 'Hardware Technical Compliance & Retail Dossier Writer',
+                category: 'Documentation & Regulatory',
+                icon: 'fa-pen-nib',
+                description: 'Synthesizes UL/CE safety certifications, IPX7 waterproof test guides, and retailer compliance dossiers into technical documentation.'
+            },
+            {
+                id: 'reviewer',
+                name: 'reviewer',
+                title: 'Director of Grooming Hardware R&D & Principal QA PE',
+                category: 'Executive Oversight',
+                icon: 'fa-user-check',
+                description: 'Provides final executive sign-off for hardware launch readiness, SkinSafe safety compliance, and commercial retail distribution.'
+            }
+        ];
+
+        const WORKFLOWS = [
+            {
+                id: 'scout',
+                title: 'SkinSafe Ceramic Blade & Bio-Compatible Material Sourcing',
+                track: 'commercial',
+                trackLabel: 'DTC Subscription & Global Retail Supply Chain',
+                description: 'Screening raw zirconium oxide ceramic blade suppliers for SkinSafe micro-edge precision and anti-bacterial coating compatibility.',
+                leadAgent: 'manscaped_skinsafe_blade_eng',
+                steps: [
+                    { step: 'Ceramic Raw Material Analysis', agent: 'manscaped_skinsafe_blade_eng' },
+                    { step: 'Clean Formula & Packaging LCA Audit', agent: 'manscaped_clean_formulation_lca_auditor' },
+                    { step: 'Executive Sourcing Dossier Compilation', agent: 'writer' }
+                ],
+                summary: 'Successfully verified 2 primary suppliers for SkinSafe bio-compatible ceramic blades with 99.9% hardness compliance. Zero trace nickel or lead detected. Approved for global production.'
+            },
+            {
+                id: 'quote',
+                title: 'Lawnmower 5.0 Ultra Trimmer BOM & Retail Costing',
+                track: 'commercial',
+                trackLabel: 'DTC Subscription & Global Retail Supply Chain',
+                description: 'Automated cost breakdown for dual-blade assembly, Li-ion battery module, 7,000 RPM motor, and premium retail box packaging.',
+                leadAgent: 'manscaped_lawnmower_bom_pricing_eng',
+                steps: [
+                    { step: 'Hardware Component BOM Costing', agent: 'manscaped_lawnmower_bom_pricing_eng' },
+                    { step: 'Injection Mold ECO Cost Assessment', agent: 'manscaped_custom_mold_eco_revision_spec' },
+                    { step: 'Executive Pricing Review', agent: 'reviewer' }
+                ],
+                summary: 'Lawnmower 5.0 Ultra BOM cost optimized to $14.20 per unit across 1,500,000 unit production run, expanding gross margin by 4.8% for holiday retail launch.'
+            },
+            {
+                id: 'tender',
+                title: 'Global Omnichannel Retail Logistics Tender (Target/Walmart/Amazon)',
+                track: 'commercial',
+                trackLabel: 'DTC Subscription & Global Retail Supply Chain',
+                description: 'Master contract tendering for fulfillment across North America, European Union, and Australia retail distribution networks.',
+                leadAgent: 'manscaped_master_contract_tender_lead',
+                steps: [
+                    { step: 'Omnichannel Tender Dispatch', agent: 'manscaped_master_contract_tender_lead' },
+                    { step: 'Global Route Cost Optimization', agent: 'manscaped_dtc_global_retail_router' },
+                    { step: 'Final Tender Authorization', agent: 'reviewer' }
+                ],
+                summary: 'Master retail supply tender awarded to 2 primary logistics partners, reducing store delivery lead times by 2.8 days and cutting DTC replenishment costs by 15%.'
+            },
+            {
+                id: 'radar',
+                title: 'Real-Time IPX7 Seal & Motor Acoustic Telemetry QA Radar',
+                track: 'commercial',
+                trackLabel: 'DTC Subscription & Global Retail Supply Chain',
+                description: 'Continuous online sensor monitoring of waterproof pressure decay, motor acoustic noise (dB), and battery charge cycles.',
+                leadAgent: 'manscaped_motor_torque_rpm_qa_engineer',
+                steps: [
+                    { step: 'Sensor Telemetry Ingestion', agent: 'manscaped_motor_torque_rpm_qa_engineer' },
+                    { step: 'IPX7 Pressure Decay Analysis', agent: 'manscaped_ipx7_waterproof_seal_spec' },
+                    { step: 'Quality Exception Dispatch', agent: 'writer' }
+                ],
+                summary: 'Real-time telemetry scan across 8 trimmer assembly lines completed with 0.001% exception rate. Acoustic noise verified under 58 dB quiet-stroke threshold.'
+            },
+            {
+                id: 'panel_qualification',
+                title: 'Lawnmower 5.0 Ultra SkinSafe Dispensing & Waterproof Qualification Protocol',
+                track: 'rd',
+                trackLabel: 'MANSCAPED Hardware R&D, SkinSafe QA & Formulation Ops',
+                flagship: true,
+                description: 'Flagship R&D protocol evaluating SkinSafe dual-blade shear force, 1-meter IPX7 water submersion, 7,000 RPM torque stability, and LED optics.',
+                leadAgent: 'manscaped_skinsafe_blade_eng',
+                steps: [
+                    { step: 'SkinSafe Dual-Ceramic Shear Force Test', agent: 'manscaped_skinsafe_blade_eng' },
+                    { step: '1-Meter IPX7 Waterproof Submersion Test', agent: 'manscaped_ipx7_waterproof_seal_spec' },
+                    { step: '7,000 RPM Motor Torque & Acoustic Verification', agent: 'manscaped_motor_torque_rpm_qa_engineer' },
+                    { step: 'Hardware R&D Principal Final Sign-off', agent: 'reviewer' }
+                ],
+                summary: 'FLAGSHIP PROTOCOL PASSED: Lawnmower 5.0 Ultra achieved 100% IPX7 waterproof seal integrity under 1-meter water submersion for 30 minutes. SkinSafe ceramic dual-blade shear force verified at zero nick tolerance.'
+            },
+            {
+                id: 'inverter_yield',
+                title: '7,000 RPM Motor Assembly & Vibration Dampening Yield Calibration',
+                track: 'rd',
+                trackLabel: 'MANSCAPED Hardware R&D, SkinSafe QA & Formulation Ops',
+                description: 'Automated calibration of motor drive shafts, silicone noise dampeners, and high-capacity Li-ion power delivery circuits.',
+                leadAgent: 'manscaped_motor_torque_rpm_qa_engineer',
+                steps: [
+                    { step: 'Motor Drive Shaft Vibration Audit', agent: 'manscaped_motor_torque_rpm_qa_engineer' },
+                    { step: 'LED Spotlight Optic Sync Check', agent: 'manscaped_led_spotlight_optics_spec' },
+                    { step: 'Motor Calibration Dossier', agent: 'writer' }
+                ],
+                summary: 'Motor assembly line speed calibrated to 220 units per minute with zero harmonic resonance wobble. First-pass assembly yield reached 99.96%.'
+            },
+            {
+                id: 'thermal_simulation',
+                title: 'Li-ion Fast Charge Battery & LED Spotlight Thermal Stress Test',
+                track: 'rd',
+                trackLabel: 'MANSCAPED Hardware R&D, SkinSafe QA & Formulation Ops',
+                description: 'Virtual thermal load simulation of fast-charging Li-ion battery cells and dual-temperature LED spotlights in enclosed waterproof casings.',
+                leadAgent: 'manscaped_led_spotlight_optics_spec',
+                steps: [
+                    { step: 'Battery Cell Thermal Load Modeling', agent: 'manscaped_led_spotlight_optics_spec' },
+                    { step: 'Clean Formula Liquid Thermal Exposure Check', agent: 'manscaped_clean_formulation_lca_auditor' },
+                    { step: 'Engineering Validation Sign-off', agent: 'reviewer' }
+                ],
+                summary: 'Simulated 60-minute continuous fast-charging and max LED illumination cycle. Enclosure sidewall temperature peaked at a safe 38.5 deg C, well below 45 deg C safety limit.'
+            },
+            {
+                id: 'mask_eco',
+                title: 'Ergonomic Trimmer Casing & Eco Refill Bottle Tooling Change',
+                track: 'rd',
+                trackLabel: 'MANSCAPED Hardware R&D, SkinSafe QA & Formulation Ops',
+                description: 'Managing Engineering Change Orders for custom multi-cavity injection molds to enhance soft-touch ergonomic grip and PCR bottle compatibility.',
+                leadAgent: 'manscaped_custom_mold_eco_revision_spec',
+                steps: [
+                    { step: 'Casing Injection Mold CAD Revision', agent: 'manscaped_custom_mold_eco_revision_spec' },
+                    { step: 'Crop Preserver Packaging Line Fitment', agent: 'manscaped_high_speed_filling_qa_engineer' },
+                    { step: 'ECO Master Approval', agent: 'reviewer' }
+                ],
+                summary: 'ECO-2026-MAN-704 approved. Soft-touch overmold core pins updated to reduce plastic cycle time by 2.4 seconds, accelerating production throughput by 12%.'
+            }
+        ];
+
+        const EMPLOYEES = [
+            {
+                id: 'scout',
+                name: 'Dr. Elena Vance',
+                role: 'Bio-Compatible Materials Lead',
+                dept: 'Hardware R&D',
+                avatarBg: 'bg-manscaped-gold text-zinc-950',
+                initials: 'EV',
+                agent: 'manscaped_skinsafe_blade_eng',
+                status: 'Active'
+            },
+            {
+                id: 'quote',
+                name: 'Marcus Thorne',
+                role: 'Hardware Cost Engineer',
+                dept: 'Commercial Sourcing',
+                avatarBg: 'bg-zinc-800 text-manscaped-gold',
+                initials: 'MT',
+                agent: 'manscaped_lawnmower_bom_pricing_eng',
+                status: 'Active'
+            },
+            {
+                id: 'tender',
+                name: 'Sophia Reynolds',
+                role: 'Global Retail Supply Director',
+                dept: 'Omnichannel Logistics',
+                avatarBg: 'bg-zinc-800 text-manscaped-gold',
+                initials: 'SR',
+                agent: 'manscaped_master_contract_tender_lead',
+                status: 'Active'
+            },
+            {
+                id: 'radar',
+                name: 'David Chen',
+                role: 'Hardware QA Sentinel',
+                dept: 'Quality Operations',
+                avatarBg: 'bg-zinc-800 text-manscaped-gold',
+                initials: 'DC',
+                agent: 'manscaped_motor_torque_rpm_qa_engineer',
+                status: 'Active'
+            },
+            {
+                id: 'safety',
+                name: 'Aria Montgomery',
+                role: 'Formulations & LCA Auditor',
+                dept: 'Sustainability',
+                avatarBg: 'bg-zinc-800 text-manscaped-gold',
+                initials: 'AM',
+                agent: 'manscaped_clean_formulation_lca_auditor',
+                status: 'Active'
+            },
+            {
+                id: 'mill',
+                name: 'Carlos Mendez',
+                role: 'High-Speed Assembly Specialist',
+                dept: 'Manufacturing Operations',
+                avatarBg: 'bg-zinc-800 text-manscaped-gold',
+                initials: 'CM',
+                agent: 'manscaped_high_speed_filling_qa_engineer',
+                status: 'Active'
+            },
+            {
+                id: 'cfd',
+                name: 'Dr. Rahul Patel',
+                role: 'IPX7 & Motor Kinematics Specialist',
+                dept: 'Mechanical Engineering',
+                avatarBg: 'bg-zinc-800 text-manscaped-gold',
+                initials: 'RP',
+                agent: 'manscaped_ipx7_waterproof_seal_spec',
+                status: 'Active'
+            },
+            {
+                id: 'eco',
+                name: 'Hannah Sterling',
+                role: 'Casing ECO Tooling Director',
+                dept: 'Tooling Engineering',
+                avatarBg: 'bg-zinc-800 text-manscaped-gold',
+                initials: 'HS',
+                agent: 'manscaped_custom_mold_eco_revision_spec',
+                status: 'Active'
+            }
+        ];
+
+        // Render Functions
+        function renderWorkflows(trackFilter = 'all') {
+            const container = document.getElementById('workflows-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const filtered = trackFilter === 'all' 
+                ? WORKFLOWS 
+                : WORKFLOWS.filter(w => w.track === trackFilter);
+
+            filtered.forEach(wf => {
+                const leadAgentObj = AGENT_ROLES.find(a => a.id === wf.leadAgent) || {};
+                const card = document.createElement('div');
+                card.className = `bg-zinc-900 rounded-xl border ${wf.flagship ? 'border-manscaped-gold ring-2 ring-manscaped-gold/20' : 'border-zinc-800'} shadow-md p-6 hover:border-manscaped-gold/60 transition-all flex flex-col justify-between`;
+                
+                let stepsHtml = wf.steps.map((s, idx) => `
+                    <div class="flex items-center space-x-2 text-xs text-zinc-300 bg-zinc-950 p-2 rounded border border-zinc-800">
+                        <span class="w-5 h-5 rounded-full bg-manscaped-gold text-zinc-950 font-bold flex items-center justify-center text-[10px]">${idx + 1}</span>
+                        <span class="font-medium text-zinc-200">${s.step}</span>
+                        <span class="text-zinc-500 font-mono text-[10px] ml-auto">(${s.agent})</span>
+                    </div>
+                `).join('');
+
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full ${wf.track === 'commercial' ? 'bg-amber-950/60 text-amber-400 border border-amber-800/40' : 'bg-yellow-950/60 text-yellow-400 border border-yellow-800/40'}">
+                                ${wf.trackLabel}
+                            </span>
+                            ${wf.flagship ? '<span class="bg-manscaped-gold/20 text-manscaped-gold border border-manscaped-gold/40 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase flex items-center gap-1"><i class="fa-solid fa-star text-manscaped-gold"></i> FLAGSHIP</span>' : ''}
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">${wf.title}</h3>
+                        <p class="text-xs text-zinc-400 mb-4 leading-relaxed">${wf.description}</p>
+                        
+                        <div class="space-y-2 mb-4">
+                            <p class="text-[11px] font-bold uppercase text-zinc-500 tracking-wider">Execution Pipeline</p>
+                            ${stepsHtml}
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-zinc-800 flex items-center justify-between mt-2">
+                        <div class="text-xs text-zinc-400">
+                            <span>Lead: </span>
+                            <span class="font-mono text-manscaped-gold font-semibold">${leadAgentObj.name || wf.leadAgent}</span>
+                        </div>
+                        <button onclick="openExecutionModal('${wf.id}')" class="bg-manscaped-gold hover:bg-yellow-600 text-zinc-950 text-xs font-bold px-4 py-2 rounded-lg transition-all flex items-center space-x-1.5 shadow-md">
+                            <i class="fa-solid fa-play text-[10px]"></i>
+                            <span>Execute</span>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderAgents(searchQuery = '') {
+            const container = document.getElementById('agents-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const filtered = AGENT_ROLES.filter(a => 
+                a.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                a.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                a.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                a.description.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+
+            filtered.forEach(agent => {
+                const card = document.createElement('div');
+                card.className = 'bg-zinc-900 rounded-xl border border-zinc-800 p-5 shadow-md hover:border-manscaped-gold transition-all flex flex-col justify-between';
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center space-x-3 mb-3">
+                            <div class="w-10 h-10 rounded-lg bg-zinc-800 text-manscaped-gold flex items-center justify-center text-lg shadow-inner border border-zinc-700">
+                                <i class="fa-solid ${agent.icon}"></i>
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-manscaped-gold">${agent.category}</span>
+                                <h4 class="font-mono text-xs font-bold text-white truncate max-w-[200px]" title="${agent.name}">${agent.name}</h4>
+                            </div>
+                        </div>
+                        <h5 class="text-sm font-bold text-zinc-200 mb-2 leading-snug">${agent.title}</h5>
+                        <p class="text-xs text-zinc-400 leading-relaxed mb-4">${agent.description}</p>
+                    </div>
+                    <div class="pt-3 border-t border-zinc-800 flex items-center justify-between text-xs">
+                        <span class="text-emerald-400 font-medium flex items-center gap-1">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Ready
+                        </span>
+                        <span class="font-mono text-[10px] text-zinc-500">AGY-V2.0</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderOperators() {
+            const container = document.getElementById('operators-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            EMPLOYEES.forEach(emp => {
+                const card = document.createElement('div');
+                card.className = 'bg-zinc-900 rounded-xl border border-zinc-800 p-5 shadow-md hover:border-manscaped-gold transition-all text-center flex flex-col items-center justify-between';
+                card.innerHTML = `
+                    <div class="w-full flex flex-col items-center">
+                        <div class="w-16 h-16 rounded-2xl ${emp.avatarBg} font-bold text-xl flex items-center justify-center shadow-lg mb-3 border-2 border-manscaped-gold">
+                            ${emp.initials}
+                        </div>
+                        <h4 class="font-bold text-sm text-white">${emp.name}</h4>
+                        <span class="text-xs text-manscaped-gold font-medium mb-1">${emp.dept}</span>
+                        <p class="text-xs font-semibold text-zinc-300 mb-3 px-2 py-0.5 bg-zinc-800 rounded border border-zinc-700">${emp.role}</p>
+                    </div>
+                    <div class="w-full pt-3 border-t border-zinc-800 text-xs">
+                        <p class="text-[10px] text-zinc-500 font-mono mb-1">Assigned Agent</p>
+                        <p class="font-mono text-[11px] text-manscaped-gold font-semibold truncate" title="${emp.agent}">${emp.agent}</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Tab Switching
+        function switchTab(tabId) {
+            ['workflows', 'agents', 'operators', 'analytics'].forEach(id => {
+                const view = document.getElementById(`view-${id}`);
+                const tabBtn = document.getElementById(`tab-${id}`);
+                if (id === tabId) {
+                    if (view) view.classList.remove('hidden');
+                    if (tabBtn) {
+                        tabBtn.classList.add('border-manscaped-gold', 'text-manscaped-gold');
+                        tabBtn.classList.remove('border-transparent', 'text-zinc-400');
+                    }
+                } else {
+                    if (view) view.classList.add('hidden');
+                    if (tabBtn) {
+                        tabBtn.classList.remove('border-manscaped-gold', 'text-manscaped-gold');
+                        tabBtn.classList.add('border-transparent', 'text-zinc-400');
+                    }
+                }
+            });
+
+            if (tabId === 'analytics') {
+                initCharts();
+            }
+        }
+
+        function filterWorkflows(track, btnEl) {
+            document.querySelectorAll('.wf-filter-btn').forEach(btn => {
+                btn.classList.remove('bg-manscaped-gold', 'text-zinc-950', 'font-bold');
+                btn.classList.add('bg-zinc-800', 'text-zinc-300', 'font-semibold');
+            });
+            if (btnEl) {
+                btnEl.classList.remove('bg-zinc-800', 'text-zinc-300', 'font-semibold');
+                btnEl.classList.add('bg-manscaped-gold', 'text-zinc-950', 'font-bold');
+            }
+            renderWorkflows(track);
+        }
+
+        function searchAgents() {
+            const query = document.getElementById('agent-search').value;
+            renderAgents(query);
+        }
+
+        // Execution Modal Logic
+        let modalTimer = null;
+        function openExecutionModal(workflowId) {
+            const wf = WORKFLOWS.find(w => w.id === workflowId);
+            if (!wf) return;
+
+            document.getElementById('modal-wf-title').innerText = wf.title;
+            document.getElementById('modal-wf-track').innerText = wf.trackLabel;
+            document.getElementById('modal-status-text').innerText = 'EXECUTING PROTOCOL...';
+            document.getElementById('modal-summary-box').classList.add('hidden');
+
+            const timeline = document.getElementById('modal-timeline');
+            timeline.innerHTML = '';
+            wf.steps.forEach((s, idx) => {
+                const stepEl = document.createElement('div');
+                stepEl.id = `step-node-${idx}`;
+                stepEl.className = 'flex items-center space-x-3 p-3 rounded-lg border border-zinc-800 bg-zinc-950 transition-all';
+                stepEl.innerHTML = `
+                    <div id="step-icon-${idx}" class="w-7 h-7 rounded-full bg-zinc-800 text-zinc-400 font-bold text-xs flex items-center justify-center">
+                        ${idx + 1}
+                    </div>
+                    <div class="flex-grow">
+                        <h5 class="text-xs font-bold text-white">${s.step}</h5>
+                        <p class="text-[10px] font-mono text-manscaped-gold">Agent: ${s.agent}</p>
+                    </div>
+                    <span id="step-status-${idx}" class="text-[10px] font-semibold px-2 py-0.5 rounded bg-zinc-800 text-zinc-400">QUEUED</span>
+                `;
+                timeline.appendChild(stepEl);
+            });
+
+            const consoleBox = document.getElementById('modal-console');
+            consoleBox.innerHTML = `<p class="text-zinc-500">[00:00:00] Initializing MANSCAPED Workflow Engine (${wf.id})...</p>`;
+
+            document.getElementById('execution-modal').classList.remove('hidden');
+
+            // Simulate Execution Steps
+            let currentStep = 0;
+            if (modalTimer) clearInterval(modalTimer);
+
+            modalTimer = setInterval(() => {
+                if (currentStep < wf.steps.length) {
+                    const stepData = wf.steps[currentStep];
+                    
+                    // Update Step UI
+                    const stepNode = document.getElementById(`step-node-${currentStep}`);
+                    const stepIcon = document.getElementById(`step-icon-${currentStep}`);
+                    const stepStatus = document.getElementById(`step-status-${currentStep}`);
+
+                    if (stepNode) {
+                        stepNode.classList.remove('bg-zinc-950', 'border-zinc-800');
+                        stepNode.classList.add('bg-zinc-900', 'border-manscaped-gold');
+                    }
+
+                    if (stepIcon) {
+                        stepIcon.classList.remove('bg-zinc-800', 'text-zinc-400');
+                        stepIcon.classList.add('bg-manscaped-gold', 'text-zinc-950');
+                    }
+
+                    if (stepStatus) {
+                        stepStatus.classList.remove('bg-zinc-800', 'text-zinc-400');
+                        stepStatus.classList.add('bg-emerald-950', 'text-emerald-400');
+                        stepStatus.innerText = 'PASSED';
+                    }
+
+                    // Append Console Log
+                    const timestamp = new Date().toISOString().substring(11, 19);
+                    consoleBox.innerHTML += `<p class="text-emerald-400">[${timestamp}] Step ${currentStep + 1} COMPLETE: ${stepData.step} (${stepData.agent})</p>`;
+                    consoleBox.scrollTop = consoleBox.scrollHeight;
+
+                    currentStep++;
+                } else {
+                    clearInterval(modalTimer);
+                    document.getElementById('modal-status-text').innerText = 'WORKFLOW COMPLETED';
+                    const timestamp = new Date().toISOString().substring(11, 19);
+                    consoleBox.innerHTML += `<p class="text-manscaped-gold font-bold">[${timestamp}] SUCCESS: All steps validated under MANSCAPED Quality Standards.</p>`;
+                    consoleBox.scrollTop = consoleBox.scrollHeight;
+
+                    // Show Summary
+                    document.getElementById('modal-summary-text').innerText = wf.summary;
+                    document.getElementById('modal-summary-box').classList.remove('hidden');
+                }
+            }, 900);
+        }
+
+        function closeExecutionModal() {
+            if (modalTimer) clearInterval(modalTimer);
+            document.getElementById('execution-modal').classList.add('hidden');
+        }
+
+        // Charts Initialization
+        let chart1, chart2;
+        function initCharts() {
+            if (chart1) chart1.destroy();
+            if (chart2) chart2.destroy();
+
+            const ctx1 = document.getElementById('chart-pressure');
+            if (ctx1) {
+                chart1 = new Chart(ctx1.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['Batch 501', 'Batch 502', 'Batch 503', 'Batch 504', 'Batch 505', 'Batch 506'],
+                        datasets: [{
+                            label: 'Motor Sound Level (dB)',
+                            data: [57.2, 57.5, 57.1, 57.4, 57.3, 57.2],
+                            borderColor: '#C5A059',
+                            backgroundColor: 'rgba(197, 160, 89, 0.1)',
+                            fill: true,
+                            tension: 0.3
+                        }]
+                    },
+                    options: { responsive: true, plugins: { legend: { display: false } } }
+                });
+            }
+
+            const ctx2 = document.getElementById('chart-sales');
+            if (ctx2) {
+                chart2 = new Chart(ctx2.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['DTC Direct Subscriptions', 'Target & Walmart Stores', 'Amazon Global Store', 'International Partners'],
+                        datasets: [{
+                            data: [45, 30, 15, 10],
+                            backgroundColor: ['#C5A059', '#D4AF37', '#3F3F46', '#71717A']
+                        }]
+                    },
+                    options: { responsive: true }
+                });
+            }
+        }
+
+        // Init on Load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderWorkflows();
+            renderAgents();
+            renderOperators();
+        });
+    </script>
+</body>
+</html>
