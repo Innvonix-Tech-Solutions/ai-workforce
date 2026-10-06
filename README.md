@@ -306,3 +306,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/iriss
 https://innvonix-tech-solutions.github.io/ai-workforce/neora
 https://innvonix-tech-solutions.github.io/ai-workforce/caeonline
 https://innvonix-tech-solutions.github.io/ai-workforce/class-ic
+https://innvonix-tech-solutions.github.io/ai-workforce/regency-supply
