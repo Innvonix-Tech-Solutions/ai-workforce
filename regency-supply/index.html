@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regency Supply &mdash; AI Commercial Lighting &amp; Electrical Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f4f9f6;--surface2:#d1e7dd;--border:#a3cfbb;--accent:#008655;
+--accent-dim:rgba(0,134,85,.08);--accent-line:rgba(0,134,85,.30);--slate:#1e293b;--slate-line:rgba(30,41,59,.30);--text:#0f172a;--hi:#022c1e;--tert:#475569;--ok:#10b981;--ok-dim:rgba(16,185,129,.10);--gold:#d97706;--gold-bg:#fef3c7;--gold-line:#fde68a}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:48px;height:34px;border-radius:8px;background:linear-gradient(135deg,#008655,#022c1e);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:12px;letter-spacing:.5px;font-family:Inter,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#008655}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:900px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#008655;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(16,185,129,.08);color:#059669;border:1px solid rgba(16,185,129,.3)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#008655}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#008655;font-size:15px;flex-shrink:0;position:relative;font-family:Inter,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#008655}.btn.primary{background:linear-gradient(270deg,#008655,#02472d);border-color:#008655;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#008655;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#008655}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(16,185,129,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(16,185,129,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#008655}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Inter,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#008655;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;color:var(--hi)}.task-row select{background:#fff;border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;color:var(--hi);outline:none;font-family:Inter,sans-serif}
+.footer{max-width:1180px;margin:32px auto 0;padding:0 24px 32px;font-size:11.5px;color:var(--tert);line-height:1.5;border-top:1px solid var(--border);padding-top:18px;font-family:Inter,sans-serif}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="mark">RS</div>
+    <div>
+      <div class="htitle">Regency Supply &mdash; AI Commercial Lighting &amp; Electrical Workforce (concept)</div>
+      <div class="hsub">National Lighting &amp; Electrical Distribution &bull; Turnkey LED Retrofits &bull; Utility Rebate Administration</div>
+    </div>
+  </div>
+  <div class="badge">Simulated Operations &bull; <b>8 Operators Active</b></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tab-roster" onclick="switchTab('roster')">AI Operator Roster</button>
+  <button class="tab" id="tab-builder" onclick="switchTab('builder')">Add an Operator</button>
+</div>
+
+<div class="main">
+  <div id="view-roster">
+    <div class="lead">
+      Regency Supply makes commercial lighting and electrical supply easier through product-centric expertise, national distribution, and turnkey retrofit project management. This prototype demonstrates an <b>AI Workforce</b> of 12 autonomous specialist agents driving commercial sales, AGi32 photometric design, Title 24 compliance, utility rebate capture, and B2B material procurement.
+    </div>
+
+    <div class="legend">
+      <span><span class="tag commercial">Commercial Sales &amp; Retrofits</span> Sourcing, Rebates &amp; B2B Takeoffs</span>
+      <span><span class="tag operations">Design &amp; Supply Operations</span> Photometrics, Title 24 &amp; Staging</span>
+      <span><span class="tag hero">Flagship Operator</span> Turnkey Commercial LED Retrofit &amp; Rebate Engine</span>
+    </div>
+
+    <div class="econ" id="econ-strip"></div>
+
+    <div id="roster-container"></div>
+
+    <div class="run hidden" id="run-panel">
+      <div class="run-head">
+        <div class="avatar" id="run-avatar">--</div>
+        <div>
+          <div class="emp-name" id="run-name">Operator</div>
+          <div class="emp-title" id="run-title">Workflow Execution</div>
+        </div>
+      </div>
+      <div class="run-sub" id="run-sub">Target: Multi-agent execution loop</div>
+
+      <div class="run-input">
+        <textarea id="run-prompt"></textarea>
+        <button class="btn primary big" id="run-btn" onclick="executeRun()">Execute Run</button>
+      </div>
+
+      <div class="phases" id="run-phases">
+        <div class="ph" id="ph-1"><div class="dot">1</div><div class="l">Initialization</div></div>
+        <div class="ph" id="ph-2"><div class="dot">2</div><div class="l">Agent Execution</div></div>
+        <div class="ph" id="ph-3"><div class="dot">3</div><div class="l">Synthesis &amp; Output</div></div>
+      </div>
+
+      <div class="agent-grid" id="agent-grid"></div>
+
+      <div class="feed" id="run-feed"></div>
+
+      <div class="result hidden" id="run-result">
+        <div class="rstats">
+          <div style="font-weight:700;font-size:13px;margin-bottom:10px;color:var(--hi)">Execution Metrics</div>
+          <div class="rrow"><span class="k">Workflow</span><span class="v" id="res-wf">--</span></div>
+          <div class="rrow"><span class="k">Agents Engaged</span><span class="v" id="res-agents">--</span></div>
+          <div class="rrow"><span class="k">Execution Time</span><span class="v" id="res-time">--</span></div>
+          <div class="rrow"><span class="k">Tools Invoked</span><span class="v" id="res-tools">--</span></div>
+          <div class="rrow"><span class="k">Est. Time Saved</span><span class="v" id="res-saved">--</span></div>
+        </div>
+        <div class="rout">
+          <div class="rh" id="res-title">Deliverable Output</div>
+          <div class="rb" id="res-body"></div>
+        </div>
+      </div>
+
+      <div class="donebar hidden" id="run-donebar">
+        Execution complete. Output synthesized and logged to Regency Supply commercial project vault.
+      </div>
+    </div>
+  </div>
+
+  <div id="view-builder" class="hidden">
+    <div class="lead">
+      Compose a new AI Operator by mapping specialist agents to a Regency Supply operational workflow.
+    </div>
+
+    <div class="steps">
+      <div class="step active" id="st-1"><div class="n">STEP 1</div><div class="l">Select Target Workflow</div><div class="d">Pick base business process</div></div>
+      <div class="step" id="st-2"><div class="n">STEP 2</div><div class="l">Agent &amp; Tool Mapping</div><div class="d">Configure task assignments</div></div>
+      <div class="step" id="st-3"><div class="n">STEP 3</div><div class="l">Deploy Operator</div><div class="d">Assign operator identity</div></div>
+    </div>
+
+    <div id="bstep-1">
+      <div style="font-weight:700;font-size:14px;margin-bottom:12px;color:var(--hi)">Select Workflow Template</div>
+      <div class="wf-grid" id="wf-select-grid"></div>
+      <div style="margin-top:20px">
+        <button class="btn primary" onclick="goToStep(2)">Next: Map Agents &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-2" class="hidden">
+      <div style="font-weight:700;font-size:14px;margin-bottom:6px;color:var(--hi)" id="bstep2-wftitle">Configure Workflow Tasks</div>
+      <div style="font-size:12px;color:var(--tert);margin-bottom:16px">Assign a specialist agent to each workflow stage</div>
+      <div id="task-map-container"></div>
+      <div style="margin-top:20px;display:flex;gap:10px">
+        <button class="btn" onclick="goToStep(1)">&larr; Back</button>
+        <button class="btn primary" onclick="goToStep(3)">Next: Assign Operator &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-3" class="hidden">
+      <div style="font-weight:700;font-size:14px;margin-bottom:14px;color:var(--hi)">Operator Details</div>
+      <div style="max-width:480px;display:flex;flex-direction:column;gap:12px">
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--tert);display:block;margin-bottom:4px">Operator Name</label>
+          <input type="text" id="b-emp-name" value="Lighting &amp; Controls Manager" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;font-family:Inter,sans-serif">
+        </div>
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--tert);display:block;margin-bottom:4px">Role / Specialty Title</label>
+          <input type="text" id="b-emp-title" value="Commercial Lighting &amp; Retrofit Specialist" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;font-family:Inter,sans-serif">
+        </div>
+        <div style="margin-top:10px;display:flex;gap:10px">
+          <button class="btn" onclick="goToStep(2)">&larr; Back</button>
+          <button class="btn primary" onclick="deployOperator()">Deploy Operator to Roster</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  This interactive AI Workforce prototype is an illustrative simulation prepared for Regency Supply. All metrics, energy savings calculations, utility rebate figures, and submittal quotes are concept placeholders. Every AI output is human-reviewed prior to project commitment.
+</div>
+
+<script>
+const AGENT_ROLES = {
+  project_scout: { emoji: '🧲', label: 'Construction & Retrofit Lead Scout', tools: ['source_commercial_leads', 'save'] },
+  lighting_designer: { emoji: '💡', label: 'Commercial Lighting & Photometric Designer', tools: ['generate_photometric_layout', 'save'] },
+  retrofit_auditor: { emoji: '🔍', label: 'Turnkey LED Retrofit & Energy Auditor', tools: ['audit_facility_fixtures', 'save'] },
+  rebate_specialist: { emoji: '💵', label: 'Utility Rebate & Financial Incentive Analyst', tools: ['calculate_utility_rebates', 'save'] },
+  electrical_spec: { emoji: '⚡', label: 'Electrical Distribution & Switchgear Specifier', tools: ['specify_electrical_gear', 'save'] },
+  title24_compliance: { emoji: '📋', label: 'Title 24 & ASHRAE 90.1 Compliance Lead', tools: ['verify_lighting_controls', 'save'] },
+  supply_chain_logistics: { emoji: '📦', label: 'National Supply Chain & Inventory Coordinator', tools: ['optimize_branch_inventory', 'save'] },
+  b2b_estimator: { emoji: '🧮', label: 'B2B Takeoff & Material Quoting Specialist', tools: ['build_material_takeoff', 'save'] },
+  project_mgr: { emoji: '🏗️', label: 'New Construction & Remodel Project Manager', tools: ['schedule_site_delivery', 'save'] },
+  maintenance_lead: { emoji: '🔧', label: 'Facility Lighting Maintenance Lead', tools: ['plan_group_relamping', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'Commercial Proposal & RFP Lead', tools: ['compose_regency_proposal', 'save'] },
+  qa_reviewer: { emoji: '✅', label: 'Executive Quality & SLA Director', tools: ['qa_review_deliverable', 'save'] }
+};
+
+const WORKFLOWS = {
+  retrofit_lead_origination: {
+    name: 'Commercial Retrofit Opportunity Discovery',
+    title: 'Commercial Retrofit Opportunity Discovery & Energy Audit',
+    mode: 'dag',
+    track: 'commercial_sales',
+    deliverable: 'Commercial LED Retrofit Opportunity & Energy Payback Memo',
+    sample: 'Source 450,000 sq.ft. industrial warehouse and multi-site retail LED retrofit leads requiring baseline fixture audits and utility rebate feasibility.',
+    desc: 'Automates commercial retrofit lead sourcing, baseline fixture inventory audits, utility rebate pre-screenings, and energy payback memos.',
+    tasks: [
+      { agent: 'project_scout', task: 'Source commercial real estate & multi-site retail LED retrofit leads', deps: [] },
+      { agent: 'retrofit_auditor', task: 'Conduct baseline fixture inventory and kw/h energy consumption audit', deps: [0] },
+      { agent: 'rebate_specialist', task: 'Model utility rebate eligibility (utility incentives, 179D tax deductions)', deps: [1] },
+      { agent: 'proposal_writer', task: 'Draft initial LED retrofit feasibility report and payback analysis', deps: [2] }
+    ]
+  },
+  turnkey_led_retrofit_proposal: {
+    name: 'Turnkey Commercial LED Retrofit Proposal',
+    title: 'Turnkey Commercial LED Retrofit & Utility Rebate Engine',
+    mode: 'dag',
+    track: 'commercial_sales',
+    tag: 'flagship',
+    deliverable: 'Turnkey Commercial LED Retrofit & Utility Rebate Proposal',
+    sample: 'Formulate a turnkey commercial LED retrofit proposal across 8 office and retail facilities (820,000 sq.ft.) with Title 24 compliance and pre-approved rebates.',
+    desc: 'Flagship DAG workflow orchestrating RFP evaluation, fixture audits, photometric design, Title 24 compliance, utility rebate administration, B2B pricing, and executive proposal synthesis.',
+    tasks: [
+      { agent: 'project_scout', task: 'Evaluate RFP specifications for multi-site warehouse and retail LED retrofit', deps: [] },
+      { agent: 'retrofit_auditor', task: 'Perform on-site fixture audit, foot-candle level mapping, and thermal inspection', deps: [0] },
+      { agent: 'lighting_designer', task: 'Specify high-efficiency LED luminaires, occupancy sensors, and daylight harvesting', deps: [1] },
+      { agent: 'title24_compliance', task: 'Verify Title 24, ASHRAE 90.1, and DLC Premium certification compliance', deps: [2] },
+      { agent: 'rebate_specialist', task: 'Maximize local utility custom rebates and IRS 179D tax deductions', deps: [2, 3] },
+      { agent: 'b2b_estimator', task: 'Calculate turnkey material costs, labor installation estimates, and ROI payback curves', deps: [4] },
+      { agent: 'proposal_writer', task: 'Assemble master commercial proposal, luminaire cut sheets, and rebate guarantees', deps: [5] },
+      { agent: 'qa_reviewer', task: 'Executive review of financial ROI, rebate commitments, and project delivery SLAs', deps: [6] }
+    ]
+  },
+  b2b_takeoff_quoting: {
+    name: 'Electrical & Lighting Material Takeoffs',
+    title: 'Electrical & Lighting Material Takeoff Quoting Engine',
+    mode: 'sequential',
+    track: 'commercial_sales',
+    deliverable: 'B2B Electrical & Lighting Material Takeoff Quote',
+    sample: 'Build a blueprint material takeoff quote for 1,200 architectural LED troffers, high-bays, and 2000A switchgear packages.',
+    desc: 'Performs blueprint material takeoffs, checks national distribution warehouse stock, and issues tiered B2B pricing quotes.',
+    tasks: [
+      { agent: 'b2b_estimator', task: 'Perform blueprint material takeoff for commercial electrical & lighting packages', deps: [] },
+      { agent: 'supply_chain_logistics', task: 'Check nationwide warehouse inventory, factory lead times, and branch staging', deps: [0] },
+      { agent: 'proposal_writer', task: 'Generate formal B2B pricing quote, volume tiered discounts, and delivery schedule', deps: [1] },
+      { agent: 'qa_reviewer', task: 'Validate gross margin compliance, freight terms, and price lock guarantees', deps: [2] }
+    ]
+  },
+  lighting_market_radar: {
+    name: 'Lighting Market & Energy Code Radar',
+    title: 'Commercial Lighting Market & Energy Code Intelligence Radar',
+    mode: 'dag',
+    track: 'commercial_sales',
+    deliverable: 'Commercial Lighting Market & Energy Code Intelligence Radar',
+    sample: 'Track evolving commercial lighting energy codes (Title 24 2026, IECC) and competitive distributor service offerings.',
+    desc: 'Monitors commercial lighting market trends, energy code updates, utility program changes, and competitive differentiation.',
+    tasks: [
+      { agent: 'project_scout', task: 'Monitor commercial lighting distributor market trends and manufacturer rebates', deps: [] },
+      { agent: 'title24_compliance', task: 'Track evolving energy codes (Title 24 2026, IECC, Dark Sky compliance)', deps: [0] },
+      { agent: 'proposal_writer', task: 'Draft competitive differentiation matrix for Regency Supply turnkey services', deps: [1] }
+    ]
+  },
+  photometric_lighting_design: {
+    name: 'AGi32 Photometric Design & Layout',
+    title: 'Commercial Photometric Lighting Design & Layout',
+    mode: 'sequential',
+    track: 'design_operations',
+    deliverable: 'AGi32 Photometric Lighting Design & Layout Package',
+    sample: 'Generate AGi32 photometric renderings and foot-candle illumination layouts for a 35,000 sq.ft. commercial corporate headquarters.',
+    desc: 'Architects AGi32 photometric layouts, specifies dimming protocols and emergency ballasts, and verifies lighting power density (LPD).',
+    tasks: [
+      { agent: 'lighting_designer', task: 'Generate AGi32 photometric renderings and foot-candle illumination layouts', deps: [] },
+      { agent: 'electrical_spec', task: 'Specify branch circuit wiring, dimming protocols (0-10V, DALI-2), and emergency ballasts', deps: [0] },
+      { agent: 'title24_compliance', task: 'Audit lighting power density (LPD) watts/sq.ft. against regional energy codes', deps: [1] },
+      { agent: 'qa_reviewer', task: 'Review visual render accuracy, glare ratings (UGR), and architectural design intent', deps: [2] }
+    ]
+  },
+  new_construction_procurement: {
+    name: 'New Construction & Remodel Procurement',
+    title: 'New Construction & Remodel Procurement Management',
+    mode: 'sequential',
+    track: 'design_operations',
+    deliverable: 'New Construction Electrical & Lighting Procurement Dossier',
+    sample: 'Manage electrical submittals and staged jobsite delivery for a new multi-story medical office building development.',
+    desc: 'Reviews general contractor construction schedules, manages electrical submittals, and coordinates JIT jobsite deliveries.',
+    tasks: [
+      { agent: 'project_mgr', task: 'Review general contractor construction schedules and submittal packages', deps: [] },
+      { agent: 'electrical_spec', task: 'Specify main distribution panels, switchgear, transformers, and conduit packages', deps: [0] },
+      { agent: 'supply_chain_logistics', task: 'Coordinate just-in-time (JIT) jobsite staging across regional fulfillment centers', deps: [1] },
+      { agent: 'qa_reviewer', task: 'Verify submittal approval compliance, damage-free freight guarantees, and field support SLAs', deps: [2] }
+    ]
+  },
+  facility_relamping_maint: {
+    name: 'Multi-Site Facility Maintenance',
+    title: 'Multi-Site Facility Lighting Maintenance & Group Relamping',
+    mode: 'dag',
+    track: 'design_operations',
+    deliverable: 'Multi-Site Facility Maintenance & Group Relamping Scorecard',
+    sample: 'Audit multi-site facility maintenance tickets for 140 retail locations and configure automated SKU replenishment.',
+    desc: 'Audits multi-site maintenance tickets, automates replacement stock replenishment, and files ongoing LED utility rebate claims.',
+    tasks: [
+      { agent: 'maintenance_lead', task: 'Audit commercial retail & hospitality multi-site maintenance tickets', deps: [] },
+      { agent: 'supply_chain_logistics', task: 'Configure automated replacement stock reordering and branch pickup kits', deps: [0] },
+      { agent: 'rebate_specialist', task: 'File ongoing maintenance LED replacement rebate claims with regional utilities', deps: [0] },
+      { agent: 'proposal_writer', task: 'Compile quarterly maintenance service report and energy savings scorecard', deps: [1, 2] }
+    ]
+  },
+  smart_lighting_controls: {
+    name: 'Smart Lighting Controls & IoT Integration',
+    title: 'Smart Lighting Controls & Title 24 Commissioning',
+    mode: 'dag',
+    track: 'design_operations',
+    deliverable: 'Smart Networked Lighting Controls & Title 24 Commissioning Guide',
+    sample: 'Design a Bluetooth mesh networked lighting control system with automated demand response and Title 24 occupancy sensing.',
+    desc: 'Architects networked wireless lighting controls, configures automated demand response (ADR), and issues commissioning guides.',
+    tasks: [
+      { agent: 'lighting_designer', task: 'Architect networked wireless lighting controls (NLC) and Bluetooth mesh topology', deps: [] },
+      { agent: 'title24_compliance', task: 'Configure automated demand response (ADR) and occupant auto-shutoff logic', deps: [0] },
+      { agent: 'electrical_spec', task: 'Specify control gateways, power packs, and sensor commissioning protocols', deps: [0] },
+      { agent: 'proposal_writer', task: 'Produce smart lighting commissioning manual and energy analytics guide', deps: [1, 2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  retrofit_lead_origination: 'Commercial LED Retrofit Opportunity & Energy Payback Memo',
+  turnkey_led_retrofit_proposal: 'Turnkey Commercial LED Retrofit & Utility Rebate Proposal',
+  b2b_takeoff_quoting: 'B2B Electrical & Lighting Material Takeoff Quote',
+  lighting_market_radar: 'Commercial Lighting Market & Energy Code Intelligence Radar',
+  photometric_lighting_design: 'AGi32 Photometric Lighting Design & Layout Package',
+  new_construction_procurement: 'New Construction Electrical & Lighting Procurement Dossier',
+  facility_relamping_maint: 'Multi-Site Facility Maintenance & Group Relamping Scorecard',
+  smart_lighting_controls: 'Smart Networked Lighting Controls & Title 24 Commissioning Guide'
+};
+
+const TOOLS = {
+  source_commercial_leads: () => 'Sourced 24 commercial real estate & multi-site retail LED retrofit leads totaling 1.8M sq.ft.',
+  audit_facility_fixtures: () => 'Audited 3,850 fluorescent & HID fixtures; current annual baseline energy cost $412,000.',
+  calculate_utility_rebates: () => 'Utility rebate pre-approval secured: $128,400 in direct custom rebates + 179D tax deductions.',
+  generate_photometric_layout: () => 'AGi32 photometric render completed: 50 FC average maintained, 0.28 LPD (W/sq.ft.), UGR <16.',
+  specify_electrical_gear: () => 'Specified 480V/277V distribution panels, NEMA 3R enclosures, 0-10V dimming drivers, and emergency backup.',
+  verify_lighting_controls: () => 'Title 24 & ASHRAE 90.1 occupancy, multi-level dimming, and daylight harvesting controls verified.',
+  optimize_branch_inventory: () => 'Cross-referenced 4 regional warehouses: 100% material available for 48-hr jobsite staging.',
+  build_material_takeoff: () => 'B2B takeoff complete: 1,420 LED troffers, high-bays, and sensor packs quoted with tiered volume pricing.',
+  schedule_site_delivery: () => 'Staged JIT delivery schedule aligned with electrical contractor phasing across 6 jobsite locations.',
+  plan_group_relamping: () => 'Group relamping strategy scheduled for 42 retail locations; reduced maintenance calls by 68%.',
+  compose_regency_proposal: () => 'Drafted 34-page turnkey proposal with energy savings ROI model, warranty terms, and rebate filings.',
+  qa_review_deliverable: () => 'Executive SLA check passed; zero foot-candle deviations or code non-compliance issues found.',
+  save: () => 'Artifact logged to secure Regency Supply project vault with full audit trail.'
+};
+
+const FINAL = {
+  retrofit_lead_origination: 'REGENCY SUPPLY — COMMERCIAL LED RETROFIT OPPORTUNITY & PAYBACK MEMO\nTarget Facility: Regional Logistics & Warehouse Center | Location: Southern California Hub\nScope: 450,000 sq.ft. Industrial Warehouse & Distribution Facility\n\n1. BASELINE FIXTURE AUDIT\n   - Existing Fixtures: 1,280 Metal Halide (400W) & T8 Fluorescent High-Bays\n   - Current Energy Consumption: 1,185,000 kWh / year\n   - Baseline Annual Utility Cost: $237,000 / year (at $0.20/kWh average)\n\n2. PROPOSED REGENCY LED SOLUTIONS\n   - Upgrade Specs: High-efficacy LED High-Bays (140lm/W) + Integrated Occupancy & Daylight Sensors\n   - Projected Energy Consumption: 385,000 kWh / year (67.5% reduction)\n   - Annual Energy Savings: $160,000 / year\n\n3. FINANCIAL ROI & REBATE INCENTIVES\n   - Equipment & Labor Turnkey Cost: $245,000\n   - Utility Rebate Incentive (Local Utility Custom Program): $78,000\n   - Net Capital Outlay: $167,000\n   - Estimated Simple Payback Period: 1.04 Years (12.5 Months)\n\nNOTE: Illustrative prototype output generated by Regency Supply AI Workforce. All project figures subject to on-site engineering audit.',
+
+  turnkey_led_retrofit_proposal: 'REGENCY SUPPLY — TURNKEY COMMERCIAL LED RETROFIT & UTILITY REBATE PROPOSAL\nClient: Pacific Commercial Real Estate Group | Scope: 8 Commercial Office & Retail Facilities\nFlagship Service: Turnkey Energy Retrofit, Utility Rebate Management & Photometric Design\n\n1. EXECUTIVE SUMMARY\n   - Facilities Covered: 8 locations across California & Arizona (820,000 total sq.ft.)\n   - Solution Scope: Complete LED luminaire retrofit, smart lighting controls, utility rebate administration\n   - Guaranteed Luminaire Warranty: 10-Year Regency Supply Comprehensive Warranty\n\n2. ENERGY PERFORMANCE & LIGHTING DESIGN\n   - Total Fixtures Replaced: 4,650 Commercial Troffers, Downlights, and Exterior Area Lights\n   - Light Level Optimization: 50 FC maintained in office areas; UGR glare rating <16\n   - Annual Energy Reduction: 2,450,000 kWh / year (64% energy savings)\n   - Annual CO2 Reduction: 1,735 metric tons CO2 equivalent\n\n3. FINANCIAL SUMMARY & REBATE ADMINISTRATION\n   - Gross Turnkey Project Cost: $890,000\n   - Local Utility Custom Rebates (Pre-Approved): $265,000\n   - Estimated Section 179D Federal Energy Tax Deduction: $115,000\n   - Net Outlay After Incentives: $510,000\n   - Simple Payback: 1.4 Years | 10-Year Net Cash Flow: +$3,280,000\n\n4. PROJECT IMPLEMENTATION SLA\n   - Turnkey Execution Schedule: 6-Week phased installation with zero business interruption\n   - Regency Dedicated Project Manager: Single point of contact from procurement to final rebate check delivery\n\nNOTE: Illustrative prototype output generated by Regency Supply AI Workforce. All project figures subject to on-site engineering audit.',
+
+  b2b_takeoff_quoting: 'REGENCY SUPPLY — B2B ELECTRICAL & LIGHTING MATERIAL TAKEOFF QUOTE\nPrepared For: Apex Electrical Contractors | Project: Metro Logistics Park Phase 2\n\n1. MATERIAL TAKEOFF SUMMARY\n   - 2x4 Architectural LED Troffers (0-10V Dimming, Selectable CCT/Wattage): 1,200 units @ $68.50\n   - High-Bay Industrial LED Luminaires (24,000 lumens, Motion Sensor Ready): 450 units @ $142.00\n   - Commercial Switchgear Package (480/277V 2000A Main Panel + Transformers): 1 lot @ $115,000\n   - Conduit, Wire & Wiring Device Package: 1 lot @ $48,500\n\n2. COMMERCIAL TERMS & LOGISTICS\n   - Total Quoted Amount: $309,600 (includes tiered B2B volume discount)\n   - Delivery SLA: 48-Hour Staged Delivery from Regency Regional Distribution Center\n   - Price Lock Guarantee: 90 Days from quotation date\n\nNOTE: Illustrative prototype output generated by Regency Supply AI Workforce. All project figures subject to on-site engineering audit.',
+
+  lighting_market_radar: 'REGENCY SUPPLY — COMMERCIAL LIGHTING MARKET & ENERGY CODE BRIEFING\nQuarter: Q4 2026 | Focus: Evolving Title 24, ASHRAE 90.1 & LED Market Trends\n\n1. REGULATORY CODE UPDATES\n   - California Title 24 2026: Stricter LPD limits for warehouse and office spaces; mandatory automatic daylighting control in spaces >100 sq.ft.\n   - Utility Rebate Shifts: Transitioning from prescriptive to custom kWh performance rebates; early application required\n\n2. REGENCY SUPPLY COMPETITIVE ADVANTAGE\n   - Product-Centric Expertise: Specialized lighting design teams vs general distributor order-takers\n   - Turnkey Rebate Processing: In-house rebate team manages application, inspection, and check collection\n\nNOTE: Illustrative prototype output generated by Regency Supply AI Workforce. All project figures subject to on-site engineering audit.',
+
+  photometric_lighting_design: 'REGENCY SUPPLY — AGi32 PHOTOMETRIC LIGHTING DESIGN & LAYOUT PACKAGE\nTarget Facility: Corporate Headquarters Open Office | Area: 35,000 sq.ft.\n\n1. PHOTOMETRIC CALCULATION RESULTS\n   - Average Maintained Foot-Candles: 48.6 FC at workplane height (30" AFF)\n   - Max-to-Min Uniformity Ratio: 1.35 : 1 (EXCELLENT uniformity)\n   - Calculated Lighting Power Density (LPD): 0.31 Watts/sq.ft. (52% below Title 24 maximum limit)\n\n2. FIXTURE SCHEDULE & CONTROL LOGIC\n   - Type A: Direct/Indirect Architectural Linear LED Pendulum (3500K, CRI 90+)\n   - Control System: 0-10V Wireless Mesh Occupancy + Daylight Harvesting Sensors\n\nNOTE: Illustrative prototype output generated by Regency Supply AI Workforce. All project figures subject to on-site engineering audit.',
+
+  new_construction_procurement: 'REGENCY SUPPLY — NEW CONSTRUCTION ELECTRICAL & LIGHTING PROCUREMENT DOSSIER\nProject: Horizon Medical Office Building | General Contractor: Turner Construction\n\n1. PROCUREMENT & SUBMITTAL STATUS\n   - Lighting Fixture Submittals: Approved by Architect/Engineer (100% Compliant)\n   - Switchgear & Panelboards: Factory release confirmed; ship date aligned with slab completion\n   - Emergency Lighting Systems: UL 924 emergency transfer switches approved\n\n2. JOBSITE LOGISTICS & STAGING\n   - Palletized Phase Deliveries: 4 scheduled drops keyed to floor-by-floor rough-in schedule\n   - Regency On-Site Support: Dedicated staging coordinator assigned for unloading and inventory audit\n\nNOTE: Illustrative prototype output generated by Regency Supply AI Workforce. All project figures subject to on-site engineering audit.',
+
+  facility_relamping_maint: 'REGENCY SUPPLY — MULTI-SITE FACILITY MAINTENANCE & RELAMPING SCORECARD\nClient: National Retail Chain | Monitored Locations: 140 Stores Nationwide\n\n1. MAINTENANCE FLEET PERFORMANCE\n   - Maintenance Ticket Resolution Time: Average 24.5 hours from request to delivery\n   - Stock Out Rate: 0.2% across top 50 SKU lamp & driver inventory\n   - Quarterly Maintenance Savings: $42,500 saved through standardized LED SKU consolidation\n\n2. UTILITY REBATE RECOVERY\n   - Maintenance LED Replacements Filed: 1,840 lamps/drivers\n   - Rebate Check Collected: $18,400 disbursed back to client facility budget\n\nNOTE: Illustrative prototype output generated by Regency Supply AI Workforce. All project figures subject to on-site engineering audit.',
+
+  smart_lighting_controls: 'REGENCY SUPPLY — SMART NETWORKED LIGHTING CONTROLS COMMISSIONING GUIDE\nTarget Facility: Multi-Tenant Commercial Tower | System: Bluetooth Mesh Networked Controls\n\n1. CONTROL SYSTEM TOPOLOGY\n   - Control Protocol: Bluetooth Mesh Wireless with DALI-2 fixture integration\n   - Energy Management Features: Task tuning, occupant auto-off (5-min timeout), automated demand response (ADR)\n   - Title 24 Compliance: Fully certified for mandatory multi-level dimming and daylight zone control\n\n2. ENERGY ANALYTICS & SAVINGS\n   - Advanced Controls Uplift: Additional 22% energy savings beyond base LED upgrade\n   - Facility Dashboard: Real-time floor-by-floor occupancy and energy consumption telemetry\n\nNOTE: Illustrative prototype output generated by Regency Supply AI Workforce. All project figures subject to on-site engineering audit.'
+};
+
+const EMPLOYEES = [
+  { id: 'retrofit-lead-scout', name: 'Retrofit Lead Scout', title: 'Commercial Business Lead', wf: 'retrofit_lead_origination', handled: 48, hrs: 5.2, win: '4.2x Pipeline' },
+  { id: 'turnkey-retrofit-director', name: 'Turnkey Retrofit Director', title: 'Flagship Operator', wf: 'turnkey_led_retrofit_proposal', handled: 32, hrs: 19.5, win: '84% Win Rate' },
+  { id: 'takeoff-quoting-specialist', name: 'Takeoff Quoting Specialist', title: 'B2B Estimating Lead', wf: 'b2b_takeoff_quoting', handled: 74, hrs: 3.5, win: '15 Min Turnaround' },
+  { id: 'lighting-market-analyst', name: 'Lighting Market Analyst', title: 'Market Radar Lead', wf: 'lighting_market_radar', handled: 105, hrs: 2.0, win: '100% Coverage' },
+  { id: 'photometric-design-lead', name: 'Photometric Design Lead', title: 'AGi32 Design Principal', wf: 'photometric_lighting_design', handled: 56, hrs: 11.0, win: 'Zero Glare AGi32' },
+  { id: 'construction-procurement-mgr', name: 'Construction Procurement Mgr', title: 'JIT Logistics Lead', wf: 'new_construction_procurement', handled: 41, hrs: 16.2, win: '99.4% On-Time JIT' },
+  { id: 'facility-relamping-auditor', name: 'Facility Relamping Auditor', title: 'Multi-Site Maintenance', wf: 'facility_relamping_maint', handled: 68, hrs: 4.8, win: '45% Energy Cut' },
+  { id: 'smart-controls-architect', name: 'Smart Controls Architect', title: 'IoT & Title 24 Lead', wf: 'smart_lighting_controls', handled: 37, hrs: 12.5, win: 'Title 24 Compliant' }
+];
+
+const TRACKS = [
+  ['commercial_sales', 'Commercial Sales & Turnkey Retrofits'],
+  ['design_operations', 'Design & Supply Operations']
+];
+
+let activeEmpId = null;
+let currentRunWf = null;
+let selectedWfKey = 'retrofit_lead_origination';
+
+function init(){
+  renderEcon();
+  renderRoster();
+  renderBuilderWfGrid();
+}
+
+function renderEcon(){
+  const totalH = EMPLOYEES.reduce((a,b)=>a+b.handled,0);
+  const totalHrs = EMPLOYEES.reduce((a,b)=>a+(b.handled*b.hrs),0);
+  const estVal = Math.round(totalHrs * 135);
+
+  document.getElementById('econ-strip').innerHTML = `
+    <div class="cell"><div class="v">${totalH}</div><div class="k">Projects &amp; Retrofits Completed</div></div>
+    <div class="cell"><div class="v">${totalHrs.toLocaleString()} <span class="u">hrs</span></div><div class="k">Engineering &amp; Sales Time Saved</div></div>
+    <div class="cell"><div class="v">$${(estVal/1000).toFixed(1)}k</div><div class="k">Estimated Value Generated</div></div>
+    <div class="cell"><div class="v">99.6<span class="u">%</span></div><div class="k">Title 24 &amp; Rebate Compliance</div></div>
+  `;
+}
+
+function renderRoster(){
+  const cont = document.getElementById('roster-container');
+  cont.innerHTML = '';
+
+  TRACKS.forEach(([tKey, tLabel]) => {
+    const emps = EMPLOYEES.filter(e => {
+      const wf = WORKFLOWS[e.wf];
+      return wf && wf.track === tKey;
+    });
+
+    if(emps.length === 0) return;
+
+    const sec = document.createElement('div');
+    sec.innerHTML = `<div class="slabel">${tLabel}</div>`;
+    const grid = document.createElement('div');
+    grid.className = 'roster';
+
+    emps.forEach(emp => {
+      grid.appendChild(createEmpCard(emp));
+    });
+
+    sec.appendChild(grid);
+    cont.appendChild(sec);
+  });
+
+  const hireCard = document.createElement('div');
+  hireCard.className = 'hire-card';
+  hireCard.onclick = () => switchTab('builder');
+  hireCard.innerHTML = `
+    <div class="plus">+</div>
+    <div class="h">Add Custom AI Operator</div>
+    <div class="p">Compose a new team of specialist agents for custom lighting and electrical workflows</div>
+  `;
+  cont.appendChild(hireCard);
+}
+
+function createEmpCard(emp){
+  const wf = WORKFLOWS[emp.wf];
+  const card = document.createElement('div');
+  const isHero = wf && wf.tag === 'flagship';
+  card.className = `emp ${isHero ? 'hero' : ''} ${emp.id === activeEmpId ? 'working' : ''}`;
+  card.id = `card-${emp.id}`;
+
+  const initials = emp.name.split(' ').map(n=>n[0]).join('').substring(0,2);
+  const agentChips = wf ? wf.tasks.map(t => {
+    const a = AGENT_ROLES[t.agent];
+    return `<span class="chip">${a ? a.emoji : ''} ${a ? a.label : t.agent}</span>`;
+  }).join('') : '';
+
+  card.innerHTML = `
+    <div class="emp-top">
+      <div class="avatar">${initials}</div>
+      <div>
+        <div class="emp-name">${emp.name} ${isHero ? '<span class="tag hero">Flagship</span>' : ''}</div>
+        <div class="emp-title">${emp.title}</div>
+      </div>
+    </div>
+    <div class="emp-owns">Owns: <b>${wf ? wf.name : emp.wf}</b></div>
+    <div class="team">${agentChips}</div>
+    <div class="emp-stats">
+      <div class="st">Runs<b>${emp.handled}</b></div>
+      <div class="st">Time Saved<b>${(emp.handled * emp.hrs).toFixed(0)} hrs</b></div>
+      <div class="st">Headline Metric<b>${emp.win}</b></div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" onclick="setupRun('${emp.id}')">Run Operator Workflow</button>
+    </div>
+  `;
+
+  return card;
+}
+
+function switchTab(t){
+  document.getElementById('tab-roster').classList.toggle('active', t==='roster');
+  document.getElementById('tab-builder').classList.toggle('active', t==='builder');
+  document.getElementById('view-roster').classList.toggle('hidden', t!=='roster');
+  document.getElementById('view-builder').classList.toggle('hidden', t!=='builder');
+}
+
+function setupRun(empId){
+  const emp = EMPLOYEES.find(e => e.id === empId);
+  if(!emp) return;
+
+  activeEmpId = empId;
+  const wf = WORKFLOWS[emp.wf];
+  currentRunWf = wf;
+
+  renderRoster();
+
+  const panel = document.getElementById('run-panel');
+  panel.classList.remove('hidden');
+  panel.scrollIntoView({ behavior: 'smooth' });
+
+  const initials = emp.name.split(' ').map(n=>n[0]).join('').substring(0,2);
+  document.getElementById('run-avatar').innerText = initials;
+  document.getElementById('run-name').innerText = emp.name;
+  document.getElementById('run-title').innerText = `Executing: ${wf.title}`;
+  document.getElementById('run-sub').innerText = wf.desc;
+  document.getElementById('run-prompt').value = wf.sample;
+
+  document.getElementById('run-phases').querySelectorAll('.ph').forEach(p=>p.className='ph');
+  document.getElementById('ph-1').classList.add('active');
+
+  const grid = document.getElementById('agent-grid');
+  grid.innerHTML = '';
+  wf.tasks.forEach((t, i) => {
+    const a = AGENT_ROLES[t.agent];
+    const ac = document.createElement('div');
+    ac.className = 'acard';
+    ac.id = `acard-${i}`;
+    ac.innerHTML = `
+      <div class="ae">${a ? a.emoji : '🤖'}</div>
+      <div class="ar">${a ? a.label : t.agent}</div>
+      <div class="at">${t.task}</div>
+      <div class="as"><div class="sd"></div><span id="astat-${i}">Queued</span></div>
+    `;
+    grid.appendChild(ac);
+  });
+
+  document.getElementById('run-feed').innerHTML = '';
+  document.getElementById('run-result').classList.add('hidden');
+  document.getElementById('run-donebar').classList.add('hidden');
+  document.getElementById('run-btn').disabled = false;
+}
+
+let runTimer = null;
+
+function executeRun(){
+  if(!currentRunWf) return;
+  document.getElementById('run-btn').disabled = true;
+
+  document.getElementById('ph-1').className = 'ph done';
+  document.getElementById('ph-2').className = 'ph active';
+
+  const feed = document.getElementById('run-feed');
+  feed.innerHTML = '';
+
+  const wf = currentRunWf;
+  const tasks = wf.tasks;
+  let idx = 0;
+
+  function logRow(agentName, msg){
+    const row = document.createElement('div');
+    row.className = 'frow';
+    const now = new Date();
+    const timeStr = now.toTimeString().split(' ')[0] + '.' + String(now.getMilliseconds()).padStart(3,'0');
+    row.innerHTML = `<span class="ft">${timeStr}</span><span class="fa">${agentName}</span><span class="fd">${msg}</span>`;
+    feed.appendChild(row);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  logRow('System', `Initializing multi-agent graph: ${wf.name}`);
+
+  runTimer = setInterval(() => {
+    if(idx < tasks.length){
+      const t = tasks[idx];
+      const a = AGENT_ROLES[t.agent];
+      const aName = a ? a.label : t.agent;
+
+      if(idx > 0){
+        const prevCard = document.getElementById(`acard-${idx-1}`);
+        if(prevCard){
+          prevCard.className = 'acard done';
+          document.getElementById(`astat-${idx-1}`).innerText = 'Completed';
+        }
+      }
+
+      const card = document.getElementById(`acard-${idx}`);
+      if(card){
+        card.className = 'acard running visible';
+        document.getElementById(`astat-${idx}`).innerText = 'Executing...';
+      }
+
+      logRow(aName, `Task: ${t.task}`);
+
+      if(a && a.tools){
+        a.tools.forEach(tk => {
+          if(TOOLS[tk]){
+            logRow(aName, `Tool [${tk}]: ${TOOLS[tk]()}`);
+          }
+        });
+      }
+
+      idx++;
+    } else {
+      clearInterval(runTimer);
+
+      const lastCard = document.getElementById(`acard-${tasks.length-1}`);
+      if(lastCard){
+        lastCard.className = 'acard done';
+        document.getElementById(`astat-${tasks.length-1}`).innerText = 'Completed';
+      }
+
+      document.getElementById('ph-2').className = 'ph done';
+      document.getElementById('ph-3').className = 'ph done';
+
+      logRow('System', 'Workflow execution complete. Synthesizing deliverable artifact.');
+
+      showResult();
+    }
+  }, 900);
+}
+
+function showResult(){
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = currentRunWf;
+  const wfKey = emp ? emp.wf : 'retrofit_lead_origination';
+
+  document.getElementById('res-wf').innerText = wf.name;
+  document.getElementById('res-agents').innerText = wf.tasks.length;
+  document.getElementById('res-time').innerText = '4.1s (Simulated)';
+  document.getElementById('res-tools').innerText = wf.tasks.length * 2;
+  document.getElementById('res-saved').innerText = `~${emp ? emp.hrs : 12} hrs`;
+
+  document.getElementById('res-title').innerText = DTITLE[wfKey] || 'Deliverable Artifact';
+  document.getElementById('res-body').innerText = FINAL[wfKey] || 'Output complete.';
+
+  document.getElementById('run-result').classList.remove('hidden');
+  document.getElementById('run-donebar').classList.remove('hidden');
+  document.getElementById('run-btn').disabled = false;
+}
+
+function renderBuilderWfGrid(){
+  const grid = document.getElementById('wf-select-grid');
+  grid.innerHTML = '';
+
+  Object.keys(WORKFLOWS).forEach(key => {
+    const wf = WORKFLOWS[key];
+    const card = document.createElement('div');
+    card.className = `wf ${key === selectedWfKey ? 'sel' : ''}`;
+    card.onclick = () => {
+      selectedWfKey = key;
+      renderBuilderWfGrid();
+    };
+    card.innerHTML = `
+      <div class="wn">${wf.name} ${wf.tag==='flagship' ? '<span class="tag hero">Flagship</span>' : ''}</div>
+      <div class="wd">${wf.desc}</div>
+      <div class="wm">${wf.mode.toUpperCase()} &bull; ${wf.tasks.length} TASKS</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function goToStep(s){
+  document.getElementById('st-1').classList.toggle('active', s===1);
+  document.getElementById('st-2').classList.toggle('active', s===2);
+  document.getElementById('st-3').classList.toggle('active', s===3);
+
+  document.getElementById('bstep-1').classList.toggle('hidden', s!==1);
+  document.getElementById('bstep-2').classList.toggle('hidden', s!==2);
+  document.getElementById('bstep-3').classList.toggle('hidden', s!==3);
+
+  if(s === 2){
+    const wf = WORKFLOWS[selectedWfKey];
+    document.getElementById('bstep2-wftitle').innerText = `Configure Tasks: ${wf.name}`;
+    const cont = document.getElementById('task-map-container');
+    cont.innerHTML = '';
+
+    wf.tasks.forEach((t, i) => {
+      const row = document.createElement('div');
+      row.className = 'task-row';
+
+      let optionsHTML = '';
+      Object.keys(AGENT_ROLES).forEach(ak => {
+        const a = AGENT_ROLES[ak];
+        const sel = ak === t.agent ? 'selected' : '';
+        optionsHTML += `<option value="${ak}" ${sel}>${a.emoji} ${a.label}</option>`;
+      });
+
+      row.innerHTML = `
+        <div class="tn">${i+1}</div>
+        <div class="tt">${t.task}</div>
+        <select id="sel-task-${i}">${optionsHTML}</select>
+      `;
+      cont.appendChild(row);
+    });
+  }
+}
+
+function deployOperator(){
+  const name = document.getElementById('b-emp-name').value.trim() || 'New Operator';
+  const title = document.getElementById('b-emp-title').value.trim() || 'Custom Specialist';
+
+  const newId = 'custom-op-' + Date.now();
+  EMPLOYEES.push({
+    id: newId,
+    name: name,
+    title: title,
+    wf: selectedWfKey,
+    handled: 1,
+    hrs: 10.0,
+    win: 'Newly Deployed'
+  });
+
+  renderEcon();
+  renderRoster();
+  switchTab('roster');
+  setupRun(newId);
+}
+
+window.onload = init;
+</script>
+</body>
+</html>
