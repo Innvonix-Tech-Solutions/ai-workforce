@@ -309,3 +309,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/class-ic
 https://innvonix-tech-solutions.github.io/ai-workforce/regency-supply
 https://innvonix-tech-solutions.github.io/ai-workforce/trackonomy
 https://innvonix-tech-solutions.github.io/ai-workforce/dmf-lighting
+https://innvonix-tech-solutions.github.io/ai-workforce/avpro
