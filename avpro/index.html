@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AVPro Global Holdings &mdash; AI Pro AV &amp; Commercial Systems Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f4f6f9;--surface2:#ffebee;--border:#e2e8f0;--accent:#d32f2f;
+--accent-dim:rgba(211,47,47,.08);--accent-line:rgba(211,47,47,.30);--slate:#121921;--slate-line:rgba(18,25,33,.30);--text:#1e293b;--hi:#0f172a;--tert:#64748b;--ok:#10b981;--ok-dim:rgba(16,185,129,.10);--gold:#d97706;--gold-bg:#fef3c7;--gold-line:#fde68a}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:48px;height:34px;border-radius:8px;background:linear-gradient(135deg,#d32f2f,#121921);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:12px;letter-spacing:.5px;font-family:Inter,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#d32f2f}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:900px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#d32f2f;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(16,185,129,.08);color:#059669;border:1px solid rgba(16,185,129,.3)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#d32f2f}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#d32f2f;font-size:15px;flex-shrink:0;position:relative;font-family:Inter,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#d32f2f}.btn.primary{background:linear-gradient(270deg,#d32f2f,#9a0007);border-color:#d32f2f;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#d32f2f;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#d32f2f}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(16,185,129,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(16,185,129,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#d32f2f}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Inter,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#d32f2f;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;color:var(--hi)}.task-row select{background:#fff;border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;color:var(--hi);outline:none;font-family:Inter,sans-serif}
+.footer{max-width:1180px;margin:32px auto 0;padding:0 24px 32px;font-size:11.5px;color:var(--tert);line-height:1.5;border-top:1px solid var(--border);padding-top:18px;font-family:Inter,sans-serif}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="mark">AVP</div>
+    <div>
+      <div class="htitle">AVPro Global Holdings &mdash; AI Pro AV &amp; Commercial Systems Workforce (concept)</div>
+      <div class="hsub">AVPro Edge &bull; AudioControl &bull; RTI &bull; Murideo &bull; Bullet Train &bull; ThenAudio</div>
+    </div>
+  </div>
+  <div class="badge">Simulated Operations &bull; <b>8 Operators Active</b></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tab-roster" onclick="switchTab('roster')">AI Operator Roster</button>
+  <button class="tab" id="tab-builder" onclick="switchTab('builder')">Add an Operator</button>
+</div>
+
+<div class="main">
+  <div id="view-roster">
+    <div class="lead">
+      AVPro Global Holdings manufactures high-performance audio, video, control, and calibration equipment for commercial Pro AV integrators and CEDIA luxury residential installers. This prototype demonstrates an <b>AI Workforce</b> of 12 autonomous specialist agents driving commercial dealer onboarding, multi-room 8K matrix specifiers, AudioControl Dante DSP routing, RTI touch panel driver engineering, and Murideo 8K signal calibration.
+    </div>
+
+    <div class="legend">
+      <span><span class="tag commercial">Commercial &amp; Dealer Solutions</span> Integrator Onboarding, System BOMs &amp; Volume Quoting</span>
+      <span><span class="tag operations">Pro AV Systems &amp; Engineering</span> 8K Signal Distribution, Dante Audio &amp; RTI Control</span>
+      <span><span class="tag hero">Flagship Operator</span> 8K AV Distribution, Dante Audio &amp; RTI Control Engine</span>
+    </div>
+
+    <div class="econ" id="econ-strip"></div>
+
+    <div id="roster-container"></div>
+
+    <div class="run hidden" id="run-panel">
+      <div class="run-head">
+        <div class="avatar" id="run-avatar">--</div>
+        <div>
+          <div class="emp-name" id="run-name">Operator</div>
+          <div class="emp-title" id="run-title">Workflow Execution</div>
+        </div>
+      </div>
+      <div class="run-sub" id="run-sub">Target: Multi-agent execution loop</div>
+
+      <div class="run-input">
+        <textarea id="run-prompt"></textarea>
+        <button class="btn primary big" id="run-btn" onclick="executeRun()">Execute Run</button>
+      </div>
+
+      <div class="phases" id="run-phases">
+        <div class="ph" id="ph-1"><div class="dot">1</div><div class="l">Initialization</div></div>
+        <div class="ph" id="ph-2"><div class="dot">2</div><div class="l">Agent Execution</div></div>
+        <div class="ph" id="ph-3"><div class="dot">3</div><div class="l">Synthesis &amp; Output</div></div>
+      </div>
+
+      <div class="agent-grid" id="agent-grid"></div>
+
+      <div class="feed" id="run-feed"></div>
+
+      <div class="result hidden" id="run-result">
+        <div class="rstats">
+          <div style="font-weight:700;font-size:13px;margin-bottom:10px;color:var(--hi)">Execution Metrics</div>
+          <div class="rrow"><span class="k">Workflow</span><span class="v" id="res-wf">--</span></div>
+          <div class="rrow"><span class="k">Agents Engaged</span><span class="v" id="res-agents">--</span></div>
+          <div class="rrow"><span class="k">Execution Time</span><span class="v" id="res-time">--</span></div>
+          <div class="rrow"><span class="k">Tools Invoked</span><span class="v" id="res-tools">--</span></div>
+          <div class="rrow"><span class="k">Est. Time Saved</span><span class="v" id="res-saved">--</span></div>
+        </div>
+        <div class="rout">
+          <div class="rh" id="res-title">Deliverable Output</div>
+          <div class="rb" id="res-body"></div>
+        </div>
+      </div>
+
+      <div class="donebar hidden" id="run-donebar">
+        Execution complete. Output synthesized and logged to AVPro Global enterprise project vault.
+      </div>
+    </div>
+  </div>
+
+  <div id="view-builder" class="hidden">
+    <div class="lead">
+      Compose a new AI Operator by mapping specialist agents to an AVPro Global commercial or systems engineering workflow.
+    </div>
+
+    <div class="steps">
+      <div class="step active" id="st-1"><div class="n">STEP 1</div><div class="l">Select Target Workflow</div><div class="d">Pick base business process</div></div>
+      <div class="step" id="st-2"><div class="n">STEP 2</div><div class="l">Agent &amp; Tool Mapping</div><div class="d">Configure task assignments</div></div>
+      <div class="step" id="st-3"><div class="n">STEP 3</div><div class="l">Deploy Operator</div><div class="d">Assign operator identity</div></div>
+    </div>
+
+    <div id="bstep-1">
+      <div style="font-weight:700;font-size:14px;margin-bottom:12px;color:var(--hi)">Select Workflow Template</div>
+      <div class="wf-grid" id="wf-select-grid"></div>
+      <div style="margin-top:20px">
+        <button class="btn primary" onclick="goToStep(2)">Next: Map Agents &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-2" class="hidden">
+      <div style="font-weight:700;font-size:14px;margin-bottom:6px;color:var(--hi)" id="bstep2-wftitle">Configure Workflow Tasks</div>
+      <div style="font-size:12px;color:var(--tert);margin-bottom:16px">Assign a specialist agent to each workflow stage</div>
+      <div id="task-map-container"></div>
+      <div style="margin-top:20px;display:flex;gap:10px">
+        <button class="btn" onclick="goToStep(1)">&larr; Back</button>
+        <button class="btn primary" onclick="goToStep(3)">Next: Assign Operator &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-3" class="hidden">
+      <div style="font-weight:700;font-size:14px;margin-bottom:14px;color:var(--hi)">Operator Details</div>
+      <div style="max-width:480px;display:flex;flex-direction:column;gap:12px">
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--tert);display:block;margin-bottom:4px">Operator Name</label>
+          <input type="text" id="b-emp-name" value="Pro AV Systems &amp; Engineering Lead" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;font-family:Inter,sans-serif">
+        </div>
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--tert);display:block;margin-bottom:4px">Role / Specialty Title</label>
+          <input type="text" id="b-emp-title" value="AVPro Edge &amp; AudioControl Solutions Architect" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;font-family:Inter,sans-serif">
+        </div>
+        <div style="margin-top:10px;display:flex;gap:10px">
+          <button class="btn" onclick="goToStep(2)">&larr; Back</button>
+          <button class="btn primary" onclick="deployOperator()">Deploy Operator to Roster</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  This interactive AI Workforce prototype is an illustrative simulation prepared for AVPro Global Holdings, LLC. All metrics, financial quotes, EDID logs, and engineering schematics are concept placeholders. Every AI output is human-reviewed prior to enterprise deployment.
+</div>
+
+<script>
+const AGENT_ROLES = {
+  prospector: { emoji: '🧲', label: 'Integrator & Dealer Prospecting Scout', tools: ['source_integrators', 'save'] },
+  qualifier: { emoji: '🎯', label: 'Commercial Project & Dealer Qualifier', tools: ['score_project_fit', 'save'] },
+  researcher: { emoji: '🔎', label: 'Dealer Portfolio & Market Research Lead', tools: ['research_dealer_network', 'save'] },
+  av_architect: { emoji: '🎛️', label: 'AVPro Edge Matrix & Signal Architect', tools: ['read_av_spec', 'recommend_avpro_matrix', 'save'] },
+  audio_engineer: { emoji: '🔊', label: 'AudioControl Dante & DSP Tuning Specialist', tools: ['map_dante_bus', 'configure_amp_dsp', 'save'] },
+  control_spec: { emoji: '🕹️', label: 'RTI Integration Designer Automation Specifier', tools: ['build_rti_driver', 'map_control_ui', 'save'] },
+  test_calibrator: { emoji: '🔬', label: 'Murideo 8K Calibration & Signal Integrity Tester', tools: ['analyze_hdmi21_signal', 'run_murideo_pattern', 'save'] },
+  cable_spec: { emoji: '🔌', label: 'Bullet Train Interconnect & AOC Specialist', tools: ['calc_bandwidth_loss', 'spec_aoc_cables', 'save'] },
+  quoter: { emoji: '🧮', label: 'Commercial AV Quoting & BOM Engineer', tools: ['build_av_bom', 'calculate_margin', 'save'] },
+  support_tech: { emoji: '🛠️', label: 'EDID & HDCP Field Technical Support Lead', tools: ['diagnose_hdcp_edid', 'save'] },
+  writer: { emoji: '✍️', label: 'Technical Specification & Proposal Lead', tools: ['compose_proposal', 'save'] },
+  reviewer: { emoji: '✅', label: 'System Design QA & Compliance Reviewer', tools: ['qa_system_design', 'save'] }
+};
+
+const WORKFLOWS = {
+  dealerscout: {
+    name: 'Authorized Dealer Sourcing & Qualification',
+    title: 'DealerScout',
+    mode: 'sequential',
+    deliverable: 'Authorized Dealer Onboarding & Prospecting Report',
+    sample: 'Identify top-tier commercial Pro AV integrators and CEDIA home automation dealers in the Southeast region.',
+    desc: 'Automated discovery and qualification of commercial Pro AV integration firms and CEDIA luxury residential dealers.',
+    track: 'trackA',
+    tasks: [
+      { agent: 'prospector', task: 'Search regional Pro AV integrators and CEDIA dealers', deps: [] },
+      { agent: 'qualifier', task: 'Filter dealers by annual revenue, showroom size, and brand fit', deps: [0] },
+      { agent: 'researcher', task: 'Gather dealership executive contact details and project portfolio', deps: [1] },
+      { agent: 'writer', task: 'Draft dealer onboarding kit and AVPro partner program proposal', deps: [2] }
+    ]
+  },
+  systemdesign: {
+    name: 'Multi-Room Commercial AV Matrix & BOM Specifier',
+    title: 'SystemArchitect',
+    mode: 'dag',
+    deliverable: 'Commercial Pro AV Bill of Materials & System Specification',
+    sample: 'Design a 16-zone 8K AV distribution system with Dante multi-zone audio and Bullet Train AOC cables for corporate headquarters.',
+    desc: 'Parallel specification of AVPro Edge matrix switchers, AudioControl Dante amplifiers, and Bullet Train AOC cables.',
+    track: 'trackA',
+    tasks: [
+      { agent: 'av_architect', task: 'Evaluate venue blueprint and spec AVPro Edge MX-1616 matrix switcher', deps: [] },
+      { agent: 'audio_engineer', task: 'Specify AudioControl Director M6800 multi-zone Dante amplifiers', deps: [] },
+      { agent: 'cable_spec', task: 'Calculate cable runs and specify Bullet Train 48Gbps AOC HDMI cables', deps: [] },
+      { agent: 'quoter', task: 'Generate consolidated dealer pricing and bill of materials (BOM)', deps: [0, 1, 2] },
+      { agent: 'reviewer', task: 'Audit AV signal chain, thermal envelope, and power draw', deps: [3] }
+    ]
+  },
+  techsupport: {
+    name: 'Field Tech Support & EDID Diagnostic Engine',
+    title: 'TechSupportEngine',
+    mode: 'sequential',
+    deliverable: 'Field Resolution Diagnostic & EDID Calibration Manual',
+    sample: 'Diagnose intermittent 8K HDMI handshaking dropouts and HDCP 2.3 authentication failures on a 100m video wall installation.',
+    desc: 'Rapid diagnostic and EDID/HDCP troubleshooting for field integrators encountering complex HDMI 2.1 signal degradation.',
+    track: 'trackA',
+    tasks: [
+      { agent: 'support_tech', task: 'Analyze field ticket for 8K HDMI handshaking failure & HDCP 2.3 dropouts', deps: [] },
+      { agent: 'test_calibrator', task: 'Simulate HDMI signal path with Murideo SIX-A generator & SIX-G analyzer', deps: [0] },
+      { agent: 'writer', task: 'Generate EDID override profile and step-by-step firmware patch guide', deps: [1] }
+    ]
+  },
+  distributorquote: {
+    name: 'Wholesale Distributor Volume Quoting & RFP Response',
+    title: 'DistributorQuote',
+    mode: 'sequential',
+    deliverable: 'Wholesale Distribution RFP & Pricing Proposal',
+    sample: 'Formulate a tier-1 distributor RFP pricing package for 500 units of AVPro Edge extenders and AudioControl amplifiers.',
+    desc: 'Automated distributor discount tiering, volume rebate calculation, and formal contract proposal generation.',
+    track: 'trackA',
+    tasks: [
+      { agent: 'prospector', task: 'Identify tier-1 national AV distributor opportunity', deps: [] },
+      { agent: 'qualifier', task: 'Validate project inventory requirements and stocking tier', deps: [0] },
+      { agent: 'quoter', task: 'Calculate tiered distributor discounts, volume rebates, and shipping SLA', deps: [1] },
+      { agent: 'writer', task: 'Format official RFP response and wholesale distribution agreement', deps: [2] }
+    ]
+  },
+  avmatrix_arch: {
+    name: 'Flagship 8K AV Distribution & RTI Control Architecture',
+    title: 'AVPro-Flagship-Architect',
+    mode: 'sequential',
+    tag: 'flagship',
+    deliverable: 'Flagship 8K AV Signal Distribution & RTI Control Architectural Blueprint',
+    sample: 'Architect a comprehensive 8K Pro AV distribution infrastructure combining AVPro Edge MX-1616, AudioControl Dante DSP, RTI Apex touch control, and Murideo 8K signal certification.',
+    desc: 'End-to-end multi-brand engineering blueprint spanning matrix routing, Dante audio networks, RTI touch control, and Murideo 8K validation.',
+    track: 'trackB',
+    tasks: [
+      { agent: 'av_architect', task: 'Configure AVPro Edge AC-MX-1616 8K60Hz HDMI 2.1 matrix switcher architecture', deps: [] },
+      { agent: 'audio_engineer', task: 'Map AudioControl Architect Model 2610 Dante network audio routing', deps: [0] },
+      { agent: 'control_spec', task: 'Develop RTI Integration Designer Apex drivers for unified touch panel control', deps: [1] },
+      { agent: 'test_calibrator', task: 'Execute Murideo Fox & Hound 8K signal pattern testing and EDID handshake audit', deps: [2] },
+      { agent: 'cable_spec', task: 'Verify Bullet Train 100m 48Gbps Active Optical Cable (AOC) signal attenuation', deps: [3] },
+      { agent: 'reviewer', task: 'Perform end-to-end system latency, HDCP 2.3 compliance, and thermal stress review', deps: [4] },
+      { agent: 'writer', task: 'Generate comprehensive engineering blueprint, schematic, and commissioner guide', deps: [5] }
+    ]
+  },
+  dante_audio: {
+    name: 'AudioControl Dante Network Audio & DSP Optimizer',
+    title: 'AudioControl-Dante-Spec',
+    mode: 'dag',
+    deliverable: 'AudioControl Dante Network Audio Routing & DSP Package',
+    sample: 'Configure a 32-zone AudioControl Director M-Series Dante audio network with room acoustic calibration and speaker EQ curves.',
+    desc: 'Parallel mapping of multi-channel Dante audio streams, DSP parametric EQ tuning, and video latency synchronization.',
+    track: 'trackB',
+    tasks: [
+      { agent: 'audio_engineer', task: 'Map 64-channel Dante audio transport to AudioControl Director M-Series amps', deps: [] },
+      { agent: 'av_architect', task: 'Align audio delay matrix with AVPro Edge video distribution timing', deps: [] },
+      { agent: 'reviewer', task: 'Verify acoustic room tuning parameters and Dante network clock synchronization', deps: [0, 1] }
+    ]
+  },
+  rti_control_integration: {
+    name: 'RTI Integration Designer Driver & Automation Suite',
+    title: 'RTI-Control-Engine',
+    mode: 'sequential',
+    deliverable: 'RTI Integration Designer Driver & Automation Manual',
+    sample: 'Build custom bi-directional IP drivers in RTI Integration Designer Apex for seamless touch panel control of AVPro Edge and AudioControl hardware.',
+    desc: 'Automated control driver generation, macro logic programming, and RTI KA11 touch panel interface design.',
+    track: 'trackB',
+    tasks: [
+      { agent: 'control_spec', task: 'Write bi-directional IP/RS-232 control driver for AVPro Edge and AudioControl devices', deps: [] },
+      { agent: 'av_architect', task: 'Bind driver telemetry to RTI KA11 11-inch touch panel UI templates', deps: [0] },
+      { agent: 'reviewer', task: 'Test macro execution speeds and sub-system fallback routines', deps: [1] }
+    ]
+  },
+  murideo_cert: {
+    name: 'Murideo 8K Signal Integrity & HDR Calibration Suite',
+    title: 'Murideo-8K-Certifier',
+    mode: 'dag',
+    deliverable: 'Murideo 8K HDMI Signal Integrity & Calibration Report',
+    sample: 'Perform laboratory 48Gbps signal integrity analysis, Dolby Vision HDR pattern validation, and Bullet Train AOC cable certification.',
+    desc: 'Parallel signal generator testing and cable bandwidth eye-diagram analysis using Murideo SEVEN-G and Fox & Hound suites.',
+    track: 'trackB',
+    tasks: [
+      { agent: 'test_calibrator', task: 'Run Murideo SEVEN-G 8K generator test patterns for Dolby Vision and HDR10+', deps: [] },
+      { agent: 'cable_spec', task: 'Test Bullet Train HDMI cable eye diagrams under 48Gbps bandwidth load', deps: [] },
+      { agent: 'reviewer', task: 'Issue official Murideo HDMI Signal Integrity & Calibration Certificate', deps: [0, 1] }
+    ]
+  }
+};
+
+const DTITLE = {
+  dealerscout: 'Authorized Dealer Onboarding & Prospecting Report',
+  systemdesign: 'Commercial Pro AV Bill of Materials & System Specification',
+  techsupport: 'Field Resolution Diagnostic & EDID Calibration Manual',
+  distributorquote: 'Wholesale Distribution RFP & Pricing Proposal',
+  avmatrix_arch: 'Flagship 8K AV Signal Distribution & RTI Control Architectural Blueprint',
+  dante_audio: 'AudioControl Dante Network Audio Routing & DSP Package',
+  rti_control_integration: 'RTI Integration Designer Driver & Automation Manual',
+  murideo_cert: 'Murideo 8K HDMI Signal Integrity & Calibration Report'
+};
+
+const TOOLS = {
+  research_dealer_network: ()=>'Queried CEDIA & Commercial AV dealer database; matched 42 qualified integrators.',
+  source_integrators: ()=>'Found 18 regional Pro AV integration firms with active commercial projects.',
+  score_project_fit: ()=>'Scored dealership profiles; 14 qualified for Premier AVPro Dealer tier.',
+  read_av_spec: ()=>'Parsed venue architectural schematics and 16-zone display requirements.',
+  recommend_avpro_matrix: ()=>'Selected AVPro Edge AC-MX-1616 8K HDMI matrix with AC-EX40-444 extenders.',
+  map_dante_bus: ()=>'Mapped 32-channel Dante audio transport across 8 AudioControl Director M6800 zones.',
+  configure_amp_dsp: ()=>'Configured AudioControl speaker calibration profiles and parametric EQ filters.',
+  build_rti_driver: ()=>'Compiled RTI Integration Designer bi-directional IP control driver (v2.4).',
+  map_control_ui: ()=>'Generated responsive RTI KA11 touch panel layout with scene presets.',
+  analyze_hdmi21_signal: ()=>'Analyzed 48Gbps FRL signal; verified 8K60 4:4:4 10-bit HDR throughput.',
+  run_murideo_pattern: ()=>'Executed Murideo SEVEN-G color bar, gradient, and HDCP 2.3 validation suite.',
+  calc_bandwidth_loss: ()=>'Calculated cable insertion loss at 100m; optical signal loss < 0.2dB.',
+  spec_aoc_cables: ()=>'Specified Bullet Train 48Gbps AOC Active Optical Cables for long-distance runs.',
+  build_av_bom: ()=>'Compiled complete bill of materials with MSRP, dealer net pricing, and margin calculations.',
+  calculate_margin: ()=>'Calculated integrator gross margin at 44.5% with volume incentive rebates.',
+  diagnose_hdcp_edid: ()=>'Isolated EDID handshake mismatch on Display 4; generated custom EDID tables.',
+  compose_proposal: ()=>'Composed engineering specification document and executive summary proposal.',
+  qa_system_design: ()=>'Validated signal chain continuity, power supply redundancy, and thermal headroom.',
+  save: ()=>'Artifact saved successfully.'
+};
+
+const FINAL = {
+  dealerscout: `AVPRO GLOBAL &mdash; AUTHORIZED DEALERSHIP PROSPECTING REPORT
+Target Region: Southeast US (FL, GA, NC, SC)
+Target Segment: Commercial Pro AV & CEDIA Luxury Residential Integrators
+
+QUALIFIED DEALER TARGETS:
+1. Apex Integrated Systems (Tampa, FL) &mdash; Revenue: $14.2M | Focus: Corporate Conference Facilities & Luxury Hospitality
+2. SoundVision Automation (Atlanta, GA) &mdash; Revenue: $18.5M | Focus: High-End CEDIA Smart Home & Dante Audio Architecture
+3. Palmetto Commercial AV (Charleston, SC) &mdash; Revenue: $9.8M | Focus: Higher Education & Sports Venue Video Walls
+
+RECOMMENDED DEALER ONBOARDING PACKAGE:
+- Preferred Wholesale Pricing Tier: Premier Level 2 (46% Off MSRP)
+- Demo Equipment Program: 50% discount on AVPro Edge MX-1616 and AudioControl Director M6800 demo racks
+- RTI Driver Training: Complimentary certification seat for 4 integration technicians
+- Co-Op Marketing Fund: 3% quarterly co-op allowance on Bullet Train AOC cable orders
+
+NOTE: illustrative autonomous proposal generated for AVPro Global dealer onboarding evaluation.`,
+
+  systemdesign: `AVPRO GLOBAL &mdash; COMMERCIAL SYSTEM SPECIFICATION & BILL OF MATERIALS (BOM)
+Project: Enterprise Corporate Headquarters (16 Display Zones + 8 Audio Zones)
+Location: Dallas, TX
+
+SYSTEM ARCHITECTURE & BOM BREAKDOWN:
+1. Video Matrix Core:
+   - 1x AVPro Edge AC-MX-1616-8K (16x16 8K60Hz HDMI 2.1 Switcher)
+   - 16x AVPro Edge AC-EX40-444-KIT (40m HDBaseT 3.0 Extender Sets with Uncompressed 4K60 4:4:4)
+2. Audio Sub-System:
+   - 2x AudioControl Director Model M6800 (16-Channel High-Power Dante Multi-Zone Amplifiers)
+   - 1x AudioControl Bijou 600 Subwoofer Amplifier
+3. Interconnect & Cabling:
+   - 32x Bullet Train BT-AOC-100M (100-Meter 48Gbps Active Optical HDMI Cables)
+   - 500ft Bullet Train 10G Shielded Cat6A Bulk Infrastructure Cable
+4. Control & Automation:
+   - 1x RTI XP-8v Advanced Control Processor
+   - 4x RTI KA11 11-inch Countertop Touch Panels
+
+COMMERCIAL FINANCIAL SUMMARY:
+- Total MSRP: $68,450.00
+- Dealer Net Price: $37,647.50
+- Integrator Gross Margin: $30,802.50 (45.0%)
+- Estimated Labor Savings: 32 Hours via Pre-Configured EDID and Dante Routing
+
+NOTE: illustrative system design output generated for AVPro Global commercial integration projects.`,
+
+  techsupport: `AVPRO GLOBAL &mdash; FIELD DIAGNOSTIC & EDID TROUBLESHOOTING REPORT
+Ticket Ref: #TK-88492-AVP | Location: Bank of America Conference Tower
+Symptom: Intermittent 8K video dropouts and HDCP 2.3 authentication handshake loops on Zone 7.
+
+ROOT CAUSE ANALYSIS:
+1. Signal Chain Inspection: Murideo SIX-A generator revealed EDID fallback to 1080p caused by legacy display sink EDID table corruption.
+2. HDCP Handshake Timing: Clock stretch jitter detected on 75m HDMI passive run exceeding 18Gbps copper bandwidth limit.
+
+RECOMMENDED FIELD RESOLUTION STEPS:
+- Step 1: Install AVPro Edge AC-EDID-HD2 Custom EDID Manager at Display 7 input.
+- Step 2: Inject custom EDID Profile #14 (8K60 4:2:0 10-bit HDR + 8-Channel LPCM Audio).
+- Step 3: Replace 75m copper HDMI run with Bullet Train BT-AOC-75M Active Optical Cable.
+- Step 4: Upgrade AC-MX-1616 firmware to v3.14 to enforce HDCP 2.3 strict mode compatibility.
+
+DIAGNOSTIC STATUS: RESOLVED (Verified 0 dropouts over 72-hour continuous burn-in).
+
+NOTE: illustrative tech support resolution report generated for AVPro Global field engineering.`,
+
+  distributorquote: `AVPRO GLOBAL &mdash; TIER-1 DISTRIBUTOR VOLUME PRICING PROPOSAL
+Distributor: ADI Global Distribution
+Contract Term: 24 Months | Annual Volume Target: $4.5M MSRP
+
+VOLUME PRICING & TIER STRUCTURE:
+- AVPro Edge Signal Distribution: Wholesale Discount 54% off MSRP (Min Order $100k)
+- AudioControl Commercial Audio: Wholesale Discount 52% off MSRP (Min Order $75k)
+- RTI Control Processors & Interfaces: Wholesale Discount 50% off MSRP
+- Bullet Train Interconnect Cables: Wholesale Discount 60% off MSRP
+
+DISTRIBUTION LOGISTICS SLA:
+- Same-Day Shipping guaranteed for orders submitted before 3:00 PM EST from Sioux Falls DC.
+- Stocking Backup Guarantee: AVPro holds 30-day buffer inventory for top 20 SKUs.
+
+NOTE: illustrative wholesale proposal generated for AVPro Global distribution account management.`,
+
+  avmatrix_arch: `AVPRO GLOBAL &mdash; FLAGSHIP 8K AV DISTRIBUTION & RTI CONTROL ARCHITECTURAL BLUEPRINT
+Project: Apex Executive Innovation Center & Conference Auditorium
+Client: AVPro Global Engineering Demonstration Facility
+
+1. VIDEO SIGNAL DISTRIBUTION (AVPRO EDGE):
+   - Switcher Engine: AVPro Edge AC-MX-1616-8K 16x16 Matrix Switcher with FRL 48Gbps backplane.
+   - Extender Network: 16x AC-EX100-444-KIT uncompressed 8K HDBaseT 3.0 extenders with eARC and RS-232 pass-through.
+   - Video Wall Processing: AVPro Edge AC-IMP-VWP Video Wall Processor feeding 3x3 8K OLED canvas.
+
+2. DANTE NETWORKED AUDIO INFRASTRUCTURE (AUDIOCONTROL):
+   - Amplification Core: 3x AudioControl Director M6800 16-channel Dante amps (48 total amplified audio channels).
+   - DSP Tuning: Parametric 12-band room EQ, speaker delay alignment (0-100ms), and Active Subwoofer Crossover profiles.
+   - Matrix Integration: Video-to-audio de-embedding via AVPro Edge AC-AVDM-AUHD Dante audio bridge.
+
+3. UNIFIED TOUCH AUTOMATION & DRIVER LOGIC (RTI):
+   - Control Engine: RTI XP-8v Advanced Control Processor running Integration Designer Apex v11.
+   - Driver Layer: Bi-directional IP drivers for AC-MX-1616 and AudioControl Director M-Series with status feedback.
+   - UI Interface: Custom RTI KA11 11" capacitive touch panel UI with 1-touch 'Executive Keynote' & 'Video Conference' macros.
+
+4. SIGNAL INTEGRITY & CABLE INFRASTRUCTURE (BULLET TRAIN & MURIDEO):
+   - Interconnect Runs: 24x Bullet Train 100m 48Gbps AOC HDMI cables (insertion loss <0.15dB).
+   - Lab Validation: Certified via Murideo SEVEN-G pattern generator & SIX-A analyzer (0 bit errors at 48Gbps over 48h).
+
+SYSTEM BENEFIT TELEMETRY:
+- Complete design cycle time reduced from 28 hours to 2.5 hours.
+- 100% interoperability verified across all 5 AVPro Global brand families prior to field installation.
+
+NOTE: illustrative flagship architecture blueprint generated for AVPro Global multi-brand solutions.`,
+
+  dante_audio: `AVPRO GLOBAL &mdash; AUDIOCONTROL DANTE NETWORK AUDIO & DSP OPTIMIZATION PACKAGE
+Project: Multi-Zone Luxury Estate & Executive Club (32 Audio Zones)
+
+DANTE AUDIO TRANSPORT MATRIX:
+- Primary Network Bus: 64-channel 24-bit/96kHz Dante audio stream over dedicated AV BSS network switch.
+- Amplification Hardware: 2x AudioControl Director M6800 + 2x AudioControl Architect Model 2610.
+- Source Routing: 16 stereo streaming sources mapped seamlessly to 32 independent listening zones.
+
+DSP & ACOUSTIC ROOM CALIBRATION RESULTS:
+- Zone 1 (Great Room): Applied 8-band parametric EQ curve compensating for glass acoustic reflection; bass crossover tuned at 80Hz.
+- Zone 4 (Patio Outdoor): Configured high-pass filter at 60Hz with dynamic compression protection for outdoor environment.
+- Video-to-Audio Delay Sync: Locked 42ms audio delay offset matching AVPro Edge video processor frame buffering.
+
+NOTE: illustrative AudioControl Dante routing package generated for AVPro Global audio engineering.`,
+
+  rti_control_integration: `AVPRO GLOBAL &mdash; RTI INTEGRATION DESIGNER APEX CONTROL DRIVER PACKAGE
+Target Hardware: AVPro Edge AC-MX-1616-8K & AudioControl Director M-Series
+Control Platform: RTI Integration Designer Apex v11.4
+
+DRIVER CAPABILITIES & FEATURES:
+- Bi-directional IP/RS-232 telemetry: Real-time matrix switching feedback, audio volume levels, mute status, and temperature monitoring.
+- One-Touch Macro Execution: Presets for 'Boardroom Presentation', 'All Off', 'Nightclub Mode', and 'Clean Screen'.
+- RTI KA11 Touch Panel UI Assets: High-resolution graphical widgets themed in AVPro Crimson and Dark Navy.
+
+COMPATIBILITY AUDIT:
+- Driver response latency: < 15ms
+- Failover routine: Auto-reconnect TCP socket on network switch power cycling.
+
+NOTE: illustrative RTI control driver documentation generated for AVPro Global automation systems.`,
+
+  murideo_cert: `MURIDEO &mdash; 8K SIGNAL INTEGRITY & CALIBRATION CERTIFICATE
+Certificate Ref: #MUR-8K-2026-9941
+Tested Equipment: AVPro Edge AC-MX-1616 + Bullet Train 100m AOC HDMI + LG 8K OLED Display
+
+LABORATORY TEST RESULTS:
+1. Bandwidth Throughput: 48.0 Gbps FRL4 (Fixed Rate Link 4-lane) &mdash; PASSED
+2. Resolution & Refresh: 7680x4320 @ 60Hz 4:4:4 10-bit HDR &mdash; PASSED
+3. HDR Standards: Dolby Vision, HDR10+, HLG Dynamic Metadata &mdash; PASSED
+4. HDCP Encryption: HDCP 2.3 & HDCP 1.4 Downward Compatibility &mdash; PASSED
+5. Cable Eye Diagram: Open eye mask with 78% margin headroom &mdash; PASSED
+
+CERTIFICATION ISSUED BY: Murideo Signal Calibration & Quality Assurance Labs.
+
+NOTE: illustrative Murideo calibration certificate generated for AVPro Global quality testing.`
+};
+
+const EMPLOYEES = [
+  { id: 'e1', name: 'DealerScout', title: 'Integrator Onboarding Specialist', wf: 'dealerscout', handled: 142, hrs: 5.2, win: '3.8x', track: 'trackA' },
+  { id: 'e2', name: 'SystemArchitect', title: 'Commercial AV & BOM Specifier', wf: 'systemdesign', handled: 215, hrs: 8.6, win: '4.5x', track: 'trackA' },
+  { id: 'e3', name: 'TechSupportEngine', title: 'EDID & HDCP Field Diagnostics', wf: 'techsupport', handled: 380, hrs: 9.4, win: '5.2x', track: 'trackA' },
+  { id: 'e4', name: 'DistributorQuote', title: 'Wholesale RFP & Volume Quoting', wf: 'distributorquote', handled: 98, hrs: 4.1, win: '3.4x', track: 'trackA' },
+  { id: 'e5', name: 'AVPro-Flagship-Architect', title: 'Flagship 8K AV & RTI Systems Engineer', wf: 'avmatrix_arch', handled: 184, hrs: 11.2, win: '6.1x', track: 'trackB' },
+  { id: 'e6', name: 'AudioControl-Dante-Spec', title: 'Dante Audio & DSP Optimizer', wf: 'dante_audio', handled: 165, hrs: 4.9, win: '4.1x', track: 'trackB' },
+  { id: 'e7', name: 'RTI-Control-Engine', title: 'RTI Driver & Automation Engineer', wf: 'rti_control_integration', handled: 128, hrs: 3.8, win: '3.9x', track: 'trackB' },
+  { id: 'e8', name: 'Murideo-8K-Certifier', title: '8K HDMI Signal & AOC Cable Certifier', wf: 'murideo_cert', handled: 108, hrs: 3.7, win: '4.8x', track: 'trackB' }
+];
+
+const TRACKS = [
+  ['trackA', 'Commercial & Dealer Solutions'],
+  ['trackB', 'Pro AV Systems & Engineering']
+];
+
+let activeEmpId = 'e5';
+let currentRunWf = null;
+let selectedWfKey = 'avmatrix_arch';
+
+function init(){
+  renderEcon();
+  renderRoster();
+  renderBuilderWfGrid();
+}
+
+function renderEcon(){
+  const strip = document.getElementById('econ-strip');
+  let totalRuns = 0;
+  let totalSaved = 0;
+  EMPLOYEES.forEach(e => {
+    totalRuns += e.handled;
+    totalSaved += e.handled * e.hrs;
+  });
+
+  strip.innerHTML = `
+    <div class="cell"><div class="v">${EMPLOYEES.length}</div><div class="k">Active AI Operators</div></div>
+    <div class="cell"><div class="v">${totalRuns}</div><div class="k">Workflows Executed</div></div>
+    <div class="cell"><div class="v">${(totalSaved).toLocaleString(undefined,{maximumFractionDigits:0})}<span class="u">h</span></div><div class="k">Hours Saved</div></div>
+    <div class="cell"><div class="v">4.6<span class="u">x</span></div><div class="k">Avg Turnaround Speedup</div></div>
+  `;
+}
+
+function renderRoster(){
+  const container = document.getElementById('roster-container');
+  container.innerHTML = '';
+
+  TRACKS.forEach(([tKey, tLabel]) => {
+    const sectionLabel = document.createElement('div');
+    sectionLabel.className = 'slabel';
+    sectionLabel.innerText = tLabel;
+    container.appendChild(sectionLabel);
+
+    const grid = document.createElement('div');
+    grid.className = 'roster';
+
+    EMPLOYEES.filter(e => {
+      const wf = WORKFLOWS[e.wf];
+      return wf && wf.track === tKey;
+    }).forEach(emp => {
+      grid.appendChild(createEmpCard(emp));
+    });
+
+    container.appendChild(grid);
+  });
+}
+
+function createEmpCard(emp){
+  const wf = WORKFLOWS[emp.wf];
+  const card = document.createElement('div');
+  const isHero = wf && wf.tag === 'flagship';
+  card.className = `emp ${isHero ? 'hero' : ''} ${emp.id === activeEmpId ? 'working' : ''}`;
+  card.id = `card-${emp.id}`;
+
+  const initials = emp.name.split(' ').map(n=>n[0]).join('').substring(0,2);
+  const agentChips = wf ? wf.tasks.map(t => {
+    const a = AGENT_ROLES[t.agent];
+    return `<span class="chip">${a ? a.emoji : ''} ${a ? a.label : t.agent}</span>`;
+  }).join('') : '';
+
+  card.innerHTML = `
+    <div class="emp-top">
+      <div class="avatar">${initials}</div>
+      <div>
+        <div class="emp-name">${emp.name} ${isHero ? '<span class="tag hero">Flagship</span>' : ''}</div>
+        <div class="emp-title">${emp.title}</div>
+      </div>
+    </div>
+    <div class="emp-owns">Owns: <b>${wf ? wf.name : emp.wf}</b></div>
+    <div class="team">${agentChips}</div>
+    <div class="emp-stats">
+      <div class="st">Runs<b>${emp.handled}</b></div>
+      <div class="st">Time Saved<b>${(emp.handled * emp.hrs).toFixed(0)} hrs</b></div>
+      <div class="st">Headline Metric<b>${emp.win}</b></div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" onclick="setupRun('${emp.id}')">Run Operator Workflow</button>
+    </div>
+  `;
+
+  return card;
+}
+
+function switchTab(t){
+  document.getElementById('tab-roster').classList.toggle('active', t==='roster');
+  document.getElementById('tab-builder').classList.toggle('active', t==='builder');
+  document.getElementById('view-roster').classList.toggle('hidden', t!=='roster');
+  document.getElementById('view-builder').classList.toggle('hidden', t!=='builder');
+}
+
+function setupRun(empId){
+  const emp = EMPLOYEES.find(e => e.id === empId);
+  if(!emp) return;
+
+  activeEmpId = empId;
+  const wf = WORKFLOWS[emp.wf];
+  currentRunWf = wf;
+
+  renderRoster();
+
+  const panel = document.getElementById('run-panel');
+  panel.classList.remove('hidden');
+  panel.scrollIntoView({ behavior: 'smooth' });
+
+  const initials = emp.name.split(' ').map(n=>n[0]).join('').substring(0,2);
+  document.getElementById('run-avatar').innerText = initials;
+  document.getElementById('run-name').innerText = emp.name;
+  document.getElementById('run-title').innerText = `Executing: ${wf.title}`;
+  document.getElementById('run-sub').innerText = wf.desc;
+  document.getElementById('run-prompt').value = wf.sample;
+
+  document.getElementById('run-phases').querySelectorAll('.ph').forEach(p=>p.className='ph');
+  document.getElementById('ph-1').classList.add('active');
+
+  const grid = document.getElementById('agent-grid');
+  grid.innerHTML = '';
+  wf.tasks.forEach((t, i) => {
+    const a = AGENT_ROLES[t.agent];
+    const ac = document.createElement('div');
+    ac.className = 'acard';
+    ac.id = `acard-${i}`;
+    ac.innerHTML = `
+      <div class="ae">${a ? a.emoji : '🤖'}</div>
+      <div class="ar">${a ? a.label : t.agent}</div>
+      <div class="at">${t.task}</div>
+      <div class="as"><div class="sd"></div><span id="astat-${i}">Queued</span></div>
+    `;
+    grid.appendChild(ac);
+  });
+
+  document.getElementById('run-feed').innerHTML = '';
+  document.getElementById('run-result').classList.add('hidden');
+  document.getElementById('run-donebar').classList.add('hidden');
+  document.getElementById('run-btn').disabled = false;
+}
+
+let runTimer = null;
+
+function executeRun(){
+  if(!currentRunWf) return;
+  document.getElementById('run-btn').disabled = true;
+
+  document.getElementById('ph-1').className = 'ph done';
+  document.getElementById('ph-2').className = 'ph active';
+
+  const feed = document.getElementById('run-feed');
+  feed.innerHTML = '';
+
+  const wf = currentRunWf;
+  const tasks = wf.tasks;
+  let idx = 0;
+
+  function logRow(agentName, msg){
+    const row = document.createElement('div');
+    row.className = 'frow';
+    const now = new Date();
+    const timeStr = now.toTimeString().split(' ')[0] + '.' + String(now.getMilliseconds()).padStart(3,'0');
+    row.innerHTML = `<span class="ft">${timeStr}</span><span class="fa">${agentName}</span><span class="fd">${msg}</span>`;
+    feed.appendChild(row);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  logRow('System', `Initializing multi-agent graph: ${wf.name}`);
+
+  runTimer = setInterval(() => {
+    if(idx < tasks.length){
+      const t = tasks[idx];
+      const a = AGENT_ROLES[t.agent];
+      const aName = a ? a.label : t.agent;
+
+      if(idx > 0){
+        const prevCard = document.getElementById(`acard-${idx-1}`);
+        if(prevCard){
+          prevCard.className = 'acard done';
+          document.getElementById(`astat-${idx-1}`).innerText = 'Completed';
+        }
+      }
+
+      const card = document.getElementById(`acard-${idx}`);
+      if(card){
+        card.className = 'acard running visible';
+        document.getElementById(`astat-${idx}`).innerText = 'Executing...';
+      }
+
+      logRow(aName, `Task: ${t.task}`);
+
+      if(a && a.tools){
+        a.tools.forEach(tk => {
+          if(TOOLS[tk]){
+            logRow(aName, `Tool [${tk}]: ${TOOLS[tk]()}`);
+          }
+        });
+      }
+
+      idx++;
+    } else {
+      clearInterval(runTimer);
+
+      const lastCard = document.getElementById(`acard-${tasks.length-1}`);
+      if(lastCard){
+        lastCard.className = 'acard done';
+        document.getElementById(`astat-${tasks.length-1}`).innerText = 'Completed';
+      }
+
+      document.getElementById('ph-2').className = 'ph done';
+      document.getElementById('ph-3').className = 'ph done';
+
+      logRow('System', 'Workflow execution complete. Synthesizing deliverable artifact.');
+
+      showResult();
+    }
+  }, 900);
+}
+
+function showResult(){
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = currentRunWf;
+  const wfKey = emp ? emp.wf : 'avmatrix_arch';
+
+  document.getElementById('res-wf').innerText = wf.name;
+  document.getElementById('res-agents').innerText = wf.tasks.length;
+  document.getElementById('res-time').innerText = '3.8s (Simulated)';
+  document.getElementById('res-tools').innerText = wf.tasks.length * 2;
+  document.getElementById('res-saved').innerText = `~${emp ? (emp.handled * emp.hrs).toFixed(0) : 12} hrs`;
+
+  document.getElementById('res-title').innerText = DTITLE[wfKey] || 'Deliverable Artifact';
+  document.getElementById('res-body').innerText = FINAL[wfKey] || 'Output complete.';
+
+  document.getElementById('run-result').classList.remove('hidden');
+  document.getElementById('run-donebar').classList.remove('hidden');
+  document.getElementById('run-btn').disabled = false;
+}
+
+function renderBuilderWfGrid(){
+  const grid = document.getElementById('wf-select-grid');
+  grid.innerHTML = '';
+
+  Object.keys(WORKFLOWS).forEach(key => {
+    const wf = WORKFLOWS[key];
+    const card = document.createElement('div');
+    card.className = `wf ${key === selectedWfKey ? 'sel' : ''}`;
+    card.onclick = () => {
+      selectedWfKey = key;
+      renderBuilderWfGrid();
+    };
+    card.innerHTML = `
+      <div class="wn">${wf.name} ${wf.tag==='flagship' ? '<span class="tag hero">Flagship</span>' : ''}</div>
+      <div class="wd">${wf.desc}</div>
+      <div class="wm">${wf.mode.toUpperCase()} &bull; ${wf.tasks.length} TASKS</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function goToStep(s){
+  document.getElementById('st-1').classList.toggle('active', s===1);
+  document.getElementById('st-2').classList.toggle('active', s===2);
+  document.getElementById('st-3').classList.toggle('active', s===3);
+
+  document.getElementById('bstep-1').classList.toggle('hidden', s!==1);
+  document.getElementById('bstep-2').classList.toggle('hidden', s!==2);
+  document.getElementById('bstep-3').classList.toggle('hidden', s!==3);
+
+  if(s === 2){
+    const wf = WORKFLOWS[selectedWfKey];
+    document.getElementById('bstep2-wftitle').innerText = `Configure Tasks: ${wf.name}`;
+    const cont = document.getElementById('task-map-container');
+    cont.innerHTML = '';
+
+    wf.tasks.forEach((t, i) => {
+      const row = document.createElement('div');
+      row.className = 'task-row';
+
+      let optionsHTML = '';
+      Object.keys(AGENT_ROLES).forEach(ak => {
+        const a = AGENT_ROLES[ak];
+        const sel = ak === t.agent ? 'selected' : '';
+        optionsHTML += `<option value="${ak}" ${sel}>${a.emoji} ${a.label}</option>`;
+      });
+
+      row.innerHTML = `
+        <div class="tn">${i+1}</div>
+        <div class="tt">${t.task}</div>
+        <select id="sel-task-${i}">${optionsHTML}</select>
+      `;
+      cont.appendChild(row);
+    });
+  }
+}
+
+function deployOperator(){
+  const name = document.getElementById('b-emp-name').value.trim() || 'New Operator';
+  const title = document.getElementById('b-emp-title').value.trim() || 'Custom Specialist';
+
+  const newId = 'custom-op-' + Date.now();
+  EMPLOYEES.push({
+    id: newId,
+    name: name,
+    title: title,
+    wf: selectedWfKey,
+    handled: 1,
+    hrs: 8.0,
+    win: 'Newly Deployed'
+  });
+
+  renderEcon();
+  renderRoster();
+  switchTab('roster');
+  setupRun(newId);
+}
+
+window.onload = init;
+</script>
+</body>
+</html>
