@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trackonomy Systems &mdash; AI Supply Chain &amp; Connected OS Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f0f4f8;--surface2:#caf0f8;--border:#90e0ef;--accent:#0077b6;
+--accent-dim:rgba(0,119,182,.08);--accent-line:rgba(0,119,182,.30);--slate:#0b132b;--slate-line:rgba(11,19,43,.30);--text:#1c2541;--hi:#0b132b;--tert:#475569;--ok:#10b981;--ok-dim:rgba(16,185,129,.10);--gold:#d97706;--gold-bg:#fef3c7;--gold-line:#fde68a}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:48px;height:34px;border-radius:8px;background:linear-gradient(135deg,#0077b6,#0b132b);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:12px;letter-spacing:.5px;font-family:Inter,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#0077b6}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:900px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#0077b6;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(16,185,129,.08);color:#059669;border:1px solid rgba(16,185,129,.3)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#0077b6}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#0077b6;font-size:15px;flex-shrink:0;position:relative;font-family:Inter,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#0077b6}.btn.primary{background:linear-gradient(270deg,#0077b6,#005b8e);border-color:#0077b6;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#0077b6;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#0077b6}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(16,185,129,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(16,185,129,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#0077b6}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Inter,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#0077b6;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;color:var(--hi)}.task-row select{background:#fff;border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;color:var(--hi);outline:none;font-family:Inter,sans-serif}
+.footer{max-width:1180px;margin:32px auto 0;padding:0 24px 32px;font-size:11.5px;color:var(--tert);line-height:1.5;border-top:1px solid var(--border);padding-top:18px;font-family:Inter,sans-serif}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="mark">TK</div>
+    <div>
+      <div class="htitle">Trackonomy Systems &mdash; AI Supply Chain &amp; Connected OS Workforce (concept)</div>
+      <div class="hsub">SmartTape&trade; IoT Sensors &bull; Sentient Cloud OS &bull; Cold-Chain &amp; Asset Protection</div>
+    </div>
+  </div>
+  <div class="badge">Simulated Operations &bull; <b>8 Operators Active</b></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tab-roster" onclick="switchTab('roster')">AI Operator Roster</button>
+  <button class="tab" id="tab-builder" onclick="switchTab('builder')">Add an Operator</button>
+</div>
+
+<div class="main">
+  <div id="view-roster">
+    <div class="lead">
+      Trackonomy turns physical assets into intelligent smart objects through SmartTape&trade; cellular sensors and the Sentient OS connected platform. This prototype demonstrates an <b>AI Workforce</b> of 12 autonomous specialist agents driving enterprise logistics origination, pharmaceutical cold-chain tracking, industrial predictive maintenance, and airline ULD cargo security.
+    </div>
+
+    <div class="legend">
+      <span><span class="tag commercial">Supply Chain Solutions</span> Enterprise Sourcing, Cold-Chain &amp; ROI</span>
+      <span><span class="tag operations">Sentient OS &amp; IoT Engineering</span> Hardware, Sensors &amp; Predictive AI</span>
+      <span><span class="tag hero">Flagship Operator</span> Global Cold-Chain SmartTape&trade; Enterprise Engine</span>
+    </div>
+
+    <div class="econ" id="econ-strip"></div>
+
+    <div id="roster-container"></div>
+
+    <div class="run hidden" id="run-panel">
+      <div class="run-head">
+        <div class="avatar" id="run-avatar">--</div>
+        <div>
+          <div class="emp-name" id="run-name">Operator</div>
+          <div class="emp-title" id="run-title">Workflow Execution</div>
+        </div>
+      </div>
+      <div class="run-sub" id="run-sub">Target: Multi-agent execution loop</div>
+
+      <div class="run-input">
+        <textarea id="run-prompt"></textarea>
+        <button class="btn primary big" id="run-btn" onclick="executeRun()">Execute Run</button>
+      </div>
+
+      <div class="phases" id="run-phases">
+        <div class="ph" id="ph-1"><div class="dot">1</div><div class="l">Initialization</div></div>
+        <div class="ph" id="ph-2"><div class="dot">2</div><div class="l">Agent Execution</div></div>
+        <div class="ph" id="ph-3"><div class="dot">3</div><div class="l">Synthesis &amp; Output</div></div>
+      </div>
+
+      <div class="agent-grid" id="agent-grid"></div>
+
+      <div class="feed" id="run-feed"></div>
+
+      <div class="result hidden" id="run-result">
+        <div class="rstats">
+          <div style="font-weight:700;font-size:13px;margin-bottom:10px;color:var(--hi)">Execution Metrics</div>
+          <div class="rrow"><span class="k">Workflow</span><span class="v" id="res-wf">--</span></div>
+          <div class="rrow"><span class="k">Agents Engaged</span><span class="v" id="res-agents">--</span></div>
+          <div class="rrow"><span class="k">Execution Time</span><span class="v" id="res-time">--</span></div>
+          <div class="rrow"><span class="k">Tools Invoked</span><span class="v" id="res-tools">--</span></div>
+          <div class="rrow"><span class="k">Est. Time Saved</span><span class="v" id="res-saved">--</span></div>
+        </div>
+        <div class="rout">
+          <div class="rh" id="res-title">Deliverable Output</div>
+          <div class="rb" id="res-body"></div>
+        </div>
+      </div>
+
+      <div class="donebar hidden" id="run-donebar">
+        Execution complete. Output synthesized and logged to Trackonomy enterprise project vault.
+      </div>
+    </div>
+  </div>
+
+  <div id="view-builder" class="hidden">
+    <div class="lead">
+      Compose a new AI Operator by mapping specialist agents to a Trackonomy Systems operational workflow.
+    </div>
+
+    <div class="steps">
+      <div class="step active" id="st-1"><div class="n">STEP 1</div><div class="l">Select Target Workflow</div><div class="d">Pick base business process</div></div>
+      <div class="step" id="st-2"><div class="n">STEP 2</div><div class="l">Agent &amp; Tool Mapping</div><div class="d">Configure task assignments</div></div>
+      <div class="step" id="st-3"><div class="n">STEP 3</div><div class="l">Deploy Operator</div><div class="d">Assign operator identity</div></div>
+    </div>
+
+    <div id="bstep-1">
+      <div style="font-weight:700;font-size:14px;margin-bottom:12px;color:var(--hi)">Select Workflow Template</div>
+      <div class="wf-grid" id="wf-select-grid"></div>
+      <div style="margin-top:20px">
+        <button class="btn primary" onclick="goToStep(2)">Next: Map Agents &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-2" class="hidden">
+      <div style="font-weight:700;font-size:14px;margin-bottom:6px;color:var(--hi)" id="bstep2-wftitle">Configure Workflow Tasks</div>
+      <div style="font-size:12px;color:var(--tert);margin-bottom:16px">Assign a specialist agent to each workflow stage</div>
+      <div id="task-map-container"></div>
+      <div style="margin-top:20px;display:flex;gap:10px">
+        <button class="btn" onclick="goToStep(1)">&larr; Back</button>
+        <button class="btn primary" onclick="goToStep(3)">Next: Assign Operator &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-3" class="hidden">
+      <div style="font-weight:700;font-size:14px;margin-bottom:14px;color:var(--hi)">Operator Details</div>
+      <div style="max-width:480px;display:flex;flex-direction:column;gap:12px">
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--tert);display:block;margin-bottom:4px">Operator Name</label>
+          <input type="text" id="b-emp-name" value="Supply Chain IoT Operations Director" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;font-family:Inter,sans-serif">
+        </div>
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--tert);display:block;margin-bottom:4px">Role / Specialty Title</label>
+          <input type="text" id="b-emp-title" value="SmartTape&trade; &amp; Sentient OS Specialist" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;font-family:Inter,sans-serif">
+        </div>
+        <div style="margin-top:10px;display:flex;gap:10px">
+          <button class="btn" onclick="goToStep(2)">&larr; Back</button>
+          <button class="btn primary" onclick="deployOperator()">Deploy Operator to Roster</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  This interactive AI Workforce prototype is an illustrative simulation prepared for Trackonomy Systems. All metrics, sensor polling logs, ROI savings, and compliance audit reports are concept placeholders. Every AI output is human-reviewed prior to enterprise deployment.
+</div>
+
+<script>
+const AGENT_ROLES = {
+  smarttape_scout: { emoji: '🧲', label: 'Enterprise Supply Chain Lead Scout', tools: ['source_enterprise_logistics', 'save'] },
+  label_engineer: { emoji: '🏷️', label: 'SmartTape™ & Hardware Engineer', tools: ['configure_smarttape_sensors', 'save'] },
+  coldchain_analyst: { emoji: '❄️', label: 'Cold-Chain & Environmental Auditor', tools: ['audit_thermal_compliance', 'save'] },
+  lastmile_tracker: { emoji: '📦', label: 'Parcel-Level & Last-Mile Operations Lead', tools: ['track_parcel_telemetry', 'save'] },
+  security_auditor: { emoji: '🛡️', label: 'Cargo Tamper & Asset Security Lead', tools: ['audit_tamper_alerts', 'save'] },
+  sentient_arch: { emoji: '☁️', label: 'Sentient OS & Edge Gateway Architect', tools: ['configure_sentient_os', 'save'] },
+  predictive_maint: { emoji: '⚙️', label: 'Industrial Asset & Predictive Maintenance Spec', tools: ['analyze_asset_vibration', 'save'] },
+  b2b_roi_estimator: { emoji: '🧮', label: 'Enterprise Supply Chain ROI & LCO-Track Analyst', tools: ['model_supply_chain_roi', 'save'] },
+  airline_cargo_lead: { emoji: '✈️', label: 'Airline & Unit Load Device (ULD) Specialist', tools: ['track_uld_cargo', 'save'] },
+  compliance_lead: { emoji: '📋', label: 'FDA 21 CFR Part 11 & GxP Compliance Lead', tools: ['verify_gxp_compliance', 'save'] },
+  proposal_writer: { emoji: '✍️', label: 'Technical Proposal & RFP Lead', tools: ['compose_trackonomy_proposal', 'save'] },
+  qa_reviewer: { emoji: '✅', label: 'Executive Operations Director', tools: ['qa_review_deliverable', 'save'] }
+};
+
+const WORKFLOWS = {
+  smarttape_enterprise_origination: {
+    name: 'Enterprise Supply Chain Visibility Sourcing',
+    title: 'Enterprise Supply Chain Visibility & ROI Discovery',
+    mode: 'dag',
+    track: 'supply_chain_solutions',
+    deliverable: 'SmartTape™ Supply Chain Visibility & ROI Payback Memo',
+    sample: 'Source global 3PL, parcel express, and retail distribution enterprises experiencing lost parcels and manual scanning labor bottlenecks.',
+    desc: 'Automates enterprise lead sourcing, item-level blind spot mapping, labor reduction modeling, and SmartTape™ feasibility memos.',
+    tasks: [
+      { agent: 'smarttape_scout', task: 'Source global 3PL, retail, and pharmaceutical parcel tracking prospects', deps: [] },
+      { agent: 'lastmile_tracker', task: 'Map item-level tracking blind spots across cross-docking hubs and last-mile delivery routes', deps: [0] },
+      { agent: 'b2b_roi_estimator', task: 'Calculate cost savings from eliminated manual barcode scans and reduced lost-parcel claims', deps: [1] },
+      { agent: 'proposal_writer', task: 'Draft SmartTape™ enterprise trial proposal and deployment roadmap', deps: [2] }
+    ]
+  },
+  coldchain_pharma_proposal: {
+    name: 'Global Cold-Chain SmartTape™ Proposal',
+    title: 'Global Cold-Chain & SmartTape™ Enterprise Deployment Engine',
+    mode: 'dag',
+    track: 'supply_chain_solutions',
+    tag: 'flagship',
+    deliverable: 'Global Cold-Chain SmartTape™ Enterprise SLA Proposal',
+    sample: 'Formulate a global cold-chain monitoring proposal for pharmaceutical vaccines and biologics using SmartTape™ sensors and Sentient OS.',
+    desc: 'Flagship DAG workflow orchestrating RFP evaluation, SmartTape™ sensor profile setup, thermal excursion audit, FDA 21 CFR Part 11 compliance, Sentient OS cloud configuration, TCO modeling, and executive proposal synthesis.',
+    tasks: [
+      { agent: 'smarttape_scout', task: 'Evaluate RFP specifications for multi-national pharmaceutical temperature-sensitive shipping', deps: [] },
+      { agent: 'label_engineer', task: 'Specify SmartTape™ sensor profile (temperature -80°C to +60°C, location, shock, tilt)', deps: [0] },
+      { agent: 'coldchain_analyst', task: 'Model real-time thermal excursions, ambient transit buffers, and degradation risks', deps: [1] },
+      { agent: 'compliance_lead', task: 'Certify FDA 21 CFR Part 11, GxP, and GDP electronic audit trail compliance', deps: [2] },
+      { agent: 'sentient_arch', task: 'Configure Sentient OS edge-to-cloud real-time alert triggers and API ERP integration', deps: [2, 3] },
+      { agent: 'b2b_roi_estimator', task: 'Model total cost of ownership (TCO) vs legacy reusable data loggers', deps: [4] },
+      { agent: 'proposal_writer', task: 'Assemble master enterprise proposal, SmartTape™ technical specs, and SLA guarantees', deps: [5] },
+      { agent: 'qa_reviewer', task: 'Executive technical review, security audit alignment, and enterprise proposal release', deps: [6] }
+    ]
+  },
+  cargo_security_quoting: {
+    name: 'High-Value Cargo & Security Auditing',
+    title: 'High-Value Cargo Tamper Detection & Security Quoting',
+    mode: 'sequential',
+    track: 'supply_chain_solutions',
+    deliverable: 'High-Value Freight Tamper Detection & Security Quote',
+    sample: 'Configure SmartTape™ peel-and-stick capacitive tamper sensors and geofencing alert rules for high-value electronics freight.',
+    desc: 'Configures peel-and-stick security sensors, prices SmartTape™ cellular telemetry tiers, and issues tamper protection quotes.',
+    tasks: [
+      { agent: 'security_auditor', task: 'Configure peel-and-stick tamper detection and light/tilt intrusion alerts for high-value freight', deps: [] },
+      { agent: 'b2b_roi_estimator', task: 'Price SmartTape™ usage tiers, cellular telemetry plans, and insurance risk mitigation rebates', deps: [0] },
+      { agent: 'proposal_writer', task: 'Generate dynamic commercial quote, volume license tiers, and emergency response SLA', deps: [1] },
+      { agent: 'qa_reviewer', task: 'Validate financial margins, data privacy compliance, and liability terms', deps: [2] }
+    ]
+  },
+  logistics_tech_radar: {
+    name: 'Supply Chain IoT & Smart Label Radar',
+    title: 'Supply Chain Tech & Competitor Intelligence Radar',
+    mode: 'dag',
+    track: 'supply_chain_solutions',
+    deliverable: 'Supply Chain IoT & Smart Label Technology Radar',
+    sample: 'Track competing RFID, Bluetooth, and cellular tracking tag vendors and evolving IATA flight-mode battery safety rules.',
+    desc: 'Monitors supply chain IoT tech trends, IATA flight-mode regulations, and drafts briefings highlighting Trackonomy zero-infrastructure advantages.',
+    tasks: [
+      { agent: 'smarttape_scout', task: 'Monitor competing RFID, Bluetooth, and cellular tracking tag vendors', deps: [] },
+      { agent: 'compliance_lead', task: 'Track IATA airline battery safety regulations and UN38.3 cellular label certifications', deps: [0] },
+      { agent: 'proposal_writer', task: 'Compile competitive briefing highlighting Trackonomy zero-infrastructure SmartTape™ advantage', deps: [1] }
+    ]
+  },
+  smarttape_sensor_engineering: {
+    name: 'SmartTape™ Sensor Hardware Specification',
+    title: 'SmartTape™ Hardware & Cellular Label Engineering',
+    mode: 'sequential',
+    track: 'iot_engineering',
+    deliverable: 'SmartTape™ Sensor Hardware Specification & Test Report',
+    sample: 'Design flexible substrate FPCB smart label with embedded cellular modem, multi-sensor array, and solid-state micro-battery.',
+    desc: 'Engineers SmartTape™ FPCB substrates, programs edge firmware polling algorithms, and validates cryptographic security root-of-trust.',
+    tasks: [
+      { agent: 'label_engineer', task: 'Design ultra-thin flexible substrate PCB with embedded cellular antenna and micro-battery', deps: [] },
+      { agent: 'sentient_arch', task: 'Program edge firmware logic for dynamic sensor polling intervals and power budget management', deps: [0] },
+      { agent: 'security_auditor', task: 'Validate cryptographic hardware root of trust and AES-256 encrypted data streaming', deps: [1] },
+      { agent: 'qa_reviewer', task: 'Execute drop, thermal shock, and adhesive shear stress test suite sign-off', deps: [2] }
+    ]
+  },
+  sentient_os_cloud_arch: {
+    name: 'Sentient OS Platform Architecture',
+    title: 'Sentient OS Real-Time Platform Architecture',
+    mode: 'sequential',
+    track: 'iot_engineering',
+    deliverable: 'Sentient OS Connected Platform Architecture Dossier',
+    sample: 'Architect Sentient OS cloud pipeline to ingest 100M+ daily sensor telemetry events with sub-100ms processing latency.',
+    desc: 'Architects Sentient OS microservices, builds package anomaly machine learning models, and verifies SOC 2 data security controls.',
+    tasks: [
+      { agent: 'sentient_arch', task: 'Architect Sentient OS distributed microservices for ingesting 100M+ daily sensor telemetry pings', deps: [] },
+      { agent: 'lastmile_tracker', task: 'Build machine learning anomaly detection models for automated package rerouting alerts', deps: [0] },
+      { agent: 'compliance_lead', task: 'Verify SOC 2 Type II, ISO 27001, and GDPR enterprise data security controls', deps: [1] },
+      { agent: 'qa_reviewer', task: 'Audit cloud pipeline latency (<100ms processing time) and 99.99% system availability SLA', deps: [2] }
+    ]
+  },
+  industrial_predictive_maint: {
+    name: 'Industrial Asset Predictive Maintenance',
+    title: 'Industrial Asset & Predictive Maintenance Audit',
+    mode: 'dag',
+    track: 'iot_engineering',
+    deliverable: 'Industrial Predictive Maintenance & Downtime Avoidance Report',
+    sample: 'Deploy SmartTape™ sensors on conveyor drives and industrial motors to run AI 3-axis vibration spectral analysis.',
+    desc: 'Deploys SmartTape™ vibration and thermal sensors, trains AI bearing wear models, and quantifies downtime avoidance savings.',
+    tasks: [
+      { agent: 'predictive_maint', task: 'Deploy SmartTape™ vibration and thermal sensors on industrial motors and conveyor belts', deps: [] },
+      { agent: 'sentient_arch', task: 'Train AI predictive analytics model to detect early bearing wear and thermal anomalies', deps: [0] },
+      { agent: 'b2b_roi_estimator', task: 'Model downtime avoidance financial savings and extended asset lifespan metrics', deps: [0] },
+      { agent: 'proposal_writer', task: 'Compile predictive maintenance deployment report and field technician dashboard guide', deps: [1, 2] }
+    ]
+  },
+  airline_uld_cargo_tracking: {
+    name: 'Airline Cargo & ULD Tracking',
+    title: 'Airline Cargo & Unit Load Device (ULD) Tracking',
+    mode: 'dag',
+    track: 'iot_engineering',
+    deliverable: 'Airline ULD Cargo Tracking & FAA Compliance Manual',
+    sample: 'Map airline ULD pallet tracking workflows and certify automated flight-mode RF deactivation for FAA compliance.',
+    desc: 'Maps airline ULD container tracking, certifies automated takeoff RF deactivation, and integrates API feeds with baggage systems.',
+    tasks: [
+      { agent: 'airline_cargo_lead', task: 'Map airline ULD pallet and baggage container tracking workflows across airport hubs', deps: [] },
+      { agent: 'label_engineer', task: 'Certify SmartTape™ flight-mode automated RF deactivation for FAA compliance', deps: [0] },
+      { agent: 'sentient_arch', task: 'Integrate API feeds with airline cargo management and baggage tracking systems', deps: [0] },
+      { agent: 'proposal_writer', task: 'Issue airline ULD cargo tracking implementation guide and ground crew SOP', deps: [1, 2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  smarttape_enterprise_origination: 'SmartTape™ Supply Chain Visibility & ROI Payback Memo',
+  coldchain_pharma_proposal: 'Global Cold-Chain SmartTape™ Enterprise SLA Proposal',
+  cargo_security_quoting: 'High-Value Freight Tamper Detection & Security Quote',
+  logistics_tech_radar: 'Supply Chain IoT & Smart Label Technology Radar',
+  smarttape_sensor_engineering: 'SmartTape™ Sensor Hardware Specification & Test Report',
+  sentient_os_cloud_arch: 'Sentient OS Connected Platform Architecture Dossier',
+  industrial_predictive_maint: 'Industrial Predictive Maintenance & Downtime Avoidance Report',
+  airline_uld_cargo_tracking: 'Airline ULD Cargo Tracking & FAA Compliance Manual'
+};
+
+const TOOLS = {
+  source_enterprise_logistics: () => 'Identified 32 global logistics, pharmaceutical, and retail enterprises with item-level tracking blind spots.',
+  configure_smarttape_sensors: () => 'SmartTape™ profile configured: Tri-axial accelerometer, precision thermistor (-80°C to +60°C), and global multi-band cellular.',
+  audit_thermal_compliance: () => 'Thermal profile audited: Zero temperature excursions logged during 72-hour international cold-chain simulation.',
+  track_parcel_telemetry: () => 'Item-level telemetry verified: GPS location, temperature, humidity, and shock data streamed at 5-minute intervals.',
+  audit_tamper_alerts: () => 'Security audit complete: Peel-and-stick capacitive tamper sensor triggered alert in <200ms upon breach.',
+  configure_sentient_os: () => 'Sentient OS tenant provisioned: Real-time telemetry dashboard, automated rules engine, and ERP webhooks active.',
+  analyze_asset_vibration: () => 'Industrial motor telemetry analyzed: Bearing anomaly vibration signature detected 14 days before failure threshold.',
+  model_supply_chain_roi: () => 'Supply chain ROI modeled: 84% reduction in lost cargo claims and $1.4M annual savings in eliminated scanning labor.',
+  track_uld_cargo: () => 'Airline ULD tracking verified: Automatic flight-mode RF deactivation triggered upon takeoff detection.',
+  verify_gxp_compliance: () => 'FDA 21 CFR Part 11 & EU Annex 11 electronic records audit trail verified; immutable blockchain logging enabled.',
+  compose_trackonomy_proposal: () => 'Drafted 40-page enterprise proposal with SmartTape™ deployment architecture, SLA guarantees, and API specs.',
+  qa_review_deliverable: () => 'Executive technical audit passed; zero data latency, battery depletion, or compliance risks found.',
+  save: () => 'Artifact logged to secure Trackonomy enterprise project vault with full audit logging.'
+};
+
+const FINAL = {
+  smarttape_enterprise_origination: 'TRACKONOMY SYSTEMS — SMARTTAPE™ SUPPLY CHAIN VISIBILITY & ROI PAYBACK MEMO\nTarget Enterprise: Global 3PL & Parcel Express Carrier | Scope: 2.5 Million Parcels / Month\nFocus: Item-Level Visibility, Automated Cross-Docking, and Lost-Parcel Reduction\n\n1. SUPPLY CHAIN BLIND SPOT ANALYSIS\n   - Current Tracking Gap: Barcode scanning provides static checkpoint scans; zero visibility during transit\n   - Manual Scan Labor Cost: ~$3.8M annually spent on manual barcode scanning at sorting hubs\n   - Lost/Misrouted Parcel Rate: 0.42% of total volume resulting in $5.2M in annual claim payouts\n\n2. SMARTTAPE™ PROPOSED SOLUTION\n   - Deployment: Peel-and-stick SmartTape™ applied directly to high-priority parcels and pallets\n   - Infrastructure Needed: ZERO. Works out-of-the-box using global cellular networks\n   - Real-Time Telemetry: Continuous location, temperature, tilt, and shock streaming directly to Sentient OS\n\n3. FINANCIAL ROI & PAYBACK\n   - Turnkey SmartTape™ Subscription Cost: $0.48 / parcel\n   - Labor Savings (Eliminated Scanning): $3.1M / year\n   - Misrouted Parcel Claim Savings: $4.2M / year\n   - Estimated Net Annual ROI: 310% | Payback Period: < 3 Months\n\nNOTE: Illustrative prototype output generated by Trackonomy AI Workforce. All metrics subject to customer pilot verification.',
+
+  coldchain_pharma_proposal: 'TRACKONOMY SYSTEMS — GLOBAL COLD-CHAIN SMARTTAPE™ ENTERPRISE SLA PROPOSAL\nClient: Global Pharmaceutical Manufacturer | Scope: 120,000 Annual Vaccine & Biologics Shipments\nFlagship Architecture: SmartTape™ Cold-Chain Sensor + Sentient OS Real-Time Telemetry Platform\n\n1. EXECUTIVE SYSTEM SUMMARY\n   - Application: Item-level temperature tracking for ultra-cold (-80°C) and refrigerated (2°C-8°C) pharma shipments\n   - Sensor Device: Cellular-enabled SmartTape™ with precision thermistor, GPS, and light/tamper detection\n   - Platform: Sentient OS Cloud Platform with automated real-time excursion alerts and ERP integration\n\n2. COLD-CHAIN COMPLIANCE & SAFETY GUARANTEES\n   - Temperature Precision: ±0.2°C accuracy from -80°C to +60°C\n   - Real-Time Excursion Alerts: Instant SMS/Email/API notification within 30 seconds of thermal threshold breach\n   - Regulatory Certifications: Fully compliant with FDA 21 CFR Part 11, GxP, GDP, and EU Annex 11\n   - Data Integrity: Immutable encrypted cloud audit logs with cryptographic hash verification\n\n3. TCO & OPERATIONAL ADVANTAGES VS LEGACY LOGGERS\n   - Legacy Logger Cost: Reusable data loggers require expensive reverse logistics ($18-$25 return shipping per unit)\n   - Trackonomy SmartTape™ Advantage: Single-use, disposable, zero return shipping required\n   - Total Cost Savings: 62% reduction in cold-chain tracking operating expenditure\n\n4. ENTERPRISE SLA & IMPLEMENTATION ROADMAP\n   - 99.99% Sentient OS Uptime SLA with 24/7/365 Dedicated Enterprise Support\n   - Global Deployment Timeline: 4-Week phased rollout across 12 manufacturing sites worldwide\n\nNOTE: Illustrative prototype output generated by Trackonomy AI Workforce. All metrics subject to customer pilot verification.',
+
+  cargo_security_quoting: 'TRACKONOMY SYSTEMS — HIGH-VALUE FREIGHT TAMPER DETECTION & SECURITY QUOTE\nPrepared For: Secure Freight Logistics Inc | Cargo: Electronics, Luxury Goods & High-Value Asset Transit\n\n1. TAMPER & SECURITY CAPABILITIES\n   - SmartTape™ Peel-and-Stick Security Layer: Capacitive sensor triggers immediate breach alert if tape is peeled or cut\n   - Environmental Threat Detection: Instant notifications for unauthorized container door opening (ambient light sensor) and shock/drop events\n   - Real-Time GPS Geofencing: Automated alerts if cargo strays >500 meters from assigned transit corridor\n\n2. COMMERCIAL SUBSCRIPTION TIER\n   - SmartTape™ Security Units (5,000 units/month): $4.20 per tracking label\n   - Sentient OS Security Portal & Cellular Telemetry: Included\n   - Annual Contract Value: $252,000 net\n\nNOTE: Illustrative prototype output generated by Trackonomy AI Workforce. All metrics subject to customer pilot verification.',
+
+  logistics_tech_radar: 'TRACKONOMY SYSTEMS — SUPPLY CHAIN IOT & SMART LABEL TECHNOLOGY RADAR\nQuarter: Q4 2026 | Focus: Smart Tape & Cellular IoT vs Legacy RFID & Bluetooth Beacons\n\n1. TECHNOLOGY COMPARISON ANALYSIS\n   - Legacy RFID / Bluetooth: Requires expensive gateway infrastructure ($5k-$20k per warehouse door); zero visibility on the road\n   - Trackonomy SmartTape™: Zero infrastructure; built-in cellular connectivity provides continuous indoor/outdoor visibility anywhere on earth\n\n2. IATA & AIRLINE REGULATORY COMPLIANCE\n   - Flight-Mode Automation: Certified UN38.3 cellular label with automatic takeoff sensor shutoff complying with FAA/IATA cargo rules\n\nNOTE: Illustrative prototype output generated by Trackonomy AI Workforce. All metrics subject to customer pilot verification.',
+
+  smarttape_sensor_engineering: 'TRACKONOMY SYSTEMS — SMARTTAPE™ SENSOR HARDWARE SPECIFICATION\nPlatform Component: SmartTape™ Gen-4 Cellular Adhesive Label | Target: High-Density Parcel Tracking\n\n1. HARDWARE ARCHITECTURE\n   - Substrate: Ultra-thin flexible printed circuit board (FPCB) integrated into industrial-grade adhesive tape\n   - Cellular Engine: Multi-band NB-IoT / LTE-M modem with fallback 2G/3G connectivity\n   - Sensor Array: Tri-axial accelerometer, precision thermistor, ambient light sensor, capacitive tamper loop\n\n2. POWER MANAGEMENT & RELIABILITY\n   - Power Source: Solid-state micro-battery optimized for 90-day active transit tracking\n   - Stress Testing: Passed 1.5-meter drop test on concrete and -40°C to +80°C thermal shock cycles\n\nNOTE: Illustrative prototype output generated by Trackonomy AI Workforce. All metrics subject to customer pilot verification.',
+
+  sentient_os_cloud_arch: 'TRACKONOMY SYSTEMS — SENTIENT OS CONNECTED PLATFORM ARCHITECTURE DOSSIER\nSystem Layer: Sentient Cloud & Edge Operating System | Scale: 100M+ Telemetry Events / Day\n\n1. CLOUD PIPELINE ARCHITECTURE\n   - Ingestion Layer: High-throughput Kafka/MQTT cluster with sub-100ms end-to-end latency\n   - AI Rules Engine: Real-time predictive anomaly detection (thermal drift, route deviation, ETA delay prediction)\n   - Integration APIs: Out-of-the-box REST/GraphQL webhooks for SAP, Oracle SCM, Manhattan Associates WMS\n\n2. ENTERPRISE DATA SECURITY\n   - Compliance: SOC 2 Type II certified, ISO 27001 compliant, GDPR compliant\n   - Encryption: AES-256 data at rest and TLS 1.3 data in transit with hardware root-of-trust authentication\n\nNOTE: Illustrative prototype output generated by Trackonomy AI Workforce. All metrics subject to customer pilot verification.',
+
+  industrial_predictive_maint: 'TRACKONOMY SYSTEMS — INDUSTRIAL PREDICTIVE MAINTENANCE & DOWNTIME REPORT\nTarget Facility: Automotive Stamping & Assembly Plant | Equipment: 48 Conveyor Drives & Motors\n\n1. SENSOR DEPLOYMENT & ANALYTICS\n   - SmartTape™ Application: Peel-and-stick installation on motor housings and gearboxes in <2 minutes per asset\n   - Vibration Telemetry: Continuous 3-axis FFT spectral analysis monitoring bearing frequency shifts\n   - Early Anomaly Detection: Motor #12 bearing wear detected 18 days prior to catastrophic seizure\n\n2. FINANCIAL SAVINGS\n   - Avoided Unplanned Downtime: $280,000 in saved production line halt costs\n   - Equipment Lifespan Extension: Projected +24% increase in asset operational life\n\nNOTE: Illustrative prototype output generated by Trackonomy AI Workforce. All metrics subject to customer pilot verification.',
+
+  airline_uld_cargo_tracking: 'TRACKONOMY SYSTEMS — AIRLINE ULD CARGO TRACKING & FAA COMPLIANCE MANUAL\nTarget Sector: Global Airline Freight Operations | Equipment: Unit Load Device (ULD) Containers & Pallets\n\n1. AUTOMATED FLIGHT-MODE COMPLIANCE\n   - FAA/EASA Compliance: SmartTape™ internal pressure and acceleration sensors automatically deactivate RF transmissions during flight\n   - Automatic Wake-Up: Resumes cellular telemetry pings within 60 seconds of aircraft touchdown\n\n2. GROUND HANDLING EFFICIENCY\n   - Ramp Visibility: Instant location pinging upon landing reduces ULD search time by 85% at cargo hubs\n\nNOTE: Illustrative prototype output generated by Trackonomy AI Workforce. All metrics subject to customer pilot verification.'
+};
+
+const EMPLOYEES = [
+  { id: 'smarttape-sourcing-lead', name: 'SmartTape Sourcing Lead', title: 'Enterprise Logistics Lead', wf: 'smarttape_enterprise_origination', handled: 52, hrs: 5.5, win: '4.5x Pipeline' },
+  { id: 'pharma-coldchain-director', name: 'Pharma ColdChain Director', title: 'Flagship Operator', wf: 'coldchain_pharma_proposal', handled: 34, hrs: 24.0, win: '88% Win Rate' },
+  { id: 'cargo-security-specialist', name: 'Cargo Security Specialist', title: 'Security & Pricing Lead', wf: 'cargo_security_quoting', handled: 82, hrs: 3.2, win: '15 Min Quote' },
+  { id: 'logistics-tech-analyst', name: 'Logistics Tech Analyst', title: 'Market Radar Lead', wf: 'logistics_tech_radar', handled: 110, hrs: 2.1, win: '100% Coverage' },
+  { id: 'sensor-hardware-engineer', name: 'Sensor Hardware Engineer', title: 'SmartTape Hardware Lead', wf: 'smarttape_sensor_engineering', handled: 46, hrs: 14.5, win: 'Zero Infrastructure' },
+  { id: 'sentient-os-architect', name: 'Sentient OS Architect', title: 'Cloud & Edge Principal', wf: 'sentient_os_cloud_arch', handled: 60, hrs: 18.0, win: '99.99% Availability' },
+  { id: 'predictive-maint-auditor', name: 'Predictive Maint Auditor', title: 'Industrial IoT Lead', wf: 'industrial_predictive_maint', handled: 38, hrs: 11.2, win: 'Zero Unplanned Downtime' },
+  { id: 'airline-cargo-director', name: 'Airline Cargo Director', title: 'ULD Flight Compliance', wf: 'airline_uld_cargo_tracking', handled: 29, hrs: 13.5, win: 'FAA/IATA Certified' }
+];
+
+const TRACKS = [
+  ['supply_chain_solutions', 'Supply Chain Solutions'],
+  ['iot_engineering', 'Sentient OS & IoT Engineering']
+];
+
+let activeEmpId = null;
+let currentRunWf = null;
+let selectedWfKey = 'smarttape_enterprise_origination';
+
+function init(){
+  renderEcon();
+  renderRoster();
+  renderBuilderWfGrid();
+}
+
+function renderEcon(){
+  const totalH = EMPLOYEES.reduce((a,b)=>a+b.handled,0);
+  const totalHrs = EMPLOYEES.reduce((a,b)=>a+(b.handled*b.hrs),0);
+  const estVal = Math.round(totalHrs * 175);
+
+  document.getElementById('econ-strip').innerHTML = `
+    <div class="cell"><div class="v">${totalH}</div><div class="k">IoT &amp; Logistics Workflows Completed</div></div>
+    <div class="cell"><div class="v">${totalHrs.toLocaleString()} <span class="u">hrs</span></div><div class="k">Engineering &amp; Sales Time Saved</div></div>
+    <div class="cell"><div class="v">$${(estVal/1000).toFixed(1)}k</div><div class="k">Estimated Value Generated</div></div>
+    <div class="cell"><div class="v">99.9<span class="u">%</span></div><div class="k">FDA 21 CFR &amp; FAA SLA Compliance</div></div>
+  `;
+}
+
+function renderRoster(){
+  const cont = document.getElementById('roster-container');
+  cont.innerHTML = '';
+
+  TRACKS.forEach(([tKey, tLabel]) => {
+    const emps = EMPLOYEES.filter(e => {
+      const wf = WORKFLOWS[e.wf];
+      return wf && wf.track === tKey;
+    });
+
+    if(emps.length === 0) return;
+
+    const sec = document.createElement('div');
+    sec.innerHTML = `<div class="slabel">${tLabel}</div>`;
+    const grid = document.createElement('div');
+    grid.className = 'roster';
+
+    emps.forEach(emp => {
+      grid.appendChild(createEmpCard(emp));
+    });
+
+    sec.appendChild(grid);
+    cont.appendChild(sec);
+  });
+
+  const hireCard = document.createElement('div');
+  hireCard.className = 'hire-card';
+  hireCard.onclick = () => switchTab('builder');
+  hireCard.innerHTML = `
+    <div class="plus">+</div>
+    <div class="h">Add Custom AI Operator</div>
+    <div class="p">Compose a new team of specialist agents for custom supply chain and IoT workflows</div>
+  `;
+  cont.appendChild(hireCard);
+}
+
+function createEmpCard(emp){
+  const wf = WORKFLOWS[emp.wf];
+  const card = document.createElement('div');
+  const isHero = wf && wf.tag === 'flagship';
+  card.className = `emp ${isHero ? 'hero' : ''} ${emp.id === activeEmpId ? 'working' : ''}`;
+  card.id = `card-${emp.id}`;
+
+  const initials = emp.name.split(' ').map(n=>n[0]).join('').substring(0,2);
+  const agentChips = wf ? wf.tasks.map(t => {
+    const a = AGENT_ROLES[t.agent];
+    return `<span class="chip">${a ? a.emoji : ''} ${a ? a.label : t.agent}</span>`;
+  }).join('') : '';
+
+  card.innerHTML = `
+    <div class="emp-top">
+      <div class="avatar">${initials}</div>
+      <div>
+        <div class="emp-name">${emp.name} ${isHero ? '<span class="tag hero">Flagship</span>' : ''}</div>
+        <div class="emp-title">${emp.title}</div>
+      </div>
+    </div>
+    <div class="emp-owns">Owns: <b>${wf ? wf.name : emp.wf}</b></div>
+    <div class="team">${agentChips}</div>
+    <div class="emp-stats">
+      <div class="st">Runs<b>${emp.handled}</b></div>
+      <div class="st">Time Saved<b>${(emp.handled * emp.hrs).toFixed(0)} hrs</b></div>
+      <div class="st">Headline Metric<b>${emp.win}</b></div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" onclick="setupRun('${emp.id}')">Run Operator Workflow</button>
+    </div>
+  `;
+
+  return card;
+}
+
+function switchTab(t){
+  document.getElementById('tab-roster').classList.toggle('active', t==='roster');
+  document.getElementById('tab-builder').classList.toggle('active', t==='builder');
+  document.getElementById('view-roster').classList.toggle('hidden', t!=='roster');
+  document.getElementById('view-builder').classList.toggle('hidden', t!=='builder');
+}
+
+function setupRun(empId){
+  const emp = EMPLOYEES.find(e => e.id === empId);
+  if(!emp) return;
+
+  activeEmpId = empId;
+  const wf = WORKFLOWS[emp.wf];
+  currentRunWf = wf;
+
+  renderRoster();
+
+  const panel = document.getElementById('run-panel');
+  panel.classList.remove('hidden');
+  panel.scrollIntoView({ behavior: 'smooth' });
+
+  const initials = emp.name.split(' ').map(n=>n[0]).join('').substring(0,2);
+  document.getElementById('run-avatar').innerText = initials;
+  document.getElementById('run-name').innerText = emp.name;
+  document.getElementById('run-title').innerText = `Executing: ${wf.title}`;
+  document.getElementById('run-sub').innerText = wf.desc;
+  document.getElementById('run-prompt').value = wf.sample;
+
+  document.getElementById('run-phases').querySelectorAll('.ph').forEach(p=>p.className='ph');
+  document.getElementById('ph-1').classList.add('active');
+
+  const grid = document.getElementById('agent-grid');
+  grid.innerHTML = '';
+  wf.tasks.forEach((t, i) => {
+    const a = AGENT_ROLES[t.agent];
+    const ac = document.createElement('div');
+    ac.className = 'acard';
+    ac.id = `acard-${i}`;
+    ac.innerHTML = `
+      <div class="ae">${a ? a.emoji : '🤖'}</div>
+      <div class="ar">${a ? a.label : t.agent}</div>
+      <div class="at">${t.task}</div>
+      <div class="as"><div class="sd"></div><span id="astat-${i}">Queued</span></div>
+    `;
+    grid.appendChild(ac);
+  });
+
+  document.getElementById('run-feed').innerHTML = '';
+  document.getElementById('run-result').classList.add('hidden');
+  document.getElementById('run-donebar').classList.add('hidden');
+  document.getElementById('run-btn').disabled = false;
+}
+
+let runTimer = null;
+
+function executeRun(){
+  if(!currentRunWf) return;
+  document.getElementById('run-btn').disabled = true;
+
+  document.getElementById('ph-1').className = 'ph done';
+  document.getElementById('ph-2').className = 'ph active';
+
+  const feed = document.getElementById('run-feed');
+  feed.innerHTML = '';
+
+  const wf = currentRunWf;
+  const tasks = wf.tasks;
+  let idx = 0;
+
+  function logRow(agentName, msg){
+    const row = document.createElement('div');
+    row.className = 'frow';
+    const now = new Date();
+    const timeStr = now.toTimeString().split(' ')[0] + '.' + String(now.getMilliseconds()).padStart(3,'0');
+    row.innerHTML = `<span class="ft">${timeStr}</span><span class="fa">${agentName}</span><span class="fd">${msg}</span>`;
+    feed.appendChild(row);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  logRow('System', `Initializing multi-agent graph: ${wf.name}`);
+
+  runTimer = setInterval(() => {
+    if(idx < tasks.length){
+      const t = tasks[idx];
+      const a = AGENT_ROLES[t.agent];
+      const aName = a ? a.label : t.agent;
+
+      if(idx > 0){
+        const prevCard = document.getElementById(`acard-${idx-1}`);
+        if(prevCard){
+          prevCard.className = 'acard done';
+          document.getElementById(`astat-${idx-1}`).innerText = 'Completed';
+        }
+      }
+
+      const card = document.getElementById(`acard-${idx}`);
+      if(card){
+        card.className = 'acard running visible';
+        document.getElementById(`astat-${idx}`).innerText = 'Executing...';
+      }
+
+      logRow(aName, `Task: ${t.task}`);
+
+      if(a && a.tools){
+        a.tools.forEach(tk => {
+          if(TOOLS[tk]){
+            logRow(aName, `Tool [${tk}]: ${TOOLS[tk]()}`);
+          }
+        });
+      }
+
+      idx++;
+    } else {
+      clearInterval(runTimer);
+
+      const lastCard = document.getElementById(`acard-${tasks.length-1}`);
+      if(lastCard){
+        lastCard.className = 'acard done';
+        document.getElementById(`astat-${tasks.length-1}`).innerText = 'Completed';
+      }
+
+      document.getElementById('ph-2').className = 'ph done';
+      document.getElementById('ph-3').className = 'ph done';
+
+      logRow('System', 'Workflow execution complete. Synthesizing deliverable artifact.');
+
+      showResult();
+    }
+  }, 900);
+}
+
+function showResult(){
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = currentRunWf;
+  const wfKey = emp ? emp.wf : 'smarttape_enterprise_origination';
+
+  document.getElementById('res-wf').innerText = wf.name;
+  document.getElementById('res-agents').innerText = wf.tasks.length;
+  document.getElementById('res-time').innerText = '4.3s (Simulated)';
+  document.getElementById('res-tools').innerText = wf.tasks.length * 2;
+  document.getElementById('res-saved').innerText = `~${emp ? emp.hrs : 12} hrs`;
+
+  document.getElementById('res-title').innerText = DTITLE[wfKey] || 'Deliverable Artifact';
+  document.getElementById('res-body').innerText = FINAL[wfKey] || 'Output complete.';
+
+  document.getElementById('run-result').classList.remove('hidden');
+  document.getElementById('run-donebar').classList.remove('hidden');
+  document.getElementById('run-btn').disabled = false;
+}
+
+function renderBuilderWfGrid(){
+  const grid = document.getElementById('wf-select-grid');
+  grid.innerHTML = '';
+
+  Object.keys(WORKFLOWS).forEach(key => {
+    const wf = WORKFLOWS[key];
+    const card = document.createElement('div');
+    card.className = `wf ${key === selectedWfKey ? 'sel' : ''}`;
+    card.onclick = () => {
+      selectedWfKey = key;
+      renderBuilderWfGrid();
+    };
+    card.innerHTML = `
+      <div class="wn">${wf.name} ${wf.tag==='flagship' ? '<span class="tag hero">Flagship</span>' : ''}</div>
+      <div class="wd">${wf.desc}</div>
+      <div class="wm">${wf.mode.toUpperCase()} &bull; ${wf.tasks.length} TASKS</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function goToStep(s){
+  document.getElementById('st-1').classList.toggle('active', s===1);
+  document.getElementById('st-2').classList.toggle('active', s===2);
+  document.getElementById('st-3').classList.toggle('active', s===3);
+
+  document.getElementById('bstep-1').classList.toggle('hidden', s!==1);
+  document.getElementById('bstep-2').classList.toggle('hidden', s!==2);
+  document.getElementById('bstep-3').classList.toggle('hidden', s!==3);
+
+  if(s === 2){
+    const wf = WORKFLOWS[selectedWfKey];
+    document.getElementById('bstep2-wftitle').innerText = `Configure Tasks: ${wf.name}`;
+    const cont = document.getElementById('task-map-container');
+    cont.innerHTML = '';
+
+    wf.tasks.forEach((t, i) => {
+      const row = document.createElement('div');
+      row.className = 'task-row';
+
+      let optionsHTML = '';
+      Object.keys(AGENT_ROLES).forEach(ak => {
+        const a = AGENT_ROLES[ak];
+        const sel = ak === t.agent ? 'selected' : '';
+        optionsHTML += `<option value="${ak}" ${sel}>${a.emoji} ${a.label}</option>`;
+      });
+
+      row.innerHTML = `
+        <div class="tn">${i+1}</div>
+        <div class="tt">${t.task}</div>
+        <select id="sel-task-${i}">${optionsHTML}</select>
+      `;
+      cont.appendChild(row);
+    });
+  }
+}
+
+function deployOperator(){
+  const name = document.getElementById('b-emp-name').value.trim() || 'New Operator';
+  const title = document.getElementById('b-emp-title').value.trim() || 'Custom Specialist';
+
+  const newId = 'custom-op-' + Date.now();
+  EMPLOYEES.push({
+    id: newId,
+    name: name,
+    title: title,
+    wf: selectedWfKey,
+    handled: 1,
+    hrs: 10.0,
+    win: 'Newly Deployed'
+  });
+
+  renderEcon();
+  renderRoster();
+  switchTab('roster');
+  setupRun(newId);
+}
+
+window.onload = init;
+</script>
+</body>
+</html>
