@@ -307,3 +307,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/neora
 https://innvonix-tech-solutions.github.io/ai-workforce/caeonline
 https://innvonix-tech-solutions.github.io/ai-workforce/class-ic
 https://innvonix-tech-solutions.github.io/ai-workforce/regency-supply
+https://innvonix-tech-solutions.github.io/ai-workforce/trackonomy
