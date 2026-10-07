@@ -315,3 +315,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/waterfurnace
 https://innvonix-tech-solutions.github.io/ai-workforce/solidpowerbattery
 https://innvonix-tech-solutions.github.io/ai-workforce/trilliumfoods
 https://innvonix-tech-solutions.github.io/ai-workforce/whirleydrinkworks
+https://innvonix-tech-solutions.github.io/ai-workforce/olaplex
