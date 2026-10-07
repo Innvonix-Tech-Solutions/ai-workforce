@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trillium Foods AI Workforce Enterprise Liquid Manufacturing Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        trillium: {
+                            forest: '#1B4D3E',
+                            emerald: '#2D6A4F',
+                            mint: '#52B788',
+                            gold: '#E0A96D',
+                            pearl: '#F4F7F5',
+                            dark: '#0F2C23',
+                            slate: '#1E293B'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .gradient-trillium { background: linear-gradient(135deg, #1B4D3E 0%, #2D6A4F 100%); }
+        .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #F4F7F5; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #2D6A4F; border-radius: 3px; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col custom-scrollbar">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-trillium-forest text-white sticky top-0 z-40 shadow-lg border-b border-trillium-mint/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="w-10 h-10 rounded-xl bg-trillium-mint flex items-center justify-center font-bold text-trillium-dark shadow-md text-xl">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-extrabold text-lg tracking-wider text-white uppercase">TRILLIUM FOODS</span>
+                        <span class="bg-trillium-mint/30 text-trillium-pearl text-xs font-semibold px-2 py-0.5 rounded border border-trillium-mint/40">AI WORKFORCE 2.0</span>
+                    </div>
+                    <p class="text-xs text-trillium-pearl/80">Liquid Food & Beverage Manufacturing: Dressings, Sauces, Mayonnaise, Syrups & Co-Packing</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <div class="hidden md:flex items-center space-x-4 text-xs font-mono">
+                    <div class="bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-700/50 flex items-center space-x-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span class="text-slate-300">PLATFORM: ONLINE</span>
+                    </div>
+                    <div class="bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-700/50 text-slate-300">
+                        LATENCY: <span class="text-trillium-mint font-bold">14ms</span>
+                    </div>
+                    <div class="bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-700/50 text-slate-300">
+                        ACTIVE AGENTS: <span class="text-trillium-mint font-bold">12/12</span>
+                    </div>
+                </div>
+                <button onclick="openExecutionModal('tender')" class="bg-trillium-mint hover:bg-emerald-400 text-trillium-dark font-bold text-xs px-4 py-2 rounded-lg transition-all shadow-md flex items-center space-x-2">
+                    <i class="fa-solid fa-play"></i>
+                    <span>RUN FLAGSHIP WORKFLOW</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full space-y-6">
+
+        <!-- Executive Metrics Header -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase">Annual Capacity</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-1">1.0B+ Lbs</h3>
+                    <p class="text-xs text-emerald-600 font-medium mt-1"><i class="fa-solid fa-circle-check"></i> 500,000+ Sq Ft Footprint</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-trillium-pearl text-trillium-forest flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-industry"></i>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase">Manufacturing Hubs</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-1">4 Strategic Plants</h3>
+                    <p class="text-xs text-emerald-600 font-medium mt-1"><i class="fa-solid fa-location-dot"></i> OH, PA, AL & HQ IL</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase">Product Specialization</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-1">Dressings & Sauces</h3>
+                    <p class="text-xs text-trillium-emerald font-medium mt-1"><i class="fa-solid fa-jar"></i> Mayo, Syrups & Mixes</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-trillium-pearl text-trillium-emerald flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-bottle-droplet"></i>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase">Active AI Specialists</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-1">12 Agents</h3>
+                    <p class="text-xs text-blue-600 font-medium mt-1"><i class="fa-solid fa-microchip"></i> 8 Enterprise Workflows</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="flex border-b border-slate-200 space-x-8 text-sm font-semibold">
+            <button onclick="switchTab('workflows')" id="tab-workflows" class="pb-3 border-b-2 border-trillium-forest text-trillium-forest flex items-center space-x-2">
+                <i class="fa-solid fa-diagram-project"></i>
+                <span>Enterprise Workflows (8)</span>
+            </button>
+            <button onclick="switchTab('agents')" id="tab-agents" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Specialist AI Agents (12)</span>
+            </button>
+            <button onclick="switchTab('operators')" id="tab-operators" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2">
+                <i class="fa-solid fa-id-card"></i>
+                <span>Human Operators & Supervisors (8)</span>
+            </button>
+            <button onclick="switchTab('analytics')" id="tab-analytics" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Live Batch & Viscosity Telemetry</span>
+            </button>
+        </div>
+
+        <!-- TAB 1: WORKFLOWS -->
+        <div id="view-workflows" class="space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">Trillium Foods Enterprise Workflows</h2>
+                    <p class="text-sm text-slate-500">Autonomous workflow orchestration spanning dual tracks: Foodservice, QSR & Retail Private Label Partnerships, and Liquid Food Manufacturing & 1B-lb Co-Packing Ops.</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <span class="text-xs text-slate-500 font-medium">Filter Track:</span>
+                    <button onclick="filterWorkflows('all', this)" class="wf-filter-btn active bg-trillium-forest text-white text-xs font-semibold px-3 py-1.5 rounded-lg">All Tracks</button>
+                    <button onclick="filterWorkflows('commercial', this)" class="wf-filter-btn bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-slate-300">Foodservice & Private Label</button>
+                    <button onclick="filterWorkflows('ops', this)" class="wf-filter-btn bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-slate-300">Liquid Ops & Quality QA</button>
+                </div>
+            </div>
+
+            <div id="workflows-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- TAB 2: AGENTS -->
+        <div id="view-agents" class="hidden space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">Specialist AI Agents (12)</h2>
+                    <p class="text-sm text-slate-500">Autonomous domain experts configured for liquid food emulsification, thermal pasteurization, Brix refractometry, and multi-plant co-packing.</p>
+                </div>
+                <div class="relative w-72">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-sm"></i>
+                    <input type="text" id="agent-search" oninput="searchAgents()" placeholder="Search agents by role or skill..." class="w-full pl-9 pr-4 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-trillium-mint">
+                </div>
+            </div>
+
+            <div id="agents-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- TAB 3: OPERATORS -->
+        <div id="view-operators" class="hidden space-y-6">
+            <div>
+                <h2 class="text-xl font-bold text-slate-900">Human Operators & Supervisors (8)</h2>
+                <p class="text-sm text-slate-500">Enterprise operators styled in Trillium Forest Green (#1B4D3E) branding.</p>
+            </div>
+
+            <div id="operators-grid" class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- TAB 4: ANALYTICS -->
+        <div id="view-analytics" class="hidden space-y-6">
+            <div>
+                <h2 class="text-xl font-bold text-slate-900">Live Batch & Viscosity Telemetry</h2>
+                <p class="text-sm text-slate-500">Real-time telemetry across multi-plant liquid manufacturing facilities in Cincinnati, Lancaster, Brundidge, and Chicago HQ.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-line text-trillium-emerald"></i>
+                        <span>Emulsion Viscosity Shear Stability (cP over 50 Batch Runs)</span>
+                    </h3>
+                    <canvas id="chart-viscosity" height="220"></canvas>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-pie text-trillium-emerald"></i>
+                        <span>Multi-Plant Volume Distribution (1.0B+ Lbs/Yr)</span>
+                    </h3>
+                    <canvas id="chart-plants" height="220"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Execution Modal -->
+    <div id="execution-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-2xl max-w-2xl w-full mx-4 shadow-2xl overflow-hidden border border-slate-200 flex flex-col max-h-[90vh]">
+            <div class="bg-trillium-forest text-white px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-lg bg-trillium-mint text-trillium-dark flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-gear"></i>
+                    </div>
+                    <div>
+                        <h3 id="modal-wf-title" class="font-bold text-sm">Workflow Title</h3>
+                        <p id="modal-wf-track" class="text-xs text-trillium-pearl/80">Track Name</p>
+                    </div>
+                </div>
+                <button onclick="closeExecutionModal()" class="text-slate-300 hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="p-6 space-y-4 overflow-y-auto flex-grow custom-scrollbar">
+                <div class="flex items-center justify-between text-xs text-slate-500 font-mono bg-slate-100 p-2.5 rounded-lg">
+                    <span>EXECUTION ENGINE: AGY-V2.0</span>
+                    <span id="modal-status-text" class="font-bold text-trillium-emerald">INITIALIZING...</span>
+                </div>
+
+                <!-- Timeline Steps -->
+                <div id="modal-timeline" class="space-y-3">
+                    <!-- Dynamic Step Nodes -->
+                </div>
+
+                <!-- Live Log Console -->
+                <div class="bg-slate-950 text-slate-200 p-4 rounded-xl font-mono text-xs h-36 overflow-y-auto custom-scrollbar border border-slate-800" id="modal-console">
+                    <p class="text-slate-500">[00:00:00] Initializing Trillium Foods Execution Engine...</p>
+                </div>
+
+                <!-- Executive Summary Box -->
+                <div id="modal-summary-box" class="bg-trillium-pearl border border-trillium-mint/40 rounded-xl p-4 hidden">
+                    <h4 class="text-sm font-bold text-trillium-forest flex items-center space-x-2">
+                        <i class="fa-solid fa-file-contract text-trillium-forest"></i>
+                        <span>Executive Summary & Resolution</span>
+                    </h4>
+                    <p id="modal-summary-text" class="text-xs text-slate-700 mt-2 leading-relaxed font-sans">
+                        Executive summary text goes here.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 px-6 py-4 border-t border-slate-200 flex items-center justify-between">
+                <span class="text-xs text-slate-500 font-mono">TRILLIUM FOODS OPERATIONAL PROTOCOL</span>
+                <button onclick="closeExecutionModal()" class="bg-slate-800 hover:bg-slate-900 text-white font-semibold text-xs px-5 py-2 rounded-lg">Close Window</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Data & Logic -->
+    <script>
+        const AGENT_ROLES = [
+            {
+                id: 'trillium_liquid_viscosity_emulsion_lead',
+                name: 'trillium_liquid_viscosity_emulsion_lead',
+                title: 'Liquid Food Viscosity & Emulsification Lead',
+                category: 'Liquid Food Chemistry',
+                icon: 'fa-bottle-droplet',
+                description: 'Engineers high-shear emulsion stability, oil-in-water globule size distribution, and viscosity calibration for dressings, sauces, and mayonnaises.'
+            },
+            {
+                id: 'trillium_ph_thermal_pasteurization_auditor',
+                name: 'trillium_ph_thermal_pasteurization_auditor',
+                title: 'Batch Thermal Pasteurization & pH Safety Auditor',
+                category: 'FDA Acidified Food Safety',
+                icon: 'fa-temperature-high',
+                description: 'Validates FDA acidified food regulations (21 CFR 114), thermal kill-step lethality (F0/PU values), and pH safety bounds under 4.6 for hot-fill processes.'
+            },
+            {
+                id: 'trillium_qsr_custom_flavor_r_and_d_spec',
+                name: 'trillium_qsr_custom_flavor_r_and_d_spec',
+                title: 'QSR Custom Flavor Formulator & Sauce R&D Specialist',
+                category: 'Culinary R&D',
+                icon: 'fa-utensils',
+                description: 'Formulates proprietary QSR signature sauces, spice extract blends, umami profiles, and commercial batch scaling formulas.'
+            },
+            {
+                id: 'trillium_high_speed_pouch_bottle_fill_eng',
+                name: 'trillium_high_speed_pouch_bottle_fill_eng',
+                title: 'High-Speed Aseptic Pouch & Bottle Fill Engineer',
+                category: 'Packaging Automation',
+                icon: 'fa-box-open',
+                description: 'Optimizes high-speed rotary liquid filling lines, volumetric piston dosing, flexible pouch seal integrity, and squeezable bottle capping.'
+            },
+            {
+                id: 'trillium_retail_private_label_co_pack_lead',
+                name: 'trillium_retail_private_label_co_pack_lead',
+                title: 'Retail Private Label & Brand Co-Packing Lead',
+                category: 'Co-Packing & Retail',
+                icon: 'fa-handshake',
+                description: 'Manages national retail private label co-manufacturing specifications, retailer SKU onboarding, and co-pack service level agreements.'
+            },
+            {
+                id: 'trillium_syrup_beverage_mix_brix_qa_spec',
+                name: 'trillium_syrup_beverage_mix_brix_qa_spec',
+                title: 'Syrup & Beverage Mix Brix Density & Refractometer QA Specialist',
+                category: 'Syrup & Beverage Quality',
+                icon: 'fa-wine-bottle',
+                description: 'Monitors Brix refractometry, sugar and sweetener ratio precision, liquid clarification, and beverage mix flavor dispersion.'
+            },
+            {
+                id: 'trillium_multi_plant_synergy_router',
+                name: 'trillium_multi_plant_synergy_router',
+                title: 'Multi-Plant Production & Freight Router',
+                category: 'Supply Chain Operations',
+                icon: 'fa-route',
+                description: 'Dynamically routes batch orders across plant footprint in Cincinnati OH, Lancaster PA, Brundidge AL, and Chicago HQ.'
+            },
+            {
+                id: 'trillium_cold_chain_allergen_cross_contam_eng',
+                name: 'trillium_cold_chain_allergen_cross_contam_eng',
+                title: 'Allergen Separation & CIP Sanitary Washdown Lead',
+                category: 'Sanitation & Safety',
+                icon: 'fa-soap',
+                description: 'Enforces Clean-In-Place (CIP) automated washdown protocols, allergen segregation (egg, soy, dairy), and swab ATP bioluminescence verification.'
+            },
+            {
+                id: 'trillium_bulk_oil_sweetener_procurement_analyst',
+                name: 'trillium_bulk_oil_sweetener_procurement_analyst',
+                title: 'Bulk Edible Oil & Vinegar Commodity Procurement Analyst',
+                category: 'Raw Ingredient Sourcing',
+                icon: 'fa-wheat-awn',
+                description: 'Tracks commodity market indices for soybean oil, canola oil, corn syrup, vinegar, and bulk egg yolk raw material contracts.'
+            },
+            {
+                id: 'trillium_eco_labeling_nutritional_label_spec',
+                name: 'trillium_eco_labeling_nutritional_label_spec',
+                title: 'FDA Nutritional Panel & Clean-Label ECO Lead',
+                category: 'Regulatory Labeling',
+                icon: 'fa-barcode',
+                description: 'Executes Engineering Change Orders (ECO) for FDA NLEA compliant nutrition facts, allergen declarations, and non-GMO claims.'
+            },
+            {
+                id: 'writer',
+                name: 'writer',
+                title: 'Food Manufacturing Technical Dossier & FSMA Writer',
+                category: 'Technical Documentation',
+                icon: 'fa-pen-to-square',
+                description: 'Compiles GFSI SQF Level 3 audit reports, HACCP hazard analysis documentation, and customer co-packing technical spec sheets.'
+            },
+            {
+                id: 'reviewer',
+                name: 'reviewer',
+                title: 'Director of Food Science, Quality Assurance & Operations PE',
+                category: 'Executive Approval',
+                icon: 'fa-user-check',
+                description: 'Final sign-off authority for master formula approvals, food safety critical control point reviews, and plant release authorization.'
+            }
+        ];
+
+        const WORKFLOWS = [
+            {
+                id: 'scout',
+                title: 'QSR Custom Sauce Formulation & Multi-Plant Co-Packing Audit',
+                track: 'commercial',
+                trackLabel: 'Foodservice, QSR & Retail Partnerships',
+                description: 'Rapid bench-to-pilot formulation of custom quick-service restaurant signature dipping sauces, viscosity targets, and co-pack plant assignment.',
+                leadAgent: 'trillium_qsr_custom_flavor_r_and_d_spec',
+                steps: [
+                    { step: 'Bench-Scale Flavor Profile & Spicing Matrix', agent: 'trillium_qsr_custom_flavor_r_and_d_spec' },
+                    { step: 'Viscosity & Emulsion Shear Test', agent: 'trillium_liquid_viscosity_emulsion_lead' },
+                    { step: 'Plant Capacity & Routing Assignment', agent: 'trillium_multi_plant_synergy_router' }
+                ],
+                summary: 'Custom QSR garlic aioli dipping sauce validated. Batch viscosity benchmarked at 14,500 cP. Production routed to Cincinnati and Brundidge plants for 120,000 lbs bi-weekly run.'
+            },
+            {
+                id: 'quote',
+                title: 'High-Volume Liquid Co-Packing Margin & Raw Commodity Pricing',
+                track: 'commercial',
+                trackLabel: 'Foodservice, QSR & Retail Partnerships',
+                description: 'Dynamic raw material costing and margin estimation evaluating soybean oil, sweetener contracts, bottle resin, and multi-plant freight.',
+                leadAgent: 'trillium_bulk_oil_sweetener_procurement_analyst',
+                steps: [
+                    { step: 'Edible Oil & Egg Commodity Index Audit', agent: 'trillium_bulk_oil_sweetener_procurement_analyst' },
+                    { step: 'Co-Pack Line Machine Rate Analysis', agent: 'trillium_retail_private_label_co_pack_lead' },
+                    { step: 'Commercial Proposal Approval', agent: 'reviewer' }
+                ],
+                summary: 'Multi-year contract pricing locked for national foodservice mayonnaise line. Raw material index formula structured with 18.4% gross margin threshold.'
+            },
+            {
+                id: 'tender',
+                title: 'Major Retailer Private Label Dressing & Mayo Line Validation',
+                track: 'commercial',
+                trackLabel: 'Foodservice, QSR & Retail Partnerships',
+                flagship: true,
+                description: 'Flagship end-to-end commercial onboarding for national retail private label salad dressing and mayonnaise product rollout across all 4 plants.',
+                leadAgent: 'trillium_retail_private_label_co_pack_lead',
+                steps: [
+                    { step: 'Retailer Gold Standard Match & Bench Audit', agent: 'trillium_qsr_custom_flavor_r_and_d_spec' },
+                    { step: 'Emulsion Micro-Structure & Shelf-Life Stress Test', agent: 'trillium_liquid_viscosity_emulsion_lead' },
+                    { step: 'Thermal Pasteurization & pH Safety Sign-Off', agent: 'trillium_ph_thermal_pasteurization_auditor' },
+                    { step: 'FDA Nutritional Panel & Allergen Label ECO', agent: 'trillium_eco_labeling_nutritional_label_spec' },
+                    { step: 'Executive Co-Pack Master Approval', agent: 'reviewer' }
+                ],
+                summary: 'Retailer private label creamy ranch and heavy duty mayonnaise lines approved. Full SQF Level 3 compliance verified. First shipment scheduled at 450,000 cases per month.'
+            },
+            {
+                id: 'radar',
+                title: 'Food & Beverage Market Trends & Clean-Label Ingredient Radar',
+                track: 'commercial',
+                trackLabel: 'Foodservice, QSR & Retail Partnerships',
+                description: 'Automated intelligence tracking non-GMO sweeteners, organic emulsifiers, sugar reduction syrups, and clean-label consumer trends.',
+                leadAgent: 'trillium_eco_labeling_nutritional_label_spec',
+                steps: [
+                    { step: 'Clean-Label Ingredient Scrape & Patent Radar', agent: 'trillium_eco_labeling_nutritional_label_spec' },
+                    { step: 'Regulatory Safety & Non-GMO Verification', agent: 'trillium_ph_thermal_pasteurization_auditor' },
+                    { step: 'R&D Reformulation Briefing', agent: 'writer' }
+                ],
+                summary: 'Identified organic sunflower lecithin as alternative emulsifier for clean-label egg-free mayonnaise, enabling 22% cost reduction in organic retail lines.'
+            },
+            {
+                id: 'panel_qualification',
+                title: 'Batch Thermal Pasteurization, pH Control & Viscosity Shear Calibration',
+                track: 'ops',
+                trackLabel: 'Liquid Food Manufacturing & 1B-lb Co-Packing Ops',
+                description: 'Continuous monitoring and calibration of stainless steel jacketed kettles, high-shear homogenizers, and continuous thermal pasteurizers.',
+                leadAgent: 'trillium_ph_thermal_pasteurization_auditor',
+                steps: [
+                    { step: 'Inline pH Probe Calibration & Safety Lockout', agent: 'trillium_ph_thermal_pasteurization_auditor' },
+                    { step: 'High-Shear Homogenizer Pressure Audit', agent: 'trillium_liquid_viscosity_emulsion_lead' },
+                    { step: 'Batch Release Master Certificate', agent: 'reviewer' }
+                ],
+                summary: 'Continuous pasteurization hold temperature verified at 182 deg F for 30 seconds. Batch pH locked at 3.82, ensuring 100% FDA Acidified Food compliance.'
+            },
+            {
+                id: 'inverter_yield',
+                title: 'High-Speed Aseptic Pouch & Squeeze Bottle Filling Line OEE Calibration',
+                track: 'ops',
+                trackLabel: 'Liquid Food Manufacturing & 1B-lb Co-Packing Ops',
+                description: 'Real-time optimization of high-speed pouch fillers, piston fill weight accuracy, induction seal testing, and bottle capping OEE.',
+                leadAgent: 'trillium_high_speed_pouch_bottle_fill_eng',
+                steps: [
+                    { step: 'Fill Weight Volumetric Deviation Sensor Check', agent: 'trillium_high_speed_pouch_bottle_fill_eng' },
+                    { step: 'Brix Refractometry & Density Verification', agent: 'trillium_syrup_beverage_mix_brix_qa_spec' },
+                    { step: 'Line OEE & Yield Dossier', agent: 'writer' }
+                ],
+                summary: 'Line 4 filling speed increased from 240 to 310 pouches per minute. Volumetric fill weight standard deviation reduced to 0.04 ounces.'
+            },
+            {
+                id: 'thermal_simulation',
+                title: 'CIP Sanitation Washdown & CIP Chemical Neutralization Simulation',
+                track: 'ops',
+                trackLabel: 'Liquid Food Manufacturing & 1B-lb Co-Packing Ops',
+                description: 'Automated simulation and validation of Clean-In-Place 5-stage caustic and acid wash cycles between high-allergen flavor changeovers.',
+                leadAgent: 'trillium_cold_chain_allergen_cross_contam_eng',
+                steps: [
+                    { step: 'CIP Caustic Loop Temperature & Flow Model', agent: 'trillium_cold_chain_allergen_cross_contam_eng' },
+                    { step: 'ATP Bioluminescence & Surface Swab Verification', agent: 'trillium_ph_thermal_pasteurization_auditor' },
+                    { step: 'Sanitation Clearance Sign-Off', agent: 'reviewer' }
+                ],
+                summary: '5-stage CIP cycle executed in 42 minutes. Zero egg protein residual detected on lines via ATP swab test. Line cleared for vegan dressing run.'
+            },
+            {
+                id: 'mask_eco',
+                title: 'Nutritional Panel ECO Revision & Allergen Separation Standard Operating Procedure',
+                track: 'ops',
+                trackLabel: 'Liquid Food Manufacturing & 1B-lb Co-Packing Ops',
+                description: 'Managing Engineering Change Orders for revised FDA 2026 nutrition labels, sodium reduction targets, and plant allergen mapping.',
+                leadAgent: 'trillium_eco_labeling_nutritional_label_spec',
+                steps: [
+                    { step: 'NLEA Nutrition Panel Artwork ECO Update', agent: 'trillium_eco_labeling_nutritional_label_spec' },
+                    { step: 'Plant Floor Allergen Segregation Map Update', agent: 'trillium_cold_chain_allergen_cross_contam_eng' },
+                    { step: 'Master ECO Sign-Off', agent: 'reviewer' }
+                ],
+                summary: 'ECO-2026-TF-409 approved across Lancaster and Brundidge plants. Reduced sodium salad dressing label updated with updated FDA serving size values.'
+            }
+        ];
+
+        const EMPLOYEES = [
+            {
+                id: 'scout',
+                name: 'Chef Marcus Vance',
+                role: 'Executive Culinary & R&D Lead',
+                dept: 'Culinary R&D',
+                avatarBg: 'bg-trillium-forest text-white',
+                initials: 'MV',
+                agent: 'trillium_qsr_custom_flavor_r_and_d_spec',
+                status: 'Active'
+            },
+            {
+                id: 'quote',
+                name: 'Sarah Jenkins',
+                role: 'Commercial Co-Packing Cost Manager',
+                dept: 'Commercial Costing',
+                avatarBg: 'bg-trillium-forest text-white',
+                initials: 'SJ',
+                agent: 'trillium_bulk_oil_sweetener_procurement_analyst',
+                status: 'Active'
+            },
+            {
+                id: 'tender',
+                name: 'David Sterling',
+                role: 'QSR & National Accounts Director',
+                dept: 'National Accounts',
+                avatarBg: 'bg-trillium-forest text-white',
+                initials: 'DS',
+                agent: 'trillium_retail_private_label_co_pack_lead',
+                status: 'Active'
+            },
+            {
+                id: 'radar',
+                name: 'Elena Rostova',
+                role: 'Food Safety & FSMA Regulatory Director',
+                dept: 'Regulatory Affairs',
+                avatarBg: 'bg-trillium-forest text-white',
+                initials: 'ER',
+                agent: 'trillium_eco_labeling_nutritional_label_spec',
+                status: 'Active'
+            },
+            {
+                id: 'safety',
+                name: 'Carlos Mendez',
+                role: 'CIP Washdown & Sanitation Supervisor',
+                dept: 'Plant Sanitation',
+                avatarBg: 'bg-trillium-forest text-white',
+                initials: 'CM',
+                agent: 'trillium_cold_chain_allergen_cross_contam_eng',
+                status: 'Active'
+            },
+            {
+                id: 'mill',
+                name: 'Michael Chang',
+                role: 'Plant Operations Lead (OH & PA)',
+                dept: 'Manufacturing Ops',
+                avatarBg: 'bg-trillium-forest text-white',
+                initials: 'MC',
+                agent: 'trillium_multi_plant_synergy_router',
+                status: 'Active'
+            },
+            {
+                id: 'cfd',
+                name: 'Dr. Anita Patel',
+                role: 'Principal Food Scientist & Emulsification Specialist',
+                dept: 'Food Science Lab',
+                avatarBg: 'bg-trillium-forest text-white',
+                initials: 'AP',
+                agent: 'trillium_liquid_viscosity_emulsion_lead',
+                status: 'Active'
+            },
+            {
+                id: 'eco',
+                name: 'Hannah Brooks',
+                role: 'Packaging & Label Compliance Manager',
+                dept: 'Packaging Quality',
+                avatarBg: 'bg-trillium-forest text-white',
+                initials: 'HB',
+                agent: 'trillium_high_speed_pouch_bottle_fill_eng',
+                status: 'Active'
+            }
+        ];
+
+        // Render Functions
+        function renderWorkflows(trackFilter = 'all') {
+            const container = document.getElementById('workflows-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const filtered = trackFilter === 'all' 
+                ? WORKFLOWS 
+                : WORKFLOWS.filter(w => w.track === trackFilter);
+
+            filtered.forEach(wf => {
+                const leadAgentObj = AGENT_ROLES.find(a => a.id === wf.leadAgent) || {};
+                const card = document.createElement('div');
+                card.className = `bg-white rounded-xl border ${wf.flagship ? 'border-trillium-mint ring-2 ring-trillium-mint/20' : 'border-slate-200'} shadow-sm p-6 hover:shadow-md transition-all flex flex-col justify-between`;
+                
+                let stepsHtml = wf.steps.map((s, idx) => `
+                    <div class="flex items-center space-x-2 text-xs text-slate-600 bg-slate-50 p-2 rounded border border-slate-100">
+                        <span class="w-5 h-5 rounded-full bg-trillium-pearl text-trillium-forest font-bold flex items-center justify-center text-[10px]">${idx + 1}</span>
+                        <span class="font-medium text-slate-800">${s.step}</span>
+                        <span class="text-slate-400 font-mono text-[10px] ml-auto">(${s.agent})</span>
+                    </div>
+                `).join('');
+
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full ${wf.track === 'commercial' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-teal-50 text-teal-800 border border-teal-200'}">
+                                ${wf.trackLabel}
+                            </span>
+                            ${wf.flagship ? '<span class="bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase flex items-center gap-1"><i class="fa-solid fa-star text-amber-600"></i> FLAGSHIP</span>' : ''}
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">${wf.title}</h3>
+                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">${wf.description}</p>
+                        
+                        <div class="space-y-2 mb-4">
+                            <p class="text-[11px] font-bold uppercase text-slate-400 tracking-wider">Execution Pipeline</p>
+                            ${stepsHtml}
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between mt-2">
+                        <div class="text-xs text-slate-500">
+                            <span>Lead: </span>
+                            <span class="font-mono text-trillium-forest font-semibold">${leadAgentObj.name || wf.leadAgent}</span>
+                        </div>
+                        <button onclick="openExecutionModal('${wf.id}')" class="bg-trillium-forest hover:bg-slate-800 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-all flex items-center space-x-1.5 shadow-sm">
+                            <i class="fa-solid fa-play text-[10px]"></i>
+                            <span>Execute</span>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderAgents(searchQuery = '') {
+            const container = document.getElementById('agents-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const filtered = AGENT_ROLES.filter(a => 
+                a.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                a.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                a.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                a.description.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+
+            filtered.forEach(agent => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:border-trillium-mint transition-all flex flex-col justify-between';
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center space-x-3 mb-3">
+                            <div class="w-10 h-10 rounded-lg bg-trillium-pearl text-trillium-forest flex items-center justify-center text-lg shadow-inner">
+                                <i class="fa-solid ${agent.icon}"></i>
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-trillium-emerald">${agent.category}</span>
+                                <h4 class="font-mono text-xs font-bold text-slate-900 truncate max-w-[200px]" title="${agent.name}">${agent.name}</h4>
+                            </div>
+                        </div>
+                        <h5 class="text-sm font-bold text-slate-800 mb-2 leading-snug">${agent.title}</h5>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4">${agent.description}</p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                        <span class="text-emerald-600 font-medium flex items-center gap-1">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Ready
+                        </span>
+                        <span class="font-mono text-[10px] text-slate-400">AGY-V2.0</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderOperators() {
+            const container = document.getElementById('operators-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            EMPLOYEES.forEach(emp => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center justify-between';
+                card.innerHTML = `
+                    <div class="w-full flex flex-col items-center">
+                        <div class="w-16 h-16 rounded-2xl ${emp.avatarBg} font-bold text-xl flex items-center justify-center shadow-lg mb-3 border-2 border-trillium-mint">
+                            ${emp.initials}
+                        </div>
+                        <h4 class="font-bold text-sm text-slate-900">${emp.name}</h4>
+                        <span class="text-xs text-trillium-emerald font-semibold mb-1">${emp.dept}</span>
+                        <p class="text-xs font-semibold text-slate-700 mb-3 px-2 py-0.5 bg-slate-100 rounded">${emp.role}</p>
+                    </div>
+                    <div class="w-full pt-3 border-t border-slate-100 text-xs">
+                        <p class="text-[10px] text-slate-400 font-mono mb-1">Assigned Agent</p>
+                        <p class="font-mono text-[11px] text-trillium-forest font-semibold truncate" title="${emp.agent}">${emp.agent}</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Tab Switching
+        function switchTab(tabId) {
+            ['workflows', 'agents', 'operators', 'analytics'].forEach(id => {
+                const view = document.getElementById(`view-${id}`);
+                const tabBtn = document.getElementById(`tab-${id}`);
+                if (id === tabId) {
+                    if (view) view.classList.remove('hidden');
+                    if (tabBtn) {
+                        tabBtn.classList.add('border-trillium-forest', 'text-trillium-forest');
+                        tabBtn.classList.remove('border-transparent', 'text-slate-500');
+                    }
+                } else {
+                    if (view) view.classList.add('hidden');
+                    if (tabBtn) {
+                        tabBtn.classList.remove('border-trillium-forest', 'text-trillium-forest');
+                        tabBtn.classList.add('border-transparent', 'text-slate-500');
+                    }
+                }
+            });
+
+            if (tabId === 'analytics') {
+                initCharts();
+            }
+        }
+
+        function filterWorkflows(track, btnEl) {
+            document.querySelectorAll('.wf-filter-btn').forEach(btn => {
+                btn.classList.remove('bg-trillium-forest', 'text-white');
+                btn.classList.add('bg-slate-200', 'text-slate-700');
+            });
+            if (btnEl) {
+                btnEl.classList.remove('bg-slate-200', 'text-slate-700');
+                btnEl.classList.add('bg-trillium-forest', 'text-white');
+            }
+            renderWorkflows(track);
+        }
+
+        function searchAgents() {
+            const query = document.getElementById('agent-search').value;
+            renderAgents(query);
+        }
+
+        // Execution Modal Logic
+        let modalTimer = null;
+        function openExecutionModal(workflowId) {
+            const wf = WORKFLOWS.find(w => w.id === workflowId);
+            if (!wf) return;
+
+            document.getElementById('modal-wf-title').innerText = wf.title;
+            document.getElementById('modal-wf-track').innerText = wf.trackLabel;
+            document.getElementById('modal-status-text').innerText = 'EXECUTING PROTOCOL...';
+            document.getElementById('modal-summary-box').classList.add('hidden');
+
+            const timeline = document.getElementById('modal-timeline');
+            timeline.innerHTML = '';
+            wf.steps.forEach((s, idx) => {
+                const stepEl = document.createElement('div');
+                stepEl.id = `step-node-${idx}`;
+                stepEl.className = 'flex items-center space-x-3 p-3 rounded-lg border border-slate-200 bg-slate-50 transition-all';
+                stepEl.innerHTML = `
+                    <div id="step-icon-${idx}" class="w-7 h-7 rounded-full bg-slate-300 text-slate-600 font-bold text-xs flex items-center justify-center">
+                        ${idx + 1}
+                    </div>
+                    <div class="flex-grow">
+                        <h5 class="text-xs font-bold text-slate-800">${s.step}</h5>
+                        <p class="text-[10px] font-mono text-trillium-emerald">Agent: ${s.agent}</p>
+                    </div>
+                    <span id="step-status-${idx}" class="text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-200 text-slate-600">QUEUED</span>
+                `;
+                timeline.appendChild(stepEl);
+            });
+
+            const consoleBox = document.getElementById('modal-console');
+            consoleBox.innerHTML = `<p class="text-slate-500">[00:00:00] Initializing Trillium Foods Execution Engine (${wf.id})...</p>`;
+
+            document.getElementById('execution-modal').classList.remove('hidden');
+
+            // Simulate Execution Steps
+            let currentStep = 0;
+            if (modalTimer) clearInterval(modalTimer);
+
+            modalTimer = setInterval(() => {
+                if (currentStep < wf.steps.length) {
+                    const stepData = wf.steps[currentStep];
+                    
+                    // Update Step UI
+                    const stepNode = document.getElementById(`step-node-${currentStep}`);
+                    const stepIcon = document.getElementById(`step-icon-${currentStep}`);
+                    const stepStatus = document.getElementById(`step-status-${currentStep}`);
+
+                    if (stepNode) {
+                        stepNode.classList.remove('bg-slate-50', 'border-slate-200');
+                        stepNode.classList.add('bg-emerald-50', 'border-trillium-mint');
+                    }
+
+                    if (stepIcon) {
+                        stepIcon.classList.remove('bg-slate-300', 'text-slate-600');
+                        stepIcon.classList.add('bg-trillium-mint', 'text-trillium-dark');
+                    }
+
+                    if (stepStatus) {
+                        stepStatus.classList.remove('bg-slate-200', 'text-slate-600');
+                        stepStatus.classList.add('bg-emerald-100', 'text-emerald-800');
+                        stepStatus.innerText = 'PASSED';
+                    }
+
+                    // Append Console Log
+                    const timestamp = new Date().toISOString().substring(11, 19);
+                    consoleBox.innerHTML += `<p class="text-emerald-400">[${timestamp}] Step ${currentStep + 1} COMPLETE: ${stepData.step} (${stepData.agent})</p>`;
+                    consoleBox.scrollTop = consoleBox.scrollHeight;
+
+                    currentStep++;
+                } else {
+                    clearInterval(modalTimer);
+                    document.getElementById('modal-status-text').innerText = 'WORKFLOW COMPLETED';
+                    const timestamp = new Date().toISOString().substring(11, 19);
+                    consoleBox.innerHTML += `<p class="text-trillium-mint font-bold">[${timestamp}] SUCCESS: All liquid manufacturing & quality control steps validated under FDA & SQF Standards.</p>`;
+                    consoleBox.scrollTop = consoleBox.scrollHeight;
+
+                    // Show Summary
+                    document.getElementById('modal-summary-text').innerText = wf.summary;
+                    document.getElementById('modal-summary-box').classList.remove('hidden');
+                }
+            }, 900);
+        }
+
+        function closeExecutionModal() {
+            if (modalTimer) clearInterval(modalTimer);
+            document.getElementById('execution-modal').classList.add('hidden');
+        }
+
+        // Charts Initialization
+        let chart1, chart2;
+        function initCharts() {
+            if (chart1) chart1.destroy();
+            if (chart2) chart2.destroy();
+
+            const ctx1 = document.getElementById('chart-viscosity');
+            if (ctx1) {
+                chart1 = new Chart(ctx1.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['Batch 10', 'Batch 20', 'Batch 30', 'Batch 40', 'Batch 50'],
+                        datasets: [{
+                            label: 'Creamy Dressing Viscosity (cP)',
+                            data: [14200, 14500, 14350, 14600, 14520],
+                            borderColor: '#2D6A4F',
+                            backgroundColor: 'rgba(45, 106, 79, 0.1)',
+                            fill: true,
+                            tension: 0.3
+                        }]
+                    },
+                    options: { responsive: true, plugins: { legend: { display: false } } }
+                });
+            }
+
+            const ctx2 = document.getElementById('chart-plants');
+            if (ctx2) {
+                chart2 = new Chart(ctx2.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Cincinnati Plant (OH)', 'Lancaster Plant (PA)', 'Brundidge Plant (AL)', 'Chicago HQ & Pilot (IL)'],
+                        datasets: [{
+                            data: [35, 30, 25, 10],
+                            backgroundColor: ['#1B4D3E', '#2D6A4F', '#52B788', '#E0A96D']
+                        }]
+                    },
+                    options: { responsive: true }
+                });
+            }
+        }
+
+        // Init on Load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderWorkflows();
+            renderAgents();
+            renderOperators();
+        });
+    </script>
+</body>
+</html>
