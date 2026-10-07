@@ -311,3 +311,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/trackonomy
 https://innvonix-tech-solutions.github.io/ai-workforce/dmf-lighting
 https://innvonix-tech-solutions.github.io/ai-workforce/avpro
 https://innvonix-tech-solutions.github.io/ai-workforce/manscaped
+https://innvonix-tech-solutions.github.io/ai-workforce/waterfurnace
