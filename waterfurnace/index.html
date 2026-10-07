@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WaterFurnace AI Workforce Enterprise Operations Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        waterfurnace: {
+                            blue: '#266782',
+                            warmblue: '#62c0cb',
+                            lightblue: '#eff4f3',
+                            green: '#a9cd34',
+                            yellowgreen: '#dde56f',
+                            yellowfade: '#ffe885',
+                            salmon: '#ff7865',
+                            dark: '#111827',
+                            slate: '#1E293B',
+                            light: '#F8FAFC'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .gradient-waterfurnace { background: linear-gradient(135deg, #266782 0%, #62c0cb 50%, #a9cd34 100%); }
+        .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #eff4f3; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #266782; border-radius: 3px; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col custom-scrollbar">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-waterfurnace-blue text-white sticky top-0 z-40 shadow-lg border-b border-waterfurnace-warmblue/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="w-10 h-10 rounded-xl bg-waterfurnace-warmblue flex items-center justify-center font-bold text-slate-900 shadow-md text-xl">
+                    <i class="fa-solid fa-temperature-arrow-down"></i>
+                </div>
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-extrabold text-lg tracking-wider text-white uppercase">WATERFURNACE</span>
+                        <span class="bg-waterfurnace-warmblue/30 text-white text-xs font-semibold px-2 py-0.5 rounded border border-waterfurnace-warmblue/40">BRAND GUIDELINE COMPLIANT 2.0</span>
+                    </div>
+                    <p class="text-xs text-waterfurnace-lightblue/90">Geothermal Heat Pumps, Symphony IoT & Renewable HVAC Operations</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <div class="hidden md:flex items-center space-x-4 text-xs font-mono">
+                    <div class="bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-700/50 flex items-center space-x-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span class="text-slate-300">SYSTEM: ONLINE</span>
+                    </div>
+                    <div class="bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-700/50 text-slate-300">
+                        LATENCY: <span class="text-waterfurnace-warmblue font-bold">12ms</span>
+                    </div>
+                    <div class="bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-700/50 text-slate-300">
+                        ACTIVE AGENTS: <span class="text-waterfurnace-green font-bold">12/12</span>
+                    </div>
+                </div>
+                <button onclick="openExecutionModal('panel_qualification')" class="bg-waterfurnace-green hover:bg-lime-500 text-slate-900 font-bold text-xs px-4 py-2 rounded-lg transition-all shadow-md flex items-center space-x-2">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>RUN FLAGSHIP WORKFLOW</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full space-y-6">
+
+        <!-- Executive Metrics Header -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase">Geothermal Rating</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-1">41 EER / 5.3 COP</h3>
+                    <p class="text-xs text-emerald-600 font-medium mt-1"><i class="fa-solid fa-circle-check"></i> AHRI & Energy Star Certified</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-waterfurnace-lightblue text-waterfurnace-blue flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase">Symphony Cloud IoT</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-1">Aurora Control</h3>
+                    <p class="text-xs text-emerald-600 font-medium mt-1"><i class="fa-solid fa-wifi"></i> Predictive Telemetry Active</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-network-wired"></i>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase">Dealer Network Hubs</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-1">2,500+ Dealers</h3>
+                    <p class="text-xs text-waterfurnace-blue font-medium mt-1"><i class="fa-solid fa-globe"></i> Global HVAC Distribution</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-waterfurnace-lightblue text-waterfurnace-blue flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-truck-fast"></i>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase">Active AI Specialists</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-1">12 Agents</h3>
+                    <p class="text-xs text-blue-600 font-medium mt-1"><i class="fa-solid fa-shield-halved"></i> 8 Enterprise Workflows</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-microchip"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="flex border-b border-slate-200 space-x-8 text-sm font-semibold">
+            <button onclick="switchTab('workflows')" id="tab-workflows" class="pb-3 border-b-2 border-waterfurnace-blue text-waterfurnace-blue flex items-center space-x-2">
+                <i class="fa-solid fa-diagram-project"></i>
+                <span>Enterprise Workflows (8)</span>
+            </button>
+            <button onclick="switchTab('agents')" id="tab-agents" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Specialist AI Agents (12)</span>
+            </button>
+            <button onclick="switchTab('operators')" id="tab-operators" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2">
+                <i class="fa-solid fa-id-card"></i>
+                <span>Human Operators & Supervisors (8)</span>
+            </button>
+            <button onclick="switchTab('analytics')" id="tab-analytics" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Live Geothermal Telemetry</span>
+            </button>
+        </div>
+
+        <!-- TAB 1: WORKFLOWS -->
+        <div id="view-workflows" class="space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">WaterFurnace Enterprise Workflows</h2>
+                    <p class="text-sm text-slate-500">Autonomous workflow orchestration spanning dual tracks: Commercial HVAC & Dealer Network Supply, and Geothermal Loop & Symphony IoT Ops.</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <span class="text-xs text-slate-500 font-medium">Filter Track:</span>
+                    <button onclick="filterWorkflows('all', this)" class="wf-filter-btn active bg-waterfurnace-blue text-white text-xs font-semibold px-3 py-1.5 rounded-lg">All Tracks</button>
+                    <button onclick="filterWorkflows('commercial', this)" class="wf-filter-btn bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-slate-300">Commercial HVAC & Dealer Supply</button>
+                    <button onclick="filterWorkflows('rd', this)" class="wf-filter-btn bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-slate-300">Geothermal Loop & Symphony IoT</button>
+                </div>
+            </div>
+
+            <div id="workflows-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- TAB 2: AGENTS -->
+        <div id="view-agents" class="hidden space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">Specialist AI Agents (12)</h2>
+                    <p class="text-sm text-slate-500">Autonomous domain experts configured for geothermal heat pumps, Symphony IoT, low-GWP refrigerants, and ground loops.</p>
+                </div>
+                <div class="relative w-72">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-sm"></i>
+                    <input type="text" id="agent-search" oninput="searchAgents()" placeholder="Search agents by role or skill..." class="w-full pl-9 pr-4 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-waterfurnace-blue">
+                </div>
+            </div>
+
+            <div id="agents-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- TAB 3: OPERATORS -->
+        <div id="view-operators" class="hidden space-y-6">
+            <div>
+                <h2 class="text-xl font-bold text-slate-900">Human Operators & Supervisors (8)</h2>
+                <p class="text-sm text-slate-500">Enterprise operators styled in official WaterFurnace WFG Blue (#266782) and WFG Green (#A9CD34) branding.</p>
+            </div>
+
+            <div id="operators-grid" class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- TAB 4: ANALYTICS -->
+        <div id="view-analytics" class="hidden space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4"><i class="fa-solid fa-chart-area text-waterfurnace-blue mr-2"></i>7 Series Geothermal Heat Pump COP Performance</h3>
+                    <canvas id="chart-pressure" height="200"></canvas>
+                </div>
+                <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4"><i class="fa-solid fa-chart-pie text-waterfurnace-blue mr-2"></i>Geothermal System Distribution by Market Segment</h3>
+                    <canvas id="chart-sales" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Execution Modal -->
+    <div id="execution-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-3xl w-full shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="bg-waterfurnace-blue text-white px-6 py-4 flex items-center justify-between border-b border-waterfurnace-warmblue/30">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-lg bg-waterfurnace-green flex items-center justify-center font-bold text-slate-900">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <div>
+                        <h3 id="modal-wf-title" class="font-bold text-base">Running Workflow</h3>
+                        <p id="modal-wf-track" class="text-xs text-waterfurnace-lightblue">Track Status</p>
+                    </div>
+                </div>
+                <button onclick="closeExecutionModal()" class="text-slate-300 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-6 flex-grow custom-scrollbar">
+                <!-- Timeline Progress -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">Workflow Execution Steps</h4>
+                    <div id="modal-timeline" class="space-y-3">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Live Logs Console -->
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500">Live Agent Console Output</h4>
+                        <span class="text-xs font-mono text-waterfurnace-blue" id="modal-status-text">INITIALIZING...</span>
+                    </div>
+                    <div id="modal-console" class="bg-slate-950 text-emerald-400 font-mono text-xs p-4 rounded-xl h-44 overflow-y-auto custom-scrollbar border border-slate-800">
+                        <p class="text-slate-500">[00:00:00] WaterFurnace AI Agent Core initialized.</p>
+                    </div>
+                </div>
+
+                <!-- Executive Summary -->
+                <div id="modal-summary-box" class="bg-waterfurnace-lightblue/60 border border-waterfurnace-warmblue/40 rounded-xl p-4 hidden">
+                    <h4 class="text-sm font-bold text-waterfurnace-blue flex items-center space-x-2">
+                        <i class="fa-solid fa-file-contract text-waterfurnace-blue"></i>
+                        <span>Executive Summary & Resolution</span>
+                    </h4>
+                    <p id="modal-summary-text" class="text-xs text-slate-700 mt-2 leading-relaxed font-sans">
+                        Executive summary text goes here.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 px-6 py-4 border-t border-slate-200 flex items-center justify-between">
+                <span class="text-xs text-slate-500 font-mono">WATERFURNACE OPERATIONAL PROTOCOL</span>
+                <button onclick="closeExecutionModal()" class="bg-slate-800 hover:bg-slate-900 text-white font-semibold text-xs px-5 py-2 rounded-lg">Close Window</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Data & Logic -->
+    <script>
+        const AGENT_ROLES = [
+            {
+                id: 'waterfurnace_7series_compressor_eng',
+                name: 'waterfurnace_7series_compressor_eng',
+                title: '7 Series Variable Capacity Inverter Compressor Lead',
+                category: 'Compressor R&D',
+                icon: 'fa-gears',
+                description: 'Engineers variable-capacity scroll compressor algorithms, inverter drive modulation, and step-less output tuning for 7 Series geothermal heat pumps.'
+            },
+            {
+                id: 'waterfurnace_geothermal_loop_cfd_spec',
+                name: 'waterfurnace_geothermal_loop_cfd_spec',
+                title: 'Ground-Source Heat Exchanger & Borehole Loop CFD Engineer',
+                category: 'Geothermal Hydronics',
+                icon: 'fa-earth-americas',
+                description: 'Models ground heat transfer fluid dynamics, vertical borehole thermal response, closed-loop bio-glycol fluid viscosity, and soil conductivity.'
+            },
+            {
+                id: 'waterfurnace_symphony_iot_telemetry_lead',
+                name: 'waterfurnace_symphony_iot_telemetry_lead',
+                title: 'Symphony Cloud IoT Platform & Aurora Control Board Lead',
+                category: 'IoT & Microelectronics',
+                icon: 'fa-wifi',
+                description: 'Manages Symphony Wi-Fi cloud connectivity, Aurora microprocessor control boards, real-time energy monitoring, and remote fault diagnostics.'
+            },
+            {
+                id: 'waterfurnace_low_gwp_refrigerant_lca_auditor',
+                name: 'waterfurnace_low_gwp_refrigerant_lca_auditor',
+                title: 'Low-GWP R-454B Refrigerant & Eco-Efficiency LCA Auditor',
+                category: 'Sustainability & Compliance',
+                icon: 'fa-leaf text-emerald-600',
+                description: 'Executes Life Cycle Assessment (LCA) on low-GWP R-454B refrigerant transitions, carbon offset calculations, and AHRI environmental compliance.'
+            },
+            {
+                id: 'waterfurnace_commercial_hvac_tender_lead',
+                name: 'waterfurnace_commercial_hvac_tender_lead',
+                title: 'Commercial Geothermal Chiller & Master Supply Tender Lead',
+                category: 'Commercial Procurement',
+                icon: 'fa-file-signature',
+                description: 'Orchestrates master supplier tenders for commercial water-to-water heat pumps, modular chiller banks, and institutional HVAC contracts.'
+            },
+            {
+                id: 'waterfurnace_cop_eer_efficiency_qa_eng',
+                name: 'waterfurnace_cop_eer_efficiency_qa_eng',
+                title: 'High-Efficiency EER / COP Seasonal Performance QA Engineer',
+                category: 'Performance QA',
+                icon: 'fa-chart-line',
+                description: 'Validates AHRI 870/13256-1 rating metrics, 41 EER cooling efficiency, 5.3 COP heating efficiency, and seasonal energy performance.'
+            },
+            {
+                id: 'waterfurnace_titanium_coaxial_heat_exchanger',
+                name: 'waterfurnace_titanium_coaxial_heat_exchanger',
+                title: 'Titanium Co-Axial Water Coil Heat Exchanger Specialist',
+                category: 'Heat Exchanger Engineering',
+                icon: 'fa-circle-nodes',
+                description: 'Engineers anti-corrosive cupronickel and titanium co-axial water-to-refrigerant heat exchangers for open-loop and harsh water conditions.'
+            },
+            {
+                id: 'waterfurnace_variable_speed_fan_kinematics',
+                name: 'waterfurnace_variable_speed_fan_kinematics',
+                title: 'ECM Variable-Speed Blower & Airflow Kinematics Engineer',
+                category: 'Airflow Systems',
+                icon: 'fa-fan',
+                description: 'Calibrates electronically commutated (ECM) variable-speed blower motors, static duct pressure sensors, and quiet acoustic dampeners.'
+            },
+            {
+                id: 'waterfurnace_custom_cabinet_eco_revision_spec',
+                name: 'waterfurnace_custom_cabinet_eco_revision_spec',
+                title: 'Heavy-Gauge Galvanized Steel Cabinet ECO Tooling Lead',
+                category: 'Cabinet Tooling ECO',
+                icon: 'fa-drafting-compass',
+                description: 'Manages Engineering Change Orders (ECO) for heavy-gauge powder-coated galvanized steel cabinets, sound insulation, and access panel locks.'
+            },
+            {
+                id: 'waterfurnace_dealer_network_supply_router',
+                name: 'waterfurnace_dealer_network_supply_router',
+                title: 'Global Independent Dealer & Wholesale HVAC Supply Router',
+                category: 'Wholesale Logistics',
+                icon: 'fa-route',
+                description: 'Routes geothermal heat pump shipments and replacement parts across 2,500+ independent WaterFurnace dealers and commercial contractors.'
+            },
+            {
+                id: 'writer',
+                name: 'writer',
+                title: 'Geothermal Technical Dossier & AHRI Regulatory Dossier Writer',
+                category: 'Documentation & Regulatory',
+                icon: 'fa-pen-nib',
+                description: 'Synthesizes AHRI certification data, Energy Star ratings, federal geothermal tax credit compliance, and technical manuals.'
+            },
+            {
+                id: 'reviewer',
+                name: 'reviewer',
+                title: 'Director of Geothermal HVAC R&D & Principal PE',
+                category: 'Executive Oversight',
+                icon: 'fa-user-check',
+                description: 'Provides final executive sign-off for geothermal product certification, compressor reliability, and commercial launch authorization.'
+            }
+        ];
+
+        const WORKFLOWS = [
+            {
+                id: 'scout',
+                title: 'Ground-Source Heat Exchanger Loop & Bio-Polymer Sourcing',
+                track: 'commercial',
+                trackLabel: 'Commercial HVAC & Dealer Supply',
+                description: 'Screening raw high-density polyethylene (HDPE) ground loop pipe suppliers for 50-year thermal stress endurance.',
+                leadAgent: 'waterfurnace_geothermal_loop_cfd_spec',
+                steps: [
+                    { step: 'HDPE Loop Pipe Pressure Testing', agent: 'waterfurnace_geothermal_loop_cfd_spec' },
+                    { step: 'Low-GWP Refrigerant LCA Audit', agent: 'waterfurnace_low_gwp_refrigerant_lca_auditor' },
+                    { step: 'Executive Sourcing Dossier Compilation', agent: 'writer' }
+                ],
+                summary: 'Successfully verified 3 primary suppliers for 100% virgin HDPE ground loop pipe with 50-year burst pressure compliance. Approved for utility geothermal installations.'
+            },
+            {
+                id: 'quote',
+                title: '7 Series Geothermal Heat Pump BOM Costing',
+                track: 'commercial',
+                trackLabel: 'Commercial HVAC & Dealer Supply',
+                description: 'Automated cost breakdown for variable-capacity inverter compressors, Aurora control boards, ECM blowers, and coaxial coils.',
+                leadAgent: 'waterfurnace_7series_compressor_eng',
+                steps: [
+                    { step: 'Compressor & Electronics BOM Costing', agent: 'waterfurnace_7series_compressor_eng' },
+                    { step: 'Cabinet Tooling ECO Cost Assessment', agent: 'waterfurnace_custom_cabinet_eco_revision_spec' },
+                    { step: 'Executive Pricing Review', agent: 'reviewer' }
+                ],
+                summary: '7 Series unit BOM cost optimized to $2,840 per unit across 45,000 unit production run, expanding gross margin by 5.4% for Q3 dealer distribution.'
+            },
+            {
+                id: 'tender',
+                title: 'Enterprise Commercial Geothermal Master Supply Tender',
+                track: 'commercial',
+                trackLabel: 'Commercial HVAC & Dealer Supply',
+                description: 'Master contract tendering for commercial geothermal heat pumps across university campuses, corporate headquarters, and municipal buildings.',
+                leadAgent: 'waterfurnace_commercial_hvac_tender_lead',
+                steps: [
+                    { step: 'Commercial Chiller Requirements Map', agent: 'waterfurnace_commercial_hvac_tender_lead' },
+                    { step: 'Dealer Network Capacity Balancing', agent: 'waterfurnace_dealer_network_supply_router' },
+                    { step: 'Final Tender Authorization', agent: 'reviewer' }
+                ],
+                summary: 'Master commercial geothermal supply tender awarded for 12 institutional campus buildings, delivering 850 tons of total heat pump capacity with 45% annual energy reduction.'
+            },
+            {
+                id: 'radar',
+                title: 'Real-Time Symphony IoT Compressor Telemetry & Energy Radar',
+                track: 'commercial',
+                trackLabel: 'Commercial HVAC & Dealer Supply',
+                description: 'Continuous cloud monitoring of compressor superheat, water temperature delta-T, and Aurora control board fault codes.',
+                leadAgent: 'waterfurnace_symphony_iot_telemetry_lead',
+                steps: [
+                    { step: 'Symphony Cloud Data Stream Audit', agent: 'waterfurnace_symphony_iot_telemetry_lead' },
+                    { step: 'EER Performance Verification', agent: 'waterfurnace_cop_eer_efficiency_qa_eng' },
+                    { step: 'Predictive Maintenance Dispatch', agent: 'writer' }
+                ],
+                summary: 'Real-time telemetry scan across 18,000 active Symphony-connected units completed with zero critical compressor faults. Average system operating EER measured at 39.8.'
+            },
+            {
+                id: 'panel_qualification',
+                title: 'WaterFurnace 7 Series Geothermal Performance Qualification Protocol',
+                track: 'rd',
+                trackLabel: 'WaterFurnace R&D Engineering, Geothermal Loop & Symphony IoT Ops',
+                flagship: true,
+                description: 'Flagship R&D protocol evaluating 7 Series variable capacity inverter compressor range, 41 EER cooling, 5.3 COP heating, and Symphony IoT sync.',
+                leadAgent: 'waterfurnace_7series_compressor_eng',
+                steps: [
+                    { step: 'Inverter Compressor Modulated Load Test', agent: 'waterfurnace_7series_compressor_eng' },
+                    { step: 'Titanium Co-Axial Coil Heat Transfer Test', agent: 'waterfurnace_titanium_coaxial_heat_exchanger' },
+                    { step: 'Symphony Cloud & Aurora Control Board Sync Check', agent: 'waterfurnace_symphony_iot_telemetry_lead' },
+                    { step: 'R&D Principal & AHRI Certification Sign-off', agent: 'reviewer' }
+                ],
+                summary: 'FLAGSHIP PROTOCOL PASSED: WaterFurnace 7 Series achieved record-setting 41.0 EER cooling and 5.3 COP heating efficiency under AHRI 13256-1 ground-loop test conditions. Symphony cloud telemetry fully synchronized with zero fault latency.'
+            },
+            {
+                id: 'inverter_yield',
+                title: 'Inverter Compressor Speed & ECM Blower Yield Calibration',
+                track: 'rd',
+                trackLabel: 'WaterFurnace R&D Engineering, Geothermal Loop & Symphony IoT Ops',
+                description: 'Automated calibration of step-less inverter drive frequencies, ECM blower static pressure curves, and anti-vibration mounts.',
+                leadAgent: 'waterfurnace_variable_speed_fan_kinematics',
+                steps: [
+                    { step: 'ECM Blower Airflow Static Pressure Audit', agent: 'waterfurnace_variable_speed_fan_kinematics' },
+                    { step: 'Compressor Inverter Drive Frequency Test', agent: 'waterfurnace_7series_compressor_eng' },
+                    { step: 'Yield Calibration Dossier', agent: 'writer' }
+                ],
+                summary: 'Blower static pressure curve calibrated for 0.1 to 0.8 in. w.g. duct resistance. Motor acoustic noise dampened by 3.8 dB(A), operating at ultra-quiet 42 dB.'
+            },
+            {
+                id: 'thermal_simulation',
+                title: 'Ground Loop Borehole Thermal Response & Heat Dissipation Stress Test',
+                track: 'rd',
+                trackLabel: 'WaterFurnace R&D Engineering, Geothermal Loop & Symphony IoT Ops',
+                description: 'Virtual CFD simulation of vertical borehole thermal buildup over 30 years of continuous cooling and heating cycles.',
+                leadAgent: 'waterfurnace_geothermal_loop_cfd_spec',
+                steps: [
+                    { step: 'Borehole Thermal Migration CFD Model', agent: 'waterfurnace_geothermal_loop_cfd_spec' },
+                    { step: 'Titanium Co-Axial Coil Heat Rejection Check', agent: 'waterfurnace_titanium_coaxial_heat_exchanger' },
+                    { step: 'Geothermal Hydronic Validation Approval', agent: 'reviewer' }
+                ],
+                summary: 'Simulated 30-year ground loop thermal balance for 500-foot vertical borehole field. Ground temperature equilibrium maintained within +/- 1.2 deg F annual swing.'
+            },
+            {
+                id: 'mask_eco',
+                title: 'Galvanized Steel Cabinet ECO & Low-GWP Refrigerant Conversion',
+                track: 'rd',
+                trackLabel: 'WaterFurnace R&D Engineering, Geothermal Loop & Symphony IoT Ops',
+                description: 'Managing Engineering Change Orders for R-454B low-GWP refrigerant circuit conversion and heavy-gauge cabinet insulation upgrades.',
+                leadAgent: 'waterfurnace_custom_cabinet_eco_revision_spec',
+                steps: [
+                    { step: 'Refrigerant Circuit & Valve ECO Modification', agent: 'waterfurnace_low_gwp_refrigerant_lca_auditor' },
+                    { step: 'Cabinet Sound Insulation Fitment Check', agent: 'waterfurnace_custom_cabinet_eco_revision_spec' },
+                    { step: 'ECO Master Approval', agent: 'reviewer' }
+                ],
+                summary: 'ECO-2026-WF-502 approved. Production line converted to R-454B low-GWP refrigerant, reducing total GWP carbon footprint by 78% while maintaining full AHRI ratings.'
+            }
+        ];
+
+        const EMPLOYEES = [
+            {
+                id: 'scout',
+                name: 'Dr. Elena Vance',
+                role: 'Bio-Polymer Loop Materials Lead',
+                dept: 'Geothermal Hydronics',
+                avatarBg: 'bg-waterfurnace-blue text-white',
+                initials: 'EV',
+                agent: 'waterfurnace_geothermal_loop_cfd_spec',
+                status: 'Active'
+            },
+            {
+                id: 'quote',
+                name: 'Marcus Thorne',
+                role: 'Geothermal BOM Cost Engineer',
+                dept: 'Commercial Costing',
+                avatarBg: 'bg-waterfurnace-blue text-white',
+                initials: 'MT',
+                agent: 'waterfurnace_7series_compressor_eng',
+                status: 'Active'
+            },
+            {
+                id: 'tender',
+                name: 'Sophia Reynolds',
+                role: 'Commercial HVAC Supply Lead',
+                dept: 'Commercial Contracts',
+                avatarBg: 'bg-waterfurnace-blue text-white',
+                initials: 'SR',
+                agent: 'waterfurnace_commercial_hvac_tender_lead',
+                status: 'Active'
+            },
+            {
+                id: 'radar',
+                name: 'David Chen',
+                role: 'Symphony IoT Operations Sentinel',
+                dept: 'IoT Cloud Ops',
+                avatarBg: 'bg-waterfurnace-blue text-white',
+                initials: 'DC',
+                agent: 'waterfurnace_symphony_iot_telemetry_lead',
+                status: 'Active'
+            },
+            {
+                id: 'safety',
+                name: 'Aria Montgomery',
+                role: 'Eco-Refrigerant LCA Auditor',
+                dept: 'Sustainability',
+                avatarBg: 'bg-waterfurnace-blue text-white',
+                initials: 'AM',
+                agent: 'waterfurnace_low_gwp_refrigerant_lca_auditor',
+                status: 'Active'
+            },
+            {
+                id: 'mill',
+                name: 'Carlos Mendez',
+                role: 'Inverter Compressor Calibration Lead',
+                dept: 'Manufacturing Plant',
+                avatarBg: 'bg-waterfurnace-blue text-white',
+                initials: 'CM',
+                agent: 'waterfurnace_variable_speed_fan_kinematics',
+                status: 'Active'
+            },
+            {
+                id: 'cfd',
+                name: 'Dr. Rahul Patel',
+                role: 'Ground Loop CFD Specialist',
+                dept: 'Geothermal R&D',
+                avatarBg: 'bg-waterfurnace-blue text-white',
+                initials: 'RP',
+                agent: 'waterfurnace_geothermal_loop_cfd_spec',
+                status: 'Active'
+            },
+            {
+                id: 'eco',
+                name: 'Hannah Sterling',
+                role: 'Cabinet ECO Tooling Director',
+                dept: 'Tooling Engineering',
+                avatarBg: 'bg-waterfurnace-blue text-white',
+                initials: 'HS',
+                agent: 'waterfurnace_custom_cabinet_eco_revision_spec',
+                status: 'Active'
+            }
+        ];
+
+        // Render Functions
+        function renderWorkflows(trackFilter = 'all') {
+            const container = document.getElementById('workflows-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const filtered = trackFilter === 'all' 
+                ? WORKFLOWS 
+                : WORKFLOWS.filter(w => w.track === trackFilter);
+
+            filtered.forEach(wf => {
+                const leadAgentObj = AGENT_ROLES.find(a => a.id === wf.leadAgent) || {};
+                const card = document.createElement('div');
+                card.className = `bg-white rounded-xl border ${wf.flagship ? 'border-waterfurnace-blue ring-2 ring-waterfurnace-blue/20' : 'border-slate-200'} shadow-sm p-6 hover:shadow-md transition-all flex flex-col justify-between`;
+                
+                let stepsHtml = wf.steps.map((s, idx) => `
+                    <div class="flex items-center space-x-2 text-xs text-slate-600 bg-slate-50 p-2 rounded border border-slate-100">
+                        <span class="w-5 h-5 rounded-full bg-waterfurnace-lightblue text-waterfurnace-blue font-bold flex items-center justify-center text-[10px]">${idx + 1}</span>
+                        <span class="font-medium text-slate-800">${s.step}</span>
+                        <span class="text-slate-400 font-mono text-[10px] ml-auto">(${s.agent})</span>
+                    </div>
+                `).join('');
+
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full ${wf.track === 'commercial' ? 'bg-sky-50 text-sky-800 border border-sky-200' : 'bg-teal-50 text-teal-800 border border-teal-200'}">
+                                ${wf.trackLabel}
+                            </span>
+                            ${wf.flagship ? '<span class="bg-lime-100 text-lime-800 border border-lime-300 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase flex items-center gap-1"><i class="fa-solid fa-star text-lime-600"></i> FLAGSHIP</span>' : ''}
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">${wf.title}</h3>
+                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">${wf.description}</p>
+                        
+                        <div class="space-y-2 mb-4">
+                            <p class="text-[11px] font-bold uppercase text-slate-400 tracking-wider">Execution Pipeline</p>
+                            ${stepsHtml}
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between mt-2">
+                        <div class="text-xs text-slate-500">
+                            <span>Lead: </span>
+                            <span class="font-mono text-waterfurnace-blue font-semibold">${leadAgentObj.name || wf.leadAgent}</span>
+                        </div>
+                        <button onclick="openExecutionModal('${wf.id}')" class="bg-waterfurnace-blue hover:bg-slate-800 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-all flex items-center space-x-1.5 shadow-sm">
+                            <i class="fa-solid fa-play text-[10px]"></i>
+                            <span>Execute</span>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderAgents(searchQuery = '') {
+            const container = document.getElementById('agents-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const filtered = AGENT_ROLES.filter(a => 
+                a.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                a.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                a.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                a.description.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+
+            filtered.forEach(agent => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:border-waterfurnace-blue transition-all flex flex-col justify-between';
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center space-x-3 mb-3">
+                            <div class="w-10 h-10 rounded-lg bg-waterfurnace-lightblue text-waterfurnace-blue flex items-center justify-center text-lg shadow-inner">
+                                <i class="fa-solid ${agent.icon}"></i>
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-waterfurnace-blue">${agent.category}</span>
+                                <h4 class="font-mono text-xs font-bold text-slate-900 truncate max-w-[200px]" title="${agent.name}">${agent.name}</h4>
+                            </div>
+                        </div>
+                        <h5 class="text-sm font-bold text-slate-800 mb-2 leading-snug">${agent.title}</h5>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4">${agent.description}</p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                        <span class="text-emerald-600 font-medium flex items-center gap-1">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Ready
+                        </span>
+                        <span class="font-mono text-[10px] text-slate-400">AGY-V2.0</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderOperators() {
+            const container = document.getElementById('operators-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            EMPLOYEES.forEach(emp => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center justify-between';
+                card.innerHTML = `
+                    <div class="w-full flex flex-col items-center">
+                        <div class="w-16 h-16 rounded-2xl ${emp.avatarBg} font-bold text-xl flex items-center justify-center shadow-lg mb-3 border-2 border-waterfurnace-green">
+                            ${emp.initials}
+                        </div>
+                        <h4 class="font-bold text-sm text-slate-900">${emp.name}</h4>
+                        <span class="text-xs text-waterfurnace-blue font-semibold mb-1">${emp.dept}</span>
+                        <p class="text-xs font-semibold text-slate-700 mb-3 px-2 py-0.5 bg-slate-100 rounded">${emp.role}</p>
+                    </div>
+                    <div class="w-full pt-3 border-t border-slate-100 text-xs">
+                        <p class="text-[10px] text-slate-400 font-mono mb-1">Assigned Agent</p>
+                        <p class="font-mono text-[11px] text-waterfurnace-blue font-semibold truncate" title="${emp.agent}">${emp.agent}</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Tab Switching
+        function switchTab(tabId) {
+            ['workflows', 'agents', 'operators', 'analytics'].forEach(id => {
+                const view = document.getElementById(`view-${id}`);
+                const tabBtn = document.getElementById(`tab-${id}`);
+                if (id === tabId) {
+                    if (view) view.classList.remove('hidden');
+                    if (tabBtn) {
+                        tabBtn.classList.add('border-waterfurnace-blue', 'text-waterfurnace-blue');
+                        tabBtn.classList.remove('border-transparent', 'text-slate-500');
+                    }
+                } else {
+                    if (view) view.classList.add('hidden');
+                    if (tabBtn) {
+                        tabBtn.classList.remove('border-waterfurnace-blue', 'text-waterfurnace-blue');
+                        tabBtn.classList.add('border-transparent', 'text-slate-500');
+                    }
+                }
+            });
+
+            if (tabId === 'analytics') {
+                initCharts();
+            }
+        }
+
+        function filterWorkflows(track, btnEl) {
+            document.querySelectorAll('.wf-filter-btn').forEach(btn => {
+                btn.classList.remove('bg-waterfurnace-blue', 'text-white');
+                btn.classList.add('bg-slate-200', 'text-slate-700');
+            });
+            if (btnEl) {
+                btnEl.classList.remove('bg-slate-200', 'text-slate-700');
+                btnEl.classList.add('bg-waterfurnace-blue', 'text-white');
+            }
+            renderWorkflows(track);
+        }
+
+        function searchAgents() {
+            const query = document.getElementById('agent-search').value;
+            renderAgents(query);
+        }
+
+        // Execution Modal Logic
+        let modalTimer = null;
+        function openExecutionModal(workflowId) {
+            const wf = WORKFLOWS.find(w => w.id === workflowId);
+            if (!wf) return;
+
+            document.getElementById('modal-wf-title').innerText = wf.title;
+            document.getElementById('modal-wf-track').innerText = wf.trackLabel;
+            document.getElementById('modal-status-text').innerText = 'EXECUTING PROTOCOL...';
+            document.getElementById('modal-summary-box').classList.add('hidden');
+
+            const timeline = document.getElementById('modal-timeline');
+            timeline.innerHTML = '';
+            wf.steps.forEach((s, idx) => {
+                const stepEl = document.createElement('div');
+                stepEl.id = `step-node-${idx}`;
+                stepEl.className = 'flex items-center space-x-3 p-3 rounded-lg border border-slate-200 bg-slate-50 transition-all';
+                stepEl.innerHTML = `
+                    <div id="step-icon-${idx}" class="w-7 h-7 rounded-full bg-slate-300 text-slate-600 font-bold text-xs flex items-center justify-center">
+                        ${idx + 1}
+                    </div>
+                    <div class="flex-grow">
+                        <h5 class="text-xs font-bold text-slate-800">${s.step}</h5>
+                        <p class="text-[10px] font-mono text-waterfurnace-blue">Agent: ${s.agent}</p>
+                    </div>
+                    <span id="step-status-${idx}" class="text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-200 text-slate-600">QUEUED</span>
+                `;
+                timeline.appendChild(stepEl);
+            });
+
+            const consoleBox = document.getElementById('modal-console');
+            consoleBox.innerHTML = `<p class="text-slate-500">[00:00:00] Initializing WaterFurnace Workflow Engine (${wf.id})...</p>`;
+
+            document.getElementById('execution-modal').classList.remove('hidden');
+
+            // Simulate Execution Steps
+            let currentStep = 0;
+            if (modalTimer) clearInterval(modalTimer);
+
+            modalTimer = setInterval(() => {
+                if (currentStep < wf.steps.length) {
+                    const stepData = wf.steps[currentStep];
+                    
+                    // Update Step UI
+                    const stepNode = document.getElementById(`step-node-${currentStep}`);
+                    const stepIcon = document.getElementById(`step-icon-${currentStep}`);
+                    const stepStatus = document.getElementById(`step-status-${currentStep}`);
+
+                    if (stepNode) {
+                        stepNode.classList.remove('bg-slate-50', 'border-slate-200');
+                        stepNode.classList.add('bg-sky-50', 'border-waterfurnace-blue');
+                    }
+
+                    if (stepIcon) {
+                        stepIcon.classList.remove('bg-slate-300', 'text-slate-600');
+                        stepIcon.classList.add('bg-waterfurnace-blue', 'text-white');
+                    }
+
+                    if (stepStatus) {
+                        stepStatus.classList.remove('bg-slate-200', 'text-slate-600');
+                        stepStatus.classList.add('bg-emerald-100', 'text-emerald-800');
+                        stepStatus.innerText = 'PASSED';
+                    }
+
+                    // Append Console Log
+                    const timestamp = new Date().toISOString().substring(11, 19);
+                    consoleBox.innerHTML += `<p class="text-emerald-400">[${timestamp}] Step ${currentStep + 1} COMPLETE: ${stepData.step} (${stepData.agent})</p>`;
+                    consoleBox.scrollTop = consoleBox.scrollHeight;
+
+                    currentStep++;
+                } else {
+                    clearInterval(modalTimer);
+                    document.getElementById('modal-status-text').innerText = 'WORKFLOW COMPLETED';
+                    const timestamp = new Date().toISOString().substring(11, 19);
+                    consoleBox.innerHTML += `<p class="text-waterfurnace-blue font-bold">[${timestamp}] SUCCESS: All steps validated under WaterFurnace AHRI & Energy Star Standards.</p>`;
+                    consoleBox.scrollTop = consoleBox.scrollHeight;
+
+                    // Show Summary
+                    document.getElementById('modal-summary-text').innerText = wf.summary;
+                    document.getElementById('modal-summary-box').classList.remove('hidden');
+                }
+            }, 900);
+        }
+
+        function closeExecutionModal() {
+            if (modalTimer) clearInterval(modalTimer);
+            document.getElementById('execution-modal').classList.add('hidden');
+        }
+
+        // Charts Initialization
+        let chart1, chart2;
+        function initCharts() {
+            if (chart1) chart1.destroy();
+            if (chart2) chart2.destroy();
+
+            const ctx1 = document.getElementById('chart-pressure');
+            if (ctx1) {
+                chart1 = new Chart(ctx1.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['Stage 1 (20%)', 'Stage 2 (40%)', 'Stage 3 (60%)', 'Stage 4 (80%)', 'Stage 5 (100%)', 'Max Boost'],
+                        datasets: [{
+                            label: 'Heating COP Efficiency',
+                            data: [5.3, 5.2, 5.1, 4.9, 4.7, 4.6],
+                            borderColor: '#266782',
+                            backgroundColor: 'rgba(38, 103, 130, 0.1)',
+                            fill: true,
+                            tension: 0.3
+                        }]
+                    },
+                    options: { responsive: true, plugins: { legend: { display: false } } }
+                });
+            }
+
+            const ctx2 = document.getElementById('chart-sales');
+            if (ctx2) {
+                chart2 = new Chart(ctx2.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['7 Series Variable Capacity', '5 Series Dual Capacity', 'Commercial Water-to-Water', 'Institutional Loop Fields'],
+                        datasets: [{
+                            data: [45, 30, 15, 10],
+                            backgroundColor: ['#266782', '#62c0cb', '#a9cd34', '#64748B']
+                        }]
+                    },
+                    options: { responsive: true }
+                });
+            }
+        }
+
+        // Init on Load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderWorkflows();
+            renderAgents();
+            renderOperators();
+        });
+    </script>
+</body>
+</html>
