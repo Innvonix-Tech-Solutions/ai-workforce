@@ -313,3 +313,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/avpro
 https://innvonix-tech-solutions.github.io/ai-workforce/manscaped
 https://innvonix-tech-solutions.github.io/ai-workforce/waterfurnace
 https://innvonix-tech-solutions.github.io/ai-workforce/solidpowerbattery
+https://innvonix-tech-solutions.github.io/ai-workforce/trilliumfoods
