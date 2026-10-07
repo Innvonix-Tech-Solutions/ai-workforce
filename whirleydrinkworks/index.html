@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whirley-DrinkWorks! AI Workforce Enterprise Drinkware Manufacturing Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        whirley: {
+                            blue: '#004B87',
+                            navy: '#003366',
+                            orange: '#FF6B00',
+                            pearl: '#F0F4F8',
+                            dark: '#0F172A',
+                            cyan: '#00A3E0',
+                            slate: '#1E293B'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .gradient-whirley { background: linear-gradient(135deg, #004B87 0%, #003366 100%); }
+        .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #F0F4F8; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #004B87; border-radius: 3px; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col custom-scrollbar">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-whirley-blue text-white sticky top-0 z-40 shadow-lg border-b border-whirley-orange/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="w-10 h-10 rounded-xl bg-whirley-orange flex items-center justify-center font-bold text-white shadow-md text-xl">
+                    <i class="fa-solid fa-mug-hot"></i>
+                </div>
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-extrabold text-lg tracking-wider text-white uppercase">WHIRLEY-DRINKWORKS!</span>
+                        <span class="bg-whirley-orange/30 text-whirley-pearl text-xs font-semibold px-2 py-0.5 rounded border border-whirley-orange/40">AI WORKFORCE 2.0</span>
+                    </div>
+                    <p class="text-xs text-whirley-pearl/80">Custom Reusable Drinkware: Theme Park Souvenir Cups, C-Store Refill Mugs & Injection Molding Ops</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <div class="hidden md:flex items-center space-x-4 text-xs font-mono">
+                    <div class="bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-700/50 flex items-center space-x-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span class="text-slate-300">WARREN PA MFG: ONLINE</span>
+                    </div>
+                    <div class="bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-700/50 text-slate-300">
+                        LATENCY: <span class="text-whirley-orange font-bold">12ms</span>
+                    </div>
+                    <div class="bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-700/50 text-slate-300">
+                        ACTIVE AGENTS: <span class="text-whirley-orange font-bold">12/12</span>
+                    </div>
+                </div>
+                <button onclick="openExecutionModal('tender')" class="bg-whirley-orange hover:bg-orange-600 text-white font-bold text-xs px-4 py-2 rounded-lg transition-all shadow-md flex items-center space-x-2">
+                    <i class="fa-solid fa-play"></i>
+                    <span>RUN FLAGSHIP WORKFLOW</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full space-y-6">
+
+        <!-- Executive Metrics Header -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase">Annual Production</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-1">150M+ Units</h3>
+                    <p class="text-xs text-emerald-600 font-medium mt-1"><i class="fa-solid fa-circle-check"></i> SQF Level 2 Certified</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-whirley-pearl text-whirley-blue flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-whiskey-glass"></i>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase">Global Footprint</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-1">25 Sales Hubs</h3>
+                    <p class="text-xs text-emerald-600 font-medium mt-1"><i class="fa-solid fa-globe"></i> 17 US & 8 International</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-earth-americas"></i>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase">Manufacturing Tech</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-1">Injection & IML</h3>
+                    <p class="text-xs text-whirley-orange font-medium mt-1"><i class="fa-solid fa-print"></i> 6-Color Screen Printing</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-whirley-pearl text-whirley-orange flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-gears"></i>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-medium text-slate-500 uppercase">Active AI Specialists</p>
+                    <h3 class="text-2xl font-bold text-slate-900 mt-1">12 Agents</h3>
+                    <p class="text-xs text-blue-600 font-medium mt-1"><i class="fa-solid fa-microchip"></i> 8 Enterprise Workflows</p>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="flex border-b border-slate-200 space-x-8 text-sm font-semibold">
+            <button onclick="switchTab('workflows')" id="tab-workflows" class="pb-3 border-b-2 border-whirley-blue text-whirley-blue flex items-center space-x-2">
+                <i class="fa-solid fa-diagram-project"></i>
+                <span>Enterprise Workflows (8)</span>
+            </button>
+            <button onclick="switchTab('agents')" id="tab-agents" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Specialist AI Agents (12)</span>
+            </button>
+            <button onclick="switchTab('operators')" id="tab-operators" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2">
+                <i class="fa-solid fa-id-card"></i>
+                <span>Human Operators & Supervisors (8)</span>
+            </button>
+            <button onclick="switchTab('analytics')" id="tab-analytics" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Live Molding & IML Telemetry</span>
+            </button>
+        </div>
+
+        <!-- TAB 1: WORKFLOWS -->
+        <div id="view-workflows" class="space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">Whirley-DrinkWorks! Enterprise Workflows</h2>
+                    <p class="text-sm text-slate-500">Autonomous workflow orchestration spanning dual tracks: Theme Park, Resort & C-Store Refill Licensing, and Injection Molding, IML Printing & SQF Container Ops.</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <span class="text-xs text-slate-500 font-medium">Filter Track:</span>
+                    <button onclick="filterWorkflows('all', this)" class="wf-filter-btn active bg-whirley-blue text-white text-xs font-semibold px-3 py-1.5 rounded-lg">All Tracks</button>
+                    <button onclick="filterWorkflows('commercial', this)" class="wf-filter-btn bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-slate-300">Theme Park & C-Store Licensing</button>
+                    <button onclick="filterWorkflows('ops', this)" class="wf-filter-btn bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-slate-300">Molding, IML & SQF Ops</button>
+                </div>
+            </div>
+
+            <div id="workflows-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- TAB 2: AGENTS -->
+        <div id="view-agents" class="hidden space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">Specialist AI Agents (12)</h2>
+                    <p class="text-sm text-slate-500">Autonomous domain experts configured for polypropylene injection molding, IML rotary printing, double-wall insulation, and CPSIA safety compliance.</p>
+                </div>
+                <div class="relative w-72">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-sm"></i>
+                    <input type="text" id="agent-search" oninput="searchAgents()" placeholder="Search agents by role or skill..." class="w-full pl-9 pr-4 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-whirley-orange">
+                </div>
+            </div>
+
+            <div id="agents-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- TAB 3: OPERATORS -->
+        <div id="view-operators" class="hidden space-y-6">
+            <div>
+                <h2 class="text-xl font-bold text-slate-900">Human Operators & Supervisors (8)</h2>
+                <p class="text-sm text-slate-500">Enterprise operators styled in Whirley Deep Blue (#004B87) branding.</p>
+            </div>
+
+            <div id="operators-grid" class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- TAB 4: ANALYTICS -->
+        <div id="view-analytics" class="hidden space-y-6">
+            <div>
+                <h2 class="text-xl font-bold text-slate-900">Live Molding & IML Telemetry</h2>
+                <p class="text-sm text-slate-500">Real-time telemetry across injection molding cells, IML robotic stations, and screen printing lines at Warren PA headquarters.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-line text-whirley-orange"></i>
+                        <span>Injection Mold Cycle Time & Pressure Stability (Seconds)</span>
+                    </h3>
+                    <canvas id="chart-molding" height="220"></canvas>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-pie text-whirley-orange"></i>
+                        <span>Product Volume Share by Channel (150M+ Units/Yr)</span>
+                    </h3>
+                    <canvas id="chart-channels" height="220"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Execution Modal -->
+    <div id="execution-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-2xl max-w-2xl w-full mx-4 shadow-2xl overflow-hidden border border-slate-200 flex flex-col max-h-[90vh]">
+            <div class="bg-whirley-blue text-white px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-lg bg-whirley-orange text-white flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-gear"></i>
+                    </div>
+                    <div>
+                        <h3 id="modal-wf-title" class="font-bold text-sm">Workflow Title</h3>
+                        <p id="modal-wf-track" class="text-xs text-whirley-pearl/80">Track Name</p>
+                    </div>
+                </div>
+                <button onclick="closeExecutionModal()" class="text-slate-300 hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="p-6 space-y-4 overflow-y-auto flex-grow custom-scrollbar">
+                <div class="flex items-center justify-between text-xs text-slate-500 font-mono bg-slate-100 p-2.5 rounded-lg">
+                    <span>EXECUTION ENGINE: AGY-V2.0</span>
+                    <span id="modal-status-text" class="font-bold text-whirley-orange">INITIALIZING...</span>
+                </div>
+
+                <!-- Timeline Steps -->
+                <div id="modal-timeline" class="space-y-3">
+                    <!-- Dynamic Step Nodes -->
+                </div>
+
+                <!-- Live Log Console -->
+                <div class="bg-slate-950 text-slate-200 p-4 rounded-xl font-mono text-xs h-36 overflow-y-auto custom-scrollbar border border-slate-800" id="modal-console">
+                    <p class="text-slate-500">[00:00:00] Initializing Whirley-DrinkWorks! Execution Engine...</p>
+                </div>
+
+                <!-- Executive Summary Box -->
+                <div id="modal-summary-box" class="bg-whirley-pearl border border-whirley-orange/40 rounded-xl p-4 hidden">
+                    <h4 class="text-sm font-bold text-whirley-blue flex items-center space-x-2">
+                        <i class="fa-solid fa-file-contract text-whirley-blue"></i>
+                        <span>Executive Summary & Resolution</span>
+                    </h4>
+                    <p id="modal-summary-text" class="text-xs text-slate-700 mt-2 leading-relaxed font-sans">
+                        Executive summary text goes here.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 px-6 py-4 border-t border-slate-200 flex items-center justify-between">
+                <span class="text-xs text-slate-500 font-mono">WHIRLEY-DRINKWORKS! OPERATIONAL PROTOCOL</span>
+                <button onclick="closeExecutionModal()" class="bg-slate-800 hover:bg-slate-900 text-white font-semibold text-xs px-5 py-2 rounded-lg">Close Window</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Data & Logic -->
+    <script>
+        const AGENT_ROLES = [
+            {
+                id: 'whirley_injection_molding_process_eng',
+                name: 'whirley_injection_molding_process_eng',
+                title: 'High-Tonnage Injection & Blow Molding Engineer',
+                category: 'Plastics Engineering',
+                icon: 'fa-cubes',
+                description: 'Optimizes multi-cavity injection molds, polypropylene resin melt flow index, cooling cycle times, and structural wall uniformity for refill vessels.'
+            },
+            {
+                id: 'whirley_iml_rotary_screen_print_spec',
+                name: 'whirley_iml_rotary_screen_print_spec',
+                title: 'In-Mold Labeling (IML) & Screen Printing Specialist',
+                category: 'Graphics & Decoration',
+                icon: 'fa-palette',
+                description: 'Controls robotic In-Mold Labeling (IML) placement, 6-color rotary screen printing registration, UV curing, and adhesion testing.'
+            },
+            {
+                id: 'whirley_bpa_free_sqf_food_safety_auditor',
+                name: 'whirley_bpa_free_sqf_food_safety_auditor',
+                title: 'BPA-Free Polypropylene & SQF Level 2 Food Safety Auditor',
+                category: 'SQF Food Safety',
+                icon: 'fa-shield-halved',
+                description: 'Enforces GFSI SQF Level 2 food-contact plastic packaging safety, FDA 21 CFR 177 compliance, heavy metal testing, and BPA-free certification.'
+            },
+            {
+                id: 'whirley_theme_park_refill_program_lead',
+                name: 'whirley_theme_park_refill_program_lead',
+                title: 'Theme Park & Resort Refill Mug Licensing Lead',
+                category: 'Amusement & Resort Licensing',
+                icon: 'fa-ticket',
+                description: 'Manages custom souvenir drinkware programs for Disney, Universal, Six Flags, and Cedar Fair, including character 3D topper integration.'
+            },
+            {
+                id: 'whirley_cstore_concession_f_and_b_estimator',
+                name: 'whirley_cstore_concession_f_and_b_estimator',
+                title: 'C-Store & Concession High-Volume Cost Estimator',
+                category: 'Commercial Costing',
+                icon: 'fa-calculator',
+                description: 'Calculates high-volume margin benchmarks for 7-Eleven, Wawa, Buc-ee’s, and sports stadium souvenir cup refill programs.'
+            },
+            {
+                id: 'whirley_double_wall_thermal_insulation_spec',
+                name: 'whirley_double_wall_thermal_insulation_spec',
+                title: 'Double-Wall Vacuum & Foam Thermal Insulation Specialist',
+                category: 'Thermal Engineering',
+                icon: 'fa-temperature-low',
+                description: 'Engineers double-wall polyurethane foam filled mugs, stainless steel vacuum insulation, sonic weld sealing, and ice-retention testing.'
+            },
+            {
+                id: 'whirley_custom_cad_mold_tooling_designer',
+                name: 'whirley_custom_cad_mold_tooling_designer',
+                title: 'Souvenir Vessel 3D CAD Mold & Handle Tooling Designer',
+                category: 'Tooling CAD Design',
+                icon: 'fa-drafting-compass',
+                description: 'Designs custom 3D mug geometries, ergonomic handle molds, leak-resistant flip lid hinges, and draft angles for rapid ejection.'
+            },
+            {
+                id: 'whirley_global_resin_supply_router',
+                name: 'whirley_global_resin_supply_router',
+                title: 'Polypropylene Resin & Stainless Steel Supply Chain Router',
+                category: 'Supply Chain Operations',
+                icon: 'fa-truck-ramp-box',
+                description: 'Routes raw virgin and recycled PCR polypropylene resin, stainless steel blanks, and silicone gaskets across 25 global sales offices.'
+            },
+            {
+                id: 'whirley_kids_meal_novelty_toy_qa_eng',
+                name: 'whirley_kids_meal_novelty_toy_qa_eng',
+                title: 'Kids Meal Container & CPSIA Child Safety QA Engineer',
+                category: 'Child Product Safety',
+                icon: 'fa-child',
+                description: 'Validates CPSIA child safety compliance, drop-impact toughness, bite resistance, and non-choking lid assembly integrity.'
+            },
+            {
+                id: 'whirley_eco_reusable_life_cycle_analyst',
+                name: 'whirley_eco_reusable_life_cycle_analyst',
+                title: 'Reusable Refill Container Life Cycle & Sustainability Analyst',
+                category: 'Sustainability LCA',
+                icon: 'fa-recycle',
+                description: 'Conducts Life Cycle Assessment (LCA) proving single-use plastic displacement metrics across 100+ refill cycles per mug.'
+            },
+            {
+                id: 'writer',
+                name: 'writer',
+                title: 'Drinkware Program Specification & Commercial Proposal Writer',
+                category: 'Technical Documentation',
+                icon: 'fa-pen-to-square',
+                description: 'Drafts turn-key program guides, custom art placement specs, SQF compliance dossiers, and commercial licensing proposals.'
+            },
+            {
+                id: 'reviewer',
+                name: 'reviewer',
+                title: 'Director of Plastics Engineering, Tooling & Quality Assurance PE',
+                category: 'Executive Approval',
+                icon: 'fa-user-check',
+                description: 'Final sign-off authority for multi-cavity mold approvals, food safety regulatory certifications, and plant production releases.'
+            }
+        ];
+
+        const WORKFLOWS = [
+            {
+                id: 'scout',
+                title: 'Theme Park Seasonal Souvenir Mug Licensing & Artwork Onboarding',
+                track: 'commercial',
+                trackLabel: 'Theme Park & C-Store Licensing',
+                description: 'Rapid onboarding of licensed IP artwork, character topper 3D CAD modeling, and IML print proofing for summer theme park launch.',
+                leadAgent: 'whirley_theme_park_refill_program_lead',
+                steps: [
+                    { step: 'Theme Park IP Artwork & 3D Topper Modeling', agent: 'whirley_theme_park_refill_program_lead' },
+                    { step: 'IML Print Proofing & Color Separation', agent: 'whirley_iml_rotary_screen_print_spec' },
+                    { step: 'CPSIA Child Safety Pre-Screening', agent: 'whirley_kids_meal_novelty_toy_qa_eng' }
+                ],
+                summary: 'Summer 2026 theme park refill mug program approved. 3D character topper CAD validated and IML 6-color label artwork released for tooling.'
+            },
+            {
+                id: 'quote',
+                title: 'High-Volume C-Store Refill Cup Margin & Bulk Resin Freight Pricing',
+                track: 'commercial',
+                trackLabel: 'Theme Park & C-Store Licensing',
+                description: 'Commercial margin optimization for 10 million unit convenience store refill cup run, evaluating virgin polypropylene vs PCR resin blends.',
+                leadAgent: 'whirley_cstore_concession_f_and_b_estimator',
+                steps: [
+                    { step: 'Polypropylene Resin Commodity Price Audit', agent: 'whirley_global_resin_supply_router' },
+                    { step: 'Multi-Cavity Mold Machine Rate Calculation', agent: 'whirley_cstore_concession_f_and_b_estimator' },
+                    { step: 'Commercial Licensing Proposal Approval', agent: 'reviewer' }
+                ],
+                summary: 'National C-store 32oz Monster Refill Mug contract finalized at $0.48 per unit, locking in 22.1% operating margin with 30% PCR resin blend.'
+            },
+            {
+                id: 'tender',
+                title: 'Major Resort Refill Program & Disney/Universal Specification Sign-Off',
+                track: 'commercial',
+                trackLabel: 'Theme Park & C-Store Licensing',
+                flagship: true,
+                description: 'Flagship turnkey refill mug program design, thermal retention validation, and SQF Level 2 food-contact sign-off for top-tier resort partner.',
+                leadAgent: 'whirley_theme_park_refill_program_lead',
+                steps: [
+                    { step: 'Resort Custom Ergonomic Handle CAD Tooling', agent: 'whirley_custom_cad_mold_tooling_designer' },
+                    { step: 'Double-Wall Foam Thermal Insulation Test', agent: 'whirley_double_wall_thermal_insulation_spec' },
+                    { step: 'SQF Level 2 Food Safety & BPA-Free Audit', agent: 'whirley_bpa_free_sqf_food_safety_auditor' },
+                    { step: 'IML Robotic In-Mold Label Print Verification', agent: 'whirley_iml_rotary_screen_print_spec' },
+                    { step: 'Executive Turn-Key Master Approval', agent: 'reviewer' }
+                ],
+                summary: 'Major resort refill program approved for 2.5 million double-wall insulated mugs. Cold retention verified at 12 hours under 40 deg F. Full SQF Level 2 certification issued.'
+            },
+            {
+                id: 'radar',
+                title: 'Amusement Industry Consumer Drinkware & RFID Refill Tech Trends Radar',
+                track: 'commercial',
+                trackLabel: 'Theme Park & C-Store Licensing',
+                description: 'Automated trend intelligence tracking smart RFID-chipped refill mugs, stainless steel thermal tumblers, and bio-based plastics.',
+                leadAgent: 'whirley_eco_reusable_life_cycle_analyst',
+                steps: [
+                    { step: 'Smart RFID Refill Chip Integration Radar', agent: 'whirley_theme_park_refill_program_lead' },
+                    { step: 'Bio-Polymer Material Degradation Bench Audit', agent: 'whirley_eco_reusable_life_cycle_analyst' },
+                    { step: 'Innovation R&D Briefing Document', agent: 'writer' }
+                ],
+                summary: 'RFID chip encapsulation in mug base validated, enabling automated beverage fountain authorization and increasing resort refill pass sales by 18%.'
+            },
+            {
+                id: 'panel_qualification',
+                title: 'Multi-Cavity Injection Mold Pressure, Temperature & Cycle Time Calibration',
+                track: 'ops',
+                trackLabel: 'Molding, IML & SQF Ops',
+                description: 'Continuous sensor calibration of 750-ton injection molding presses, hydraulic clamp pressure, and gate cooling cycle times.',
+                leadAgent: 'whirley_injection_molding_process_eng',
+                steps: [
+                    { step: 'Melt Temperature & Mold Pressure Audit', agent: 'whirley_injection_molding_process_eng' },
+                    { step: 'Vessel Wall Thickness & Impact Drop Test', agent: 'whirley_kids_meal_novelty_toy_qa_eng' },
+                    { step: 'Tooling Calibration Certificate', agent: 'reviewer' }
+                ],
+                summary: 'Molding press cycle time optimized from 18.2 to 14.8 seconds. Part flash eliminated across all 8 mold cavities with zero drop-impact fracturing.'
+            },
+            {
+                id: 'inverter_yield',
+                title: 'In-Mold Labeling (IML) High-Speed Automation & Print Alignment Calibration',
+                track: 'ops',
+                trackLabel: 'Molding, IML & SQF Ops',
+                description: 'High-speed robotic placement of IML film labels into injection molds with optical vision registration and zero label wrinkle defect rates.',
+                leadAgent: 'whirley_iml_rotary_screen_print_spec',
+                steps: [
+                    { step: 'Robotic IML Arm Optical Alignment Check', agent: 'whirley_iml_rotary_screen_print_spec' },
+                    { step: 'UV Screen Printing Ink Adhesion Test', agent: 'whirley_bpa_free_sqf_food_safety_auditor' },
+                    { step: 'Line Productivity Dossier', agent: 'writer' }
+                ],
+                summary: 'IML robotic placement accuracy achieved within 0.15mm tolerance. Line yield reached 99.85% across 450,000 unit continuous production run.'
+            },
+            {
+                id: 'thermal_simulation',
+                title: 'Double-Wall Sonic Welding & Thermal Retention Leak Simulation',
+                track: 'ops',
+                trackLabel: 'Molding, IML & SQF Ops',
+                description: 'Ultrasonic welding amplitude simulation and hermetic seal leak testing for double-wall polyurethane foam insulated souvenir travel mugs.',
+                leadAgent: 'whirley_double_wall_thermal_insulation_spec',
+                steps: [
+                    { step: 'Ultrasonic Horn Frequency & Pressure Model', agent: 'whirley_double_wall_thermal_insulation_spec' },
+                    { step: 'Helium Leak Detector & Hydrostatic Test', agent: 'whirley_injection_molding_process_eng' },
+                    { step: 'Hermetic Weld Quality Clearance', agent: 'reviewer' }
+                ],
+                summary: 'Sonic weld joint integrity verified under 45 PSI hydrostatic pressure. Zero fluid ingress detected into polyurethane foam thermal insulation cavity.'
+            },
+            {
+                id: 'mask_eco',
+                title: 'CPSIA Child Safety ECO Revision & BPA-Free Material Declaration Standard',
+                track: 'ops',
+                trackLabel: 'Molding, IML & SQF Ops',
+                description: 'Managing Engineering Change Orders for revised FDA food-contact resin formulations, CPSIA lead/phthalate testing, and art layout updates.',
+                leadAgent: 'whirley_bpa_free_sqf_food_safety_auditor',
+                steps: [
+                    { step: 'Polypropylene Resin Extractable ECO Review', agent: 'whirley_bpa_free_sqf_food_safety_auditor' },
+                    { step: 'CPSIA Third-Party Lab Test Verification', agent: 'whirley_kids_meal_novelty_toy_qa_eng' },
+                    { step: 'Master Material ECO Approval', agent: 'reviewer' }
+                ],
+                summary: 'ECO-2026-WD-702 approved. Resin supplier change verified 100% free of BPA, BPS, and heavy metals across all Warren PA production lines.'
+            }
+        ];
+
+        const EMPLOYEES = [
+            {
+                id: 'scout',
+                name: 'Dr. Robert Vance',
+                role: 'Director of Injection Molding & Polymer R&D',
+                dept: 'Plastics Engineering',
+                avatarBg: 'bg-whirley-blue text-white',
+                initials: 'RV',
+                agent: 'whirley_injection_molding_process_eng',
+                status: 'Active'
+            },
+            {
+                id: 'quote',
+                name: 'Megan Cooper',
+                role: 'Commercial Licensing & Costing Manager',
+                dept: 'Commercial Licensing',
+                avatarBg: 'bg-whirley-blue text-white',
+                initials: 'MC',
+                agent: 'whirley_cstore_concession_f_and_b_estimator',
+                status: 'Active'
+            },
+            {
+                id: 'tender',
+                name: 'Brandon Miller',
+                role: 'Theme Park & Resort Accounts VP',
+                dept: 'Resort Partnerships',
+                avatarBg: 'bg-whirley-blue text-white',
+                initials: 'BM',
+                agent: 'whirley_theme_park_refill_program_lead',
+                status: 'Active'
+            },
+            {
+                id: 'radar',
+                name: 'Chloe Davenport',
+                role: 'Global Regulatory & SQF Food Safety Lead',
+                dept: 'Regulatory Affairs',
+                avatarBg: 'bg-whirley-blue text-white',
+                initials: 'CD',
+                agent: 'whirley_bpa_free_sqf_food_safety_auditor',
+                status: 'Active'
+            },
+            {
+                id: 'safety',
+                name: 'Carlos Ruiz',
+                role: 'Tooling & Mold Maintenance Supervisor',
+                dept: 'Plant Maintenance',
+                avatarBg: 'bg-whirley-blue text-white',
+                initials: 'CR',
+                agent: 'whirley_custom_cad_mold_tooling_designer',
+                status: 'Active'
+            },
+            {
+                id: 'mill',
+                name: 'Derek Larson',
+                role: 'Plant Operations Director (Warren PA)',
+                dept: 'Manufacturing Ops',
+                avatarBg: 'bg-whirley-blue text-white',
+                initials: 'DL',
+                agent: 'whirley_global_resin_supply_router',
+                status: 'Active'
+            },
+            {
+                id: 'cfd',
+                name: 'Dr. Amanda Chen',
+                role: 'Principal Thermal & Sonic Welding Engineer',
+                dept: 'Thermal R&D',
+                avatarBg: 'bg-whirley-blue text-white',
+                initials: 'AC',
+                agent: 'whirley_double_wall_thermal_insulation_spec',
+                status: 'Active'
+            },
+            {
+                id: 'eco',
+                name: 'Jessica Taylor',
+                role: 'Packaging Art & IML Print Quality Director',
+                dept: 'Graphics & Decorating',
+                avatarBg: 'bg-whirley-blue text-white',
+                initials: 'JT',
+                agent: 'whirley_iml_rotary_screen_print_spec',
+                status: 'Active'
+            }
+        ];
+
+        // Render Functions
+        function renderWorkflows(trackFilter = 'all') {
+            const container = document.getElementById('workflows-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const filtered = trackFilter === 'all' 
+                ? WORKFLOWS 
+                : WORKFLOWS.filter(w => w.track === trackFilter);
+
+            filtered.forEach(wf => {
+                const leadAgentObj = AGENT_ROLES.find(a => a.id === wf.leadAgent) || {};
+                const card = document.createElement('div');
+                card.className = `bg-white rounded-xl border ${wf.flagship ? 'border-whirley-orange ring-2 ring-whirley-orange/20' : 'border-slate-200'} shadow-sm p-6 hover:shadow-md transition-all flex flex-col justify-between`;
+                
+                let stepsHtml = wf.steps.map((s, idx) => `
+                    <div class="flex items-center space-x-2 text-xs text-slate-600 bg-slate-50 p-2 rounded border border-slate-100">
+                        <span class="w-5 h-5 rounded-full bg-whirley-pearl text-whirley-blue font-bold flex items-center justify-center text-[10px]">${idx + 1}</span>
+                        <span class="font-medium text-slate-800">${s.step}</span>
+                        <span class="text-slate-400 font-mono text-[10px] ml-auto">(${s.agent})</span>
+                    </div>
+                `).join('');
+
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full ${wf.track === 'commercial' ? 'bg-blue-50 text-blue-700 border border-blue-200' : 'bg-orange-50 text-orange-700 border border-orange-200'}">
+                                ${wf.trackLabel}
+                            </span>
+                            ${wf.flagship ? '<span class="bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase flex items-center gap-1"><i class="fa-solid fa-star text-amber-600"></i> FLAGSHIP</span>' : ''}
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">${wf.title}</h3>
+                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">${wf.description}</p>
+                        
+                        <div class="space-y-2 mb-4">
+                            <p class="text-[11px] font-bold uppercase text-slate-400 tracking-wider">Execution Pipeline</p>
+                            ${stepsHtml}
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between mt-2">
+                        <div class="text-xs text-slate-500">
+                            <span>Lead: </span>
+                            <span class="font-mono text-whirley-blue font-semibold">${leadAgentObj.name || wf.leadAgent}</span>
+                        </div>
+                        <button onclick="openExecutionModal('${wf.id}')" class="bg-whirley-blue hover:bg-slate-800 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-all flex items-center space-x-1.5 shadow-sm">
+                            <i class="fa-solid fa-play text-[10px]"></i>
+                            <span>Execute</span>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderAgents(searchQuery = '') {
+            const container = document.getElementById('agents-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const filtered = AGENT_ROLES.filter(a => 
+                a.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                a.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                a.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                a.description.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+
+            filtered.forEach(agent => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:border-whirley-orange transition-all flex flex-col justify-between';
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center space-x-3 mb-3">
+                            <div class="w-10 h-10 rounded-lg bg-whirley-pearl text-whirley-blue flex items-center justify-center text-lg shadow-inner">
+                                <i class="fa-solid ${agent.icon}"></i>
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-whirley-orange">${agent.category}</span>
+                                <h4 class="font-mono text-xs font-bold text-slate-900 truncate max-w-[200px]" title="${agent.name}">${agent.name}</h4>
+                            </div>
+                        </div>
+                        <h5 class="text-sm font-bold text-slate-800 mb-2 leading-snug">${agent.title}</h5>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4">${agent.description}</p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                        <span class="text-emerald-600 font-medium flex items-center gap-1">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Ready
+                        </span>
+                        <span class="font-mono text-[10px] text-slate-400">AGY-V2.0</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderOperators() {
+            const container = document.getElementById('operators-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            EMPLOYEES.forEach(emp => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center justify-between';
+                card.innerHTML = `
+                    <div class="w-full flex flex-col items-center">
+                        <div class="w-16 h-16 rounded-2xl ${emp.avatarBg} font-bold text-xl flex items-center justify-center shadow-lg mb-3 border-2 border-whirley-orange">
+                            ${emp.initials}
+                        </div>
+                        <h4 class="font-bold text-sm text-slate-900">${emp.name}</h4>
+                        <span class="text-xs text-whirley-orange font-semibold mb-1">${emp.dept}</span>
+                        <p class="text-xs font-semibold text-slate-700 mb-3 px-2 py-0.5 bg-slate-100 rounded">${emp.role}</p>
+                    </div>
+                    <div class="w-full pt-3 border-t border-slate-100 text-xs">
+                        <p class="text-[10px] text-slate-400 font-mono mb-1">Assigned Agent</p>
+                        <p class="font-mono text-[11px] text-whirley-blue font-semibold truncate" title="${emp.agent}">${emp.agent}</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Tab Switching
+        function switchTab(tabId) {
+            ['workflows', 'agents', 'operators', 'analytics'].forEach(id => {
+                const view = document.getElementById(`view-${id}`);
+                const tabBtn = document.getElementById(`tab-${id}`);
+                if (id === tabId) {
+                    if (view) view.classList.remove('hidden');
+                    if (tabBtn) {
+                        tabBtn.classList.add('border-whirley-blue', 'text-whirley-blue');
+                        tabBtn.classList.remove('border-transparent', 'text-slate-500');
+                    }
+                } else {
+                    if (view) view.classList.add('hidden');
+                    if (tabBtn) {
+                        tabBtn.classList.remove('border-whirley-blue', 'text-whirley-blue');
+                        tabBtn.classList.add('border-transparent', 'text-slate-500');
+                    }
+                }
+            });
+
+            if (tabId === 'analytics') {
+                initCharts();
+            }
+        }
+
+        function filterWorkflows(track, btnEl) {
+            document.querySelectorAll('.wf-filter-btn').forEach(btn => {
+                btn.classList.remove('bg-whirley-blue', 'text-white');
+                btn.classList.add('bg-slate-200', 'text-slate-700');
+            });
+            if (btnEl) {
+                btnEl.classList.remove('bg-slate-200', 'text-slate-700');
+                btnEl.classList.add('bg-whirley-blue', 'text-white');
+            }
+            renderWorkflows(track);
+        }
+
+        function searchAgents() {
+            const query = document.getElementById('agent-search').value;
+            renderAgents(query);
+        }
+
+        // Execution Modal Logic
+        let modalTimer = null;
+        function openExecutionModal(workflowId) {
+            const wf = WORKFLOWS.find(w => w.id === workflowId);
+            if (!wf) return;
+
+            document.getElementById('modal-wf-title').innerText = wf.title;
+            document.getElementById('modal-wf-track').innerText = wf.trackLabel;
+            document.getElementById('modal-status-text').innerText = 'EXECUTING PROTOCOL...';
+            document.getElementById('modal-summary-box').classList.add('hidden');
+
+            const timeline = document.getElementById('modal-timeline');
+            timeline.innerHTML = '';
+            wf.steps.forEach((s, idx) => {
+                const stepEl = document.createElement('div');
+                stepEl.id = `step-node-${idx}`;
+                stepEl.className = 'flex items-center space-x-3 p-3 rounded-lg border border-slate-200 bg-slate-50 transition-all';
+                stepEl.innerHTML = `
+                    <div id="step-icon-${idx}" class="w-7 h-7 rounded-full bg-slate-300 text-slate-600 font-bold text-xs flex items-center justify-center">
+                        ${idx + 1}
+                    </div>
+                    <div class="flex-grow">
+                        <h5 class="text-xs font-bold text-slate-800">${s.step}</h5>
+                        <p class="text-[10px] font-mono text-whirley-orange">Agent: ${s.agent}</p>
+                    </div>
+                    <span id="step-status-${idx}" class="text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-200 text-slate-600">QUEUED</span>
+                `;
+                timeline.appendChild(stepEl);
+            });
+
+            const consoleBox = document.getElementById('modal-console');
+            consoleBox.innerHTML = `<p class="text-slate-500">[00:00:00] Initializing Whirley-DrinkWorks! Execution Engine (${wf.id})...</p>`;
+
+            document.getElementById('execution-modal').classList.remove('hidden');
+
+            // Simulate Execution Steps
+            let currentStep = 0;
+            if (modalTimer) clearInterval(modalTimer);
+
+            modalTimer = setInterval(() => {
+                if (currentStep < wf.steps.length) {
+                    const stepData = wf.steps[currentStep];
+                    
+                    // Update Step UI
+                    const stepNode = document.getElementById(`step-node-${currentStep}`);
+                    const stepIcon = document.getElementById(`step-icon-${currentStep}`);
+                    const stepStatus = document.getElementById(`step-status-${currentStep}`);
+
+                    if (stepNode) {
+                        stepNode.classList.remove('bg-slate-50', 'border-slate-200');
+                        stepNode.classList.add('bg-orange-50', 'border-whirley-orange');
+                    }
+
+                    if (stepIcon) {
+                        stepIcon.classList.remove('bg-slate-300', 'text-slate-600');
+                        stepIcon.classList.add('bg-whirley-orange', 'text-white');
+                    }
+
+                    if (stepStatus) {
+                        stepStatus.classList.remove('bg-slate-200', 'text-slate-600');
+                        stepStatus.classList.add('bg-emerald-100', 'text-emerald-800');
+                        stepStatus.innerText = 'PASSED';
+                    }
+
+                    // Append Console Log
+                    const timestamp = new Date().toISOString().substring(11, 19);
+                    consoleBox.innerHTML += `<p class="text-emerald-400">[${timestamp}] Step ${currentStep + 1} COMPLETE: ${stepData.step} (${stepData.agent})</p>`;
+                    consoleBox.scrollTop = consoleBox.scrollHeight;
+
+                    currentStep++;
+                } else {
+                    clearInterval(modalTimer);
+                    document.getElementById('modal-status-text').innerText = 'WORKFLOW COMPLETED';
+                    const timestamp = new Date().toISOString().substring(11, 19);
+                    consoleBox.innerHTML += `<p class="text-whirley-orange font-bold">[${timestamp}] SUCCESS: All drinkware manufacturing & quality control steps validated under SQF & CPSIA Standards.</p>`;
+                    consoleBox.scrollTop = consoleBox.scrollHeight;
+
+                    // Show Summary
+                    document.getElementById('modal-summary-text').innerText = wf.summary;
+                    document.getElementById('modal-summary-box').classList.remove('hidden');
+                }
+            }, 900);
+        }
+
+        function closeExecutionModal() {
+            if (modalTimer) clearInterval(modalTimer);
+            document.getElementById('execution-modal').classList.add('hidden');
+        }
+
+        // Charts Initialization
+        let chart1, chart2;
+        function initCharts() {
+            if (chart1) chart1.destroy();
+            if (chart2) chart2.destroy();
+
+            const ctx1 = document.getElementById('chart-molding');
+            if (ctx1) {
+                chart1 = new Chart(ctx1.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['Shift 1', 'Shift 2', 'Shift 3', 'Shift 4', 'Shift 5'],
+                        datasets: [{
+                            label: 'Mold Cycle Time Target (Sec)',
+                            data: [15.2, 14.8, 14.9, 14.7, 14.8],
+                            borderColor: '#FF6B00',
+                            backgroundColor: 'rgba(255, 107, 0, 0.1)',
+                            fill: true,
+                            tension: 0.3
+                        }]
+                    },
+                    options: { responsive: true, plugins: { legend: { display: false } } }
+                });
+            }
+
+            const ctx2 = document.getElementById('chart-channels');
+            if (ctx2) {
+                chart2 = new Chart(ctx2.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Amusement Parks & Resorts', 'Convenience Stores & Refill', 'Sports Concessions & Stadiums', 'Fairs, Festivals & F&B Retail'],
+                        datasets: [{
+                            data: [42, 33, 15, 10],
+                            backgroundColor: ['#004B87', '#FF6B00', '#003366', '#64748B']
+                        }]
+                    },
+                    options: { responsive: true }
+                });
+            }
+        }
+
+        // Init on Load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderWorkflows();
+            renderAgents();
+            renderOperators();
+        });
+    </script>
+</body>
+</html>
