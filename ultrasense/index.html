@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UltraSense Systems &mdash; AI Automotive SmartSurface &amp; HMI Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f8fafc;--surface2:#ffedd5;--border:#fdba74;--accent:#ea580c;
+--accent-dim:rgba(234,88,12,.08);--accent-line:rgba(234,88,12,.30);--slate:#101921;--slate-line:rgba(16,25,33,.30);--text:#1e293b;--hi:#0f172a;--tert:#64748b;--ok:#10b981;--ok-dim:rgba(16,185,129,.10);--gold:#d97706;--gold-bg:#fef3c7;--gold-line:#fde68a}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:48px;height:34px;border-radius:8px;background:linear-gradient(135deg,#ea580c,#101921);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:12px;letter-spacing:.5px;font-family:Inter,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#ea580c}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:900px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#ea580c;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(16,185,129,.08);color:#059669;border:1px solid rgba(16,185,129,.3)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#ea580c}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#ea580c;font-size:15px;flex-shrink:0;position:relative;font-family:Inter,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#ea580c}.btn.primary{background:linear-gradient(270deg,#ea580c,#c2410c);border-color:#ea580c;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#ea580c;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#ea580c}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(16,185,129,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(16,185,129,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#ea580c}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Inter,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#ea580c;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;color:var(--hi)}.task-row select{background:#fff;border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;color:var(--hi);outline:none;font-family:Inter,sans-serif}
+.footer{max-width:1180px;margin:32px auto 0;padding:0 24px 32px;font-size:11.5px;color:var(--tert);line-height:1.5;border-top:1px solid var(--border);padding-top:18px;font-family:Inter,sans-serif}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="mark">USS</div>
+    <div>
+      <div class="htitle">UltraSense Systems &mdash; AI Automotive SmartSurface &amp; HMI Workforce (concept)</div>
+      <div class="hsub">TouchPoint&trade; Controllers &bull; InPlane&trade; Sensing &bull; TouchPoint Q &bull; AEC-Q100 Grade 2 &bull; San Jose, CA</div>
+    </div>
+  </div>
+  <div class="badge">Simulated Operations &bull; <b>8 Operators Active</b></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tab-roster" onclick="switchTab('roster')">AI Operator Roster</button>
+  <button class="tab" id="tab-builder" onclick="switchTab('builder')">Add an Operator</button>
+</div>
+
+<div class="main">
+  <div id="view-roster">
+    <div class="lead">
+      UltraSense Systems transforms solid interior and exterior surfaces into intelligent, multi-mode touch interfaces through TouchPoint&trade; controllers and InPlane&trade; sensing technology. This prototype demonstrates an <b>AI Workforce</b> of 12 autonomous specialist agents driving automotive OEM cockpit design wins, solid-metal steering wheel HMI architectures, UltraStudio&trade; calibration, and AEC-Q100 Grade 2 reliability certification.
+    </div>
+
+    <div class="legend">
+      <span><span class="tag commercial">Automotive Tier-1 &amp; OEM Solutions</span> Design-Win Sourcing, RFP Quoting &amp; APQP</span>
+      <span><span class="tag operations">InPlane&trade; &amp; HMI Systems Engineering</span> Ultrasound Sensing, TouchPoint Q &amp; AEC-Q100</span>
+      <span><span class="tag hero">Flagship Operator</span> Solid-Metal SmartSurface Steering Wheel Architecture</span>
+    </div>
+
+    <div class="econ" id="econ-strip"></div>
+
+    <div id="roster-container"></div>
+
+    <div class="run hidden" id="run-panel">
+      <div class="run-head">
+        <div class="avatar" id="run-avatar">--</div>
+        <div>
+          <div class="emp-name" id="run-name">Operator</div>
+          <div class="emp-title" id="run-title">Workflow Execution</div>
+        </div>
+      </div>
+      <div class="run-sub" id="run-sub">Target: Multi-agent execution loop</div>
+
+      <div class="run-input">
+        <textarea id="run-prompt"></textarea>
+        <button class="btn primary big" id="run-btn" onclick="executeRun()">Execute Run</button>
+      </div>
+
+      <div class="phases" id="run-phases">
+        <div class="ph" id="ph-1"><div class="dot">1</div><div class="l">Initialization</div></div>
+        <div class="ph" id="ph-2"><div class="dot">2</div><div class="l">Agent Execution</div></div>
+        <div class="ph" id="ph-3"><div class="dot">3</div><div class="l">Synthesis &amp; Output</div></div>
+      </div>
+
+      <div class="agent-grid" id="agent-grid"></div>
+
+      <div class="feed" id="run-feed"></div>
+
+      <div class="result hidden" id="run-result">
+        <div class="rstats">
+          <div style="font-weight:700;font-size:13px;margin-bottom:10px;color:var(--hi)">Execution Metrics</div>
+          <div class="rrow"><span class="k">Workflow</span><span class="v" id="res-wf">--</span></div>
+          <div class="rrow"><span class="k">Agents Engaged</span><span class="v" id="res-agents">--</span></div>
+          <div class="rrow"><span class="k">Execution Time</span><span class="v" id="res-time">--</span></div>
+          <div class="rrow"><span class="k">Tools Invoked</span><span class="v" id="res-tools">--</span></div>
+          <div class="rrow"><span class="k">Est. Time Saved</span><span class="v" id="res-saved">--</span></div>
+        </div>
+        <div class="rout">
+          <div class="rh" id="res-title">Deliverable Output</div>
+          <div class="rb" id="res-body"></div>
+        </div>
+      </div>
+
+      <div class="donebar hidden" id="run-donebar">
+        Execution complete. Output synthesized and logged to UltraSense Systems automotive engineering vault.
+      </div>
+    </div>
+  </div>
+
+  <div id="view-builder" class="hidden">
+    <div class="lead">
+      Compose a new AI Operator by mapping specialist agents to an UltraSense Systems automotive HMI or commercial workflow.
+    </div>
+
+    <div class="steps">
+      <div class="step active" id="st-1"><div class="n">STEP 1</div><div class="l">Select Target Workflow</div><div class="d">Pick base business process</div></div>
+      <div class="step" id="st-2"><div class="n">STEP 2</div><div class="l">Agent &amp; Tool Mapping</div><div class="d">Configure task assignments</div></div>
+      <div class="step" id="st-3"><div class="n">STEP 3</div><div class="l">Deploy Operator</div><div class="d">Assign operator identity</div></div>
+    </div>
+
+    <div id="bstep-1">
+      <div style="font-weight:700;font-size:14px;margin-bottom:12px;color:var(--hi)">Select Workflow Template</div>
+      <div class="wf-grid" id="wf-select-grid"></div>
+      <div style="margin-top:20px">
+        <button class="btn primary" onclick="goToStep(2)">Next: Map Agents &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-2" class="hidden">
+      <div style="font-weight:700;font-size:14px;margin-bottom:6px;color:var(--hi)" id="bstep2-wftitle">Configure Workflow Tasks</div>
+      <div style="font-size:12px;color:var(--tert);margin-bottom:16px">Assign a specialist agent to each workflow stage</div>
+      <div id="task-map-container"></div>
+      <div style="margin-top:20px;display:flex;gap:10px">
+        <button class="btn" onclick="goToStep(1)">&larr; Back</button>
+        <button class="btn primary" onclick="goToStep(3)">Next: Assign Operator &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-3" class="hidden">
+      <div style="font-weight:700;font-size:14px;margin-bottom:14px;color:var(--hi)">Operator Details</div>
+      <div style="max-width:480px;display:flex;flex-direction:column;gap:12px">
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--tert);display:block;margin-bottom:4px">Operator Name</label>
+          <input type="text" id="b-emp-name" value="Automotive HMI Solutions Director" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;font-family:Inter,sans-serif">
+        </div>
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--tert);display:block;margin-bottom:4px">Role / Specialty Title</label>
+          <input type="text" id="b-emp-title" value="InPlane&trade; &amp; TouchPoint Q Solutions Architect" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;font-family:Inter,sans-serif">
+        </div>
+        <div style="margin-top:10px;display:flex;gap:10px">
+          <button class="btn" onclick="goToStep(2)">&larr; Back</button>
+          <button class="btn primary" onclick="deployOperator()">Deploy Operator to Roster</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  This interactive AI Workforce prototype is an illustrative simulation prepared for UltraSense Systems, Inc. All metrics, financial quotes, FEA acoustic plots, and AEC-Q100 test logs are concept placeholders. Every AI output is human-reviewed prior to enterprise automotive deployment.
+</div>
+
+<script>
+const AGENT_ROLES = {
+  oem_scout: { emoji: '🧲', label: 'Automotive OEM & Tier-1 Lead Scout', tools: ['source_automotive_programs', 'save'] },
+  hmi_architect: { emoji: '🎛️', label: 'InPlane™ HMI Systems Architect', tools: ['architect_smartsurface_stack', 'save'] },
+  piezo_engineer: { emoji: '🔬', label: 'TouchPoint™ & MEMS Ultrasound Engineer', tools: ['simulate_ultrasound_propagation', 'save'] },
+  material_specialist: { emoji: '🪵', label: 'Solid-Surface & Acoustic Material Specialist', tools: ['analyze_acoustic_impedance', 'save'] },
+  algo_engineer: { emoji: '🧠', label: 'Sensor Fusion & False-Trigger AI Specialist', tools: ['tune_sensor_fusion_algos', 'save'] },
+  haptic_lighting_dev: { emoji: '💡', label: 'Haptics & RGB Illumination Designer', tools: ['design_haptic_waveforms', 'save'] },
+  ultrastudio_tuner: { emoji: '💻', label: 'UltraStudio™ Calibration & UX Engineer', tools: ['calibrate_ultrastudio_thresholds', 'save'] },
+  aec_compliance: { emoji: '📋', label: 'AEC-Q100 & Automotive Safety Lead', tools: ['audit_aec_q100_compliance', 'save'] },
+  cost_quoter: { emoji: '🧮', label: 'Tier-1 Commercial BOM & Quoting Analyst', tools: ['calculate_hmi_bom_savings', 'save'] },
+  tier1_integrator: { emoji: '🚗', label: 'Tier-1 Supplier & Interior Systems Lead', tools: ['verify_tier1_packaging', 'save'] },
+  proposal_lead: { emoji: '✍️', label: 'Automotive RFP & Technical Proposal Lead', tools: ['compose_oem_proposal', 'save'] },
+  qa_director: { emoji: '🛡️', label: 'Executive Quality & Program Reviewer', tools: ['review_engineering_signoff', 'save'] }
+};
+
+const WORKFLOWS = {
+  oem_designwin_discovery: {
+    name: 'Global EV/OEM SmartSurface Program Discovery',
+    title: 'OEM-Program-Scout',
+    mode: 'dag',
+    deliverable: 'Automotive OEM SmartSurface Opportunity & Business Case Memo',
+    sample: 'Identify global EV and luxury vehicle programs transitioning center consoles, door panels, and steering wheels to solid-state SmartSurfaces.',
+    desc: 'Autonomous discovery of automotive cockpit RFIs, Tier-1 supplier bidding pipelines, and commercial weight-reduction business cases.',
+    track: 'automotive_commercial',
+    tasks: [
+      { agent: 'oem_scout', task: 'Scan global OEM EV and luxury cockpit refresh RFIs across North America and Europe', deps: [] },
+      { agent: 'tier1_integrator', task: 'Map Tier-1 interior suppliers bidding on center console and door module integration', deps: [0] },
+      { agent: 'cost_quoter', task: 'Model weight reduction, package depth shrinkage (<5mm vs 45mm), and BOM savings vs mechanical switches', deps: [1] },
+      { agent: 'proposal_lead', task: 'Assemble OEM executive value proposition pitch with InPlane energy and space metrics', deps: [2] }
+    ]
+  },
+  tier1_rfp_quote: {
+    name: 'Tier-1 Commercial RFP Response & BOM Optimization',
+    title: 'Tier1-Commercial-Quoter',
+    mode: 'sequential',
+    deliverable: 'Tier-1 Commercial RFP Response & TouchPoint™ BOM Quotation',
+    sample: 'Formulate an automotive Tier-1 supplier RFP response for 1.8M annual TouchPoint Q controllers across multi-zone cockpit surfaces.',
+    desc: 'Automated Tier-1 volume discount modeling, packaging pinout verification, and multi-year production ramp contract generation.',
+    track: 'automotive_commercial',
+    tasks: [
+      { agent: 'tier1_integrator', task: 'Review Tier-1 RFP packaging envelope, CAN/LIN interface, and pinout constraints', deps: [] },
+      { agent: 'cost_quoter', task: 'Calculate TouchPoint Q controller volume pricing, tape-and-reel packaging, and NRE tooling amortizations', deps: [0] },
+      { agent: 'proposal_lead', task: 'Formulate formal commercial proposal with multi-year SOP volume ramp schedules', deps: [1] },
+      { agent: 'qa_director', task: 'Review commercial warranty terms, automotive delivery SLAs, and margin thresholds', deps: [2] }
+    ]
+  },
+  hmi_competitive_benchmark: {
+    name: 'Solid-State HMI Competitive Teardown & Benchmark',
+    title: 'HMI-Benchmark-Analyst',
+    mode: 'dag',
+    deliverable: 'Solid-State HMI Competitive Teardown & Benchmark Audit',
+    sample: 'Benchmark UltraSense TouchPoint multi-mode ultrasound against conventional capacitive touch foils on metal and leather panels.',
+    desc: 'Comprehensive technical benchmark comparing multi-mode ultrasound and QuadForce strain sensing against conventional capacitive foils.',
+    track: 'automotive_commercial',
+    tasks: [
+      { agent: 'oem_scout', task: 'Analyze competitor capacitive and optical sensor teardowns for automotive center consoles', deps: [] },
+      { agent: 'algo_engineer', task: 'Benchmark false-positive rejection under glove, water droplet, and accidental contact scenarios', deps: [] },
+      { agent: 'material_specialist', task: 'Compare penetration depths through real brushed aluminum, wood veneer, and leather', deps: [0, 1] },
+      { agent: 'proposal_lead', task: 'Synthesize competitive intelligence audit for OEM cockpit engineering committees', deps: [2] }
+    ]
+  },
+  oem_program_lifecycle: {
+    name: 'Automotive Program Production Gate & PPAP Preparation',
+    title: 'APQP-Launch-Manager',
+    mode: 'sequential',
+    deliverable: 'Automotive Program Production Gate & PPAP Readiness Dossier',
+    sample: 'Execute APQP Stage Gate 4 review and PPAP Level 3 documentation for automotive steering wheel TouchPoint Q launch.',
+    desc: 'Automated APQP milestone tracking, PPAP Level 3 compliance documentation, and factory SMT yield validation for vehicle launch.',
+    track: 'automotive_commercial',
+    tasks: [
+      { agent: 'tier1_integrator', task: 'Establish APQP Stage Gate 4 checklist for vehicle SOP launch milestones', deps: [] },
+      { agent: 'aec_compliance', task: 'Compile PPAP Level 3 documentation, IMDS material entries, and DFMEA matrices', deps: [0] },
+      { agent: 'qa_director', task: 'Audit Tier-1 factory automated optical inspection (AOI) and SMT yield criteria', deps: [1] },
+      { agent: 'proposal_lead', task: 'Generate automotive production readiness sign-off dossier for OEM approval', deps: [2] }
+    ]
+  },
+  steering_wheel_flagship: {
+    name: 'Solid-Metal SmartSurface Steering Wheel Architecture',
+    title: 'SteeringWheel-HMI-Architect',
+    mode: 'sequential',
+    tag: 'flagship',
+    deliverable: 'Flagship Solid-Metal SmartSurface Steering Wheel Architecture Blueprint',
+    sample: 'Architect a 3.5mm ultra-thin solid brushed aluminum steering wheel spoke featuring multi-mode TouchPoint Q sensing, localized piezo haptics, and hidden-until-lit RGB icons.',
+    desc: 'End-to-end multi-agent engineering run designing an ultra-thin (<5mm) multi-mode touch and force slider on a brushed aluminum steering wheel spoke.',
+    track: 'smartsurface_engineering',
+    tasks: [
+      { agent: 'hmi_architect', task: 'Specify InPlane architecture and sub-surface PCB stack for 2.0mm brushed aluminum spoke', deps: [] },
+      { agent: 'piezo_engineer', task: 'Simulate ultrasound acoustic wave transmission and MEMS QuadForce 100nm micro-deflection', deps: [0] },
+      { agent: 'material_specialist', task: 'Measure acoustic impedance matching through aluminum, structural adhesive, and backing substrate', deps: [1] },
+      { agent: 'algo_engineer', task: 'Configure sensor fusion algorithms combining capacitive proximity and 100nm strain thresholds', deps: [2] },
+      { agent: 'haptic_lighting_dev', task: 'Design localized piezo-haptic click profile and hidden-until-lit RGB micro-perforation illumination', deps: [3] },
+      { agent: 'aec_compliance', task: 'Verify thermal shock (-40°C to +105°C) and AEC-Q100 Grade 2 electrical reliability', deps: [4] },
+      { agent: 'proposal_lead', task: 'Generate comprehensive engineering blueprint and system integration specification', deps: [5] }
+    ]
+  },
+  ultrastudio_tuning: {
+    name: 'UltraStudio™ Calibration & HMI Threshold Tuning Package',
+    title: 'UltraStudio-Tuner',
+    mode: 'dag',
+    deliverable: 'UltraStudio™ Sensor Calibration & HMI Threshold Tuning Package',
+    sample: 'Calibrate multi-mode force thresholds, capacitive sliders, and dynamic thermal drift compensation using UltraStudio workbench.',
+    desc: 'Parallel calibration of touch sensitivity, force thresholds, gesture detection, and dynamic environmental drift compensation.',
+    track: 'smartsurface_engineering',
+    tasks: [
+      { agent: 'ultrastudio_tuner', task: 'Ingest raw sensor telemetry across automotive temperature chamber cycling (-40°C to +85°C)', deps: [] },
+      { agent: 'algo_engineer', task: 'Optimize dynamic baseline tracking algorithms to eliminate thermal expansion false triggers', deps: [] },
+      { agent: 'haptic_lighting_dev', task: 'Synchronize haptic pulse latency (<12ms) with microsecond touch event trigger', deps: [0, 1] },
+      { agent: 'qa_director', task: 'Validate zero false-trigger rate over 100,000 automated robotic finger actuation cycles', deps: [2] }
+    ]
+  },
+  inplane_materials_fea: {
+    name: 'InPlane™ Multi-Material Acoustic FEA & Stackup Simulation',
+    title: 'Acoustic-FEA-Specialist',
+    mode: 'dag',
+    deliverable: 'InPlane™ Multi-Material Acoustic FEA & Stackup Engineering Guide',
+    sample: 'Simulate ultrasound pulse propagation, acoustic attenuation, and optical bonding through open-pore wood, Napa leather, and carbon fiber.',
+    desc: 'Finite Element Analysis (FEA) and acoustic wave simulation across luxury vehicle materials: real open-pore wood, Napa leather, and carbon fiber.',
+    track: 'smartsurface_engineering',
+    tasks: [
+      { agent: 'material_specialist', task: 'Profile acoustic attenuation and Poisson ratio for open-pore wood veneer and Napa leather', deps: [] },
+      { agent: 'piezo_engineer', task: 'Run ultrasonic transducer frequency sweep (1 MHz - 15 MHz) for boundary reflection minimization', deps: [] },
+      { agent: 'hmi_architect', task: 'Optimize optical clear adhesive (OCA) layer thickness and cure parameters', deps: [0, 1] },
+      { agent: 'proposal_lead', task: 'Compile mechanical integration design guide and stackup tolerance limits for Tier-1 toolmakers', deps: [2] }
+    ]
+  },
+  aec_q100_reliability: {
+    name: 'TouchPoint™ AEC-Q100 Grade 2 Stress Testing & EMC Audit',
+    title: 'AEC-Reliability-Director',
+    mode: 'sequential',
+    deliverable: 'TouchPoint™ AEC-Q100 Grade 2 Qualification & EMC Compliance Certificate',
+    sample: 'Verify TouchPoint controller AEC-Q100 Grade 2 qualification, ±15kV ESD air discharge immunity, and CISPR 25 Class 5 EMC emissions.',
+    desc: 'Rigorous automotive environmental stress qualification, ESD discharge testing, and CISPR 25 radiated emissions validation.',
+    track: 'smartsurface_engineering',
+    tasks: [
+      { agent: 'aec_compliance', task: 'Execute High Temperature Operating Life (HTOL 1000h) and thermal cycle stress data analysis', deps: [] },
+      { agent: 'piezo_engineer', task: 'Test ±15kV air and ±8kV contact ESD discharge survival on exposed A-surface', deps: [0] },
+      { agent: 'tier1_integrator', task: 'Audit CISPR 25 Class 5 conducted and radiated emissions for automotive cockpit harness', deps: [1] },
+      { agent: 'qa_director', task: 'Issue official AEC-Q100 Grade 2 Qualification & Automotive EMC Compliance Certificate', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  oem_designwin_discovery: 'Automotive OEM SmartSurface Opportunity & Business Case Memo',
+  tier1_rfp_quote: 'Tier-1 Commercial RFP Response & TouchPoint™ BOM Quotation',
+  hmi_competitive_benchmark: 'Solid-State HMI Competitive Teardown & Benchmark Audit',
+  oem_program_lifecycle: 'Automotive Program Production Gate & PPAP Readiness Dossier',
+  steering_wheel_flagship: 'Flagship Solid-Metal SmartSurface Steering Wheel Architecture Blueprint',
+  ultrastudio_tuning: 'UltraStudio™ Sensor Calibration & HMI Threshold Tuning Package',
+  inplane_materials_fea: 'InPlane™ Multi-Material Acoustic FEA & Stackup Engineering Guide',
+  aec_q100_reliability: 'TouchPoint™ AEC-Q100 Grade 2 Qualification & EMC Compliance Certificate'
+};
+
+const TOOLS = {
+  source_automotive_programs: ()=>'Queried automotive intelligence databases; identified 14 OEM EV cockpit RFIs transitioning to solid-surface controls.',
+  architect_smartsurface_stack: ()=>'Synthesized InPlane 4-layer mechanical stackup; achieved 3.2mm total module depth with integrated sub-surface PCB.',
+  simulate_ultrasound_propagation: ()=>'Executed ultrasound acoustic wave simulation; confirmed 98.4% energy transmission at 10 MHz across aluminum boundary.',
+  analyze_acoustic_impedance: ()=>'Calculated acoustic impedance (Z = 17.3 MRayl); matched structural adhesive layer to eliminate internal wave reflection.',
+  tune_sensor_fusion_algos: ()=>'Tuned neural sensor fusion weights; reduced water droplet and accidental touch false-trigger rate to 0.00 ppm.',
+  design_haptic_waveforms: ()=>'Designed 180Hz localized piezo haptic pulse profile; simulated 1.2G tactile acceleration with <10ms actuation latency.',
+  calibrate_ultrastudio_thresholds: ()=>'Programmed UltraStudio dynamic baseline register; compensated for -40°C to +105°C coefficient of thermal expansion drift.',
+  audit_aec_q100_compliance: ()=>'Verified 1,000h HTOL at 125°C and 500 thermal shock cycles (-40°C/+125°C); 0 IC failures recorded.',
+  calculate_hmi_bom_savings: ()=>'Calculated automotive system BOM savings: $14.20 per vehicle, 450g mass reduction, and 38 fewer mechanical parts.',
+  verify_tier1_packaging: ()=>'Validated Tier-1 packaging envelope and LIN/CAN-FD bus transceiver integration for instrument panel harness.',
+  compose_oem_proposal: ()=>'Composed formal automotive engineering proposal and system integration specification document.',
+  review_engineering_signoff: ()=>'Conducted technical milestone signoff; confirmed compliance with OEM HMI performance requirements and ISO 26262 ASIL-B.',
+  save: ()=>'Artifact saved successfully.'
+};
+
+const FINAL = {
+  oem_designwin_discovery: `ULTRASENSE SYSTEMS &mdash; AUTOMOTIVE OEM SMARTSURFACE OPPORTUNITY & BUSINESS CASE MEMO
+Program Target: Next-Gen Electric SUV Cockpit Architecture (SOP 2027)
+Target Modules: Center Console Climate Bar, Door Armrest Controls, and Steering Wheel Trim
+
+EXECUTIVE SUMMARY & BUSINESS CASE:
+1. Packaging Depth Reduction:
+   - Conventional Mechanical Switch Cluster: 42.0 mm depth envelope
+   - UltraSense InPlane™ Solid-State Architecture: 3.4 mm depth envelope
+   - Space Savings: 91.9% reduction in Z-axis depth, freeing critical volume for EV battery cooling ducts.
+2. Weight & Component Reduction:
+   - Part Count: Reduced from 52 mechanical buttons, springs, and light guides to 3 monolithic SmartSurfaces.
+   - Total Mass Savings: 520 grams per vehicle (contributing to extended electric driving range).
+3. Projected Commercial Economics:
+   - Direct BOM Savings: $16.40 per vehicle across cockpit switches.
+   - Tooling Amortization: Eliminated 8 injection molding sliding-core tools, saving $380,000 in upfront NRE.
+
+RECOMMENDED NEXT STEPS:
+- Initiate Tier-1 demonstration with pre-configured InPlane demonstration vehicle consoles.
+- Schedule joint engineering workshop with OEM Cockpit Experience and Studio Styling teams.
+
+NOTE: illustrative autonomous proposal generated for UltraSense Systems automotive HMI evaluation.`,
+
+  tier1_rfp_quote: `ULTRASENSE SYSTEMS &mdash; TIER-1 COMMERCIAL RFP RESPONSE & TOUCHPOINT™ BOM QUOTATION
+Customer: Tier-1 Global Interior Systems Supplier (Confidential)
+Vehicle Program: Luxury Electric Sedan & Crossover Platform (Annual Volume: 250,000 Vehicles)
+
+COMMERCIAL QUOTATION SUMMARY:
+1. Silicon Bill of Materials (Per Vehicle):
+   - 4x TouchPoint™ Q Multi-Mode HMI Controllers (QFN-32 5x5mm package) @ $2.45/unit = $9.80
+   - 2x TouchPoint™ Standard Auxiliary Controllers (QFN-24 4x4mm package) @ $1.65/unit = $3.30
+   - Tape-and-Reel Automotive Packaging & Automated SMT Pick-and-Place qualification included.
+2. Software & Tooling:
+   - UltraStudio™ Enterprise Workbench Site License: Included with production commitment.
+   - Production Line End-of-Line (EOL) Flash Firmware Calibration Tool: $45,000 one-time NRE.
+3. Multi-Year Production Pricing Ramp:
+   - Year 1 (SOP): 100% contract base price ($13.10 total IC content)
+   - Year 2: 3% volume productivity rebate
+   - Year 3: 5% volume productivity rebate
+
+QUALITY & WARRANTY ASSURANCE:
+- Automotive Defect Target: < 1.0 DPPM (Defective Parts Per Million)
+- AEC-Q100 Grade 2 (-40°C to +105°C) fully certified with 15-year automotive supply guarantee.
+
+NOTE: illustrative autonomous quotation generated for UltraSense Systems automotive commercial operations.`,
+
+  hmi_competitive_benchmark: `ULTRASENSE SYSTEMS &mdash; SOLID-STATE HMI COMPETITIVE TEARDOWN & BENCHMARK AUDIT
+Subject: Multi-Mode Ultrasound + QuadForce vs Conventional Capacitive Touch in Automotive Cockpits
+
+BENCHMARK MATRIX:
+1. False Trigger Rejection (Water Droplets / Condensation):
+   - Conventional Capacitive Touch: FAILS. Water bridges capacitive fields, causing unintended wiper/light triggers.
+   - UltraSense TouchPoint™ Multi-Mode: PASSES. Dual-axis verification requires acoustic surface coupling AND 100nm strain.
+2. Operation with Winter Gloves:
+   - Conventional Capacitive Touch: FAILS. Thick leather or thermal gloves prevent charge coupling.
+   - UltraSense TouchPoint™: PASSES. Ultrasound acoustic pulse and QuadForce strain measure physical touch pressure directly.
+3. Material Compatibility (Solid Metal & Real Wood):
+   - Conventional Capacitive Touch: FAILS on solid metal (>0.5mm) without complex insulated cutout gaps.
+   - UltraSense InPlane™: PASSES through up to 3.0mm solid brushed aluminum and 2.5mm open-pore wood veneer.
+4. Packaging Depth:
+   - Optical / Force-Resistive Foils: 15.0 - 25.0 mm module depth.
+   - UltraSense InPlane™: 3.2 mm total stack depth.
+
+CONCLUSION:
+UltraSense provides the only automotive-qualified solution capable of operating seamlessly through solid metal while guaranteeing zero false triggers in extreme weather.
+
+NOTE: illustrative competitive benchmark generated for UltraSense Systems engineering sales.`,
+
+  oem_program_lifecycle: `ULTRASENSE SYSTEMS &mdash; AUTOMOTIVE PRODUCTION GATE & PPAP READINESS DOSSIER
+Program: Global OEM Flagship Steering Wheel HMI Module
+Milestone: APQP Stage Gate 4 / PPAP Level 3 Submission
+
+PRODUCTION READINESS AUDIT CHECKLIST:
+1. PPAP Level 3 Elements:
+   - Design Records & Ballooned Engineering Drawings: Complete & Approved
+   - Design FMEA (DFMEA v3.2): RPN values < 40; all critical characteristics verified
+   - Process Flow Diagram & Control Plan: Validated at Tier-1 SMT assembly line
+   - Measurement System Analysis (Gage R&R): 6.8% variance (well within < 10% automotive standard)
+   - Dimensional Results: 100% Cpk > 1.67 across 30 consecutive pre-production parts
+2. Environmental & Safety Compliance:
+   - International Material Data System (IMDS): Module ID #88492019 submitted and accepted
+   - REACH / RoHS 3 / Conflict Minerals: Full certification on record
+   - ISO 26262 Functional Safety: ASIL-B Safety Element out of Context (SEooC) validated
+3. SMT Assembly & Yield Telemetry:
+   - SMT First Pass Yield (FPY): 99.62% over 5,000-unit pilot run
+   - Automated Optical Inspection (AOI) & In-Circuit Test (ICT) verified with 100% automated calibration.
+
+STATUS: APPROVED FOR SERIES PRODUCTION (SOP).
+
+NOTE: illustrative APQP production dossier generated for UltraSense Systems automotive program management.`,
+
+  steering_wheel_flagship: `ULTRASENSE SYSTEMS &mdash; FLAGSHIP SOLID-METAL SMARTSURFACE STEERING WHEEL BLUEPRINT
+Module: Brushed Aluminum Steering Wheel Spoke Controls (Left & Right Multifunction Switches)
+Client Program: Premium EV Autonomous-Ready Cockpit
+
+1. MECHANICAL & INPLANE™ STACKUP (TOTAL THICKNESS: 3.25 MM):
+   - Layer 1 (A-Surface): 1.5mm authentic 6061-T6 brushed aluminum spoke with laser micro-perforated icons (0.05mm dia).
+   - Layer 2: 0.15mm optical-grade structural adhesive with tuned acoustic impedance (Z = 1.95 MRayl).
+   - Layer 3: UltraSense TouchPoint™ Q monolithic controller with integrated MEMS ultrasound transducer array.
+   - Layer 4: 0.8mm FR4 backing PCB with integrated RGB micro-LEDs, piezo-haptic actuators, and LIN bus transceiver.
+   - Layer 5: Rigid cast magnesium steering wheel armature bracket.
+
+2. MULTI-MODE SENSING & SENSOR FUSION ENGINE:
+   - Ultrasonic Touch Detection: 10 MHz acoustic pulses penetrate aluminum; reflected wave amplitude shift detects finger touch.
+   - QuadForce™ Strain Detection: Integrated piezo strain gauges measure microscopic deflection down to 100 nanometers.
+   - Sensor Fusion Logic: Event triggers ONLY when ultrasound impedance shift AND > 1.2N force vector coincide.
+   - False-Positive Immunity: 0.00% false trigger rate under water droplet spray, hand sweat, and rapid temperature transitions.
+
+3. HAPTIC FEEDBACK & ILLUMINATION ARCHITECTURE:
+   - Haptic Feedback: Localized piezo actuator delivers crisp mechanical button feel (180 Hz pulse, 1.4G peak acceleration).
+   - Dynamic Illumination: Hidden-until-lit capacitive approach lighting illuminates micro-perforations as hand approaches.
+
+4. AUTOMOTIVE COMPLIANCE & RELIABILITY TELEMETRY:
+   - Operating Temperature: AEC-Q100 Grade 2 (-40°C to +105°C continuous).
+   - Electrostatic Discharge (ESD): Surpasses ISO 10605 ±15kV air and ±8kV contact discharge directly on metal face.
+   - EMC / EMI: Meets CISPR 25 Class 5 radiated emissions for seamless vehicle infotainment coexistence.
+
+NOTE: illustrative flagship architecture blueprint generated for UltraSense Systems automotive engineering.`,
+
+  ultrastudio_tuning: `ULTRASENSE SYSTEMS &mdash; ULTRASTUDIO™ SENSOR CALIBRATION & HMI TUNING PACKAGE
+Tool Version: UltraStudio™ Enterprise Workbench v4.6
+Hardware Target: Center Console Dual-Zone TouchPoint™ Q Matrix
+
+CALIBRATION & PARAMETER REGISTER PROFILE:
+1. Multi-Mode Threshold Configuration:
+   - Proximity Detection Distance: 25 mm capacitive wake-up radius
+   - Ultrasound Impedance Delta Threshold: 18.5% acoustic attenuation
+   - Actuation Force Trigger Threshold: 1.5 Newtons (adjustable via software 0.8N - 3.5N)
+   - Slider Gesture Tracking: 200 Hz continuous interpolation with dynamic acceleration damping
+2. Thermal Drift Compensation:
+   - Dynamic baseline tracking frequency: 10 Hz continuous background loop
+   - Coefficient of Thermal Expansion (CTE) compensation active across -40°C to +85°C
+   - Sensor baseline drift across 125°C temperature sweep: < 0.4% (well within 2.0% tolerance band)
+3. Haptic & Audio Latency Synchronization:
+   - Touch Detection to Haptic Driver Pulse: 8.2 milliseconds
+   - Human perception delay: Indistinguishable from solid mechanical tactile switch.
+
+VERIFICATION SUMMARY:
+- 100,000 automated robotic finger taps executed; 100% correct actuation, 0 missed triggers, 0 double clicks.
+
+NOTE: illustrative UltraStudio calibration package generated for UltraSense Systems HMI tuning operations.`,
+
+  inplane_materials_fea: `ULTRASENSE SYSTEMS &mdash; INPLANE™ MULTI-MATERIAL ACOUSTIC FEA SIMULATION GUIDE
+Objective: Acoustic Pulse Propagation Analysis across Premium Automotive Interior Substrates
+
+MATERIAL PROPERTY ANALYSIS & IMPEDANCE MAPPING:
+1. Substrate A: Brushed 6061-T6 Aluminum (1.5mm - 2.5mm thickness)
+   - Acoustic Velocity: 6,420 m/s | Density: 2.70 g/cm³ | Acoustic Impedance: 17.33 MRayl
+   - Optimal Ultrasound Operating Frequency: 10.5 MHz | Round-trip transit time: 467 nanoseconds.
+2. Substrate B: Open-Pore Walnut Wood Veneer (0.8mm wood + 1.2mm ABS backing)
+   - Acoustic Velocity: 3,850 m/s | Density: 0.68 g/cm³ | Acoustic Impedance: 2.62 MRayl
+   - Optimal Ultrasound Operating Frequency: 5.2 MHz | Round-trip transit time: 519 nanoseconds.
+3. Substrate C: Napa Leather Wrapped Polycarbonate (1.0mm leather + 1.5mm PC substrate)
+   - Acoustic Velocity: 1,750 m/s (leather) / 2,200 m/s (PC)
+   - QuadForce™ Strain Primacy: 75% strain weighting / 25% ultrasound weighting for compliant organic materials.
+
+TOOLING & BONDING TOLERANCE RECOMMENDATIONS:
+- Optical Clear Adhesive (OCA) thickness: 150 µm ± 12 µm with 0 bubble inclusions (>0.05mm).
+- Bonding pressure during autoclaving: 0.35 MPa at 65°C for 25 minutes.
+
+NOTE: illustrative acoustic FEA engineering guide generated for UltraSense Systems material integration.`,
+
+  aec_q100_reliability: `ULTRASENSE SYSTEMS &mdash; TOUCHPOINT™ AEC-Q100 GRADE 2 QUALIFICATION CERTIFICATE
+Certificate Number: #AEC-USS-2026-88194
+Component: TouchPoint™ Q Integrated HMI Controller SoC (AEC-Q100 Grade 2 Qualified)
+
+AUTOMOTIVE STRESS TEST EXECUTION RESULTS:
+1. High Temperature Operating Life (HTOL - JESD22-A108):
+   - Condition: 1,000 Hours at 125°C ambient, dynamic clock stress | Sample Size: 231 units (3 lots) | Failures: 0
+2. Temperature Cycling (TC - JESD22-A104):
+   - Condition: 1,000 Cycles from -40°C to +125°C, air-to-air | Sample Size: 231 units (3 lots) | Failures: 0
+3. Highly Accelerated Stress Test (HAST - JESD22-A110):
+   - Condition: 96 Hours at 130°C / 85% RH with continuous bias | Sample Size: 231 units (3 lots) | Failures: 0
+4. Electrostatic Discharge (ESD Immunity):
+   - Human Body Model (AEC-Q100-002): Class H2 (> 2,000V) &mdash; PASSED
+   - Charged Device Model (AEC-Q100-011): Class C3 (> 750V) &mdash; PASSED
+   - System-Level ESD (ISO 10605): ±15kV Air Discharge / ±8kV Contact &mdash; PASSED
+5. Electromagnetic Compatibility (EMC):
+   - CISPR 25 Class 5 Conducted and Radiated Emissions &mdash; COMPLIANT
+
+QUALIFICATION STATUS: FULLY CERTIFIED FOR GLOBAL AUTOMOTIVE PRODUCTION.
+
+NOTE: illustrative AEC-Q100 qualification certificate generated for UltraSense Systems quality assurance.`
+};
+
+const EMPLOYEES = [
+  { id: 'e1', name: 'OEM-Program-Scout', title: 'Global Automotive Design-Win Director', wf: 'oem_designwin_discovery', handled: 142, hrs: 9.5, win: '4.2x', track: 'automotive_commercial' },
+  { id: 'e2', name: 'Tier1-Commercial-Quoter', title: 'Automotive RFP & BOM Optimization Lead', wf: 'tier1_rfp_quote', handled: 98, hrs: 8.0, win: '3.6x', track: 'automotive_commercial' },
+  { id: 'e3', name: 'HMI-Benchmark-Analyst', title: 'SmartSurface Competitive Teardown Spec', wf: 'hmi_competitive_benchmark', handled: 114, hrs: 6.5, win: '4.0x', track: 'automotive_commercial' },
+  { id: 'e4', name: 'APQP-Launch-Manager', title: 'Tier-1 PPAP & SOP Production Gate Lead', wf: 'oem_program_lifecycle', handled: 86, hrs: 12.0, win: '3.4x', track: 'automotive_commercial' },
+  { id: 'e5', name: 'SteeringWheel-HMI-Architect', title: 'Solid-Metal SmartSurface Chief Engineer', wf: 'steering_wheel_flagship', handled: 186, hrs: 16.5, win: '5.8x', track: 'smartsurface_engineering' },
+  { id: 'e6', name: 'UltraStudio-Tuner', title: 'HMI Calibration & Algorithms Lead', wf: 'ultrastudio_tuning', handled: 224, hrs: 7.5, win: '4.8x', track: 'smartsurface_engineering' },
+  { id: 'e7', name: 'Acoustic-FEA-Specialist', title: 'InPlane™ Multi-Material Simulation Eng', wf: 'inplane_materials_fea', handled: 132, hrs: 11.0, win: '4.4x', track: 'smartsurface_engineering' },
+  { id: 'e8', name: 'AEC-Reliability-Director', title: 'AEC-Q100 & Automotive EMC Audit Spec', wf: 'aec_q100_reliability', handled: 104, hrs: 14.0, win: '5.0x', track: 'smartsurface_engineering' }
+];
+
+const TRACKS = [
+  ['automotive_commercial', 'Automotive Tier-1 & OEM Solutions'],
+  ['smartsurface_engineering', 'InPlane™ & HMI Systems Engineering']
+];
+
+let activeEmpId = 'e5';
+let currentRunWf = null;
+let selectedWfKey = 'steering_wheel_flagship';
+
+function init(){
+  renderEcon();
+  renderRoster();
+  renderBuilderWfGrid();
+}
+
+function renderEcon(){
+  const strip = document.getElementById('econ-strip');
+  let totalRuns = 0;
+  let totalSaved = 0;
+  EMPLOYEES.forEach(e => {
+    totalRuns += e.handled;
+    totalSaved += e.handled * e.hrs;
+  });
+
+  strip.innerHTML = `
+    <div class="cell"><div class="v">${EMPLOYEES.length}</div><div class="k">Active AI Operators</div></div>
+    <div class="cell"><div class="v">${totalRuns.toLocaleString()}</div><div class="k">Workflows Executed</div></div>
+    <div class="cell"><div class="v">${(totalSaved).toLocaleString(undefined,{maximumFractionDigits:0})}<span class="u">h</span></div><div class="k">Hours Saved</div></div>
+    <div class="cell"><div class="v">4.5<span class="u">x</span></div><div class="k">Avg Turnaround Speedup</div></div>
+  `;
+}
+
+function renderRoster(){
+  const container = document.getElementById('roster-container');
+  container.innerHTML = '';
+
+  TRACKS.forEach(([tKey, tLabel]) => {
+    const sectionLabel = document.createElement('div');
+    sectionLabel.className = 'slabel';
+    sectionLabel.innerText = tLabel;
+    container.appendChild(sectionLabel);
+
+    const grid = document.createElement('div');
+    grid.className = 'roster';
+
+    EMPLOYEES.filter(e => {
+      const wf = WORKFLOWS[e.wf];
+      return wf && wf.track === tKey;
+    }).forEach(emp => {
+      grid.appendChild(createEmpCard(emp));
+    });
+
+    container.appendChild(grid);
+  });
+}
+
+function createEmpCard(emp){
+  const wf = WORKFLOWS[emp.wf];
+  const card = document.createElement('div');
+  const isHero = wf && wf.tag === 'flagship';
+  card.className = `emp ${isHero ? 'hero' : ''} ${emp.id === activeEmpId ? 'working' : ''}`;
+  card.id = `card-${emp.id}`;
+
+  const initials = emp.name.split('-').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+  const agentChips = wf ? wf.tasks.map(t => {
+    const a = AGENT_ROLES[t.agent];
+    return `<span class="chip">${a ? a.emoji : ''} ${a ? a.label : t.agent}</span>`;
+  }).join('') : '';
+
+  card.innerHTML = `
+    <div class="emp-top">
+      <div class="avatar">${initials}</div>
+      <div>
+        <div class="emp-name">${emp.name} ${isHero ? '<span class="tag hero">Flagship</span>' : ''}</div>
+        <div class="emp-title">${emp.title}</div>
+      </div>
+    </div>
+    <div class="emp-owns">Owns: <b>${wf ? wf.name : emp.wf}</b></div>
+    <div class="team">${agentChips}</div>
+    <div class="emp-stats">
+      <div class="st">Runs<b>${emp.handled}</b></div>
+      <div class="st">Time Saved<b>${(emp.handled * emp.hrs).toFixed(0)} hrs</b></div>
+      <div class="st">Headline Metric<b>${emp.win}</b></div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" onclick="setupRun('${emp.id}')">Run Operator Workflow</button>
+    </div>
+  `;
+
+  return card;
+}
+
+function switchTab(t){
+  document.getElementById('tab-roster').classList.toggle('active', t==='roster');
+  document.getElementById('tab-builder').classList.toggle('active', t==='builder');
+  document.getElementById('view-roster').classList.toggle('hidden', t!=='roster');
+  document.getElementById('view-builder').classList.toggle('hidden', t!=='builder');
+}
+
+function setupRun(empId){
+  const emp = EMPLOYEES.find(e => e.id === empId);
+  if(!emp) return;
+
+  activeEmpId = empId;
+  const wf = WORKFLOWS[emp.wf];
+  currentRunWf = wf;
+
+  renderRoster();
+
+  const panel = document.getElementById('run-panel');
+  panel.classList.remove('hidden');
+  panel.scrollIntoView({ behavior: 'smooth' });
+
+  const initials = emp.name.split('-').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+  document.getElementById('run-avatar').innerText = initials;
+  document.getElementById('run-name').innerText = emp.name;
+  document.getElementById('run-title').innerText = `Executing: ${wf.title}`;
+  document.getElementById('run-sub').innerText = wf.desc;
+  document.getElementById('run-prompt').value = wf.sample;
+
+  document.getElementById('run-phases').querySelectorAll('.ph').forEach(p=>p.className='ph');
+  document.getElementById('ph-1').classList.add('active');
+
+  const grid = document.getElementById('agent-grid');
+  grid.innerHTML = '';
+  wf.tasks.forEach((t, i) => {
+    const a = AGENT_ROLES[t.agent];
+    const ac = document.createElement('div');
+    ac.className = 'acard';
+    ac.id = `acard-${i}`;
+    ac.innerHTML = `
+      <div class="ae">${a ? a.emoji : '🤖'}</div>
+      <div class="ar">${a ? a.label : t.agent}</div>
+      <div class="at">${t.task}</div>
+      <div class="as"><div class="sd"></div><span id="astat-${i}">Queued</span></div>
+    `;
+    grid.appendChild(ac);
+  });
+
+  document.getElementById('run-feed').innerHTML = '';
+  document.getElementById('run-result').classList.add('hidden');
+  document.getElementById('run-donebar').classList.add('hidden');
+  document.getElementById('run-btn').disabled = false;
+}
+
+let runTimer = null;
+
+function executeRun(){
+  if(!currentRunWf) return;
+  document.getElementById('run-btn').disabled = true;
+
+  document.getElementById('ph-1').className = 'ph done';
+  document.getElementById('ph-2').className = 'ph active';
+
+  const feed = document.getElementById('run-feed');
+  feed.innerHTML = '';
+
+  const wf = currentRunWf;
+  const tasks = wf.tasks;
+  let idx = 0;
+
+  function logRow(agentName, msg){
+    const row = document.createElement('div');
+    row.className = 'frow';
+    const now = new Date();
+    const timeStr = now.toTimeString().split(' ')[0] + '.' + String(now.getMilliseconds()).padStart(3,'0');
+    row.innerHTML = `<span class="ft">${timeStr}</span><span class="fa">${agentName}</span><span class="fd">${msg}</span>`;
+    feed.appendChild(row);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  logRow('System', `Initializing multi-agent graph: ${wf.name}`);
+
+  runTimer = setInterval(() => {
+    if(idx < tasks.length){
+      const t = tasks[idx];
+      const a = AGENT_ROLES[t.agent];
+      const aName = a ? a.label : t.agent;
+
+      if(idx > 0){
+        const prevCard = document.getElementById(`acard-${idx-1}`);
+        if(prevCard){
+          prevCard.className = 'acard done';
+          document.getElementById(`astat-${idx-1}`).innerText = 'Completed';
+        }
+      }
+
+      const card = document.getElementById(`acard-${idx}`);
+      if(card){
+        card.className = 'acard running visible';
+        document.getElementById(`astat-${idx}`).innerText = 'Executing...';
+      }
+
+      logRow(aName, `Task: ${t.task}`);
+
+      if(a && a.tools){
+        a.tools.forEach(tk => {
+          if(TOOLS[tk]){
+            logRow(aName, `Tool [${tk}]: ${TOOLS[tk]()}`);
+          }
+        });
+      }
+
+      idx++;
+    } else {
+      clearInterval(runTimer);
+
+      const lastCard = document.getElementById(`acard-${tasks.length-1}`);
+      if(lastCard){
+        lastCard.className = 'acard done';
+        document.getElementById(`astat-${tasks.length-1}`).innerText = 'Completed';
+      }
+
+      document.getElementById('ph-2').className = 'ph done';
+      document.getElementById('ph-3').className = 'ph done';
+
+      logRow('System', 'Workflow execution complete. Synthesizing deliverable artifact.');
+
+      showResult();
+    }
+  }, 900);
+}
+
+function showResult(){
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = currentRunWf;
+  const wfKey = emp ? emp.wf : 'steering_wheel_flagship';
+
+  document.getElementById('res-wf').innerText = wf.name;
+  document.getElementById('res-agents').innerText = wf.tasks.length;
+  document.getElementById('res-time').innerText = '3.9s (Simulated)';
+  document.getElementById('res-tools').innerText = wf.tasks.length * 2;
+  document.getElementById('res-saved').innerText = `~${emp ? (emp.handled * emp.hrs).toFixed(0) : 16} hrs`;
+
+  document.getElementById('res-title').innerText = DTITLE[wfKey] || 'Deliverable Artifact';
+  document.getElementById('res-body').innerText = FINAL[wfKey] || 'Output complete.';
+
+  document.getElementById('run-result').classList.remove('hidden');
+  document.getElementById('run-donebar').classList.remove('hidden');
+  document.getElementById('run-btn').disabled = false;
+}
+
+function renderBuilderWfGrid(){
+  const grid = document.getElementById('wf-select-grid');
+  grid.innerHTML = '';
+
+  Object.keys(WORKFLOWS).forEach(key => {
+    const wf = WORKFLOWS[key];
+    const card = document.createElement('div');
+    card.className = `wf ${key === selectedWfKey ? 'sel' : ''}`;
+    card.onclick = () => {
+      selectedWfKey = key;
+      renderBuilderWfGrid();
+    };
+    card.innerHTML = `
+      <div class="wn">${wf.name} ${wf.tag==='flagship' ? '<span class="tag hero">Flagship</span>' : ''}</div>
+      <div class="wd">${wf.desc}</div>
+      <div class="wm">${wf.mode.toUpperCase()} &bull; ${wf.tasks.length} TASKS</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function goToStep(s){
+  document.getElementById('st-1').classList.toggle('active', s===1);
+  document.getElementById('st-2').classList.toggle('active', s===2);
+  document.getElementById('st-3').classList.toggle('active', s===3);
+
+  document.getElementById('bstep-1').classList.toggle('hidden', s!==1);
+  document.getElementById('bstep-2').classList.toggle('hidden', s!==2);
+  document.getElementById('bstep-3').classList.toggle('hidden', s!==3);
+
+  if(s === 2){
+    const wf = WORKFLOWS[selectedWfKey];
+    document.getElementById('bstep2-wftitle').innerText = `Configure Tasks: ${wf.name}`;
+    const cont = document.getElementById('task-map-container');
+    cont.innerHTML = '';
+
+    wf.tasks.forEach((t, i) => {
+      const row = document.createElement('div');
+      row.className = 'task-row';
+
+      let optionsHTML = '';
+      Object.keys(AGENT_ROLES).forEach(ak => {
+        const a = AGENT_ROLES[ak];
+        const sel = ak === t.agent ? 'selected' : '';
+        optionsHTML += `<option value="${ak}" ${sel}>${a.emoji} ${a.label}</option>`;
+      });
+
+      row.innerHTML = `
+        <div class="tn">${i+1}</div>
+        <div class="tt">${t.task}</div>
+        <select id="sel-task-${i}">${optionsHTML}</select>
+      `;
+      cont.appendChild(row);
+    });
+  }
+}
+
+function deployOperator(){
+  const name = document.getElementById('b-emp-name').value.trim() || 'New Operator';
+  const title = document.getElementById('b-emp-title').value.trim() || 'Custom Specialist';
+
+  const newId = 'custom-op-' + Date.now();
+  EMPLOYEES.push({
+    id: newId,
+    name: name,
+    title: title,
+    wf: selectedWfKey,
+    handled: 1,
+    hrs: 8.0,
+    win: 'Newly Deployed'
+  });
+
+  renderEcon();
+  renderRoster();
+  switchTab('roster');
+  setupRun(newId);
+}
+
+window.onload = init;
+</script>
+</body>
+</html>
