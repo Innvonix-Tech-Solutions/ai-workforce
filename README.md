@@ -317,3 +317,8 @@ https://innvonix-tech-solutions.github.io/ai-workforce/trilliumfoods
 https://innvonix-tech-solutions.github.io/ai-workforce/whirleydrinkworks
 https://innvonix-tech-solutions.github.io/ai-workforce/olaplex
 https://innvonix-tech-solutions.github.io/ai-workforce/steelobrien
+https://innvonix-tech-solutions.github.io/ai-workforce/performance-motion-devices
+https://innvonix-tech-solutions.github.io/ai-workforce/nortek
+https://innvonix-tech-solutions.github.io/ai-workforce/metox
+https://innvonix-tech-solutions.github.io/ai-workforce/vektrex
+https://innvonix-tech-solutions.github.io/ai-workforce/ultrasense
