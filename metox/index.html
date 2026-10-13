@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MetOx International &mdash; AI High-Temperature Superconducting (HTS) Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f0f9ff;--surface2:#e0f2fe;--border:#7dd3fc;--accent:#0284c7;
+--accent-dim:rgba(2,132,199,.08);--accent-line:rgba(2,132,199,.30);--slate:#0f172a;--slate-line:rgba(15,23,42,.30);--text:#1e293b;--hi:#0f172a;--tert:#64748b;--ok:#10b981;--ok-dim:rgba(16,185,129,.10);--gold:#d97706;--gold-bg:#fef3c7;--gold-line:#fde68a}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:48px;height:34px;border-radius:8px;background:linear-gradient(135deg,#0284c7,#0f172a);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:12px;letter-spacing:.5px;font-family:Inter,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#0284c7}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:900px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#0284c7;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(16,185,129,.08);color:#059669;border:1px solid rgba(16,185,129,.3)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#0284c7}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#0284c7;font-size:15px;flex-shrink:0;position:relative;font-family:Inter,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#0284c7}.btn.primary{background:linear-gradient(270deg,#0284c7,#0369a1);border-color:#0284c7;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#0284c7;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#0284c7}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(16,185,129,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(16,185,129,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#0284c7}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Inter,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#0284c7;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;color:var(--hi)}.task-row select{background:#fff;border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;color:var(--hi);outline:none;font-family:Inter,sans-serif}
+.footer{max-width:1180px;margin:32px auto 0;padding:0 24px 32px;font-size:11.5px;color:var(--tert);line-height:1.5;border-top:1px solid var(--border);padding-top:18px;font-family:Inter,sans-serif}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="mark">MOX</div>
+    <div>
+      <div class="htitle">MetOx International &mdash; AI High-Temperature Superconducting (HTS) Workforce (concept)</div>
+      <div class="hsub">Xeus&trade; HTS Wire &bull; A-MOCVD Reel-to-Reel Manufacturing &bull; Fusion Energy &amp; Superconducting Grids &bull; Houston, TX</div>
+    </div>
+  </div>
+  <div class="badge">Simulated Operations &bull; <b>8 Operators Active</b></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tab-roster" onclick="switchTab('roster')">AI Operator Roster</button>
+  <button class="tab" id="tab-builder" onclick="switchTab('builder')">Add an Operator</button>
+</div>
+
+<div class="main">
+  <div id="view-roster">
+    <div class="lead">
+      MetOx International manufactures breakthrough High-Temperature Superconducting (HTS) wire, branded as <b>Xeus&trade;</b>, using advanced reel-to-reel MOCVD epitaxy in Houston, Texas. Capable of carrying over 250 times the current of equivalent copper wire with zero electrical resistance, Xeus&trade; enables commercial magnetic fusion reactors, gigawatt urban underground power grids, and hyper-dense AI data centers. This prototype demonstrates an <b>AI Workforce</b> of 12 autonomous specialist agents driving commercial fusion magnet procurement, A-MOCVD deposition rate tuning, and cryogenic critical current ($I_c$) metrology.
+    </div>
+
+    <div class="legend">
+      <span><span class="tag commercial">Commercial &amp; Energy Infrastructure Solutions</span> Fusion Magnets, Urban Grid Cables &amp; AI Data Centers</span>
+      <span><span class="tag operations">Superconducting Materials &amp; MOCVD Engineering</span> A-MOCVD Epitaxy, REBCO Thin Films &amp; 77K/20K Metrology</span>
+      <span><span class="tag hero">Flagship Operator</span> 20+ Tesla Fusion Magnet Coil Xeus&trade; Wire Architecture</span>
+    </div>
+
+    <div class="econ" id="econ-strip"></div>
+
+    <div id="roster-container"></div>
+
+    <div class="run hidden" id="run-panel">
+      <div class="run-head">
+        <div class="avatar" id="run-avatar">--</div>
+        <div>
+          <div class="emp-name" id="run-name">Operator</div>
+          <div class="emp-title" id="run-title">Workflow Execution</div>
+        </div>
+      </div>
+      <div class="run-sub" id="run-sub">Target: Multi-agent execution loop</div>
+
+      <div class="run-input">
+        <textarea id="run-prompt"></textarea>
+        <button class="btn primary big" id="run-btn" onclick="executeRun()">Execute Run</button>
+      </div>
+
+      <div class="phases" id="run-phases">
+        <div class="ph" id="ph-1"><div class="dot">1</div><div class="l">Initialization</div></div>
+        <div class="ph" id="ph-2"><div class="dot">2</div><div class="l">Agent Execution</div></div>
+        <div class="ph" id="ph-3"><div class="dot">3</div><div class="l">Synthesis &amp; Output</div></div>
+      </div>
+
+      <div class="agent-grid" id="agent-grid"></div>
+
+      <div class="feed" id="run-feed"></div>
+
+      <div class="result hidden" id="run-result">
+        <div class="rstats">
+          <div style="font-weight:700;font-size:13px;margin-bottom:10px;color:var(--hi)">Execution Metrics</div>
+          <div class="rrow"><span class="k">Workflow</span><span class="v" id="res-wf">--</span></div>
+          <div class="rrow"><span class="k">Agents Engaged</span><span class="v" id="res-agents">--</span></div>
+          <div class="rrow"><span class="k">Execution Time</span><span class="v" id="res-time">--</span></div>
+          <div class="rrow"><span class="k">Tools Invoked</span><span class="v" id="res-tools">--</span></div>
+          <div class="rrow"><span class="k">Est. Time Saved</span><span class="v" id="res-saved">--</span></div>
+        </div>
+        <div class="rout">
+          <div class="rh" id="res-title">Deliverable Output</div>
+          <div class="rb" id="res-body"></div>
+        </div>
+      </div>
+
+      <div class="donebar hidden" id="run-donebar">
+        Execution complete. Output synthesized and logged to MetOx superconducting technology vault.
+      </div>
+    </div>
+  </div>
+
+  <div id="view-builder" class="hidden">
+    <div class="lead">
+      Compose a new AI Operator by mapping specialist agents to a MetOx International superconducting production or commercial workflow.
+    </div>
+
+    <div class="steps">
+      <div class="step active" id="st-1"><div class="n">STEP 1</div><div class="l">Select Target Workflow</div><div class="d">Pick base business process</div></div>
+      <div class="step" id="st-2"><div class="n">STEP 2</div><div class="l">Agent &amp; Tool Mapping</div><div class="d">Configure task assignments</div></div>
+      <div class="step" id="st-3"><div class="n">STEP 3</div><div class="l">Deploy Operator</div><div class="d">Assign operator identity</div></div>
+    </div>
+
+    <div id="bstep-1">
+      <div style="font-weight:700;font-size:14px;margin-bottom:12px;color:var(--hi)">Select Workflow Template</div>
+      <div class="wf-grid" id="wf-select-grid"></div>
+      <div style="margin-top:20px">
+        <button class="btn primary" onclick="goToStep(2)">Next: Map Agents &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-2" class="hidden">
+      <div style="font-weight:700;font-size:14px;margin-bottom:6px;color:var(--hi)" id="bstep2-wftitle">Configure Workflow Tasks</div>
+      <div style="font-size:12px;color:var(--tert);margin-bottom:16px">Assign a specialist agent to each workflow stage</div>
+      <div id="task-map-container"></div>
+      <div style="margin-top:20px;display:flex;gap:10px">
+        <button class="btn" onclick="goToStep(1)">&larr; Back</button>
+        <button class="btn primary" onclick="goToStep(3)">Next: Assign Operator &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-3" class="hidden">
+      <div style="font-weight:700;font-size:14px;margin-bottom:14px;color:var(--hi)">Operator Details</div>
+      <div style="max-width:480px;display:flex;flex-direction:column;gap:12px">
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--tert);display:block;margin-bottom:4px">Operator Name</label>
+          <input type="text" id="b-emp-name" value="Superconducting Energy Solutions Lead" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;font-family:Inter,sans-serif">
+        </div>
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--tert);display:block;margin-bottom:4px">Role / Specialty Title</label>
+          <input type="text" id="b-emp-title" value="Xeus&trade; Wire &amp; Fusion Integration Specialist" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;font-family:Inter,sans-serif">
+        </div>
+        <div style="margin-top:10px;display:flex;gap:10px">
+          <button class="btn" onclick="goToStep(2)">&larr; Back</button>
+          <button class="btn primary" onclick="deployOperator()">Deploy Operator to Roster</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  This interactive AI Workforce prototype is an illustrative simulation prepared for MetOx International. All metrics, financial quotes, XRD rocking curves, and critical current logs are concept placeholders. Every AI output is human-reviewed prior to enterprise superconductor deployment.
+</div>
+
+<script>
+const AGENT_ROLES = {
+  hts_market_scout: { emoji: '🧲', label: 'Fusion & Grid Infrastructure Lead Scout', tools: ['source_fusion_and_grid_programs', 'save'] },
+  magnet_architect: { emoji: '🧲', label: 'High-Field Superconducting Magnet Architect', tools: ['architect_fusion_coil_winding', 'save'] },
+  mocvd_process_eng: { emoji: '🔬', label: 'A-MOCVD Reel-to-Reel Deposition Engineer', tools: ['optimize_mocvd_vapor_deposition', 'save'] },
+  rebco_crystallographer: { emoji: '💎', label: 'REBCO Epitaxial Thin-Film Crystallographer', tools: ['analyze_xrd_texture_alignment', 'save'] },
+  cryo_test_physicist: { emoji: '❄️', label: 'Cryogenic Metrology & Critical Current (Ic) Physicist', tools: ['measure_infield_critical_current', 'save'] },
+  copper_stabilizer_dev: { emoji: '🛡️', label: 'Substrate & Copper Cladding Specialist', tools: ['evaluate_quench_stabilization', 'save'] },
+  grid_cable_engineer: { emoji: '⚡', label: 'Superconducting Power Cable & SFCL Systems Lead', tools: ['model_grid_transmission_capacity', 'save'] },
+  datacenter_power_spec: { emoji: '🖥️', label: 'Hyperscale AI Data Center Power Architect', tools: ['model_datacenter_busbar_savings', 'save'] },
+  cost_scaling_analyst: { emoji: '🧮', label: 'HTS Production Scaling & $/kA-m Analyst', tools: ['calculate_hts_kam_cost_parity', 'save'] },
+  fusion_liaison: { emoji: '⚛️', label: 'Tokamak & Stellarator Integration Lead', tools: ['verify_tokamak_coil_tolerances', 'save'] },
+  proposal_lead: { emoji: '✍️', label: 'Technical Proposal & DOE/RFP Program Lead', tools: ['compose_metox_proposal', 'save'] },
+  qa_director: { emoji: '✅', label: 'Superconductor Quality & ASTM Metrology Director', tools: ['review_hts_quality_signoff', 'save'] }
+};
+
+const WORKFLOWS = {
+  fusion_magnet_procurement: {
+    name: 'Commercial Fusion Reactor Magnet Coil Supply & Sourcing',
+    title: 'Fusion-Magnet-Director',
+    mode: 'dag',
+    deliverable: 'Commercial Fusion Reactor Magnet Coil Supply & Xeus™ Reel Procurement Plan',
+    sample: 'Structure a multi-kilometer Xeus™ HTS wire supply agreement for 20+ Tesla toroidal field magnet coils in commercial fusion energy reactors.',
+    desc: 'Autonomous multi-kilometer HTS wire procurement sizing, piece-length optimization, and critical current screening for commercial fusion ventures.',
+    track: 'commercial_energy_solutions',
+    tasks: [
+      { agent: 'hts_market_scout', task: 'Scan global fusion energy reactor ventures (tokamak and stellarator) entering magnet construction', deps: [] },
+      { agent: 'magnet_architect', task: 'Calculate total conductor length (240 km), piece length minimums (>500m), and winding strain envelopes', deps: [] },
+      { agent: 'cost_scaling_analyst', task: 'Model scaled manufacturing $/kA-m cost curve across multi-megameter volume commitments', deps: [0, 1] },
+      { agent: 'fusion_liaison', task: 'Align delivery milestones with tokamak assembly hall vacuum vessel insertion schedules', deps: [2] },
+      { agent: 'proposal_lead', task: 'Compile commercial fusion HTS wire master supply agreement and qualification protocol', deps: [3] }
+    ]
+  },
+  grid_cable_modernization: {
+    name: 'Urban Superconducting Power Cable Infrastructure Business Case',
+    title: 'Grid-Infrastructure-Lead',
+    mode: 'sequential',
+    deliverable: 'Urban Superconducting Cable Transmission Infrastructure Techno-Economic Plan',
+    sample: 'Develop a grid modernization proposal replacing overloaded high-voltage copper transmission lines with compact Xeus™ superconducting cables in existing city conduits.',
+    desc: 'Techno-economic modeling of urban power transmission replacing conventional copper cables with 5x-capacity liquid nitrogen cooled HTS lines.',
+    track: 'commercial_energy_solutions',
+    tasks: [
+      { agent: 'hts_market_scout', task: 'Screen metropolitan utility substations constrained by right-of-way and thermal bottlenecking', deps: [] },
+      { agent: 'grid_cable_engineer', task: 'Design 3-phase 138kV superconducting cable carrying 2.4 Gigawatts through existing 6-inch underground conduits', deps: [0] },
+      { agent: 'cost_scaling_analyst', task: 'Quantify avoided civil excavation costs, eliminated substation transformers, and zero line loss savings', deps: [1] },
+      { agent: 'proposal_lead', task: 'Formulate utility grid modernization proposal and DOE Grid Deployment Office grant submission', deps: [2] }
+    ]
+  },
+  ai_datacenter_power: {
+    name: 'Gigawatt AI Data Center Superconducting Busbar RFP',
+    title: 'AI-Datacenter-Architect',
+    mode: 'dag',
+    deliverable: 'Gigawatt AI Data Center Superconducting Busbar & Cryogenic Distribution RFP',
+    sample: 'Architect a 500MW - 1GW low-voltage, ultra-high-current Xeus™ superconducting power busbar for next-generation AI hyperscale data center campuses.',
+    desc: 'High-density power distribution architecture eliminating massive copper busbar voltage drops and thermal waste in mega-watt AI computing clusters.',
+    track: 'commercial_energy_solutions',
+    tasks: [
+      { agent: 'hts_market_scout', task: 'Identify hyperscale cloud providers deploying 500MW+ clusters constrained by power distribution footprint', deps: [] },
+      { agent: 'datacenter_power_spec', task: 'Architect low-voltage DC (380V/1000V) high-current superconducting busbar distributing 50,000 Amperes with 0% resistive loss', deps: [] },
+      { agent: 'cost_scaling_analyst', task: 'Model $12.8M annual electricity savings and 80% copper mass elimination across server room rows', deps: [0, 1] },
+      { agent: 'proposal_lead', task: 'Synthesize hyperscale AI data center infrastructure proposal and closed-loop liquid nitrogen cooling layout', deps: [2] }
+    ]
+  },
+  sfcl_grid_protection: {
+    name: 'Superconducting Fault Current Limiter (SFCL) Substation System',
+    title: 'SFCL-Substation-Engineer',
+    mode: 'sequential',
+    deliverable: 'Superconducting Fault Current Limiter (SFCL) Substation Protection Specification',
+    sample: 'Design an ultra-fast resistive Superconducting Fault Current Limiter (SFCL) using Xeus™ wire to protect renewable utility interconnections from short circuits.',
+    desc: 'Self-triggering sub-millisecond fault current limitation utilizing natural superconducting-to-normal resistive state transitions.',
+    track: 'commercial_energy_solutions',
+    tasks: [
+      { agent: 'grid_cable_engineer', task: 'Model utility short-circuit fault current levels (exceeding 40kA) at renewable wind/solar grid interconnection', deps: [] },
+      { agent: 'qa_director', task: 'Specify non-inductive Xeus™ winding coil with sub-cycle (under 2ms) natural quench triggering', deps: [0] },
+      { agent: 'proposal_lead', task: 'Assemble turnkey SFCL system specification, cryocooler package, and protection coordination report', deps: [1] }
+    ]
+  },
+  xeus_hts_magnet_flagship: {
+    name: '20+ Tesla Fusion Magnet Coil Xeus™ Architecture',
+    title: 'Xeus-HTS-Chief-Engineer',
+    mode: 'sequential',
+    tag: 'flagship',
+    deliverable: 'Flagship 20+ Tesla Fusion Magnet Coil Xeus™ HTS Architecture Blueprint',
+    sample: 'Engineer a multi-layer D-shaped toroidal field fusion coil winding utilizing MetOx Xeus™ 12mm HTS tape operating at 20 Kelvin in a 20 Tesla background field.',
+    desc: 'Deep multi-agent engineering run designing an ultra-high-field superconducting magnet coil: A-MOCVD REBCO layer optimization, 20K in-field critical current, and quench protection.',
+    track: 'hts_materials_engineering',
+    tasks: [
+      { agent: 'magnet_architect', task: 'Specify 20 Tesla toroidal field magnet coil geometry, peak magnetic stress (600 MPa), and pancake winding profile', deps: [] },
+      { agent: 'mocvd_process_eng', task: 'Configure continuous reel-to-reel A-MOCVD deposition parameters for 3.5µm thick high-crystallinity REBCO film', deps: [0] },
+      { agent: 'rebco_crystallographer', task: 'Audit biaxial texture in-plane alignment (FWHM < 1.2°) and flux-pinning artificial pinning center (APC) density', deps: [1] },
+      { agent: 'cryo_test_physicist', task: 'Measure 20K / 20 Tesla in-field critical current performance (Ic > 850 A per 12mm tape width)', deps: [2] },
+      { agent: 'copper_stabilizer_dev', task: 'Calculate electroplated copper stabilizer thickness (40µm total) and solder-laminated Hastelloy substrate shear strength', deps: [3] },
+      { agent: 'fusion_liaison', task: 'Verify joint resistance (< 5 nano-Ohms per lap joint) and Lorentz force mechanical reinforcement banding', deps: [4] },
+      { agent: 'proposal_lead', task: 'Generate comprehensive high-field fusion magnet engineering blueprint and conductor qualification certificate', deps: [5] }
+    ]
+  },
+  mocvd_epitaxy_optimization: {
+    name: 'A-MOCVD Reel-to-Reel REBCO Deposition Rate Tuning',
+    title: 'MOCVD-Process-Scientist',
+    mode: 'dag',
+    deliverable: 'Advanced A-MOCVD Reel-to-Reel REBCO Deposition Rate & Texture Report',
+    sample: 'Optimize precursor chemical stoichiometry, evaporation vapor velocity, and reel translation speed to double MOCVD manufacturing throughput.',
+    desc: 'Chemical vapor deposition optimization accelerating reel-to-reel throughput while maintaining atomic-scale crystalline epitaxial alignment.',
+    track: 'hts_materials_engineering',
+    tasks: [
+      { agent: 'mocvd_process_eng', task: 'Adjust metal-organic precursor flow rates (Y:Ba:Cu:Zr) and reactor chamber temperature profile (820°C)', deps: [] },
+      { agent: 'rebco_crystallographer', task: 'Map atomic c-axis orientation, cation stoichiometry, and barium zirconate (BZO) nanoscale column formation', deps: [] },
+      { agent: 'qa_director', task: 'Certify high-speed deposition yield exceeding 98.5% over continuous 1,000-meter production runs', deps: [0, 1] }
+    ]
+  },
+  critical_current_mapping: {
+    name: '77K & 20K In-Field Critical Current (Ic) Metrology',
+    title: 'Cryo-Metrology-Physicist',
+    mode: 'dag',
+    deliverable: 'Reel-to-Reel 77K & 20K In-Field Critical Current Uniformity Metrology Audit',
+    sample: 'Execute continuous non-contact magnetic Tapestar mapping at 77K and high-field transport current verification at 20K across full 500m conductor reels.',
+    desc: 'Precision cryogenic metrology assessing reel-to-reel critical current uniformity, drop-out defect identification, and high-field angle dependency.',
+    track: 'hts_materials_engineering',
+    tasks: [
+      { agent: 'cryo_test_physicist', task: 'Calibrate continuous Hall-probe Tapestar measurement rig in liquid nitrogen bath (77 Kelvin)', deps: [] },
+      { agent: 'qa_director', task: 'Map critical current along 500m tape length at 1mm resolution; verify zero localized current dropouts (< 2%)', deps: [] }
+    ]
+  },
+  cryogenic_electromechanical_qa: {
+    name: 'Cryogenic Electromechanical Delamination & Quench QA',
+    title: 'Quench-Stabilization-Spec',
+    mode: 'sequential',
+    deliverable: 'Cryogenic Electromechanical Delamination & Quench Stabilization Dossier',
+    sample: 'Perform 77K transverse tensile stress tests and simulate hotspot thermal propagation to certify quench protection stabilization.',
+    desc: 'Electromechanical and thermal quench qualification proving that Xeus™ wire withstands extreme Lorentz forces and sudden cryogenic temperature spikes.',
+    track: 'hts_materials_engineering',
+    tasks: [
+      { agent: 'copper_stabilizer_dev', task: 'Subject Xeus™ tape to transverse tensile stress cycling (up to 700 MPa) under liquid nitrogen immersion', deps: [] },
+      { agent: 'qa_director', task: 'Verify zero interfacial delamination between Hastelloy, buffer, REBCO, and silver/copper cladding layers', deps: [0] },
+      { agent: 'proposal_lead', task: 'Issue formal electromechanical durability dossier and quench protection design manual for magnet winders', deps: [1] }
+    ]
+  }
+};
+
+const DTITLE = {
+  fusion_magnet_procurement: 'Commercial Fusion Reactor Magnet Coil Supply & Xeus™ Reel Procurement Plan',
+  grid_cable_modernization: 'Urban Superconducting Cable Transmission Infrastructure Techno-Economic Plan',
+  ai_datacenter_power: 'Gigawatt AI Data Center Superconducting Busbar & Cryogenic Distribution RFP',
+  sfcl_grid_protection: 'Superconducting Fault Current Limiter (SFCL) Substation Protection Specification',
+  xeus_hts_magnet_flagship: 'Flagship 20+ Tesla Fusion Magnet Coil Xeus™ HTS Architecture Blueprint',
+  mocvd_epitaxy_optimization: 'Advanced A-MOCVD Reel-to-Reel REBCO Deposition Rate & Texture Report',
+  critical_current_mapping: 'Reel-to-Reel 77K & 20K In-Field Critical Current Uniformity Metrology Audit',
+  cryogenic_electromechanical_qa: 'Cryogenic Electromechanical Delamination & Quench Stabilization Dossier'
+};
+
+const TOOLS = {
+  source_fusion_and_grid_programs: ()=>'Scanned global fusion energy ventures and urban transmission projects; identified 16 active HTS wire tenders.',
+  architect_fusion_coil_winding: ()=>'Modeled D-shaped toroidal field coil winding geometry with 40-layer pancake winding and tension control.',
+  optimize_mocvd_vapor_deposition: ()=>'Tuned precursor evaporation rate and deposition temperature (820°C); achieved 18nm/s uniform REBCO growth.',
+  analyze_xrd_texture_alignment: ()=>'Verified X-ray diffraction (XRD) rocking curve FWHM < 1.2°; confirmed biaxial c-axis in-plane alignment.',
+  measure_infield_critical_current: ()=>'Measured critical current at 20K in 15T background field; verified Ic = 820 A/cm-width with zero resistive drift.',
+  evaluate_quench_stabilization: ()=>'Calculated copper stabilizer thickness (20µm per side); modeled transient current shunting during hot-spot quench.',
+  model_grid_transmission_capacity: ()=>'Modeled 3-phase 138kV superconducting cable carrying 2.4 GW through existing 6-inch underground duct.',
+  model_datacenter_busbar_savings: ()=>'Calculated 94% reduction in busbar voltage drop and $12.8M annual power savings for 500MW AI compute campus.',
+  calculate_hts_kam_cost_parity: ()=>'Modeled scaled A-MOCVD manufacturing economics; projected HTS tape cost dropping toward $25/kA-m.',
+  verify_tokamak_coil_tolerances: ()=>'Verified minimum bend radius (R = 25mm) and critical current retention (>99%) under 600 MPa Lorentz stress.',
+  compose_metox_proposal: ()=>'Composed formal high-temperature superconductor supply agreement and technical execution dossier.',
+  review_hts_quality_signoff: ()=>'Audited reel-to-reel Tapestar Ic uniformity data and certified compliance with ASTM B714 superconductor standards.',
+  save: ()=>'Artifact saved successfully.'
+};
+
+const FINAL = {
+  fusion_magnet_procurement: `METOX INTERNATIONAL &mdash; COMMERCIAL FUSION MAGNET COIL SUPPLY & PROCUREMENT PLAN
+Client: Private Tokamak Fusion Energy Venture
+Project: Commercial Pilot Fusion Power Plant (Q_plasma > 10)
+Target Scope: 240 Kilometers of 12mm High-Temperature Superconducting (HTS) Tape
+
+PROCUREMENT SPECIFICATIONS & CAPACITY ALLOCATION:
+1. Conductor Specification:
+   - Conductor: MetOx Xeus™ 12mm Second-Generation (2G) REBCO High-Field Superconducting Tape.
+   - Critical Current Specification: Ic ≥ 800 A @ 20K, 20 Tesla background field (perpendicular orientation).
+   - Piece Length Requirement: Continuous single-piece lengths ≥ 500 meters without splices.
+2. Manufacturing & Delivery Ramp Schedule:
+   - Production Facility: MetOx A-MOCVD Commercial Manufacturing Hub (Houston, TX).
+   - Milestone Phase 1 (Months 1-6): 20 km pilot coil qualification batch.
+   - Milestone Phase 2 (Months 7-18): 120 km Toroidal Field (TF) coil series production.
+   - Milestone Phase 3 (Months 19-30): 100 km Central Solenoid & Poloidal Field coil completion.
+3. Commercial Terms & Volume Cost Parity:
+   - Scaled Volume Price: $38.50 per kA-meter (representing a 62% cost reduction vs legacy small-batch HTS).
+   - Conductor Performance Warranty: 100% replacement guarantee for localized Ic dropouts > 3%.
+
+NOTE: illustrative autonomous proposal generated for MetOx International HTS evaluation.`,
+
+  grid_cable_modernization: `METOX INTERNATIONAL &mdash; URBAN SUPERCONDUCTING CABLE MODERNIZATION PLAN
+Target Utility: Major Metropolitan Power Authority (East Coast Grid Interconnection)
+Objective: 2.4 Gigawatt Power Transmission Upgrade via Existing Underground Conduits
+
+INFRASTRUCTURE & ENGINEERING DESIGN:
+1. Cable System Comparison:
+   - Existing Infrastructure: Dual 138kV oil-filled copper pipe cables (Capacity limit: 450 MW total).
+   - MetOx Superconducting Replacement: Tri-axial Xeus™ HTS Cable in vacuum-insulated cryostat (Capacity: 2,400 MW).
+   - Power Density Uplift: 5.3x throughput increase within existing 6-inch underground right-of-way.
+2. Electrical & Thermal Advantages:
+   - Line Loss Elimination: 0.00% resistive I²R electrical loss across superconducting span.
+   - Heat Signature: Zero soil thermal dry-out; eliminating thermal interference with adjacent municipal gas/telecom lines.
+   - Voltage Profile: Transmits bulk power at distribution voltage (69kV - 138kV), avoiding $45M in new substation step-up transformers.
+3. Project Financial Payback:
+   - Avoided New Civil Trenching & Permitting Costs: $118,000,000.
+   - Annual Avoided Transmission Energy Losses: $6,400,000.
+   - Projected Net Project Payback Period: 3.2 Years.
+
+NOTE: illustrative techno-economic proposal generated for MetOx International grid infrastructure operations.`,
+
+  ai_datacenter_power: `METOX INTERNATIONAL &mdash; GIGAWATT AI DATA CENTER SUPERCONDUCTING BUSBAR RFP
+Client: Hyperscale Cloud Infrastructure Operator
+Target Facility: 600 Megawatt Dedicated AI Supercomputing Data Center Campus
+
+SUPERCONDUCTING POWER DISTRIBUTION ARCHITECTURE:
+1. The Challenge of Hyperscale AI Power Density:
+   - Traditional 480V/1000V copper busbars required for 600MW weigh over 1,200 tons and dissipate 4.2% of total power as waste heat.
+   - Immense magnetic cross-coupling and severe voltage drops limit maximum server row run lengths.
+2. The MetOx Xeus™ Superconducting Busbar Solution:
+   - Compact Closed-Loop Cryostat: 100mm diameter flexible vacuum jacket carrying 60,000 Amperes at 1,000V DC.
+   - Resistance: Zero electrical resistance; voltage drop along 500-meter distribution spine is 0.00 Volts.
+   - Copper Elimination: 95% reduction in conductor mass; frees up 18,000 sq ft of indoor floor space for compute racks.
+3. Operating Economics:
+   - Direct Electrical Energy Savings: 25.2 GWh annually ($3,024,000 @ $0.12/kWh).
+   - Avoided Data Center Cooling (HVAC) Overhead: Eliminates 2,400 Tons of indoor chillers ($1,850,000 annual cooling OPEX).
+   - Net 10-Year TCO Savings: $48,740,000.
+
+NOTE: illustrative hyperscale data center proposal generated for MetOx International power solutions.`,
+
+  sfcl_grid_protection: `METOX INTERNATIONAL &mdash; SUPERCONDUCTING FAULT CURRENT LIMITER (SFCL) SPECIFICATION
+Application: Substation Renewable Interconnection Protection (230kV / 40kA Fault Level)
+Technology: Resistive Superconducting Fault Current Limiter (R-SFCL) Utilizing Xeus™ HTS Tape
+
+SYSTEM SPECIFICATION & PERFORMANCE TELEMETRY:
+1. Normal Operating State:
+   - Current Carrying Capacity: 2,500 A continuous rated current in liquid nitrogen (77K).
+   - Impedance in Normal Grid Operation: < 0.001 Ohms (virtually invisible to grid power flow; zero harmonic distortion).
+2. Fault Interruption Dynamics:
+   - Short-Circuit Inception: 42,000 A prospective fault surge detected on renewable feeder bus.
+   - Superconducting-to-Normal Transition: Current exceeds critical threshold (Ic); tape naturally transitions to resistive state within 1.2 milliseconds.
+   - Fault Current Clamping: Clamps peak prospective fault from 42kA down to 8.5kA, protecting downstream substation breakers.
+   - Recovery Time: Natural cryogenic thermal re-cooling and full superconductor recovery in < 2.5 seconds.
+
+EQUIPMENT BENEFIT AUDIT:
+- Eliminates need to replace $32M in legacy substation circuit breakers rated for lower fault duties.
+
+NOTE: illustrative SFCL system specification generated for MetOx International utility protection engineering.`,
+
+  xeus_hts_magnet_flagship: `METOX INTERNATIONAL &mdash; FLAGSHIP 20+ TESLA FUSION MAGNET COIL ARCHITECTURE
+Component: Toroidal Field (TF) Superconducting Coil Winding Package
+Application: Compact High-Field Commercial Fusion Tokamak
+
+1. CONDUCTOR ARCHITECTURE & A-MOCVD SUB-SURFACE STACKUP:
+   - Conductor Base: 12.0 mm wide MetOx Xeus™ High-Field REBCO Tape (Total thickness: 95 µm).
+   - Substrate: 50 µm Hastelloy C-276 high-strength non-magnetic alloy (Yield strength > 1,200 MPa at 20K).
+   - Buffer Architecture: Nanoscale textured oxide buffer layers deposited via continuous reel-to-reel ion-beam assisted deposition.
+   - Superconducting Layer: 3.5 µm thick epitaxially aligned YBa2Cu3O7-δ (REBCO) deposited via Advanced MOCVD.
+   - Flux-Pinning Dopants: High-density Barium Zirconate (BaZrO3) artificial pinning nanocolumns optimized for high-field vortex pinning.
+   - Stabilizer Cladding: 20 µm electroplated oxygen-free high-conductivity (OFHC) copper on each side (40 µm total).
+
+2. CRYOGENIC ELECTROMAGNETIC PERFORMANCE TELEMETRY:
+   - Self-Field Critical Current (77K, 0 Tesla): 380 Amperes.
+   - In-Field Critical Current (20K, 20 Tesla background field, B ⊥ tape): 875 Amperes.
+   - Engineering Current Density (Je): > 760 A/mm² at 20 Tesla (5x higher than Nb3Sn low-temperature superconductor limits).
+   - Critical Current Uniformity: ±1.4% variance along continuous 500-meter tape reel.
+
+3. MECHANICAL ROBUSTNESS & MAGNET COIL WINDING:
+   - Maximum Operating Lorentz Stress: 620 MPa allowable hoop stress without critical current degradation.
+   - Minimum Bend Radius: 25.0 mm (allowing tight inner-bore tokamak aspect ratios).
+   - Delamination Resistance: Transverse tensile strength > 85 MPa under thermal shock cycling (-196°C to +20°C).
+
+4. QUENCH DETECTION & STABILIZATION INTEGRATION:
+   - Propagation Velocity: Minimum quench energy (MQE) and normal zone propagation velocity (NZPV) calibrated for fiber-optic acoustic sensing.
+   - Lap Joint Resistance: < 3.2 nano-Ohms per joint utilizing low-temperature indium-bismuth solder matrix.
+
+NOTE: illustrative flagship architecture blueprint generated for MetOx International high-field fusion engineering.`,
+
+  mocvd_epitaxy_optimization: `METOX INTERNATIONAL &mdash; A-MOCVD REEL-TO-REEL REBCO EPITAXY REPORT
+Manufacturing Line: Houston Production Facility &mdash; A-MOCVD Reel-to-Reel Reactor Line #3
+Objective: High-Rate REBCO Thin-Film Deposition Optimization & Texture Yield
+
+PROCESS ENGINEERING TELEMETRY:
+1. Chemical Vapor Deposition Parameters:
+   - Metal-Organic Precursors: Tetramethylheptanedionate (thd) chelates of Yttrium, Barium, Copper, and Zirconium.
+   - Reactor Chamber Pressure: 2.2 Torr | Substrate Deposition Temperature: 820°C ± 1.5°C uniform zone.
+   - Linear Tape Translation Speed: 42 meters/hour (2.3x uplift over baseline manufacturing throughput).
+   - REBCO Deposition Growth Rate: 18.2 nm/second continuous epitaxial growth.
+2. Crystalline Microstructure & Texture Audit:
+   - X-Ray Diffraction (XRD) Biaxial Texture: In-plane alignment FWHM = 1.15°; Out-of-plane c-axis FWHM = 0.88°.
+   - Nano-Defect Pinning Density: TEM cross-section confirms high-density BZO columnar pinning centers (5nm dia, 15nm spacing).
+   - Surface Roughness (AFM): Ra = 8.4 nm across 10µm x 10µm scan area.
+
+MANUFACTURING YIELD METRICS:
+- Continuous 1,000-Meter Run: Zero tape breaks, zero precursor nozzle clogging, 99.1% length meeting Ic specification.
+
+NOTE: illustrative MOCVD process engineering report generated for MetOx International advanced manufacturing.`,
+
+  critical_current_mapping: `METOX INTERNATIONAL &mdash; REEL-TO-REEL CRITICAL CURRENT (IC) METROLOGY AUDIT
+Conductor Reel ID: #XEUS-12MM-2026-0941B | Conductor Length: 520.0 Meters Continuous
+Testing Standard: ASTM B714 Standard Test Method for DC Critical Current of High-Temperature Superconductors
+
+METROLOGY RESULTS SUMMARY:
+1. Reel-to-Reel Tapestar Magnetic Scan (77K, Liquid Nitrogen Immersion):
+   - Spatial Measurement Resolution: 1.0 mm continuous along entire 520-meter reel.
+   - Average Critical Current (Ic): 412.5 Amperes (77K, self-field).
+   - Minimum Critical Current: 398.2 Amperes | Maximum Critical Current: 421.0 Amperes.
+   - Length-Weighted Standard Deviation: 1.28% (World-class reel uniformity).
+   - Localized Dropouts (< 380A): 0 detected.
+2. High-Field Transport Current Verification (20K, Background Superconducting Magnet):
+   - Sample Extracted: 50cm leader and trailer test coupons.
+   - Critical Current @ 20K, 15 Tesla (B ⊥ c): 1,040 Amperes (Electric field criterion: 1.0 µV/cm).
+   - Critical Current @ 20K, 20 Tesla (B ⊥ c): 882 Amperes.
+
+CERTIFICATION: CONDUCTOR REEL CERTIFIED FOR FUSION MAGNET INNER COIL WINDING.
+
+NOTE: illustrative cryogenic metrology audit generated for MetOx International quality assurance.`,
+
+  cryogenic_electromechanical_qa: `METOX INTERNATIONAL &mdash; CRYOGENIC ELECTROMECHANICAL & QUENCH QA DOSSIER
+Testing Lab: MetOx Superconducting Electromechanical Reliability Lab (Houston, TX)
+Subject: Mechanical Strain Tolerance, Delamination Resistance & Quench Shunting Performance
+
+TEST TELEMETRY & STRESS CYCLING:
+1. Uniaxial & Transverse Tensile Loading:
+   - Longitudinal Tensile Strain Limit: 0.58% strain under liquid nitrogen (77K) with 100% Ic retention.
+   - Critical Tensile Stress: 720 MPa (Surpasses maximum tokamak magnetic burst load of 600 MPa).
+   - Transverse Tensile Delamination Strength: 92 MPa (Tested via pin-pull method; failure occurs in solder, not buffer interface).
+2. Thermal Cycling Fatigue:
+   - 100 Sudden Thermal Shock Cycles between 300K (ambient) and 77K (liquid nitrogen).
+   - Critical Current Change: ΔIc = -0.15% (Within measurement repeatability uncertainty).
+3. Quench Current Shunting Verification:
+   - Induced localized normal zone: Copper stabilizer successfully shunts 1,200 A surge for 250 milliseconds.
+   - Peak Hot-Spot Temperature: Clamped at 110K (Well below the 250K degradation threshold).
+
+CONCLUSION:
+Xeus™ conductor demonstrates industry-leading electromechanical resilience against delamination under Lorentz magnetic forces.
+
+NOTE: illustrative electromechanical QA report generated for MetOx International reliability engineering.`
+};
+
+const EMPLOYEES = [
+  { id: 'e1', name: 'Fusion-Magnet-Director', title: 'Commercial Fusion & High-Field Coil Lead', wf: 'fusion_magnet_procurement', handled: 136, hrs: 16.0, win: '4.8x', track: 'commercial_energy_solutions' },
+  { id: 'e2', name: 'Grid-Infrastructure-Lead', title: 'Superconducting Grid & Cable Systems Spec', wf: 'grid_cable_modernization', handled: 92, hrs: 12.5, win: '3.6x', track: 'commercial_energy_solutions' },
+  { id: 'e3', name: 'AI-Datacenter-Architect', title: 'Gigawatt Power Busbar & Cryo-Distribution Spec', wf: 'ai_datacenter_power', handled: 104, hrs: 11.0, win: '4.2x', track: 'commercial_energy_solutions' },
+  { id: 'e4', name: 'SFCL-Substation-Engineer', title: 'Fault Current Limiter & Grid Resilience Lead', wf: 'sfcl_grid_protection', handled: 78, hrs: 9.5, win: '3.4x', track: 'commercial_energy_solutions' },
+  { id: 'e5', name: 'Xeus-HTS-Chief-Engineer', title: 'High-Field 20T Fusion Magnet Architecture Lead', wf: 'xeus_hts_magnet_flagship', handled: 195, hrs: 22.0, win: '6.5x', track: 'hts_materials_engineering' },
+  { id: 'e6', name: 'MOCVD-Process-Scientist', title: 'A-MOCVD Reel-to-Reel Epitaxy Specialist', wf: 'mocvd_epitaxy_optimization', handled: 162, hrs: 14.0, win: '5.2x', track: 'hts_materials_engineering' },
+  { id: 'e7', name: 'Cryo-Metrology-Physicist', title: '77K/20K Critical Current (Ic) Audit Lead', wf: 'critical_current_mapping', handled: 144, hrs: 10.5, win: '4.6x', track: 'hts_materials_engineering' },
+  { id: 'e8', name: 'Quench-Stabilization-Spec', title: 'Cryogenic Electromechanical & Copper Clad Eng', wf: 'cryogenic_electromechanical_qa', handled: 118, hrs: 13.0, win: '4.0x', track: 'hts_materials_engineering' }
+];
+
+const TRACKS = [
+  ['commercial_energy_solutions', 'Commercial & Energy Infrastructure Solutions'],
+  ['hts_materials_engineering', 'Superconducting Materials & MOCVD Engineering']
+];
+
+let activeEmpId = 'e5';
+let currentRunWf = null;
+let selectedWfKey = 'xeus_hts_magnet_flagship';
+
+function init(){
+  renderEcon();
+  renderRoster();
+  renderBuilderWfGrid();
+}
+
+function renderEcon(){
+  const strip = document.getElementById('econ-strip');
+  let totalRuns = 0;
+  let totalSaved = 0;
+  EMPLOYEES.forEach(e => {
+    totalRuns += e.handled;
+    totalSaved += e.handled * e.hrs;
+  });
+
+  strip.innerHTML = `
+    <div class="cell"><div class="v">${EMPLOYEES.length}</div><div class="k">Active AI Operators</div></div>
+    <div class="cell"><div class="v">${totalRuns.toLocaleString()}</div><div class="k">Workflows Executed</div></div>
+    <div class="cell"><div class="v">${(totalSaved).toLocaleString(undefined,{maximumFractionDigits:0})}<span class="u">h</span></div><div class="k">Hours Saved</div></div>
+    <div class="cell"><div class="v">4.5<span class="u">x</span></div><div class="k">Avg Turnaround Speedup</div></div>
+  `;
+}
+
+function renderRoster(){
+  const container = document.getElementById('roster-container');
+  container.innerHTML = '';
+
+  TRACKS.forEach(([tKey, tLabel]) => {
+    const sectionLabel = document.createElement('div');
+    sectionLabel.className = 'slabel';
+    sectionLabel.innerText = tLabel;
+    container.appendChild(sectionLabel);
+
+    const grid = document.createElement('div');
+    grid.className = 'roster';
+
+    EMPLOYEES.filter(e => {
+      const wf = WORKFLOWS[e.wf];
+      return wf && wf.track === tKey;
+    }).forEach(emp => {
+      grid.appendChild(createEmpCard(emp));
+    });
+
+    container.appendChild(grid);
+  });
+}
+
+function createEmpCard(emp){
+  const wf = WORKFLOWS[emp.wf];
+  const card = document.createElement('div');
+  const isHero = wf && wf.tag === 'flagship';
+  card.className = `emp ${isHero ? 'hero' : ''} ${emp.id === activeEmpId ? 'working' : ''}`;
+  card.id = `card-${emp.id}`;
+
+  const initials = emp.name.split('-').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+  const agentChips = wf ? wf.tasks.map(t => {
+    const a = AGENT_ROLES[t.agent];
+    return `<span class="chip">${a ? a.emoji : ''} ${a ? a.label : t.agent}</span>`;
+  }).join('') : '';
+
+  card.innerHTML = `
+    <div class="emp-top">
+      <div class="avatar">${initials}</div>
+      <div>
+        <div class="emp-name">${emp.name} ${isHero ? '<span class="tag hero">Flagship</span>' : ''}</div>
+        <div class="emp-title">${emp.title}</div>
+      </div>
+    </div>
+    <div class="emp-owns">Owns: <b>${wf ? wf.name : emp.wf}</b></div>
+    <div class="team">${agentChips}</div>
+    <div class="emp-stats">
+      <div class="st">Runs<b>${emp.handled}</b></div>
+      <div class="st">Time Saved<b>${(emp.handled * emp.hrs).toFixed(0)} hrs</b></div>
+      <div class="st">Headline Metric<b>${emp.win}</b></div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" onclick="setupRun('${emp.id}')">Run Operator Workflow</button>
+    </div>
+  `;
+
+  return card;
+}
+
+function switchTab(t){
+  document.getElementById('tab-roster').classList.toggle('active', t==='roster');
+  document.getElementById('tab-builder').classList.toggle('active', t==='builder');
+  document.getElementById('view-roster').classList.toggle('hidden', t!=='roster');
+  document.getElementById('view-builder').classList.toggle('hidden', t!=='builder');
+}
+
+function setupRun(empId){
+  const emp = EMPLOYEES.find(e => e.id === empId);
+  if(!emp) return;
+
+  activeEmpId = empId;
+  const wf = WORKFLOWS[emp.wf];
+  currentRunWf = wf;
+
+  renderRoster();
+
+  const panel = document.getElementById('run-panel');
+  panel.classList.remove('hidden');
+  panel.scrollIntoView({ behavior: 'smooth' });
+
+  const initials = emp.name.split('-').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+  document.getElementById('run-avatar').innerText = initials;
+  document.getElementById('run-name').innerText = emp.name;
+  document.getElementById('run-title').innerText = `Executing: ${wf.title}`;
+  document.getElementById('run-sub').innerText = wf.desc;
+  document.getElementById('run-prompt').value = wf.sample;
+
+  document.getElementById('run-phases').querySelectorAll('.ph').forEach(p=>p.className='ph');
+  document.getElementById('ph-1').classList.add('active');
+
+  const grid = document.getElementById('agent-grid');
+  grid.innerHTML = '';
+  wf.tasks.forEach((t, i) => {
+    const a = AGENT_ROLES[t.agent];
+    const ac = document.createElement('div');
+    ac.className = 'acard';
+    ac.id = `acard-${i}`;
+    ac.innerHTML = `
+      <div class="ae">${a ? a.emoji : '🤖'}</div>
+      <div class="ar">${a ? a.label : t.agent}</div>
+      <div class="at">${t.task}</div>
+      <div class="as"><div class="sd"></div><span id="astat-${i}">Queued</span></div>
+    `;
+    grid.appendChild(ac);
+  });
+
+  document.getElementById('run-feed').innerHTML = '';
+  document.getElementById('run-result').classList.add('hidden');
+  document.getElementById('run-donebar').classList.add('hidden');
+  document.getElementById('run-btn').disabled = false;
+}
+
+let runTimer = null;
+
+function executeRun(){
+  if(!currentRunWf) return;
+  document.getElementById('run-btn').disabled = true;
+
+  document.getElementById('ph-1').className = 'ph done';
+  document.getElementById('ph-2').className = 'ph active';
+
+  const feed = document.getElementById('run-feed');
+  feed.innerHTML = '';
+
+  const wf = currentRunWf;
+  const tasks = wf.tasks;
+  let idx = 0;
+
+  function logRow(agentName, msg){
+    const row = document.createElement('div');
+    row.className = 'frow';
+    const now = new Date();
+    const timeStr = now.toTimeString().split(' ')[0] + '.' + String(now.getMilliseconds()).padStart(3,'0');
+    row.innerHTML = `<span class="ft">${timeStr}</span><span class="fa">${agentName}</span><span class="fd">${msg}</span>`;
+    feed.appendChild(row);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  logRow('System', `Initializing multi-agent graph: ${wf.name}`);
+
+  runTimer = setInterval(() => {
+    if(idx < tasks.length){
+      const t = tasks[idx];
+      const a = AGENT_ROLES[t.agent];
+      const aName = a ? a.label : t.agent;
+
+      if(idx > 0){
+        const prevCard = document.getElementById(`acard-${idx-1}`);
+        if(prevCard){
+          prevCard.className = 'acard done';
+          document.getElementById(`astat-${idx-1}`).innerText = 'Completed';
+        }
+      }
+
+      const card = document.getElementById(`acard-${idx}`);
+      if(card){
+        card.className = 'acard running visible';
+        document.getElementById(`astat-${idx}`).innerText = 'Executing...';
+      }
+
+      logRow(aName, `Task: ${t.task}`);
+
+      if(a && a.tools){
+        a.tools.forEach(tk => {
+          if(TOOLS[tk]){
+            logRow(aName, `Tool [${tk}]: ${TOOLS[tk]()}`);
+          }
+        });
+      }
+
+      idx++;
+    } else {
+      clearInterval(runTimer);
+
+      const lastCard = document.getElementById(`acard-${tasks.length-1}`);
+      if(lastCard){
+        lastCard.className = 'acard done';
+        document.getElementById(`astat-${tasks.length-1}`).innerText = 'Completed';
+      }
+
+      document.getElementById('ph-2').className = 'ph done';
+      document.getElementById('ph-3').className = 'ph done';
+
+      logRow('System', 'Workflow execution complete. Synthesizing deliverable artifact.');
+
+      showResult();
+    }
+  }, 900);
+}
+
+function showResult(){
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = currentRunWf;
+  const wfKey = emp ? emp.wf : 'xeus_hts_magnet_flagship';
+
+  document.getElementById('res-wf').innerText = wf.name;
+  document.getElementById('res-agents').innerText = wf.tasks.length;
+  document.getElementById('res-time').innerText = '4.2s (Simulated)';
+  document.getElementById('res-tools').innerText = wf.tasks.length * 2;
+  document.getElementById('res-saved').innerText = `~${emp ? (emp.handled * emp.hrs).toFixed(0) : 22} hrs`;
+
+  document.getElementById('res-title').innerText = DTITLE[wfKey] || 'Deliverable Artifact';
+  document.getElementById('res-body').innerText = FINAL[wfKey] || 'Output complete.';
+
+  document.getElementById('run-result').classList.remove('hidden');
+  document.getElementById('run-donebar').classList.remove('hidden');
+  document.getElementById('run-btn').disabled = false;
+}
+
+function renderBuilderWfGrid(){
+  const grid = document.getElementById('wf-select-grid');
+  grid.innerHTML = '';
+
+  Object.keys(WORKFLOWS).forEach(key => {
+    const wf = WORKFLOWS[key];
+    const card = document.createElement('div');
+    card.className = `wf ${key === selectedWfKey ? 'sel' : ''}`;
+    card.onclick = () => {
+      selectedWfKey = key;
+      renderBuilderWfGrid();
+    };
+    card.innerHTML = `
+      <div class="wn">${wf.name} ${wf.tag==='flagship' ? '<span class="tag hero">Flagship</span>' : ''}</div>
+      <div class="wd">${wf.desc}</div>
+      <div class="wm">${wf.mode.toUpperCase()} &bull; ${wf.tasks.length} TASKS</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function goToStep(s){
+  document.getElementById('st-1').classList.toggle('active', s===1);
+  document.getElementById('st-2').classList.toggle('active', s===2);
+  document.getElementById('st-3').classList.toggle('active', s===3);
+
+  document.getElementById('bstep-1').classList.toggle('hidden', s!==1);
+  document.getElementById('bstep-2').classList.toggle('hidden', s!==2);
+  document.getElementById('bstep-3').classList.toggle('hidden', s!==3);
+
+  if(s === 2){
+    const wf = WORKFLOWS[selectedWfKey];
+    document.getElementById('bstep2-wftitle').innerText = `Configure Tasks: ${wf.name}`;
+    const cont = document.getElementById('task-map-container');
+    cont.innerHTML = '';
+
+    wf.tasks.forEach((t, i) => {
+      const row = document.createElement('div');
+      row.className = 'task-row';
+
+      let optionsHTML = '';
+      Object.keys(AGENT_ROLES).forEach(ak => {
+        const a = AGENT_ROLES[ak];
+        const sel = ak === t.agent ? 'selected' : '';
+        optionsHTML += `<option value="${ak}" ${sel}>${a.emoji} ${a.label}</option>`;
+      });
+
+      row.innerHTML = `
+        <div class="tn">${i+1}</div>
+        <div class="tt">${t.task}</div>
+        <select id="sel-task-${i}">${optionsHTML}</select>
+      `;
+      cont.appendChild(row);
+    });
+  }
+}
+
+function deployOperator(){
+  const name = document.getElementById('b-emp-name').value.trim() || 'New Operator';
+  const title = document.getElementById('b-emp-title').value.trim() || 'Custom Specialist';
+
+  const newId = 'custom-op-' + Date.now();
+  EMPLOYEES.push({
+    id: newId,
+    name: name,
+    title: title,
+    wf: selectedWfKey,
+    handled: 1,
+    hrs: 8.0,
+    win: 'Newly Deployed'
+  });
+
+  renderEcon();
+  renderRoster();
+  switchTab('roster');
+  setupRun(newId);
+}
+
+window.onload = init;
+</script>
+</body>
+</html>
