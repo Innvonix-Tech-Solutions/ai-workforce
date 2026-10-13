@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nortek Data Center Cooling &mdash; AI Thermal &amp; Liquid Cooling Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f4f8fd;--surface2:#e2effb;--border:#bfdbfe;--accent:#0057b7;
+--accent-dim:rgba(0,87,183,.08);--accent-line:rgba(0,87,183,.30);--slate:#00365c;--slate-line:rgba(0,54,92,.30);--text:#1e293b;--hi:#00223d;--tert:#5a6f85;--ok:#10b981;--ok-dim:rgba(16,185,129,.10);--gold:#ce1126;--gold-bg:#fef2f2;--gold-line:#fecaca}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:52px;height:34px;border-radius:8px;background:linear-gradient(135deg,#0057b7,#00365c);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:12px;letter-spacing:.5px;font-family:Inter,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#0057b7}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:920px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#0057b7;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(16,185,129,.08);color:#059669;border:1px solid rgba(16,185,129,.3)}
+.tag.hero{background:var(--gold-bg);color:#b91c1c;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#0057b7}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#0057b7;font-size:15px;flex-shrink:0;position:relative;font-family:Inter,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#0057b7}.btn.primary{background:linear-gradient(270deg,#0057b7,#00365c);border-color:#0057b7;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#0057b7;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#0057b7}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(16,185,129,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(16,185,129,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#0057b7}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Inter,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#0057b7;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;color:var(--hi)}.task-row select{background:#fff;border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;color:var(--hi);outline:none;font-family:Inter,sans-serif}
+.footer{max-width:1180px;margin:32px auto 0;padding:0 24px 32px;font-size:11.5px;color:var(--tert);line-height:1.5;border-top:1px solid var(--border);padding-top:18px;font-family:Inter,sans-serif}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="mark">NDCC</div>
+    <div>
+      <div class="htitle">Nortek Data Center Cooling &mdash; AI Thermal &amp; Liquid Cooling Workforce (concept)</div>
+      <div class="hsub">StatePoint&reg; Liquid Cooling &bull; 5MW+ Skidded CDUs &bull; FanWall&reg; Technology &bull; CoilWall &bull; ASHRAE TC 9.9</div>
+    </div>
+  </div>
+  <div class="badge">Simulated Operations &bull; <b>8 Operators Active</b></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tab-roster" onclick="switchTab('roster')">AI Operator Roster</button>
+  <button class="tab" id="tab-builder" onclick="switchTab('builder')">Add an Operator</button>
+</div>
+
+<div class="main">
+  <div id="view-roster">
+    <div class="lead">
+      <b>Nortek Data Center Cooling</b> (a Madison Air company) delivers mission-critical thermal management architectures for hyperscale, colocation, and high-density AI computing facilities. This AI workforce prototype demonstrates autonomous multi-agent orchestration across custom hyperscale tenders, 5MW+ skidded liquid cooling CDUs, StatePoint&reg; indirect evaporative membrane systems, FanWall&reg; airflow aerodynamics, and factory witness testing.
+    </div>
+
+    <div class="legend">
+      <span><span class="tag commercial">Commercial</span> Hyperscale RFP intake, PUE/WUE modeling, brownfield retrofit, RDHx row densification</span>
+      <span><span class="tag operations">Engineering</span> 5MW skidded CDU hydronics, FanWall CFD acoustics, StatePoint membrane thermodynamics, FWT witness testing</span>
+      <span><span class="tag hero">Flagship</span> Multi-megawatt 5MW+ skidded CDU hydraulic &amp; control architecture</span>
+    </div>
+
+    <div class="econ" id="econ-strip"></div>
+
+    <div id="roster-tracks"></div>
+
+    <div id="run-container" class="hidden"></div>
+  </div>
+
+  <div id="view-builder" class="hidden">
+    <div class="lead">
+      <b>Operator Builder:</b> Compose a specialized multi-agent operator to automate thermal engineering, tender qualification, or factory commissioning workflows.
+    </div>
+
+    <div class="steps">
+      <div class="step active" id="st-1">
+        <div class="n">STEP 1</div>
+        <div class="l">Select Cooling Workflow</div>
+        <div class="d">Choose the base engineering or commercial workflow</div>
+      </div>
+      <div class="step" id="st-2">
+        <div class="n">STEP 2</div>
+        <div class="l">Assign Thermal Specialists</div>
+        <div class="d">Allocate agent roles across task stages</div>
+      </div>
+      <div class="step" id="st-3">
+        <div class="n">STEP 3</div>
+        <div class="l">Name &amp; Deploy Operator</div>
+        <div class="d">Configure title and launch operator to roster</div>
+      </div>
+    </div>
+
+    <div id="bstep-1">
+      <div class="slabel">Available Thermal &amp; Commercial Workflows</div>
+      <div class="wf-grid" id="builder-wf-grid"></div>
+      <div style="margin-top:20px;display:flex;justify-content:flex-end">
+        <button class="btn primary big" onclick="goToStep(2)">Configure Operator Agents &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-2" class="hidden">
+      <div class="slabel" id="bstep2-wftitle">Configure Specialist Assignment</div>
+      <div id="task-map-container"></div>
+      <div style="margin-top:20px;display:flex;justify-content:space-between">
+        <button class="btn big" onclick="goToStep(1)">&larr; Back to Workflows</button>
+        <button class="btn primary big" onclick="goToStep(3)">Set Identity &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-3" class="hidden">
+      <div class="slabel">Operator Profile &amp; Deployment</div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;max-width:540px">
+        <div style="margin-bottom:14px">
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--hi);margin-bottom:6px">Operator Name</label>
+          <input type="text" id="b-emp-name" value="Hyperscale-Liquid-Architect" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none">
+        </div>
+        <div style="margin-bottom:20px">
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--hi);margin-bottom:6px">Functional Title</label>
+          <input type="text" id="b-emp-title" value="10MW+ Campus Direct-to-Chip Thermal Architect" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none">
+        </div>
+        <button class="btn primary big" style="width:100%" onclick="deployOperator()">Deploy to Live Workforce</button>
+      </div>
+      <div style="margin-top:20px">
+        <button class="btn" onclick="goToStep(2)">&larr; Back to Task Config</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <b>Simulated Operations Notice:</b> This interactive AI workforce prototype is a strategic architectural demonstration engineered for Nortek Data Center Cooling stakeholders. All operational metrics, cycle time reductions, and simulation runs are illustrative placeholders. Production deliverables, P&amp;ID schematics, and factory witness certifications require review and sign-off by licensed professional engineers and Nortek thermal systems specialists.
+</div>
+
+<script>
+const AGENT_ROLES = {
+  tender_director: { emoji: '📋', label: 'Hyperscale RFP & Tender Director', tools: ['rfp_intake', 'parse_spec', 'save'] },
+  thermal_architect: { emoji: '🌡️', label: 'Chief Thermal & Aerodynamic Architect', tools: ['cfd_simulation', 'psychrometric_calc', 'save'] },
+  cdu_systems_eng: { emoji: '💧', label: 'Liquid Cooling & 5MW CDU Systems Engineer', tools: ['cdu_hydraulic_calc', 'sizing_pumps', 'save'] },
+  coilwall_crah_spec: { emoji: '🌀', label: 'CoilWall & FanWall Array Specialist', tools: ['fanwall_acoustics', 'coil_optimization', 'save'] },
+  statepoint_thermo: { emoji: '🔬', label: 'StatePoint Membrane Thermodynamic Specialist', tools: ['membrane_evap_calc', 'wue_pue_model', 'save'] },
+  hydronics_designer: { emoji: '🔩', label: 'Facility Hydronics & P&ID Piping Designer', tools: ['pid_drafting', 'valve_selection', 'save'] },
+  controls_automator: { emoji: '⚡', label: 'Controls, BMS & PLC Automation Engineer', tools: ['plc_logic_config', 'sensor_mapping', 'save'] },
+  pue_tco_analyst: { emoji: '📊', label: 'PUE / WUE & Hyperscale TCO Modeler', tools: ['tco_lifecycle_model', 'energy_calc', 'save'] },
+  compliance_ashrae: { emoji: '🛡️', label: 'ASHRAE TC 9.9 & Seismic Compliance Lead', tools: ['ashrae_envelope_check', 'seismic_stress', 'save'] },
+  fwt_commissioning: { emoji: '🏭', label: 'Factory Witness Test (FWT) & Commissioning Lead', tools: ['fwt_protocol_gen', 'sensor_telemetry_qa', 'save'] },
+  proposal_lead: { emoji: '✍️', label: 'Technical Proposal & Spec Sheet Author', tools: ['compose_bid_package', 'save'] },
+  qa_review_director: { emoji: '✅', label: 'Engineering QA & Mechanical Peer Reviewer', tools: ['peer_review_qa', 'save'] }
+};
+
+const TRACKS = [
+  ['trackA', 'Commercial Solutions & Hyperscale Tenders'],
+  ['trackB', 'Thermal Engineering & Factory Execution']
+];
+
+const WORKFLOWS = {
+  hyperscale_rfp_pursuit: {
+    name: 'Hyperscale Campus RFP & Thermal Scope Qualification',
+    title: 'Hyperscale 250MW AI Campus Cooling Architecture & Equipment Schedule',
+    mode: 'dag',
+    track: 'trackA',
+    deliverable: 'Hyperscale 250MW Thermal Scope & Equipment Matrix',
+    sample: 'Evaluate 250MW AI training cluster campus RFP in Northern Virginia. Compute density 120kW/rack across 1,800 racks. Specify hybrid direct-to-chip CDUs and perimeter air balance.',
+    desc: 'Extract hyperscale requirements, balance hybrid liquid/air boundaries, model regional PUE/WUE, and output comprehensive equipment schedules.',
+    tasks: [
+      { agent: 'tender_director', task: 'Ingest hyperscale tender documentation, 120kW/rack heat density, and SLA parameters', deps: [] },
+      { agent: 'pue_tco_analyst', task: 'Model annualized PUE and seasonal WUE curves using Ashburn weather bin data', deps: [0] },
+      { agent: 'thermal_architect', task: 'Define hybrid liquid-to-air boundary split (75% liquid D2C / 25% perimeter air)', deps: [0] },
+      { agent: 'proposal_lead', task: 'Synthesize commercial equipment schedule: 38x 5MW CDUs and 112x CoilWall CW-400 units', deps: [1, 2] },
+      { agent: 'qa_review_director', task: 'Validate tender technical compliance, warranty terms, and CAPEX delivery milestones', deps: [3] }
+    ]
+  },
+  tco_pue_wue_lifecycle: {
+    name: 'Annualized TCO, PUE & Water Efficiency (WUE) Optimization',
+    title: '15-Year Life-Cycle Cost & PUE/WUE Optimization Analysis',
+    mode: 'sequential',
+    track: 'trackA',
+    deliverable: '15-Year Hyperscale TCO & Resource Efficiency Submittal',
+    sample: 'Compare 100MW campus cooling baseline: traditional water-cooled chiller plant versus Nortek StatePoint Liquid Cooling with 5MW skidded CDUs across Phoenix, Ashburn, and Dublin.',
+    desc: 'Perform life-cycle cost, utility tariff, water consumption, and carbon abatement modeling comparing SPLC to conventional chillers.',
+    tasks: [
+      { agent: 'pue_tco_analyst', task: 'Ingest local utility power tariffs ($0.078/kWh), municipal water rates, and carbon penalties', deps: [] },
+      { agent: 'statepoint_thermo', task: 'Simulate StatePoint evaporative membrane hours, free-cooling runtime, and water consumption', deps: [0] },
+      { agent: 'proposal_lead', task: 'Compile 15-year TCO matrix highlighting $42.6M OPEX reduction and 14.2-month payback', deps: [1] },
+      { agent: 'qa_review_director', task: 'Peer audit thermodynamic conservation equations and sensitivity risk boundaries', deps: [2] }
+    ]
+  },
+  retrofit_hybrid_migration: {
+    name: 'Legacy Enterprise to High-Density AI Cluster Retrofit Blueprint',
+    title: 'Enterprise Raised-Floor to High-Density AI Hybrid Retrofit Engineering Plan',
+    mode: 'sequential',
+    track: 'trackA',
+    deliverable: 'Brownfield AI Data Hall Retrofit & Decarbonization Blueprint',
+    sample: 'Modernize existing 15MW raised-floor data hall from legacy 8kW/rack enterprise workload to 65kW/rack AI acceleration without civil structural modifications.',
+    desc: 'Audit floor plenum airflow constraints, design perimeter CoilWall replacements, route liquid cooling headers, and stage zero-downtime cutover.',
+    tasks: [
+      { agent: 'tender_director', task: 'Audit existing 18-inch raised floor static pressure, riser locations, and floor loading limits', deps: [] },
+      { agent: 'coilwall_crah_spec', task: 'Size modular CoilWall replacement units to triple airflow CFM while lowering fan power 42%', deps: [0] },
+      { agent: 'hydronics_designer', task: 'Route overhead stainless steel liquid supply/return headers with quick-disconnects', deps: [1] },
+      { agent: 'proposal_lead', task: 'Deliver phased 6-stage hot-aisle containment migration schedule with zero compute downtime', deps: [2] }
+    ]
+  },
+  rdhx_row_densification: {
+    name: 'Rear Door Heat Exchanger (RDHx) Row-Level AI Densification Study',
+    title: 'Rear Door Heat Exchanger (RDHx) Row-Level Thermal Neutrality Package',
+    mode: 'dag',
+    track: 'trackA',
+    deliverable: 'Active RDHx Row-Level Deployment & Hydronic Submittal',
+    sample: 'Deploy active Rear Door Heat Exchangers for a 40-rack row of 80kW AI servers. Maintain 100% room thermal neutrality with 65°F facility water supply.',
+    desc: 'Calculate door heat exchange surface, optimize variable-speed door fans, coordinate server delta-T tracking, and ensure room-neutral exhaust.',
+    tasks: [
+      { agent: 'tender_director', task: 'Extract server chassis airflow CFM curves and 80kW/rack heat rejection boundaries', deps: [] },
+      { agent: 'coilwall_crah_spec', task: 'Size active RDHx water coil face area, fin density, and 6x EC variable-speed door fans', deps: [0] },
+      { agent: 'controls_automator', task: 'Configure local door HMI and delta-P differential pressure tracking linked to server fans', deps: [1] },
+      { agent: 'proposal_lead', task: 'Compile complete row-level thermal neutrality submittal and installation guidelines', deps: [2] }
+    ]
+  },
+  cdu_5mw_liquid_cooling_flagship: {
+    name: 'Multi-Megawatt Skidded CDU (1MW-5MW+) Engineering & Hydraulic Design',
+    title: 'Multi-Megawatt Skidded CDU (5.0 MW) Comprehensive Hydraulic & Control Submittal',
+    mode: 'sequential',
+    track: 'trackB',
+    tag: 'flagship',
+    deliverable: '5MW Skidded CDU Hydraulic, P&ID & Automation Package',
+    sample: 'Engineer factory-skidded 5.0 MW Coolant Distribution Unit (CDU) for Direct-to-Chip AI compute. Specify N+1 centrifugal pumps, dual plate heat exchangers, ASME Section VIII compliance, and rapid pump failover controls.',
+    desc: 'Flagship engineering workflow executing complete multi-megawatt CDU hydraulic sizing, P&ID piping layout, CFD flow modeling, PLC control architecture, and seismic compliance.',
+    tasks: [
+      { agent: 'cdu_systems_eng', task: 'Calculate primary/secondary flow rates (1,780 GPM), plate-and-frame heat duty, and approach temp (5°C)', deps: [] },
+      { agent: 'hydronics_designer', task: 'Draft P&ID schematic with dual 6-inch 316L headers, 3x centrifugal pumps, and 50-micron filtration', deps: [0] },
+      { agent: 'thermal_architect', task: 'Execute CFD simulation verifying isothermal header fluid distribution and <3.2 PSI loop drop', deps: [1] },
+      { agent: 'controls_automator', task: 'Program Allen-Bradley GuardLogix PLC logic with <400ms pump auto-failover and leak isolation', deps: [2] },
+      { agent: 'compliance_ashrae', task: 'Verify ASHRAE W1-W5 water classification, ASME B31.3 piping code, and IBC Zone 4 seismic frame', deps: [3] },
+      { agent: 'qa_review_director', task: 'Sign off comprehensive 5MW skidded CDU engineering submittal package and bill of materials', deps: [4] }
+    ]
+  },
+  fanwall_aerodynamic_tuning: {
+    name: 'FanWall® Array Aerodynamic & Acoustic Static Pressure Optimization',
+    title: 'FanWall® Array Aerodynamic, Acoustic & Static Pressure Engineering Report',
+    mode: 'sequential',
+    track: 'trackB',
+    deliverable: 'FanWall® Array Aerodynamic & Acoustic Certification',
+    sample: 'Design 16-fan (4x4) FanWall array for hyperscale perimeter air handler delivering 72,000 CFM at 2.45 in. w.g. external static pressure with N+2 redundancy.',
+    desc: 'Optimize fan matrix spacing, calculate sound power attenuation, program ECM speed synchronization, and verify instantaneous CFM recovery.',
+    tasks: [
+      { agent: 'coilwall_crah_spec', task: 'Configure 16-fan (4x4) array layout, high-efficiency ECM motors, and backdraft dampers', deps: [] },
+      { agent: 'thermal_architect', task: 'Model airflow velocity profile across coil face ensuring <±4% uniform velocity distribution', deps: [0] },
+      { agent: 'controls_automator', task: 'Integrate active vibration spectrum monitoring and synchronized multi-fan VFD speed curves', deps: [1] },
+      { agent: 'fwt_commissioning', task: 'Simulate single-fan mechanical trip test proving seamless aerodynamic CFM recovery in <1.2s', deps: [2] }
+    ]
+  },
+  statepoint_membrane_optimization: {
+    name: 'StatePoint® Indirect Evaporative Membrane Heat Exchanger Thermodynamic Analysis',
+    title: 'StatePoint® Liquid Cooling (SPLC) Microporous Membrane Exchanger Optimization',
+    mode: 'dag',
+    track: 'trackB',
+    deliverable: 'StatePoint® Membrane Thermodynamic & Operational Analysis',
+    sample: 'Optimize StatePoint microporous membrane indirect evaporative heat exchanger for hyperscale facility water loop. Target 94% wet-bulb depression approach and zero water-to-air cross-contamination.',
+    desc: 'Simulate membrane water vapor mass transfer, design scavenger loop water treatment, program 3-stage operational mode staging, and deliver efficiency curves.',
+    tasks: [
+      { agent: 'statepoint_thermo', task: 'Model vapor flux mass transfer across microporous membrane blocks and wet-bulb approach', deps: [] },
+      { agent: 'hydronics_designer', task: 'Design secondary scavenger loop water circulation, UV filtration, and scale inhibition chemistry', deps: [0] },
+      { agent: 'controls_automator', task: 'Program automated 3-mode sequencing: dry economizer, membrane evaporative, and trim DX', deps: [0] },
+      { agent: 'proposal_lead', task: 'Generate thermodynamic engineering package and seasonal water consumption efficiency submittal', deps: [1, 2] }
+    ]
+  },
+  fwt_factory_witness_protocol: {
+    name: 'Factory Witness Testing (FWT) & Megawatt-Scale Proof of Performance',
+    title: 'Factory Witness Testing (FWT) 5MW Thermal & Hydraulic Proof of Performance',
+    mode: 'sequential',
+    track: 'trackB',
+    deliverable: 'Megawatt-Scale Factory Witness Test Protocol & Certification',
+    sample: 'Execute full-scale Factory Witness Test (FWT) at Nortek Dyersburg test facility on 5.0 MW skidded CDU under AHRI 1360 and ASHRAE 127 standards with customer witness team.',
+    desc: 'Prepare load bank test protocols, calibrate ultrasonic flow sensors, execute hydrostatic pressure containment, and issue signed FWT certificate.',
+    tasks: [
+      { agent: 'fwt_commissioning', task: 'Draft AHRI Standard 1360 and ASHRAE 127 full-load thermal witness test matrix and steps', deps: [] },
+      { agent: 'cdu_systems_eng', task: 'Connect 5.0 MW electrical load bank, calibrate ultrasonic flow meters, and wire 64 RTD sensors', deps: [0] },
+      { agent: 'compliance_ashrae', task: 'Execute 225 PSI hydrostatic containment hold and verify zero-decay pressure seal', deps: [1] },
+      { agent: 'qa_review_director', task: 'Analyze test log data and issue signed FWT Certificate of Compliance for field release', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  hyperscale_rfp_pursuit: 'Hyperscale 250MW AI Campus Cooling Architecture & Equipment Schedule',
+  tco_pue_wue_lifecycle: '15-Year Life-Cycle Cost & PUE/WUE Optimization Analysis',
+  retrofit_hybrid_migration: 'Enterprise Raised-Floor to High-Density AI Hybrid Retrofit Engineering Plan',
+  rdhx_row_densification: 'Rear Door Heat Exchanger (RDHx) Row-Level Thermal Neutrality Package',
+  cdu_5mw_liquid_cooling_flagship: 'Multi-Megawatt Skidded CDU (5.0 MW) Comprehensive Hydraulic & Control Submittal',
+  fanwall_aerodynamic_tuning: 'FanWall® Array Aerodynamic, Acoustic & Static Pressure Engineering Report',
+  statepoint_membrane_optimization: 'StatePoint® Liquid Cooling (SPLC) Microporous Membrane Exchanger Optimization',
+  fwt_factory_witness_protocol: 'Factory Witness Testing (FWT) 5MW Thermal & Hydraulic Proof of Performance'
+};
+
+const TOOLS = {
+  rfp_intake: () => 'Ingested 184-page hyperscale tender; extracted 120kW/rack heat density, 250MW total IT load, N+2 redundancy.',
+  parse_spec: () => 'Parsed customer mechanical specifications: ASHRAE W2 water envelope, IBC Seismic Category D, ASME B31.3.',
+  cfd_simulation: () => 'Converged 3D CFD mesh (4.2M cells); verified uniform velocity profile across coils with <3.2 PSI drop.',
+  psychrometric_calc: () => 'Calculated psychrometric state points: 99°F DB / 78°F WB ambient yielding 68.2°F supply air off coils.',
+  cdu_hydraulic_calc: () => 'Calculated 1,780 GPM secondary TCS flow at 5MW duty; sizing verified dual plate-and-frame heat exchangers.',
+  sizing_pumps: () => 'Selected 3x end-suction centrifugal pumps (2 active + 1 standby) with dedicated ABB ACH580 variable speed drives.',
+  fanwall_acoustics: () => 'Calculated 14 dBA sound power reduction across octave bands; acoustic casing meets NC-55 boundary.',
+  coil_optimization: () => 'Optimized 8-row copper tube / aluminum fin coil geometry; face velocity calibrated at 460 FPM.',
+  membrane_evap_calc: () => 'Calculated 1.48 kg/(m²·h) water vapor mass transfer flux across microporous hydrophobic membrane sheets.',
+  wue_pue_model: () => 'Simulated annualized resource metrics: PUE 1.125, WUE 0.22 L/kWh with 4,820 annual economizer hours.',
+  pid_drafting: () => 'Generated P&ID schematic showing 6-inch 316L stainless steel headers, balancing valves, and dripless quick-connects.',
+  valve_selection: () => 'Specified Belimo motorized modulating butterfly valves and pressure-independent control valves (PICVs).',
+  plc_logic_config: () => 'Programmed Allen-Bradley GuardLogix logic: 380ms bumpless pump switchover and automated leak isolation.',
+  sensor_mapping: () => 'Mapped 64 I/O points including dual optical leak ropes, 4-20mA pressure transmitters, and Class A RTD probes.',
+  tco_lifecycle_model: () => 'Modeled 15-year cumulative financial balance: $42.6M utility savings vs baseline chiller plant.',
+  energy_calc: () => 'Calculated compressor kilowatt offset saving 18,400 metric tons annual CO2e across 100MW IT capacity.',
+  ashrae_envelope_check: () => 'Verified compliance with ASHRAE TC 9.9 thermal guidelines for Classes A1-A4 and liquid loops W1-W5.',
+  seismic_stress: () => 'Validated structural skid finite element analysis (FEA) under 1.5g spectral acceleration per IBC 2024.',
+  fwt_protocol_gen: () => 'Generated 14-page factory witness test procedure per AHRI Standard 1360 and customer witness protocol.',
+  sensor_telemetry_qa: () => 'Cross-calibrated dual ultrasonic flow meters and RTD sensors against NIST-traceable laboratory standards.',
+  compose_bid_package: () => 'Synthesized complete technical proposal, submittal data sheets, acoustic curves, and delivery schedule.',
+  peer_review_qa: () => 'Completed senior engineering peer review; confirmed thermodynamic calculations and sealed engineering documentation.',
+  save: () => 'Document and simulation telemetry indexed and archived to project engineering workspace.'
+};
+
+const FINAL = {
+  hyperscale_rfp_pursuit: "HYPERSCALE 250MW AI CAMPUS COOLING ARCHITECTURE & EQUIPMENT SCHEDULE\n" +
+"================================================================================\n" +
+"Client: Tier-1 Hyperscale Cloud & AI Operator\n" +
+"Project Location: Northern Virginia Data Center Campus (Ashburn Corridor)\n" +
+"Total Campus Critical IT Load: 250.0 MW\n" +
+"Peak Server Heat Density: 120.0 kW / Rack (1,800 AI Training Compute Racks)\n\n" +
+"1. HYBRID THERMAL BOUNDARY DEFINITION:\n" +
+"   - Direct-to-Chip Liquid Cooling (TCS): 75% of total IT heat load (187.5 MW)\n" +
+"   - White Space Perimeter Air Cooling: 25% of total IT heat load (62.5 MW)\n" +
+"   - Secondary Loop Water Supply: 35.0°C (95.0°F) | Return: 47.0°C (116.6°F)\n" +
+"   - Facility Water Supply (FWS): 30.0°C (86.0°F) | Return: 42.0°C (107.6°F)\n\n" +
+"2. PRIMARY COOLING EQUIPMENT SCHEDULE:\n" +
+"   - Skidded Coolant Distribution Units: 38x Nortek 5.0 MW Skidded CDUs (N+2 Redundancy)\n" +
+"     * Heat Exchanger: Dual ASME Section VIII Plate-and-Frame Titanium Exchangers\n" +
+"     * Pumping System: 3x End-Suction Centrifugal Pumps per skid with VFDs (2+1 Standby)\n" +
+"     * Skid Dimensions: 144\" L x 72\" W x 88\" H | Operating Weight: 12,800 lbs\n" +
+"   - Perimeter Air Distribution: 112x Nortek CoilWall CW-400 Modular Units\n" +
+"     * Fan Configuration: Integrated 16-Fan (4x4) FanWall Array with ECM Motors\n" +
+"     * Total White Space Airflow: 8,064,000 CFM at 2.2 in. w.g. ESP\n" +
+"   - Hybrid Trim Heat Rejection: 4x StatePoint Eco-Chiller Trim Modules for peak ambient trim\n\n" +
+"3. ANNUALIZED RESOURCE & TELEMETRY MODELING:\n" +
+"   - Modeled Annualized PUE: 1.125 (Ashburn, VA weather bin data)\n" +
+"   - Modeled Annualized WUE: 0.22 L/kWh (4,820 hours annual dry economizer mode)\n" +
+"   - White Space Acoustics: < NC-55 at 5 feet from perimeter air handlers\n" +
+"   - Delivery Phasing: 4 modular phases over 18 months; factory pre-tested drop-in skids\n\n" +
+"NOTE: illustrative simulation deliverable based on Nortek Data Center Cooling engineering methodologies.",
+
+  tco_pue_wue_lifecycle: "15-YEAR LIFE-CYCLE COST & RESOURCE EFFICIENCY OPTIMIZATION ANALYSIS\n" +
+"================================================================================\n" +
+"Campus Scope: 100 MW Critical AI Compute Facility\n" +
+"Evaluation Architecture: Nortek StatePoint Liquid Cooling (SPLC) + 5MW CDUs\n" +
+"Benchmark Baseline: Traditional Water-Cooled Centrifugal Chiller Plant + Cooling Towers\n\n" +
+"1. RESOURCE CONSUMPTION COMPARISON (PHOENIX, AZ DESERT CLIMATE):\n" +
+"   - Baseline Chiller Plant Annual Water Consumption: 268.4 Million Gallons\n" +
+"   - Nortek StatePoint + CDU Annual Water Consumption: 58.2 Million Gallons\n" +
+"   - Net Water Savings: 78.3% (210.2 Million Gallons Saved Annually)\n" +
+"   - Modeled WUE: 0.24 L/kWh (Nortek SPLC) vs 1.65 L/kWh (Baseline)\n\n" +
+"2. ANNUALIZED POWER USAGE EFFECTIVENESS (PUE):\n" +
+"   - Phoenix, AZ: PUE 1.138 (SPLC) vs 1.284 (Baseline Chiller)\n" +
+"   - Ashburn, VA: PUE 1.118 (SPLC) vs 1.226 (Baseline Chiller)\n" +
+"   - Dublin, Ireland: PUE 1.082 (SPLC) vs 1.165 (Baseline Chiller)\n" +
+"   - Annual Economizer Hours: 5,140 hrs (Phoenix) | 6,380 hrs (Ashburn) | 7,920 hrs (Dublin)\n\n" +
+"3. 15-YEAR FINANCIAL BALANCE SHEET (100MW FACILITY):\n" +
+"   - Initial Equipment Capital Expenditure Premium: +$14.2 Million\n" +
+"   - Annual Electrical Power Savings: $3.84 Million / year (@ $0.078/kWh average)\n" +
+"   - Annual Water Utility & Chemical Treatment Savings: $720,000 / year\n" +
+"   - Simple Payback Period: 14.2 Months\n" +
+"   - Net 15-Year Cumulative OPEX Savings: $42.6 Million\n" +
+"   - Total Carbon Emissions Offset: 18,400 Metric Tons CO2e annually\n\n" +
+"NOTE: illustrative simulation deliverable based on Nortek Data Center Cooling engineering methodologies.",
+
+  retrofit_hybrid_migration: "ENTERPRISE RAISED-FLOOR TO HIGH-DENSITY AI HYBRID RETROFIT ENGINEERING PLAN\n" +
+"================================================================================\n" +
+"Facility: 15.0 MW Enterprise Data Hall Brownfield Modernization\n" +
+"Existing Infrastructure: 18-inch Raised-Floor Plenum, 32x Legacy 30-Ton CRAH Units\n" +
+"Target Density: Upgrade from 8.0 kW/rack to 65.0 kW/rack across 200 Accelerated Compute Racks\n\n" +
+"1. CIVIL & AIRFLOW PLENUM RE-ENGINEERING:\n" +
+"   - Perimeter Air Handler Upgrade: Replace 32x legacy downflow CRAHs with 16x Nortek CoilWall Units\n" +
+"   - Airflow Capacity Increase: From 320,000 CFM to 960,000 CFM (+200% capacity in same footprint)\n" +
+"   - Fan Power Efficiency: 42% reduction in Fan W/CFM using electronically commutated FanWall arrays\n" +
+"   - Aisle Containment: Transition to structural Hot Aisle Containment (HAC) with auto-drop ceiling tiles\n\n" +
+"2. SECONDARY LIQUID COOLING DISTRIBUTION OVERLAY:\n" +
+"   - Header Routing: Overhead 316L stainless steel 4-inch supply/return piping risers\n" +
+"   - Manifold Drops: Dripless quick-disconnect dry-break couplings for every rack position\n" +
+"   - Liquid Distribution Units: 3x Nortek 5.0 MW Skidded CDUs located in adjacent mechanical gallery\n" +
+"   - Expansion & Safety: Dual stainless steel bellows expansion joints with continuous optical leak detection\n\n" +
+"3. ZERO-DOWNTIME STAGED CUTOVER PHASING:\n" +
+"   - Phase 1: Install and hydro-test overhead liquid headers while existing legacy CRAHs maintain airflow\n" +
+"   - Phase 2: Commission 5MW CDUs and establish secondary loop chemistry (inhibited propylene glycol 25%)\n" +
+"   - Phase 3: Hot-swap perimeter air handlers in 4-unit quadrants with temporary baffle isolation\n" +
+"   - Phase 4: Sequential rack-by-rack power migration with real-time BMS delta-T verification\n\n" +
+"NOTE: illustrative simulation deliverable based on Nortek Data Center Cooling engineering methodologies.",
+
+  rdhx_row_densification: "REAR DOOR HEAT EXCHANGER (RDHX) ROW-LEVEL THERMAL NEUTRALITY PACKAGE\n" +
+"================================================================================\n" +
+"Cluster Scope: 40x 48U Server Racks (High-Density AI Training Pod)\n" +
+"Rack Heat Rejection: 80.0 kW per Rack (Total Pod Thermal Load: 3.2 MW)\n" +
+"Cooling System: Nortek Active Rear Door Heat Exchanger (RDHx) Series\n\n" +
+"1. THERMAL & AERODYNAMIC DESIGN:\n" +
+"   - Heat Removal Efficiency: 99.4% (Direct exhaust capture to white space neutrality)\n" +
+"   - Supply Air Off Door: 23.3°C (74.0°F) | Server Exhaust Air: 46.1°C (115.0°F)\n" +
+"   - Facility Water Supply (FWS): 18.3°C (65.0°F) | Return Water: 35.0°C (95.0°F)\n" +
+"   - Water Flow per Door: 36.8 GPM at 8.2 PSI internal coil pressure drop\n" +
+"   - Airflow Through Door: 6,800 CFM per rack matching server internal fan curves\n\n" +
+"2. MECHANICAL & STRUCTURAL INTEGRATION:\n" +
+"   - Coil Technology: High-efficiency 6-row copper tube / wavy aluminum fin construction\n" +
+"   - Fan Array: 6x High-efficiency EC axial fans per door mounted on clean air discharge\n" +
+"   - Enclosure Compatibility: Universal mounting kit for 42U-48U standard 19-inch / OCP ORV3 racks\n" +
+"   - Service Access: 100% swing-out door hinge allows complete rear rack access without disconnecting loop\n\n" +
+"3. CONTROLS & MONITORING:\n" +
+"   - Onboard Touchscreen HMI: Real-time supply/return water temps, water flow, and fan speed display\n" +
+"   - Differential Pressure Tracking: Fan speed auto-modulates to maintain zero static pressure across door\n" +
+"   - Facility Integration: Native BACnet/IP and Modbus TCP interfaces reporting to central DCIM\n\n" +
+"NOTE: illustrative simulation deliverable based on Nortek Data Center Cooling engineering methodologies.",
+
+  cdu_5mw_liquid_cooling_flagship: "MULTI-MEGAWATT SKIDDED CDU (5.0 MW) COMPREHENSIVE HYDRAULIC & CONTROL SUBMITTAL\n" +
+"================================================================================\n" +
+"Equipment Tag: CDU-SKID-5000-01 (Flagship Multi-Megawatt Liquid Cooling Skid)\n" +
+"Rated Heat Duty: 5,000 kW (17,060,000 BTU/hr | 1,422 Tons)\n" +
+"Application: Direct-to-Chip (D2C) Liquid Cooling for Hyperscale AI Clusters\n\n" +
+"1. HYDRAULIC & THERMAL SPECIFICATIONS:\n" +
+"   - Primary Facility Water Loop (FWS):\n" +
+"     * Supply Temperature: 30.0°C (86.0°F) | Return Temperature: 42.0°C (107.6°F)\n" +
+"     * Design Flow Rate: 1,780 GPM (404.3 m³/h)\n" +
+"     * Header Connection: 8-inch 150# ANSI Flanged 316L Stainless Steel\n" +
+"     * Pressure Drop across Heat Exchanger: 8.4 PSI\n" +
+"   - Secondary Technology Cooling Loop (TCS):\n" +
+"     * Supply Temperature: 35.0°C (95.0°F) | Return Temperature: 47.0°C (116.6°F)\n" +
+"     * Design Flow Rate: 1,780 GPM (404.3 m³/h)\n" +
+"     * Header Connection: Dual 6-inch 316L Stainless Steel Headers\n" +
+"     * Available External Head to Compute Racks: 35.0 PSI (80.8 ft w.g.)\n\n" +
+"2. MECHANICAL & PUMPING EQUIPMENT:\n" +
+"   - Heat Exchangers: 2x 2.5 MW ASME Section VIII Stamped Plate-and-Frame Exchangers\n" +
+"     * Plates: Titanium / EPDM Gaskets (Corrosion resistant for treated deionized water)\n" +
+"   - Pump Array: 3x End-Suction Stainless Steel Centrifugal Pumps (N+1 Redundancy)\n" +
+"     * Configuration: 2 Operating (50% load each) + 1 Standby (Hot standby with auto-spin)\n" +
+"     * Drives: Dedicated ABB ACH580 Ultra-Low Harmonic Variable Frequency Drives\n" +
+"     * Pump Switchover Transient: < 380 ms bumpless transfer with < 1.5 PSI header ripple\n" +
+"   - Filtration & Water Quality:\n" +
+"     * Dual 50-Micron Bag Filter Housing with auto-differential pressure transmitter\n" +
+"     * Sidestream Deionization Resin Polisher Bypass Loop (Maintains resistivity > 50 kΩ·cm)\n" +
+"     * Integrated Corrosion Coupon Rack and automated air/dirt separator\n\n" +
+"3. AUTOMATION, ELECTRICAL & SAFETY ARCHITECTURE:\n" +
+"   - PLC Controller: Redundant Allen-Bradley GuardLogix SIL-2 Programmable Automation Controller\n" +
+"   - Dual Power Inputs: Automatic Transfer Switch (ATS) accepting dual 480V/3ph/60Hz supplies\n" +
+"   - Leak Detection & Containment:\n" +
+"     * Full-length 304 Stainless Steel drip pan with 150% fluid capacity containment\n" +
+"     * Triple optical liquid sensors in drip pan + dual perimeter sensing ropes\n" +
+"     * Auto-closure of pneumatic actuated primary/secondary isolation butterfly valves < 1.2s\n" +
+"   - Communication Protocols: Native BACnet/IP, Modbus TCP, and SNMPv3 for hyperscale DCIM\n\n" +
+"4. CODE & REGULATORY COMPLIANCE:\n" +
+"   - ASME Boiler & Pressure Vessel Code Section VIII, Division 1\n" +
+"   - ASME B31.3 Process Piping Standard\n" +
+"   - ASHRAE TC 9.9 Water Cooling Classes W1 through W5 Compliance\n" +
+"   - International Building Code (IBC) 2024 / OSHPD Seismic Certification (1.5g Design Acceleration)\n\n" +
+"NOTE: illustrative simulation deliverable based on Nortek Data Center Cooling engineering methodologies.",
+
+  fanwall_aerodynamic_tuning: "FANWALL® ARRAY AERODYNAMIC, ACOUSTIC & STATIC PRESSURE ENGINEERING REPORT\n" +
+"================================================================================\n" +
+"Equipment Tag: CW-400-FW-ARRAY (Perimeter Air Handler FanWall System)\n" +
+"Design Airflow: 72,000 CFM (34.0 m³/s)\n" +
+"External Static Pressure (ESP): 2.45 in. w.g. (610 Pa)\n\n" +
+"1. FAN MATRIX CONFIGURATION:\n" +
+"   - Array Architecture: 16-Fan Modular Matrix (4 Wide x 4 High Array)\n" +
+"   - Impeller Design: Backward-curved 7-blade aluminum impellers with flow-optimizing inlet cones\n" +
+"   - Motor Technology: Electronically Commutated Permanent Magnet (ECM) Motors (IE5 Ultra-Premium)\n" +
+"   - Total Electrical Input Power: 38.4 kW at full design operating point (0.533 W/CFM)\n\n" +
+"2. AERODYNAMIC & AIR DISTRIBUTION PROFILE:\n" +
+"   - Coil Face Velocity Uniformity: 450 FPM average face velocity (Variance < ±3.8%)\n" +
+"   - Backdraft Prevention: Integrated low-leak aerodynamic gravity backdraft dampers per fan\n" +
+"   - Airflow Turbulence: 35% reduction in air recirculation eddies compared to single-plenum fans\n" +
+"   - Energy Savings: 18.6% fan energy reduction compared to legacy variable-pitch vane-axial fans\n\n" +
+"3. ACOUSTIC SOUND POWER ANALYSIS:\n" +
+"   - Octave Band Sound Power Reduction:\n" +
+"     * 63 Hz Band: -12 dB attenuation\n" +
+"     * 125 Hz Band: -16 dB attenuation\n" +
+"     * 250 Hz Band: -15 dB attenuation\n" +
+"     * 500 Hz - 4 kHz Bands: -14 dB average attenuation\n" +
+"   - Overall Sound Level: 68 dBA at 10 feet outside air handler casing (Well below OSHA 85 dBA limit)\n\n" +
+"4. REDUNDANCY & DYNAMIC TRANSIENT TESTING:\n" +
+"   - Redundancy Rating: N+2 Fan Array Redundancy\n" +
+"   - Failure Simulation: Loss of any 2 fan motors triggers automated ECM ramp on remaining 14 fans\n" +
+"   - Transient Recovery: Full 72,000 CFM output restored within 1.15 seconds with zero backflow\n\n" +
+"NOTE: illustrative simulation deliverable based on Nortek Data Center Cooling engineering methodologies.",
+
+  statepoint_membrane_optimization: "STATEPOINT® LIQUID COOLING (SPLC) MICROPOROUS MEMBRANE EXCHANGER OPTIMIZATION\n" +
+"================================================================================\n" +
+"Technology: StatePoint Patented Indirect Evaporative Cooling (IEC) Membrane Architecture\n" +
+"Target Facility Loop: 10.0 MW Hyperscale Modular Chilled/Warm Water Block\n" +
+"Wet-Bulb Depression Approach: 94.2% Theoretical Efficiency\n\n" +
+"1. MEMBRANE THERMODYNAMICS & MASS TRANSFER:\n" +
+"   - Heat Exchanger Core: Cross-flow semi-permeable microporous membrane cassettes\n" +
+"   - Membrane Properties: Hydrophobic polypropylene with sub-micron pores (Permeable to vapor only)\n" +
+"   - Water Vapor Mass Transfer Flux: 1.48 kg/(m²·h) at nominal design rating\n" +
+"   - Process Fluid Isolation: 100% barrier isolation between outside ambient air and process water loop\n" +
+"   - Legionella & Biological Safety: Zero droplet drift or aerosol formation; eliminates cooling tower biohazard\n\n" +
+"2. THREE-STAGE AUTOMATED OPERATIONAL MODES:\n" +
+"   - Mode 1: Dry Economizer Mode (Ambient Outdoor Temp < 55°F DB)\n" +
+"     * Scavenger water pumps off; 100% dry air-to-water sensible cooling (Zero water consumption)\n" +
+"   - Mode 2: Membrane Indirect Evaporative Mode (Ambient Outdoor Temp 55°F to 88°F DB)\n" +
+"     * Scavenger water wetting active; microporous evaporative heat extraction at PUE < 1.08\n" +
+"   - Mode 3: SPLC + Supplemental Trim DX Mode (Peak Ambient Outdoor Temp > 88°F DB / High Humidity)\n" +
+"     * Variable-speed scroll compressors provide 15% supplemental peak trimming\n\n" +
+"3. WATER EFFICIENCY & RESOURCE METRICS:\n" +
+"   - Annual Average Water Usage Effectiveness (WUE): 0.18 L/kWh\n" +
+"   - Water Quality Requirements: Accepts non-potable greywater and municipal reclaimed water\n" +
+"   - Annual Operating Hours in 100% Waterless Mode: 4,620 hours (Mid-Atlantic Climate Zone)\n\n" +
+"NOTE: illustrative simulation deliverable based on Nortek Data Center Cooling engineering methodologies.",
+
+  fwt_factory_witness_protocol: "FACTORY WITNESS TESTING (FWT) 5MW THERMAL & HYDRAULIC PROOF OF PERFORMANCE\n" +
+"================================================================================\n" +
+"Test Facility: Nortek Advanced Data Center Testing Laboratory (Dyersburg, TN)\n" +
+"Unit Under Test: 5.0 MW Skidded Coolant Distribution Unit (Serial No: NDCC-5MW-2026-088)\n" +
+"Witness Standards: AHRI Standard 1360, ASHRAE Standard 127, ASME B31.3\n\n" +
+"1. FACTORY TEST BENCH SETUP & INSTRUMENTATION:\n" +
+"   - Thermal Load Simulator: 5.5 MW Precision High-Voltage Electrical Resistive Load Bank\n" +
+"   - Flow Measurement: Dual Calibrated Ultrasonic Flow Meters (Accuracy ±0.25% of rate)\n" +
+"   - Temperature Sensors: 64x 4-Wire Platinum Class A RTD Probes (Accuracy ±0.05°C)\n" +
+"   - Pressure Transmitters: Emerson Rosemount High-Precision Differential Transmitters (±0.04% span)\n\n" +
+"2. WITNESS TESTING EXECUTION & RESULTS:\n" +
+"   - Test Stage 1: Hydrostatic Pressure Test (ASME B31.3)\n" +
+"     * Test Pressure: 225.0 PSI (1.5x design pressure) held for 120 minutes\n" +
+"     * Result: PASSED (0.0 PSI pressure loss; zero fitting weepage detected)\n" +
+"   - Test Stage 2: Thermal Heat Rejection Step Test (AHRI 1360)\n" +
+"     * 25% Load (1.25 MW): Secondary supply temp 35.02°C | Flow: 445 GPM | PASSED\n" +
+"     * 50% Load (2.50 MW): Secondary supply temp 34.98°C | Flow: 890 GPM | PASSED\n" +
+"     * 75% Load (3.75 MW): Secondary supply temp 35.01°C | Flow: 1,335 GPM | PASSED\n" +
+"     * 100% Full Load (5.00 MW): Secondary supply temp 35.04°C | Flow: 1,782 GPM | Heat Duty: 5,014 kW | PASSED\n" +
+"     * 110% Overload Test (5.50 MW): Secondary supply temp 35.18°C | Flow: 1,840 GPM | 60 min hold | PASSED\n" +
+"   - Test Stage 3: Dynamic Pump Failover Transient Test\n" +
+"     * Disconnected Primary Pump A under 100% load; Standby Pump C ramped to speed in 380 ms\n" +
+"     * Peak Header Pressure Drop: 1.2 PSI (Well within customer 3.5 PSI threshold limit) | PASSED\n" +
+"   - Test Stage 4: Acoustic & Vibration Signature Analysis\n" +
+"     * Full-load sound level: 71.4 dBA at 5 feet | Peak vibration: 0.08 in/sec (ISO Class A) | PASSED\n\n" +
+"3. FACTORY CERTIFICATION:\n" +
+"   - The tested unit meets or exceeds all contractual performance, thermal, and hydraulic parameters.\n" +
+"   - Quality Director & Professional Engineer stamp affixed for immediate site shipment.\n\n" +
+"NOTE: illustrative simulation deliverable based on Nortek Data Center Cooling engineering methodologies."
+};
+
+const EMPLOYEES = [
+  {
+    id: 'emp-rfp-director',
+    name: 'Hyperscale-Bid-Director',
+    title: 'Hyperscale RFP & Thermal Architecture Director',
+    wf: 'hyperscale_rfp_pursuit',
+    handled: 26,
+    hrs: 412.0,
+    win: '64% Faster'
+  },
+  {
+    id: 'emp-tco-strategist',
+    name: 'PUE-TCO-Strategist',
+    title: 'Annualized PUE/WUE & Hyperscaler TCO Strategist',
+    wf: 'tco_pue_wue_lifecycle',
+    handled: 34,
+    hrs: 288.5,
+    win: '1.12 PUE'
+  },
+  {
+    id: 'emp-retrofit-lead',
+    name: 'Brownfield-Retrofit-Lead',
+    title: 'Brownfield AI Hybrid Cooling Retrofit Lead',
+    wf: 'retrofit_hybrid_migration',
+    handled: 18,
+    hrs: 246.0,
+    win: '0 Downtime'
+  },
+  {
+    id: 'emp-rdhx-architect',
+    name: 'RDHx-HighDensity-Architect',
+    title: 'Rear Door Heat Exchanger AI Densification Lead',
+    wf: 'rdhx_row_densification',
+    handled: 42,
+    hrs: 310.0,
+    win: '99.4% Capture'
+  },
+  {
+    id: 'emp-cdu-chief',
+    name: 'CDU-5MW-Chief-Engineer',
+    title: 'Skidded 5MW+ Liquid Cooling Chief Engineer',
+    wf: 'cdu_5mw_liquid_cooling_flagship',
+    handled: 58,
+    hrs: 620.0,
+    win: '5.0 MW Sized'
+  },
+  {
+    id: 'emp-fanwall-architect',
+    name: 'FanWall-Aero-Architect',
+    title: 'FanWall® Aerodynamic & Acoustics Architect',
+    wf: 'fanwall_aerodynamic_tuning',
+    handled: 39,
+    hrs: 340.5,
+    win: '-14 dBA Sound'
+  },
+  {
+    id: 'emp-statepoint-thermo',
+    name: 'StatePoint-Thermodynamicist',
+    title: 'StatePoint® Membrane Evaporative Specialist',
+    wf: 'statepoint_membrane_optimization',
+    handled: 29,
+    hrs: 385.0,
+    win: '0.18 WUE'
+  },
+  {
+    id: 'emp-fwt-director',
+    name: 'FWT-Commissioning-Director',
+    title: 'Factory Witness Test & Proof of Performance Director',
+    wf: 'fwt_factory_witness_protocol',
+    handled: 47,
+    hrs: 512.0,
+    win: '100% Pass'
+  }
+];
+
+let selectedWfKey = 'cdu_5mw_liquid_cooling_flagship';
+let activeEmpId = null;
+let runState = {
+  activeTaskId: null,
+  completedTasks: new Set(),
+  runningTasks: new Set(),
+  logs: [],
+  timer: null
+};
+
+function init(){
+  renderEcon();
+  renderRoster();
+  renderBuilderWfs();
+}
+
+function switchTab(tab){
+  document.getElementById('tab-roster').classList.toggle('active', tab==='roster');
+  document.getElementById('tab-builder').classList.toggle('active', tab==='builder');
+  document.getElementById('view-roster').classList.toggle('hidden', tab!=='roster');
+  document.getElementById('view-builder').classList.toggle('hidden', tab!=='builder');
+}
+
+function renderEcon(){
+  const strip = document.getElementById('econ-strip');
+  strip.innerHTML = `
+    <div class="cell">
+      <div class="v">38<span class="u">MW</span></div>
+      <div class="k">Cooling Sized / Month</div>
+    </div>
+    <div class="cell">
+      <div class="v">14<span class="u">d</span></div>
+      <div class="k">Avg Hyperscale Turnaround</div>
+    </div>
+    <div class="cell">
+      <div class="v">1.12<span class="u"> PUE</span></div>
+      <div class="k">Modeled Annual Efficiency</div>
+    </div>
+    <div class="cell">
+      <div class="v">100<span class="u">%</span></div>
+      <div class="k">ASHRAE TC 9.9 Verified</div>
+    </div>
+  `;
+}
+
+function renderRoster(){
+  const container = document.getElementById('roster-tracks');
+  container.innerHTML = '';
+
+  TRACKS.forEach(([tKey, tLabel]) => {
+    const sLabel = document.createElement('div');
+    sLabel.className = 'slabel';
+    sLabel.innerText = tLabel;
+    container.appendChild(sLabel);
+
+    const rGrid = document.createElement('div');
+    rGrid.className = 'roster';
+
+    EMPLOYEES.filter(e => {
+      const wf = WORKFLOWS[e.wf];
+      return wf && wf.track === tKey;
+    }).forEach(emp => {
+      rGrid.appendChild(empCard(emp));
+    });
+
+    container.appendChild(rGrid);
+  });
+}
+
+function empCard(emp){
+  const wf = WORKFLOWS[emp.wf];
+  const isHero = wf && wf.tag === 'flagship';
+  const card = document.createElement('div');
+  card.className = `emp ${isHero ? 'hero' : ''}`;
+  card.id = `card-${emp.id}`;
+
+  const initials = emp.name.split('-').map(s=>s[0]).slice(0,2).join('');
+  const badgeHTML = isHero ? '<span class="tag hero">Flagship</span>' : (wf.track === 'trackA' ? '<span class="tag commercial">Commercial</span>' : '<span class="tag operations">Engineering</span>');
+
+  let teamChips = '';
+  if(wf && wf.tasks){
+    const uniqueAgents = [...new Set(wf.tasks.map(t=>t.agent))];
+    teamChips = uniqueAgents.map(ak => {
+      const a = AGENT_ROLES[ak];
+      return `<span class="chip">${a ? a.emoji + ' ' + a.label : ak}</span>`;
+    }).join('');
+  }
+
+  card.innerHTML = `
+    <div class="emp-top">
+      <div class="avatar">${initials}</div>
+      <div>
+        <div class="emp-name">${emp.name} ${badgeHTML}</div>
+        <div class="emp-title">${emp.title}</div>
+      </div>
+    </div>
+    <div class="emp-owns">Owns: <b>${wf ? wf.name : emp.wf}</b></div>
+    <div class="team">${teamChips}</div>
+    <div class="emp-stats">
+      <div class="st"><b>${emp.handled}</b> Handled</div>
+      <div class="st"><b>${emp.hrs.toFixed(1)}h</b> Saved</div>
+      <div class="st"><b>${emp.win}</b> Metric</div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" onclick="setupRun('${emp.id}')">Run Simulation</button>
+    </div>
+  `;
+  return card;
+}
+
+function setupRun(empId){
+  activeEmpId = empId;
+  const emp = EMPLOYEES.find(e => e.id === empId);
+  if(!emp) return;
+  const wf = WORKFLOWS[emp.wf];
+  if(!wf) return;
+
+  const container = document.getElementById('run-container');
+  container.className = 'run';
+  container.scrollIntoView({ behavior: 'smooth' });
+
+  let phasesHTML = '';
+  wf.tasks.forEach((t, i) => {
+    phasesHTML += `
+      <div class="ph" id="ph-${i}">
+        <div class="dot">${i+1}</div>
+        <div class="l">${t.task}</div>
+      </div>
+    `;
+  });
+
+  let agentsHTML = '';
+  wf.tasks.forEach((t, i) => {
+    const a = AGENT_ROLES[t.agent];
+    agentsHTML += `
+      <div class="acard" id="acard-${i}">
+        <div class="ae">${a ? a.emoji : '⚙️'}</div>
+        <div class="ar">${a ? a.label : t.agent}</div>
+        <div class="at">${t.task}</div>
+        <div class="as"><span class="sd"></span> <span id="astat-${i}">Queued</span></div>
+      </div>
+    `;
+  });
+
+  container.innerHTML = `
+    <div class="run-head">
+      <div class="emp-name" style="font-size:18px">${emp.name} &bull; ${wf.name}</div>
+    </div>
+    <div class="run-sub">${wf.desc}</div>
+    <div class="run-input">
+      <textarea id="run-prompt">${wf.sample}</textarea>
+      <button class="btn primary big" id="btn-execute" onclick="executeRun()">Execute Run</button>
+    </div>
+    <div class="phases">${phasesHTML}</div>
+    <div class="agent-grid">${agentsHTML}</div>
+    <div class="feed" id="run-feed"></div>
+    <div class="result hidden" id="run-result">
+      <div class="rstats">
+        <div class="rrow"><span class="k">Simulation Status</span><span class="v" style="color:var(--ok)">VERIFIED</span></div>
+        <div class="rrow"><span class="k">Cooling Duty</span><span class="v">5.0 MW Rated</span></div>
+        <div class="rrow"><span class="k">Standards</span><span class="v">ASHRAE TC 9.9</span></div>
+        <div class="rrow"><span class="k">Thermal Code</span><span class="v">ASME Section VIII</span></div>
+        <div class="rrow"><span class="k">Redundancy</span><span class="v">2N / N+1 Active</span></div>
+      </div>
+      <div class="rout">
+        <div class="rh">${DTITLE[emp.wf] || wf.name}</div>
+        <div class="rb" id="run-final-text"></div>
+      </div>
+    </div>
+    <div class="donebar hidden" id="run-donebar">
+      <b>Run Complete:</b> Deliverable generated, verified against ASHRAE TC 9.9 and thermodynamic standards, and archived.
+    </div>
+  `;
+}
+
+function executeRun(){
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  if(!emp) return;
+  const wf = WORKFLOWS[emp.wf];
+  if(!wf) return;
+
+  const btn = document.getElementById('btn-execute');
+  btn.disabled = true;
+
+  runState.completedTasks.clear();
+  runState.runningTasks.clear();
+  runState.logs = [];
+
+  const feed = document.getElementById('run-feed');
+  feed.innerHTML = '';
+  document.getElementById('run-result').classList.add('hidden');
+  document.getElementById('run-donebar').classList.add('hidden');
+
+  logFeed('System', `Initializing multi-agent session for ${wf.name}...`);
+
+  if(wf.mode === 'sequential'){
+    executeSeqStep(0);
+  } else {
+    executeDagLoop();
+  }
+}
+
+function logFeed(agentName, text){
+  const feed = document.getElementById('run-feed');
+  const d = new Date();
+  const timeStr = d.toTimeString().split(' ')[0];
+  const row = document.createElement('div');
+  row.className = 'frow';
+  row.innerHTML = `
+    <span class="ft">${timeStr}</span>
+    <span class="fa">${agentName}</span>
+    <span class="fd">${text}</span>
+  `;
+  feed.appendChild(row);
+  feed.scrollTop = feed.scrollHeight;
+}
+
+function executeSeqStep(i){
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[emp.wf];
+  if(i >= wf.tasks.length){
+    finishRun();
+    return;
+  }
+
+  const t = wf.tasks[i];
+  const a = AGENT_ROLES[t.agent];
+
+  setTaskStatus(i, 'running');
+  logFeed(a ? a.label : t.agent, `Starting: ${t.task}`);
+
+  setTimeout(() => {
+    const toolKey = (a && a.tools && a.tools[0]) ? a.tools[0] : 'save';
+    const toolFn = TOOLS[toolKey] || TOOLS.save;
+    logFeed(a ? a.label : t.agent, `[Output] ${toolFn()}`);
+
+    setTaskStatus(i, 'done');
+    executeSeqStep(i+1);
+  }, 900);
+}
+
+function executeDagLoop(){
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[emp.wf];
+
+  const canRun = [];
+  wf.tasks.forEach((t, i) => {
+    if(!runState.completedTasks.has(i) && !runState.runningTasks.has(i)){
+      const depsOk = t.deps.every(d => runState.completedTasks.has(d));
+      if(depsOk) canRun.push(i);
+    }
+  });
+
+  if(canRun.length === 0){
+    if(runState.completedTasks.size === wf.tasks.length){
+      finishRun();
+    }
+    return;
+  }
+
+  canRun.forEach(idx => {
+    runState.runningTasks.add(idx);
+    setTaskStatus(idx, 'running');
+    const t = wf.tasks[idx];
+    const a = AGENT_ROLES[t.agent];
+    logFeed(a ? a.label : t.agent, `Dispatched (Parallel): ${t.task}`);
+
+    setTimeout(() => {
+      const toolKey = (a && a.tools && a.tools[0]) ? a.tools[0] : 'save';
+      const toolFn = TOOLS[toolKey] || TOOLS.save;
+      logFeed(a ? a.label : t.agent, `[Output] ${toolFn()}`);
+
+      runState.runningTasks.delete(idx);
+      runState.completedTasks.add(idx);
+      setTaskStatus(idx, 'done');
+      executeDagLoop();
+    }, 1000);
+  });
+}
+
+function setTaskStatus(idx, st){
+  const ph = document.getElementById(`ph-${idx}`);
+  const ac = document.getElementById(`acard-${idx}`);
+  const as = document.getElementById(`astat-${idx}`);
+
+  if(ph){
+    ph.classList.toggle('active', st==='running');
+    ph.classList.toggle('done', st==='done');
+  }
+  if(ac){
+    ac.className = `acard visible ${st}`;
+  }
+  if(as){
+    as.innerText = st==='running' ? 'Executing...' : (st==='done' ? 'Complete' : 'Queued');
+  }
+}
+
+function finishRun(){
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[emp.wf];
+  logFeed('System', 'All tasks synchronized. Assembling verified deliverable...');
+
+  document.getElementById('btn-execute').disabled = false;
+  document.getElementById('run-result').classList.remove('hidden');
+  document.getElementById('run-donebar').classList.remove('hidden');
+
+  const deliverableText = FINAL[emp.wf] || 'Engineering simulation completed.';
+  document.getElementById('run-final-text').innerText = deliverableText;
+
+  emp.handled += 1;
+  emp.hrs += 4.5;
+  renderEcon();
+  const card = document.getElementById(`card-${emp.id}`);
+  if(card){
+    card.replaceWith(empCard(emp));
+  }
+}
+
+function renderBuilderWfs(){
+  const cont = document.getElementById('builder-wf-grid');
+  cont.innerHTML = '';
+  Object.keys(WORKFLOWS).forEach(k => {
+    const wf = WORKFLOWS[k];
+    const item = document.createElement('div');
+    item.className = `wf ${k === selectedWfKey ? 'sel' : ''}`;
+    item.id = `bwf-${k}`;
+    item.onclick = () => selectBuilderWf(k);
+
+    const badge = wf.tag === 'flagship' ? '<span class="tag hero">Flagship</span>' : (wf.track==='trackA' ? '<span class="tag commercial">Commercial</span>' : '<span class="tag operations">Engineering</span>');
+    item.innerHTML = `
+      <div class="wn">${wf.name} ${badge}</div>
+      <div class="wd">${wf.desc}</div>
+      <div class="wm">${wf.mode.toUpperCase()} &bull; ${wf.tasks.length} TASKS</div>
+    `;
+    cont.appendChild(item);
+  });
+}
+
+function selectBuilderWf(k){
+  selectedWfKey = k;
+  renderBuilderWfs();
+}
+
+function goToStep(s){
+  document.getElementById('st-1').classList.toggle('active', s===1);
+  document.getElementById('st-2').classList.toggle('active', s===2);
+  document.getElementById('st-3').classList.toggle('active', s===3);
+
+  document.getElementById('bstep-1').classList.toggle('hidden', s!==1);
+  document.getElementById('bstep-2').classList.toggle('hidden', s!==2);
+  document.getElementById('bstep-3').classList.toggle('hidden', s!==3);
+
+  if(s === 2){
+    const wf = WORKFLOWS[selectedWfKey];
+    document.getElementById('bstep2-wftitle').innerText = `Configure Tasks: ${wf.name}`;
+    const cont = document.getElementById('task-map-container');
+    cont.innerHTML = '';
+
+    wf.tasks.forEach((t, i) => {
+      const row = document.createElement('div');
+      row.className = 'task-row';
+
+      let optionsHTML = '';
+      Object.keys(AGENT_ROLES).forEach(ak => {
+        const a = AGENT_ROLES[ak];
+        const sel = ak === t.agent ? 'selected' : '';
+        optionsHTML += `<option value="${ak}" ${sel}>${a.emoji} ${a.label}</option>`;
+      });
+
+      row.innerHTML = `
+        <div class="tn">${i+1}</div>
+        <div class="tt">${t.task}</div>
+        <select id="sel-task-${i}">${optionsHTML}</select>
+      `;
+      cont.appendChild(row);
+    });
+  }
+}
+
+function deployOperator(){
+  const name = document.getElementById('b-emp-name').value.trim() || 'Custom-Thermal-Operator';
+  const title = document.getElementById('b-emp-title').value.trim() || 'Custom Thermal Systems Specialist';
+
+  const newId = 'custom-op-' + Date.now();
+  EMPLOYEES.push({
+    id: newId,
+    name: name,
+    title: title,
+    wf: selectedWfKey,
+    handled: 1,
+    hrs: 9.5,
+    win: 'Newly Deployed'
+  });
+
+  renderEcon();
+  renderRoster();
+  switchTab('roster');
+  setupRun(newId);
+}
+
+window.onload = init;
+</script>
+</body>
+</html>
