@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vektrex &mdash; AI High-Performance LED &amp; Laser Test Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f4f7fb;--surface2:#dbeafe;--border:#93c5fd;--accent:#005696;
+--accent-dim:rgba(0,86,150,.08);--accent-line:rgba(0,86,150,.30);--slate:#0f172a;--slate-line:rgba(15,23,42,.30);--text:#1e293b;--hi:#0f172a;--tert:#64748b;--ok:#10b981;--ok-dim:rgba(16,185,129,.10);--gold:#d97706;--gold-bg:#fef3c7;--gold-line:#fde68a}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:48px;height:34px;border-radius:8px;background:linear-gradient(135deg,#005696,#0f172a);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:12px;letter-spacing:.5px;font-family:Inter,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#005696}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:900px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#005696;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(16,185,129,.08);color:#059669;border:1px solid rgba(16,185,129,.3)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#005696}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#005696;font-size:15px;flex-shrink:0;position:relative;font-family:Inter,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#005696}.btn.primary{background:linear-gradient(270deg,#005696,#003a66);border-color:#005696;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#005696;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#005696}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(16,185,129,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(16,185,129,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#005696}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Inter,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#005696;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;color:var(--hi)}.task-row select{background:#fff;border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;color:var(--hi);outline:none;font-family:Inter,sans-serif}
+.footer{max-width:1180px;margin:32px auto 0;padding:0 24px 32px;font-size:11.5px;color:var(--tert);line-height:1.5;border-top:1px solid var(--border);padding-top:18px;font-family:Inter,sans-serif}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="mark">VKX</div>
+    <div>
+      <div class="htitle">Vektrex &mdash; AI High-Performance LED &amp; Laser Test Workforce (concept)</div>
+      <div class="hsub">SpikeSafe&trade; Pulsed SMUs &bull; Turnkey LM-80 Systems &bull; JEDEC Thermal &bull; San Diego, CA</div>
+    </div>
+  </div>
+  <div class="badge">Simulated Operations &bull; <b>8 Operators Active</b></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tab-roster" onclick="switchTab('roster')">AI Operator Roster</button>
+  <button class="tab" id="tab-builder" onclick="switchTab('builder')">Add an Operator</button>
+</div>
+
+<div class="main">
+  <div id="view-roster">
+    <div class="lead">
+      Since 1986, Vektrex has engineered precision pulsed current sources, Source Measure Units (SMUs), and reliability life-test systems for the world's leading LED, VCSEL, and laser diode manufacturers. This prototype demonstrates an <b>AI Workforce</b> of 12 autonomous specialist agents driving turnkey LM-80 test bench proposals, Differential Continuous Pulse (DCP) thermal droop characterization, JEDEC JESD51-1 K-factor calibration, and SpikeSafe&trade; transient protection audits.
+    </div>
+
+    <div class="legend">
+      <span><span class="tag commercial">Commercial &amp; Test Lab Solutions</span> Turnkey LM-80 Systems, LiDAR Sourcing &amp; Energy ROI</span>
+      <span><span class="tag operations">Precision Pulsed &amp; Thermal Engineering</span> DCP Characterization, JEDEC ETM &amp; SpikeSafe&trade;</span>
+      <span><span class="tag hero">Flagship Operator</span> High-Power VCSEL / LED Differential Continuous Pulse (DCP) Engine</span>
+    </div>
+
+    <div class="econ" id="econ-strip"></div>
+
+    <div id="roster-container"></div>
+
+    <div class="run hidden" id="run-panel">
+      <div class="run-head">
+        <div class="avatar" id="run-avatar">--</div>
+        <div>
+          <div class="emp-name" id="run-name">Operator</div>
+          <div class="emp-title" id="run-title">Workflow Execution</div>
+        </div>
+      </div>
+      <div class="run-sub" id="run-sub">Target: Multi-agent execution loop</div>
+
+      <div class="run-input">
+        <textarea id="run-prompt"></textarea>
+        <button class="btn primary big" id="run-btn" onclick="executeRun()">Execute Run</button>
+      </div>
+
+      <div class="phases" id="run-phases">
+        <div class="ph" id="ph-1"><div class="dot">1</div><div class="l">Initialization</div></div>
+        <div class="ph" id="ph-2"><div class="dot">2</div><div class="l">Agent Execution</div></div>
+        <div class="ph" id="ph-3"><div class="dot">3</div><div class="l">Synthesis &amp; Output</div></div>
+      </div>
+
+      <div class="agent-grid" id="agent-grid"></div>
+
+      <div class="feed" id="run-feed"></div>
+
+      <div class="result hidden" id="run-result">
+        <div class="rstats">
+          <div style="font-weight:700;font-size:13px;margin-bottom:10px;color:var(--hi)">Execution Metrics</div>
+          <div class="rrow"><span class="k">Workflow</span><span class="v" id="res-wf">--</span></div>
+          <div class="rrow"><span class="k">Agents Engaged</span><span class="v" id="res-agents">--</span></div>
+          <div class="rrow"><span class="k">Execution Time</span><span class="v" id="res-time">--</span></div>
+          <div class="rrow"><span class="k">Tools Invoked</span><span class="v" id="res-tools">--</span></div>
+          <div class="rrow"><span class="k">Est. Time Saved</span><span class="v" id="res-saved">--</span></div>
+        </div>
+        <div class="rout">
+          <div class="rh" id="res-title">Deliverable Output</div>
+          <div class="rb" id="res-body"></div>
+        </div>
+      </div>
+
+      <div class="donebar hidden" id="run-donebar">
+        Execution complete. Output synthesized and logged to Vektrex test automation engineering vault.
+      </div>
+    </div>
+  </div>
+
+  <div id="view-builder" class="hidden">
+    <div class="lead">
+      Compose a new AI Operator by mapping specialist agents to a Vektrex photonics reliability or pulsed instrumentation workflow.
+    </div>
+
+    <div class="steps">
+      <div class="step active" id="st-1"><div class="n">STEP 1</div><div class="l">Select Target Workflow</div><div class="d">Pick base business process</div></div>
+      <div class="step" id="st-2"><div class="n">STEP 2</div><div class="l">Agent &amp; Tool Mapping</div><div class="d">Configure task assignments</div></div>
+      <div class="step" id="st-3"><div class="n">STEP 3</div><div class="l">Deploy Operator</div><div class="d">Assign operator identity</div></div>
+    </div>
+
+    <div id="bstep-1">
+      <div style="font-weight:700;font-size:14px;margin-bottom:12px;color:var(--hi)">Select Workflow Template</div>
+      <div class="wf-grid" id="wf-select-grid"></div>
+      <div style="margin-top:20px">
+        <button class="btn primary" onclick="goToStep(2)">Next: Map Agents &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-2" class="hidden">
+      <div style="font-weight:700;font-size:14px;margin-bottom:6px;color:var(--hi)" id="bstep2-wftitle">Configure Workflow Tasks</div>
+      <div style="font-size:12px;color:var(--tert);margin-bottom:16px">Assign a specialist agent to each workflow stage</div>
+      <div id="task-map-container"></div>
+      <div style="margin-top:20px;display:flex;gap:10px">
+        <button class="btn" onclick="goToStep(1)">&larr; Back</button>
+        <button class="btn primary" onclick="goToStep(3)">Next: Assign Operator &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-3" class="hidden">
+      <div style="font-weight:700;font-size:14px;margin-bottom:14px;color:var(--hi)">Operator Details</div>
+      <div style="max-width:480px;display:flex;flex-direction:column;gap:12px">
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--tert);display:block;margin-bottom:4px">Operator Name</label>
+          <input type="text" id="b-emp-name" value="Photonics Test Operations Lead" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;font-family:Inter,sans-serif">
+        </div>
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--tert);display:block;margin-bottom:4px">Role / Specialty Title</label>
+          <input type="text" id="b-emp-title" value="SpikeSafe&trade; &amp; LM-80 Systems Specialist" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;font-family:Inter,sans-serif">
+        </div>
+        <div style="margin-top:10px;display:flex;gap:10px">
+          <button class="btn" onclick="goToStep(2)">&larr; Back</button>
+          <button class="btn primary" onclick="deployOperator()">Deploy Operator to Roster</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  This interactive AI Workforce prototype is an illustrative simulation prepared for Vektrex Electronic Systems, Inc. All metrics, financial quotes, K-factor curves, and LIV telemetry logs are concept placeholders. Every AI output is human-reviewed prior to enterprise test lab deployment.
+</div>
+
+<script>
+const AGENT_ROLES = {
+  lab_scout: { emoji: '🧲', label: 'Semiconductor & Photonics Lab Scout', tools: ['source_photonics_programs', 'save'] },
+  smu_architect: { emoji: '⚡', label: 'SpikeSafe™ & Pulsed SMU Systems Architect', tools: ['architect_spikesafe_rack', 'save'] },
+  thermal_physicist: { emoji: '🌡️', label: 'JEDEC Thermal & Junction Temp Physicist', tools: ['calculate_k_factor', 'save'] },
+  optics_engineer: { emoji: '💡', label: 'Spectroradiometer & Optical Specialist', tools: ['measure_liv_spectral_flux', 'save'] },
+  dcp_pulse_spec: { emoji: '⏱️', label: 'Continuous Pulse & Microsecond Timing Spec', tools: ['configure_dcp_timing', 'save'] },
+  vcsel_specialist: { emoji: '🎯', label: 'VCSEL Array & High-Power Laser Engineer', tools: ['model_vcsel_dynamic_impedance', 'save'] },
+  lm80_auditor: { emoji: '📋', label: 'IES LM-80 / TM-21 Standards Auditor', tools: ['audit_lm80_compliance', 'save'] },
+  spikesafe_sec: { emoji: '🛡️', label: 'SpikeSafe™ Circuit Protection Engineer', tools: ['verify_rapid_shutdown_timing', 'save'] },
+  energy_analyst: { emoji: '🧮', label: 'Life-Testing Energy Recovery & ROI Analyst', tools: ['calculate_energy_recovery_roi', 'save'] },
+  firmware_integrator: { emoji: '💻', label: 'STARS & Python/C# Test Automation Engineer', tools: ['compile_automation_scripts', 'save'] },
+  proposal_lead: { emoji: '✍️', label: 'Technical System Proposal & RFP Lead', tools: ['compose_vektrex_proposal', 'save'] },
+  qa_director: { emoji: '✅', label: 'Metrology QA & Standards Director', tools: ['review_metrology_signoff', 'save'] }
+};
+
+const WORKFLOWS = {
+  lm80_turnkey_proposal: {
+    name: 'Turnkey LM-80 Multi-Chamber Reliability Test Bench',
+    title: 'LM80-Program-Director',
+    mode: 'dag',
+    deliverable: 'Turnkey Multi-Chamber LM-80 / TM-21 Test System Proposal',
+    sample: 'Configure a turnkey 32-channel, 1,000-device LM-80 test system with dual-zone thermal chambers (-40°C to +105°C) and automated lumen maintenance logging.',
+    desc: 'Autonomous configuration of high-capacity SpikeSafe DC drive racks, thermal stress chambers, and automated IES LM-80/TM-21 data acquisition software.',
+    track: 'commercial_lab_solutions',
+    tasks: [
+      { agent: 'lab_scout', task: 'Identify tier-1 automotive LED and luminaire manufacturers expanding LM-80 test capacity', deps: [] },
+      { agent: 'lm80_auditor', task: 'Validate test requirements under IES LM-80-20, TM-21, and EPA ENERGY STAR guidelines', deps: [] },
+      { agent: 'smu_architect', task: 'Spec 32-channel SpikeSafe DC current source rack with multi-temperature thermal chambers', deps: [0, 1] },
+      { agent: 'energy_analyst', task: 'Model electricity consumption savings via Vektrex high-efficiency patented power architecture', deps: [2] },
+      { agent: 'proposal_lead', task: 'Formulate turnkey multi-chamber LM-80 system proposal and delivery schedule', deps: [3] }
+    ]
+  },
+  vcsel_lidar_qualification: {
+    name: 'Automotive VCSEL & LiDAR High-Current Pulsed Test Rig',
+    title: 'VCSEL-LiDAR-Quoter',
+    mode: 'sequential',
+    deliverable: 'Automotive VCSEL & LiDAR High-Current Pulsed Test Rig Specification',
+    sample: 'Design a 60A high-current pulsed Source Measure Unit (SMU) test station for automotive LiDAR VCSEL array wafer-level and package burn-in.',
+    desc: 'Automated sizing of sub-microsecond pulse widths, 400V compliance headroom, and nanosecond SpikeSafe transient protection for laser arrays.',
+    track: 'commercial_lab_solutions',
+    tasks: [
+      { agent: 'lab_scout', task: 'Screen automotive LiDAR and 3D time-of-flight VCSEL manufacturers requiring high-current pulse testing', deps: [] },
+      { agent: 'vcsel_specialist', task: 'Specify 60A pulsed current parameters and sub-microsecond pulse widths', deps: [0] },
+      { agent: 'spikesafe_sec', task: 'Configure SpikeSafe rapid transient suppression to eliminate costly VCSEL array blowout', deps: [1] },
+      { agent: 'proposal_lead', task: 'Formulate automotive LiDAR qualification proposal and test fixture BOM', deps: [2] }
+    ]
+  },
+  energy_efficiency_roi: {
+    name: 'Burn-In Lab Energy Recovery & Operating Cost Payback',
+    title: 'Lab-Energy-Auditor',
+    mode: 'dag',
+    deliverable: 'Life-Testing Energy Recovery & Operating Cost Payback Memo',
+    sample: 'Audit a 2,000-channel LED reliability lab to calculate HVAC thermal heat load reduction and electrical utility savings using Vektrex systems.',
+    desc: 'Financial and thermal modeling demonstrating dramatic operating expenditure reductions by replacing inefficient linear current drivers.',
+    track: 'commercial_lab_solutions',
+    tasks: [
+      { agent: 'lab_scout', task: 'Audit existing customer burn-in lab running 1,000 continuous LED burn-in channels', deps: [] },
+      { agent: 'energy_analyst', task: 'Calculate thermal dissipation heat load and HVAC air-conditioning cost reductions', deps: [0] },
+      { agent: 'smu_architect', task: 'Map transition to Vektrex SpikeSafe energy-efficient drivers operating at 92%+ efficiency', deps: [0] },
+      { agent: 'proposal_lead', task: 'Synthesize 3-year TCO reduction and carbon footprint payback memo', deps: [1, 2] }
+    ]
+  },
+  lab_integration_rfp: {
+    name: 'Automated Optical Test Bench & Spectrometer Integration',
+    title: 'Optical-Bench-Integrator',
+    mode: 'sequential',
+    deliverable: 'Automated Optical Test Bench & Spectroradiometer Integration RFP',
+    sample: 'Architect hardware trigger synchronization between SpikeSafe SMUs, integrating spheres, and Instrument Systems CAS 140D spectrometers.',
+    desc: 'End-to-end integration of pulsed source measure units with optical spectrometers, LabVIEW drivers, and Python SCPI automation scripts.',
+    track: 'commercial_lab_solutions',
+    tasks: [
+      { agent: 'firmware_integrator', task: 'Review client RFP software environment (LabVIEW, Python, C#) and test bench instruments', deps: [] },
+      { agent: 'optics_engineer', task: 'Configure hardware triggering between SpikeSafe SMU, Keithley DMM, and CAS 140D spectrometer', deps: [0] },
+      { agent: 'proposal_lead', task: 'Generate automated optical characterization bench specification and API documentation', deps: [1] },
+      { agent: 'qa_director', task: 'Audit measurement repeatability and NIST traceability standards', deps: [2] }
+    ]
+  },
+  dcp_thermal_droop_flagship: {
+    name: 'Flagship Differential Continuous Pulse (DCP) Characterization',
+    title: 'Thermal-Droop-Architect',
+    mode: 'sequential',
+    tag: 'flagship',
+    deliverable: 'Flagship High-Power VCSEL / LED Differential Continuous Pulse Characterization Blueprint',
+    sample: 'Execute true isothermal LIV and junction temperature (Tj) characterization on 100W high-power automotive LED arrays using Differential Continuous Pulse (DCP) to eliminate self-heating droop.',
+    desc: 'Deep multi-agent engineering run executing true isothermal light-current-voltage measurements, nanosecond pulse timing, and junction temperature isolation.',
+    track: 'pulsed_thermal_engineering',
+    tasks: [
+      { agent: 'vcsel_specialist', task: 'Characterize high-power laser/LED self-heating dynamics and thermal droop susceptibility', deps: [] },
+      { agent: 'dcp_pulse_spec', task: 'Formulate Differential Continuous Pulse (DCP) timing sequence with 10µs duty-controlled micro-pulses', deps: [0] },
+      { agent: 'thermal_physicist', task: 'Measure true junction temperature (Tj) using JEDEC JESD51-1 Electrical Test Method', deps: [1] },
+      { agent: 'optics_engineer', task: 'Capture unheated LIV curve (Light-Current-Voltage) and radiant flux without thermal distortion', deps: [2] },
+      { agent: 'spikesafe_sec', task: 'Verify SpikeSafe nanosecond transient protection during 50A optical pulse transitions', deps: [3] },
+      { agent: 'qa_director', task: 'Audit thermal resistance (Rθj-c) calculation and measurement uncertainty budgets', deps: [4] },
+      { agent: 'proposal_lead', task: 'Compile comprehensive thermal droop characterization report and calibration blueprint', deps: [5] }
+    ]
+  },
+  kfactor_jedec_etm: {
+    name: 'JEDEC JESD51-1 K-Factor & Transient Thermal Impedance',
+    title: 'JEDEC-Thermal-Metrologist',
+    mode: 'dag',
+    deliverable: 'JEDEC JESD51-1 K-Factor Calibration & Transient Thermal Impedance Package',
+    sample: 'Calibrate diode forward voltage temperature coefficient (K-factor) and extract cumulative structure functions to detect semiconductor die-attach voids.',
+    desc: 'Precision thermal metrology utilizing JEDEC Electrical Test Method (ETM), oil bath temperature sweeps, and microsecond transient voltage capture.',
+    track: 'pulsed_thermal_engineering',
+    tasks: [
+      { agent: 'thermal_physicist', task: 'Calibrate device forward voltage (VF) temperature sensitivity coefficient (K-factor) in oil bath', deps: [] },
+      { agent: 'dcp_pulse_spec', task: 'Apply calibration measurement current (1mA - 10mA) with microsecond settling time', deps: [] },
+      { agent: 'firmware_integrator', task: 'Execute automated transient thermal response curve acquisition in STARS software', deps: [0, 1] },
+      { agent: 'qa_director', task: 'Calculate structure function, thermal capacitance, and die-attach void percentage', deps: [2] }
+    ]
+  },
+  spikesafe_protection_audit: {
+    name: 'SpikeSafe™ Nanosecond Overcurrent Shutdown & FA Audit',
+    title: 'SpikeSafe-Protection-Engineer',
+    mode: 'sequential',
+    deliverable: 'SpikeSafe™ Nanosecond Overcurrent Shutdown & Failure Analysis Audit',
+    sample: 'Simulate high-voltage compliance runaway and catastrophic load breakdown to verify sub-microsecond SpikeSafe hardware current clamping.',
+    desc: 'High-speed electronic protection verification proving that failed dies remain intact without explosive melting, preserving root-cause failure analysis evidence.',
+    track: 'pulsed_thermal_engineering',
+    tasks: [
+      { agent: 'spikesafe_sec', task: 'Simulate short-circuit and open-circuit load fault conditions under 400V compliance', deps: [] },
+      { agent: 'smu_architect', task: 'Measure SpikeSafe hardware current cutoff response time (< 1 microsecond shutdown)', deps: [0] },
+      { agent: 'vcsel_specialist', task: 'Inspect post-fault laser diode facet and wire-bond integrity under SEM', deps: [1] },
+      { agent: 'qa_director', task: 'Validate non-destructive failure preservation for semiconductor failure analysis', deps: [2] }
+    ]
+  },
+  uv_laser_characterization: {
+    name: 'UV-C LED & Pulsed Laser Diode Optical Metrology',
+    title: 'UVC-Laser-Auditor',
+    mode: 'dag',
+    deliverable: 'UV-C LED & Laser Diode Optical-Electrical Characterization Report',
+    sample: 'Characterize 265nm UV-C disinfection LED arrays and short-pulse laser diodes under continuous pulse drive according to IES LM-92.',
+    desc: 'Specialized radiometric optical metrology in the deep ultraviolet spectrum using PTFE integrating spheres and LM-92 standards compliance.',
+    track: 'pulsed_thermal_engineering',
+    tasks: [
+      { agent: 'optics_engineer', task: 'Configure calibrated UV-C PTFE integrating sphere and radiant flux detector (250nm - 280nm)', deps: [] },
+      { agent: 'dcp_pulse_spec', task: 'Establish continuous pulse drive parameters to prevent UV-C LED rapid thermal degradation', deps: [] },
+      { agent: 'lm80_auditor', task: 'Validate test methodology compliance with IES LM-92 UV-LED measurement protocol', deps: [0, 1] },
+      { agent: 'proposal_lead', task: 'Generate UV-C optical characterization report and radiometric calibration sheet', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  lm80_turnkey_proposal: 'Turnkey Multi-Chamber LM-80 / TM-21 Test System Proposal',
+  vcsel_lidar_qualification: 'Automotive VCSEL & LiDAR High-Current Pulsed Test Rig Specification',
+  energy_efficiency_roi: 'Life-Testing Energy Recovery & Operating Cost Payback Memo',
+  lab_integration_rfp: 'Automated Optical Test Bench & Spectroradiometer Integration RFP',
+  dcp_thermal_droop_flagship: 'Flagship High-Power VCSEL / LED Differential Continuous Pulse Characterization Blueprint',
+  kfactor_jedec_etm: 'JEDEC JESD51-1 K-Factor Calibration & Transient Thermal Impedance Package',
+  spikesafe_protection_audit: 'SpikeSafe™ Nanosecond Overcurrent Shutdown & Failure Analysis Audit',
+  uv_laser_characterization: 'UV-C LED & Laser Diode Optical-Electrical Characterization Report'
+};
+
+const TOOLS = {
+  source_photonics_programs: ()=>'Queried photonics lab database; identified 18 high-power VCSEL and automotive LED reliability RFPs.',
+  architect_spikesafe_rack: ()=>'Configured 32-channel SpikeSafe SMU rack with 400V compliance and isolated current channels.',
+  calculate_k_factor: ()=>'Calculated forward voltage temperature coefficient (K = 1.84 mV/°C) with linear correlation R² = 0.9998.',
+  measure_liv_spectral_flux: ()=>'Acquired synchronized LIV curve and radiometric flux across 500ms continuous sweep.',
+  configure_dcp_timing: ()=>'Programmed Differential Continuous Pulse sequence with 10µs pulse width and 1% duty cycle.',
+  model_vcsel_dynamic_impedance: ()=>'Modeled VCSEL array dynamic resistance (Rd = 0.42 Ω) under 50A high-speed injection.',
+  audit_lm80_compliance: ()=>'Validated compliance with IES LM-80-20, TM-21 extrapolation guidelines, and EPA ENERGY STAR.',
+  verify_rapid_shutdown_timing: ()=>'Verified SpikeSafe hardware shutdown within 820 nanoseconds of load voltage anomaly.',
+  calculate_energy_recovery_roi: ()=>'Modeled 84% reduction in HVAC heat load; calculated annual electricity savings of $42,600.',
+  compile_automation_scripts: ()=>'Compiled Python SCPI test automation scripts and LabVIEW instrument driver wrappers.',
+  compose_vektrex_proposal: ()=>'Composed formal turnkey test system proposal and engineering specification dossier.',
+  review_metrology_signoff: ()=>'Audited NIST-traceable optical calibration uncertainty and JEDEC thermal repeatability budgets.',
+  save: ()=>'Artifact saved successfully.'
+};
+
+const FINAL = {
+  lm80_turnkey_proposal: `VEKTREX ELECTRONIC SYSTEMS &mdash; TURNKEY LM-80 / TM-21 SYSTEM PROPOSAL
+Client: Tier-1 Automotive LED Lighting Manufacturer
+Target Capacity: 32 Channels | 1,024 High-Power Automotive LEDs Under Continuous Test
+
+SYSTEM CONFIGURATION & ARCHITECTURE:
+1. Drive Electronics Core:
+   - 4x Vektrex SpikeSafe™ Multi-Channel DC Current Sources (Model ESS-32)
+   - Current Capability: 10mA to 5,000mA per channel | Voltage Compliance: Up to 400V DC
+   - Patented SpikeSafe™ Circuit Protection: Continuous microsecond monitoring on all channels.
+2. Thermal Stress Infrastructure:
+   - 2x High-Uniformity Industrial Thermal Test Chambers (Temperature Range: 55°C to 105°C ±0.5°C)
+   - Custom High-Thermal-Conductivity Aluminum Burn-In Fixtures with calibrated thermocouple arrays.
+3. Automated Software & Compliance Suite:
+   - Vektrex STARS (SpikeSafe Test and Reliability Software) automated logging engine.
+   - Continuous forward voltage (VF) and photometric flux tracking compliant with IES LM-80-20 & TM-21.
+
+COMMERCIAL SUMMARY & DELIVERY SLA:
+- Turnkey Hardware & Software Package: $184,500.00
+- Energy Consumption Savings vs Conventional Linear Systems: ~$18,200 annually (88% efficiency).
+- Factory Acceptance Test (FAT) & On-Site Commissioning: 8 Weeks ARO.
+
+NOTE: illustrative autonomous proposal generated for Vektrex LED and laser test evaluation.`,
+
+  vcsel_lidar_qualification: `VEKTREX ELECTRONIC SYSTEMS &mdash; AUTOMOTIVE VCSEL & LIDAR TEST RIG SPECIFICATION
+Client: Global Autonomous Vehicle Sensor Foundry
+Application: High-Current Sub-Microsecond Pulsed Characterization of 905nm / 940nm VCSEL Arrays
+
+TECHNICAL SPECIFICATION & TEST RIG ARCHITECTURE:
+1. Pulsed Source Measure Unit (SMU):
+   - Vektrex SpikeSafe™ Performance Series Precision Pulsed Current Source
+   - Peak Current: 60.0 Amperes | Minimum Pulse Width: 500 nanoseconds | Rise Time: < 50 nanoseconds
+   - Maximum Compliance Voltage: 100 Volts | Duty Cycle Range: 0.01% to 10.0%
+2. Device Protection & SpikeSafe™ Transient Clamping:
+   - Real-time voltage transient monitoring with patented ultrafast energy diversion (< 1µs).
+   - Prevents catastrophic optical mirror damage and wire-bond fusing during high-current dielectric breakdown.
+3. Automated LIV Test Integration:
+   - Integrated with low-inductance kelvin test socket and fast InGaAs photodetector.
+   - Generates pulsed LIV (Light-Current-Voltage) curves without parasitic inductive ringing.
+
+CALIBRATION & REPEATABILITY:
+- Current Pulse Amplitude Repeatability: ±0.05%
+- Pulse Width Jitter: < 2.0 nanoseconds.
+
+NOTE: illustrative autonomous quotation generated for Vektrex photonics instrumentation evaluation.`,
+
+  energy_efficiency_roi: `VEKTREX ELECTRONIC SYSTEMS &mdash; LIFE-TESTING ENERGY RECOVERY & OPERATING ROI MEMO
+Facility: Commercial Luminaire Reliability Lab (1,500 Channel LED Burn-In System)
+Analysis Horizon: 3 Years (26,280 Operating Hours Continuous)
+
+ENERGY & OPERATING EXPENDITURE AUDIT:
+1. Power Consumption Baseline (Legacy Linear Driver Racks):
+   - Power Efficiency: 42% (58% of electrical power dissipated as waste room heat)
+   - Annual Direct Electricity Consumption: 328,500 kWh ($52,560 @ $0.16/kWh)
+   - Air Conditioning (HVAC) Load to Remove Waste Heat: 52 Tons continuous ($28,400 cooling power)
+   - Total Annual Electrical Cost: $80,960
+2. Vektrex SpikeSafe™ Switch-Mode High-Efficiency Architecture:
+   - Power Efficiency: 91.5% (Only 8.5% waste heat dissipation)
+   - Annual Direct Electricity Consumption: 151,000 kWh ($24,160)
+   - HVAC Cooling Power Required: 8 Tons ($4,370)
+   - Total Annual Electrical Cost: $28,530
+
+FINANCIAL RETURN ON INVESTMENT (ROI):
+- Net Annual Operating Savings: $52,430.00
+- 3-Year Cumulative OPEX Reduction: $157,290.00
+- Full Capital Equipment Payback Period: 16.4 Months.
+
+NOTE: illustrative energy efficiency ROI memo generated for Vektrex reliability lab consulting.`,
+
+  lab_integration_rfp: `VEKTREX ELECTRONIC SYSTEMS &mdash; AUTOMATED OPTICAL TEST BENCH INTEGRATION RFP
+Target Environment: R&D Characterization Laboratory
+Integrated Hardware: SpikeSafe™ Pulsed SMU + Instrument Systems CAS 140D Spectroradiometer + 50cm Integrating Sphere
+
+SYSTEM INTEGRATION ARCHITECTURE:
+1. Hardware Trigger Bus & Synchronization:
+   - Low-jitter BNC hardware trigger line between SpikeSafe SMU auxiliary output and spectrometer trigger in.
+   - Synchronous optical integration gating (< 20ns trigger latency) ensuring zero optical measurement blur.
+2. Software Automation Architecture:
+   - Multi-threaded Python SCPI automation suite utilizing Vektrex open-source driver library.
+   - Automated wavelength calibration, spectral power distribution (SPD) capture, and colorimetric CCT/CRI logging.
+3. Measurement Speed Telemetry:
+   - Complete 50-point LIV and spectrum sweep executed in 3.4 seconds (vs 45 seconds manual).
+
+COMPLIANCE & TRACEABILITY:
+- Calibration standards traceable to NIST and PTB optical primary standards.
+
+NOTE: illustrative optical bench integration specification generated for Vektrex lab automation.`,
+
+  dcp_thermal_droop_flagship: `VEKTREX ELECTRONIC SYSTEMS &mdash; FLAGSHIP DIFFERENTIAL CONTINUOUS PULSE (DCP) BLUEPRINT
+Technology: Patented Differential Continuous Pulse (DCP) Optical & Thermal Characterization
+Device Under Test (DUT): 150W Multi-Die Automotive LED Headlight Array / High-Power VCSEL Emitter
+
+1. PROBLEM: ELIMINATING THERMAL DROOP IN SOLID-STATE EMITTERS:
+   - Standard DC testing induces rapid junction self-heating within milliseconds, causing optical flux to droop by 15-30%.
+   - Single-pulse methods introduce thermal baseline drift between successive test pulses.
+   - Traditional tests fail to reflect true room-temperature (25°C) junction physics.
+
+2. THE VEKTREX DIFFERENTIAL CONTINUOUS PULSE (DCP) SOLUTION:
+   - Drive Sequence: Applies a continuous sequence of precise micro-pulses (Pulse Width: 10µs, Duty Cycle: 1.0%).
+   - Baseline Compensation: Alternates between measurement pulses (I_measure = 10A) and baseline reference pulses.
+   - Mathematical Differential: Subtracts background optical baseline to extract pure isothermal optical response.
+   - Result: 100% elimination of thermal droop artifacts during radiometric flux measurement.
+
+3. JUNCTION TEMPERATURE (Tj) EXTRACTION VIA JEDEC ELECTRICAL TEST METHOD:
+   - Senses forward voltage shift (ΔVF) during microsecond pulse intervals.
+   - Correlates voltage drop to device K-factor (1.82 mV/°C) to calculate true junction temperature rise (ΔTj < 0.2°C).
+   - Generates exact transient thermal impedance curve (Z_th(t)) and thermal resistance (R_th_j-c = 1.15 K/W).
+
+4. MEASUREMENT TELEMETRY & SYSTEM REPEATABILITY:
+   - Flux Repeatability: ±0.08% across 1,000 continuous test cycles.
+   - Device Safety: SpikeSafe™ active clamping ensures zero electrical overstress during 50A switching transitions.
+
+NOTE: illustrative flagship characterization blueprint generated for Vektrex precision optoelectronic engineering.`,
+
+  kfactor_jedec_etm: `VEKTREX ELECTRONIC SYSTEMS &mdash; JEDEC JESD51-1 K-FACTOR & THERMAL IMPEDANCE PACKAGE
+Standard: JEDEC JESD51-1 Electrical Test Method (ETM) for Semiconductor Devices with Heating Effect
+Component: High-Power InGaN Flip-Chip Automotive LED
+
+METROLOGY WORKFLOW & TEST RESULTS:
+1. K-Factor Calibration (Calibration Phase):
+   - Precision dielectric oil bath temperature sweep: 25°C, 45°C, 65°C, 85°C, 105°C (±0.05°C stability).
+   - Sense Current: 5.00 mA (pure measurement regime without self-heating).
+   - Calculated Temperature Coefficient (K-Factor): -1.842 mV/°C (Linear fit R² = 0.9999).
+2. Transient Thermal Impedance Measurement (Heating & Cooling Phase):
+   - Heating Current: 3,000 mA for 30.0 seconds until thermal equilibrium reached.
+   - Switching Transient: Sub-microsecond switchover from heating current to sense current (< 2µs measurement delay).
+   - Transient Cooling Voltage Curve recorded at 1 MHz sampling rate.
+3. Structure Function Extraction:
+   - Differential structure function calculated via mathematical deconvolution.
+   - Junction-to-case thermal resistance (Rθ_j-c): 1.42 K/W.
+   - Identified solder interface thermal resistance shift indicating 3.2% die-attach voiding (well below 10% limit).
+
+NOTE: illustrative JEDEC thermal characterization report generated for Vektrex metrology engineering.`,
+
+  spikesafe_protection_audit: `VEKTREX ELECTRONIC SYSTEMS &mdash; SPIKESAFE™ TRANSIENT PROTECTION AUDIT
+Test Objective: Verification of Fast Overcurrent Shutdown & Non-Destructive Failure Preservation
+Simulated Failure Mode: High-Voltage Dielectric Rupture in 850nm VCSEL Array under 400V Compliance
+
+LABORATORY AUDIT TELEMETRY:
+1. Fault Inception & Response Speed:
+   - Load Fault Induced: Instantaneous forward voltage drop from 24.5V to 1.2V simulating avalanche breakdown.
+   - SpikeSafe™ Hardware Trigger Latency: 120 nanoseconds to detect dV/dt threshold violation.
+   - Complete Current Shunt & Output Disconnect: 820 nanoseconds total elapsed time.
+2. Energy Dissipation Comparison:
+   - Standard Commercial Bench Power Supply: Delivers 14.5 Joules of stored output capacitor energy, causing explosive vaporizing of laser facet and wire bonds.
+   - Vektrex SpikeSafe™ Current Source: Dissipates < 0.004 Joules of residual energy into the fault.
+3. Failure Analysis (FA) Preservation Result:
+   - Post-test optical microscopy and SEM inspection confirmed laser diode sub-micron facet structure remained 100% physically intact.
+   - Defect root cause (epitaxial threading dislocation) successfully isolated in failure analysis lab.
+
+CONCLUSION:
+SpikeSafe™ technology preserves critical failure analysis evidence, saving photonics manufacturers months of lost yield debugging time.
+
+NOTE: illustrative circuit protection audit generated for Vektrex SpikeSafe hardware evaluation.`,
+
+  uv_laser_characterization: `VEKTREX ELECTRONIC SYSTEMS &mdash; UV-C LED OPTICAL METROLOGY & LM-92 AUDIT
+Device: 265nm High-Power UV-C Disinfection LED Array (AlGaN Multiple Quantum Well)
+Standards Protocol: IES LM-92-20 Standard Method for Measuring Ultraviolet Radiation
+
+METROLOGY RESULTS & TEST CONFIGURATION:
+1. Radiometric Optical Test Setup:
+   - 30cm High-Reflectance PTFE Integrating Sphere (98.5% reflectance at 265nm).
+   - NIST-calibrated blind silicon photodiode with calibrated bandpass interference filter.
+2. Pulsed Drive Performance vs Thermal Degradation:
+   - Continuous DC Drive (350mA): Optical radiant flux drooped by 22.4% within 12 seconds due to severe AlGaN thermal resistance.
+   - Vektrex Continuous Pulse Mode (350mA peak, 5% duty cycle): Maintained steady-state optical flux of 118.4 mW (0.0% droop).
+3. Accelerated Lifetime Extrapolation:
+   - 1,000-hour continuous pulse degradation data processed under TM-21 mathematical model.
+   - Projected L70 Lifetime: 18,500 Hours.
+
+NOTE: illustrative UV-C optical characterization report generated for Vektrex optical metrology.`
+};
+
+const EMPLOYEES = [
+  { id: 'e1', name: 'LM80-Program-Director', title: 'Turnkey Reliability & LM-80 Systems Lead', wf: 'lm80_turnkey_proposal', handled: 148, hrs: 14.5, win: '4.4x', track: 'commercial_lab_solutions' },
+  { id: 'e2', name: 'VCSEL-LiDAR-Quoter', title: 'Pulsed Laser & LiDAR Test Systems Spec', wf: 'vcsel_lidar_qualification', handled: 112, hrs: 9.0, win: '3.8x', track: 'commercial_lab_solutions' },
+  { id: 'e3', name: 'Lab-Energy-Auditor', title: 'Burn-In TCO & Energy Efficiency Analyst', wf: 'energy_efficiency_roi', handled: 94, hrs: 7.5, win: '4.2x', track: 'commercial_lab_solutions' },
+  { id: 'e4', name: 'Optical-Bench-Integrator', title: 'Automated LIV & Spectrometer Integration Lead', wf: 'lab_integration_rfp', handled: 126, hrs: 8.5, win: '3.6x', track: 'commercial_lab_solutions' },
+  { id: 'e5', name: 'Thermal-Droop-Architect', title: 'DCP & Junction Temperature (Tj) Specialist', wf: 'dcp_thermal_droop_flagship', handled: 210, hrs: 18.0, win: '6.2x', track: 'pulsed_thermal_engineering' },
+  { id: 'e6', name: 'JEDEC-Thermal-Metrologist', title: 'K-Factor & Transient Thermal Impedance Eng', wf: 'kfactor_jedec_etm', handled: 135, hrs: 11.5, win: '4.8x', track: 'pulsed_thermal_engineering' },
+  { id: 'e7', name: 'SpikeSafe-Protection-Engineer', title: 'Fast Transient & Device Preservation Spec', wf: 'spikesafe_protection_audit', handled: 164, hrs: 8.0, win: '5.1x', track: 'pulsed_thermal_engineering' },
+  { id: 'e8', name: 'UVC-Laser-Auditor', title: 'UV-C LED & LM-92 Optical Metrologist', wf: 'uv_laser_characterization', handled: 88, hrs: 10.0, win: '4.0x', track: 'pulsed_thermal_engineering' }
+];
+
+const TRACKS = [
+  ['commercial_lab_solutions', 'Commercial & Test Lab Solutions'],
+  ['pulsed_thermal_engineering', 'Precision Pulsed & Thermal Engineering']
+];
+
+let activeEmpId = 'e5';
+let currentRunWf = null;
+let selectedWfKey = 'dcp_thermal_droop_flagship';
+
+function init(){
+  renderEcon();
+  renderRoster();
+  renderBuilderWfGrid();
+}
+
+function renderEcon(){
+  const strip = document.getElementById('econ-strip');
+  let totalRuns = 0;
+  let totalSaved = 0;
+  EMPLOYEES.forEach(e => {
+    totalRuns += e.handled;
+    totalSaved += e.handled * e.hrs;
+  });
+
+  strip.innerHTML = `
+    <div class="cell"><div class="v">${EMPLOYEES.length}</div><div class="k">Active AI Operators</div></div>
+    <div class="cell"><div class="v">${totalRuns.toLocaleString()}</div><div class="k">Workflows Executed</div></div>
+    <div class="cell"><div class="v">${(totalSaved).toLocaleString(undefined,{maximumFractionDigits:0})}<span class="u">h</span></div><div class="k">Hours Saved</div></div>
+    <div class="cell"><div class="v">4.5<span class="u">x</span></div><div class="k">Avg Turnaround Speedup</div></div>
+  `;
+}
+
+function renderRoster(){
+  const container = document.getElementById('roster-container');
+  container.innerHTML = '';
+
+  TRACKS.forEach(([tKey, tLabel]) => {
+    const sectionLabel = document.createElement('div');
+    sectionLabel.className = 'slabel';
+    sectionLabel.innerText = tLabel;
+    container.appendChild(sectionLabel);
+
+    const grid = document.createElement('div');
+    grid.className = 'roster';
+
+    EMPLOYEES.filter(e => {
+      const wf = WORKFLOWS[e.wf];
+      return wf && wf.track === tKey;
+    }).forEach(emp => {
+      grid.appendChild(createEmpCard(emp));
+    });
+
+    container.appendChild(grid);
+  });
+}
+
+function createEmpCard(emp){
+  const wf = WORKFLOWS[emp.wf];
+  const card = document.createElement('div');
+  const isHero = wf && wf.tag === 'flagship';
+  card.className = `emp ${isHero ? 'hero' : ''} ${emp.id === activeEmpId ? 'working' : ''}`;
+  card.id = `card-${emp.id}`;
+
+  const initials = emp.name.split('-').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+  const agentChips = wf ? wf.tasks.map(t => {
+    const a = AGENT_ROLES[t.agent];
+    return `<span class="chip">${a ? a.emoji : ''} ${a ? a.label : t.agent}</span>`;
+  }).join('') : '';
+
+  card.innerHTML = `
+    <div class="emp-top">
+      <div class="avatar">${initials}</div>
+      <div>
+        <div class="emp-name">${emp.name} ${isHero ? '<span class="tag hero">Flagship</span>' : ''}</div>
+        <div class="emp-title">${emp.title}</div>
+      </div>
+    </div>
+    <div class="emp-owns">Owns: <b>${wf ? wf.name : emp.wf}</b></div>
+    <div class="team">${agentChips}</div>
+    <div class="emp-stats">
+      <div class="st">Runs<b>${emp.handled}</b></div>
+      <div class="st">Time Saved<b>${(emp.handled * emp.hrs).toFixed(0)} hrs</b></div>
+      <div class="st">Headline Metric<b>${emp.win}</b></div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" onclick="setupRun('${emp.id}')">Run Operator Workflow</button>
+    </div>
+  `;
+
+  return card;
+}
+
+function switchTab(t){
+  document.getElementById('tab-roster').classList.toggle('active', t==='roster');
+  document.getElementById('tab-builder').classList.toggle('active', t==='builder');
+  document.getElementById('view-roster').classList.toggle('hidden', t!=='roster');
+  document.getElementById('view-builder').classList.toggle('hidden', t!=='builder');
+}
+
+function setupRun(empId){
+  const emp = EMPLOYEES.find(e => e.id === empId);
+  if(!emp) return;
+
+  activeEmpId = empId;
+  const wf = WORKFLOWS[emp.wf];
+  currentRunWf = wf;
+
+  renderRoster();
+
+  const panel = document.getElementById('run-panel');
+  panel.classList.remove('hidden');
+  panel.scrollIntoView({ behavior: 'smooth' });
+
+  const initials = emp.name.split('-').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+  document.getElementById('run-avatar').innerText = initials;
+  document.getElementById('run-name').innerText = emp.name;
+  document.getElementById('run-title').innerText = `Executing: ${wf.title}`;
+  document.getElementById('run-sub').innerText = wf.desc;
+  document.getElementById('run-prompt').value = wf.sample;
+
+  document.getElementById('run-phases').querySelectorAll('.ph').forEach(p=>p.className='ph');
+  document.getElementById('ph-1').classList.add('active');
+
+  const grid = document.getElementById('agent-grid');
+  grid.innerHTML = '';
+  wf.tasks.forEach((t, i) => {
+    const a = AGENT_ROLES[t.agent];
+    const ac = document.createElement('div');
+    ac.className = 'acard';
+    ac.id = `acard-${i}`;
+    ac.innerHTML = `
+      <div class="ae">${a ? a.emoji : '🤖'}</div>
+      <div class="ar">${a ? a.label : t.agent}</div>
+      <div class="at">${t.task}</div>
+      <div class="as"><div class="sd"></div><span id="astat-${i}">Queued</span></div>
+    `;
+    grid.appendChild(ac);
+  });
+
+  document.getElementById('run-feed').innerHTML = '';
+  document.getElementById('run-result').classList.add('hidden');
+  document.getElementById('run-donebar').classList.add('hidden');
+  document.getElementById('run-btn').disabled = false;
+}
+
+let runTimer = null;
+
+function executeRun(){
+  if(!currentRunWf) return;
+  document.getElementById('run-btn').disabled = true;
+
+  document.getElementById('ph-1').className = 'ph done';
+  document.getElementById('ph-2').className = 'ph active';
+
+  const feed = document.getElementById('run-feed');
+  feed.innerHTML = '';
+
+  const wf = currentRunWf;
+  const tasks = wf.tasks;
+  let idx = 0;
+
+  function logRow(agentName, msg){
+    const row = document.createElement('div');
+    row.className = 'frow';
+    const now = new Date();
+    const timeStr = now.toTimeString().split(' ')[0] + '.' + String(now.getMilliseconds()).padStart(3,'0');
+    row.innerHTML = `<span class="ft">${timeStr}</span><span class="fa">${agentName}</span><span class="fd">${msg}</span>`;
+    feed.appendChild(row);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  logRow('System', `Initializing multi-agent graph: ${wf.name}`);
+
+  runTimer = setInterval(() => {
+    if(idx < tasks.length){
+      const t = tasks[idx];
+      const a = AGENT_ROLES[t.agent];
+      const aName = a ? a.label : t.agent;
+
+      if(idx > 0){
+        const prevCard = document.getElementById(`acard-${idx-1}`);
+        if(prevCard){
+          prevCard.className = 'acard done';
+          document.getElementById(`astat-${idx-1}`).innerText = 'Completed';
+        }
+      }
+
+      const card = document.getElementById(`acard-${idx}`);
+      if(card){
+        card.className = 'acard running visible';
+        document.getElementById(`astat-${idx}`).innerText = 'Executing...';
+      }
+
+      logRow(aName, `Task: ${t.task}`);
+
+      if(a && a.tools){
+        a.tools.forEach(tk => {
+          if(TOOLS[tk]){
+            logRow(aName, `Tool [${tk}]: ${TOOLS[tk]()}`);
+          }
+        });
+      }
+
+      idx++;
+    } else {
+      clearInterval(runTimer);
+
+      const lastCard = document.getElementById(`acard-${tasks.length-1}`);
+      if(lastCard){
+        lastCard.className = 'acard done';
+        document.getElementById(`astat-${tasks.length-1}`).innerText = 'Completed';
+      }
+
+      document.getElementById('ph-2').className = 'ph done';
+      document.getElementById('ph-3').className = 'ph done';
+
+      logRow('System', 'Workflow execution complete. Synthesizing deliverable artifact.');
+
+      showResult();
+    }
+  }, 900);
+}
+
+function showResult(){
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = currentRunWf;
+  const wfKey = emp ? emp.wf : 'dcp_thermal_droop_flagship';
+
+  document.getElementById('res-wf').innerText = wf.name;
+  document.getElementById('res-agents').innerText = wf.tasks.length;
+  document.getElementById('res-time').innerText = '4.1s (Simulated)';
+  document.getElementById('res-tools').innerText = wf.tasks.length * 2;
+  document.getElementById('res-saved').innerText = `~${emp ? (emp.handled * emp.hrs).toFixed(0) : 18} hrs`;
+
+  document.getElementById('res-title').innerText = DTITLE[wfKey] || 'Deliverable Artifact';
+  document.getElementById('res-body').innerText = FINAL[wfKey] || 'Output complete.';
+
+  document.getElementById('run-result').classList.remove('hidden');
+  document.getElementById('run-donebar').classList.remove('hidden');
+  document.getElementById('run-btn').disabled = false;
+}
+
+function renderBuilderWfGrid(){
+  const grid = document.getElementById('wf-select-grid');
+  grid.innerHTML = '';
+
+  Object.keys(WORKFLOWS).forEach(key => {
+    const wf = WORKFLOWS[key];
+    const card = document.createElement('div');
+    card.className = `wf ${key === selectedWfKey ? 'sel' : ''}`;
+    card.onclick = () => {
+      selectedWfKey = key;
+      renderBuilderWfGrid();
+    };
+    card.innerHTML = `
+      <div class="wn">${wf.name} ${wf.tag==='flagship' ? '<span class="tag hero">Flagship</span>' : ''}</div>
+      <div class="wd">${wf.desc}</div>
+      <div class="wm">${wf.mode.toUpperCase()} &bull; ${wf.tasks.length} TASKS</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function goToStep(s){
+  document.getElementById('st-1').classList.toggle('active', s===1);
+  document.getElementById('st-2').classList.toggle('active', s===2);
+  document.getElementById('st-3').classList.toggle('active', s===3);
+
+  document.getElementById('bstep-1').classList.toggle('hidden', s!==1);
+  document.getElementById('bstep-2').classList.toggle('hidden', s!==2);
+  document.getElementById('bstep-3').classList.toggle('hidden', s!==3);
+
+  if(s === 2){
+    const wf = WORKFLOWS[selectedWfKey];
+    document.getElementById('bstep2-wftitle').innerText = `Configure Tasks: ${wf.name}`;
+    const cont = document.getElementById('task-map-container');
+    cont.innerHTML = '';
+
+    wf.tasks.forEach((t, i) => {
+      const row = document.createElement('div');
+      row.className = 'task-row';
+
+      let optionsHTML = '';
+      Object.keys(AGENT_ROLES).forEach(ak => {
+        const a = AGENT_ROLES[ak];
+        const sel = ak === t.agent ? 'selected' : '';
+        optionsHTML += `<option value="${ak}" ${sel}>${a.emoji} ${a.label}</option>`;
+      });
+
+      row.innerHTML = `
+        <div class="tn">${i+1}</div>
+        <div class="tt">${t.task}</div>
+        <select id="sel-task-${i}">${optionsHTML}</select>
+      `;
+      cont.appendChild(row);
+    });
+  }
+}
+
+function deployOperator(){
+  const name = document.getElementById('b-emp-name').value.trim() || 'New Operator';
+  const title = document.getElementById('b-emp-title').value.trim() || 'Custom Specialist';
+
+  const newId = 'custom-op-' + Date.now();
+  EMPLOYEES.push({
+    id: newId,
+    name: name,
+    title: title,
+    wf: selectedWfKey,
+    handled: 1,
+    hrs: 8.0,
+    win: 'Newly Deployed'
+  });
+
+  renderEcon();
+  renderRoster();
+  switchTab('roster');
+  setupRun(newId);
+}
+
+window.onload = init;
+</script>
+</body>
+</html>
