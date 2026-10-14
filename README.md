@@ -322,3 +322,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/nortek
 https://innvonix-tech-solutions.github.io/ai-workforce/metox
 https://innvonix-tech-solutions.github.io/ai-workforce/vektrex
 https://innvonix-tech-solutions.github.io/ai-workforce/ultrasense
+https://innvonix-tech-solutions.github.io/ai-workforce/rohner-ai-workforce
