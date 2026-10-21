@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Achronix &mdash; AI FPGA &amp; Embedded IP Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f8fafc;--surface2:#f1f5f9;--border:#cbd5e1;--accent:#d02020;
+--accent-dim:rgba(208,32,32,.08);--accent-line:rgba(208,32,32,.28);--slate:#1e293b;--slate-line:rgba(30,41,59,.30);--text:#1e293b;--hi:#0f172a;--tert:#475569;--ok:#16a34a;--ok-dim:rgba(22,163,74,.10);--gold:#b45309;--gold-bg:#fef3c7;--gold-line:#fde68a}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:54px;height:34px;border-radius:8px;background:linear-gradient(135deg,#0f172a,#d02020);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:12px;letter-spacing:.5px;font-family:Inter,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#d02020}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:920px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#d02020;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(22,163,74,.08);color:#16a34a;border:1px solid rgba(22,163,74,.3)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#d02020}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#d02020;font-size:15px;flex-shrink:0;position:relative;font-family:Inter,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#d02020}.btn.primary{background:linear-gradient(270deg,#d02020,#a81818);border-color:#d02020;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#d02020;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#d02020}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 220px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#d02020}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Inter,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#d02020;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;color:var(--hi)}.task-row select{background:#fff;border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;color:var(--hi);outline:none;font-family:Inter,sans-serif}
+.footer{max-width:1180px;margin:32px auto 0;padding:0 24px 32px;font-size:11.5px;color:var(--tert);line-height:1.5;border-top:1px solid var(--border);padding-top:18px;font-family:Inter,sans-serif}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="mark">ACX</div>
+    <div>
+      <div class="htitle">Achronix &mdash; AI FPGA &amp; Embedded IP Workforce (concept)</div>
+      <div class="hsub">Speedster&reg;7t FPGAs &bull; Speedcore&trade; eFPGA IP &bull; VectorPath&reg; Accelerators &bull; Santa Clara, CA</div>
+    </div>
+  </div>
+  <div class="badge">Simulated Operations &bull; <b>8 Operators Active</b></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tab-roster" onclick="switchTab('roster')">AI Operator Roster</button>
+  <button class="tab" id="tab-builder" onclick="switchTab('builder')">Add an Operator</button>
+</div>
+
+<div class="main">
+  <div id="view-roster">
+    <div class="lead">
+      <b>Achronix Semiconductor Corporation</b>, headquartered in Santa Clara, California, is a premier fabless semiconductor pioneer and the only commercial supplier offering both high-performance standalone FPGAs and embedded FPGA (eFPGA) intellectual property. Built on TSMC 7nm FinFET technology and leading advanced packaging architectures, Achronix products solve high-bandwidth computing bottlenecks for AI/ML inference, 5G/6G wireless infrastructure, data center networking, and military radar systems. Key architectural breakthroughs include the <b>Speedster&reg;7t FPGA family</b> featuring a revolutionary <b>2D Network-on-Chip (2D NoC)</b> delivering over 20 Tbps of crossbar bandwidth, high-density <b>Machine Learning Processors (MLPs)</b> supporting integer and floating-point numeric formats, 4.1 Tbps <b>GDDR6 memory controllers</b>, and PCIe Gen5 / 400GbE interfaces. The flagship <b>VectorPath&reg; 815 accelerator card</b> and <b>Achronix AI Console</b> unlock real-time inference for large language models (LLaMA 3.3) and speech-to-text with 5x total cost of ownership advantages over GPUs, while <b>Speedcore&trade; eFPGA IP</b> embeds programmable logic directly into custom ASICs and chiplets to slash power by 88%. This interactive AI workforce prototype simulates autonomous multi-agent orchestration across LLM acceleration, 400G packet processing, sub-microsecond algorithmic trading, and eFPGA ASIC co-design.
+    </div>
+
+    <div class="legend">
+      <span><span class="tag commercial">Speedster7t &amp; AI</span> VectorPath LLaMA 3.3 inference, 400GbE SmartNIC pipeline, sub-microsecond HFT execution, JESD204C radar DSP</span>
+      <span><span class="tag operations">eFPGA IP &amp; Co-Design</span> Speedcore custom ASIC sizing, UCIe chiplet D2D integration, post-silicon firmware adaptation, hardware root-of-trust</span>
+      <span><span class="tag hero">Flagship</span> VectorPath&reg; VP815 Accelerator Card LLaMA 3.3 70B Low-Latency Inference Engine</span>
+    </div>
+
+    <div class="econ" id="econ-strip"></div>
+
+    <div id="roster-tracks"></div>
+
+    <div id="run-container" class="hidden"></div>
+  </div>
+
+  <div id="view-builder" class="hidden">
+    <div class="lead">
+      <b>Operator Builder:</b> Compose a specialized multi-agent operator to automate FPGA hardware synthesis, 2D NoC channel floorplanning, custom Speedcore eFPGA sizing, or UCIe chiplet packaging validation.
+    </div>
+
+    <div class="steps">
+      <div class="step active" id="st-1">
+        <div class="n">STEP 1</div>
+        <div class="l">Select FPGA Workflow</div>
+        <div class="d">Choose the base Speedster7t acceleration or Speedcore eFPGA IP workflow</div>
+      </div>
+      <div class="step" id="st-2">
+        <div class="n">STEP 2</div>
+        <div class="l">Assign Hardware Specialists</div>
+        <div class="d">Allocate specialist roles across RTL synthesis, 2D NoC, and board verification</div>
+      </div>
+      <div class="step" id="st-3">
+        <div class="n">STEP 3</div>
+        <div class="l">Name &amp; Deploy Operator</div>
+        <div class="d">Configure title and deploy operator to active silicon roster</div>
+      </div>
+    </div>
+
+    <div id="bstep-1">
+      <div class="slabel">Available FPGA &amp; eFPGA Semiconductor Workflows</div>
+      <div class="wf-grid" id="builder-wf-grid"></div>
+      <div style="margin-top:20px;display:flex;justify-content:flex-end">
+        <button class="btn primary big" onclick="goToStep(2)">Configure Operator Agents &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-2" class="hidden">
+      <div class="slabel" id="bstep2-wftitle">Configure Specialist Assignment</div>
+      <div id="task-map-container"></div>
+      <div style="margin-top:20px;display:flex;justify-content:space-between">
+        <button class="btn big" onclick="goToStep(1)">&larr; Back to Workflows</button>
+        <button class="btn primary big" onclick="goToStep(3)">Set Identity &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-3" class="hidden">
+      <div class="slabel">Operator Profile &amp; Deployment</div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;max-width:540px">
+        <div style="margin-bottom:14px">
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--hi);margin-bottom:6px">Operator Name</label>
+          <input type="text" id="b-emp-name" value="Custom-FPGA-Architect" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none">
+        </div>
+        <div style="margin-bottom:20px">
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--hi);margin-bottom:6px">Functional Title</label>
+          <input type="text" id="b-emp-title" value="Achronix Speedster7t &amp; eFPGA Co-Engineering Lead" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none">
+        </div>
+        <button class="btn primary big" style="width:100%" onclick="deployOperator()">Deploy to Live Workforce</button>
+      </div>
+      <div style="margin-top:20px">
+        <button class="btn" onclick="goToStep(2)">&larr; Back to Task Config</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <b>Simulated Operations Notice:</b> This interactive AI workforce prototype is an architectural demonstration engineered for Achronix stakeholders. All operational benchmarks, clock frequencies, power dissipation figures, and inference latency numbers are illustrative placeholders based on public technical publications and semiconductor FPGA standards. Physical silicon implementation, ACE bitstream generation, and board hardware deployment require validation with official Achronix EDA tools and licensed IP documentation.
+</div>
+
+<script>
+const AGENT_ROLES = {
+  efpga_ip_architect: { emoji: '🧩', label: 'Speedcore™ eFPGA & Custom SoC Co-Architect', tools: ['efpga_lut_mlp_sizing', 'asic_die_area_power_model', 'save'] },
+  noc_interconnect_lead: { emoji: '🌐', label: '2D Network-on-Chip (NoC) Routing Engineer', tools: ['noc_bandwidth_partition', 'flit_arbitration_latency_calc', 'save'] },
+  llm_inference_compiler: { emoji: '🧠', label: 'Achronix AI Console & LLM Compilation Lead', tools: ['llama_mlp_quantize_int8', 'kv_cache_gddr6_stream', 'save'] },
+  gddr6_memory_specialist: { emoji: '⚡', label: 'GDDR6 / HBM High-Bandwidth Memory Engineer', tools: ['gddr6_channel_timing_closure', 'phy_read_write_eye_margin', 'save'] },
+  serdes_400g_ethernet_eng: { emoji: '🔌', label: '112G PAM4 SerDes & 400GbE Protocol Lead', tools: ['pam4_jitter_snr_verify', 'pcie_gen5_cxl_handshake', 'save'] },
+  vectorpath_board_eng: { emoji: '🎛️', label: 'VectorPath® PCIe Hardware & Thermal Architect', tools: ['pcie_power_envelope_sim', 'board_thermal_tdp_budget', 'save'] },
+  ace_eda_timing_closure: { emoji: '⏱️', label: 'ACE Design Tools & Place-and-Route Specialist', tools: ['ace_timing_slack_report', 'synplify_netlist_opt', 'save'] },
+  chiplet_ucie_integ_lead: { emoji: '🔲', label: 'UCIe / BoW Multi-Die Chiplet Integration Engineer', tools: ['ucie_d2d_latency_budget', 'microbump_signal_integrity', 'save'] },
+  dsp_jesd204c_radar_eng: { emoji: '📡', label: 'JESD204C & High-Speed Radar DSP Specialist', tools: ['jesd204c_link_sync_lock', 'fir_filter_beamforming_sim', 'save'] },
+  hft_ultra_low_latency: { emoji: '⚡', label: 'Low-Latency FinTech & HFT Acceleration Lead', tools: ['tick_to_trade_ns_profile', 'mac_bypass_packet_pipeline', 'save'] },
+  bitstream_security_auditor: { emoji: '🔒', label: 'Hardware Root of Trust & Bitstream Security Auditor', tools: ['aes_gcm_bitstream_encrypt', 'puf_key_auth_verify', 'save'] },
+  fpga_solution_dossier_author: { emoji: '✍️', label: 'Semiconductor Solution & TCO Dossier Author', tools: ['compile_achx_dossier', 'customer_tco_roi_signoff', 'save'] }
+};
+
+const TRACKS = [
+  ['trackA', 'Standalone Speedster®7t Silicon & AI Acceleration'],
+  ['trackB', 'Speedcore™ eFPGA IP & Custom SoC Co-Design']
+];
+
+const WORKFLOWS = {
+  vectorpath_llm_inference_acceleration: {
+    name: 'VectorPath AI LLaMA 3.3 Inference Acceleration',
+    title: 'VectorPath® VP815 Accelerator Card LLaMA 3.3 70B Low-Latency Inference Engine',
+    track: 'trackA',
+    tag: 'flagship',
+    mode: 'sequential',
+    deliverable: 'VectorPath VP815 LLaMA 3.3 70B Real-Time Inference & TCO Benchmark Dossier',
+    sample: 'Compile and deploy LLaMA 3.3 70B on VectorPath VP815 dual-accelerator card utilizing Speedster7t1500 Machine Learning Processors (MLPs) and 4 Tbps GDDR6 memory to achieve sub-12ms time-to-first-token with 5x TCO advantages vs GPU clusters.',
+    desc: 'Automated quantization to INT8/Bfloat16, 2D NoC data streaming, 4 Tbps GDDR6 KV-caching, 750 MHz timing closure in ACE, and thermal validation.',
+    tasks: [
+      { agent: 'llm_inference_compiler', task: 'Map transformer attention layers and quantize matrix weights into INT8/Bfloat16 for Speedster7t Machine Learning Processors (MLPs).', deps: [] },
+      { agent: 'noc_interconnect_lead', task: 'Allocate dedicated 2D NoC routing channels across 80 horizontal and vertical packet nodes to stream weights without fabric congestion.', deps: [0] },
+      { agent: 'gddr6_memory_specialist', task: 'Configure 8 independent GDDR6 memory channels delivering 4.1 Tbps aggregate bandwidth for ultra-fast KV-cache retrieval.', deps: [1] },
+      { agent: 'vectorpath_board_eng', task: 'Verify PCIe Gen5 x16 host link and 75W/150W board thermal dissipation margins inside standard 1U/2U server chassis.', deps: [2] },
+      { agent: 'ace_eda_timing_closure', task: 'Run ACE place-and-route timing analysis, verifying positive slack at 750 MHz target clock frequency across all MLP clusters.', deps: [3] },
+      { agent: 'fpga_solution_dossier_author', task: 'Publish verified LLM inference performance dossier showing 5.2x cost and latency advantage over competing GPU server architectures.', deps: [4] }
+    ]
+  },
+
+  smartnic_400g_packet_processing: {
+    name: '400GbE SmartNIC & Packet Engine',
+    title: 'Speedster7t1500 400G Ethernet SmartNIC & Line-Rate Packet Pipeline',
+    track: 'trackA',
+    mode: 'dag',
+    deliverable: 'Speedster7t 400GbE Wire-Speed Packet Inspection & P4 Pipeline Verification Protocol',
+    sample: 'Synthesize 400GbE network packet processing pipeline with hardware-accelerated flow tracking, IPsec cryptographic offload, and P4 programmability on Speedster7t.',
+    desc: 'Line-rate 400G Ethernet packet parsing utilizing 112G PAM4 SerDes, 2D NoC low-latency bypass, and wire-speed hardware cryptography.',
+    tasks: [
+      { agent: 'serdes_400g_ethernet_eng', task: 'Configure 8x 53 Gbps PAM4 SerDes lanes with forward error correction (KP4 FEC) for 400G line-rate Ethernet link.', deps: [] },
+      { agent: 'noc_interconnect_lead', task: 'Route packet descriptors directly from 400GbE MAC to PCIe Gen5 DMA rings via 2D NoC bypass rings.', deps: [0] },
+      { agent: 'bitstream_security_auditor', task: 'Implement inline AES-GCM-256 IPsec wire-speed encryption without dropping packets or inducing latency jitter.', deps: [0] },
+      { agent: 'fpga_solution_dossier_author', task: 'Deliver line-rate 400GbE test telemetry confirming 0% packet drop at 600 million packets/sec.', deps: [1, 2] }
+    ]
+  },
+
+  hft_sub_microsecond_tick_to_trade: {
+    name: 'Sub-Microsecond FinTech & HFT Execution',
+    title: 'Speedster7t Ultra-Low-Latency HFT Market Data Ingestion & Order Execution',
+    track: 'trackA',
+    mode: 'sequential',
+    deliverable: 'Ultra-Low-Latency 22-Nanosecond Tick-to-Trade Trading Core Specification',
+    sample: 'Implement hardware MAC-bypass and direct market data parser for NASDAQ ITCH/OUCH protocol to minimize tick-to-trade latency on VectorPath hardware.',
+    desc: 'Deterministic sub-microsecond algorithmic trade trigger architecture eliminating operating system network stack overhead.',
+    tasks: [
+      { agent: 'hft_ultra_low_latency', task: 'Construct cut-through 10GbE/25GbE MAC bypass parser decoding market data book updates in 14.5 nanoseconds.', deps: [] },
+      { agent: 'noc_interconnect_lead', task: 'Configure fixed-priority low-jitter 2D NoC point-to-point interconnect between parser and order book logic.', deps: [0] },
+      { agent: 'ace_eda_timing_closure', task: 'Optimize register retiming and critical clock domains in ACE EDA, locking operational frequency at 800 MHz.', deps: [1] },
+      { agent: 'fpga_solution_dossier_author', task: 'Sign off deterministic 22-nanosecond trigger latency benchmark for financial algorithmic trading clients.', deps: [2] }
+    ]
+  },
+
+  jesd204c_radar_signal_processing: {
+    name: 'JESD204C Phased-Array Radar DSP',
+    title: 'Speedster7t JESD204C Multi-Channel ADC/DAC Synchronization & Beamforming DSP',
+    track: 'trackA',
+    mode: 'dag',
+    deliverable: 'JESD204C 32 Gbps Multi-Tile Phased-Array Beamforming DSP Calibration Package',
+    sample: 'Calibrate 16-channel JESD204C 32 Gbps high-speed data converter interfaces and implement systolic FIR beamforming filtering on Speedster7t.',
+    desc: 'Sub-picosecond multi-channel converter phase synchronization and high-performance floating-point systolic radar filtering.',
+    tasks: [
+      { agent: 'dsp_jesd204c_radar_eng', task: 'Lock deterministic link latency across 16 lanes of 32 Gbps JESD204C Subclass 1 converters using SYSREF alignment.', deps: [] },
+      { agent: 'llm_inference_compiler', task: 'Map complex floating-point systolic array filters onto Machine Learning Processors (MLPs) for real-time beam steering.', deps: [0] },
+      { agent: 'gddr6_memory_specialist', task: 'Buffer deep radar pulse returns into GDDR6 memory at 512 GB/s for Doppler spectral processing.', deps: [0] },
+      { agent: 'fpga_solution_dossier_author', task: 'Complete defense-grade radar signal processing qualification report verifying phase error < 0.5 degrees.', deps: [1, 2] }
+    ]
+  },
+
+  speedcore_efpga_custom_asic_sizing: {
+    name: 'Speedcore eFPGA Custom ASIC Sizing',
+    title: 'Speedcore™ Embedded FPGA Fabric Custom Sizing & Power/Area Optimization',
+    track: 'trackB',
+    mode: 'sequential',
+    deliverable: 'Speedcore eFPGA TSMC 5nm/3nm Core Sizing, PPA & GDSII Integration Specification',
+    sample: 'Architect custom Speedcore eFPGA fabric with 120K LUTs, 80 MLPs, and 12 Mb LRAM to integrate into customer TSMC 5nm data-processing SoC.',
+    desc: 'Custom-tailored embedded FPGA core sizing delivering up to 88% power savings and 75% cost reduction vs discrete FPGA chips.',
+    tasks: [
+      { agent: 'efpga_ip_architect', task: 'Profile customer workload requirements, synthesizing custom balance of 6-input LUTs, BRAM72K blocks, and MLP units.', deps: [] },
+      { agent: 'noc_interconnect_lead', task: 'Map high-bandwidth parallel interface buses between custom SoC AXI crossbar and embedded FPGA boundary ports.', deps: [0] },
+      { agent: 'ace_eda_timing_closure', task: 'Deliver custom Speedcore EDA collateral, enabling customer designers to compile RTL directly into embedded fabric.', deps: [1] },
+      { agent: 'fpga_solution_dossier_author', task: 'Generate full PPA audit demonstrating 88% power reduction and 75% cost savings vs standalone FPGA implementations.', deps: [2] }
+    ]
+  },
+
+  ucie_chiplet_d2d_integration: {
+    name: 'UCIe Multi-Die Chiplet Interconnect',
+    title: 'Speedcore eFPGA Chiplet Die-to-Die (D2D) UCIe / BoW Advanced Packaging Integration',
+    track: 'trackB',
+    mode: 'dag',
+    deliverable: 'Speedcore 2.5D/3D Chiplet UCIe Die-to-Die Low-Latency Interconnect Verification Dossier',
+    sample: 'Integrate Speedcore eFPGA chiplet via UCIe 1.1 standard interconnect into 2.5D advanced substrate package alongside host application processor.',
+    desc: 'Multi-die modular chiplet design utilizing UCIe 32 Gbps/lane interconnect with sub-2ns latency and ultra-low energy per bit.',
+    tasks: [
+      { agent: 'chiplet_ucie_integ_lead', task: 'Design UCIe 1.1 physical layer microbump array and map 32 Gbps/lane die-to-die signals across organic substrate.', deps: [] },
+      { agent: 'efpga_ip_architect', task: 'Establish low-latency streaming bridge between UCIe D2D adapter and internal eFPGA fabric routing matrix.', deps: [0] },
+      { agent: 'vectorpath_board_eng', task: 'Model package thermal dissipation and warpage stress across multi-die advanced packaging stack.', deps: [0] },
+      { agent: 'fpga_solution_dossier_author', task: 'Certify sub-2ns die-to-die transport latency and bit error rate (BER < 10^-27) across chiplet interface.', deps: [1, 2] }
+    ]
+  },
+
+  post_silicon_efpga_algorithm_update: {
+    name: 'Post-Silicon eFPGA Algorithm Updating',
+    title: 'In-Field Post-Silicon eFPGA Firmware & Microcode Algorithm Adaptation',
+    track: 'trackB',
+    mode: 'sequential',
+    deliverable: 'Post-Silicon Algorithm Reconfiguration & Live Field Patching Verification Protocol',
+    sample: 'Deploy in-field algorithm update to Speedcore eFPGA block inside deployed automotive ADAS SoC to support new vision transformer model.',
+    desc: 'Non-intrusive post-silicon algorithmic hardware updates eliminating multi-million-dollar ASIC redesign and tape-out cycles.',
+    tasks: [
+      { agent: 'efpga_ip_architect', task: 'Compile updated mathematical neural operator kernels onto Speedcore eFPGA bitstream without altering base ASIC logic.', deps: [] },
+      { agent: 'bitstream_security_auditor', task: 'Sign bitstream with ECDSA-384 and encrypt payload via AES-GCM-256 for secure over-the-air (OTA) transmission.', deps: [0] },
+      { agent: 'ace_eda_timing_closure', task: 'Verify zero timing violations across corner operating conditions (-40°C to +125°C automotive temperature grade).', deps: [1] },
+      { agent: 'fpga_solution_dossier_author', task: 'Complete non-intrusive in-field reconfiguration sign-off, preserving functional safety (ISO 26262 ASIL-D).', deps: [2] }
+    ]
+  },
+
+  bitstream_hardware_root_of_trust: {
+    name: 'Hardware Security & Bitstream Trust',
+    title: 'Speedster7t & Speedcore Hardware Root-of-Trust, PUF Key & Anti-Tamper Security',
+    track: 'trackB',
+    mode: 'dag',
+    deliverable: 'Zero-Trust Bitstream Security, Anti-Tamper & PUF Key Management Architecture Dossier',
+    sample: 'Implement zero-trust secure boot and anti-tamper defenses using internal Physically Unclonable Function (PUF) on Speedster7t FPGAs.',
+    desc: 'Defense-grade hardware security utilizing unclonable silicon fingerprints, side-channel attack countermeasures, and tamper zeroization.',
+    tasks: [
+      { agent: 'bitstream_security_auditor', task: 'Configure on-chip PUF enrollment and generate device-unique cryptographic private keys for bitstream decryption.', deps: [] },
+      { agent: 'serdes_400g_ethernet_eng', task: 'Authenticate PCIe Gen5 / CXL secure boot handshake against encrypted external flash memory.', deps: [0] },
+      { agent: 'efpga_ip_architect', task: 'Establish differential power analysis (DPA) countermeasures and voltage/temperature glitch tamper detectors.', deps: [0] },
+      { agent: 'fpga_solution_dossier_author', task: 'Deliver FIPS 140-3 Level 3 compliance package confirming complete hardware-level IP protection.', deps: [1, 2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  vectorpath_llm_inference_acceleration: 'VectorPath VP815 LLaMA 3.3 70B Real-Time Inference & TCO Benchmark Dossier',
+  smartnic_400g_packet_processing: 'Speedster7t 400GbE Wire-Speed Packet Inspection & P4 Pipeline Verification Protocol',
+  hft_sub_microsecond_tick_to_trade: 'Ultra-Low-Latency 22-Nanosecond Tick-to-Trade Trading Core Specification',
+  jesd204c_radar_signal_processing: 'JESD204C 32 Gbps Multi-Tile Phased-Array Beamforming DSP Calibration Package',
+  speedcore_efpga_custom_asic_sizing: 'Speedcore eFPGA TSMC 5nm/3nm Core Sizing, PPA & GDSII Integration Specification',
+  ucie_chiplet_d2d_integration: 'Speedcore 2.5D/3D Chiplet UCIe Die-to-Die Low-Latency Interconnect Verification Dossier',
+  post_silicon_efpga_algorithm_update: 'Post-Silicon Algorithm Reconfiguration & Live Field Patching Verification Protocol',
+  bitstream_hardware_root_of_trust: 'Zero-Trust Bitstream Security, Anti-Tamper & PUF Key Management Architecture Dossier'
+};
+
+const TOOLS = {
+  efpga_lut_mlp_sizing: () => 'Speedcore sizing calculated: 124,000 6-LUTs, 96 MLPs, 14.2 Mb LRAM; silicon footprint 8.42 mm² in TSMC 5nm FinFET.',
+  asic_die_area_power_model: () => 'PPA simulation output: active power consumption 4.8 W at 650 MHz; saves 88.4% power vs standalone discrete FPGA approach.',
+  noc_bandwidth_partition: () => '2D NoC crossbar bandwidth allocated: 20.4 Tbps aggregate capacity; 8 rows x 10 columns packet mesh running at 2.0 GHz.',
+  flit_arbitration_latency_calc: () => '2D NoC packet routing latency: average point-to-point hop delay 1.15 ns, zero flit contention on dedicated VIP channels.',
+  llama_mlp_quantize_int8: () => 'LLaMA 3.3 70B quantized to INT8/Bfloat16: perplexity loss < 0.12%; MLP utilization 94.2% across 2,560 arithmetic slices.',
+  kv_cache_gddr6_stream: () => 'GDDR6 memory streaming verified: 8 channels operating at 16 Gbps, delivering 4.10 Tbps sustained bandwidth for KV-cache lookup.',
+  gddr6_channel_timing_closure: () => 'GDDR6 PHY calibration locked: read/write eye opening 68.4% UI at 1.35V; bit error rate BER < 10^-16 verified.',
+  phy_read_write_eye_margin: () => 'Signal integrity margin: setup slack +148 ps, hold slack +112 ps across process-voltage-temperature (PVT) corners.',
+  pam4_jitter_snr_verify: () => '112G PAM4 SerDes link validated: post-FEC BER < 10^-15; receiver SNR 24.2 dB across 30 dB insertion loss backplane channel.',
+  pcie_gen5_cxl_handshake: () => 'PCIe Gen5 x16 link trained: 32 GT/s link speed confirmed with CXL 2.0 coherence protocol handshake established.',
+  pcie_power_envelope_sim: () => 'VectorPath PCIe board power model: total board power 142 W under 100% MLP load, well within standard 150W auxiliary PCIe spec.',
+  board_thermal_tdp_budget: () => 'Thermal simulation in 1U server chassis: active air cooling maintains FPGA junction temperature at 71.4°C (spec limit 105°C).',
+  ace_timing_slack_report: () => 'ACE Static Timing Analysis (STA): setup slack +0.064 ns at 750 MHz global clock; hold slack clean across all internal registers.',
+  synplify_netlist_opt: () => 'Synplify Pro synthesis optimization: logic depth reduced by 14%, register pipelining inserted automatically into critical data paths.',
+  ucie_d2d_latency_budget: () => 'UCIe 1.1 link performance: die-to-die transport latency 1.82 ns; energy efficiency 0.48 pJ/bit across 64-channel standard package.',
+  microbump_signal_integrity: () => '2.5D microbump interconnect modeled: crosstalk <-42 dB at 16 GHz Nyquist frequency; insertion loss 0.28 dB per bump.',
+  jesd204c_radar_sync_lock: () => 'JESD204C Subclass 1 deterministic latency: SYSREF phase jitter < 4.8 ps; inter-lane skew aligned across all 16 channels.',
+  jesd204c_link_sync_lock: () => 'JESD204C 32 Gbps link synchronization locked: 64B/66B encoding active, deterministic frame latency guaranteed.',
+  fir_filter_beamforming_sim: () => 'Systolic beamforming FIR filter benchmark: 64-channel 128-tap complex filtering processed at 1.2 GSamples/sec per antenna tile.',
+  tick_to_trade_ns_profile: () => 'Hardware parser latency benchmark: Ethernet frame SOF to order submission trigger measured at 21.8 nanoseconds wire-to-wire.',
+  mac_bypass_packet_pipeline: () => 'Cut-through MAC bypass: preamble stripped and packet payload routed to trading decision core in 5 clock cycles at 800 MHz.',
+  aes_gcm_bitstream_encrypt: () => 'AES-GCM-256 cryptographic bitstream generated: authentication tag verified; side-channel power analysis resistance confirmed.',
+  puf_key_auth_verify: () => 'Silicon PUF enrollment confirmed: intra-die Hamming distance 0.0%, inter-die Hamming distance 49.8%; cryptographic root-of-trust locked.',
+  compile_achx_dossier: () => 'Achronix engineering dossier compiled: synthesizable RTL collateral, pin constraints, timing reports, and ROI economics bundled.',
+  customer_tco_roi_signoff: () => 'Executive TCO sign-off: 5.2x cost reduction and 68% lower server rack space footprint vs equivalent GPU cluster baseline.',
+  save: () => 'Silicon specification artifact written to secure customer repository: signed with GPG key, versioned, and indexed for engineering team.'
+};
+
+const FINAL = {
+  vectorpath_llm_inference_acceleration: `VECTORPATH VP815 LLaMA 3.3 70B REAL-TIME INFERENCE DOSSIER
+================================================================================
+Target Hardware: Achronix VectorPath® VP815 Dual-Accelerator PCIe Gen5 Card
+Silicon Platform: Speedster®7t1500 FPGA (TSMC 7nm FinFET Architecture)
+Workload Target: LLaMA 3.3 70B Open-Source Large Language Model (Real-Time Inference)
+Memory Architecture: 8 Channels GDDR6 (16 GB Capacity @ 4.10 Tbps Aggregate Bandwidth)
+
+1. MODEL QUANTIZATION & MLP COMPUTE ENGINE:
+   - Numerical Representation: INT8 weights with Bfloat16 activation scaling
+   - Compute Slice Allocation: 2,560 Machine Learning Processors (MLPs) utilized
+   - Matrix Multiplication Throughput: 82.4 TOPS sustained at 750 MHz operating frequency
+   - Perplexity Delta: < 0.12% compared to FP16 floating-point baseline
+
+2. 2D NETWORK-ON-CHIP (NoC) ROUTING TOPOLOGY:
+   - Interconnect Bandwidth: 20.4 Tbps non-blocking 2D NoC crossbar
+   - Traffic Partitioning: Weight streaming mapped to dedicated horizontal NoC rings
+   - Flit Transfer Latency: Average 1.15 ns per hop across 8x10 router mesh
+   - Fabric Routing Congestion: Zero programmable logic wire congestion (100% NoC offload)
+
+3. MEMORY SUB-SYSTEM & KV-CACHE LATENCY:
+   - KV-Cache Retrieval: Streamed across 8 independent GDDR6 PHY channels
+   - Memory Bus Utilization: 91.8% efficiency during auto-regressive decoding phase
+   - Time-to-First-Token (TTFT): 11.8 ms for 2,048 prompt context window
+   - Token Generation Rate: 48.2 tokens/second per user stream
+
+4. TOTAL COST OF OWNERSHIP (TCO) COMPARISON:
+   - Board Power Draw: 142 W under 100% computational load (Passive/Active 2U chassis)
+   - GPU Cluster Baseline Comparison: 5.2x reduction in capital and operational expenditure
+   - Server Footprint: 2U VectorPath appliance matches output of 8-GPU 4U enterprise server
+
+NOTE: illustrative simulation based on public technical documentation and semiconductor FPGA standards. Silicon implementation and production deployment require official Achronix EDA tools and licensed IP documentation.`,
+
+  smartnic_400g_packet_processing: `SPEEDSTER7t1500 400GbE SMARTNIC LINE-RATE PACKET REPORT
+================================================================================
+Hardware Platform: Speedster7t1500 Standalone FPGA (400G Ethernet SmartNIC)
+Target Application: Data Center Cloud Virtualization, Open vSwitch Offload, IPsec Gateways
+Interfaces: 8x 53 Gbps PAM4 SerDes (400GAUI-8) + PCIe Gen5 x16 Host Interface
+
+1. ETHERNET MAC & SERDES TRANSMISSION:
+   - PHY Layer: 8 channels 53.125 Gbps PAM4 with mandatory IEEE 802.3ck KP4 FEC
+   - Receiver Margin: Post-FEC Bit Error Rate < 10^-15 at 28 dB channel loss
+   - Total Line-Rate Throughput: 400.0 Gbps full-duplex wire speed (595.2 Mpps @ 64B frames)
+
+2. 2D NoC PACKET BUFFERING & DMA TRANSPORT:
+   - Packet Header Processing: Parsed in programmable logic, payloads routed via 2D NoC
+   - DMA Engine: Multi-queue PCIe Gen5 x16 DMA engine sustaining 256 Gbps host delivery
+   - Zero-Copy Ring Buffers: Direct descriptor posting to host CPU memory without CPU interrupts
+
+3. WIRE-SPEED SECURITY ENCRYPTION:
+   - Cryptographic Engine: 4-pipeline parallel AES-GCM-256 IPsec offload engine
+   - Packet Inspection Latency: Added cryptographic latency < 45 nanoseconds
+   - Packet Loss Metric: 0.000% packet drop across 100 Billion packet continuous stress run
+
+NOTE: illustrative simulation based on public technical documentation and semiconductor FPGA standards. Silicon implementation and production deployment require official Achronix EDA tools and licensed IP documentation.`,
+
+  hft_sub_microsecond_tick_to_trade: `SPEEDSTER7t ULTRA-LOW-LATENCY 22ns HFT EXECUTION DOSSIER
+================================================================================
+Target Sector: High-Frequency Algorithmic Trading (Equities, Futures & Options)
+Host Hardware: VectorPath Accelerator Card inside Low-Jitter Liquid-Cooled Server
+Target Feed: NASDAQ TotalView-ITCH / OUCH Binary Protocol (10GbE / 25GbE Optical)
+
+1. CUT-THROUGH MAC BYPASS & PARSING ENGINE:
+   - Frame Demarcation: Ethernet preamble stripped on-the-fly inside custom PHY wrapper
+   - ITCH Order Book Parser: Decodes Order Add/Cancel messages in 14.5 nanoseconds
+   - Clock Frequency: Trading decision core clocked at 800 MHz in Speedster7t fabric
+
+2. 2D NoC FIXED-PRIORITY DIRECT INTERCONNECT:
+   - Order Dispatch Channel: Fixed-priority point-to-point NoC route to PCIe / 10GbE TX MAC
+   - Jitter Characteristics: Peak-to-peak transmission jitter < 0.25 nanoseconds
+   - Wire-to-Wire Latency (Rx SOF to Tx SOF): 21.8 nanoseconds deterministic
+
+3. COMPETITIVE TRADING ADVANTAGE:
+   - CPU Software Stack Latency: ~1,200 nanoseconds (Kernel bypass baseline)
+   - Speedster7t Hardware Latency: 22 nanoseconds (54x faster execution response)
+   - Queue Position Win Rate: +38.5% increase in top-of-book execution priority
+
+NOTE: illustrative simulation based on public technical documentation and semiconductor FPGA standards. Silicon implementation and production deployment require official Achronix EDA tools and licensed IP documentation.`,
+
+  jesd204c_radar_signal_processing: `SPEEDSTER7t JESD204C MULTI-TILE RADAR DSP SPECIFICATION
+================================================================================
+Platform: Speedster7t1500 FPGA with Multi-Channel JESD204C Interface Core
+Application: Active Electronically Scanned Array (AESA) Radar & Electronic Warfare
+Data Converters: 16x ADC / 16x DAC Channels operating at up to 32.0 Gbps per lane
+
+1. DETERMINISTIC LINK SYNCHRONIZATION:
+   - JESD204C Protocol: Subclass 1 deterministic latency utilizing periodic SYSREF alignment
+   - Inter-Lane Deskew: Phase alignment achieved within +/- 4.8 ps across all 16 RF channels
+   - Operating Line Rate: 32.0 Gbps per lane (Total converter bandwidth 512 Gbps)
+
+2. SYSTOLIC ARRAY DIGITAL BEAMFORMING:
+   - Filtering Architecture: 128-tap complex finite impulse response (FIR) systolic filter
+   - Compute Resource: Mapped across Speedster7t Machine Learning Processors (MLPs)
+   - Sample Processing Rate: 1.2 GSamples/sec continuous streaming without buffer overflow
+   - Beam Steering Agility: Phase weights updated in < 120 nanoseconds per RF pulse
+
+3. MEMORY BUFFERING & SPECTRAL ANALYSIS:
+   - Deep Pulse Storage: GDDR6 memory channels capture raw I/Q samples at 512 GB/s
+   - Doppler FFT Engine: 4,096-point complex FFT computed in 3.4 microseconds
+
+NOTE: illustrative simulation based on public technical documentation and semiconductor FPGA standards. Silicon implementation and production deployment require official Achronix EDA tools and licensed IP documentation.`,
+
+  speedcore_efpga_custom_asic_sizing: `SPEEDCORE™ eFPGA TSMC 5nm CUSTOM ASIC SIZING DOSSIER
+================================================================================
+Customer Project: Custom Data Center Machine Learning & Storage Controller SoC
+Target Foundry Node: TSMC 5nm FinFET (N5) Standard Cell & eFPGA Co-Integration
+Objective: Embed Reconfigurable Logic Fabric for Post-Silicon Algorithm Agility
+
+1. SPEEDCORE FABRIC SIZING BREAKDOWN:
+   - Programmable Look-Up Tables: 124,000 6-input LUTs (6-LUT architecture)
+   - Machine Learning Processors: 96 MLP blocks (supporting INT8, INT16, FP16, Bfloat16)
+   - Embedded Memory: 14.2 Megabits of LRAM20K and BRAM72K blocks
+   - Silicon Footprint: 8.42 mm² total integrated macro area in TSMC 5nm
+
+2. POWER, PERFORMANCE & AREA (PPA) BENCHMARK:
+   - Operating Clock Frequency: 650 MHz worst-case PVT corner
+   - Total Dynamic Power: 4.82 W under maximum algorithmic utilization
+   - Discrete FPGA Comparison: 88.4% power savings vs standalone FPGA + SerDes interconnect
+   - Bill of Materials Savings: 75.2% reduction in system packaging and board layer count
+
+3. EDA COLLATERAL & ASIC INTEGRATION:
+   - Customer Design Kit: GDSII, LEF, timing Lib, Verilog simulation models delivered
+   - Customer Tool Integration: Synopsys Design Compiler and Cadence Innovus compatibility
+
+NOTE: illustrative simulation based on public technical documentation and semiconductor FPGA standards. Silicon implementation and production deployment require official Achronix EDA tools and licensed IP documentation.`,
+
+  ucie_chiplet_d2d_integration: `SPEEDCORE CHIPLET UCIe DIE-TO-DIE ADVANCED PACKAGING DOSSIER
+================================================================================
+Architecture: Multi-Die Heterogeneous 2.5D Advanced Packaging Substrate
+Chiplet Cores: Speedcore eFPGA Compute Tile + Host Application Processor Die
+Interconnect Standard: UCIe (Universal Chiplet Interconnect Express) 1.1 Specification
+
+1. PHYSICAL LAYER (PHY) INTERCONNECT METRICS:
+   - Microbump Pitch: 45 um pitch microbump array across organic package substrate
+   - Data Rate per Lane: 32.0 Gbps NRZ / PAM4 signaling
+   - Channel Configuration: 64 data lanes providing 2.048 Tbps bidirectional die-to-die bandwidth
+   - Bit Error Rate (BER): < 10^-27 (practically zero error rate across channel)
+
+2. LATENCY & ENERGY EFFICIENCY:
+   - Die-to-Die Latency: 1.82 nanoseconds total transit time between silicon dies
+   - Energy per Bit: 0.48 pJ/bit (92% more energy-efficient than traditional PCIe SerDes)
+   - AXI Streaming Bridge: Hardware adapter presents native AXI-5 interface to logic fabric
+
+3. THERMAL & MECHANICAL PACKAGING INTEGRATION:
+   - Substrate Thermal Warpage: < 12 um maximum warpage across -40°C to +125°C thermal range
+   - Thermal Dissipation Margin: Total package TDP budget of 120 W verified in simulation
+
+NOTE: illustrative simulation based on public technical documentation and semiconductor FPGA standards. Silicon implementation and production deployment require official Achronix EDA tools and licensed IP documentation.`,
+
+  post_silicon_efpga_algorithm_update: `IN-FIELD POST-SILICON eFPGA ALGORITHM UPDATE DOSSIER
+================================================================================
+Target System: Deployed Automotive ADAS Edge Perception Controller (ISO 26262 ASIL-D)
+eFPGA Core: Speedcore Embedded IP Block integrated within Tier-1 Automotive SoC
+Trigger Event: Deployment of New Multi-Scale Vision Transformer Neural Network Model
+
+1. BITSTREAM SYNTHESIS & TARGET MAPPING:
+   - New Operator Kernel: Deformable attention operator synthesized into Speedcore eFPGA
+   - Compilation Tool: Achronix ACE EDA suite with automated timing closure
+   - Operating Frequency: 500 MHz achieved with zero timing violations at 125°C junction temp
+
+2. CRYPTOGRAPHIC INTEGRITY & SECURE OTA DELIVERY:
+   - Security Envelope: Bitstream signed using ECDSA-384 and encrypted with AES-GCM-256
+   - In-System Reconfiguration: Bitstream loaded over internal SPI/AXI interface in 82 ms
+   - Fallback Safe State: Golden recovery bitstream preserved in protected non-volatile sector
+
+3. ECONOMIC & TIME-TO-MARKET VALUE:
+   - ASIC Mask Spin Avoided: Saved $8.5M in TSMC mask re-tooling and qualification costs
+   - Deployment Timeline: Updated in 3 weeks via software patch vs 14 months for silicon respin
+   - ISO 26262 Compliance: Re-certified under automotive functional safety provisions
+
+NOTE: illustrative simulation based on public technical documentation and semiconductor FPGA standards. Silicon implementation and production deployment require official Achronix EDA tools and licensed IP documentation.`,
+
+  bitstream_hardware_root_of_trust: `SPEEDSTER7t HARDWARE ROOT-OF-TRUST & SECURITY AUDIT
+================================================================================
+Security Framework: Defense-Grade Zero-Trust Hardware Security Architecture
+Silicon Target: Speedster7t FPGAs & Speedcore eFPGA IP Cores
+Compliance Grade: FIPS 140-3 Level 3 & Common Criteria EAL 5+ Target Profile
+
+1. SILICON PHYSICALLY UNCLONABLE FUNCTION (PUF):
+   - Key Generation: Device-unique cryptographic key derived from silicon manufacturing entropy
+   - Intra-Die Bit Stability: 0.00% Hamming distance drift across voltage (-10% / +10%) and temp
+   - Non-Volatile Key Storage: Zero plaintext keys stored in flash or unpowered registers
+
+2. BITSTREAM ENCRYPTION & AUTHENTICATION ENGINE:
+   - Decryption Standard: AES-GCM-256 with integrated authenticated message data
+   - Side-Channel Defense: Differential Power Analysis (DPA) noise injection active
+   - Secure Boot Time: Full 120 Mb encrypted bitstream authenticated and loaded in 142 ms
+
+3. ANTI-TAMPER & ZEROIZATION CONTROLS:
+   - Environmental Sensors: Voltage glitching, temperature excursion, and laser decapping detectors
+   - Active Zeroization: Cryptographic erase triggered in < 5 nanoseconds upon physical tamper
+   - Intellectual Property Protection: Reverse engineering barrier rated unbreakable against FIB
+
+NOTE: illustrative simulation based on public technical documentation and semiconductor FPGA standards. Silicon implementation and production deployment require official Achronix EDA tools and licensed IP documentation.`
+};
+
+const EMPLOYEES = [
+  { id: 'acx-vp-ai', name: 'ACX-VpAi', title: 'VectorPath AI & LLM Inference Lead', wf: 'vectorpath_llm_inference_acceleration', handled: 184, hrs: 3950, win: '5.2x TCO', status: 'idle' },
+  { id: 'acx-smartnic', name: 'ACX-SmartNic', title: '400GbE Line-Rate SmartNIC Architect', wf: 'smartnic_400g_packet_processing', handled: 146, hrs: 2880, win: '400G Line', status: 'idle' },
+  { id: 'acx-hft-core', name: 'ACX-HftCore', title: 'Sub-Microsecond FinTech Acceleration Lead', wf: 'hft_sub_microsecond_tick_to_trade', handled: 215, hrs: 4210, win: '22 ns', status: 'idle' },
+  { id: 'acx-radar-dsp', name: 'ACX-RadarDsp', title: 'JESD204C Phased-Array DSP Specialist', wf: 'jesd204c_radar_signal_processing', handled: 89, hrs: 1940, win: '32 Gbps', status: 'idle' },
+  { id: 'acx-speedcore', name: 'ACX-Speedcore', title: 'Speedcore eFPGA Custom ASIC Architect', wf: 'speedcore_efpga_custom_asic_sizing', handled: 128, hrs: 2750, win: '-88% Power', status: 'idle' },
+  { id: 'acx-chiplet', name: 'ACX-Chiplet', title: 'UCIe Multi-Die Chiplet Integration Lead', wf: 'ucie_chiplet_d2d_integration', handled: 74, hrs: 1820, win: '<2ns D2D', status: 'idle' },
+  { id: 'acx-field-patch', name: 'ACX-FieldPatch', title: 'Post-Silicon eFPGA Adaptation Director', wf: 'post_silicon_efpga_algorithm_update', handled: 162, hrs: 3100, win: 'Zero Silicon', status: 'idle' },
+  { id: 'acx-sec-trust', name: 'ACX-SecTrust', title: 'Hardware Root-of-Trust & Security Lead', wf: 'bitstream_hardware_root_of_trust', handled: 110, hrs: 2260, win: 'FIPS 140-3', status: 'idle' }
+];
+
+let activeEmpId = null;
+let selectedWfKey = 'vectorpath_llm_inference_acceleration';
+let runState = {
+  running: false,
+  phase: 0,
+  runningTasks: new Set(),
+  completedTasks: new Set()
+};
+
+function init() {
+  renderEcon();
+  renderRoster();
+  renderBuilderWfs();
+}
+
+function switchTab(t) {
+  document.getElementById('tab-roster').classList.toggle('active', t === 'roster');
+  document.getElementById('tab-builder').classList.toggle('active', t === 'builder');
+  document.getElementById('view-roster').classList.toggle('hidden', t !== 'roster');
+  document.getElementById('view-builder').classList.toggle('hidden', t !== 'builder');
+}
+
+function renderEcon() {
+  const cont = document.getElementById('econ-strip');
+  cont.innerHTML = `
+    <div class="cell"><div class="v">&gt;20<span class="u"> Tbps</span></div><div class="k">2D Network-on-Chip (NoC) Crossbar Bandwidth</div></div>
+    <div class="cell"><div class="v">4.1<span class="u"> Tbps</span></div><div class="k">GDDR6 High-Bandwidth Memory Throughput</div></div>
+    <div class="cell"><div class="v">5.2<span class="u">x</span></div><div class="k">Inference TCO Advantage vs GPU Clusters</div></div>
+    <div class="cell"><div class="v">-88<span class="u">%</span></div><div class="k">Power Reduction (Speedcore eFPGA vs Standalone)</div></div>
+  `;
+}
+
+function empCard(emp) {
+  const wf = WORKFLOWS[emp.wf];
+  const card = document.createElement('div');
+  card.className = `emp ${emp.id === activeEmpId ? 'working' : ''} ${wf.tag === 'flagship' ? 'hero' : ''}`;
+  card.id = `card-${emp.id}`;
+
+  const initials = emp.name.split('-').map(s => s[0]).slice(0, 2).join('');
+  const badgeHTML = wf.tag === 'flagship' ? '<span class="tag hero">Flagship</span>' : (wf.track === 'trackA' ? '<span class="tag commercial">Speedster7t &amp; AI</span>' : '<span class="tag operations">eFPGA IP &amp; Co-Design</span>');
+
+  let teamHTML = '';
+  wf.tasks.forEach(t => {
+    const a = AGENT_ROLES[t.agent];
+    if (a) teamHTML += `<span class="chip">${a.emoji} ${a.label.split(' ')[0]}</span>`;
+  });
+
+  card.innerHTML = `
+    <div class="emp-top">
+      <div class="avatar">${initials}</div>
+      <div>
+        <div class="emp-name">${emp.name} ${badgeHTML}</div>
+        <div class="emp-title">${emp.title}</div>
+      </div>
+    </div>
+    <div class="emp-owns">Owns: <b>${wf.name}</b></div>
+    <div class="team">${teamHTML}</div>
+    <div class="emp-stats">
+      <div class="st"><b>${emp.handled}</b>Runs</div>
+      <div class="st"><b>${emp.hrs.toFixed(0)}h</b>Silicon Eng Saved</div>
+      <div class="st"><b class="wn" style="color:var(--accent)">${emp.win}</b>Benchmark</div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" onclick="setupRun('${emp.id}')">Run Operator</button>
+      <button class="btn" onclick="inspectWf('${emp.wf}')">Inspect Workflow</button>
+    </div>
+  `;
+  return card;
+}
+
+function renderRoster() {
+  const cont = document.getElementById('roster-tracks');
+  cont.innerHTML = '';
+
+  TRACKS.forEach(([tk, tl]) => {
+    const slabel = document.createElement('div');
+    slabel.className = 'slabel';
+    slabel.innerText = tl;
+    cont.appendChild(slabel);
+
+    const grid = document.createElement('div');
+    grid.className = 'roster';
+
+    EMPLOYEES.filter(e => {
+      const wf = WORKFLOWS[e.wf];
+      return wf.track === tk;
+    }).forEach(e => grid.appendChild(empCard(e)));
+
+    if (tk === 'trackB') {
+      const hire = document.createElement('div');
+      hire.className = 'hire-card';
+      hire.onclick = () => switchTab('builder');
+      hire.innerHTML = `
+        <div class="plus">+</div>
+        <div class="h">Add an Operator</div>
+        <div class="p">Compose specialist FPGA logic, 2D NoC routing, and eFPGA IP agents into a custom workflow</div>
+      `;
+      grid.appendChild(hire);
+    }
+    cont.appendChild(grid);
+  });
+}
+
+function inspectWf(wfKey) {
+  selectedWfKey = wfKey;
+  switchTab('builder');
+  goToStep(2);
+}
+
+function setupRun(empId) {
+  activeEmpId = empId;
+  const emp = EMPLOYEES.find(e => e.id === empId);
+  const wf = WORKFLOWS[emp.wf];
+
+  const cont = document.getElementById('run-container');
+  cont.className = 'run';
+  cont.innerHTML = `
+    <div class="run-head">
+      <div class="avatar" style="width:38px;height:38px;font-size:13px">${emp.name.split('-').map(s=>s[0]).slice(0,2).join('')}</div>
+      <div>
+        <div style="font-size:16px;font-weight:700;color:var(--hi)">${emp.name} &bull; ${wf.name}</div>
+        <div class="run-sub">${wf.desc}</div>
+      </div>
+    </div>
+
+    <div class="run-input">
+      <textarea id="run-prompt">${wf.sample}</textarea>
+      <button class="btn primary big" id="btn-execute" onclick="executeRun()">Execute Multi-Agent Run</button>
+    </div>
+
+    <div class="phases" id="run-phases"></div>
+    <div class="agent-grid" id="run-agent-grid"></div>
+
+    <div class="feed" id="run-feed"></div>
+
+    <div class="result hidden" id="run-result">
+      <div class="rstats">
+        <div style="font-size:13px;font-weight:700;color:var(--hi);margin-bottom:12px">Execution Telemetry</div>
+        <div class="rrow"><span class="k">Orchestration</span><span class="v">${wf.mode.toUpperCase()}</span></div>
+        <div class="rrow"><span class="k">Specialist Agents</span><span class="v">${wf.tasks.length} Active</span></div>
+        <div class="rrow"><span class="k">Process Node</span><span class="v">TSMC 7nm / 5nm / 3nm</span></div>
+        <div class="rrow"><span class="k">Security Grade</span><span class="v">FIPS 140-3 Compliant</span></div>
+        <div class="rrow"><span class="k">Status</span><span class="v" style="color:var(--ok)">Verified</span></div>
+      </div>
+      <div class="rout">
+        <div class="rh">${DTITLE[emp.wf] || wf.deliverable}</div>
+        <div class="rb" id="run-final-text"></div>
+      </div>
+    </div>
+
+    <div class="donebar hidden" id="run-donebar">
+      <b>Run Complete:</b> Semiconductor solution &amp; engineering package generated. Validated against Achronix silicon models and industry standards.
+    </div>
+  `;
+
+  const pcont = document.getElementById('run-phases');
+  const acont = document.getElementById('run-agent-grid');
+
+  wf.tasks.forEach((t, i) => {
+    const ph = document.createElement('div');
+    ph.className = 'ph';
+    ph.id = `ph-${i}`;
+    ph.innerHTML = `<div class="dot">${i+1}</div><div class="l">Task ${i+1}</div>`;
+    pcont.appendChild(ph);
+
+    const a = AGENT_ROLES[t.agent];
+    const ac = document.createElement('div');
+    ac.className = 'acard';
+    ac.id = `acard-${i}`;
+    ac.innerHTML = `
+      <div class="ae">${a ? a.emoji : '⚡'}</div>
+      <div class="ar">${a ? a.label : t.agent}</div>
+      <div class="at">${t.task}</div>
+      <div class="as"><div class="sd"></div><span id="astat-${i}">Queued</span></div>
+    `;
+    acont.appendChild(ac);
+  });
+
+  cont.scrollIntoView({ behavior: 'smooth' });
+}
+
+function logFeed(agent, text) {
+  const f = document.getElementById('run-feed');
+  if (!f) return;
+  const row = document.createElement('div');
+  row.className = 'frow';
+  const now = new Date();
+  const ts = now.toTimeString().split(' ')[0];
+  row.innerHTML = `<span class="ft">${ts}</span><span class="fa">${agent}</span><span class="fd">${text}</span>`;
+  f.appendChild(row);
+  f.scrollTop = f.scrollHeight;
+}
+
+function executeRun() {
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[emp.wf];
+
+  document.getElementById('btn-execute').disabled = true;
+  document.getElementById('run-feed').innerHTML = '';
+  document.getElementById('run-result').classList.add('hidden');
+  document.getElementById('run-donebar').classList.add('hidden');
+
+  logFeed('System', `Initiating ${wf.mode.toUpperCase()} FPGA engineering workflow: ${wf.name}...`);
+
+  runState.running = true;
+  runState.phase = 0;
+  runState.runningTasks.clear();
+  runState.completedTasks.clear();
+
+  if (wf.mode === 'sequential') {
+    executeSequentialStep(0);
+  } else {
+    executeDagLoop();
+  }
+}
+
+function executeSequentialStep(idx) {
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[emp.wf];
+
+  if (idx >= wf.tasks.length) {
+    finishRun();
+    return;
+  }
+
+  setTaskStatus(idx, 'running');
+  const t = wf.tasks[idx];
+  const a = AGENT_ROLES[t.agent];
+  logFeed(a ? a.label : t.agent, `Dispatched: ${t.task}`);
+
+  setTimeout(() => {
+    const toolKey = (a && a.tools && a.tools[0]) ? a.tools[0] : 'save';
+    const toolFn = TOOLS[toolKey] || TOOLS.save;
+    logFeed(a ? a.label : t.agent, `[Output] ${toolFn()}`);
+
+    setTaskStatus(idx, 'done');
+    setTimeout(() => {
+      executeSequentialStep(idx + 1);
+    }, 450);
+  }, 1000);
+}
+
+function executeDagLoop() {
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[emp.wf];
+
+  const canRun = [];
+  wf.tasks.forEach((t, i) => {
+    if (!runState.completedTasks.has(i) && !runState.runningTasks.has(i)) {
+      const depsMet = t.deps.every(d => runState.completedTasks.has(d));
+      if (depsMet) canRun.push(i);
+    }
+  });
+
+  if (canRun.length === 0) {
+    if (runState.completedTasks.size === wf.tasks.length) {
+      finishRun();
+    }
+    return;
+  }
+
+  canRun.forEach(idx => {
+    runState.runningTasks.add(idx);
+    setTaskStatus(idx, 'running');
+    const t = wf.tasks[idx];
+    const a = AGENT_ROLES[t.agent];
+    logFeed(a ? a.label : t.agent, `Dispatched (Parallel): ${t.task}`);
+
+    setTimeout(() => {
+      const toolKey = (a && a.tools && a.tools[0]) ? a.tools[0] : 'save';
+      const toolFn = TOOLS[toolKey] || TOOLS.save;
+      logFeed(a ? a.label : t.agent, `[Output] ${toolFn()}`);
+
+      runState.runningTasks.delete(idx);
+      runState.completedTasks.add(idx);
+      setTaskStatus(idx, 'done');
+      executeDagLoop();
+    }, 1000);
+  });
+}
+
+function setTaskStatus(idx, st) {
+  const ph = document.getElementById(`ph-${idx}`);
+  const ac = document.getElementById(`acard-${idx}`);
+  const as = document.getElementById(`astat-${idx}`);
+
+  if (ph) {
+    ph.classList.toggle('active', st === 'running');
+    ph.classList.toggle('done', st === 'done');
+  }
+  if (ac) {
+    ac.className = `acard visible ${st}`;
+  }
+  if (as) {
+    as.innerText = st === 'running' ? 'Executing...' : (st === 'done' ? 'Complete' : 'Queued');
+  }
+}
+
+function finishRun() {
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[emp.wf];
+  logFeed('System', 'All tasks synchronized. Assembling verified deliverable...');
+
+  document.getElementById('btn-execute').disabled = false;
+  document.getElementById('run-result').classList.remove('hidden');
+  document.getElementById('run-donebar').classList.remove('hidden');
+
+  const deliverableText = FINAL[emp.wf] || 'FPGA solution deliverable completed.';
+  document.getElementById('run-final-text').innerText = deliverableText;
+
+  emp.handled += 1;
+  emp.hrs += 4.5;
+  renderEcon();
+  const card = document.getElementById(`card-${emp.id}`);
+  if (card) {
+    card.replaceWith(empCard(emp));
+  }
+}
+
+function renderBuilderWfs() {
+  const cont = document.getElementById('builder-wf-grid');
+  cont.innerHTML = '';
+  Object.keys(WORKFLOWS).forEach(k => {
+    const wf = WORKFLOWS[k];
+    const item = document.createElement('div');
+    item.className = `wf ${k === selectedWfKey ? 'sel' : ''}`;
+    item.id = `bwf-${k}`;
+    item.onclick = () => selectBuilderWf(k);
+
+    const badge = wf.tag === 'flagship' ? '<span class="tag hero">Flagship</span>' : (wf.track === 'trackA' ? '<span class="tag commercial">Speedster7t &amp; AI</span>' : '<span class="tag operations">eFPGA IP &amp; Co-Design</span>');
+    item.innerHTML = `
+      <div class="wn">${wf.name} ${badge}</div>
+      <div class="wd">${wf.desc}</div>
+      <div class="wm">${wf.mode.toUpperCase()} &bull; ${wf.tasks.length} TASKS</div>
+    `;
+    cont.appendChild(item);
+  });
+}
+
+function selectBuilderWf(k) {
+  selectedWfKey = k;
+  renderBuilderWfs();
+}
+
+function goToStep(s) {
+  document.getElementById('st-1').classList.toggle('active', s === 1);
+  document.getElementById('st-2').classList.toggle('active', s === 2);
+  document.getElementById('st-3').classList.toggle('active', s === 3);
+
+  document.getElementById('bstep-1').classList.toggle('hidden', s !== 1);
+  document.getElementById('bstep-2').classList.toggle('hidden', s !== 2);
+  document.getElementById('bstep-3').classList.toggle('hidden', s !== 3);
+
+  if (s === 2) {
+    const wf = WORKFLOWS[selectedWfKey];
+    document.getElementById('bstep2-wftitle').innerText = `Configure Tasks: ${wf.name}`;
+    const cont = document.getElementById('task-map-container');
+    cont.innerHTML = '';
+
+    wf.tasks.forEach((t, i) => {
+      const row = document.createElement('div');
+      row.className = 'task-row';
+
+      let optionsHTML = '';
+      Object.keys(AGENT_ROLES).forEach(ak => {
+        const a = AGENT_ROLES[ak];
+        const sel = ak === t.agent ? 'selected' : '';
+        optionsHTML += `<option value="${ak}" ${sel}>${a.emoji} ${a.label}</option>`;
+      });
+
+      row.innerHTML = `
+        <div class="tn">${i+1}</div>
+        <div class="tt">${t.task}</div>
+        <select id="sel-task-${i}">${optionsHTML}</select>
+      `;
+      cont.appendChild(row);
+    });
+  }
+}
+
+function deployOperator() {
+  const name = document.getElementById('b-emp-name').value.trim() || 'Custom-FPGA-Operator';
+  const title = document.getElementById('b-emp-title').value.trim() || 'Custom Achronix Silicon Acceleration Specialist';
+
+  const newId = 'custom-op-' + Date.now();
+  EMPLOYEES.push({
+    id: newId,
+    name: name,
+    title: title,
+    wf: selectedWfKey,
+    handled: 1,
+    hrs: 8.5,
+    win: 'Newly Deployed',
+    status: 'idle'
+  });
+
+  renderEcon();
+  renderRoster();
+  switchTab('roster');
+  setupRun(newId);
+}
+
+window.onload = init;
+</script>
+</body>
+</html>
