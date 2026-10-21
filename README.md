@@ -323,3 +323,17 @@ https://innvonix-tech-solutions.github.io/ai-workforce/metox
 https://innvonix-tech-solutions.github.io/ai-workforce/vektrex
 https://innvonix-tech-solutions.github.io/ai-workforce/ultrasense
 https://innvonix-tech-solutions.github.io/ai-workforce/rohner-ai-workforce
+https://innvonix-tech-solutions.github.io/ai-workforce/flip-electronics
+https://innvonix-tech-solutions.github.io/ai-workforce/South-bay-solutions
+https://innvonix-tech-solutions.github.io/ai-workforce/empower-semi
+https://innvonix-tech-solutions.github.io/ai-workforce/techpoint
+https://innvonix-tech-solutions.github.io/ai-workforce/atlas-magnetics
+https://innvonix-tech-solutions.github.io/ai-workforce/eliyan-corporation
+https://innvonix-tech-solutions.github.io/ai-workforce/innogrit
+https://innvonix-tech-solutions.github.io/ai-workforce/amber-semiconductor
+https://innvonix-tech-solutions.github.io/ai-workforce/forwardedgeasic
+https://innvonix-tech-solutions.github.io/ai-workforce/netlist
+https://innvonix-tech-solutions.github.io/ai-workforce/agile-analog
+https://innvonix-tech-solutions.github.io/ai-workforce/rasirc
+https://innvonix-tech-solutions.github.io/ai-workforce/cymer
+https://innvonix-tech-solutions.github.io/ai-workforce/achronix-semi
