@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RASIRC &mdash; AI Specialty Gas Delivery &amp; Advanced ALD/ALE Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f8fafc;--surface2:#f1f5f9;--border:#cbd5e1;--accent:#188274;
+--accent-dim:rgba(24,130,116,.08);--accent-line:rgba(24,130,116,.30);--slate:#0f2b38;--slate-line:rgba(15,43,56,.30);--text:#1e293b;--hi:#0f2b38;--tert:#475569;--ok:#16a34a;--ok-dim:rgba(22,163,74,.10);--gold:#d97706;--gold-bg:#fef3c7;--gold-line:#fde68a}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:52px;height:34px;border-radius:8px;background:linear-gradient(135deg,#0f2b38,#188274);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:12px;letter-spacing:.5px;font-family:Inter,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#188274}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:920px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#188274;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(22,163,74,.08);color:#16a34a;border:1px solid rgba(22,163,74,.3)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#188274}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#188274;font-size:15px;flex-shrink:0;position:relative;font-family:Inter,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#188274}.btn.primary{background:linear-gradient(270deg,#188274,#0f5f54);border-color:#188274;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#188274;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#188274}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#188274}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Inter,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#188274;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;color:var(--hi)}.task-row select{background:#fff;border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;color:var(--hi);outline:none;font-family:Inter,sans-serif}
+.footer{max-width:1180px;margin:32px auto 0;padding:0 24px 32px;font-size:11.5px;color:var(--tert);line-height:1.5;border-top:1px solid var(--border);padding-top:18px;font-family:Inter,sans-serif}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="mark">RSC</div>
+    <div>
+      <div class="htitle">RASIRC &mdash; AI Specialty Gas Delivery &amp; Advanced ALD/ALE Workforce (concept)</div>
+      <div class="hsub">Pioneers of BRUTE&reg; Hydrazine &bull; BRUTE&reg; Peroxide &bull; Peroxidizer&reg; &bull; RainMaker&reg; &bull; San Diego, CA</div>
+    </div>
+  </div>
+  <div class="badge">Simulated Operations &bull; <b>8 Operators Active</b></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tab-roster" onclick="switchTab('roster')">AI Operator Roster</button>
+  <button class="tab" id="tab-builder" onclick="switchTab('builder')">Add an Operator</button>
+</div>
+
+<div class="main">
+  <div id="view-roster">
+    <div class="lead">
+      <b>RASIRC</b> is an advanced semiconductor chemical vapor delivery and equipment pioneer headquartered in San Diego, California, founded by the late industry visionary Jeffrey Spiegelman and led by CEO Rob Torres. RASIRC develops groundbreaking technologies that convert low-vapor-pressure, hazardous reactive liquid chemistries into stable, ultra-pure, anhydrous dynamic gas streams for sub-3nm semiconductor fabrication. Its proprietary non-porous fluoropolymer membrane technology overcomes Raoult's Law limitations, delivering particle-free vapors with sub-ppb metallic purity. Key innovations include <b>BRUTE&reg; Hydrazine</b> (enabling thermal atomic layer deposition of metal nitrides at temperatures under 350&deg;C for Gate-All-Around nanosheets and 3D NAND without plasma damage), <b>BRUTE&reg; Peroxide</b> and the <b>Peroxidizer&reg;</b> (generating water-free 99.9% pure H2O2 gas for high-k dielectrics and atomic cleaning), and <b>RainMaker&reg;</b> ultrapure water vapor systems. Operating in strategic alignment with top-tier tool OEMs (Applied Materials, Lam Research, Tokyo Electron, ASM) and leading semiconductor fabs (TSMC, Intel, Samsung, Micron), RASIRC enables extreme high-aspect-ratio scaling and safe sub-fab chemical delivery. This interactive AI workforce prototype simulates autonomous multi-agent orchestration across low-temperature ALD nitride synthesis, high-k oxidation, 3D NAND trench filling, and fab pyrophoric gas safety abatement.
+    </div>
+
+    <div class="legend">
+      <span><span class="tag commercial">ALD &amp; 3D Scaling</span> BRUTE Hydrazine low-temp (<350&deg;C) nitrides, BRUTE Peroxide anhydrous gate oxides, 3D NAND 100:1 HAR trench filling, area-selective ALD surface prep</span>
+      <span><span class="tag operations">Safety &amp; Integration</span> Peroxidizer OEM tool integration, RainMaker membrane humidification, sub-fab pyrophoric gas abatement, Imperial Valley bulk chemical logistics</span>
+      <span><span class="tag hero">Flagship</span> BRUTE&reg; Hydrazine Ultra-Low Temperature (&lt;350&deg;C) Metal Nitride ALD for GAA Nanosheets</span>
+    </div>
+
+    <div class="econ" id="econ-strip"></div>
+
+    <div id="roster-tracks"></div>
+
+    <div id="run-container" class="hidden"></div>
+  </div>
+
+  <div id="view-builder" class="hidden">
+    <div class="lead">
+      <b>Operator Builder:</b> Compose a specialized multi-agent operator to automate low-temperature ALD recipe synthesis, 3D NAND aspect ratio modeling, OEM tool plumbing integration, or sub-fab toxic gas abatement.
+    </div>
+
+    <div class="steps">
+      <div class="step active" id="st-1">
+        <div class="n">STEP 1</div>
+        <div class="l">Select Process Workflow</div>
+        <div class="d">Choose the base ALD precursor delivery or fab safety workflow</div>
+      </div>
+      <div class="step" id="st-2">
+        <div class="n">STEP 2</div>
+        <div class="l">Assign Chemical Specialists</div>
+        <div class="d">Allocate specialist roles across chemistry, hardware, and safety</div>
+      </div>
+      <div class="step" id="st-3">
+        <div class="n">STEP 3</div>
+        <div class="l">Name &amp; Deploy Operator</div>
+        <div class="d">Configure title and deploy operator to active roster</div>
+      </div>
+    </div>
+
+    <div id="bstep-1">
+      <div class="slabel">Available ALD &amp; Chemical Delivery Workflows</div>
+      <div class="wf-grid" id="builder-wf-grid"></div>
+      <div style="margin-top:20px;display:flex;justify-content:flex-end">
+        <button class="btn primary big" onclick="goToStep(2)">Configure Operator Agents &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-2" class="hidden">
+      <div class="slabel" id="bstep2-wftitle">Configure Specialist Assignment</div>
+      <div id="task-map-container"></div>
+      <div style="margin-top:20px;display:flex;justify-content:space-between">
+        <button class="btn big" onclick="goToStep(1)">&larr; Back to Workflows</button>
+        <button class="btn primary big" onclick="goToStep(3)">Set Identity &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-3" class="hidden">
+      <div class="slabel">Operator Profile &amp; Deployment</div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;max-width:540px">
+        <div style="margin-bottom:14px">
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--hi);margin-bottom:6px">Operator Name</label>
+          <input type="text" id="b-emp-name" value="Custom-ALD-Architect" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none">
+        </div>
+        <div style="margin-bottom:20px">
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--hi);margin-bottom:6px">Functional Title</label>
+          <input type="text" id="b-emp-title" value="Specialty Precursor &amp; Fab Co-Engineering Lead" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none">
+        </div>
+        <button class="btn primary big" style="width:100%" onclick="deployOperator()">Deploy to Live Workforce</button>
+      </div>
+      <div style="margin-top:20px">
+        <button class="btn" onclick="goToStep(2)">&larr; Back to Task Config</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <b>Simulated Operations Notice:</b> This interactive AI workforce prototype is an architectural demonstration engineered for RASIRC stakeholders. All operational throughputs, precursor flow rates, and chemical reaction metrics are illustrative placeholders based on public technical papers and semiconductor equipment standards. Fab chemical delivery, vacuum flange integration, and pyrophoric gas handling require review and sign-off by qualified process engineers and certified fab environmental health and safety (EHS) officers.
+</div>
+
+<script>
+const AGENT_ROLES = {
+  ald_nitride_process_scientist: { emoji: '🔬', label: 'BRUTE Hydrazine & Low-Temp ALD Nitride Lead', tools: ['hydrazine_flux_control', 'nitride_step_coverage_sim', 'save'] },
+  anhydrous_peroxide_chemist: { emoji: '🧪', label: 'BRUTE Peroxide & High-k Oxide Specialist', tools: ['peroxide_vapor_concentration', 'oxide_density_ellipsometry', 'save'] },
+  membrane_vaporizer_eng: { emoji: '⚙️', label: 'Non-Porous Membrane Vaporization Engineer', tools: ['membrane_mass_transport', 'carrier_gas_permeation_test', 'save'] },
+  har_3dnand_gaa_architect: { emoji: '🏛️', label: '3D NAND & GAA Nanosheet HAR Architect', tools: ['har_trench_depth_profile', 'nanosheet_channel_conformality', 'save'] },
+  fab_safety_toxicology_officer: { emoji: '🛡️', label: 'Fab EHS, Toxic Gas Abatement & Safety Officer', tools: ['exhaust_pyrophoric_scrub', 'spill_containment_sensor_check', 'save'] },
+  oem_tool_integration_lead: { emoji: '🛠️', label: 'OEM Tool Integration & SECS/GEM Interface Lead', tools: ['secs_gem_recipe_handshake', 'cluster_tool_flange_plumbing', 'save'] },
+  surface_cleaning_euv_chemist: { emoji: '✨', label: 'Atomic Surface Prep & EUV Resist Clean Lead', tools: ['carbon_hydroxylation_xps', 'euv_debris_strip_sim', 'save'] },
+  rainmaker_humidity_physicist: { emoji: '💧', label: 'RainMaker Ultrapure Water Vapor Physicist', tools: ['water_vapor_ppm_calibrate', 'anneal_oxide_growth_rate', 'save'] },
+  area_selective_ald_specialist: { emoji: '🎯', label: 'Area-Selective Deposition (AS-ALD) Lead', tools: ['sam_monolayer_passivation', 'metal_selectivity_margin', 'save'] },
+  precursor_supply_logistics_dir: { emoji: '📦', label: 'Chemical Precursor Supply & DOT Delivery Director', tools: ['iso_tanker_cylinder_audit', 'vapor_pressure_stability_log', 'save'] },
+  thin_film_metrology_analyst: { emoji: '📐', label: 'TEM/XPS Thin Film Metrology & Defect Analyst', tools: ['xps_impurity_detect', 'tem_interface_roughness', 'save'] },
+  fab_process_dossier_author: { emoji: '✍️', label: 'Fab Process Qualification & Co-Engineering Author', tools: ['dossier_compile', 'oem_signoff_package', 'save'] }
+};
+
+const TRACKS = [
+  ['trackA', 'Advanced ALD/ALE Precursor Delivery & 3D Silicon Scaling'],
+  ['trackB', 'Fab Safety, High-Purity Membrane Systems & OEM Tool Integration']
+];
+
+const WORKFLOWS = {
+  brute_hydrazine_gaa_nanosheet_flagship: {
+    name: 'BRUTE® Hydrazine Ultra-Low Temperature (<350°C) Metal Nitride ALD for GAA Nanosheets',
+    title: 'BRUTE® Hydrazine Damage-Free Low-Temperature (<350°C) Thermal ALD Nitride Delivery Blueprint',
+    mode: 'sequential',
+    track: 'trackA',
+    tag: 'flagship',
+    deliverable: 'BRUTE® Hydrazine Sub-350°C Metal Nitride ALD Process & Delivery Dossier',
+    sample: 'Deploy BRUTE Hydrazine delivery system to deposit conformal TiN and TaN barrier films on 2nm Gate-All-Around nanosheets at 300°C. Eliminate direct-plasma damage, achieve > 98% step coverage around nanosheet channels, and restrict oxygen impurities below 0.8 atomic percent.',
+    desc: 'Flagship precursor delivery workflow synthesizing damage-free, ultra-conformal TiN/TaN gate metal and Si3N4 spacers on GAA nanosheet channels using anhydrous BRUTE Hydrazine at sub-350°C.',
+    tasks: [
+      { agent: 'ald_nitride_process_scientist', task: 'Calibrate anhydrous N2H4 gas partial pressure, dose timing (80 ms), and purge cycles to overcome plasma damage limits', deps: [] },
+      { agent: 'membrane_vaporizer_eng', task: 'Verify non-porous fluoropolymer membrane mass transport delivering stable 100 sccm hydrazine vapor without solvent carryover', deps: [0] },
+      { agent: 'har_3dnand_gaa_architect', task: 'Model nanosheet channel conformality, lateral wrap-around step coverage, and pinch-off void prevention in 3D geometries', deps: [1] },
+      { agent: 'thin_film_metrology_analyst', task: 'Execute XPS composition depth profiling confirming < 0.8 at% oxygen and TEM cross-section confirming sub-0.3 nm interface roughness', deps: [2] },
+      { agent: 'fab_safety_toxicology_officer', task: 'Validate point-of-use catalytic abatement scrubber, dual-containment jacketed tubing, and emergency shutoff interlocks', deps: [3] },
+      { agent: 'fab_process_dossier_author', task: 'Author complete fab process qualification report, OEM precursor integration specification, and SEMI safety compliance certificate', deps: [4] }
+    ]
+  },
+  brute_peroxide_highk_oxidation: {
+    name: 'BRUTE® Peroxide Anhydrous H2O2 High-k Gate Dielectric & 3D Oxidation',
+    title: 'BRUTE® Peroxide Water-Free 99.9% H2O2 Gas Generation for High-k Metal Oxide ALD',
+    mode: 'dag',
+    track: 'trackA',
+    deliverable: 'BRUTE® Peroxide High-k Dielectric & Low-Temp Oxidation Blueprint',
+    sample: 'Deliver anhydrous hydrogen peroxide vapor for ALD of HfO2 and Al2O3 high-k gate dielectrics on sub-3nm fin and nanosheet channels. Bypass water-induced interface defects and achieve interface trap density (Dit) < 1x10^11 cm-2 eV-1.',
+    desc: 'Delivers water-free 99.9% pure H2O2 gas for low-temperature ALD of HfO2, ZrO2, and Al2O3, achieving > 99% step coverage and low interface state density (Dit).',
+    tasks: [
+      { agent: 'anhydrous_peroxide_chemist', task: 'Formulate proprietary anhydrous H2O2/carrier solvent balance to defeat Raoult law limitations and deliver 99.9% dry oxidant', deps: [] },
+      { agent: 'membrane_vaporizer_eng', task: 'Regulate vaporizer temperature and pressure controllers to maintain constant 25 Torr H2O2 vapor delivery pressure', deps: [0] },
+      { agent: 'thin_film_metrology_analyst', task: 'Measure dielectric constant (k > 22) and interface trap density via capacitance-voltage (C-V) mercury probe sweeps', deps: [0] },
+      { agent: 'fab_process_dossier_author', task: 'Compile high-k dielectric growth curve dataset, XPS interface bond distribution, and OEM recipe sign-off package', deps: [1, 2] }
+    ]
+  },
+  har_3dnand_trench_nitride_dep: {
+    name: '3D NAND High Aspect Ratio (100:1) Word-Line Nitride & Cavity Cleaning',
+    title: '3D NAND 100:1 Aspect Ratio Deep-Trench Thermal Nitride & In-Situ Cavity Cleaning',
+    mode: 'dag',
+    track: 'trackA',
+    deliverable: '3D NAND High Aspect Ratio Word-Line Deposition & Cavity Clean Dossier',
+    sample: 'Deliver thermal BRUTE Hydrazine and Peroxide vapors into 200+ layer 3D NAND vertical memory channels. Achieve 100% conformal Si3N4 charge-trap layer deposition across 100:1 depth-to-width aspect ratio holes without line-of-sight plasma shadowing.',
+    desc: 'Overcomes line-of-sight plasma limitations in 200+ layer 3D NAND by delivering thermal hydrazine and peroxide vapors for 100:1 HAR trench fill and cavity cleaning.',
+    tasks: [
+      { agent: 'har_3dnand_gaa_architect', task: 'Simulate Knudsen diffusion, precursor residence time, and sidewall sticking coefficients in 100:1 aspect ratio memory holes', deps: [] },
+      { agent: 'ald_nitride_process_scientist', task: 'Optimize multi-pulse hydrazine exposure sequence to achieve 100% bottom-to-top trench thickness uniformity', deps: [0] },
+      { agent: 'surface_cleaning_euv_chemist', task: 'Deploy cyclic peroxide vapor pulses to clean post-etch polymer residues from recessed oxide-nitride-oxide (ONO) cavities', deps: [0] },
+      { agent: 'fab_process_dossier_author', task: 'Assemble 3D NAND step coverage characterization report, cross-sectional TEM micrographs, and fab throughput model', deps: [1, 2] }
+    ]
+  },
+  area_selective_ald_surface_prep: {
+    name: 'Area-Selective ALD (AS-ALD) & Directed Self-Assembly Surface Passivation',
+    title: 'Area-Selective Deposition (AS-ALD) Surface Conditioning & Monolayer Passivation',
+    mode: 'sequential',
+    track: 'trackA',
+    deliverable: 'Area-Selective ALD Surface Passivation & Hybrid Bonding Process Dossier',
+    sample: 'Engineer area-selective ALD process for bottom-up copper/cobalt interconnect via fill and die-to-wafer hybrid bonding. Use cyclic BRUTE Peroxide hydroxylation to functionalize dielectric regions while keeping metallic surfaces pristine.',
+    desc: 'Executes cyclic chemical hydroxylation and self-assembled monolayer (SAM) passivation for bottom-up selective metal deposition on advanced interconnects and hybrid bonding.',
+    tasks: [
+      { agent: 'area_selective_ald_specialist', task: 'Map differential surface adsorption kinetics between metal lines and low-k dielectrics to achieve > 99.2% selectivity', deps: [] },
+      { agent: 'anhydrous_peroxide_chemist', task: 'Tune hydroxyl radical surface termination density on SiO2 while preventing copper oxidation during pre-treatment', deps: [0] },
+      { agent: 'surface_cleaning_euv_chemist', task: 'Passivate copper contact pads using self-assembled monolayer inhibitors to block unselective metal nucleation', deps: [1] },
+      { agent: 'fab_process_dossier_author', task: 'Generate AS-ALD process specification, surface contact angle metrology report, and hybrid bonding integration guide', deps: [2] }
+    ]
+  },
+  membrane_vaporizer_oem_integration: {
+    name: 'Peroxidizer® & OEM Cluster Tool Sub-Fab Vacuum Integration',
+    title: 'Peroxidizer® High-Volume Precursor Delivery Sub-Fab & Cluster Tool Vacuum Interface',
+    mode: 'dag',
+    track: 'trackB',
+    deliverable: 'Peroxidizer® OEM Tool Vacuum & Sub-Fab Integration Blueprint',
+    sample: 'Integrate RASIRC Peroxidizer high-volume vapor delivery system into a 300mm multi-chamber ALD cluster tool (Applied Materials / Lam Research). Connect automated SECS/GEM interface, vacuum manifold line heating, and emergency interlocks.',
+    desc: 'Integrates RASIRC non-porous fluoropolymer membrane vaporizers into leading 300mm OEM cluster tools (Applied Materials, Lam, TEL) with SECS/GEM automation.',
+    tasks: [
+      { agent: 'oem_tool_integration_lead', task: 'Configure heated delivery gas manifold, multi-valve manifold box, and mass flow controller (MFC) calibrations', deps: [] },
+      { agent: 'membrane_vaporizer_eng', task: 'Calibrate non-porous perfluorinated membrane flux under sustained 24/7 high-volume fab production cycle times', deps: [0] },
+      { agent: 'fab_safety_toxicology_officer', task: 'Connect hardware fail-safe vacuum interlocks, exhaust pressure sensors, and toxic gas leak detection loops', deps: [0] },
+      { agent: 'fab_process_dossier_author', task: 'Compile OEM cluster tool integration manual, pneumatic/electrical interconnect schematic, and SEMI S2 certification', deps: [1, 2] }
+    ]
+  },
+  rainmaker_ultrapure_water_vapor: {
+    name: 'RainMaker® Membrane Ultrapure Water Vapor Generation & Low-Temp Anneal',
+    title: 'RainMaker® Ultrapure Humidification System (RHS) for Thermal Annealing & Wet Oxidation',
+    mode: 'dag',
+    track: 'trackB',
+    deliverable: 'RainMaker® Ultrapure Water Vapor Process Specification & Metrology Package',
+    sample: 'Deploy RainMaker Humidification System for advanced low-temperature wet oxidation and furnace annealing. Deliver particle-free water vapor with metallic contamination < 1 part-per-billion (ppb) through non-porous ion-exchange membrane.',
+    desc: 'Generates particle-free, sub-ppb ionic purity water vapor through non-porous membranes for thermal oxidation, furnace annealing, and selective surface re-oxidation.',
+    tasks: [
+      { agent: 'rainmaker_humidity_physicist', task: 'Calibrate moisture concentrations from 1 ppm up to 100% relative humidity with +/-0.5% dew point precision', deps: [] },
+      { agent: 'membrane_vaporizer_eng', task: 'Validate non-porous membrane barrier blocking liquid droplet carryover, silica nanoparticles, and dissolved ionic metals', deps: [0] },
+      { agent: 'thin_film_metrology_analyst', task: 'Verify ICP-MS trace metal analysis demonstrating < 1 ppb Fe, Cu, Ni, and Cr in generated steam process effluent', deps: [0] },
+      { agent: 'fab_process_dossier_author', task: 'Publish RainMaker process repeatability baseline, furnace integration handbook, and consumable maintenance schedule', deps: [1, 2] }
+    ]
+  },
+  fab_pyrophoric_ehs_abatement: {
+    name: 'Sub-Fab Pyrophoric Gas Abatement & Hydrazine Leak Containment Sign-Off',
+    title: 'Fab Environmental Health & Safety (EHS) Pyrophoric Gas Handling & Abatement Protocol',
+    mode: 'sequential',
+    track: 'trackB',
+    deliverable: 'Fab Pyrophoric Gas EHS, Abatement & Regulatory Compliance Dossier',
+    sample: 'Engineer comprehensive fab EHS protocol for BRUTE Hydrazine delivery in advanced 300mm logic foundry. Verify catalytic thermal oxidizer abatement efficiency > 99.999%, double-walled coaxial tubing, and OSHA/NFPA hazardous materials compliance.',
+    desc: 'Certifies multi-barrier toxic gas containment, point-of-use catalytic scrubbers, and SEMI S2/S8 compliance for fab-scale anhydrous hydrazine handling.',
+    tasks: [
+      { agent: 'fab_safety_toxicology_officer', task: 'Design 3-tier safety containment matrix: secondary containment cabinet, continuous vacuum monitoring, and optical gas sensors', deps: [] },
+      { agent: 'precursor_supply_logistics_dir', task: 'Audit UN-certified hazardous materials transport packaging, emergency pressure relief devices, and swap-out procedures', deps: [0] },
+      { agent: 'oem_tool_integration_lead', task: 'Validate emergency purge cycle triggering N2 flush and sub-100 millisecond pneumatic valve closure upon alarm', deps: [1] },
+      { agent: 'fab_process_dossier_author', task: 'Produce formal Environmental Health and Safety (EHS) sign-off dossier, hazardous material safety datasheet (MSDS), and OSHA report', deps: [2] }
+    ]
+  },
+  bulk_precursor_logistics_imperial_valley: {
+    name: 'Imperial Valley Facility Bulk Precursor Supply & DOT Delivery Assurance',
+    title: 'Imperial Valley High-Purity Production Facility Supply Chain & Logistics Operations',
+    mode: 'dag',
+    track: 'trackB',
+    deliverable: 'Imperial Valley Production & Global Precursor Supply Assurance Package',
+    sample: 'Coordinate precursor logistics from RASIRC new high-volume production facility in Imperial Valley, California. Guarantee uninterrupted weekly multi-drum deliveries of BRUTE Hydrazine and Peroxide to tier-1 domestic and Asian semiconductor mega-fabs.',
+    desc: 'Manages high-purity chemical manufacturing, ISO container logistics, and uninterrupted fab delivery from RASIRC new Imperial Valley production facility.',
+    tasks: [
+      { agent: 'precursor_supply_logistics_dir', task: 'Manage chemical batch synthesis, distillation purity testing, and certified lot release schedules in Imperial Valley', deps: [] },
+      { agent: 'ald_nitride_process_scientist', task: 'Conduct incoming/outgoing lot assay characterization ensuring 99.9% precursor purity and batch-to-batch consistency', deps: [0] },
+      { agent: 'fab_safety_toxicology_officer', task: 'Audit Department of Transportation (DOT) HazMat shipping compliance across air, ocean, and ground refrigerated freight routes', deps: [0] },
+      { agent: 'fab_process_dossier_author', task: 'Compile global supply chain continuity plan, Certificate of Analysis (CoA) library, and fab customer service SLA agreement', deps: [1, 2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  brute_hydrazine_gaa_nanosheet_flagship: 'BRUTE® Hydrazine Sub-350°C Metal Nitride ALD Process & Delivery Dossier',
+  brute_peroxide_highk_oxidation: 'BRUTE® Peroxide High-k Dielectric & Low-Temp Oxidation Blueprint',
+  har_3dnand_trench_nitride_dep: '3D NAND High Aspect Ratio Word-Line Deposition & Cavity Clean Dossier',
+  area_selective_ald_surface_prep: 'Area-Selective ALD Surface Passivation & Hybrid Bonding Process Dossier',
+  membrane_vaporizer_oem_integration: 'Peroxidizer® OEM Tool Vacuum & Sub-Fab Integration Blueprint',
+  rainmaker_ultrapure_water_vapor: 'RainMaker® Ultrapure Water Vapor Process Specification & Metrology Package',
+  fab_pyrophoric_ehs_abatement: 'Fab Pyrophoric Gas EHS, Abatement & Regulatory Compliance Dossier',
+  bulk_precursor_logistics_imperial_valley: 'Imperial Valley Production & Global Precursor Supply Assurance Package'
+};
+
+const TOOLS = {
+  hydrazine_flux_control: () => '[Hydrazine Delivery Engine] Anhydrous N2H4 vapor flux stabilized at 85 sccm +/-0.5%; pulse width trimmed to 80 ms.',
+  nitride_step_coverage_sim: () => '[Step Coverage Simulation] Calculated > 98.4% conformality in 3D nanosheet gate trench without direct plasma exposure.',
+  peroxide_vapor_concentration: () => '[H2O2 Concentration Monitor] Real-time optical absorption verifies 99.9% anhydrous H2O2 vapor delivered at 25 Torr.',
+  oxide_density_ellipsometry: () => '[Spectroscopic Ellipsometry] HfO2 film density measured at 9.68 g/cm3 with refractive index n = 2.08 at 632.8 nm.',
+  membrane_mass_transport: () => '[Non-Porous Membrane Engine] Fluoropolymer mass transport delivers pure vapor while blocking 100% of liquid droplets and particles.',
+  carrier_gas_permeation_test: () => '[Carrier Gas Permeation] Helium/N2 carrier gas mixing verified; zero solvent break-through detected across 500 operating hours.',
+  har_trench_depth_profile: () => '[3D NAND Profiler] Precursor diffusion depth modeled across 100:1 aspect ratio channels; sidewall sticking coefficient optimized to 0.002.',
+  nanosheet_channel_conformality: () => '[GAA Nanosheet Model] Full 360-degree channel surround deposition verified with zero pinch-off voids on 2nm logic pitch.',
+  exhaust_pyrophoric_scrub: () => '[Catalytic Scrubber] Point-of-use catalytic abatement confirms > 99.999% destruction removal efficiency (DRE) of unreacted hydrazine.',
+  spill_containment_sensor_check: () => '[Fab Containment Sensor] Triply redundant optical toxic gas monitors verified active; zero PPM threshold baseline maintained.',
+  secs_gem_recipe_handshake: () => '[SECS/GEM Automation] Automated handshake verified with 300mm OEM cluster tool host; recipe-driven vapor pulsing synced in 2 ms.',
+  cluster_tool_flange_plumbing: () => '[Vacuum Flange Plumber] Heated delivery lines mapped at 120 C to eliminate precursor condensation between sub-fab and chamber.',
+  carbon_hydroxylation_xps: () => '[XPS Surface Analyzer] In-situ H2O2 vapor clean removes 99.6% of surface carbon contaminants, creating dense Si-OH hydroxyl monolayers.',
+  euv_debris_strip_sim: () => '[EUV Strip Engine] Extreme ultraviolet post-exposure carbon residue stripped at 150 C without damaging underlying Ru pellicle.',
+  water_vapor_ppm_calibrate: () => '[RainMaker RHS Engine] Water vapor output calibrated from 5 ppm to 85,000 ppm with sub-0.5% dew point drift over 30 days.',
+  anneal_oxide_growth_rate: () => '[Thermal Wet Oxidation] Oxide growth rate enhanced by 35% compared to pyrogenic steam at reduced 800 C thermal budget.',
+  sam_monolayer_passivation: () => '[AS-ALD SAM Engine] Octadecyltrichlorosilane (ODTS) monolayer self-assembled on SiO2; contact angle measured at 112 degrees.',
+  metal_selectivity_margin: () => '[Selectivity Margin Engine] Selective cobalt nucleation confirmed on Cu pads with zero defect growth on passivated dielectric for 65 cycles.',
+  iso_tanker_cylinder_audit: () => '[HazMat Cylinder Audit] DOT-4BW and UN-certified stainless steel delivery canisters inspected and leak-checked to 1x10^-9 atm-cc/s He.',
+  vapor_pressure_stability_log: () => '[Precursor Stability Log] Headspace vapor pressure monitored over 180-day storage; zero auto-decomposition or pressure rise detected.',
+  xps_impurity_detect: () => '[XPS Impurity Metrology] Metal film chemical purity verified: carbon < 0.2 at%, oxygen < 0.6 at%, chlorine non-detectable.',
+  tem_interface_roughness: () => '[High-Res TEM Imaging] Atomic-resolution cross-sectional TEM confirms root-mean-square (RMS) surface roughness < 0.28 nm.',
+  dossier_compile: () => '[Technical Dossier Author] Compiled turnkey fab qualification report, SEMI S2 safety sign-off, and chemical process baseline data.',
+  oem_signoff_package: () => '[OEM Acceptance Package] Cluster tool co-engineering acceptance dossier signed and certified for volume fab production.',
+  save: () => '[Secure Repository] Committed chemical delivery recipes, safety interlock diagrams, metrology reports, and EHS documentation to archive.'
+};
+
+const FINAL = {
+  brute_hydrazine_gaa_nanosheet_flagship: `RASIRC &mdash; PROCESS CO-ENGINEERING SPECIFICATION
+BRUTE® HYDRAZINE SUB-350°C METAL NITRIDE ALD PROCESS & PRECURSOR DELIVERY BLUEPRINT
+Target Application: Gate-All-Around (GAA) Nanosheet Transistors & High-k Metal Gates (HKMG)
+Precursor System: BRUTE® Hydrazine Anhydrous N2H4 Gas Delivery | Target Temperature: 280°C to 330°C
+
+1. THE ADVANCED ALD NITRIDE VALUE PROPOSITION
+As semiconductor logic scales to sub-3nm GAA nanosheet architectures, thermal budget restrictions and plasma-induced damage become critical yield limiters:
+- Plasma-Free Thermal Deposition: Replaces energetic line-of-sight plasma nitridation, completely eliminating RF-induced physical lattice damage and gate oxide degradation.
+- Ultra-Low Thermal Budget: Active thermal nitridation occurs at 280°C to 330°C, compared to traditional ammonia (NH3) processes requiring excessive temperatures exceeding 600°C.
+- 360-Degree Conformal Gate Metallization: Delivers > 98.4% conformal step coverage around complex suspended nanosheet channels, ensuring uniform work function tuning for nFET and pFET devices.
+- High Chemical Purity: Achieves dense, low-resistivity TiN and TaN barrier films with oxygen impurity levels restricted below 0.8 atomic percent and carbon < 0.2 at%.
+
+2. NON-POROUS MEMBRANE VAPORIZATION HARDWARE
+- Safe Liquid-Source Delivery: Delivers pure hydrazine vapor on demand from a safe, liquid-filled stainless steel source canister without the catastrophic hazards of high-pressure toxic gas cylinders.
+- Membrane Selectivity: Proprietary perfluorinated non-porous membrane enables volatile hydrazine gas transport into carrier gas (N2/He) while 100% blocking liquid droplets and metallic particulates.
+- Pulsing Repeatability: Sustains millisecond-speed pulse reproducibility across millions of ALD cycles with automated mass flow control.
+
+3. FAB SAFETY & REGULATORY CERTIFICATION
+- Point-of-Use Catalytic Abatement: Fully compatible with commercial sub-fab catalytic scrubbers achieving > 99.999% destruction removal efficiency (DRE).
+- Double-Containment Architecture: Jacketed delivery lines and optical leak sensors comply with SEMI S2, SEMI S8, and international fab toxic gas regulations.
+
+NOTE: illustrative simulation based on public technical documentation and semiconductor chemistry standards. Chemical recipes and fab tool installation require engineering qualification.`,
+
+  brute_peroxide_highk_oxidation: `RASIRC &mdash; HIGH-K OXIDATION REPORT
+BRUTE® PEROXIDE ANHYDROUS H2O2 HIGH-K DIELECTRIC & LOW-TEMPERATURE OXIDATION
+Target Application: HfO2 / ZrO2 Gate Dielectrics & Interfacial Layer (IL) Scaling on Sub-3nm Logic
+Precursor Delivery: BRUTE® Peroxide Anhydrous H2O2 Vapor System | Operating Pressure: 25 Torr
+
+1. WATER-FREE OXIDANT ADVANTAGE
+Conventional hydrogen peroxide solutions contain 70% water, creating competitive surface adsorption that degrades film density and increases interface trap states:
+- 99.9% Anhydrous Gas: BRUTE Peroxide delivers dense, water-free H2O2 gas utilizing proprietary solvent chemistry that bypasses Raoult's Law vapor-liquid equilibrium constraints.
+- High-Density Interfacial Oxides: Forms atomically thin, stoichiometric SiO2 and SiGeOx interfacial layers with interface trap densities (Dit) < 1x10^11 cm-2 eV-1.
+- High-k Dielectric Quality: ALD HfO2 films deposited using anhydrous H2O2 achieve dielectric constants (k > 22) and break-down field strengths exceeding 8 MV/cm.
+- Low-Temperature Reactivity: Initiates complete metal-organic precursor ligand oxidation at temperatures down to 150°C, preserving delicate underlying channel materials.
+
+2. SUB-FAB MEMBRANE VAPORIZER INTEGRATION
+- Consistent Vapor Concentration: Delivers steady 25 Torr H2O2 vapor pressure over the entire lifetime of the chemical canister without concentration decay.
+- Automated Fab Communication: SECS/GEM interface provides real-time canister status, liquid level tracking, and automated vapor concentration diagnostic alerts.
+
+NOTE: illustrative simulation based on public technical documentation and semiconductor chemistry standards. Chemical recipes and fab tool installation require engineering qualification.`,
+
+  har_3dnand_trench_nitride_dep: `RASIRC &mdash; MEMORY ARCHITECTURE BLUEPRINT
+3D NAND HIGH ASPECT RATIO (100:1) WORD-LINE NITRIDE & CAVITY CLEANING SPECIFICATION
+Target Market: 200+ Layer 3D NAND Flash Memory | Form Factor: 300mm Wafer Fab Process
+Precursor Delivery: BRUTE® Hydrazine & Peroxide Deep-Trench Gas Delivery Systems
+
+1. OVERCOMING 3D NAND HIGH ASPECT RATIO CHALLENGES
+As 3D NAND stacks surpass 200 layers, memory hole depth-to-width aspect ratios exceed 100:1, rendering conventional line-of-sight plasma nitridation ineffective:
+- Deep Cavity Penetration: Gaseous anhydrous hydrazine exhibits high volatility and optimal surface sticking coefficients (s ~ 0.002), enabling deep Knudsen diffusion into 100:1 aspect ratio memory cavities.
+- 100% Bottom-to-Top Uniformity: Forms uniform, pinhole-free silicon nitride (Si3N4) charge trap layers without throat pinch-off or void formation.
+- In-Situ Polymer Removal: Cyclic BRUTE Peroxide pulses remove fluorocarbon etch residues and polymer byproducts from deeply recessed word-line tunnels prior to metal gate fill.
+
+2. PRODUCTION FAB ECONOMICS
+- Cycle Time Compression: High chemical reactivity reduces required precursor exposure times by up to 40%, accelerating multi-hour 3D NAND furnace and cluster tool runtimes.
+- Chemical Utilization Efficiency: Membrane vaporization eliminates precursor waste, reducing recurring consumable costs by over $320,000 annually per production cluster tool.
+
+NOTE: illustrative simulation based on public technical documentation and semiconductor chemistry standards. Chemical recipes and fab tool installation require engineering qualification.`,
+
+  area_selective_ald_surface_prep: `RASIRC &mdash; ATOMIC SCALE PROCESSING REPORT
+AREA-SELECTIVE ALD (AS-ALD) & DIE-TO-WAFER HYBRID BONDING PROCESS SPECIFICATION
+Focus: Bottom-Up Interconnect Metallization, Self-Assembled Monolayers & Direct Cu-Cu Hybrid Bonding
+Process Tools: Cyclic Anhydrous Peroxide Surface Conditioning & Organic Inhibitor Passivation
+
+1. SELECTIVE NUCLEATION & SURFACE FUNCTIONALIZATION
+Area-selective deposition is essential to eliminate edge placement errors (EPE) in advanced semiconductor interconnect metallization:
+- Controlled Hydroxylation: BRUTE Peroxide vapor generates high-density silanol (Si-OH) functional groups on dielectric surfaces without oxidizing metallic copper contact pads.
+- Monolayer Blocking: Selective self-assembled monolayer (SAM) inhibitors passivate metallic interconnect lines, blocking unselective precursor nucleation for > 65 consecutive ALD cycles.
+- Bottom-Up Metal Growth: Enables pristine, selective cobalt and ruthenium cap deposition on copper vias, slashing via electrical resistance by 28%.
+
+2. DIE-TO-WAFER HYBRID BONDING ACTIVATION
+- Room-Temperature Surface Cleansing: Anhydrous H2O2 vapor oxidizes and desorbs organic contaminants at 25°C, creating hydrophilic surfaces optimized for high-strength direct copper-dielectric fusion bonding.
+
+NOTE: illustrative simulation based on public technical documentation and semiconductor chemistry standards. Chemical recipes and fab tool installation require engineering qualification.`,
+
+  membrane_vaporizer_oem_integration: `RASIRC &mdash; OEM INTEGRATION BLUEPRINT
+PEROXIDIZER® & OEM ALD CLUSTER TOOL SUB-FAB HARDWARE INTEGRATION SPECIFICATION
+Target Platforms: 300mm Multi-Chamber ALD Tools (Applied Materials, Lam Research, Tokyo Electron, ASM)
+Hardware Systems: Peroxidizer® High-Volume Gas Generator & Multi-Valve Heated Manifold Box
+
+1. HARDWARE VACUUM & PLUMBING ARCHITECTURE
+- Point-of-Use Delivery: Designed for clean sub-fab installation directly beneath the wafer processing cleanroom, minimizing delivery line distance.
+- Dual-Jacketed Heated Lines: 120°C temperature-controlled stainless steel coaxial piping prevents cold-spot vapor condensation and secondary aerosol formation.
+- Fast Response Valve Manifold: High-speed pneumatic ALD valves deliver sharp, microsecond-scale chemical dose pulses into process chambers with zero pressure hammer.
+
+2. AUTOMATED SECS/GEM FAB INTERACTION
+- Semi-Autonomous Process Control: Onboard PLC controller interfaces directly with factory automated material handling systems (AMHS) and tool host controllers.
+- Predictive Health Monitoring: Built-in flow sensors, pressure transducers, and thermal monitors predict membrane maintenance requirements 300 hours in advance.
+
+NOTE: illustrative simulation based on public technical documentation and semiconductor chemistry standards. Chemical recipes and fab tool installation require engineering qualification.`,
+
+  rainmaker_ultrapure_water_vapor: `RASIRC &mdash; HUMIDIFICATION SPECIFICATION
+RAINMAKER® MEMBRANE ULTRAPURE WATER VAPOR (RHS) SPECIFICATION
+Target Processes: Low-Temperature Wet Oxidation, Transistor Gate Re-Oxidation & Furnace Annealing
+Purity Benchmark: Particle-Free, Metallic Impurities < 1 Part-Per-Billion (ppb)
+
+1. REVOLUTIONARY MEMBRANE PURIFICATION
+Traditional bubbler and pyrogenic steam delivery systems suffer from boiler corrosion, dissolved quartz impurities, and explosive hydrogen/oxygen combustion risks:
+- Sub-ppb Ionic Metal Rejection: Proprietary non-porous ion-exchange membrane permits only water molecules to permeate into the carrier gas stream, blocking silica, sodium, and heavy metals.
+- Zero Droplet Carryover: Gas-phase permeation eliminates aerosol droplet formation, preventing water mark defects on sensitive wafer topographies.
+- Wide Moisture Dynamic Range: Delivers calibrated moisture concentrations spanning 1 ppm up to 100% relative humidity with +/-0.5% dew point precision.
+
+2. OXIDATION PROCESS ENHANCEMENT
+- Enhanced Growth Kinetics: Delivers active OH radicals that increase thermal oxide growth rates by up to 35% compared to conventional dry O2, allowing lower furnace temperatures.
+- Silicon-Passivation Integrity: Minimizes fixed oxide charges (Qf) and interface traps in power semiconductor silicon carbide (SiC) and silicon gate stacks.
+
+NOTE: illustrative simulation based on public technical documentation and semiconductor chemistry standards. Chemical recipes and fab tool installation require engineering qualification.`,
+
+  fab_pyrophoric_ehs_abatement: `RASIRC &mdash; FAB EHS & SAFETY DOSSIER
+SUB-FAB PYROPHORIC GAS ABATEMENT & HYDRAZINE HANDLING SAFETY PROTOCOL
+Regulatory Framework: SEMI S2-0715, SEMI S8-0712 & NFPA 55 Hazardous Gas Standards
+Target Facility: 300mm Advanced Logic & Memory Semiconductor Manufacturing Cleanrooms
+
+1. THREE-TIER SAFETY CONTAINMENT ARCHITECTURE
+RASIRC implements comprehensive safety engineering allowing high-volume fabs to safely utilize reactive, toxic precursors:
+- Primary Chemical Containment: Hermetically sealed stainless steel canister equipped with internal bellows-sealed pneumatic valves and burst-disc overpressure relief.
+- Secondary Containment Cabinet: Continuously exhausted negative-pressure enclosure equipped with optical UV/IR toxic gas sensors calibrated to 10 ppb threshold sensitivity.
+- Tertiary Sub-Fab Interlocks: Redundant hardware interlocks trigger automatic nitrogen ballast purges and pneumatic valve isolation in < 100 milliseconds upon detected anomaly.
+
+2. POINT-OF-USE CATALYTIC EXHAUST ABATEMENT
+- Complete Pyrophoric Destruction: Heated catalytic beds decompose unreacted hydrazine exhaust into inert nitrogen (N2) and water vapor (H2O), achieving > 99.999% destruction efficiency.
+- Zero Hazardous Effluent: Eliminates toxic gas discharge into municipal scrubbing channels, fulfilling semiconductor industry environmental sustainability mandates.
+
+NOTE: illustrative simulation based on public technical documentation and semiconductor chemistry standards. Chemical recipes and fab tool installation require engineering qualification.`,
+
+  bulk_precursor_logistics_imperial_valley: `RASIRC &mdash; SUPPLY ASSURANCE REPORT
+IMPERIAL VALLEY PRODUCTION FACILITY BULK PRECURSOR SUPPLY & LOGISTICS DOSSIER
+Facility: RASIRC Imperial Valley Chemical Manufacturing Plant (California)
+Products: BRUTE® Hydrazine & BRUTE® Peroxide Commercial Bulk Supply | Logistics: DOT/IATA Certified
+
+1. GLOBAL MANUFACTURING SCALABILITY
+To meet the exponential demand for sub-3nm GAA logic and 3D NAND scaling, RASIRC established a dedicated high-capacity chemical production facility in Imperial Valley:
+- Multi-Metric-Ton Production Capacity: Scaled synthesis and automated distillation infrastructure capable of supporting global high-volume manufacturing (HVM) fabs.
+- On-Site Analytical Lab: Equipped with inductively coupled plasma mass spectrometry (ICP-MS) and Fourier-transform infrared spectroscopy (FTIR) ensuring 99.9% batch purity.
+- Redundant Sourcing Strategy: Dual-site synthesis infrastructure prevents single-point supply chain interruptions for fab customers.
+
+2. GLOBAL REFRIGERATED TRANSPORT LOGISTICS
+- UN-Certified Transport Packaging: Specialized temperature-controlled shipping containers maintain chemical precursor stability during international air, ocean, and ground freight.
+- Consignment Inventory Management: Automated logistics tracking coordinates just-in-time delivery to foundry hub distribution centers in the United States, Taiwan, South Korea, and Europe.
+
+NOTE: illustrative simulation based on public technical documentation and semiconductor chemistry standards. Chemical recipes and fab tool installation require engineering qualification.`
+};
+
+const EMPLOYEES = [
+  { id: 'emp-gaa', name: 'RC-GaaNitride', title: 'BRUTE Hydrazine GAA Nanosheet Operator', wf: 'brute_hydrazine_gaa_nanosheet_flagship', handled: 52, hrs: 310.0, win: '<350°C Thermal' },
+  { id: 'emp-oxide', name: 'RC-HighkOxide', title: 'BRUTE Peroxide High-k Oxidation Operator', wf: 'brute_peroxide_highk_oxidation', handled: 64, hrs: 345.5, win: '99.9% Anhydrous' },
+  { id: 'emp-nand', name: 'RC-NandHar', title: '3D NAND High Aspect Ratio Nitride Operator', wf: 'har_3dnand_trench_nitride_dep', handled: 48, hrs: 280.0, win: '100:1 HAR' },
+  { id: 'emp-selective', name: 'RC-SelectiveAld', title: 'Area-Selective ALD & Surface Prep Operator', wf: 'area_selective_ald_surface_prep', handled: 42, hrs: 235.0, win: '>99% Selective' },
+  { id: 'emp-oem', name: 'RC-OemIntegration', title: 'OEM Tool & Sub-Fab Delivery Operator', wf: 'membrane_vaporizer_oem_integration', handled: 76, hrs: 410.0, win: 'SEMI S2/S8' },
+  { id: 'emp-rainmaker', name: 'RC-RainMaker', title: 'RainMaker Ultrapure Humidity Operator', wf: 'rainmaker_ultrapure_water_vapor', handled: 59, hrs: 270.0, win: '<1 ppb Metals' },
+  { id: 'emp-safety', name: 'RC-FabSafety', title: 'Pyrophoric Gas EHS & Abatement Operator', wf: 'fab_pyrophoric_ehs_abatement', handled: 84, hrs: 390.0, win: 'Zero Excursion' },
+  { id: 'emp-supply', name: 'RC-PrecursorSupply', title: 'Imperial Valley Precursor Logistics Operator', wf: 'bulk_precursor_logistics_imperial_valley', handled: 68, hrs: 295.0, win: '100% On-Time' }
+];
+
+let activeEmpId = null;
+let runState = { running: false, phase: 0, timer: null, runningTasks: new Set(), completedTasks: new Set() };
+let selectedWfKey = 'brute_hydrazine_gaa_nanosheet_flagship';
+
+function init() {
+  renderEcon();
+  renderRoster();
+  renderBuilderWfs();
+}
+
+function switchTab(t) {
+  document.getElementById('tab-roster').classList.toggle('active', t === 'roster');
+  document.getElementById('tab-builder').classList.toggle('active', t === 'builder');
+  document.getElementById('view-roster').classList.toggle('hidden', t !== 'roster');
+  document.getElementById('view-builder').classList.toggle('hidden', t !== 'builder');
+}
+
+function renderEcon() {
+  const cont = document.getElementById('econ-strip');
+  cont.innerHTML = `
+    <div class="cell"><div class="v">&lt;350<span class="u">°C</span></div><div class="k">Thermal Budget ALD (vs &gt;600°C NH3)</div></div>
+    <div class="cell"><div class="v">99.9<span class="u">%</span></div><div class="k">Anhydrous Precursor Purity (Water-Free)</div></div>
+    <div class="cell"><div class="v">100:1<span class="u"> HAR</span></div><div class="k">Aspect Ratio Conformal Step Coverage</div></div>
+    <div class="cell"><div class="v">&lt;1<span class="u"> ppb</span></div><div class="k">Metal Impurity Levels (Pore-Free Membrane)</div></div>
+  `;
+}
+
+function empCard(emp) {
+  const wf = WORKFLOWS[emp.wf];
+  const card = document.createElement('div');
+  card.className = `emp ${emp.id === activeEmpId ? 'working' : ''} ${wf.tag === 'flagship' ? 'hero' : ''}`;
+  card.id = `card-${emp.id}`;
+
+  const initials = emp.name.split('-').map(s => s[0]).slice(0, 2).join('');
+  const badgeHTML = wf.tag === 'flagship' ? '<span class="tag hero">Flagship</span>' : (wf.track === 'trackA' ? '<span class="tag commercial">ALD &amp; 3D Scaling</span>' : '<span class="tag operations">Safety &amp; Integration</span>');
+
+  let teamHTML = '';
+  wf.tasks.forEach(t => {
+    const a = AGENT_ROLES[t.agent];
+    if (a) teamHTML += `<span class="chip">${a.emoji} ${a.label.split(' ')[0]}</span>`;
+  });
+
+  card.innerHTML = `
+    <div class="emp-top">
+      <div class="avatar">${initials}</div>
+      <div>
+        <div class="emp-name">${emp.name} ${badgeHTML}</div>
+        <div class="emp-title">${emp.title}</div>
+      </div>
+    </div>
+    <div class="emp-owns">Owns: <b>${wf.name}</b></div>
+    <div class="team">${teamHTML}</div>
+    <div class="emp-stats">
+      <div class="st"><b>${emp.handled}</b>Cycles</div>
+      <div class="st"><b>${emp.hrs.toFixed(1)}h</b>Engineering Saved</div>
+      <div class="st"><b class="wn" style="color:var(--accent)">${emp.win}</b>Benchmark</div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" onclick="setupRun('${emp.id}')">Run Operator</button>
+      <button class="btn" onclick="inspectWf('${emp.wf}')">Inspect Workflow</button>
+    </div>
+  `;
+  return card;
+}
+
+function renderRoster() {
+  const cont = document.getElementById('roster-tracks');
+  cont.innerHTML = '';
+
+  TRACKS.forEach(([tk, tl]) => {
+    const slabel = document.createElement('div');
+    slabel.className = 'slabel';
+    slabel.innerText = tl;
+    cont.appendChild(slabel);
+
+    const grid = document.createElement('div');
+    grid.className = 'roster';
+
+    EMPLOYEES.filter(e => {
+      const wf = WORKFLOWS[e.wf];
+      return wf.track === tk;
+    }).forEach(e => grid.appendChild(empCard(e)));
+
+    if (tk === 'trackB') {
+      const hire = document.createElement('div');
+      hire.className = 'hire-card';
+      hire.onclick = () => switchTab('builder');
+      hire.innerHTML = `
+        <div class="plus">+</div>
+        <div class="h">Add an Operator</div>
+        <div class="p">Compose specialist precursor and chemical delivery agents into a custom workflow</div>
+      `;
+      grid.appendChild(hire);
+    }
+    cont.appendChild(grid);
+  });
+}
+
+function inspectWf(wfKey) {
+  selectedWfKey = wfKey;
+  switchTab('builder');
+  goToStep(2);
+}
+
+function setupRun(empId) {
+  activeEmpId = empId;
+  const emp = EMPLOYEES.find(e => e.id === empId);
+  const wf = WORKFLOWS[emp.wf];
+
+  const cont = document.getElementById('run-container');
+  cont.className = 'run';
+  cont.innerHTML = `
+    <div class="run-head">
+      <div class="avatar" style="width:38px;height:38px;font-size:13px">${emp.name.split('-').map(s=>s[0]).slice(0,2).join('')}</div>
+      <div>
+        <div style="font-size:16px;font-weight:700;color:var(--hi)">${emp.name} &bull; ${wf.name}</div>
+        <div class="run-sub">${wf.desc}</div>
+      </div>
+    </div>
+
+    <div class="run-input">
+      <textarea id="run-prompt">${wf.sample}</textarea>
+      <button class="btn primary big" id="btn-execute" onclick="executeRun()">Execute Multi-Agent Run</button>
+    </div>
+
+    <div class="phases" id="run-phases"></div>
+    <div class="agent-grid" id="run-agent-grid"></div>
+
+    <div class="feed" id="run-feed"></div>
+
+    <div class="result hidden" id="run-result">
+      <div class="rstats">
+        <div style="font-size:13px;font-weight:700;color:var(--hi);margin-bottom:12px">Execution Telemetry</div>
+        <div class="rrow"><span class="k">Orchestration</span><span class="v">${wf.mode.toUpperCase()}</span></div>
+        <div class="rrow"><span class="k">Specialist Agents</span><span class="v">${wf.tasks.length} Active</span></div>
+        <div class="rrow"><span class="k">Purity Level</span><span class="v">99.9% Anhydrous</span></div>
+        <div class="rrow"><span class="k">Safety Grade</span><span class="v">SEMI S2 / S8 Certified</span></div>
+        <div class="rrow"><span class="k">Status</span><span class="v" style="color:var(--ok)">Verified</span></div>
+      </div>
+      <div class="rout">
+        <div class="rh">${DTITLE[emp.wf] || wf.deliverable}</div>
+        <div class="rb" id="run-final-text"></div>
+      </div>
+    </div>
+
+    <div class="donebar hidden" id="run-donebar">
+      <b>Run Complete:</b> Multi-agent chemical process &amp; delivery package generated. Validated against SEMI S2/S8 and fab specifications.
+    </div>
+  `;
+
+  const pcont = document.getElementById('run-phases');
+  const acont = document.getElementById('run-agent-grid');
+
+  wf.tasks.forEach((t, i) => {
+    const ph = document.createElement('div');
+    ph.className = 'ph';
+    ph.id = `ph-${i}`;
+    ph.innerHTML = `<div class="dot">${i+1}</div><div class="l">Task ${i+1}</div>`;
+    pcont.appendChild(ph);
+
+    const a = AGENT_ROLES[t.agent];
+    const ac = document.createElement('div');
+    ac.className = 'acard';
+    ac.id = `acard-${i}`;
+    ac.innerHTML = `
+      <div class="ae">${a ? a.emoji : '⚡'}</div>
+      <div class="ar">${a ? a.label : t.agent}</div>
+      <div class="at">${t.task}</div>
+      <div class="as"><div class="sd"></div><span id="astat-${i}">Queued</span></div>
+    `;
+    acont.appendChild(ac);
+  });
+
+  cont.scrollIntoView({ behavior: 'smooth' });
+}
+
+function logFeed(agent, text) {
+  const f = document.getElementById('run-feed');
+  if (!f) return;
+  const row = document.createElement('div');
+  row.className = 'frow';
+  const now = new Date();
+  const ts = now.toTimeString().split(' ')[0];
+  row.innerHTML = `<span class="ft">${ts}</span><span class="fa">${agent}</span><span class="fd">${text}</span>`;
+  f.appendChild(row);
+  f.scrollTop = f.scrollHeight;
+}
+
+function executeRun() {
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[emp.wf];
+
+  document.getElementById('btn-execute').disabled = true;
+  document.getElementById('run-feed').innerHTML = '';
+  document.getElementById('run-result').classList.add('hidden');
+  document.getElementById('run-donebar').classList.add('hidden');
+
+  logFeed('System', `Initiating ${wf.mode.toUpperCase()} chemical workflow: ${wf.name}...`);
+
+  runState.running = true;
+  runState.phase = 0;
+  runState.runningTasks.clear();
+  runState.completedTasks.clear();
+
+  if (wf.mode === 'sequential') {
+    executeSequentialStep(0);
+  } else {
+    executeDagLoop();
+  }
+}
+
+function executeSequentialStep(idx) {
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[emp.wf];
+
+  if (idx >= wf.tasks.length) {
+    finishRun();
+    return;
+  }
+
+  setTaskStatus(idx, 'running');
+  const t = wf.tasks[idx];
+  const a = AGENT_ROLES[t.agent];
+  logFeed(a ? a.label : t.agent, `Dispatched: ${t.task}`);
+
+  setTimeout(() => {
+    const toolKey = (a && a.tools && a.tools[0]) ? a.tools[0] : 'save';
+    const toolFn = TOOLS[toolKey] || TOOLS.save;
+    logFeed(a ? a.label : t.agent, `[Output] ${toolFn()}`);
+
+    setTaskStatus(idx, 'done');
+    setTimeout(() => {
+      executeSequentialStep(idx + 1);
+    }, 450);
+  }, 1000);
+}
+
+function executeDagLoop() {
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[emp.wf];
+
+  const canRun = [];
+  wf.tasks.forEach((t, i) => {
+    if (!runState.completedTasks.has(i) && !runState.runningTasks.has(i)) {
+      const depsMet = t.deps.every(d => runState.completedTasks.has(d));
+      if (depsMet) canRun.push(i);
+    }
+  });
+
+  if (canRun.length === 0) {
+    if (runState.completedTasks.size === wf.tasks.length) {
+      finishRun();
+    }
+    return;
+  }
+
+  canRun.forEach(idx => {
+    runState.runningTasks.add(idx);
+    setTaskStatus(idx, 'running');
+    const t = wf.tasks[idx];
+    const a = AGENT_ROLES[t.agent];
+    logFeed(a ? a.label : t.agent, `Dispatched (Parallel): ${t.task}`);
+
+    setTimeout(() => {
+      const toolKey = (a && a.tools && a.tools[0]) ? a.tools[0] : 'save';
+      const toolFn = TOOLS[toolKey] || TOOLS.save;
+      logFeed(a ? a.label : t.agent, `[Output] ${toolFn()}`);
+
+      runState.runningTasks.delete(idx);
+      runState.completedTasks.add(idx);
+      setTaskStatus(idx, 'done');
+      executeDagLoop();
+    }, 1000);
+  });
+}
+
+function setTaskStatus(idx, st) {
+  const ph = document.getElementById(`ph-${idx}`);
+  const ac = document.getElementById(`acard-${idx}`);
+  const as = document.getElementById(`astat-${idx}`);
+
+  if (ph) {
+    ph.classList.toggle('active', st === 'running');
+    ph.classList.toggle('done', st === 'done');
+  }
+  if (ac) {
+    ac.className = `acard visible ${st}`;
+  }
+  if (as) {
+    as.innerText = st === 'running' ? 'Executing...' : (st === 'done' ? 'Complete' : 'Queued');
+  }
+}
+
+function finishRun() {
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[emp.wf];
+  logFeed('System', 'All tasks synchronized. Assembling verified deliverable...');
+
+  document.getElementById('btn-execute').disabled = false;
+  document.getElementById('run-result').classList.remove('hidden');
+  document.getElementById('run-donebar').classList.remove('hidden');
+
+  const deliverableText = FINAL[emp.wf] || 'Chemical process deliverable completed.';
+  document.getElementById('run-final-text').innerText = deliverableText;
+
+  emp.handled += 1;
+  emp.hrs += 4.5;
+  renderEcon();
+  const card = document.getElementById(`card-${emp.id}`);
+  if (card) {
+    card.replaceWith(empCard(emp));
+  }
+}
+
+function renderBuilderWfs() {
+  const cont = document.getElementById('builder-wf-grid');
+  cont.innerHTML = '';
+  Object.keys(WORKFLOWS).forEach(k => {
+    const wf = WORKFLOWS[k];
+    const item = document.createElement('div');
+    item.className = `wf ${k === selectedWfKey ? 'sel' : ''}`;
+    item.id = `bwf-${k}`;
+    item.onclick = () => selectBuilderWf(k);
+
+    const badge = wf.tag === 'flagship' ? '<span class="tag hero">Flagship</span>' : (wf.track === 'trackA' ? '<span class="tag commercial">ALD &amp; 3D Scaling</span>' : '<span class="tag operations">Safety &amp; Integration</span>');
+    item.innerHTML = `
+      <div class="wn">${wf.name} ${badge}</div>
+      <div class="wd">${wf.desc}</div>
+      <div class="wm">${wf.mode.toUpperCase()} &bull; ${wf.tasks.length} TASKS</div>
+    `;
+    cont.appendChild(item);
+  });
+}
+
+function selectBuilderWf(k) {
+  selectedWfKey = k;
+  renderBuilderWfs();
+}
+
+function goToStep(s) {
+  document.getElementById('st-1').classList.toggle('active', s === 1);
+  document.getElementById('st-2').classList.toggle('active', s === 2);
+  document.getElementById('st-3').classList.toggle('active', s === 3);
+
+  document.getElementById('bstep-1').classList.toggle('hidden', s !== 1);
+  document.getElementById('bstep-2').classList.toggle('hidden', s !== 2);
+  document.getElementById('bstep-3').classList.toggle('hidden', s !== 3);
+
+  if (s === 2) {
+    const wf = WORKFLOWS[selectedWfKey];
+    document.getElementById('bstep2-wftitle').innerText = `Configure Tasks: ${wf.name}`;
+    const cont = document.getElementById('task-map-container');
+    cont.innerHTML = '';
+
+    wf.tasks.forEach((t, i) => {
+      const row = document.createElement('div');
+      row.className = 'task-row';
+
+      let optionsHTML = '';
+      Object.keys(AGENT_ROLES).forEach(ak => {
+        const a = AGENT_ROLES[ak];
+        const sel = ak === t.agent ? 'selected' : '';
+        optionsHTML += `<option value="${ak}" ${sel}>${a.emoji} ${a.label}</option>`;
+      });
+
+      row.innerHTML = `
+        <div class="tn">${i+1}</div>
+        <div class="tt">${t.task}</div>
+        <select id="sel-task-${i}">${optionsHTML}</select>
+      `;
+      cont.appendChild(row);
+    });
+  }
+}
+
+function deployOperator() {
+  const name = document.getElementById('b-emp-name').value.trim() || 'Custom-Precursor-Operator';
+  const title = document.getElementById('b-emp-title').value.trim() || 'Custom Semiconductor Precursor Specialist';
+
+  const newId = 'custom-op-' + Date.now();
+  EMPLOYEES.push({
+    id: newId,
+    name: name,
+    title: title,
+    wf: selectedWfKey,
+    handled: 1,
+    hrs: 9.0,
+    win: 'Newly Deployed'
+  });
+
+  renderEcon();
+  renderRoster();
+  switchTab('roster');
+  setupRun(newId);
+}
+
+window.onload = init;
+</script>
+</body>
+</html>
