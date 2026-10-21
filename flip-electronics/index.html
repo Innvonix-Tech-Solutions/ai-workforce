@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flip Electronics &mdash; AI Semiconductor Obsolescence &amp; Supply Chain Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f2f7fb;--surface2:#e1effa;--border:#b8d7ee;--accent:#005691;
+--accent-dim:rgba(0,86,145,.08);--accent-line:rgba(0,86,145,.30);--slate:#0a1e33;--slate-line:rgba(10,30,51,.30);--text:#162638;--hi:#081a2e;--tert:#557088;--ok:#10b981;--ok-dim:rgba(16,185,129,.10);--gold:#d97706;--gold-bg:#fef3c7;--gold-line:#fde68a}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:52px;height:34px;border-radius:8px;background:linear-gradient(135deg,#005691,#0a1e33);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:12px;letter-spacing:.5px;font-family:Inter,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#005691}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:920px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#005691;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(16,185,129,.08);color:#059669;border:1px solid rgba(16,185,129,.3)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#005691}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#005691;font-size:15px;flex-shrink:0;position:relative;font-family:Inter,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#005691}.btn.primary{background:linear-gradient(270deg,#005691,#0a1e33);border-color:#005691;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#005691;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#005691}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(16,185,129,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(16,185,129,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#005691}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Inter,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#005691;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;color:var(--hi)}.task-row select{background:#fff;border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;color:var(--hi);outline:none;font-family:Inter,sans-serif}
+.footer{max-width:1180px;margin:32px auto 0;padding:0 24px 32px;font-size:11.5px;color:var(--tert);line-height:1.5;border-top:1px solid var(--border);padding-top:18px;font-family:Inter,sans-serif}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="mark">FLIP</div>
+    <div>
+      <div class="htitle">Flip Electronics &mdash; AI Semiconductor Obsolescence &amp; Supply Chain Workforce (concept)</div>
+      <div class="hsub">Factory-Authorized Distribution &bull; Resurgent&trade; Licensed Manufacturing &bull; AS6081 Counterfeit Mitigation &bull; Alpharetta, GA</div>
+    </div>
+  </div>
+  <div class="badge">Simulated Operations &bull; <b>8 Operators Active</b></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tab-roster" onclick="switchTab('roster')">AI Operator Roster</button>
+  <button class="tab" id="tab-builder" onclick="switchTab('builder')">Add an Operator</button>
+</div>
+
+<div class="main">
+  <div id="view-roster">
+    <div class="lead">
+      <b>Flip Electronics</b> is a factory-authorized distributor and licensed semiconductor manufacturer specializing in end-of-life (EOL), obsolete, and critical shortage components for defense, aerospace, medical, and industrial OEMs. This AI workforce prototype demonstrates multi-agent orchestration across bill-of-materials (BOM) obsolescence scrubbing, Last-Time Buy (LTB) capitalization, AS6081 counterfeit screening, and Resurgent&trade; licensed semiconductor re-creation.
+    </div>
+
+    <div class="legend">
+      <span><span class="tag commercial">Commercial</span> OEM BOM obsolescence scrub, LTB capitalization, shortage allocation, excess monetization</span>
+      <span><span class="tag operations">Quality &amp; Lab</span> AS6081 counterfeit screening, Resurgent licensed manufacturing, DPA testing, AS9120B C of C audit</span>
+      <span><span class="tag hero">Flagship</span> 2,400-line aerospace &amp; defense program BOM obsolescence risk mitigation</span>
+    </div>
+
+    <div class="econ" id="econ-strip"></div>
+
+    <div id="roster-tracks"></div>
+
+    <div id="run-container" class="hidden"></div>
+  </div>
+
+  <div id="view-builder" class="hidden">
+    <div class="lead">
+      <b>Operator Builder:</b> Compose a specialized multi-agent operator to automate semiconductor lifecycle scrubbing, counterfeit avoidance, or factory-direct excess monetization.
+    </div>
+
+    <div class="steps">
+      <div class="step active" id="st-1">
+        <div class="n">STEP 1</div>
+        <div class="l">Select Obsolescence Workflow</div>
+        <div class="d">Choose the base supply chain or quality laboratory workflow</div>
+      </div>
+      <div class="step" id="st-2">
+        <div class="n">STEP 2</div>
+        <div class="l">Assign Supply Chain Specialists</div>
+        <div class="d">Allocate specialist roles across verification stages</div>
+      </div>
+      <div class="step" id="st-3">
+        <div class="n">STEP 3</div>
+        <div class="l">Name &amp; Deploy Operator</div>
+        <div class="d">Configure title and deploy operator to active roster</div>
+      </div>
+    </div>
+
+    <div id="bstep-1">
+      <div class="slabel">Available Supply Chain &amp; Quality Workflows</div>
+      <div class="wf-grid" id="builder-wf-grid"></div>
+      <div style="margin-top:20px;display:flex;justify-content:flex-end">
+        <button class="btn primary big" onclick="goToStep(2)">Configure Operator Agents &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-2" class="hidden">
+      <div class="slabel" id="bstep2-wftitle">Configure Specialist Assignment</div>
+      <div id="task-map-container"></div>
+      <div style="margin-top:20px;display:flex;justify-content:space-between">
+        <button class="btn big" onclick="goToStep(1)">&larr; Back to Workflows</button>
+        <button class="btn primary big" onclick="goToStep(3)">Set Identity &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-3" class="hidden">
+      <div class="slabel">Operator Profile &amp; Deployment</div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;max-width:540px">
+        <div style="margin-bottom:14px">
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--hi);margin-bottom:6px">Operator Name</label>
+          <input type="text" id="b-emp-name" value="Avionics-Lifecycle-Strategist" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none">
+        </div>
+        <div style="margin-bottom:20px">
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--hi);margin-bottom:6px">Functional Title</label>
+          <input type="text" id="b-emp-title" value="Defense Prime Long-Lifecycle Sustainment Manager" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none">
+        </div>
+        <button class="btn primary big" style="width:100%" onclick="deployOperator()">Deploy to Live Workforce</button>
+      </div>
+      <div style="margin-top:20px">
+        <button class="btn" onclick="goToStep(2)">&larr; Back to Task Config</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <b>Simulated Operations Notice:</b> This interactive AI workforce prototype is a strategic architectural demonstration engineered for Flip Electronics stakeholders. All operational metrics, cycle time reductions, and simulation runs are illustrative placeholders. Sourcing agreements, counterfeit inspection test reports, and Certificate of Conformance (C of C) releases require verification by certified quality directors and factory franchise liaisons.
+</div>
+
+<script>
+const AGENT_ROLES = {
+  bom_scrub_analyst: { emoji: '📋', label: 'BOM Obsolescence & Life-Cycle Analyst', tools: ['bom_ingest', 'pcn_pdn_crossref', 'save'] },
+  ocm_franchise_liaison: { emoji: '🤝', label: 'OCM Franchise & Factory Authorization Liaison', tools: ['verify_factory_auth', 'c_of_c_provenance', 'save'] },
+  ltb_capital_planner: { emoji: '💰', label: 'Last Time Buy (LTB) & Buffer Stock Modeler', tools: ['ltb_forecast', 'carrying_cost_calc', 'save'] },
+  shortage_allocator: { emoji: '🔍', label: 'Critical Shortage & Allocation Specialist', tools: ['shortage_sweep', 'authorized_inventory_match', 'save'] },
+  excess_monetization_lead: { emoji: '📦', label: 'OEM & OCM Excess Consignment Specialist', tools: ['excess_lot_valuation', 'consignment_schedule', 'save'] },
+  as6081_counterfeit_spec: { emoji: '🛡️', label: 'AS6081 & IDEA-STD-1010 Counterfeit Inspector', tools: ['visual_inspection_protocol', 'decapsulation_die_check', 'save'] },
+  resurgent_mfg_engineer: { emoji: '🔬', label: 'Resurgent™ Licensed Semiconductor Lead', tools: ['wafer_banking_audit', 'fff_tooling_spec', 'save'] },
+  dpa_test_physicist: { emoji: '🧪', label: 'Destructive Physical Analysis (DPA) Metallurgist', tools: ['xrf_rohs_analysis', 'solderability_jstd_test', 'save'] },
+  defense_compliance_officer: { emoji: '⚔️', label: 'ITAR, DFARS & AS9120B Defense Compliance Officer', tools: ['dfars_clause_check', 'itar_end_user_audit', 'save'] },
+  vmi_bonded_logistician: { emoji: '🏭', label: 'Bonded Inventory & MSL Environmental Logistician', tools: ['msl_esd_containment', 'vmi_kanban_calc', 'save'] },
+  proposal_lead: { emoji: '✍️', label: 'Supply Chain Proposal & Spec Sheet Author', tools: ['compose_bid_package', 'save'] },
+  qa_review_director: { emoji: '✅', label: 'Quality Assurance & Chain-of-Custody Reviewer', tools: ['peer_review_qa', 'save'] }
+};
+
+const TRACKS = [
+  ['trackA', 'Obsolescence & Supply Chain Solutions'],
+  ['trackB', 'Quality Assurance & Counterfeit Mitigation']
+];
+
+const WORKFLOWS = {
+  bom_obsolescence_scrub_flagship: {
+    name: 'Defense & Aerospace Program BOM Obsolescence Risk Scrub',
+    title: 'Defense Prime 2,400-Line Avionics BOM Obsolescence Mitigation Package',
+    mode: 'sequential',
+    track: 'trackA',
+    tag: 'flagship',
+    deliverable: 'Defense Program BOM Obsolescence Scrub & Authorized Sourcing Blueprint',
+    sample: 'Execute proactive obsolescence scrub on 2,400-line radar avionics BOM for Tier-1 defense prime. Identify EOL/LTB semiconductors, verify OCM franchise stock, and calculate 10-year sustainment buy.',
+    desc: 'Flagship supply chain workflow parsing OEM BOMs, cross-referencing OCM Product Discontinuation Notices (PDNs), modeling 10-year sustainment LTB buys, and securing DFARS-compliant inventory.',
+    tasks: [
+      { agent: 'bom_scrub_analyst', task: 'Ingest 2,400-line avionics BOM; identify 142 at-risk lines (84 EOL, 38 LTB active, 20 obsolete)', deps: [] },
+      { agent: 'ocm_franchise_liaison', task: 'Cross-reference factory Product Discontinuation Notices (PDNs) across NXP, Infineon, and onsemi franchise lines', deps: [0] },
+      { agent: 'ltb_capital_planner', task: 'Calculate 10-year program sustainment volume requirements and buffer stock financial amortization', deps: [1] },
+      { agent: 'shortage_allocator', task: 'Match 20 immediate obsolete line items against Flip factory-authorized bonded warehouse inventory', deps: [2] },
+      { agent: 'defense_compliance_officer', task: 'Verify DFARS 252.246-7007 electronic counterfeit avoidance clause and AS9120B traceability', deps: [3] },
+      { agent: 'qa_review_director', task: 'Sign off comprehensive BOM Obsolescence Risk Mitigation Report and authorized supply schedule', deps: [4] }
+    ]
+  },
+  ltb_financing_bonded_storage: {
+    name: 'Multi-Year Last Time Buy (LTB) Capitalization & Bonded Storage',
+    title: '7-Year Program Last Time Buy (LTB) Capitalization & Nitrogen Storage Agreement',
+    mode: 'sequential',
+    track: 'trackA',
+    deliverable: 'Multi-Year LTB Financing & Nitrogen-Purged Storage Submittal',
+    sample: 'Structure multi-year Last Time Buy financing and bonded warehouse storage for 180,000 units of discontinued industrial microcontrollers across 7-year medical equipment lifecycle.',
+    desc: 'Model program burn rates, secure final factory production lots, store in nitrogen-purged desiccated chambers, and structure quarterly drawdowns.',
+    tasks: [
+      { agent: 'ltb_capital_planner', task: 'Model 7-year OEM consumption burn rates and calculate carrying cost vs redesign cost avoidance ($3.2M)', deps: [] },
+      { agent: 'ocm_franchise_liaison', task: 'Lock in final factory wafer fabrication run with OCM franchise partner prior to tooling shutdown', deps: [0] },
+      { agent: 'vmi_bonded_logistician', task: 'Establish nitrogen-purged bonded storage per ANSI/ESD S20.20 and J-STD-033 moisture barrier standards', deps: [1] },
+      { agent: 'proposal_lead', task: 'Compile multi-year LTB inventory financing terms, scheduled release schedule, and C of C guarantees', deps: [2] }
+    ]
+  },
+  factory_direct_shortage_resolution: {
+    name: 'Critical Line-Down Semiconductor Shortage Sourcing',
+    title: 'Critical 24-Hour Factory-Authorized Line-Down Shortage Allocation',
+    mode: 'dag',
+    track: 'trackA',
+    deliverable: 'Line-Down Shortage Allocation & Factory Traceability Release',
+    sample: 'Resolve critical line-down event for automotive Tier-1 supplier requiring 12,500 pcs AEC-Q100 power MOSFETs without gray-market counterfeit exposure.',
+    desc: 'Sweep factory-authorized pipeline, verify manufacturer Certificate of Conformance (C of C), execute 24-hour allocation, and dispatch same-day courier.',
+    tasks: [
+      { agent: 'shortage_allocator', task: 'Intake critical factory line-down shortage: 12,500 pcs automotive AEC-Q100 power MOSFETs', deps: [] },
+      { agent: 'ocm_franchise_liaison', task: 'Locate authorized factory reserve stock through Diodes Inc / onsemi direct franchise agreements', deps: [0] },
+      { agent: 'defense_compliance_officer', task: 'Audit unbroken chain of custody, original factory packaging seals, and lot date codes', deps: [0] },
+      { agent: 'qa_review_director', task: 'Issue 24-hour expedited factory release approval and dispatch temperature-controlled courier', deps: [1, 2] }
+    ]
+  },
+  authorized_excess_monetization: {
+    name: 'OEM & Tier-1 Excess Semiconductor Inventory Consignment',
+    title: 'OEM Excess Semiconductor Lot Valuation & Global Consignment Schedule',
+    mode: 'dag',
+    track: 'trackA',
+    deliverable: 'Authorized Excess Inventory Monetization & Consignment Dossier',
+    sample: 'Consign and monetize $4.8M surplus semiconductor lot from aerospace prime: active, passive, and memory devices in original factory reels with C of C.',
+    desc: 'Audit excess lots for market liquidity, inspect factory seal integrity, ingest into climate-controlled bonded storage, and execute global sales monetization.',
+    tasks: [
+      { agent: 'excess_monetization_lead', task: 'Audit 680-line surplus semiconductor lot ($4.8M valuation) from aerospace prime warehouse', deps: [] },
+      { agent: 'bom_scrub_analyst', task: 'Cross-reference global market demand velocity, current franchise lead times, and liquidity pricing', deps: [0] },
+      { agent: 'vmi_bonded_logistician', task: 'Ingest and bar-code reels into Flip Alpharetta AS9120B climate-controlled staging facility', deps: [0] },
+      { agent: 'proposal_lead', task: 'Publish revenue-sharing consignment contract with transparent monthly sales reporting', deps: [1, 2] }
+    ]
+  },
+  as6081_counterfeit_screening: {
+    name: 'AS6081 & IDEA-STD-1010 Advanced Counterfeit Screening Protocol',
+    title: 'AS6081 & IDEA-STD-1010 Comprehensive Counterfeit Avoidance Laboratory Test Report',
+    mode: 'sequential',
+    track: 'trackB',
+    deliverable: 'AS6081 Laboratory Counterfeit Inspection & Verification Certificate',
+    sample: 'Perform complete AS6081 counterfeit screening on legacy military ceramic microprocessors: visual microscopy, marking permanency, XRF RoHS lead finish, and decapsulation die audit.',
+    desc: 'Execute rigorous non-destructive and destructive testing in Flip quality laboratory, verifying internal die authenticity, lead metallurgy, and absence of blacktopping.',
+    tasks: [
+      { agent: 'as6081_counterfeit_spec', task: 'Perform 100% external visual inspection (EVI) per IDEA-STD-1010-B, acetone swab, and heated solvent testing', deps: [] },
+      { agent: 'dpa_test_physicist', task: 'Conduct X-ray fluorescence (XRF) spectroscopy verifying lead finish elemental composition (Sn63Pb37)', deps: [0] },
+      { agent: 'as6081_counterfeit_spec', task: 'Execute chemical decapsulation and high-power metallurgical microscope die inspection for OCM logo and mask ID', deps: [1] },
+      { agent: 'qa_review_director', task: 'Issue certified AS6081 Counterfeit Prevention Inspection Test Report with high-res optical micrograph plates', deps: [2] }
+    ]
+  },
+  resurgent_licensed_manufacturing: {
+    name: 'Resurgent™ Licensed Semiconductor Re-Creation & Wafer Banking',
+    title: 'Resurgent™ Licensed Semiconductor Manufacturing & Form-Fit-Function Verification',
+    mode: 'sequential',
+    track: 'trackB',
+    deliverable: 'Resurgent™ Licensed Semiconductor Re-Creation & Qualification Package',
+    sample: 'Re-create obsolete military RF power transistor utilizing OCM-licensed original wafer stock, tooling, and test vectors under Resurgent Manufacturing division.',
+    desc: 'Audit OCM licensing intellectual property, inspect nitrogen-banked silicon wafers, assemble in hermetic ceramic packages, and verify MIL-STD-883 electrical parity.',
+    tasks: [
+      { agent: 'resurgent_mfg_engineer', task: 'Audit OCM licensing agreement, original wafer test vectors, and assembly bonding diagrams', deps: [] },
+      { agent: 'dpa_test_physicist', task: 'Inspect banked silicon wafer dice stored in nitrogen chambers for crystal oxidation and metallization integrity', deps: [0] },
+      { agent: 'resurgent_mfg_engineer', task: 'Execute assembly packaging in hermetic ceramic flanged packages guaranteeing 100% FFF drop-in parity', deps: [1] },
+      { agent: 'qa_review_director', task: 'Certify high-temperature electrical burn-in test per MIL-STD-883 Method 5004/5005 screening', deps: [2] }
+    ]
+  },
+  dpa_solderability_qualification: {
+    name: 'Destructive Physical Analysis (DPA) & J-STD-002 Solderability Test',
+    title: 'Destructive Physical Analysis (DPA) & J-STD-002 Lead Solderability Certification',
+    mode: 'dag',
+    track: 'trackB',
+    deliverable: 'DPA Metallurgical Analysis & Solderability Test Dossier',
+    sample: 'Execute Destructive Physical Analysis (DPA) per MIL-STD-1580 on lot of 500 pcs aerospace diodes. Conduct J-STD-002 steam-aged dip-and-look solderability test.',
+    desc: 'Sample component lots, perform wire bond pull tests, execute steam aging solderability, and confirm compliance with military high-reliability standards.',
+    tasks: [
+      { agent: 'dpa_test_physicist', task: 'Sample 5 units per MIL-STD-1580; perform internal wire bond pull strength (>5.0g) and die shear testing', deps: [] },
+      { agent: 'dpa_test_physicist', task: 'Conduct 8-hour steam aging and dip-and-look solderability test per IPC/JEDEC J-STD-002', deps: [0] },
+      { agent: 'defense_compliance_officer', task: 'Verify absence of pure tin whiskers and compliance with defense high-rel tin-lead finish rules', deps: [0] },
+      { agent: 'proposal_lead', task: 'Deliver metallurgical cross-section imagery, wetting balance graphs, and signed DPA dossier', deps: [1, 2] }
+    ]
+  },
+  as9120b_chain_of_custody_audit: {
+    name: 'AS9120B & ISO 9001 Factory-Direct Traceability Audit',
+    title: 'AS9120B Aerospace Chain-of-Custody & Certificate of Conformance (C of C) Dossier',
+    mode: 'sequential',
+    track: 'trackB',
+    deliverable: 'AS9120B Chain-of-Custody & Factory Conformance Dossier',
+    sample: 'Audit full pedigree and chain of custody for 45,000 pcs defense microcontrollers from original OCM fabrication wafer lot to customer delivery.',
+    desc: 'Retrieve factory dicing lot traveler records, verify date codes, audit climate packaging, and issue signed Certificate of Conformance (C of C).',
+    tasks: [
+      { agent: 'ocm_franchise_liaison', task: 'Retrieve OCM factory wafer traveler records, original dicing test logs, and manufacturer date codes', deps: [] },
+      { agent: 'defense_compliance_officer', task: 'Verify unbroken chain of custody from OCM factory floor to Flip AS9120B bonded warehouse', deps: [0] },
+      { agent: 'vmi_bonded_logistician', task: 'Audit barcoding, humidity indicator cards (HIC), and desiccant moisture barrier bag sealing', deps: [1] },
+      { agent: 'qa_review_director', task: 'Issue signed Certificate of Conformance (C of C) with full manufacturer warranty coverage', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  bom_obsolescence_scrub_flagship: 'Defense Prime 2,400-Line Avionics BOM Obsolescence Mitigation Package',
+  ltb_financing_bonded_storage: '7-Year Program Last Time Buy (LTB) Capitalization & Nitrogen Storage Agreement',
+  factory_direct_shortage_resolution: 'Critical 24-Hour Factory-Authorized Line-Down Shortage Allocation',
+  authorized_excess_monetization: 'OEM Excess Semiconductor Lot Valuation & Global Consignment Schedule',
+  as6081_counterfeit_screening: 'AS6081 & IDEA-STD-1010 Comprehensive Counterfeit Avoidance Laboratory Test Report',
+  resurgent_licensed_manufacturing: 'Resurgent™ Licensed Semiconductor Manufacturing & Form-Fit-Function Verification',
+  dpa_solderability_qualification: 'Destructive Physical Analysis (DPA) & J-STD-002 Lead Solderability Certification',
+  as9120b_chain_of_custody_audit: 'AS9120B Aerospace Chain-of-Custody & Certificate of Conformance (C of C) Dossier'
+};
+
+const TOOLS = {
+  bom_ingest: () => 'Ingested 2,400-line bill-of-materials; categorized 142 at-risk parts across active, EOL, and obsolete stages.',
+  pcn_pdn_crossref: () => 'Cross-referenced factory Product Change Notices (PCNs) and Product Discontinuation Notices (PDNs) across 18 OCMs.',
+  verify_factory_auth: () => 'Verified active factory franchise agreements with NXP, Infineon, onsemi, Littelfuse, and Diodes Incorporated.',
+  c_of_c_provenance: () => 'Validated original OCM Certificate of Conformance (C of C) traceability back to wafer fabrication lot traveler.',
+  ltb_forecast: () => 'Modeled 10-year sustainment consumption: 24,000 units needed; redesign avoidance estimated at $3.2 Million.',
+  carrying_cost_calc: () => 'Calculated cost of capital and storage carrying cost; structured quarterly drawdown financing terms.',
+  shortage_sweep: () => 'Scanned factory-authorized inventory pipelines; identified 12,500 pcs matching exact AEC-Q100 part number.',
+  authorized_inventory_match: () => 'Matched line-down part with bonded factory stock in Flip Alpharetta logistics hub with zero gray-market risk.',
+  excess_lot_valuation: () => 'Appraised 680 surplus OEM line items against global run rates; established $4.8M fair market baseline.',
+  consignment_schedule: () => 'Drafted AS9120B consignment agreement with segregated bonded storage and monthly revenue distribution.',
+  visual_inspection_protocol: () => 'Completed 100% External Visual Inspection (EVI) per IDEA-STD-1010; verified packaging, lead co-planarity, and markings.',
+  decapsulation_die_check: () => 'Executed acid decapsulation; high-power microscope confirmed original manufacturer die markings and mask revisions.',
+  wafer_banking_audit: () => 'Audited nitrogen storage cabinets housing 8-inch silicon wafers; confirmed zero crystal oxidation and clean passivation.',
+  fff_tooling_spec: () => 'Verified ceramic hermetic packaging tooling and automated wire bonding recipe matching original OCM specifications.',
+  xrf_rohs_analysis: () => 'XRF spectroscopy confirmed 63% Sn / 37% Pb lead finish; certified zero tin whisker risk for aerospace flight hardware.',
+  solderability_jstd_test: () => 'Performed 8-hour steam aging and dip-and-look test per J-STD-002; achieved >98% continuous solder wetting.',
+  dfars_clause_check: () => 'Audited compliance with DFARS 252.246-7007 (Counterfeit Prevention) and DFARS 252.246-7008 (Trusted Sources).',
+  itar_end_user_audit: () => 'Verified customer end-user statement and export control compliance per US ITAR / EAR regulations.',
+  msl_esd_containment: () => 'Verified Moisture Sensitivity Level (MSL 3) dry-baking and vacuum sealing in moisture barrier bags per J-STD-033.',
+  vmi_kanban_calc: () => 'Calculated min-max safety stock buffer levels and automated re-order replenishment points for bonded VMI program.',
+  compose_bid_package: () => 'Compiled formal engineering deliverable, lot traceability certificates, and warranty documentation.',
+  peer_review_qa: () => 'Completed Director of Quality peer review; verified laboratory data integrity and sealed factory release documentation.',
+  save: () => 'Indexed and archived quality test records, inspection micrographs, and factory traceability files into compliance archive.'
+};
+
+const FINAL = {
+  bom_obsolescence_scrub_flagship: "DEFENSE PRIME 2,400-LINE AVIONICS BOM OBSOLESCENCE MITIGATION PACKAGE\n" +
+"================================================================================\n" +
+"Client: Tier-1 Defense & Aerospace Prime Contractor\n" +
+"System: Multi-Role Airborne Phased-Array Radar Processing Unit\n" +
+"Total Bill of Materials (BOM) Scope: 2,400 Line Items\n" +
+"Compliance Standard: DFARS 252.246-7007 / DFARS 252.246-7008 / AS9120B\n\n" +
+"1. BOM LIFECYCLE SCRUB & RISK STRATIFICATION:\n" +
+"   - Active / Low Risk Lines: 2,258 items (94.1%) - stable factory production lifecycle\n" +
+"   - Last Time Buy (LTB) Active: 38 items (1.6%) - OCM final order cutoff within 9 months\n" +
+"   - End of Life (EOL) Discontinued: 84 items (3.5%) - factory production terminated\n" +
+"   - Immediate Critical Obsolete Lines: 20 items (0.8%) - zero active tier-1 broadline inventory\n\n" +
+"2. FLIP AUTHORIZED SOURCING & ALLOCATION SOLUTION:\n" +
+"   - Factory Franchise Coverage: 18 out of 20 obsolete lines matched directly to Flip authorized inventory\n" +
+"     * Direct franchise partners: Infineon, NXP, onsemi, Diodes Inc, Littelfuse, Renesas\n" +
+"     * Authenticity Guarantee: 100% factory original packaging, original C of C, full OCM warranty\n" +
+"   - Resurgent™ Licensed Manufacturing Solution: Remaining 2 specialized RF transistor lines scheduled\n" +
+"     for licensed re-creation using OEM-banked silicon wafers and certified MIL-STD-883 tooling\n" +
+"   - Sourcing Timeline: Immediate release of 18 line items from Flip Alpharetta bonded facility\n\n" +
+"3. 10-YEAR SUSTAINMENT & FINANCIAL FORECAST:\n" +
+"   - Projected 10-Year Program Sustainment Volume: 24,000 total multi-chip units\n" +
+"   - Capital Outlay for Consolidated LTB Package: $1,420,000.00\n" +
+"   - Redesign Cost Avoidance: Estimated $3,250,000.00 in board spin, recertification, and flight qualification costs\n" +
+"   - Net Program Savings: $1,830,000.00 with zero production schedule disruption\n\n" +
+"4. DEFENSE QUALITY & COUNTERFEIT AVOIDANCE CERTIFICATION:\n" +
+"   - Sourced strictly through factory-authorized franchised distribution channels\n" +
+"   - Zero gray-market exposure; eliminates broker intermediaries\n" +
+"   - Compliant with DFARS 252.246-7007 Electronic Parts Counterfeit Avoidance\n" +
+"   - AS9120B / ISO 9001 certified custody transfer with full manufacturer pedigree\n\n" +
+"NOTE: illustrative simulation deliverable based on Flip Electronics authorized distribution and obsolescence methodologies.",
+
+  ltb_financing_bonded_storage: "7-YEAR PROGRAM LAST TIME BUY (LTB) CAPITALIZATION & NITROGEN STORAGE AGREEMENT\n" +
+"================================================================================\n" +
+"OEM Partner: Critical Medical Diagnostic Equipment Manufacturer\n" +
+"Device Scope: Microcontroller (16-bit RISC) & Specialized Analog Front-End (AFE)\n" +
+"Discontinuation Notice: OCM PDN-2025-098 (Final Fab Run Shutdown)\n" +
+"Total LTB Volume Secured: 180,000 Components (7-Year Program Lifecycle)\n\n" +
+"1. PROGRAM CONSUMPTION & INVENTORY FINANCING:\n" +
+"   - Total Inventory Valuation: $1,620,000.00 capital commitment funded by Flip Electronics\n" +
+"   - OEM Payment Structure: Quarterly drawdown billing upon scheduled release to manufacturing\n" +
+"   - Redesign Avoidance Benefit: $2.4 Million in FDA 510(k) re-submission and software re-validation costs\n" +
+"   - Amortization Cost: 1.8% annual inventory carrying charge offset by volume purchase price protection\n\n" +
+"2. BONDED STORAGE & ENVIRONMENTAL PRESERVATION:\n" +
+"   - Storage Facility: Flip Electronics Alpharetta, GA High-Reliability Bonded Warehouse\n" +
+"   - Atmospheric Control: Continuous Nitrogen-Purged Desiccated Storage Cabinets (<5% Relative Humidity)\n" +
+"   - ESD Protection: ANSI/ESD S20.20 certified cleanrooms with continuous grounding monitoring\n" +
+"   - Moisture Management: J-STD-033 dry-baking and vacuum sealing in multi-layer moisture barrier bags\n\n" +
+"3. QUALITY & RE-CERTIFICATION SCHEDULE:\n" +
+"   - Periodic Sample Testing: Annual solderability testing per J-STD-002 prior to scheduled batch release\n" +
+"   - Guaranteed Pedigree: Original OCM Certificate of Conformance (C of C) preserved in digital escrow\n\n" +
+"NOTE: illustrative simulation deliverable based on Flip Electronics authorized distribution and obsolescence methodologies.",
+
+  factory_direct_shortage_resolution: "CRITICAL 24-HOUR FACTORY-AUTHORIZED LINE-DOWN SHORTAGE ALLOCATION\n" +
+"================================================================================\n" +
+"Customer: Tier-1 Automotive Powertrain Electronics Supplier\n" +
+"Critical Shortage: 12,500 Pcs AEC-Q100 Automotive Trench Power MOSFETs\n" +
+"Line-Down Impact: Plant shutdown incurring $185,000 / day in automotive assembly downtime\n\n" +
+"1. SOURCING & ALLOCATION RESOLUTION:\n" +
+"   - Sourcing Channel: Authorized factory franchise reserve inventory via Diodes Inc / onsemi partnership\n" +
+"   - Allocation Secured: Full 12,500 pcs matching exact OEM part number, package, and tape-and-reel spec\n" +
+"   - Counterfeit Risk: 0.0% (Zero broker, secondary, or gray-market intermediaries involved)\n" +
+"   - Unit Pricing: Fixed contract franchise price without broker shortage price gouging\n\n" +
+"2. TRACEABILITY & VERIFICATION:\n" +
+"   - Factory Seal Integrity: 100% original manufacturer factory-sealed reels with barcode verification\n" +
+"   - Traceability Documentation: Complete factory C of C, lot date codes (2025/2026), and fab traveler logs\n" +
+"   - Automotive Standards: Compliant with IATF 16949 supply chain requirements and PPAP documentation\n\n" +
+"3. EXPEDITED LOGISTICS EXECUTION:\n" +
+"   - Order Processing: Completed within 3.5 hours of initial line-down alert\n" +
+"   - Packaging & Dispatch: Same-day dedicated air courier from Flip Alpharetta Hub to Detroit manufacturing facility\n" +
+"   - Line-Down Avoidance: SMT surface mount placement lines resumed 18 hours ahead of critical shutdown deadline\n\n" +
+"NOTE: illustrative simulation deliverable based on Flip Electronics authorized distribution and obsolescence methodologies.",
+
+  authorized_excess_monetization: "OEM EXCESS SEMICONDUCTOR LOT VALUATION & GLOBAL CONSIGNMENT SCHEDULE\n" +
+"================================================================================\n" +
+"Consignor: Tier-1 Aerospace Flight Control Equipment OEM\n" +
+"Inventory Scope: 680 Line Items (Active, Passive, Discrete, Microcontroller Devices)\n" +
+"Total Consigned Quantity: 2,850,000 Units in Original Manufacturer Packaging\n" +
+"Appraised Lot Valuation: $4,820,000.00 Fair Market Liquidity Value\n\n" +
+"1. LOT APPRAISAL & DEMAND VELOCITY MAPPING:\n" +
+"   - High-Velocity Lines: 240 line items ($2.65M) - active demand in defense and aerospace markets\n" +
+"   - Moderate Velocity Lines: 310 line items ($1.52M) - EOL parts with ongoing repair depot demand\n" +
+"   - Mature / Specialized Lines: 130 line items ($650k) - high-value hermetic military devices\n\n" +
+"2. CONSIGNMENT STORAGE & SECURITY PROTOCOLS:\n" +
+"   - Custody Transfer: Ingested into segregated, bonded, climate-controlled warehouse in Alpharetta, GA\n" +
+"   - Receiving QA: 100% barcode scan, visual package inspection, and date code verification per AS9120B\n" +
+"   - Chain of Custody: OEM ownership retained until point of sale; fully insured against loss and ESD damage\n\n" +
+"3. GLOBAL MONETIZATION & REVENUE RECOVERY:\n" +
+"   - Sales Channels: Marketed exclusively through Flip authorized global sales network and authorized partners\n" +
+"   - Revenue Share: 75% OEM / 25% Flip consignment split after logistics handling fees\n" +
+"   - Projected 12-Month Cash Recovery: $3,615,000.00 returned directly to OEM balance sheet\n\n" +
+"NOTE: illustrative simulation deliverable based on Flip Electronics authorized distribution and obsolescence methodologies.",
+
+  as6081_counterfeit_screening: "AS6081 & IDEA-STD-1010 COMPREHENSIVE COUNTERFEIT AVOIDANCE LABORATORY TEST REPORT\n" +
+"================================================================================\n" +
+"Test Facility: Flip Electronics Advanced Component Quality Laboratory (Alpharetta, GA)\n" +
+"Part Number Tested: Military Ceramic Microprocessor (54C881-883B)\n" +
+"Lot Quantity Tested: 250 Pieces (Sample Size: 22 Pieces tested per AS6081 Table 1)\n" +
+"Inspection Standards: AS6081, IDEA-STD-1010-B, MIL-STD-883 Method 2009 / Method 2014\n\n" +
+"1. NON-DESTRUCTIVE TESTING & INSPECTION RESULTS:\n" +
+"   - External Visual Inspection (EVI): 100% verified - zero package cracks, lead oxidation, or re-tinning marks\n" +
+"   - Marking Permanency & Blacktopping: 3:1 Mineral Spirits / Acetone swab test performed (Zero ink dissolution)\n" +
+"   - Heated Chemical Resistance: Heated solvent test at 115°C confirms original epoxy surface finish\n" +
+"   - Dimensional Verification: Ceramic body thickness and lead pitch match OEM mechanical datasheet within ±0.03mm\n\n" +
+"2. X-RAY RADIOGRAPHY & XRF ELEMENTAL SPECTROSCOPY:\n" +
+"   - Real-Time X-Ray Inspection: Internal die cavity wire bonds show uniform gold ball bonds with zero voids\n" +
+"   - Lead Finish Metallurgy (XRF): 64.2% Tin (Sn) / 35.8% Lead (Pb) - complies with defense non-pure tin mandate\n" +
+"   - Package Composition: Verified ceramic hermetic dual-in-line package with gold-plated lead frames\n\n" +
+"3. DESTRUCTIVE DECAPSULATION & DIE VERIFICATION:\n" +
+"   - Chemical Decapsulation: Fuming nitric acid opening performed on 2 sample units\n" +
+"   - Die Topography: High-power optical microscope (1000x) confirms original manufacturer logo\n" +
+"   - Die Mask Revision: Mask ID \"REV-D-1998\" matches factory master database\n\n" +
+"4. CERTIFICATION & DISPOSITION:\n" +
+"   - Disposition: LOT ACCEPTED - Zero indicators of remarking, blacktopping, salvage, or counterfeit activity\n" +
+"   - Certified Quality Authority: AS6081 Lead Quality Inspector & Quality Assurance Director stamp affixed\n\n" +
+"NOTE: illustrative simulation deliverable based on Flip Electronics authorized distribution and obsolescence methodologies.",
+
+  resurgent_licensed_manufacturing: "RESURGENT™ LICENSED SEMICONDUCTOR MANUFACTURING & FORM-FIT-FUNCTION VERIFICATION\n" +
+"================================================================================\n" +
+"Division: Resurgent Manufacturing Services (A Division of Flip Electronics)\n" +
+"Device Tag: High-Power L-Band Radar RF Transistor (Silicon Bipolar)\n" +
+"Licensing Partner: Original Component Manufacturer (OCM Intellectual Property License)\n" +
+"Target System: Long-Range Ground Surveillance Radar Sustainment Program\n\n" +
+"1. LICENSED MANUFACTURING ARCHITECTURE:\n" +
+"   - Intellectual Property: Full OCM legal authorization to manufacture discontinued legacy semiconductor\n" +
+"   - Wafer Inventory: Banked 6-inch silicon diffusion wafers stored in nitrogen cabinets since final factory fab run\n" +
+"   - Wafer Health Audit: Die shear, visual inspection, and sheet resistance confirm zero oxidation degradation\n" +
+"   - Packaging & Assembly: Flanged ceramic hermetic package using original gold-silicon eutectic die attach\n\n" +
+"2. ELECTRICAL PERFORMANCE & MIL-STD-883 VERIFICATION:\n" +
+"   - RF Power Output: 125.4 Watts at 1.4 GHz (OEM Specification: 120.0W Minimum) - PASSED\n" +
+"   - Power Gain: 9.8 dB at full saturated output - PASSED\n" +
+"   - Collector Efficiency: 52.4% (Exceeds baseline requirement of 50.0%) - PASSED\n" +
+"   - Environmental Burn-In: 168 hours at 150°C junction temperature with zero electrical parameter drift\n\n" +
+"3. FORM, FIT, AND FUNCTION (FFF) CERTIFICATION:\n" +
+"   - Drop-in replacement guarantees zero hardware redesign or software driver modifications\n" +
+"   - Certified compliance with MIL-STD-883 Class B screening and full military flight hardware qualification\n\n" +
+"NOTE: illustrative simulation deliverable based on Flip Electronics authorized distribution and obsolescence methodologies.",
+
+  dpa_solderability_qualification: "DESTRUCTIVE PHYSICAL ANALYSIS (DPA) & J-STD-002 LEAD SOLDERABILITY CERTIFICATION\n" +
+"================================================================================\n" +
+"Laboratory: Flip Component Quality & Metallurgy Test Center\n" +
+"Test Scope: Destructive Physical Analysis (DPA) per MIL-STD-1580 & J-STD-002\n" +
+"Part Type: Military Switching Diode (JANTXV-grade)\n" +
+"Sample Selection: 5 Units randomly sampled from 1,200 piece production lot\n\n" +
+"1. DESTRUCTIVE PHYSICAL ANALYSIS (MIL-STD-1580):\n" +
+"   - Internal Die Shear Strength: Average shear force 18.4 N (MIL-STD threshold: 10.0 N) - PASSED\n" +
+"   - Wire Bond Pull Strength: 1.25 mil gold wire average pull 9.2 grams (MIL-STD threshold: >4.5g) - PASSED\n" +
+"   - Die Attach Voiding: X-ray acoustic microscope inspection shows <3.2% total void area (Limit: <15%)\n" +
+"   - Package Hermeticity: Fine and gross leak hermetic test per MIL-STD-883 Method 1014 (Leak rate < 1x10⁻⁸ atm·cc/s)\n\n" +
+"2. J-STD-002 SOLDERABILITY & STEAM AGING TEST:\n" +
+"   - Conditioning: 8 hours accelerated steam aging at 93°C to simulate multi-year warehouse shelf life\n" +
+"   - Solder Dip: Sn63Pb37 eutectic solder bath at 245°C for 5.0 seconds dwell time\n" +
+"   - Surface Coverage: 99.4% continuous, pinhole-free solder coverage (Standard requires >95%)\n" +
+"   - Wetting Balance Test: Zero de-wetting or non-wetting observed on all 5 sample leads\n\n" +
+"3. METALLURGICAL CERTIFICATE:\n" +
+"   - Components approved for immediate assembly on aerospace surface-mount production lines\n" +
+"   - Full DPA micrograph plates and metallurgical log archived to customer quality portal\n\n" +
+"NOTE: illustrative simulation deliverable based on Flip Electronics authorized distribution and obsolescence methodologies.",
+
+  as9120b_chain_of_custody_audit: "AS9120B AEROSPACE CHAIN-OF-CUSTODY & CERTIFICATE OF CONFORMANCE (C OF C) DOSSIER\n" +
+"================================================================================\n" +
+"Order Reference: FLIP-AERO-2026-9042\n" +
+"Customer: Commercial Aerospace Flight Control Systems Prime\n" +
+"Part Number: 16-Bit High-Reliability Rad-Tolerant Microcontroller\n" +
+"Delivered Quantity: 45,000 Units across 18 Factory-Sealed Reels\n" +
+"Quality Certification Standard: AS9120 Rev B / ISO 9001:2015 / FAA AC 00-56B\n\n" +
+"1. PROVENANCE & UNBROKEN CHAIN OF CUSTODY:\n" +
+"   - Originating Manufacturer: Original Component Manufacturer (OCM) Semiconductor Fab\n" +
+"   - Factory Wafer Lot Trace: Wafer Lot #WL-48201 / Dicing Batch #DC-992\n" +
+"   - Intermediate Custody: Direct freight transit from OCM warehouse to Flip Alpharetta AS9120B hub\n" +
+"   - Non-Destructive Custody: Zero broker, reseller, or secondary distributor touchpoints\n\n" +
+"2. PACKAGING & ENVIRONMENTAL COMPLIANCE:\n" +
+"   - Packaging: Original factory 13-inch tape-and-reel packaging with untouched manufacturer tamper tape\n" +
+"   - Barcode Verification: 2D DataMatrix barcode scans verify manufacturer part number, lot, and date code\n" +
+"   - Moisture Barrier Bags: Fresh desiccant and Cobalt-free Humidity Indicator Cards (HIC) sealed per J-STD-033\n\n" +
+"3. CERTIFICATE OF CONFORMANCE (C OF C) RELEASE:\n" +
+"   - Flip Electronics certifies that the components provided on this order are 100% authentic, factory-direct,\n" +
+"     fully traceable to the original manufacturer, and covered by full manufacturer warranty provisions.\n" +
+"   - Quality Director Signature and AS9120B Auditor seal affixed for commercial airworthiness release.\n\n" +
+"NOTE: illustrative simulation deliverable based on Flip Electronics authorized distribution and obsolescence methodologies."
+};
+
+const EMPLOYEES = [
+  {
+    id: 'emp-bom-director',
+    name: 'BOM-Obsolescence-Director',
+    title: 'OEM Defense & Aerospace BOM Obsolescence Director',
+    wf: 'bom_obsolescence_scrub_flagship',
+    handled: 48,
+    hrs: 560.0,
+    win: '$3.2M Avoided'
+  },
+  {
+    id: 'emp-ltb-strategist',
+    name: 'LTB-Capital-Strategist',
+    title: 'Last Time Buy Capitalization & Bonded Storage Lead',
+    wf: 'ltb_financing_bonded_storage',
+    handled: 36,
+    hrs: 410.5,
+    win: '7-Yr Sustain'
+  },
+  {
+    id: 'emp-shortage-lead',
+    name: 'LineDown-Shortage-Lead',
+    title: 'Critical Line-Down Shortage Allocation Lead',
+    wf: 'factory_direct_shortage_resolution',
+    handled: 82,
+    hrs: 620.0,
+    win: '<24h Alloc'
+  },
+  {
+    id: 'emp-excess-manager',
+    name: 'Excess-Monetization-Manager',
+    title: 'OEM & Tier-1 Excess Inventory Consignment Lead',
+    wf: 'authorized_excess_monetization',
+    handled: 29,
+    hrs: 345.0,
+    win: '$4.8M Managed'
+  },
+  {
+    id: 'emp-counterfeit-chief',
+    name: 'AS6081-Counterfeit-Chief',
+    title: 'AS6081 Counterfeit Avoidance & Inspection Lead',
+    wf: 'as6081_counterfeit_screening',
+    handled: 64,
+    hrs: 490.0,
+    win: '0 Escapes'
+  },
+  {
+    id: 'emp-resurgent-director',
+    name: 'Resurgent-Mfg-Director',
+    title: 'Resurgent™ Licensed Semiconductor Manufacturing Director',
+    wf: 'resurgent_licensed_manufacturing',
+    handled: 22,
+    hrs: 380.0,
+    win: '100% FFF'
+  },
+  {
+    id: 'emp-dpa-specialist',
+    name: 'DPA-Metallurgy-Specialist',
+    title: 'Destructive Physical Analysis & Solderability Specialist',
+    wf: 'dpa_solderability_qualification',
+    handled: 53,
+    hrs: 315.0,
+    win: 'MIL-STD-1580'
+  },
+  {
+    id: 'emp-traceability-auditor',
+    name: 'AS9120B-Traceability-Auditor',
+    title: 'AS9120B Aerospace Chain-of-Custody Lead',
+    wf: 'as9120b_chain_of_custody_audit',
+    handled: 74,
+    hrs: 430.0,
+    win: '100% C of C'
+  }
+];
+
+let selectedWfKey = 'bom_obsolescence_scrub_flagship';
+let activeEmpId = null;
+let runState = {
+  activeTaskId: null,
+  completedTasks: new Set(),
+  runningTasks: new Set(),
+  logs: [],
+  timer: null
+};
+
+function init(){
+  renderEcon();
+  renderRoster();
+  renderBuilderWfs();
+}
+
+function switchTab(tab){
+  document.getElementById('tab-roster').classList.toggle('active', tab==='roster');
+  document.getElementById('tab-builder').classList.toggle('active', tab==='builder');
+  document.getElementById('view-roster').classList.toggle('hidden', tab!=='roster');
+  document.getElementById('view-builder').classList.toggle('hidden', tab!=='builder');
+}
+
+function renderEcon(){
+  const strip = document.getElementById('econ-strip');
+  strip.innerHTML = `
+    <div class="cell">
+      <div class="v">100<span class="u">%</span></div>
+      <div class="k">Factory-Direct Traceability</div>
+    </div>
+    <div class="cell">
+      <div class="v">24<span class="u">h</span></div>
+      <div class="k">Avg Shortage Allocation</div>
+    </div>
+    <div class="cell">
+      <div class="v">0<span class="u"></span></div>
+      <div class="k">Counterfeits Escaped</div>
+    </div>
+    <div class="cell">
+      <div class="v">10<span class="u">+ yrs</span></div>
+      <div class="k">Extended Program Sustainment</div>
+    </div>
+  `;
+}
+
+function renderRoster(){
+  const container = document.getElementById('roster-tracks');
+  container.innerHTML = '';
+
+  TRACKS.forEach(([tKey, tLabel]) => {
+    const sLabel = document.createElement('div');
+    sLabel.className = 'slabel';
+    sLabel.innerText = tLabel;
+    container.appendChild(sLabel);
+
+    const rGrid = document.createElement('div');
+    rGrid.className = 'roster';
+
+    EMPLOYEES.filter(e => {
+      const wf = WORKFLOWS[e.wf];
+      return wf && wf.track === tKey;
+    }).forEach(emp => {
+      rGrid.appendChild(empCard(emp));
+    });
+
+    container.appendChild(rGrid);
+  });
+}
+
+function empCard(emp){
+  const wf = WORKFLOWS[emp.wf];
+  const isHero = wf && wf.tag === 'flagship';
+  const card = document.createElement('div');
+  card.className = `emp ${isHero ? 'hero' : ''}`;
+  card.id = `card-${emp.id}`;
+
+  const initials = emp.name.split('-').map(s=>s[0]).slice(0,2).join('');
+  const badgeHTML = isHero ? '<span class="tag hero">Flagship</span>' : (wf.track === 'trackA' ? '<span class="tag commercial">Commercial</span>' : '<span class="tag operations">Quality Lab</span>');
+
+  let teamChips = '';
+  if(wf && wf.tasks){
+    const uniqueAgents = [...new Set(wf.tasks.map(t=>t.agent))];
+    teamChips = uniqueAgents.map(ak => {
+      const a = AGENT_ROLES[ak];
+      return `<span class="chip">${a ? a.emoji + ' ' + a.label : ak}</span>`;
+    }).join('');
+  }
+
+  card.innerHTML = `
+    <div class="emp-top">
+      <div class="avatar">${initials}</div>
+      <div>
+        <div class="emp-name">${emp.name} ${badgeHTML}</div>
+        <div class="emp-title">${emp.title}</div>
+      </div>
+    </div>
+    <div class="emp-owns">Owns: <b>${wf ? wf.name : emp.wf}</b></div>
+    <div class="team">${teamChips}</div>
+    <div class="emp-stats">
+      <div class="st"><b>${emp.handled}</b> Handled</div>
+      <div class="st"><b>${emp.hrs.toFixed(1)}h</b> Saved</div>
+      <div class="st"><b>${emp.win}</b> Metric</div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" onclick="setupRun('${emp.id}')">Run Simulation</button>
+    </div>
+  `;
+  return card;
+}
+
+function setupRun(empId){
+  activeEmpId = empId;
+  const emp = EMPLOYEES.find(e => e.id === empId);
+  if(!emp) return;
+  const wf = WORKFLOWS[emp.wf];
+  if(!wf) return;
+
+  const container = document.getElementById('run-container');
+  container.className = 'run';
+  container.scrollIntoView({ behavior: 'smooth' });
+
+  let phasesHTML = '';
+  wf.tasks.forEach((t, i) => {
+    phasesHTML += `
+      <div class="ph" id="ph-${i}">
+        <div class="dot">${i+1}</div>
+        <div class="l">${t.task}</div>
+      </div>
+    `;
+  });
+
+  let agentsHTML = '';
+  wf.tasks.forEach((t, i) => {
+    const a = AGENT_ROLES[t.agent];
+    agentsHTML += `
+      <div class="acard" id="acard-${i}">
+        <div class="ae">${a ? a.emoji : '⚙️'}</div>
+        <div class="ar">${a ? a.label : t.agent}</div>
+        <div class="at">${t.task}</div>
+        <div class="as"><span class="sd"></span> <span id="astat-${i}">Queued</span></div>
+      </div>
+    `;
+  });
+
+  container.innerHTML = `
+    <div class="run-head">
+      <div class="emp-name" style="font-size:18px">${emp.name} &bull; ${wf.name}</div>
+    </div>
+    <div class="run-sub">${wf.desc}</div>
+    <div class="run-input">
+      <textarea id="run-prompt">${wf.sample}</textarea>
+      <button class="btn primary big" id="btn-execute" onclick="executeRun()">Execute Run</button>
+    </div>
+    <div class="phases">${phasesHTML}</div>
+    <div class="agent-grid">${agentsHTML}</div>
+    <div class="feed" id="run-feed"></div>
+    <div class="result hidden" id="run-result">
+      <div class="rstats">
+        <div class="rrow"><span class="k">Sourcing Status</span><span class="v" style="color:var(--ok)">FACTORY AUTHORIZED</span></div>
+        <div class="rrow"><span class="k">Quality Standard</span><span class="v">AS9120B / AS6081</span></div>
+        <div class="rrow"><span class="k">Counterfeit Risk</span><span class="v">0.0% Mitigated</span></div>
+        <div class="rrow"><span class="k">Chain of Custody</span><span class="v">100% OCM C of C</span></div>
+        <div class="rrow"><span class="k">Defense Compliance</span><span class="v">DFARS 252.246-7007</span></div>
+      </div>
+      <div class="rout">
+        <div class="rh">${DTITLE[emp.wf] || wf.name}</div>
+        <div class="rb" id="run-final-text"></div>
+      </div>
+    </div>
+    <div class="donebar hidden" id="run-donebar">
+      <b>Run Complete:</b> Supply chain deliverable generated, verified against AS9120B and AS6081 counterfeit prevention standards, and archived.
+    </div>
+  `;
+}
+
+function executeRun(){
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  if(!emp) return;
+  const wf = WORKFLOWS[emp.wf];
+  if(!wf) return;
+
+  const btn = document.getElementById('btn-execute');
+  btn.disabled = true;
+
+  runState.completedTasks.clear();
+  runState.runningTasks.clear();
+  runState.logs = [];
+
+  const feed = document.getElementById('run-feed');
+  feed.innerHTML = '';
+  document.getElementById('run-result').classList.add('hidden');
+  document.getElementById('run-donebar').classList.add('hidden');
+
+  logFeed('System', `Initializing multi-agent session for ${wf.name}...`);
+
+  if(wf.mode === 'sequential'){
+    executeSeqStep(0);
+  } else {
+    executeDagLoop();
+  }
+}
+
+function logFeed(agentName, text){
+  const feed = document.getElementById('run-feed');
+  const d = new Date();
+  const timeStr = d.toTimeString().split(' ')[0];
+  const row = document.createElement('div');
+  row.className = 'frow';
+  row.innerHTML = `
+    <span class="ft">${timeStr}</span>
+    <span class="fa">${agentName}</span>
+    <span class="fd">${text}</span>
+  `;
+  feed.appendChild(row);
+  feed.scrollTop = feed.scrollHeight;
+}
+
+function executeSeqStep(i){
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[emp.wf];
+  if(i >= wf.tasks.length){
+    finishRun();
+    return;
+  }
+
+  const t = wf.tasks[i];
+  const a = AGENT_ROLES[t.agent];
+
+  setTaskStatus(i, 'running');
+  logFeed(a ? a.label : t.agent, `Starting: ${t.task}`);
+
+  setTimeout(() => {
+    const toolKey = (a && a.tools && a.tools[0]) ? a.tools[0] : 'save';
+    const toolFn = TOOLS[toolKey] || TOOLS.save;
+    logFeed(a ? a.label : t.agent, `[Output] ${toolFn()}`);
+
+    setTaskStatus(i, 'done');
+    executeSeqStep(i+1);
+  }, 900);
+}
+
+function executeDagLoop(){
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[emp.wf];
+
+  const canRun = [];
+  wf.tasks.forEach((t, i) => {
+    if(!runState.completedTasks.has(i) && !runState.runningTasks.has(i)){
+      const depsOk = t.deps.every(d => runState.completedTasks.has(d));
+      if(depsOk) canRun.push(i);
+    }
+  });
+
+  if(canRun.length === 0){
+    if(runState.completedTasks.size === wf.tasks.length){
+      finishRun();
+    }
+    return;
+  }
+
+  canRun.forEach(idx => {
+    runState.runningTasks.add(idx);
+    setTaskStatus(idx, 'running');
+    const t = wf.tasks[idx];
+    const a = AGENT_ROLES[t.agent];
+    logFeed(a ? a.label : t.agent, `Dispatched (Parallel): ${t.task}`);
+
+    setTimeout(() => {
+      const toolKey = (a && a.tools && a.tools[0]) ? a.tools[0] : 'save';
+      const toolFn = TOOLS[toolKey] || TOOLS.save;
+      logFeed(a ? a.label : t.agent, `[Output] ${toolFn()}`);
+
+      runState.runningTasks.delete(idx);
+      runState.completedTasks.add(idx);
+      setTaskStatus(idx, 'done');
+      executeDagLoop();
+    }, 1000);
+  });
+}
+
+function setTaskStatus(idx, st){
+  const ph = document.getElementById(`ph-${idx}`);
+  const ac = document.getElementById(`acard-${idx}`);
+  const as = document.getElementById(`astat-${idx}`);
+
+  if(ph){
+    ph.classList.toggle('active', st==='running');
+    ph.classList.toggle('done', st==='done');
+  }
+  if(ac){
+    ac.className = `acard visible ${st}`;
+  }
+  if(as){
+    as.innerText = st==='running' ? 'Executing...' : (st==='done' ? 'Complete' : 'Queued');
+  }
+}
+
+function finishRun(){
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[emp.wf];
+  logFeed('System', 'All tasks synchronized. Assembling verified deliverable...');
+
+  document.getElementById('btn-execute').disabled = false;
+  document.getElementById('run-result').classList.remove('hidden');
+  document.getElementById('run-donebar').classList.remove('hidden');
+
+  const deliverableText = FINAL[emp.wf] || 'Obsolescence management simulation completed.';
+  document.getElementById('run-final-text').innerText = deliverableText;
+
+  emp.handled += 1;
+  emp.hrs += 4.5;
+  renderEcon();
+  const card = document.getElementById(`card-${emp.id}`);
+  if(card){
+    card.replaceWith(empCard(emp));
+  }
+}
+
+function renderBuilderWfs(){
+  const cont = document.getElementById('builder-wf-grid');
+  cont.innerHTML = '';
+  Object.keys(WORKFLOWS).forEach(k => {
+    const wf = WORKFLOWS[k];
+    const item = document.createElement('div');
+    item.className = `wf ${k === selectedWfKey ? 'sel' : ''}`;
+    item.id = `bwf-${k}`;
+    item.onclick = () => selectBuilderWf(k);
+
+    const badge = wf.tag === 'flagship' ? '<span class="tag hero">Flagship</span>' : (wf.track==='trackA' ? '<span class="tag commercial">Commercial</span>' : '<span class="tag operations">Quality Lab</span>');
+    item.innerHTML = `
+      <div class="wn">${wf.name} ${badge}</div>
+      <div class="wd">${wf.desc}</div>
+      <div class="wm">${wf.mode.toUpperCase()} &bull; ${wf.tasks.length} TASKS</div>
+    `;
+    cont.appendChild(item);
+  });
+}
+
+function selectBuilderWf(k){
+  selectedWfKey = k;
+  renderBuilderWfs();
+}
+
+function goToStep(s){
+  document.getElementById('st-1').classList.toggle('active', s===1);
+  document.getElementById('st-2').classList.toggle('active', s===2);
+  document.getElementById('st-3').classList.toggle('active', s===3);
+
+  document.getElementById('bstep-1').classList.toggle('hidden', s!==1);
+  document.getElementById('bstep-2').classList.toggle('hidden', s!==2);
+  document.getElementById('bstep-3').classList.toggle('hidden', s!==3);
+
+  if(s === 2){
+    const wf = WORKFLOWS[selectedWfKey];
+    document.getElementById('bstep2-wftitle').innerText = `Configure Tasks: ${wf.name}`;
+    const cont = document.getElementById('task-map-container');
+    cont.innerHTML = '';
+
+    wf.tasks.forEach((t, i) => {
+      const row = document.createElement('div');
+      row.className = 'task-row';
+
+      let optionsHTML = '';
+      Object.keys(AGENT_ROLES).forEach(ak => {
+        const a = AGENT_ROLES[ak];
+        const sel = ak === t.agent ? 'selected' : '';
+        optionsHTML += `<option value="${ak}" ${sel}>${a.emoji} ${a.label}</option>`;
+      });
+
+      row.innerHTML = `
+        <div class="tn">${i+1}</div>
+        <div class="tt">${t.task}</div>
+        <select id="sel-task-${i}">${optionsHTML}</select>
+      `;
+      cont.appendChild(row);
+    });
+  }
+}
+
+function deployOperator(){
+  const name = document.getElementById('b-emp-name').value.trim() || 'Custom-Obsolescence-Operator';
+  const title = document.getElementById('b-emp-title').value.trim() || 'Custom Semiconductor Lifecycle Specialist';
+
+  const newId = 'custom-op-' + Date.now();
+  EMPLOYEES.push({
+    id: newId,
+    name: name,
+    title: title,
+    wf: selectedWfKey,
+    handled: 1,
+    hrs: 8.5,
+    win: 'Newly Deployed'
+  });
+
+  renderEcon();
+  renderRoster();
+  switchTab('roster');
+  setupRun(newId);
+}
+
+window.onload = init;
+</script>
+</body>
+</html>
