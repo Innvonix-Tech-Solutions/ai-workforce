@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InnoGrit Corporation &mdash; AI Storage Controllers &amp; Turnkey NVMe Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f8fafc;--surface2:#f1f5f9;--border:#cbd5e1;--accent:#be1e24;
+--accent-dim:rgba(190,30,36,.08);--accent-line:rgba(190,30,36,.30);--slate:#111827;--slate-line:rgba(17,24,39,.30);--text:#1f2937;--hi:#111827;--tert:#4b5563;--ok:#16a34a;--ok-dim:rgba(22,163,74,.10);--gold:#d97706;--gold-bg:#fef3c7;--gold-line:#fde68a}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:48px;height:34px;border-radius:8px;background:linear-gradient(135deg,#111827,#be1e24);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:12px;letter-spacing:.5px;font-family:Inter,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#be1e24}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:920px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#be1e24;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(22,163,74,.08);color:#16a34a;border:1px solid rgba(22,163,74,.3)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#be1e24}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#be1e24;font-size:15px;flex-shrink:0;position:relative;font-family:Inter,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#be1e24}.btn.primary{background:linear-gradient(270deg,#be1e24,#99151b);border-color:#be1e24;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#be1e24;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#be1e24}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#be1e24}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Inter,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#be1e24;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;color:var(--hi)}.task-row select{background:#fff;border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;color:var(--hi);outline:none;font-family:Inter,sans-serif}
+.footer{max-width:1180px;margin:32px auto 0;padding:0 24px 32px;font-size:11.5px;color:var(--tert);line-height:1.5;border-top:1px solid var(--border);padding-top:18px;font-family:Inter,sans-serif}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="mark">IG</div>
+    <div>
+      <div class="htitle">InnoGrit Corporation &mdash; AI Storage Controllers &amp; Turnkey NVMe Workforce (concept)</div>
+      <div class="hsub">PCIe 5.0/6.0 NVMe Controllers &bull; InnoGrit-N3X AI Cache SSDs &bull; 4K LDPC ECC &bull; San Jose, CA</div>
+    </div>
+  </div>
+  <div class="badge">Simulated Operations &bull; <b>8 Operators Active</b></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tab-roster" onclick="switchTab('roster')">AI Operator Roster</button>
+  <button class="tab" id="tab-builder" onclick="switchTab('builder')">Add an Operator</button>
+</div>
+
+<div class="main">
+  <div id="view-roster">
+    <div class="lead">
+      <b>InnoGrit Corporation</b> is a premier fabless semiconductor company headquartered in San Jose, California, founded in 2016 by Dr. Zining Wu (former CTO of Marvell Technology). InnoGrit delivers high-performance, low-power solid-state drive (SSD) controller ICs and full turnkey (FTK) enterprise storage systems engineered to overcome the data storage wall in the artificial intelligence era. Spanning consumer client AI PCs, hyperscale cloud data centers, and mission-critical edge infrastructure, InnoGrit's technology portfolio features PCIe Gen4/Gen5/Gen6 controllers (including the flagship Tacoma IG5669 and Crestone IG5686), CXL 3.1 memory expanders (Cascade IG5676), ultra-low-latency AI cache drives (InnoGrit-N3X with Kioxia XL-FLASH delivering 13µs latency and 100 DWPD), and proprietary 3rd-generation 4K LDPC error correction. This interactive AI workforce prototype models autonomous multi-agent orchestration across enterprise qualification, silicon PPA optimization, firmware FDP co-design, and exabyte storage TCO analysis.
+    </div>
+
+    <div class="legend">
+      <span><span class="tag commercial">Commercial &amp; Systems</span> InnoGrit-N3Q 64TB QLC high-density arrays, PCIe 6.0 Crestone &amp; CXL 3.1 Cascade memory tiering, CSP turnkey qualification, cloud TCO economics</span>
+      <span><span class="tag operations">ASIC &amp; Firmware</span> InnoGrit-N3X 13µs AI cache co-design, IG5222 DRAM-less client PPA, Tacoma IG5669 16-channel tapeout, 4K LDPC DSP calibration, NVMe FDP firmware</span>
+      <span><span class="tag hero">Flagship</span> InnoGrit-N3X AI Edge &amp; Real-Time KV-Cache Acceleration Architecture</span>
+    </div>
+
+    <div class="econ" id="econ-strip"></div>
+
+    <div id="roster-tracks"></div>
+
+    <div id="run-container" class="hidden"></div>
+  </div>
+
+  <div id="view-builder" class="hidden">
+    <div class="lead">
+      <b>Operator Builder:</b> Compose a specialized multi-agent operator to automate PCIe 5.0/6.0 controller synthesis, NAND flash error characterization, NVMe FDP firmware tuning, or cloud datacenter qualification.
+    </div>
+
+    <div class="steps">
+      <div class="step active" id="st-1">
+        <div class="n">STEP 1</div>
+        <div class="l">Select Storage Workflow</div>
+        <div class="d">Choose the base controller SoC or turnkey SSD storage workflow</div>
+      </div>
+      <div class="step" id="st-2">
+        <div class="n">STEP 2</div>
+        <div class="l">Assign Storage Specialists</div>
+        <div class="d">Allocate specialist roles across ASIC, firmware, and validation stages</div>
+      </div>
+      <div class="step" id="st-3">
+        <div class="n">STEP 3</div>
+        <div class="l">Name &amp; Deploy Operator</div>
+        <div class="d">Configure title and deploy operator to active roster</div>
+      </div>
+    </div>
+
+    <div id="bstep-1">
+      <div class="slabel">Available Controller &amp; Storage Solution Workflows</div>
+      <div class="wf-grid" id="builder-wf-grid"></div>
+      <div style="margin-top:20px;display:flex;justify-content:flex-end">
+        <button class="btn primary big" onclick="goToStep(2)">Configure Operator Agents &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-2" class="hidden">
+      <div class="slabel" id="bstep2-wftitle">Configure Specialist Assignment</div>
+      <div id="task-map-container"></div>
+      <div style="margin-top:20px;display:flex;justify-content:space-between">
+        <button class="btn big" onclick="goToStep(1)">&larr; Back to Workflows</button>
+        <button class="btn primary big" onclick="goToStep(3)">Set Identity &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-3" class="hidden">
+      <div class="slabel">Operator Profile &amp; Deployment</div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;max-width:540px">
+        <div style="margin-bottom:14px">
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--hi);margin-bottom:6px">Operator Name</label>
+          <input type="text" id="b-emp-name" value="Custom-Storage-Architect" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none">
+        </div>
+        <div style="margin-bottom:20px">
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--hi);margin-bottom:6px">Functional Title</label>
+          <input type="text" id="b-emp-title" value="Enterprise PCIe Gen5 &amp; Turnkey SSD Storage Specialist" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none">
+        </div>
+        <button class="btn primary big" style="width:100%" onclick="deployOperator()">Deploy to Live Workforce</button>
+      </div>
+      <div style="margin-top:20px">
+        <button class="btn" onclick="goToStep(2)">&larr; Back to Task Config</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <b>Simulated Operations Notice:</b> This interactive AI workforce prototype is an architectural demonstration engineered for InnoGrit Corporation stakeholders. All operational throughputs, latency benchmarks, and TCO projections are illustrative placeholders based on public technical specifications. Semiconductor tapeouts, high-frequency PCIe SerDes physical models, and enterprise firmware builds require review and sign-off by qualified ASIC design engineers and certified enterprise storage architects.
+</div>
+
+<script>
+const AGENT_ROLES = {
+  nvme_protocol_architect: { emoji: '⚡', label: 'PCIe 5.0/6.0 & NVMe 2.0 Protocol Architect', tools: ['nvme_fdp_config', 'pcie_flit_verify', 'save'] },
+  nand_physics_ldpc_eng: { emoji: '🔬', label: '3D TLC/QLC Flash & 4K LDPC Physicist', tools: ['nand_vth_calibrate', 'rber_curve_fit', 'save'] },
+  hyperscale_storage_architect: { emoji: '🏛️', label: 'Cloud Hyperscale & AI Storage Architect', tools: ['density_power_model', 'cluster_ingest_sim', 'save'] },
+  ai_cache_workload_analyst: { emoji: '🧠', label: 'AI KV-Cache & Low-Latency Engine Lead', tools: ['kv_cache_trace', 'checkpoint_burst_eval', 'save'] },
+  firmware_core_dev: { emoji: '💻', label: 'FTL Firmware & Queue Arbitration Engineer', tools: ['ftl_queue_arbitrate', 'sriov_vf_dispatch', 'save'] },
+  tsmc_asic_ppa_lead: { emoji: '📐', label: 'TSMC FinFET & Extreme PPA SoC Lead', tools: ['sta_timing_signoff', 'floorplan_power_gate', 'save'] },
+  cxl_fabric_specialist: { emoji: '🌐', label: 'CXL 3.1 & Memory Pooling Architect', tools: ['cxl_mem_state_sim', 'pooling_latency_eval', 'save'] },
+  hardware_thermal_si_eng: { emoji: '🌡️', label: 'High-Speed SerDes & Thermal Physicist', tools: ['serdes_eye_margin', 'thermal_airflow_sim', 'save'] },
+  enterprise_ras_qa_lead: { emoji: '🛡️', label: 'Enterprise RAS & Power-Loss Protection Lead', tools: ['plp_discharge_test', 'chamber_4corner_audit', 'save'] },
+  storage_tco_economist: { emoji: '📊', label: 'Storage TCO & WAF Economics Modeler', tools: ['waf_endurance_calc', 'capex_opex_compare', 'save'] },
+  field_solutions_fae: { emoji: '🛠️', label: 'Hyperscale Turnkey FAE & Interop Lead', tools: ['ocp_interop_matrix', 'evb_schematic_review', 'save'] },
+  technical_specs_writer: { emoji: '✍️', label: 'Technical Spec & CSP Qualification Author', tools: ['spec_sheet_compile', 'csp_turnkey_dossier', 'save'] }
+};
+
+const TRACKS = [
+  ['trackA', 'Hyperscale Enterprise & AI Storage Solutions'],
+  ['trackB', 'ASIC Silicon Architecture & Turnkey Firmware']
+];
+
+const WORKFLOWS = {
+  n3x_ai_cache_xlflash_flagship: {
+    name: 'InnoGrit-N3X AI Cache & KIOXIA XL-FLASH Ultra-Low Latency Architecture',
+    title: 'InnoGrit-N3X 13µs Ultra-Low Latency AI Cache SSD Blueprint (IG5668 + XL-FLASH)',
+    mode: 'sequential',
+    track: 'trackA',
+    tag: 'flagship',
+    deliverable: 'InnoGrit-N3X AI Edge & Real-Time KV-Cache Architecture Dossier',
+    sample: 'Co-design InnoGrit-N3X enterprise cache SSD pairing IG5668 PCIe Gen5 controller with Kioxia XL-FLASH SLC NAND. Achieve 13µs read latency, 1.6M 4KB random read IOPS, and 100 DWPD endurance for AI GPU KV-cache offloading.',
+    desc: 'Flagship enterprise workflow engineering the InnoGrit-N3X cache SSD using the IG5668 PCIe Gen5 controller and Kioxia XL-FLASH, achieving 13µs read latency and 100 DWPD endurance for AI inference and vector caching.',
+    tasks: [
+      { agent: 'ai_cache_workload_analyst', task: 'Profile generative AI LLM inference KV-cache evictions, vector database queries, and 4KB random burst IOPS', deps: [] },
+      { agent: 'nand_physics_ldpc_eng', task: 'Calibrate Kioxia XL-FLASH timing parameters, SLC read thresholds, and 100 DWPD wear-leveling endurance matrix', deps: [0] },
+      { agent: 'nvme_protocol_architect', task: 'Implement NVMe 2.0 Flexible Data Placement (FDP) and Controller Memory Buffer (CMB) direct GPU DMA pathways', deps: [1] },
+      { agent: 'firmware_core_dev', task: 'Tune IG5668 firmware flash translation layer (FTL) to guarantee sub-15µs 99.99th percentile read latency under 1.6M IOPS concurrency', deps: [2] },
+      { agent: 'hardware_thermal_si_eng', task: 'Simulate EDSFF E3.S and U.2 thermal dissipation curves under sustained 14W active power envelope', deps: [3] },
+      { agent: 'enterprise_ras_qa_lead', task: 'Execute full-link end-to-end data path CRC checksum verification and power-loss protection (PLP) capacitor discharge stress', deps: [4] }
+    ]
+  },
+  n3q_64tb_hyperscale_qlc: {
+    name: 'InnoGrit-N3Q 64TB Hyperscale High-Density QLC Storage Deployment',
+    title: 'InnoGrit-N3Q 64TB PCIe Gen5 U.2 High-Capacity QLC Enterprise Qualification',
+    mode: 'dag',
+    track: 'trackA',
+    deliverable: 'InnoGrit-N3Q 64TB Hyperscale AI Data Lake Storage Dossier',
+    sample: 'Qualify 64TB high-density InnoGrit-N3Q U.2 NVMe SSD for AI training data lakes and cloud multi-tier storage. Benchmark 14.5 GB/s sequential reads and optimize 4K LDPC soft-decoding for 3D QLC reliability.',
+    desc: 'Deploys 64TB high-capacity InnoGrit-N3Q PCIe Gen5 U.2 NVMe SSDs for hyperscale AI training data lakes, optimizing advanced 4K LDPC decoding to deliver 14.5 GB/s throughput across high-density 3D QLC NAND.',
+    tasks: [
+      { agent: 'hyperscale_storage_architect', task: 'Model 20PB rack-scale storage density, IOPS/Watt, and sequential read streaming across AI training data lakes', deps: [] },
+      { agent: 'nand_physics_ldpc_eng', task: 'Calibrate 16-level threshold voltage sensing across 3D QLC NAND to suppress read-disturb bit errors', deps: [0] },
+      { agent: 'storage_tco_economist', task: 'Compute 3-year TCO delta against nearline HDDs and TLC SSDs, factoring in 70% rack space and power reduction', deps: [0] },
+      { agent: 'field_solutions_fae', task: 'Assemble turnkey OCP NVMe Cloud SSD qualification package for hyperscale cloud storage backplanes', deps: [1, 2] }
+    ]
+  },
+  crestone_pcie6_cascade_cxl: {
+    name: 'PCIe 6.0 Crestone & CXL 3.1 Cascade Next-Gen Memory Tiering Architecture',
+    title: 'Crestone IG5686 PCIe 6.0 (28 GB/s) & Cascade IG5676 CXL 3.1 Pooling Feasibility',
+    mode: 'dag',
+    track: 'trackA',
+    deliverable: 'PCIe 6.0 Crestone & CXL 3.1 Cascade Memory Disaggregation Blueprint',
+    sample: 'Architect next-generation storage fabric featuring Crestone IG5686 PCIe 6.0 controller (28 GB/s, 10M IOPS) and Cascade IG5676 CXL 3.1 controller for pooled memory tiering in HPC clusters.',
+    desc: 'Architects next-generation memory disaggregation utilizing Crestone IG5686 PCIe 6.0 controller (28 GB/s, 10M IOPS) and Cascade IG5676 CXL 3.1 pooled memory expander for AI clusters.',
+    tasks: [
+      { agent: 'cxl_fabric_specialist', task: 'Design CXL.mem and CXL.io protocol state machines for dynamic host memory expansion with sub-180ns load/store latency', deps: [] },
+      { agent: 'nvme_protocol_architect', task: 'Configure PCIe 6.0 PAM4 64 GT/s physical coding sublayer with Flit-based forward error correction (FEC) parity', deps: [] },
+      { agent: 'tsmc_asic_ppa_lead', task: 'Synthesize multi-core RISC-V compute complex and 64 GT/s SerDes PHY in advanced TSMC FinFET node', deps: [0, 1] },
+      { agent: 'technical_specs_writer', task: 'Author the PCIe 6.0 & CXL 3.1 pooled storage/memory whitepaper for Open Compute Project (OCP) submission', deps: [2] }
+    ]
+  },
+  hyperscale_qualification_enablement: {
+    name: 'Hyperscale Cloud Service Provider Turnkey Drive Qualification & Interop',
+    title: 'Tier-1 Cloud Provider Turnkey Drive Qualification & OCP Cloud SSD Matrix',
+    mode: 'sequential',
+    track: 'trackA',
+    deliverable: 'Hyperscale CSP Turnkey Drive Qualification & Interop Sign-Off Package',
+    sample: 'Execute automated OEM/ODM qualification testing for tier-1 cloud service providers across OCP Datacenter NVMe SSD specifications. Verify telemetry, thermal throttling, and multi-tenant virtualization.',
+    desc: 'Accelerates turnkey drive qualification for tier-1 hyperscalers against OCP Cloud SSD requirements, validating firmware telemetry, thermal throttling, and multi-tenant virtualization.',
+    tasks: [
+      { agent: 'field_solutions_fae', task: 'Audit CSP server backplane compatibility, hot-plug telemetry, and OCP 2.0 Cloud SSD compliance test matrices', deps: [] },
+      { agent: 'firmware_core_dev', task: 'Implement vendor-unique telemetry commands, SMART health error logs, and predictive background scrubbing', deps: [0] },
+      { agent: 'enterprise_ras_qa_lead', task: 'Conduct 1,000-hour 4-corner environmental chamber testing under simultaneous power cycling and thermal shock', deps: [1] },
+      { agent: 'technical_specs_writer', task: 'Generate the turnkey CSP qualification report, customer release notes, and OEM interoperability certificate', deps: [2] }
+    ]
+  },
+  ig5222_dramless_extreme_ppa: {
+    name: 'IG5222 PCIe Gen4 DRAM-Less Client SoC Extreme PPA Optimization',
+    title: 'IG5222 DRAM-Less Client Controller PPA (Performance, Power, Area) Engineering Blueprint',
+    mode: 'dag',
+    track: 'trackB',
+    deliverable: 'IG5222 DRAM-Less Client Controller Extreme PPA Sign-Off Package',
+    sample: 'Optimize InnoGrit IG5222 PCIe Gen4 x4 DRAM-less controller for AI PCs and thin-and-light laptops. Achieve 7,400 MB/s sequential read and 1.2M IOPS within a 2.5W power budget utilizing Host Memory Buffer (HMB).',
+    desc: 'Optimizes InnoGrit IG5222 PCIe Gen4 DRAM-less client controller for AI PCs and ultra-thin notebooks, delivering 7,400 MB/s sequential read and 1.2M IOPS at sub-2.5W average active power.',
+    tasks: [
+      { agent: 'tsmc_asic_ppa_lead', task: 'Optimize logic synthesis, clock gating, and die area below 42 mm² in TSMC FinFET to minimize packaging thermal footprint', deps: [] },
+      { agent: 'nvme_protocol_architect', task: 'Fine-tune NVMe Host Memory Buffer (HMB 1.4) allocation and lookup cache hit rate to exceed 98.4%', deps: [0] },
+      { agent: 'hardware_thermal_si_eng', task: 'Model dynamic thermal throttling curves to sustain 7.4 GB/s bursts within a 2.5W average mobile power envelope', deps: [0] },
+      { agent: 'firmware_core_dev', task: 'Validate 1.2M random IOPS firmware scheduling and fast resume from low-power states (PS3/PS4 < 3ms)', deps: [1, 2] }
+    ]
+  },
+  ig5669_tacoma_gen5_enterprise_asic: {
+    name: 'Tacoma IG5669 16-Channel PCIe Gen5 Enterprise Controller Tape-Out Sign-Off',
+    title: 'Tacoma IG5669 16-Channel 32TB PCIe Gen5 NVMe 2.0 Physical Design & Tape-Out Package',
+    mode: 'sequential',
+    track: 'trackB',
+    deliverable: 'Tacoma IG5669 16-Channel Enterprise Controller Physical Sign-Off Dossier',
+    sample: 'Execute physical design and timing sign-off for Tacoma IG5669 16-channel PCIe Gen5 x4 enterprise SSD controller. Support up to 32TB capacity, 14.7 GB/s sequential read, and 3.5M random read IOPS.',
+    desc: 'Drives physical timing closure and tape-out sign-off for InnoGrit Tacoma IG5669 16-channel PCIe Gen5 enterprise controller, supporting 32TB capacity, 14.7 GB/s read, and 3.5M random IOPS.',
+    tasks: [
+      { agent: 'tsmc_asic_ppa_lead', task: 'Execute static timing analysis (STA) and IR drop sign-off for 16-channel 2400 MT/s ONFI 5.0 / Toggle 5.0 PHYs', deps: [] },
+      { agent: 'hardware_thermal_si_eng', task: 'Simulate 32 GT/s SerDes eye diagrams and jitter budgets across package ball grid array (BGA 27x27mm)', deps: [0] },
+      { agent: 'enterprise_ras_qa_lead', task: 'Verify hardware cryptographic engines including AES-XTS 256, SHA-3, and FIPS 140-3 Level 2 readiness', deps: [1] },
+      { agent: 'field_solutions_fae', task: 'Release reference evaluation board (EVB) schematics, high-speed layout rules, and bill of materials (BOM)', deps: [2] }
+    ]
+  },
+  proprietary_4k_ldpc_dsp_engine: {
+    name: 'Proprietary 3rd-Gen 4K LDPC ECC & DSP Soft-Decode Calibration',
+    title: 'InnoGrit 3rd-Gen 4K LDPC ECC & Adaptive DSP Flash Endurance Calibration',
+    mode: 'dag',
+    track: 'trackB',
+    deliverable: 'InnoGrit 4K LDPC ECC Engine Specification & Endurance Benchmark Report',
+    sample: 'Calibrate InnoGrit proprietary 3rd-generation 4K LDPC error correction engine. Tripling TLC/QLC NAND endurance and maintaining UBER < 10^-17 across end-of-life retention stress.',
+    desc: 'Calibrates InnoGrit proprietary 3rd-generation 4K LDPC ECC and multi-stage soft-decoding algorithms, tripling TLC/QLC NAND endurance and maintaining UBER < 10⁻¹⁷ under extreme retention.',
+    tasks: [
+      { agent: 'nand_physics_ldpc_eng', task: 'Profile raw bit error rate (RBER) growth curves across 3,000 P/E cycles on 232-layer 3D TLC/QLC NAND', deps: [] },
+      { agent: 'firmware_core_dev', task: 'Implement dynamic read-voltage threshold shifting (Vth tracking) in the flash translation layer (FTL)', deps: [0] },
+      { agent: 'tsmc_asic_ppa_lead', task: 'Synthesize hard-decision and soft-decision parity check matrix processing pipelines with sub-20ns decode latency', deps: [0] },
+      { agent: 'enterprise_ras_qa_lead', task: 'Certify UBER < 10⁻¹⁷ across 3 months of 70°C high-temperature data retention stress testing', deps: [1, 2] }
+    ]
+  },
+  enterprise_fdp_sriov_firmware_stack: {
+    name: 'Enterprise NVMe 2.0 FDP & SR-IOV Cloud Virtualization Firmware Stack',
+    title: 'Flexible Data Placement (FDP) & SR-IOV Multi-Tenant Cloud SSD Firmware Architecture',
+    mode: 'sequential',
+    track: 'trackB',
+    deliverable: 'Enterprise NVMe 2.0 FDP & SR-IOV Cloud Virtualization Firmware Dossier',
+    sample: 'Deploy cloud multi-tenant firmware supporting Flexible Data Placement (FDP) to cut write amplification from 3.2 to 1.05 and SR-IOV hardware virtualization for 128 isolated virtual functions.',
+    desc: 'Engineers cloud virtualization firmware incorporating NVMe Flexible Data Placement (FDP) to reduce write amplification by 67% and SR-IOV multi-tenancy for 128 virtual functions.',
+    tasks: [
+      { agent: 'nvme_protocol_architect', task: 'Map host-managed Reclaim Units (RUs) and placement handles into physical flash erase blocks', deps: [] },
+      { agent: 'firmware_core_dev', task: 'Architect zero-copy SR-IOV virtual function queue dispatching to isolate noisy neighbors across 128 VMs', deps: [0] },
+      { agent: 'storage_tco_economist', task: 'Benchmark Write Amplification Factor (WAF) reduction from 3.2 down to 1.05, doubling drive endurance and SSD lifespan', deps: [1] },
+      { agent: 'technical_specs_writer', task: 'Author the cloud hyperscaler integration guide and API documentation for automated FDP orchestration', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  n3x_ai_cache_xlflash_flagship: 'InnoGrit-N3X AI Edge & Real-Time KV-Cache Architecture Dossier',
+  n3q_64tb_hyperscale_qlc: 'InnoGrit-N3Q 64TB Hyperscale AI Data Lake Storage Dossier',
+  crestone_pcie6_cascade_cxl: 'PCIe 6.0 Crestone & CXL 3.1 Cascade Memory Disaggregation Blueprint',
+  hyperscale_qualification_enablement: 'Hyperscale CSP Turnkey Drive Qualification & Interop Sign-Off Package',
+  ig5222_dramless_extreme_ppa: 'IG5222 DRAM-Less Client Controller Extreme PPA Sign-Off Package',
+  ig5669_tacoma_gen5_enterprise_asic: 'Tacoma IG5669 16-Channel Enterprise Controller Physical Sign-Off Dossier',
+  proprietary_4k_ldpc_dsp_engine: 'InnoGrit 4K LDPC ECC Engine Specification & Endurance Benchmark Report',
+  enterprise_fdp_sriov_firmware_stack: 'Enterprise NVMe 2.0 FDP & SR-IOV Cloud Virtualization Firmware Dossier'
+};
+
+const TOOLS = {
+  nvme_fdp_config: () => '[NVMe FDP Engine] Reclaim Unit (RU) placement handles mapped; host-directed data separation eliminates GC write amplification.',
+  pcie_flit_verify: () => '[PCIe Protocol Analyzer] Flit mode 64 GT/s PAM4 framing verified; zero symbol errors detected across 10^12 cycles.',
+  nand_vth_calibrate: () => '[NAND Vth Tracker] Calibrated 16-level voltage distribution for 3D QLC; optimal read-level shift reduces raw bit errors by 44%.',
+  rber_curve_fit: () => '[RBER Characterization] End-of-life RBER modeled at 1.8x10^-2; soft LDPC decoding converges with zero uncorrectable sectors.',
+  density_power_model: () => '[Hyperscale Model] 64TB U.2 arrays achieve 2.05 Petabytes per 1U server node; power consumption restricted to 14.2W active.',
+  cluster_ingest_sim: () => '[Ingest Simulation] Sustained sequential read rate measured at 14.5 GB/s; saturates dual-port 100GbE NIC direct storage ingestion.',
+  kv_cache_trace: () => '[AI KV-Cache Engine] LLM attention key-value cache access profile captured; random 4KB read latency sustained at 13 µs.',
+  checkpoint_burst_eval: () => '[Checkpoint Burst] Evaluated 1.2TB model state write burst; sustained throughput verified at 11.8 GB/s with zero thermal throttling.',
+  ftl_queue_arbitrate: () => '[FTL Firmware Arbiter] Multi-core FTL hardware queues balanced; 99.99th percentile tail latency capped at 14.8 µs under 1.6M IOPS.',
+  sriov_vf_dispatch: () => '[SR-IOV Virtualization] 128 virtual functions provisioned; hardware rate-limiting isolates multi-tenant noisy neighbor contention.',
+  sta_timing_signoff: () => '[TSMC FinFET STA] Static timing closed at 1.2 GHz across worst-case SS/0.675V/125C corner; setup margin +42 ps, hold margin +28 ps.',
+  floorplan_power_gate: () => '[PPA Floorplan] Multi-voltage island power gating verified; deep sleep power dissipation restricted to 2.4 mW in PS4 state.',
+  cxl_mem_state_sim: () => '[CXL.mem Coherency] CXL 3.1 Type 3 memory pooling protocol state machine verified; host load/store latency measured at 168 ns.',
+  pooling_latency_eval: () => '[Fabric Telemetry] Fabric multi-headed memory sharing benchmarked across 8 host nodes; zero deadlock under heavy cache invalidate contention.',
+  serdes_eye_margin: () => '[SerDes SI Eye] 32 GT/s PCIe Gen5 PAM2 SerDes eye opening measured at 188 mV and 0.58 UI; jitter well within JEDEC/PCI-SIG specs.',
+  thermal_airflow_sim: () => '[Thermal CFD] Chassis airflow simulation confirms junction temperature at 76.4 C with 300 LFM ambient airflow at 35 C inlet.',
+  plp_discharge_test: () => '[PLP Audit] Tantalum capacitor backup power verified; 32MB host-write buffer flushed to non-volatile flash in 18.2 ms upon AC power drop.',
+  chamber_4corner_audit: () => '[4-Corner Environmental] 1,000-hour stress testing complete across -40 C to +85 C and 90% RH; zero drive drops or firmware halts.',
+  waf_endurance_calc: () => '[WAF Economics] Write Amplification Factor dropped from 3.2 to 1.05 under FDP; drive endurance extended from 1.0 DWPD to 3.0 DWPD.',
+  capex_opex_compare: () => '[Storage TCO Model] CapEx reduced by $3.4M per 20PB storage cluster; annual power and cooling savings equal $420,000.',
+  ocp_interop_matrix: () => '[OCP 2.0 Compliance] 100% test pass rate across OCP Datacenter NVMe SSD spec including telemetry log 0x07 and latency monitors.',
+  evb_schematic_review: () => '[Hardware EVB Signoff] 16-channel PCIe 5.0 reference board layout verified; differential impedance controlled to 85 ohms +/-5%.',
+  spec_sheet_compile: () => '[Spec Dossier] Compiled turnkey electrical, optical, mechanical, and protocol sign-off dossier for OEM module partners.',
+  csp_turnkey_dossier: () => '[CSP Acceptance] Hyperscaler engineering acceptance dossier generated; verified for immediate deployment in production data center racks.',
+  save: () => '[Secure Archive] Committed technical verification package, FTL firmware binaries, register maps, and validation reports to secure repository.'
+};
+
+const FINAL = {
+  n3x_ai_cache_xlflash_flagship: `INNOGRIT CORPORATION &mdash; ARCHITECTURAL DESIGN SPECIFICATION
+INNOGRIT-N3X ULTRA-LOW LATENCY AI CACHE SSD BLUEPRINT (IG5668 + KIOXIA XL-FLASH)
+Document ID: IG-SPEC-N3X-AICACHE-REV3 | Form Factors: EDSFF E3.S & U.2 | Protocol: PCIe Gen5 x4, NVMe 2.0
+
+1. SYSTEM ARCHITECTURE & TARGET AI WORKLOADS
+The InnoGrit-N3X series represents a breakthrough in storage tiering, purposefully engineered to shatter the storage wall in real-time generative AI inference and edge computing:
+- Core Controller: InnoGrit IG5668 enterprise-grade PCIe Gen5 x4, NVMe 2.0 SSD controller fabricated on TSMC advanced FinFET process.
+- Storage Media: KIOXIA XL-FLASH ultra-high-performance SLC-class 3D NAND flash, delivering read latency 75% lower than conventional 3D TLC media.
+- Latency Profile: Sustained 13 µs random read latency and 4 µs random write latency, bridging the latency gap between DRAM and enterprise NVMe SSDs.
+- Concurrency & IOPS: Up to 1,600,000 IOPS (1.6M IOPS) in 4KB random read, providing deterministic throughput for real-time AI KV-cache checkpointing.
+- Extreme Endurance: Rated at 100 DWPD (Drive Writes Per Day) across 5 years, purpose-built for continuous model parameter reload and embedding table updates.
+
+2. CONTROLLER HARDWARE & PROTOCOL INNOVATIONS
+- Flexible Data Placement (FDP): Native hardware support for NVMe 2.0 FDP eliminates internal Garbage Collection overhead, aligning host KV-cache allocations with physical erase blocks.
+- Controller Memory Buffer (CMB): Integrates high-speed CMB allowing direct peer-to-peer DMA transfers between GPU VRAM and SSD without host CPU memory bouncing.
+- Single Root I/O Virtualization (SR-IOV): Hardware-assisted queue virtualization supporting 128 virtual functions with dedicated hardware submission/completion rings.
+- Power Envelope: Active operational power capped at 14.0W under full 1.6M IOPS saturation; idle standby power < 3.2W.
+
+3. HARDWARE RELIABILITY & RAS TELEMETRY
+- End-to-End Data Protection: Full-path data protection with embedded 32-bit CRC per logical block, ECC parity inside internal SRAM buffers, and flash-level 4K LDPC.
+- Advanced Power-Loss Protection (PLP): On-board discrete tantalum capacitor array guarantees full flush of in-flight write data from internal DRAM cache to XL-FLASH in < 18.2 ms upon power drop.
+- Thermal Management: Closed-loop autonomous multi-stage thermal throttling ensures continuous 24/7 reliability in dense AI GPU chassis.
+
+NOTE: illustrative simulation based on public domain research of InnoGrit technologies.`,
+
+  n3q_64tb_hyperscale_qlc: `INNOGRIT CORPORATION &mdash; QUALIFICATION DOSSIER
+INNOGRIT-N3Q 64TB PCIE GEN5 HIGH-CAPACITY QLC ENTERPRISE STORAGE BLUEPRINT
+Document ID: IG-QUAL-N3Q-64TB-QLC-REV2 | Interface: PCIe Gen5 x4, NVMe 2.0 | Target: AI Training Data Lakes
+
+1. HIGH-CAPACITY ARCHITECTURAL OVERVIEW
+The InnoGrit-N3Q U.2 / E3.S enterprise NVMe SSD is engineered to replace legacy nearline hard disk drive arrays and lower-tier TLC storage in hyperscale AI infrastructures:
+- Native Usable Capacity: Up to 64 Terabytes (TB) in a standard 2.5-inch 15mm U.2 or EDSFF E3.S form factor.
+- Throughput Benchmark: Delivers up to 14,500 MB/s (14.5 GB/s) sequential read throughput and 1,200,000 4KB random read IOPS.
+- Storage Density: Achieves over 2.0 Petabytes of raw storage capacity within a single 1U high-density server chassis (32x 64TB E3.S drives).
+
+2. ADVANCED 4K LDPC & QLC ENDURANCE OPTIMIZATION
+- 16-Level Threshold Voltage Tracking: InnoGrit's proprietary adaptive voltage sensing dynamically compensates for floating-gate charge leakage and read-disturb phenomena in 3D QLC.
+- Soft-Decision LDPC Engine: Employs multi-stage soft-decoding algorithms that triple native QLC program/erase (P/E) cycle longevity, delivering 1.0 DWPD over 5 years.
+- Uncorrectable Bit Error Rate (UBER): Guaranteed UBER < 10^-17 across end-of-life temperature retention stress.
+
+3. HYPERSCALE TCO IMPACT (20 PETABYTE CLUSTER)
+- Rack Footprint: Compresses 20 Petabytes from twelve 42U racks (legacy nearline HDDs) down into two 42U racks (InnoGrit-N3Q SSDs) &mdash; an 83% floor space reduction.
+- Power Consumption: Reduces cluster power dissipation from 78.4 kW to 18.2 kW, generating over $420,000 in annual utility and cooling savings.
+- Training Ingestion Acceleration: Increases raw training data feeding bandwidth by 18x, keeping thousands of GPU compute cores fully saturated during multi-modal training.
+
+NOTE: illustrative simulation based on public domain research of InnoGrit technologies.`,
+
+  crestone_pcie6_cascade_cxl: `INNOGRIT CORPORATION &mdash; NEXT-GENERATION SILICON BLUEPRINT
+CRESTONE IG5686 PCIE 6.0 & CASCADE IG5676 CXL 3.1 MEMORY DISAGGREGATION SPECIFICATION
+Document ID: IG-ARCH-CRESTONE-CASCADE-REV1 | Interfaces: PCIe 6.0 (64 GT/s PAM4) & CXL 3.1 Type 3
+
+1. CRESTONE IG5686 ENTERPRISE PCIE GEN6 CONTROLLER
+InnoGrit's Crestone IG5686 controller doubles interface throughput to satisfy extreme bandwidth requirements in next-generation high-performance computing (HPC) and AI server clusters:
+- Interface Speed: PCIe 6.0 x4 operating at 64 GT/s per lane utilizing PAM4 (Pulse Amplitude Modulation 4-level) signaling.
+- Sequential Throughput: Up to 28,000 MB/s (28 GB/s) sequential read speed and 24,000 MB/s sequential write speed.
+- Transaction Rate: Exceeds 10,000,000 IOPS (10M IOPS) in 4KB random read, delivering record-breaking storage IOPS density.
+- Physical Coding Layer: Implements low-latency Forward Error Correction (FEC) combined with 256B Flit-based framing.
+
+2. CASCADE IG5676 CXL 3.1 MEMORY POOLING EXPANDER
+The Cascade IG5676 is a CXL 3.1 Type 3 memory controller designed to dismantle memory capacity and bandwidth walls across disaggregated AI data centers:
+- Coherent Protocols: Native support for CXL.io (device discovery/virtualization) and CXL.mem (byte-addressable host-managed memory load/store).
+- Latency Budget: Hardware protocol state machines achieve sub-180 ns round-trip memory access latency.
+- Dynamic Memory Sharing: Enables multi-host memory pooling where up to 8 host servers share an exabyte-scale fabric-attached CXL memory tier with zero cache-line lockups.
+
+NOTE: illustrative simulation based on public domain research of InnoGrit technologies.`,
+
+  hyperscale_qualification_enablement: `INNOGRIT CORPORATION &mdash; ENTERPRISE QUALIFICATION DOSSIER
+TIER-1 CLOUD SERVICE PROVIDER TURNKEY DRIVE QUALIFICATION & OCP COMPLIANCE MATRIX
+Document ID: IG-QUAL-CSP-OCP-REV4 | Target: Hyperscale Cloud Infrastructure Deployments
+
+1. OCP DATACENTER NVME SSD SPECIFICATION 2.0 AUDIT
+InnoGrit's full turnkey (FTK) SSD platform has successfully completed comprehensive interoperability validation against Open Compute Project (OCP) Cloud SSD benchmarks:
+- Telemetry & Diagnostic Logs: Verified automated telemetry logging (Log Page 0x07) and smart background monitoring without host polling overhead.
+- Tail Latency Guarantees: Guaranteed 99.999th percentile read latency < 500 µs under mixed 70/30 read/write workloads at 80% queue depth.
+- Host-Initiated Secure Erase: Verified Sanitize Cryptographic Erase and NVMe Format Command compliance in < 1.2 seconds.
+
+2. ENVIRONMENTAL CHAMBER & STRESS CYCLING BENCHMARK
+- 4-Corner Qualification: 1,000 hours of continuous test execution across voltage margins (+/-10% nominal) and temperature limits (-40 C to +85 C).
+- Power Cycling Stress: 10,000 uninterrupted cold boot and warm reset cycles executed with zero drive bricking or metadata table corruption.
+- Firmware Live Update: Non-disruptive firmware download and commit without resetting host PCIe link or dropping virtual machine sessions.
+
+NOTE: illustrative simulation based on public domain research of InnoGrit technologies.`,
+
+  ig5222_dramless_extreme_ppa: `INNOGRIT CORPORATION &mdash; CLIENT SILICON SPECIFICATION
+IG5222 PCIE GEN4 DRAM-LESS CLIENT SOC EXTREME PPA (PERFORMANCE, POWER, AREA) BLUEPRINT
+Document ID: IG-SPEC-IG5222-PPA-REV3 | Market: AI PCs, Ultrabooks & Gaming Handhelds | Interface: PCIe 4.0 x4
+
+1. EXTREME PPA (PERFORMANCE, POWER, AREA) ARCHITECTURE
+InnoGrit's IG5222 is engineered for client applications demanding flagship sequential throughput combined with minimalist board area and sub-watt thermal profiles:
+- Sequential Performance: Up to 7,400 MB/s sequential read and 6,800 MB/s sequential write speed.
+- Random IOPS: 1,200,000 random read IOPS and 1,200,000 random write IOPS.
+- DRAM-Less Architecture: Eliminates external DRAM components, reducing total BOM cost by up to 25% and shrinking PCB real-estate for compact M.2 2230 and BGA form factors.
+
+2. NVME HOST MEMORY BUFFER (HMB 1.4) OPTIMIZATION
+- Host Cache Hit Rate: Leverages 64MB of host DRAM through NVMe HMB protocol; proprietary caching algorithms achieve > 98.4% translation cache hit rates.
+- Power Envelope: Average active read/write power < 2.5 Watts; ultra-low power sleep states (PS3/PS4) consume < 2.5 mW with fast wake-up < 3 ms.
+- Thermal Throttling: Intelligent autonomous thermal throttling preserves peak burst throughput while keeping drive surface temperatures below 70 C in fanless chassis.
+
+NOTE: illustrative simulation based on public domain research of InnoGrit technologies.`,
+
+  ig5669_tacoma_gen5_enterprise_asic: `INNOGRIT CORPORATION &mdash; PHYSICAL SILICON SIGN-OFF DOSSIER
+TACOMA IG5669 16-CHANNEL PCIE GEN5 ENTERPRISE CONTROLLER TAPE-OUT REPORT
+Document ID: IG-SIGNOFF-TACOMA-IG5669-REV2 | Process Node: TSMC FinFET | Form Factor: BGA 27x27mm
+
+1. TACOMA CONTROLLER SILICON OVERVIEW
+InnoGrit's Tacoma IG5669 is an enterprise and datacenter SSD controller engineered for mission-critical storage arrays:
+- Channel Architecture: 16 high-speed NAND flash channels supporting ONFI 5.0 and Toggle 5.0 interface speeds up to 2400 MT/s per channel.
+- Maximum Capacity: Supports up to 32TB native drive capacity with 3D TLC and QLC NAND dies.
+- Peak Performance: Delivers up to 14,700 MB/s (14.7 GB/s) sequential read and 12,000 MB/s sequential write; up to 3,500,000 random read IOPS.
+
+2. PHYSICAL DESIGN & TIMING CLOSURE
+- Static Timing Analysis (STA): Timing closed across all 24 multi-mode multi-corner (MMMC) operating points at 1.2 GHz core clock frequency.
+- Electro-Migration & IR Drop: Maximum peak IR drop < 1.8% on primary core VDD mesh under worst-case 16-channel simultaneous write bursts.
+- Hardware Security Engine: Certified hardware cryptography block including inline AES-XTS 256, SHA-3, true random number generator (TRNG), and FIPS 140-3 Level 2 readiness.
+
+NOTE: illustrative simulation based on public domain research of InnoGrit technologies.`,
+
+  proprietary_4k_ldpc_dsp_engine: `INNOGRIT CORPORATION &mdash; ERROR CORRECTION & RELIABILITY SPECIFICATION
+PROPRIETARY 3RD-GENERATION 4K LDPC ECC & ADAPTIVE DSP FLASH CALIBRATION REPORT
+Document ID: IG-ECC-4K-LDPC-REV3 | Technology: 4KB Code-Word Length Advanced LDPC & Dynamic Vth Tracking
+
+1. ERROR CORRECTION ALGORITHM & HARDWARE TOPOLOGY
+InnoGrit's 3rd-generation proprietary LDPC ECC engine is specifically architected for advanced high-density 3D TLC and QLC flash memories:
+- Parity Architecture: Utilizes 4KB code-word block size with high-rate quasi-cyclic parity check matrices.
+- Dual-Mode Decoding: Integrates ultra-fast hardware hard-decision decoding (< 20 ns latency) for normal operations, seamlessly transitioning to multi-stage soft-decision decoding under degraded cell conditions.
+- NAND Longevity Multiplication: Triples raw NAND endurance, extending 3D TLC/QLC usable lifespan by up to 300%.
+
+2. DSP ADAPTIVE VOLTAGE SENSING & RETENTION
+- Dynamic Vth Shift: Real-time digital signal processing (DSP) dynamically estimates optimal cell threshold voltage distributions, compensating for temperature variations and cycling degradation.
+- Data Retention Benchmark: Sustains uncorrectable bit error rates (UBER) < 10^-17 after 3 months of accelerated 70 C thermal retention bake, compliant with enterprise JEDEC JESD218 standards.
+
+NOTE: illustrative simulation based on public domain research of InnoGrit technologies.`,
+
+  enterprise_fdp_sriov_firmware_stack: `INNOGRIT CORPORATION &mdash; CLOUD FIRMWARE ARCHITECTURAL DOSSIER
+FLEXIBLE DATA PLACEMENT (FDP) & SR-IOV MULTI-TENANT CLOUD FIRMWARE STACK
+Document ID: IG-FW-FDP-SRIOV-REV2 | Protocol: NVMe 2.0 TP4146 (FDP) & PCI-SIG SR-IOV
+
+1. FLEXIBLE DATA PLACEMENT (FDP) IMPLEMENTATION
+InnoGrit's enterprise cloud firmware incorporates NVMe 2.0 Flexible Data Placement (FDP) to overcome the traditional Write Amplification Factor (WAF) penalties of multi-tenant cloud storage:
+- Write Amplification Factor (WAF): Drives WAF from 3.2 down to 1.05 by allowing cloud host hypervisors to place data into isolated Reclaim Units (RUs).
+- Garbage Collection Elimination: Completely eliminates background garbage collection collisions, reducing tail latency jitter by up to 85%.
+- Drive Longevity Doubling: Extending effective SSD endurance by 3x without increasing physical over-provisioning percentages.
+
+2. HARDWARE SR-IOV VIRTUALIZATION & NOISY NEIGHBOR MITIGATION
+- Virtual Function Capacity: Native support for 128 virtual functions (VFs) mapped across independent submission and completion queue hardware engines.
+- Quality of Service (QoS): Enforces hard IOPS and bandwidth rate limiters per virtual machine, preventing runaway database queries from degrading neighboring cloud tenant latency.
+
+NOTE: illustrative simulation based on public domain research of InnoGrit technologies.`
+};
+
+const EMPLOYEES = [
+  { id: 'emp-n3x', name: 'N3X-AI-Lead', title: 'InnoGrit-N3X AI Cache & Low-Latency Systems Architect', wf: 'n3x_ai_cache_xlflash_flagship', handled: 48, hrs: 18.4, win: '13µs / 100 DWPD' },
+  { id: 'emp-qlc', name: 'QLC-Scale-Eng', title: 'N3Q 64TB Hyperscale High-Density Storage Director', wf: 'n3q_64tb_hyperscale_qlc', handled: 62, hrs: 14.2, win: '64TB @ 14.5GB/s' },
+  { id: 'emp-cxl', name: 'PCIe6-CXL-Architect', title: 'Crestone PCIe 6.0 & Cascade CXL 3.1 Fabric Lead', wf: 'crestone_pcie6_cascade_cxl', handled: 35, hrs: 21.5, win: '28 GB/s & 10M IOPS' },
+  { id: 'emp-qual', name: 'CSP-Qual-Director', title: 'Cloud Service Provider Turnkey Drive Qual Director', wf: 'hyperscale_qualification_enablement', handled: 84, hrs: 16.8, win: '6-Wk Qual Cycle' },
+  { id: 'emp-ppa', name: 'PPA-Client-Lead', title: 'IG5222 DRAM-Less Client SoC Optimization Lead', wf: 'ig5222_dramless_extreme_ppa', handled: 112, hrs: 19.6, win: '7.4 GB/s @ 2.5W' },
+  { id: 'emp-tacoma', name: 'Tacoma-Tapeout-Lead', title: 'Tacoma IG5669 16-Channel Enterprise Tapeout Lead', wf: 'ig5669_tacoma_gen5_enterprise_asic', handled: 42, hrs: 24.1, win: '16-Ch 32TB Signoff' },
+  { id: 'emp-ldpc', name: 'LDPC-DSP-Physicist', title: 'Proprietary 4K LDPC ECC & DSP Calibration Specialist', wf: 'proprietary_4k_ldpc_dsp_engine', handled: 96, hrs: 17.5, win: '3x NAND Longevity' },
+  { id: 'emp-fdp', name: 'FDP-Cloud-Architect', title: 'Enterprise NVMe FDP & SR-IOV Cloud Firmware Lead', wf: 'enterprise_fdp_sriov_firmware_stack', handled: 58, hrs: 15.9, win: 'WAF 1.05 (67% Cut)' }
+];
+
+let activeEmpId = null;
+let runState = { running: false, phase: 0, timer: null, runningTasks: new Set(), completedTasks: new Set() };
+let selectedWfKey = 'n3x_ai_cache_xlflash_flagship';
+
+function init() {
+  renderEcon();
+  renderRoster();
+  renderBuilderWfs();
+}
+
+function switchTab(t) {
+  document.getElementById('tab-roster').classList.toggle('active', t === 'roster');
+  document.getElementById('tab-builder').classList.toggle('active', t === 'builder');
+  document.getElementById('view-roster').classList.toggle('hidden', t !== 'roster');
+  document.getElementById('view-builder').classList.toggle('hidden', t !== 'builder');
+}
+
+function renderEcon() {
+  const cont = document.getElementById('econ-strip');
+  cont.innerHTML = `
+    <div class="cell"><div class="v">13<span class="u">µs</span></div><div class="k">Ultra-Low Latency Read (N3X AI Cache)</div></div>
+    <div class="cell"><div class="v">64<span class="u">TB</span></div><div class="k">Single-Drive Enterprise Density (N3Q QLC)</div></div>
+    <div class="cell"><div class="v">10<span class="u">M</span></div><div class="k">Peak IOPS Capability (PCIe 6.0 Crestone)</div></div>
+    <div class="cell"><div class="v">67<span class="u">%</span></div><div class="k">WAF Reduction (NVMe 2.0 FDP Architecture)</div></div>
+  `;
+}
+
+function empCard(emp) {
+  const wf = WORKFLOWS[emp.wf];
+  const card = document.createElement('div');
+  card.className = `emp ${emp.id === activeEmpId ? 'working' : ''} ${wf.tag === 'flagship' ? 'hero' : ''}`;
+  card.id = `card-${emp.id}`;
+
+  const initials = emp.name.split('-').map(s => s[0]).slice(0, 2).join('');
+  const badgeHTML = wf.tag === 'flagship' ? '<span class="tag hero">Flagship</span>' : (wf.track === 'trackA' ? '<span class="tag commercial">Commercial &amp; Systems</span>' : '<span class="tag operations">ASIC &amp; Firmware</span>');
+
+  let teamHTML = '';
+  wf.tasks.forEach(t => {
+    const a = AGENT_ROLES[t.agent];
+    if (a) teamHTML += `<span class="chip">${a.emoji} ${a.label.split(' ')[0]}</span>`;
+  });
+
+  card.innerHTML = `
+    <div class="emp-top">
+      <div class="avatar">${initials}</div>
+      <div>
+        <div class="emp-name">${emp.name} ${badgeHTML}</div>
+        <div class="emp-title">${emp.title}</div>
+      </div>
+    </div>
+    <div class="emp-owns">Owns: <b>${wf.name}</b></div>
+    <div class="team">${teamHTML}</div>
+    <div class="emp-stats">
+      <div class="st"><b>${emp.handled}</b>Simulations</div>
+      <div class="st"><b>${emp.hrs.toFixed(1)}h</b>Engineering Saved</div>
+      <div class="st"><b class="wn" style="color:var(--accent)">${emp.win}</b>Benchmark</div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" onclick="setupRun('${emp.id}')">Run Operator</button>
+      <button class="btn" onclick="inspectWf('${emp.wf}')">Inspect Workflow</button>
+    </div>
+  `;
+  return card;
+}
+
+function renderRoster() {
+  const cont = document.getElementById('roster-tracks');
+  cont.innerHTML = '';
+
+  TRACKS.forEach(([tk, tl]) => {
+    const slabel = document.createElement('div');
+    slabel.className = 'slabel';
+    slabel.innerText = tl;
+    cont.appendChild(slabel);
+
+    const grid = document.createElement('div');
+    grid.className = 'roster';
+
+    EMPLOYEES.filter(e => {
+      const wf = WORKFLOWS[e.wf];
+      return wf.track === tk;
+    }).forEach(e => grid.appendChild(empCard(e)));
+
+    if (tk === 'trackB') {
+      const hire = document.createElement('div');
+      hire.className = 'hire-card';
+      hire.onclick = () => switchTab('builder');
+      hire.innerHTML = `
+        <div class="plus">+</div>
+        <div class="h">Add an Operator</div>
+        <div class="p">Compose specialist storage controller agents into a custom turnkey workflow</div>
+      `;
+      grid.appendChild(hire);
+    }
+    cont.appendChild(grid);
+  });
+}
+
+function inspectWf(wfKey) {
+  selectedWfKey = wfKey;
+  switchTab('builder');
+  goToStep(2);
+}
+
+function setupRun(empId) {
+  activeEmpId = empId;
+  const emp = EMPLOYEES.find(e => e.id === empId);
+  const wf = WORKFLOWS[emp.wf];
+
+  const cont = document.getElementById('run-container');
+  cont.className = 'run';
+  cont.innerHTML = `
+    <div class="run-head">
+      <div class="avatar" style="width:38px;height:38px;font-size:13px">${emp.name.split('-').map(s=>s[0]).slice(0,2).join('')}</div>
+      <div>
+        <div style="font-size:16px;font-weight:700;color:var(--hi)">${emp.name} &bull; ${wf.name}</div>
+        <div class="run-sub">${wf.desc}</div>
+      </div>
+    </div>
+
+    <div class="run-input">
+      <textarea id="run-prompt">${wf.sample}</textarea>
+      <button class="btn primary big" id="btn-execute" onclick="executeRun()">Execute Multi-Agent Run</button>
+    </div>
+
+    <div class="phases" id="run-phases"></div>
+    <div class="agent-grid" id="run-agent-grid"></div>
+
+    <div class="feed" id="run-feed"></div>
+
+    <div class="result hidden" id="run-result">
+      <div class="rstats">
+        <div style="font-size:13px;font-weight:700;color:var(--hi);margin-bottom:12px">Execution Telemetry</div>
+        <div class="rrow"><span class="k">Orchestration</span><span class="v">${wf.mode.toUpperCase()}</span></div>
+        <div class="rrow"><span class="k">Specialist Agents</span><span class="v">${wf.tasks.length} Active</span></div>
+        <div class="rrow"><span class="k">Convergence Rate</span><span class="v">100% Validated</span></div>
+        <div class="rrow"><span class="k">Interface</span><span class="v">PCIe Gen5 / Gen6</span></div>
+        <div class="rrow"><span class="k">Status</span><span class="v" style="color:var(--ok)">Verified</span></div>
+      </div>
+      <div class="rout">
+        <div class="rh">${DTITLE[emp.wf] || wf.deliverable}</div>
+        <div class="rb" id="run-final-text"></div>
+      </div>
+    </div>
+
+    <div class="donebar hidden" id="run-donebar">
+      <b>Run Complete:</b> Multi-agent storage controller package generated. Validated against NVMe 2.0 &amp; OCP Cloud SSD specifications.
+    </div>
+  `;
+
+  const pcont = document.getElementById('run-phases');
+  const acont = document.getElementById('run-agent-grid');
+
+  wf.tasks.forEach((t, i) => {
+    const ph = document.createElement('div');
+    ph.className = 'ph';
+    ph.id = `ph-${i}`;
+    ph.innerHTML = `<div class="dot">${i+1}</div><div class="l">Task ${i+1}</div>`;
+    pcont.appendChild(ph);
+
+    const a = AGENT_ROLES[t.agent];
+    const ac = document.createElement('div');
+    ac.className = 'acard';
+    ac.id = `acard-${i}`;
+    ac.innerHTML = `
+      <div class="ae">${a ? a.emoji : '⚡'}</div>
+      <div class="ar">${a ? a.label : t.agent}</div>
+      <div class="at">${t.task}</div>
+      <div class="as"><div class="sd"></div><span id="astat-${i}">Queued</span></div>
+    `;
+    acont.appendChild(ac);
+  });
+
+  cont.scrollIntoView({ behavior: 'smooth' });
+}
+
+function logFeed(agent, text) {
+  const f = document.getElementById('run-feed');
+  if (!f) return;
+  const row = document.createElement('div');
+  row.className = 'frow';
+  const now = new Date();
+  const ts = now.toTimeString().split(' ')[0];
+  row.innerHTML = `<span class="ft">${ts}</span><span class="fa">${agent}</span><span class="fd">${text}</span>`;
+  f.appendChild(row);
+  f.scrollTop = f.scrollHeight;
+}
+
+function executeRun() {
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[emp.wf];
+
+  document.getElementById('btn-execute').disabled = true;
+  document.getElementById('run-feed').innerHTML = '';
+  document.getElementById('run-result').classList.add('hidden');
+  document.getElementById('run-donebar').classList.add('hidden');
+
+  logFeed('System', `Initiating ${wf.mode.toUpperCase()} storage workflow: ${wf.name}...`);
+
+  runState.running = true;
+  runState.phase = 0;
+  runState.runningTasks.clear();
+  runState.completedTasks.clear();
+
+  if (wf.mode === 'sequential') {
+    executeSequentialStep(0);
+  } else {
+    executeDagLoop();
+  }
+}
+
+function executeSequentialStep(idx) {
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[emp.wf];
+
+  if (idx >= wf.tasks.length) {
+    finishRun();
+    return;
+  }
+
+  setTaskStatus(idx, 'running');
+  const t = wf.tasks[idx];
+  const a = AGENT_ROLES[t.agent];
+  logFeed(a ? a.label : t.agent, `Dispatched: ${t.task}`);
+
+  setTimeout(() => {
+    const toolKey = (a && a.tools && a.tools[0]) ? a.tools[0] : 'save';
+    const toolFn = TOOLS[toolKey] || TOOLS.save;
+    logFeed(a ? a.label : t.agent, `[Output] ${toolFn()}`);
+
+    setTaskStatus(idx, 'done');
+    setTimeout(() => {
+      executeSequentialStep(idx + 1);
+    }, 450);
+  }, 1000);
+}
+
+function executeDagLoop() {
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[emp.wf];
+
+  const canRun = [];
+  wf.tasks.forEach((t, i) => {
+    if (!runState.completedTasks.has(i) && !runState.runningTasks.has(i)) {
+      const depsMet = t.deps.every(d => runState.completedTasks.has(d));
+      if (depsMet) canRun.push(i);
+    }
+  });
+
+  if (canRun.length === 0) {
+    if (runState.completedTasks.size === wf.tasks.length) {
+      finishRun();
+    }
+    return;
+  }
+
+  canRun.forEach(idx => {
+    runState.runningTasks.add(idx);
+    setTaskStatus(idx, 'running');
+    const t = wf.tasks[idx];
+    const a = AGENT_ROLES[t.agent];
+    logFeed(a ? a.label : t.agent, `Dispatched (Parallel): ${t.task}`);
+
+    setTimeout(() => {
+      const toolKey = (a && a.tools && a.tools[0]) ? a.tools[0] : 'save';
+      const toolFn = TOOLS[toolKey] || TOOLS.save;
+      logFeed(a ? a.label : t.agent, `[Output] ${toolFn()}`);
+
+      runState.runningTasks.delete(idx);
+      runState.completedTasks.add(idx);
+      setTaskStatus(idx, 'done');
+      executeDagLoop();
+    }, 1000);
+  });
+}
+
+function setTaskStatus(idx, st) {
+  const ph = document.getElementById(`ph-${idx}`);
+  const ac = document.getElementById(`acard-${idx}`);
+  const as = document.getElementById(`astat-${idx}`);
+
+  if (ph) {
+    ph.classList.toggle('active', st === 'running');
+    ph.classList.toggle('done', st === 'done');
+  }
+  if (ac) {
+    ac.className = `acard visible ${st}`;
+  }
+  if (as) {
+    as.innerText = st === 'running' ? 'Executing...' : (st === 'done' ? 'Complete' : 'Queued');
+  }
+}
+
+function finishRun() {
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[emp.wf];
+  logFeed('System', 'All tasks synchronized. Assembling verified deliverable...');
+
+  document.getElementById('btn-execute').disabled = false;
+  document.getElementById('run-result').classList.remove('hidden');
+  document.getElementById('run-donebar').classList.remove('hidden');
+
+  const deliverableText = FINAL[emp.wf] || 'Storage controller deliverable completed.';
+  document.getElementById('run-final-text').innerText = deliverableText;
+
+  emp.handled += 1;
+  emp.hrs += 4.5;
+  renderEcon();
+  const card = document.getElementById(`card-${emp.id}`);
+  if (card) {
+    card.replaceWith(empCard(emp));
+  }
+}
+
+function renderBuilderWfs() {
+  const cont = document.getElementById('builder-wf-grid');
+  cont.innerHTML = '';
+  Object.keys(WORKFLOWS).forEach(k => {
+    const wf = WORKFLOWS[k];
+    const item = document.createElement('div');
+    item.className = `wf ${k === selectedWfKey ? 'sel' : ''}`;
+    item.id = `bwf-${k}`;
+    item.onclick = () => selectBuilderWf(k);
+
+    const badge = wf.tag === 'flagship' ? '<span class="tag hero">Flagship</span>' : (wf.track === 'trackA' ? '<span class="tag commercial">Commercial &amp; Systems</span>' : '<span class="tag operations">ASIC &amp; Firmware</span>');
+    item.innerHTML = `
+      <div class="wn">${wf.name} ${badge}</div>
+      <div class="wd">${wf.desc}</div>
+      <div class="wm">${wf.mode.toUpperCase()} &bull; ${wf.tasks.length} TASKS</div>
+    `;
+    cont.appendChild(item);
+  });
+}
+
+function selectBuilderWf(k) {
+  selectedWfKey = k;
+  renderBuilderWfs();
+}
+
+function goToStep(s) {
+  document.getElementById('st-1').classList.toggle('active', s === 1);
+  document.getElementById('st-2').classList.toggle('active', s === 2);
+  document.getElementById('st-3').classList.toggle('active', s === 3);
+
+  document.getElementById('bstep-1').classList.toggle('hidden', s !== 1);
+  document.getElementById('bstep-2').classList.toggle('hidden', s !== 2);
+  document.getElementById('bstep-3').classList.toggle('hidden', s !== 3);
+
+  if (s === 2) {
+    const wf = WORKFLOWS[selectedWfKey];
+    document.getElementById('bstep2-wftitle').innerText = `Configure Tasks: ${wf.name}`;
+    const cont = document.getElementById('task-map-container');
+    cont.innerHTML = '';
+
+    wf.tasks.forEach((t, i) => {
+      const row = document.createElement('div');
+      row.className = 'task-row';
+
+      let optionsHTML = '';
+      Object.keys(AGENT_ROLES).forEach(ak => {
+        const a = AGENT_ROLES[ak];
+        const sel = ak === t.agent ? 'selected' : '';
+        optionsHTML += `<option value="${ak}" ${sel}>${a.emoji} ${a.label}</option>`;
+      });
+
+      row.innerHTML = `
+        <div class="tn">${i+1}</div>
+        <div class="tt">${t.task}</div>
+        <select id="sel-task-${i}">${optionsHTML}</select>
+      `;
+      cont.appendChild(row);
+    });
+  }
+}
+
+function deployOperator() {
+  const name = document.getElementById('b-emp-name').value.trim() || 'Custom-Storage-Operator';
+  const title = document.getElementById('b-emp-title').value.trim() || 'Custom Enterprise Storage Specialist';
+
+  const newId = 'custom-op-' + Date.now();
+  EMPLOYEES.push({
+    id: newId,
+    name: name,
+    title: title,
+    wf: selectedWfKey,
+    handled: 1,
+    hrs: 9.0,
+    win: 'Newly Deployed'
+  });
+
+  renderEcon();
+  renderRoster();
+  switchTab('roster');
+  setupRun(newId);
+}
+
+window.onload = init;
+</script>
+</body>
+</html>
