@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agile Analog &mdash; AI Automated Analog IP &amp; Subsystems Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--canvas:#fff;--surface:#f8fafc;--surface2:#f1f5f9;--border:#cbd5e1;--accent:#00a4b4;
+--accent-dim:rgba(0,164,180,.08);--accent-line:rgba(0,164,180,.30);--slate:#1f1646;--slate-line:rgba(31,22,70,.30);--text:#1e293b;--hi:#1f1646;--tert:#475569;--ok:#16a34a;--ok-dim:rgba(22,163,74,.10);--gold:#d97706;--gold-bg:#fef3c7;--gold-line:#fde68a}
+body{background:var(--canvas);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.mark,.htitle,.emp-name,.cell .v,.wn{font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:30}
+.logo{display:flex;align-items:center;gap:12px}
+.mark{width:48px;height:34px;border-radius:8px;background:linear-gradient(135deg,#1f1646,#00a4b4);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:12px;letter-spacing:.5px;font-family:Inter,sans-serif}
+.htitle{font-size:16px;font-weight:700;color:var(--hi)}.hsub{font-size:11px;color:var(--tert);margin-top:1px;font-family:Inter,sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:Inter,sans-serif}.badge b{color:#00a4b4}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:Inter,sans-serif}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:14px;line-height:1.55;max-width:920px;margin-bottom:14px;font-family:Inter,sans-serif}.lead b{color:var(--hi)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:Inter,sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:Inter,sans-serif}
+.tag.commercial{background:var(--accent-dim);color:#00a4b4;border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(22,163,74,.08);color:#16a34a;border:1px solid rgba(22,163,74,.3)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:#00a4b4}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:Inter,sans-serif}
+.slabel{font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--tert);text-transform:uppercase;margin:20px 0 14px;display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.emp.working{border-color:var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:#00a4b4;font-size:15px;flex-shrink:0;position:relative;font-family:Inter,sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:17px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:Inter,sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:Inter,sans-serif}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:Inter,sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:Inter,sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700}
+.btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi)}
+.btn:hover{border-color:#00a4b4}.btn.primary{background:linear-gradient(270deg,#00a4b4,#007f8c);border-color:#00a4b4;color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);color:#00a4b4;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:600;color:var(--hi);font-family:Inter,sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:Inter,sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:Inter,sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:Inter,sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:Inter,sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:#00a4b4}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:600;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:Inter,sans-serif}
+.acard.visible{opacity:1}.acard.running{border-color:var(--accent);opacity:1}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi)}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#fff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:Inter,monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--hi)}.frow .fd{color:var(--text);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:Inter,sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:600}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--hi)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto}
+.donebar{background:var(--surface);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:Inter,sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:Inter,sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:600;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface)}
+.wf:hover{border-color:#00a4b4}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:Inter,sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:Inter,sans-serif}.wf .wm{font-size:10px;color:#00a4b4;margin-top:8px;font-weight:600;text-transform:uppercase;font-family:Inter,sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:Inter,sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.task-row .tt{flex:1;font-size:12.5px;color:var(--hi)}.task-row select{background:#fff;border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;color:var(--hi);outline:none;font-family:Inter,sans-serif}
+.footer{max-width:1180px;margin:32px auto 0;padding:0 24px 32px;font-size:11.5px;color:var(--tert);line-height:1.5;border-top:1px solid var(--border);padding-top:18px;font-family:Inter,sans-serif}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="mark">AA</div>
+    <div>
+      <div class="htitle">Agile Analog &mdash; AI Automated Analog IP &amp; Subsystems Workforce (concept)</div>
+      <div class="hsub">Composa&trade; Process-Agnostic Generation &bull; agilePMU &bull; agileSECURITY &bull; agilePVT &bull; Cambridge, UK</div>
+    </div>
+  </div>
+  <div class="badge">Simulated Operations &bull; <b>8 Operators Active</b></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tab-roster" onclick="switchTab('roster')">AI Operator Roster</button>
+  <button class="tab" id="tab-builder" onclick="switchTab('builder')">Add an Operator</button>
+</div>
+
+<div class="main">
+  <div id="view-roster">
+    <div class="lead">
+      <b>Agile Analog</b> is a pioneering semiconductor IP company headquartered in Cambridge, UK, led by CEO Barry Paterson (former executive at Dialog Semiconductor and Maxim Integrated). Agile Analog transforms custom mixed-signal semiconductor development through its revolutionary <b>Composa&trade;</b> design technology. Rather than relying on manual, multi-month analog schematic drafting and physical layout that must be laboriously re-engineered for every foundry process, Composa programmatically generates custom, highly optimized analog IP from functional sub-circuit building blocks across any foundry node. Its comprehensive portfolio includes <b>agilePMU</b> (power management), <b>agileSECURITY</b> (voltage and clock glitch detection for anti-tamper SoCs), <b>agileSensorIF</b> (12-bit SAR ADCs and DACs), <b>agileIRDROP</b> and <b>agilePVT</b> (process, voltage, temperature tracking for AI and HPC silicon), and <b>agileSMU</b> (always-on sleep management). Operating in partnership with TSMC, Intel Foundry, GlobalFoundries, Samsung, and UMC, Agile Analog compresses 9-month analog design cycles into 3 to 4 weeks. This interactive AI workforce prototype models autonomous multi-agent orchestration across algorithmic analog generation, cross-PDK porting, fault-injection defense verification, and automotive ASIL-D sign-off.
+    </div>
+
+    <div class="legend">
+      <span><span class="tag commercial">Subsystems &amp; Security</span> Composa RISC-V SoC analog subsystems, agileSECURITY physical glitch &amp; EMFI defense, agileSensorIF 12-bit SAR ADC/DAC, agileSMU always-on power</span>
+      <span><span class="tag operations">Porting &amp; Reliability</span> Cross-foundry FinFET &amp; planar porting, agileIRDROP &amp; PVT sensor meshes for AI chips, automotive AEC-Q100 ASIL-D sign-off, turnkey testchip bring-up</span>
+      <span><span class="tag hero">Flagship</span> Composa&trade; Automated RISC-V SoC Analog Subsystem Generation &amp; Delivery</span>
+    </div>
+
+    <div class="econ" id="econ-strip"></div>
+
+    <div id="roster-tracks"></div>
+
+    <div id="run-container" class="hidden"></div>
+  </div>
+
+  <div id="view-builder" class="hidden">
+    <div class="lead">
+      <b>Operator Builder:</b> Compose a specialized multi-agent operator to automate Composa analog IP generation, cross-foundry PDK retargeting, glitch detection verification, or automotive ASIL-D safety analysis.
+    </div>
+
+    <div class="steps">
+      <div class="step active" id="st-1">
+        <div class="n">STEP 1</div>
+        <div class="l">Select Analog Workflow</div>
+        <div class="d">Choose the base analog IP subsystem or physical verification workflow</div>
+      </div>
+      <div class="step" id="st-2">
+        <div class="n">STEP 2</div>
+        <div class="l">Assign Specialist Agents</div>
+        <div class="d">Allocate specialist roles across analog generation, layout, and verification</div>
+      </div>
+      <div class="step" id="st-3">
+        <div class="n">STEP 3</div>
+        <div class="l">Name &amp; Deploy Operator</div>
+        <div class="d">Configure title and deploy operator to active roster</div>
+      </div>
+    </div>
+
+    <div id="bstep-1">
+      <div class="slabel">Available Analog IP &amp; Subsystem Workflows</div>
+      <div class="wf-grid" id="builder-wf-grid"></div>
+      <div style="margin-top:20px;display:flex;justify-content:flex-end">
+        <button class="btn primary big" onclick="goToStep(2)">Configure Operator Agents &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-2" class="hidden">
+      <div class="slabel" id="bstep2-wftitle">Configure Specialist Assignment</div>
+      <div id="task-map-container"></div>
+      <div style="margin-top:20px;display:flex;justify-content:space-between">
+        <button class="btn big" onclick="goToStep(1)">&larr; Back to Workflows</button>
+        <button class="btn primary big" onclick="goToStep(3)">Set Identity &rarr;</button>
+      </div>
+    </div>
+
+    <div id="bstep-3" class="hidden">
+      <div class="slabel">Operator Profile &amp; Deployment</div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;max-width:540px">
+        <div style="margin-bottom:14px">
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--hi);margin-bottom:6px">Operator Name</label>
+          <input type="text" id="b-emp-name" value="Custom-Analog-Generator" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none">
+        </div>
+        <div style="margin-bottom:20px">
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--hi);margin-bottom:6px">Functional Title</label>
+          <input type="text" id="b-emp-title" value="Composa™ Automated Analog IP &amp; Subsystem Specialist" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none">
+        </div>
+        <button class="btn primary big" style="width:100%" onclick="deployOperator()">Deploy to Live Workforce</button>
+      </div>
+      <div style="margin-top:20px">
+        <button class="btn" onclick="goToStep(2)">&larr; Back to Task Config</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <b>Simulated Operations Notice:</b> This interactive AI workforce prototype is an architectural demonstration engineered for Agile Analog stakeholders. All delivery schedules, circuit performance metrics, and foundry porting turnaround figures are illustrative placeholders based on public technical specifications and the Composa&trade; methodology. Final GDSII delivery, physical DRC/LVS closure, and silicon sign-off require validation by qualified mixed-signal analog design engineers and authorized foundry tapeout sign-off.
+</div>
+
+<script>
+const AGENT_ROLES = {
+  composa_core_architect: { emoji: '🧩', label: 'Composa™ Algorithmic Generator Lead', tools: ['composa_synthesize_netlist', 'circuit_topology_map', 'save'] },
+  pmu_power_engineer: { emoji: '⚡', label: 'agilePMU & Multi-Rail Power Architect', tools: ['ldo_transient_response_sim', 'quiescent_current_calc', 'save'] },
+  data_converter_specialist: { emoji: '📊', label: 'agileADC & agileDAC Precision Designer', tools: ['enob_snrd_fft_eval', 'sar_linearity_inl_dnl', 'save'] },
+  security_glitch_defense_eng: { emoji: '🛡️', label: 'agileSECURITY & Fault Injection Physicist', tools: ['vglitch_trigger_sim', 'emfi_attack_model', 'save'] },
+  pvt_irdrop_monitor_lead: { emoji: '🌡️', label: 'agilePVT & agileIRDROP Monitoring Lead', tools: ['irdrop_droop_threshold', 'pvt_variation_mesh', 'save'] },
+  always_on_low_power_designer: { emoji: '🌙', label: 'agileSMU & Sub-Microamp Always-On Lead', tools: ['sleep_leakage_analyzer', 'rcosc_jitter_sweep', 'save'] },
+  foundry_pdk_porting_eng: { emoji: '🏭', label: 'Foundry PDK & Process Migration Specialist', tools: ['pdk_drc_rule_retarget', 'finfet_metal_stack_map', 'save'] },
+  analog_layout_generator: { emoji: '📐', label: 'Automated GDSII & Analog Layout Physicist', tools: ['auto_placement_routing', 'parasitic_pex_extract', 'save'] },
+  mixed_signal_verification_eng: { emoji: '🧪', label: 'UVM & Mixed-Signal Co-Simulation Lead', tools: ['real_number_model_wreal', 'apb_bus_register_audit', 'save'] },
+  automotive_iso26262_lead: { emoji: '🚗', label: 'Automotive ASIL-D & High-Temp Physicist', tools: ['fmeca_safety_metric', 'htol_temp_extrapolation', 'save'] },
+  soc_customer_enablement_fae: { emoji: '🛠️', label: 'RISC-V SoC & Customer Enablement FAE Lead', tools: ['soc_subsystem_top_level', 'testchip_eval_board', 'save'] },
+  analog_ip_dossier_author: { emoji: '✍️', label: 'Foundry Sign-Off & Datasheet Technical Author', tools: ['ip_datasheet_compile', 'foundry_tapeout_signoff', 'save'] }
+};
+
+const TRACKS = [
+  ['trackA', 'Composable Analog Subsystems & Security IP'],
+  ['trackB', 'Fab-Agnostic Porting, PVT & Automotive Sign-Off']
+];
+
+const WORKFLOWS = {
+  composa_riscv_iot_subsystem_flagship: {
+    name: 'Composa™ Automated RISC-V SoC Analog Subsystem Generation & Delivery',
+    title: 'Composa™ Algorithmic Generation of Integrated Analog Subsystem (PMU, ADC, PVT & SMU) with AMBA APB Wrapper',
+    mode: 'sequential',
+    track: 'trackA',
+    tag: 'flagship',
+    deliverable: 'Composa™ RISC-V SoC Analog Subsystem Architectural Delivery Package',
+    sample: 'Generate complete digitally wrapped analog subsystem for high-performance RISC-V edge AI SoC on TSMC N5. Integrate agilePMU (4x LDO, POR, POK), agileADC 12-bit SAR, agilePVT sensor, and agileSMU with AMBA APB digital control interface within 3 weeks.',
+    desc: 'Flagship workflow programmatically composing an integrated analog subsystem with PMU, 12-bit ADC, PVT monitoring, and low-power sleep management wrapped in an AMBA APB interface, compressing design time from 9 months to 3 weeks.',
+    tasks: [
+      { agent: 'composa_core_architect', task: 'Ingest customer SoC target specifications, process design kit (TSMC N5), and generate unified functional block schematic netlist', deps: [] },
+      { agent: 'pmu_power_engineer', task: 'Synthesize multi-rail agilePMU with 4 on-chip low-dropout regulators (LDOs), bandgap reference, and power-on-reset (agilePOR)', deps: [0] },
+      { agent: 'data_converter_specialist', task: 'Configure 12-bit 1MSPS successive-approximation agileADC 12 with programmable input channel multiplexer', deps: [1] },
+      { agent: 'always_on_low_power_designer', task: 'Integrate agileSMU sleep management unit with sub-120nA quiescent leakage current and ultra-low-power RC oscillator (agileRCOSC)', deps: [2] },
+      { agent: 'mixed_signal_verification_eng', task: 'Execute mixed-signal co-simulation (wreal/SystemVerilog) with AMBA APB 4 digital slave registers across PVT corners', deps: [3] },
+      { agent: 'analog_ip_dossier_author', task: 'Generate complete IP deliverable package: GDSII, LEF, Liberty (.lib), Verilog behavioral models, and customer integration manual', deps: [4] }
+    ]
+  },
+  security_ip_glitch_emfi_hardening: {
+    name: 'agileSECURITY Physical Anti-Tamper & Glitch Detection Integration',
+    title: 'agileSECURITY Hardware Countermeasure Subsystem (agileVGLITCH, agileCAM & agileEMSensor)',
+    mode: 'dag',
+    track: 'trackA',
+    deliverable: 'agileSECURITY Hardware Anti-Tamper & Fault Injection Protection Dossier',
+    sample: 'Deploy agileSECURITY suite on crypto-accelerator SoC. Protect root-of-trust and secure elements against voltage glitch injection (agileVGLITCH), clock frequency tampering (agileCAM), and electromagnetic fault injection (agileEMSensor).',
+    desc: 'Deploys agileSECURITY anti-tamper IP to detect and counter physical fault injection attacks (voltage, clock, thermal, and EMFI), providing sub-2ns alarm assertions to lock down cryptographic secure elements.',
+    tasks: [
+      { agent: 'security_glitch_defense_eng', task: 'Configure agileVGLITCH and agileCAM sensors to detect sub-10ns supply droops and clock edge disruptions', deps: [] },
+      { agent: 'mixed_signal_verification_eng', task: 'Simulate fault-injection resistance and fast-trigger alarm asserting security zeroize in < 2 nanoseconds', deps: [0] },
+      { agent: 'soc_customer_enablement_fae', task: 'Map sensor alarm interrupts to host RISC-V/ARM cryptographic root-of-trust controller', deps: [0] },
+      { agent: 'analog_ip_dossier_author', task: 'Compile security qualification dossier, fault injection vulnerability report, and silicon validation checklist', deps: [1, 2] }
+    ]
+  },
+  data_conversion_sensorif_subsystem: {
+    name: 'agileSensorIF 12-Bit SAR ADC & DAC Precision Subsystem Generation',
+    title: 'agileSensorIF Precision Analog-to-Digital & Digital-to-Analog Converter Subsystem',
+    mode: 'dag',
+    track: 'trackA',
+    deliverable: 'agileSensorIF 12-Bit Data Conversion Subsystem Delivery Package',
+    sample: 'Generate high-linearity agileSensorIF subsystem combining 12-bit SAR ADC, 10-bit resistor-string DAC, and programmable gain amplifier (PGA) on GlobalFoundries 22FDX. Achieve 10.8 effective number of bits (ENOB).',
+    desc: 'Synthesizes customizable data conversion subsystems pairing agileADC 12 with precision agileDAC and reference buffers, optimized for high dynamic range and low power across sensor IoT applications.',
+    tasks: [
+      { agent: 'data_converter_specialist', task: 'Size capacitor DAC array and comparator stages to achieve > 10.8 ENOB at 1 MSPS sampling rate', deps: [] },
+      { agent: 'pmu_power_engineer', task: 'Design low-noise on-chip reference voltage buffer (agileREF) with PSRR > 65 dB across 100 kHz bandwidth', deps: [0] },
+      { agent: 'analog_layout_generator', task: 'Run automated common-centroid placement and matched routing for capacitor array to eliminate gradient mismatches', deps: [0] },
+      { agent: 'analog_ip_dossier_author', task: 'Compile dynamic FFT spectral characterization, INL/DNL histograms, and Verilog-A behavioral simulation models', deps: [1, 2] }
+    ]
+  },
+  always_on_smu_ultra_low_power: {
+    name: 'agileSMU Sub-Microamp Sleep Management & Always-On Domain Subsystem',
+    title: 'agileSMU Ultra-Low-Power Sleep Management Unit with Digital Standard Cells (agileDSCL)',
+    mode: 'sequential',
+    track: 'trackA',
+    deliverable: 'agileSMU Always-On Sleep Management & Ultra-Low-Power Subsystem Blueprint',
+    sample: 'Engineer always-on sleep management subsystem consuming < 120 nA in deep retention mode. Integrate agileLDO_LP, agileCMP_LP, low-frequency agileRCOSC, and agileDSCL standard cell library on Intel 16.',
+    desc: 'Constructs sub-microamp always-on power islands combining ultra-low-power LDOs, wake-up timers, and custom standard cell libraries to keep battery-powered SoCs in minimal standby state.',
+    tasks: [
+      { agent: 'always_on_low_power_designer', task: 'Design sub-threshold bias circuits and wake-up comparator consuming < 45 nA quiescent current', deps: [] },
+      { agent: 'pmu_power_engineer', task: 'Configure ultra-low-dropout regulator (agileLDO_LP) providing stable 0.7V retention voltage at 25 nA no-load current', deps: [0] },
+      { agent: 'mixed_signal_verification_eng', task: 'Validate power-state transition sequencing, cold-boot brownout recovery, and wake-up timer interrupt handling', deps: [1] },
+      { agent: 'analog_ip_dossier_author', task: 'Generate power-state transition timing diagram, standby leakage budget report, and power domain integration guidelines', deps: [2] }
+    ]
+  },
+  fab_agnostic_finfet_migration: {
+    name: 'Composa™ Cross-Foundry Analog Migration (TSMC, Intel Foundry & GlobalFoundries)',
+    title: 'Fab-Agnostic Analog IP Retargeting Across Advanced FinFET & Mature Planar Nodes',
+    mode: 'dag',
+    track: 'trackB',
+    deliverable: 'Composa™ Cross-Foundry Analog Porting & Retargeting Sign-Off Dossier',
+    sample: 'Port an existing mixed-signal analog IP block from TSMC 16nm to Intel 16 and GlobalFoundries 22FDX using Composa. Maintain identical electrical performance parameters with zero manual schematic redesign.',
+    desc: 'Demonstrates the core Composa capability: programmatically migrating verified analog IP designs across different foundries, processes, and metal stacks in days rather than quarters.',
+    tasks: [
+      { agent: 'foundry_pdk_porting_eng', task: 'Translate target foundry device models, DRC/LVS rule decks, and FinFET/planar transistor characteristics', deps: [] },
+      { agent: 'composa_core_architect', task: 'Re-run Composa algorithmic optimization to re-scale transistor width/length ratios and passive resistor/capacitor values', deps: [0] },
+      { agent: 'analog_layout_generator', task: 'Regenerate physical layout conforming to new design rules, metal density minimums, and electromigration rules', deps: [0] },
+      { agent: 'analog_ip_dossier_author', task: 'Publish cross-foundry correlation matrix proving performance equivalence between source and retargeted designs', deps: [1, 2] }
+    ]
+  },
+  irdrop_pvt_realtime_monitoring: {
+    name: 'agileIRDROP & agilePVT High-Performance AI/HPC Dynamic Voltage Droop Sensor Mesh',
+    title: 'agileIRDROP & agilePVT Distributed On-Chip Real-Time Voltage Droop and Thermal Mesh',
+    mode: 'dag',
+    track: 'trackB',
+    deliverable: 'agileIRDROP & agilePVT AI Accelerator Dynamic Voltage & Thermal Monitoring Dossier',
+    sample: 'Deploy distributed agileIRDROP and agilePVT sensor mesh across a multi-die AI accelerator on TSMC N3. Detect transient IR-drop droops in < 50 picoseconds to trigger dynamic frequency scaling and avert timing failures.',
+    desc: 'Deploys distributed multi-point IR-drop and PVT monitors across complex AI and HPC compute dies, detecting microsecond voltage droops and thermal hotspots to safeguard high-frequency clocking.',
+    tasks: [
+      { agent: 'pvt_irdrop_monitor_lead', task: 'Distribute 32 agileIRDROP micro-sensors across primary VDD power grid to capture di/dt transient voltage drops', deps: [] },
+      { agent: 'analog_layout_generator', task: 'Floorplan compact sensor cells into standard digital routing tracks with zero DRC keep-out boundary penalties', deps: [0] },
+      { agent: 'soc_customer_enablement_fae', task: 'Interface high-speed comparator flags to host Dynamic Voltage and Frequency Scaling (DVFS) hardware governor', deps: [0] },
+      { agent: 'analog_ip_dossier_author', task: 'Generate thermal/voltage droop response latency report, calibration register map, and simulation sign-off dossier', deps: [1, 2] }
+    ]
+  },
+  automotive_asil_d_high_rel_signoff: {
+    name: 'Automotive AEC-Q100 Grade 0 & ISO 26262 ASIL-D Functional Safety Sign-Off',
+    title: 'Automotive Safety-Critical Analog IP Qualification (AEC-Q100 Grade 0, -40 C to +175 C)',
+    mode: 'sequential',
+    track: 'trackB',
+    deliverable: 'Automotive AEC-Q100 Grade 0 & ISO 26262 ASIL-D Functional Safety Dossier',
+    sample: 'Execute automotive functional safety qualification for powertrain microcontroller PMU and monitoring IP. Ensure compliance with ISO 26262 ASIL-D requirements, AEC-Q100 Grade 0 junction temperatures (-40 C to +175 C), and zero cold-start failures.',
+    desc: 'Qualifies Agile Analog power and monitoring IP for mission-critical automotive applications, incorporating redundancy, diagnostic coverage, and extreme high-temperature operational models up to 175 C.',
+    tasks: [
+      { agent: 'automotive_iso26262_lead', task: 'Perform Failure Modes, Effects and Diagnostic Analysis (FMEDA) to verify Single Point Fault Metric (SPFM) > 99%', deps: [] },
+      { agent: 'pmu_power_engineer', task: 'Integrate dual-redundant bandgap references and voltage monitors with self-checking diagnostic circuitry', deps: [0] },
+      { agent: 'pvt_irdrop_monitor_lead', task: 'Validate continuous high-temperature operating life (HTOL) models up to 175 C automotive junction temperature', deps: [1] },
+      { agent: 'mixed_signal_verification_eng', task: 'Execute fault-injection simulation suites validating safe-state transitions upon any detected open or short circuit', deps: [2] },
+      { agent: 'analog_ip_dossier_author', task: 'Compile ISO 26262 Safety Manual, FMEDA report, and AEC-Q100 Grade 0 environmental qualification certificate', deps: [3] }
+    ]
+  },
+  customer_testchip_enablement_bringup: {
+    name: 'Turnkey Customer Evaluation Board (EVB) & Testchip Silicon Bring-Up',
+    title: 'Agile Analog Customer Testchip Demonstration & Silicon Bring-Up Validation Package',
+    mode: 'dag',
+    track: 'trackB',
+    deliverable: 'Customer Evaluation Board (EVB) & Silicon Bring-Up Characterization Report',
+    sample: 'Deliver turnkey evaluation board and software GUI for customer testchip integrating agileADC, agileLDO, and agilePVT. Execute automated bench characterization to confirm silicon performance correlates with Composa pre-silicon models.',
+    desc: 'Streamlines customer silicon validation by providing reference evaluation boards, firmware drivers, and automated bench measurement suites confirming silicon correlation with pre-silicon Composa models.',
+    tasks: [
+      { agent: 'soc_customer_enablement_fae', task: 'Design 4-layer evaluation board (EVB) with precision low-noise analog reference traces and USB/SPI control bridges', deps: [] },
+      { agent: 'data_converter_specialist', task: 'Execute automated bench measurement sweeps measuring ADC SNR, THD, and LDO load regulation across 50 test chips', deps: [0] },
+      { agent: 'foundry_pdk_porting_eng', task: 'Correlate measured silicon data against post-layout parasitic extraction (PEX) simulations, achieving < 3% delta', deps: [0] },
+      { agent: 'analog_ip_dossier_author', task: 'Publish final silicon characterization report, customer software API guide, and reference board schematic archive', deps: [1, 2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  composa_riscv_iot_subsystem_flagship: 'Composa™ RISC-V SoC Analog Subsystem Architectural Delivery Package',
+  security_ip_glitch_emfi_hardening: 'agileSECURITY Hardware Anti-Tamper & Fault Injection Protection Dossier',
+  data_conversion_sensorif_subsystem: 'agileSensorIF 12-Bit Data Conversion Subsystem Delivery Package',
+  always_on_smu_ultra_low_power: 'agileSMU Always-On Sleep Management & Ultra-Low-Power Subsystem Blueprint',
+  fab_agnostic_finfet_migration: 'Composa™ Cross-Foundry Analog Porting & Retargeting Sign-Off Dossier',
+  irdrop_pvt_realtime_monitoring: 'agileIRDROP & agilePVT AI Accelerator Dynamic Voltage & Thermal Monitoring Dossier',
+  automotive_asil_d_high_rel_signoff: 'Automotive AEC-Q100 Grade 0 & ISO 26262 ASIL-D Functional Safety Dossier',
+  customer_testchip_enablement_bringup: 'Customer Evaluation Board (EVB) & Silicon Bring-Up Characterization Report'
+};
+
+const TOOLS = {
+  composa_synthesize_netlist: () => '[Composa Generator] Algorithmic netlist generated in 18 minutes; 14 functional sub-circuits instantiated with zero manual schematic entry.',
+  circuit_topology_map: () => '[Circuit Topology Engine] Mapped optimal folded-cascode and bandgap topologies to TSMC N5 design rule constraints.',
+  ldo_transient_response_sim: () => '[agilePMU Engine] LDO output voltage droop capped at 24 mV under 100 mA step load; transient recovery within 1.8 µs.',
+  quiescent_current_calc: () => '[Power Analysis] Total active quiescent current across 4 LDO rails restricted to 42 µA; standby leakage < 110 nA.',
+  enob_snrd_fft_eval: () => '[agileADC FFT] 12-bit SAR ADC achieves 10.84 ENOB, 67.2 dB SNR, and -78.4 dB THD at 1 MSPS sampling rate.',
+  sar_linearity_inl_dnl: () => '[Linearity Analyzer] ADC linearity confirmed: DNL within +/-0.65 LSB, INL within +/-0.82 LSB across full input voltage swing.',
+  vglitch_trigger_sim: () => '[agileVGLITCH Engine] Voltage glitch detector asserts alarm flag in 1.4 ns upon detection of 150 mV power grid droop.',
+  emfi_attack_model: () => '[agileEMSensor] Electromagnetic pulse sensor triggers hardware fault interrupt prior to internal logic state corruption.',
+  irdrop_droop_threshold: () => '[agileIRDROP Sensor] Multi-level threshold comparator triggers DVFS interrupt in 42 ps, halting catastrophic timing violations.',
+  pvt_variation_mesh: () => '[agilePVT Subsystem] 12-point distributed on-chip thermal and voltage telemetry streamed via APB interface at 50 kHz.',
+  sleep_leakage_analyzer: () => '[agileSMU Sleep Engine] Deep sleep retention state consumes 94 nA total current at 0.7V VDD in 25 C ambient.',
+  rcosc_jitter_sweep: () => '[agileRCOSC Monitor] 32 kHz low-power RC oscillator achieves +/-1.5% frequency stability over -40 C to +125 C without external crystal.',
+  pdk_drc_rule_retarget: () => '[Foundry Migration] Processed 1,420 DRC/LVS rule decks; successfully retargeted analog circuit structures between TSMC and Intel Foundry.',
+  finfet_metal_stack_map: () => '[Metal Stack Layering] Automated metal pitch and via re-mapping complete across 13-metal layer back-end-of-line (BEOL).',
+  auto_placement_routing: () => '[Automated Layout Engine] Common-centroid analog placement and symmetry-constrained routing completed with 0 design rule violations.',
+  parasitic_pex_extract: () => '[Post-Layout PEX] Extracted RLC parasitics show < 2.1% deviation from schematic simulation across all 16 PVT corners.',
+  real_number_model_wreal: () => '[Mixed-Signal Verification] Real-number SystemVerilog wreal behavioral models executed 100,000 APB bus cycles in 45 seconds.',
+  apb_bus_register_audit: () => '[Digital Register Audit] 100% test coverage achieved across AMBA APB 4 control, status, and telemetry register maps.',
+  fmeca_safety_metric: () => '[ISO 26262 FMEDA] Single Point Fault Metric (SPFM) calculated at 99.4%, exceeding ASIL-D target requirements.',
+  htol_temp_extrapolation: () => '[AEC-Q100 Qualification] High-temperature operational life simulated at 175 C junction temperature; electromigration MTBF > 20 years.',
+  soc_subsystem_top_level: () => '[SoC Top-Level Subsystem] Unified analog macro generated with digital wrapper; drop-in ready for RISC-V SoC synthesis.',
+  testchip_eval_board: () => '[Hardware EVB Benchmark] Automated bench test script characterized 50 physical test chips; measured silicon matches simulation within 2.8%.',
+  ip_datasheet_compile: () => '[Deliverable Author] Compiled complete deliverable archive: GDSII, LEF, Liberty .lib, CDL netlist, and technical datasheet.',
+  foundry_tapeout_signoff: () => '[Foundry Sign-Off] Generated clean GDSII/OASIS stream with checksum verification; certified tapeout-ready for foundry submission.',
+  save: () => '[Secure Repository] Committed verified analog netlists, layout databases, simulation testbenches, and datasheets to encrypted vault.'
+};
+
+const FINAL = {
+  composa_riscv_iot_subsystem_flagship: `AGILE ANALOG &mdash; ANALOG IP ARCHITECTURAL DELIVERY PACKAGE
+COMPOSA™ AUTOMATED RISC-V SOC ANALOG SUBSYSTEM SPECIFICATION
+Document ID: AA-SPEC-RISCV-SUB-REV3 | Technology: Composa™ Algorithmic Analog Generator
+Target Foundry Node: TSMC N5 (5nm FinFET) | Control Interface: AMBA APB 4 Bus Wrapper
+
+1. PROGRAMMATIC SUBSYSTEM ARCHITECTURE
+Agile Analog Composa™ methodology programmatically generates a complete, verified analog subsystem customized to the customer's SoC specifications:
+- Generation Speed: Full custom analog subsystem delivered in 3 weeks, compared to 9 to 12 months for traditional manual analog IP design.
+- agilePMU Power Subsystem: 4 programmable on-chip Low-Dropout Linear Regulators (LDOs, 50-150mA), precision bandgap reference (agileREF), and integrated Power-On-Reset (agilePOR) / Power-OK (agilePOK) circuitry.
+- agileADC 12 Data Conversion: 12-bit SAR ADC delivering 1 MSPS sampling rate, 10.84 effective number of bits (ENOB), and < 1.2 mW active power consumption.
+- agilePVT Sensor: Multi-point on-chip process, voltage, and temperature sensor monitoring internal die health in real time.
+- agileSMU Sleep Management: Always-on sleep controller with sub-120nA deep retention mode and 32 kHz internal RC oscillator (agileRCOSC).
+
+2. DIGITAL WRAPPER & SOC INTEGRATION
+- AMBA APB 4 Bus Interface: Complete digital control and status register interface allowing host RISC-V CPU to configure LDO voltages, ADC sample rates, and alarm thresholds.
+- Unified Macro Floorplan: Single contiguous GDSII macro boundary with standardized pin pitch and internal power routing, eliminating complex analog routing at SoC top-level.
+- First-Pass Silicon Success: Built from verified circuit topologies, guaranteeing high yield and silicon correlation on first tapeout.
+
+NOTE: illustrative simulation based on public technical specifications and Agile Analog Composa™ methodology. Human review and sign-off required for tapeout.`,
+
+  security_ip_glitch_emfi_hardening: `AGILE ANALOG &mdash; HARDWARE SECURITY SPECIFICATION
+AGILESECURITY HARDWARE ANTI-TAMPER & FAULT INJECTION PROTECTION DOSSIER
+Target Application: Cryptographic Secure Elements, eSIM, Hardware Wallets & Trusted Execution Environments
+IP Modules: agileVGLITCH (Voltage Droop), agileCAM (Clock Attack), agileEMSensor (EMFI Detector)
+
+1. PHYSICAL ATTACK MITIGATION ARCHITECTURE
+Agile Analog delivers configurable, process-agnostic security IP designed to protect silicon from non-invasive and semi-invasive physical attacks:
+- agileVGLITCH: Ultra-fast voltage glitch detector capable of identifying supply voltage dips as brief as 5 nanoseconds, asserting a tamper flag in < 1.4 ns to thwart instruction skipping attacks.
+- agileCAM: Clock attack monitor continuously measuring clock duty cycle, minimum pulse width, and frequency drift, alerting on clock glitch injection.
+- agileEMSensor: Integrated on-chip electromagnetic fault injection (EMFI) detector sensing localized high-intensity magnetic pulses used to bypass cryptographic security routines.
+
+2. REAL-TIME THREAT REACTION & ZEROIZATION
+- Fast-Action Alarm Pin: Dedicated direct hardware trip wire bypasses CPU bus to immediately zeroize AES/ECC cryptographic key vaults and force hardware reset within 2 nanoseconds.
+- Ultra-Low Footprint: Entire security subsystem consumes < 15 µA active current, enabling continuous protection in battery-backed and low-power standby modes.
+
+NOTE: illustrative simulation based on public technical specifications and Agile Analog Composa™ methodology. Human review and sign-off required for tapeout.`,
+
+  data_conversion_sensorif_subsystem: `AGILE ANALOG &mdash; DATA CONVERSION SPECIFICATION
+AGILESENSORIF 12-BIT SAR ADC & DAC ANALOG SENSOR INTERFACE SUBSYSTEM
+Target Foundry: GlobalFoundries 22FDX (22nm FD-SOI) | Application: Industrial IoT & Medical Sensor Nodes
+Configuration: agileADC 12 + agileDAC 10 + agileREF + Programmable Gain Amplifier (PGA)
+
+1. PERFORMANCE SPECIFICATIONS
+- Sampling Speed & Resolution: 12-bit successive approximation register (SAR) ADC operating from 100 kSPS up to 2 MSPS with zero missing codes.
+- Dynamic Performance: Achieves 67.2 dB Signal-to-Noise Ratio (SNR), 10.84 ENOB, and -78.4 dB Total Harmonic Distortion (THD).
+- Integral / Differential Linearity: Guaranteed DNL < +/-0.65 LSB and INL < +/-0.82 LSB across full rail-to-rail dynamic input range.
+- Integrated Digital-to-Analog: 10-bit monotonic resistor-string DAC providing sensor excitation and programmable threshold calibration.
+
+2. AUTOMATED COMPOSA LAYOUT INTEGRATION
+- Common-Centroid Matching: Automated layout generator applies common-centroid symmetry to capacitive DAC binary arrays, eliminating systematic thermal and process gradients.
+- High PSRR Reference: On-chip bandgap voltage reference achieves > 65 dB Power Supply Rejection Ratio (PSRR) up to 100 kHz.
+
+NOTE: illustrative simulation based on public technical specifications and Agile Analog Composa™ methodology. Human review and sign-off required for tapeout.`,
+
+  always_on_smu_ultra_low_power: `AGILE ANALOG &mdash; ALWAYS-ON SUBSYSTEM BLUEPRINT
+AGILESMU ULTRA-LOW-POWER SLEEP MANAGEMENT & RETENTION POWER SUBSYSTEM
+Target Foundry: Intel 16 (16nm FinFET) | Target Markets: Wearables, Smart Meters & Remote IoT Sensors
+Subsystem Components: agileLDO_LP + agileCMP_LP + agileRCOSC + agileDSCL Digital Cell Library
+
+1. SUB-MICROAMP POWER ARCHITECTURE
+- Deep Sleep Retention Current: Complete always-on power island consumes less than 94 nA total quiescent current at 25 C and 0.7V retention voltage.
+- agileLDO_LP Low-Power Regulator: Generates clean 0.7V internal retention rail from 1.8V/3.3V battery supply with zero-load ground current of 25 nA.
+- agileRCOSC Clock Source: On-chip 32.768 kHz ultra-low-power RC oscillator provides wake-up timer ticks with +/-1.5% frequency accuracy without external crystal quartz.
+- agileCMP_LP Wake-Up Comparator: Programmable low-power threshold comparator for sensor event detection consuming < 22 nA.
+
+2. AGILEDSCL DIGITAL STANDARD CELLS
+- Thick-Oxide Standard Cells: Custom low-leakage digital standard cell library optimized for always-on state machines, retention flip-flops, and wake-up sequencing.
+
+NOTE: illustrative simulation based on public technical specifications and Agile Analog Composa™ methodology. Human review and sign-off required for tapeout.`,
+
+  fab_agnostic_finfet_migration: `AGILE ANALOG &mdash; PROCESS MIGRATION DOSSIER
+COMPOSA™ PROCESS-AGNOSTIC ANALOG IP RETARGETING ACROSS FOUNDRIES
+Migration Source: TSMC N16 (16nm FinFET) | Target Nodes: Intel 16 & GlobalFoundries 22FDX
+Automated Turnaround: 14 Business Days | Electrical Equivalence: < 2.5% Parametric Delta
+
+1. COMPOSA ALGORITHMIC PORTING METHODOLOGY
+Agile Analog solves the industry's most persistent analog bottleneck &mdash; porting analog IP between foundries without manual redesign:
+- Automated Schematic Retargeting: Composa software ingests target foundry PDK, automatically recalibrates transistor W/L ratios, threshold voltages, and biasing networks.
+- Layout Automation: Generates DRC-clean and LVS-clean physical layout tailored to target process design rules, metal layer stacks, and electromigration rules.
+- Multi-Source Assurance: Enables fabless chipmakers to execute multi-sourcing foundry strategies without locking proprietary SoCs into a single foundry partner.
+
+2. VERIFICATION & ELECTRICAL CORRELATION
+- Corner Coverage: Validated across 24 multi-corner multi-mode (MCMM) PVT operating points with extracted 3D parasitic capacitances.
+- Functional Equivalency: Preserves operational bandwidth, gain margin, and power consumption within 2.5% of original baseline designs.
+
+NOTE: illustrative simulation based on public technical specifications and Agile Analog Composa™ methodology. Human review and sign-off required for tapeout.`,
+
+  irdrop_pvt_realtime_monitoring: `AGILE ANALOG &mdash; HIGH-PERFORMANCE COMPUTING BLUEPRINT
+AGILEIRDROP & AGILEPVT DISTRIBUTED REAL-TIME SENSOR MESH SPECIFICATION
+Application: AI Accelerators, Hyperscale Server CPUs & High-Performance Computing (HPC) SoCs
+Target Process Node: TSMC N3 / N4 (3nm/4nm FinFET) | Configuration: Distributed 32-Node Grid
+
+1. DYNAMIC VOLTAGE DROOP & IR-DROP DETECTION
+- Ultra-Fast Response Time: agileIRDROP sensors detect sudden supply voltage droops within 42 picoseconds, alerting host logic before logic paths violate timing margins.
+- Multi-Level Thresholds: Programmable multi-tier warning triggers enable graduated mitigation (e.g., dynamic frequency throttling followed by temporary execution pausing).
+- Silicon Real Estate: Minimalist standard-cell-sized layout enables dense embedding across high-power GPU/NPU compute clusters without disrupting logic placement.
+
+2. AGILEPVT ON-CHIP SENSING SUBSYSTEM
+- Distributed Temperature Sensors: High-accuracy digital temperature sensors (+/-1.5 C accuracy) track on-die thermal gradients and hotspot formation.
+- Process Corner Tracking: Identifies localized silicon speed variations across large reticle-sized multi-core dies to maximize energy efficiency.
+
+NOTE: illustrative simulation based on public technical specifications and Agile Analog Composa™ methodology. Human review and sign-off required for tapeout.`,
+
+  automotive_asil_d_high_rel_signoff: `AGILE ANALOG &mdash; AUTOMOTIVE FUNCTIONAL SAFETY DOSSIER
+AUTOMOTIVE AEC-Q100 GRADE 0 & ISO 26262 ASIL-D ANALOG IP QUALIFICATION
+Target Domains: Electric Vehicle Powertrain, ADAS Sensor Hubs & Braking Electronic Control Units
+Temperature Range: AEC-Q100 Grade 0 (-40 C to +175 C Junction) | Safety Standard: ISO 26262 ASIL-D
+
+1. FUNCTIONAL SAFETY & DIAGNOSTIC COVERAGE
+- ISO 26262 ASIL-D Ready: Architected with comprehensive safety mechanisms to achieve Single Point Fault Metric (SPFM) > 99% and Latent Fault Metric (LFM) > 90%.
+- Dual-Redundant References: Built-in cross-checking redundant bandgap voltage references and comparators detect on-chip drift and catastrophic hardware failures.
+- Fail-Safe State Control: Autonomous diagnostic circuits force system power rails and control signals into verified fail-safe states within 5 microseconds of detected anomaly.
+
+2. HARSH AUTOMOTIVE ENVIRONMENT QUALIFICATION
+- Extreme Temperature Operation: Full circuit operation verified up to 175 C continuous junction temperature with zero thermal runaway.
+- Electromigration Reliability: Metal interconnections and contact vias sized to exceed 20-year automotive mission profiles under maximum continuous current densities.
+
+NOTE: illustrative simulation based on public technical specifications and Agile Analog Composa™ methodology. Human review and sign-off required for tapeout.`,
+
+  customer_testchip_enablement_bringup: `AGILE ANALOG &mdash; SILICON VALIDATION REPORT
+CUSTOMER EVALUATION BOARD (EVB) & TESTCHIP CHARACTERIZATION REPORT
+Testchip Integration: agilePMU + agileADC 12 + agilePVT + agileSMU on Intel Foundry Process
+Silicon Correlation: Measured Lab Bench Data vs Composa Pre-Silicon Simulation Models
+
+1. BENCH TEST SETUP & EVALUATION BOARD (EVB)
+- Hardware Platform: 4-layer custom evaluation board featuring ultra-low-noise linear power supplies, high-precision BNC analog I/O, and USB-to-APB register control.
+- Automation Software: Python-based automated bench measurement framework executing sweeps across supply voltages, clock frequencies, and ambient temperatures (-40 C to +125 C).
+
+2. SILICON CORRELATION BENCHMARK
+- ADC Dynamic Correlation: Measured silicon achieves 10.79 ENOB and 66.8 dB SNR against Composa simulation prediction of 10.84 ENOB (a 0.4% variance).
+- LDO Regulation: Measured load regulation is 1.2 mV/mA with transient droop of 26 mV, closely tracking pre-silicon model predictions of 24 mV.
+- First-Pass Validation: 100% functional test pass rate across 50 packaged testchip devices, demonstrating Composa first-pass silicon predictability.
+
+NOTE: illustrative simulation based on public technical specifications and Agile Analog Composa™ methodology. Human review and sign-off required for tapeout.`
+};
+
+const EMPLOYEES = [
+  { id: 'emp-composa', name: 'AA-ComposaLead', title: 'Composa™ RISC-V Analog Subsystem Operator', wf: 'composa_riscv_iot_subsystem_flagship', handled: 46, hrs: 290.0, win: '3-Week Turn' },
+  { id: 'emp-glitch', name: 'AA-GlitchShield', title: 'agileSECURITY Hardware Anti-Tamper Operator', wf: 'security_ip_glitch_emfi_hardening', handled: 38, hrs: 195.5, win: '<2ns Detect' },
+  { id: 'emp-sensorif', name: 'AA-SensorIF', title: 'agileSensorIF 12-Bit Precision ADC/DAC Operator', wf: 'data_conversion_sensorif_subsystem', handled: 52, hrs: 240.0, win: '10.8 ENOB' },
+  { id: 'emp-sleep', name: 'AA-SleepPower', title: 'agileSMU Sub-Microamp Always-On Operator', wf: 'always_on_smu_ultra_low_power', handled: 64, hrs: 275.0, win: '<120nA Standby' },
+  { id: 'emp-porting', name: 'AA-FabPorting', title: 'Composa™ Cross-Foundry Migration Operator', wf: 'fab_agnostic_finfet_migration', handled: 72, hrs: 385.0, win: 'Any Foundry/Node' },
+  { id: 'emp-irdrop', name: 'AA-IrDropMesh', title: 'agileIRDROP & agilePVT High-Speed Sensor Operator', wf: 'irdrop_pvt_realtime_monitoring', handled: 58, hrs: 260.0, win: '<50ps Droop Alert' },
+  { id: 'emp-safety', name: 'AA-AutoSafety', title: 'Automotive ASIL-D & AEC-Q100 Sign-Off Operator', wf: 'automotive_asil_d_high_rel_signoff', handled: 34, hrs: 220.0, win: '175°C Grade 0' },
+  { id: 'emp-silicon', name: 'AA-SiliconEVB', title: 'Customer Testchip & Silicon Bring-Up Operator', wf: 'customer_testchip_enablement_bringup', handled: 49, hrs: 215.0, win: '100% 1st-Pass' }
+];
+
+let activeEmpId = null;
+let runState = { running: false, phase: 0, timer: null, runningTasks: new Set(), completedTasks: new Set() };
+let selectedWfKey = 'composa_riscv_iot_subsystem_flagship';
+
+function init() {
+  renderEcon();
+  renderRoster();
+  renderBuilderWfs();
+}
+
+function switchTab(t) {
+  document.getElementById('tab-roster').classList.toggle('active', t === 'roster');
+  document.getElementById('tab-builder').classList.toggle('active', t === 'builder');
+  document.getElementById('view-roster').classList.toggle('hidden', t !== 'roster');
+  document.getElementById('view-builder').classList.toggle('hidden', t !== 'builder');
+}
+
+function renderEcon() {
+  const cont = document.getElementById('econ-strip');
+  cont.innerHTML = `
+    <div class="cell"><div class="v">3<span class="u"> Weeks</span></div><div class="k">Analog Subsystem Delivery (vs 9+ Months)</div></div>
+    <div class="cell"><div class="v">100<span class="u">%</span></div><div class="k">Process &amp; Foundry Agnostic (FinFET &amp; Planar)</div></div>
+    <div class="cell"><div class="v">&lt;120<span class="u">nA</span></div><div class="k">Ultra-Low Always-On Standby Current</div></div>
+    <div class="cell"><div class="v">&gt;90<span class="u">%</span></div><div class="k">Analog Verification &amp; DRC First-Pass Clean</div></div>
+  `;
+}
+
+function empCard(emp) {
+  const wf = WORKFLOWS[emp.wf];
+  const card = document.createElement('div');
+  card.className = `emp ${emp.id === activeEmpId ? 'working' : ''} ${wf.tag === 'flagship' ? 'hero' : ''}`;
+  card.id = `card-${emp.id}`;
+
+  const initials = emp.name.split('-').map(s => s[0]).slice(0, 2).join('');
+  const badgeHTML = wf.tag === 'flagship' ? '<span class="tag hero">Flagship</span>' : (wf.track === 'trackA' ? '<span class="tag commercial">Subsystems &amp; Security</span>' : '<span class="tag operations">Porting &amp; Reliability</span>');
+
+  let teamHTML = '';
+  wf.tasks.forEach(t => {
+    const a = AGENT_ROLES[t.agent];
+    if (a) teamHTML += `<span class="chip">${a.emoji} ${a.label.split(' ')[0]}</span>`;
+  });
+
+  card.innerHTML = `
+    <div class="emp-top">
+      <div class="avatar">${initials}</div>
+      <div>
+        <div class="emp-name">${emp.name} ${badgeHTML}</div>
+        <div class="emp-title">${emp.title}</div>
+      </div>
+    </div>
+    <div class="emp-owns">Owns: <b>${wf.name}</b></div>
+    <div class="team">${teamHTML}</div>
+    <div class="emp-stats">
+      <div class="st"><b>${emp.handled}</b>Generations</div>
+      <div class="st"><b>${emp.hrs.toFixed(1)}h</b>Engineering Saved</div>
+      <div class="st"><b class="wn" style="color:var(--accent)">${emp.win}</b>Benchmark</div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" onclick="setupRun('${emp.id}')">Run Operator</button>
+      <button class="btn" onclick="inspectWf('${emp.wf}')">Inspect Workflow</button>
+    </div>
+  `;
+  return card;
+}
+
+function renderRoster() {
+  const cont = document.getElementById('roster-tracks');
+  cont.innerHTML = '';
+
+  TRACKS.forEach(([tk, tl]) => {
+    const slabel = document.createElement('div');
+    slabel.className = 'slabel';
+    slabel.innerText = tl;
+    cont.appendChild(slabel);
+
+    const grid = document.createElement('div');
+    grid.className = 'roster';
+
+    EMPLOYEES.filter(e => {
+      const wf = WORKFLOWS[e.wf];
+      return wf.track === tk;
+    }).forEach(e => grid.appendChild(empCard(e)));
+
+    if (tk === 'trackB') {
+      const hire = document.createElement('div');
+      hire.className = 'hire-card';
+      hire.onclick = () => switchTab('builder');
+      hire.innerHTML = `
+        <div class="plus">+</div>
+        <div class="h">Add an Operator</div>
+        <div class="p">Compose specialist analog circuit agents into an automated Composa™ workflow</div>
+      `;
+      grid.appendChild(hire);
+    }
+    cont.appendChild(grid);
+  });
+}
+
+function inspectWf(wfKey) {
+  selectedWfKey = wfKey;
+  switchTab('builder');
+  goToStep(2);
+}
+
+function setupRun(empId) {
+  activeEmpId = empId;
+  const emp = EMPLOYEES.find(e => e.id === empId);
+  const wf = WORKFLOWS[emp.wf];
+
+  const cont = document.getElementById('run-container');
+  cont.className = 'run';
+  cont.innerHTML = `
+    <div class="run-head">
+      <div class="avatar" style="width:38px;height:38px;font-size:13px">${emp.name.split('-').map(s=>s[0]).slice(0,2).join('')}</div>
+      <div>
+        <div style="font-size:16px;font-weight:700;color:var(--hi)">${emp.name} &bull; ${wf.name}</div>
+        <div class="run-sub">${wf.desc}</div>
+      </div>
+    </div>
+
+    <div class="run-input">
+      <textarea id="run-prompt">${wf.sample}</textarea>
+      <button class="btn primary big" id="btn-execute" onclick="executeRun()">Execute Multi-Agent Run</button>
+    </div>
+
+    <div class="phases" id="run-phases"></div>
+    <div class="agent-grid" id="run-agent-grid"></div>
+
+    <div class="feed" id="run-feed"></div>
+
+    <div class="result hidden" id="run-result">
+      <div class="rstats">
+        <div style="font-size:13px;font-weight:700;color:var(--hi);margin-bottom:12px">Execution Telemetry</div>
+        <div class="rrow"><span class="k">Orchestration</span><span class="v">${wf.mode.toUpperCase()}</span></div>
+        <div class="rrow"><span class="k">Specialist Agents</span><span class="v">${wf.tasks.length} Active</span></div>
+        <div class="rrow"><span class="k">Methodology</span><span class="v">Composa™ Algorithmic</span></div>
+        <div class="rrow"><span class="k">Foundry Target</span><span class="v">Process-Agnostic</span></div>
+        <div class="rrow"><span class="k">Status</span><span class="v" style="color:var(--ok)">Verified</span></div>
+      </div>
+      <div class="rout">
+        <div class="rh">${DTITLE[emp.wf] || wf.deliverable}</div>
+        <div class="rb" id="run-final-text"></div>
+      </div>
+    </div>
+
+    <div class="donebar hidden" id="run-donebar">
+      <b>Run Complete:</b> Multi-agent analog IP package generated. Validated against foundry PDK and mixed-signal verification standards.
+    </div>
+  `;
+
+  const pcont = document.getElementById('run-phases');
+  const acont = document.getElementById('run-agent-grid');
+
+  wf.tasks.forEach((t, i) => {
+    const ph = document.createElement('div');
+    ph.className = 'ph';
+    ph.id = `ph-${i}`;
+    ph.innerHTML = `<div class="dot">${i+1}</div><div class="l">Task ${i+1}</div>`;
+    pcont.appendChild(ph);
+
+    const a = AGENT_ROLES[t.agent];
+    const ac = document.createElement('div');
+    ac.className = 'acard';
+    ac.id = `acard-${i}`;
+    ac.innerHTML = `
+      <div class="ae">${a ? a.emoji : '⚡'}</div>
+      <div class="ar">${a ? a.label : t.agent}</div>
+      <div class="at">${t.task}</div>
+      <div class="as"><div class="sd"></div><span id="astat-${i}">Queued</span></div>
+    `;
+    acont.appendChild(ac);
+  });
+
+  cont.scrollIntoView({ behavior: 'smooth' });
+}
+
+function logFeed(agent, text) {
+  const f = document.getElementById('run-feed');
+  if (!f) return;
+  const row = document.createElement('div');
+  row.className = 'frow';
+  const now = new Date();
+  const ts = now.toTimeString().split(' ')[0];
+  row.innerHTML = `<span class="ft">${ts}</span><span class="fa">${agent}</span><span class="fd">${text}</span>`;
+  f.appendChild(row);
+  f.scrollTop = f.scrollHeight;
+}
+
+function executeRun() {
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[emp.wf];
+
+  document.getElementById('btn-execute').disabled = true;
+  document.getElementById('run-feed').innerHTML = '';
+  document.getElementById('run-result').classList.add('hidden');
+  document.getElementById('run-donebar').classList.add('hidden');
+
+  logFeed('System', `Initiating ${wf.mode.toUpperCase()} analog workflow: ${wf.name}...`);
+
+  runState.running = true;
+  runState.phase = 0;
+  runState.runningTasks.clear();
+  runState.completedTasks.clear();
+
+  if (wf.mode === 'sequential') {
+    executeSequentialStep(0);
+  } else {
+    executeDagLoop();
+  }
+}
+
+function executeSequentialStep(idx) {
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[emp.wf];
+
+  if (idx >= wf.tasks.length) {
+    finishRun();
+    return;
+  }
+
+  setTaskStatus(idx, 'running');
+  const t = wf.tasks[idx];
+  const a = AGENT_ROLES[t.agent];
+  logFeed(a ? a.label : t.agent, `Dispatched: ${t.task}`);
+
+  setTimeout(() => {
+    const toolKey = (a && a.tools && a.tools[0]) ? a.tools[0] : 'save';
+    const toolFn = TOOLS[toolKey] || TOOLS.save;
+    logFeed(a ? a.label : t.agent, `[Output] ${toolFn()}`);
+
+    setTaskStatus(idx, 'done');
+    setTimeout(() => {
+      executeSequentialStep(idx + 1);
+    }, 450);
+  }, 1000);
+}
+
+function executeDagLoop() {
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[emp.wf];
+
+  const canRun = [];
+  wf.tasks.forEach((t, i) => {
+    if (!runState.completedTasks.has(i) && !runState.runningTasks.has(i)) {
+      const depsMet = t.deps.every(d => runState.completedTasks.has(d));
+      if (depsMet) canRun.push(i);
+    }
+  });
+
+  if (canRun.length === 0) {
+    if (runState.completedTasks.size === wf.tasks.length) {
+      finishRun();
+    }
+    return;
+  }
+
+  canRun.forEach(idx => {
+    runState.runningTasks.add(idx);
+    setTaskStatus(idx, 'running');
+    const t = wf.tasks[idx];
+    const a = AGENT_ROLES[t.agent];
+    logFeed(a ? a.label : t.agent, `Dispatched (Parallel): ${t.task}`);
+
+    setTimeout(() => {
+      const toolKey = (a && a.tools && a.tools[0]) ? a.tools[0] : 'save';
+      const toolFn = TOOLS[toolKey] || TOOLS.save;
+      logFeed(a ? a.label : t.agent, `[Output] ${toolFn()}`);
+
+      runState.runningTasks.delete(idx);
+      runState.completedTasks.add(idx);
+      setTaskStatus(idx, 'done');
+      executeDagLoop();
+    }, 1000);
+  });
+}
+
+function setTaskStatus(idx, st) {
+  const ph = document.getElementById(`ph-${idx}`);
+  const ac = document.getElementById(`acard-${idx}`);
+  const as = document.getElementById(`astat-${idx}`);
+
+  if (ph) {
+    ph.classList.toggle('active', st === 'running');
+    ph.classList.toggle('done', st === 'done');
+  }
+  if (ac) {
+    ac.className = `acard visible ${st}`;
+  }
+  if (as) {
+    as.innerText = st === 'running' ? 'Executing...' : (st === 'done' ? 'Complete' : 'Queued');
+  }
+}
+
+function finishRun() {
+  const emp = EMPLOYEES.find(e => e.id === activeEmpId);
+  const wf = WORKFLOWS[emp.wf];
+  logFeed('System', 'All tasks synchronized. Assembling verified deliverable...');
+
+  document.getElementById('btn-execute').disabled = false;
+  document.getElementById('run-result').classList.remove('hidden');
+  document.getElementById('run-donebar').classList.remove('hidden');
+
+  const deliverableText = FINAL[emp.wf] || 'Analog IP deliverable completed.';
+  document.getElementById('run-final-text').innerText = deliverableText;
+
+  emp.handled += 1;
+  emp.hrs += 4.5;
+  renderEcon();
+  const card = document.getElementById(`card-${emp.id}`);
+  if (card) {
+    card.replaceWith(empCard(emp));
+  }
+}
+
+function renderBuilderWfs() {
+  const cont = document.getElementById('builder-wf-grid');
+  cont.innerHTML = '';
+  Object.keys(WORKFLOWS).forEach(k => {
+    const wf = WORKFLOWS[k];
+    const item = document.createElement('div');
+    item.className = `wf ${k === selectedWfKey ? 'sel' : ''}`;
+    item.id = `bwf-${k}`;
+    item.onclick = () => selectBuilderWf(k);
+
+    const badge = wf.tag === 'flagship' ? '<span class="tag hero">Flagship</span>' : (wf.track === 'trackA' ? '<span class="tag commercial">Subsystems &amp; Security</span>' : '<span class="tag operations">Porting &amp; Reliability</span>');
+    item.innerHTML = `
+      <div class="wn">${wf.name} ${badge}</div>
+      <div class="wd">${wf.desc}</div>
+      <div class="wm">${wf.mode.toUpperCase()} &bull; ${wf.tasks.length} TASKS</div>
+    `;
+    cont.appendChild(item);
+  });
+}
+
+function selectBuilderWf(k) {
+  selectedWfKey = k;
+  renderBuilderWfs();
+}
+
+function goToStep(s) {
+  document.getElementById('st-1').classList.toggle('active', s === 1);
+  document.getElementById('st-2').classList.toggle('active', s === 2);
+  document.getElementById('st-3').classList.toggle('active', s === 3);
+
+  document.getElementById('bstep-1').classList.toggle('hidden', s !== 1);
+  document.getElementById('bstep-2').classList.toggle('hidden', s !== 2);
+  document.getElementById('bstep-3').classList.toggle('hidden', s !== 3);
+
+  if (s === 2) {
+    const wf = WORKFLOWS[selectedWfKey];
+    document.getElementById('bstep2-wftitle').innerText = `Configure Tasks: ${wf.name}`;
+    const cont = document.getElementById('task-map-container');
+    cont.innerHTML = '';
+
+    wf.tasks.forEach((t, i) => {
+      const row = document.createElement('div');
+      row.className = 'task-row';
+
+      let optionsHTML = '';
+      Object.keys(AGENT_ROLES).forEach(ak => {
+        const a = AGENT_ROLES[ak];
+        const sel = ak === t.agent ? 'selected' : '';
+        optionsHTML += `<option value="${ak}" ${sel}>${a.emoji} ${a.label}</option>`;
+      });
+
+      row.innerHTML = `
+        <div class="tn">${i+1}</div>
+        <div class="tt">${t.task}</div>
+        <select id="sel-task-${i}">${optionsHTML}</select>
+      `;
+      cont.appendChild(row);
+    });
+  }
+}
+
+function deployOperator() {
+  const name = document.getElementById('b-emp-name').value.trim() || 'Custom-Analog-Operator';
+  const title = document.getElementById('b-emp-title').value.trim() || 'Custom Analog IP Subsystem Specialist';
+
+  const newId = 'custom-op-' + Date.now();
+  EMPLOYEES.push({
+    id: newId,
+    name: name,
+    title: title,
+    wf: selectedWfKey,
+    handled: 1,
+    hrs: 9.0,
+    win: 'Newly Deployed'
+  });
+
+  renderEcon();
+  renderRoster();
+  switchTab('roster');
+  setupRun(newId);
+}
+
+window.onload = init;
+</script>
+</body>
+</html>
