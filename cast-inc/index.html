@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAST, Inc. &mdash; AI Commercial &amp; Silicon IP Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Condensed:wght@400;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#f8fafc;
+  --surface:#ffffff;
+  --surface2:#f1f2f3;
+  --border:#dfdfdf;
+  --accent:#990000;
+  --accent-dim:rgba(153,0,0,.08);
+  --accent-line:rgba(153,0,0,.35);
+  --accent-dark:#660000;
+  --slate:#343a40;
+  --slate-line:rgba(52,58,64,.32);
+  --text:#222222;
+  --hi:#111827;
+  --tert:#626262;
+  --ok:#28a745;
+  --ok-dim:rgba(40,167,69,.10);
+  --gold:#d18b16;
+  --gold-bg:#fffbeb;
+  --gold-line:#fde68a;
+  --blue:#0a4281;
+}
+body{background:var(--canvas);color:var(--text);font-family:'Roboto',system-ui,-apple-system,BlinkMacSystemFont,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.htitle,.emp-name,.cell .v,.wn,.slabel{font-family:'Roboto Condensed',sans-serif;font-weight:700;letter-spacing:-.2px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:14px 30px;border-bottom:2px solid var(--accent);position:sticky;top:0;background:#ffffff;box-shadow:0 3px 10px rgba(0,0,0,0.05);z-index:30}
+.logo{display:flex;align-items:center;gap:14px}
+.logo-img{height:34px;width:auto;display:block;object-fit:contain}
+.brand-divider{height:28px;width:1px;background:var(--border)}
+.htitle{font-size:15px;font-weight:700;color:var(--hi);line-height:1.2}.hsub{font-size:11px;color:var(--tert);margin-top:2px;font-family:'Roboto',sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);background:var(--surface2);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:'Roboto Condensed',sans-serif}.badge b{color:var(--accent)}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:'Roboto Condensed',sans-serif;transition:all .3s}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:13.5px;line-height:1.6;max-width:920px;margin-bottom:14px;color:#334155;font-family:'Roboto',sans-serif}.lead b{color:var(--hi);font-family:'Roboto Condensed',sans-serif}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:'Roboto',sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:'Roboto Condensed',sans-serif}
+.tag.commercial{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(10,66,129,.10);color:var(--blue);border:1px solid rgba(10,66,129,.35)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,0.02)}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:var(--accent)}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:'Roboto',sans-serif}
+.slabel{font-size:11.5px;font-weight:700;letter-spacing:1.2px;color:var(--accent);text-transform:uppercase;margin:22px 0 14px;display:flex;align-items:center;gap:10px}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:0 2px 5px rgba(0,0,0,0.02);transition:border-color .3s,box-shadow .3s}
+.emp.working{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--accent);font-size:14px;flex-shrink:0;position:relative;font-family:'Roboto Condensed',sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:16.5px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:'Roboto',sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:'Roboto',sans-serif;color:#475569}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:'Roboto',sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:'Roboto',sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700;font-family:'Roboto Condensed',sans-serif}
+.btn{font-family:'Roboto Condensed',sans-serif;font-size:12.5px;font-weight:700;border-radius:8px;padding:9px 15px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi);transition:all .25s}
+.btn:hover{border-color:var(--accent);color:var(--accent)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--accent-dark);border-color:var(--accent-dark);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);background:var(--surface);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px;transition:border-color .3s}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);background:var(--surface2);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:700;color:var(--hi);font-family:'Roboto Condensed',sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:'Roboto',sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:0 4px 12px rgba(0,0,0,0.03)}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:'Roboto',sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:'Roboto',sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45;transition:border-color .2s}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:'Roboto Condensed',sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:700;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:'Roboto',sans-serif}
+.acard.visible{opacity:1;background:#fff}.acard.running{border-color:var(--accent);opacity:1;box-shadow:0 0 0 1px var(--accent)}.acard.done{border-color:rgba(40,167,69,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi);font-family:'Roboto Condensed',sans-serif}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#ffffff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:'Roboto Mono',monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--accent);font-weight:600}.frow .fd{color:var(--text);opacity:.9;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:'Roboto',sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:700;font-family:'Roboto Condensed',sans-serif}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12.5px;font-weight:700;color:var(--hi);font-family:'Roboto Condensed',sans-serif;background:var(--surface2)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto;font-family:'Roboto Mono',monospace;color:#1e293b}
+.donebar{background:var(--surface2);border:1px solid rgba(40,167,69,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:'Roboto',sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:'Roboto Condensed',sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:700;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface);transition:border-color .2s}
+.wf:hover{border-color:var(--accent)}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:'Roboto Condensed',sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:'Roboto',sans-serif}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:700;text-transform:uppercase;font-family:'Roboto Condensed',sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:'Roboto',sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;font-family:'Roboto Condensed',sans-serif}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px;font-family:'Roboto',sans-serif}.field label{display:block;font-size:12px;font-weight:700;color:var(--hi);margin-bottom:6px;font-family:'Roboto Condensed',sans-serif}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:99px;padding:11px 16px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:99px;overflow:hidden}
+.seg button{font-family:'Roboto Condensed',sans-serif;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border);transition:background .2s}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff;font-weight:700}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.55;font-family:'Roboto',sans-serif}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="header">
+<div class="logo">
+  <img class="logo-img" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMTYzcHgiIGhlaWdodD0iNTBweCIgdmlld0JveD0iMCAwIDE2MyA1MCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KICAgIDwhLS0gR2VuZXJhdG9yOiBTa2V0Y2ggNTQuMSAoNzY0OTApIC0gaHR0cHM6Ly9za2V0Y2hhcHAuY29tIC0tPgogICAgPHRpdGxlPmxvZ288L3RpdGxlPgogICAgPGRlc2M+Q3JlYXRlZCB3aXRoIFNrZXRjaC48L2Rlc2M+CiAgICA8ZGVmcz4KICAgICAgICA8cG9seWdvbiBpZD0icGF0aC0xIiBwb2ludHM9IjAuNDQwNDc1IDAuNTk2NjEwMTMzIDQxLjc5MDc4NzUgMC41OTY2MTAxMzMgNDEuNzkwNzg3NSA0OS4yMDYzNDkyIDAuNDQwNDc1IDQ5LjIwNjM0OTIiPjwvcG9seWdvbj4KICAgIDwvZGVmcz4KICAgIDxnIGlkPSJTeW1ib2xzIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0ibG9nbyI+CiAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgPHBhdGggZD0iTTE0Ny40NjY2OTYsMTAuMjA0MDgxNiBMMTU2Ljg1MzMzLDEwLjIwNDA4MTYgQzE1OS42OTg0MTYsMTAuMjA0MDgxNiAxNjIsOC42MDg4MDIwOCAxNjIsNS42MTI1ODgyNiBDMTYyLDIuNjE3NzQ3OTEgMTU5LjY5ODQxNiwxLjAyMDQwODE2IDE1Ni44NTMzMywxLjAyMDQwODE2IEwxMjguMTQ3OTcxLDEuMDIwNDA4MTYgQzEyNS4zMDIyMzUsMS4wMjA0MDgxNiAxMjMsMi42MTc3NDc5MSAxMjMsNS42MTI1ODgyNiBDMTIzLDguNjA4ODAyMDggMTI1LjMwMjIzNSwxMC4yMDQwODE2IDEyOC4xNDc5NzEsMTAuMjA0MDgxNiBMMTQ3LjQ2NjY5NiwxMC4yMDQwODE2IFoiIGlkPSJGaWxsLTEiIGZpbGw9IiM5OTAwMDAiPjwvcGF0aD4KICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0xMjguODk5MDE4LDEuODQ0MDkzNDcgQzEyNi44NjAxOTksMS44NDQwOTM0NyAxMjQuNjgxMzIzLDIuODM0NTMwODkgMTI0LjY4MTMyMyw1LjYxMjk0NjM0IEMxMjQuNjgxMzIzLDguMzkwNjYwMzUgMTI2Ljg2MDE5OSw5LjM4MDM5NjMzIDEyOC44OTkwMTgsOS4zODAzOTYzMyBMMTU3LjEwMjksOS4zODAzOTYzMyBDMTU5LjE0MTA4LDkuMzgwMzk2MzMgMTYxLjMxODY3Nyw4LjM5MDY2MDM1IDE2MS4zMTg2NzcsNS42MTI5NDYzNCBDMTYxLjMxODY3NywyLjgzNDUzMDg5IDE1OS4xNDEwOCwxLjg0NDA5MzQ3IDE1Ny4xMDI5LDEuODQ0MDkzNDcgTDEyOC44OTkwMTgsMS44NDQwOTM0NyBaIE0xMjguODk5MDE4LDExLjIyNDQ4OTggQzEyNS4zNzA3MzUsMTEuMjI0NDg5OCAxMjMsOC45NjkzNTA3NyAxMjMsNS42MTI5NDYzNCBDMTIzLDIuMjU1MTM5MDMgMTI1LjM3MDczNSwwIDEyOC44OTkwMTgsMCBMMTU3LjEwMjksMCBDMTYwLjYyOTkwNCwwIDE2MywyLjI1NTEzOTAzIDE2Myw1LjYxMjk0NjM0IEMxNjMsOC45NjkzNTA3NyAxNjAuNjI5OTA0LDExLjIyNDQ4OTggMTU3LjEwMjksMTEuMjI0NDg5OCBMMTI4Ljg5OTAxOCwxMS4yMjQ0ODk4IFoiIGlkPSJGaWxsLTMiIGZpbGw9IiM2MjYyNjIiPjwvcGF0aD4KICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0xNDIuNDIwNzYzLDEyLjI0NDg5OCBDMTQ2LjM1MTE2LDEyLjI0NDg5OCAxNDcsMTUuMjA4NzI2OCAxNDcsMTcuNDg4MDI4NSBMMTQ3LDQyLjcxMzA1ODggQzE0Nyw0NS4yNDAxODM0IDE0NS4wNDc1ODIsNDYuOTM4Nzc1NSAxNDEuOTk4MDM0LDQ2LjkzODc3NTUgQzEzOC45NTE3NjMsNDYuOTM4Nzc1NSAxMzcsNDUuMjQwMTgzNCAxMzcsNDIuNzEzMDU4OCBMMTM3LDE3LjQ4ODAyODUgQzEzNywxNS40NjEyMzg0IDEzNy43NTg5NDYsMTIuMjQ0ODk4IDE0Mi40MjA3NjMsMTIuMjQ0ODk4IiBpZD0iRmlsbC01IiBmaWxsPSIjOTkwMDAwIj48L3BhdGg+CiAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMTQxLjg5NDc5LDEyLjk5ODg5NDIgQzEzOS4wNTYyMzksMTIuOTk4ODk0MiAxMzcuNjE2NjcsMTQuNDc3Njc3MSAxMzcuNjE2NjcsMTcuMzk1NDIxNiBMMTM3LjYxNjY3LDQyLjgxMzQ3ODMgQzEzNy42MTY2Nyw0NC44OTI5NTM0IDEzOS4xMDQyMDQsNDYuMTg0Nzc5MiAxNDEuNDk4MTU1LDQ2LjE4NDc3OTIgQzE0My44OTQ1NjYsNDYuMTg0Nzc5MiAxNDUuMzgzMzMsNDQuODkyOTUzNCAxNDUuMzgzMzMsNDIuODEzNDc4MyBMMTQ1LjM4MzMzLDE3LjM5NTQyMTYgQzE0NS4zODMzMywxNC4zOTYwMDk5IDE0NC4yNzQ1OTcsMTIuOTk4ODk0MiAxNDEuODk0NzksMTIuOTk4ODk0MiBNMTQxLjQ5ODE1NSw0Ny45NTkxODM3IEMxMzguMjA5NDcsNDcuOTU5MTgzNyAxMzYsNDUuODkxODU3NCAxMzYsNDIuODEzNDc4MyBMMTM2LDE3LjM5NTQyMTYgQzEzNiwxNS41NDAwMjUgMTM2LjU3NDM1MiwxMS4yMjQ0ODk4IDE0MS44OTQ3OSwxMS4yMjQ0ODk4IEMxNDUuMTg3MTY1LDExLjIyNDQ4OTggMTQ3LDEzLjQxNjAwNDEgMTQ3LDE3LjM5NTQyMTYgTDE0Nyw0Mi44MTM0NzgzIEMxNDcsNDUuODkxODU3NCAxNDQuNzg5Myw0Ny45NTkxODM3IDE0MS40OTgxNTUsNDcuOTU5MTgzNyIgaWQ9IkZpbGwtNyIgZmlsbD0iIzYyNjI2MiI+PC9wYXRoPgogICAgICAgICAgICAgICAgPHBhdGggZD0iTTQxLDEyLjQ3MDgxNTIgQzQxLDE1LjI3MDU3IDM5LjQ0NDc0NTMsMTYuOTc0NTY2NyAzNi4zOTcwODgxLDE2Ljk3NDU2NjcgQzMwLjQ4NDk4MDcsMTYuOTc0NTY2NyAzMi4yMjg3OTE2LDkuMDU5NTA1MjQgMjIuODk1OTI2Myw5LjA1OTUwNTI0IEMxNi40OTAzNjMyLDkuMDU5NTA1MjQgMTEuMjAyMDk2MiwxNC40Nzg1OTk2IDExLjIwMjA5NjIsMjMuOTc5NTkxOCBDMTEuMjAyMDk2MiwzMS45NTc2NjYxIDE0LjQzODMwOTcsMzguODk5MDE1MSAyMy4yNzE3MDE1LDM4Ljg5OTAxNTEgQzMxLjI5NTM3MTMsMzguODk5MDE1MSAzMS4xMDk0ODk3LDMwLjQ5NTc3MDkgMzYuMDIxOTgxNSwzMC40OTU3NzA5IEMzOC41MTEzMjUxLDMwLjQ5NTc3MDkgNDEsMzEuODk2NjQzMiA0MSwzNC4zMzA5MjQzIEM0MSw0MC40Nzc2MTYzIDM2LjExMTA5NzIsNDYuNTc5ODQyNyAyNi42NDEwMjU2LDQ2LjkzODc3NTUgQzI2LjM0ODcwNTMsNDYuOTQ5ODU1IDIzLjU2Nzg1ODIsNDYuOTM4Nzc1NSAyMy4yNzE3MDE1LDQ2LjkzODc3NTUgQzkuMjczMDcyMjMsNDYuOTM4Nzc1NSAxLDM5LjA4NDA3MzYgMSwyMy45Nzk1OTE4IEMxLDExLjYxNjQ5NTMgOC40NjQwMTg4NiwxLjAyMDQwODE2IDIyLjg5NTkyNjMsMS4wMjA0MDgxNiBDMzQuNTkwNDI1MSwxLjAyMDQwODE2IDQxLDguMjA1MTg1MzUgNDEsMTIuNDcwODE1MiBaIiBpZD0iRmlsbC05IiBmaWxsPSIjOTkwMDAwIj48L3BhdGg+CiAgICAgICAgICAgICAgICA8ZyBpZD0iR3JvdXAtMTMiIGZpbGw9IiM2MjYyNjIiPgogICAgICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0yMi43MDc2NjY3LDIuMjkzNjUzOSBDOC4yMzIzMzMzMywyLjI5MzY1MzkgMS43NTIzMzMzMywxMy41MTUzNDgxIDEuNzUyMzMzMzMsMjQuNjM2Mzk5MiBDMS43NTIzMzMzMywzOS4wNDM3Nzk3IDkuMzI3NjY2NjcsNDYuOTc4NDczNiAyMy4wODIzMzMzLDQ2Ljk3ODQ3MzYgQzMxLjAxMjMzMzMsNDYuOTc4NDczNiAzOS44ODE2NjY3LDQxLjkwMjA0MDggMzkuODgxNjY2NywzNS4xMDcyOTY2IEMzOS44ODE2NjY3LDMzLjE1OTUxOTIgMzcuNzc2MzMzMywzMi4xMDk0NzcyIDM1Ljc5NSwzMi4xMDk0NzcyIEMzNC4xNzYzMzMzLDMyLjEwOTQ3NzIgMzMuMjQ5NjY2NywzMy4yOTEwMjYgMzEuODcyMzMzMywzNS4yMTg2NzQ5IEMzMC4xNTU2NjY3LDM3LjYyMDY4NzcgMjguMDE5LDQwLjYwOTc4NDcgMjMuMDgyMzMzMyw0MC42MDk3ODQ3IEMxNC44NzcsNDAuNjA5Nzg0NyAxMC4xNzE2NjY3LDM0Ljc4NzI1MTkgMTAuMTcxNjY2NywyNC42MzYzOTkyIEMxMC4xNzE2NjY3LDE1LjIzMDk3NTcgMTUuMzI3LDguNjYxNjcxNzkgMjIuNzA3NjY2Nyw4LjY2MTY3MTc5IEMyOC4zNDEsOC42NjE2NzE3OSAzMC4zMjM2NjY3LDExLjQ2MzU3MjggMzEuOTE3LDEzLjcxNDYyMTIgQzMzLjEzMSwxNS40Mjk1Nzc5IDM0LjAwODMzMzMsMTYuNjY4MTU3NyAzNi4xNjksMTYuNjY4MTU3NyBDMzguNjMyMzMzMywxNi42NjgxNTc3IDM5Ljg4MTY2NjcsMTUuNDMyMjYxNyAzOS44ODE2NjY3LDEyLjk5NDY4ODMgQzM5Ljg4MTY2NjcsOS4yNjAxNjIxNSAzMy45ODM2NjY3LDIuMjkzNjUzOSAyMi43MDc2NjY3LDIuMjkzNjUzOSBNMjMuMDgyMzMzMyw0OC43NDI0MDk4IEM4LjQxMyw0OC43NDI0MDk4IC0wLjAwMDMzMzMzMzMzMzMsMzkuOTU1NjA1MyAtMC4wMDAzMzMzMzMzMzMzLDI0LjYzNjM5OTIgQy0wLjAwMDMzMzMzMzMzMzMsMTIuNjM3MDcwMiA3LjAyMTY2NjY3LDAuNTI5NzE3NjQgMjIuNzA3NjY2NywwLjUyOTcxNzY0IEMzNS4zMDk2NjY3LDAuNTI5NzE3NjQgNDEuNjM0MzMzMyw4LjUyMDc3MTYgNDEuNjM0MzMzMywxMi45OTQ2ODgzIEM0MS42MzQzMzMzLDE2LjM5OTEwNTQgMzkuNTkxLDE4LjQzMjA5MzkgMzYuMTY5LDE4LjQzMjA5MzkgQzMzLjEwNSwxOC40MzIwOTM5IDMxLjc3NTY2NjcsMTYuNTU0MDk1NiAzMC40ODk2NjY3LDE0LjczNzgyNSBDMjguOTg5LDEyLjYxODI4MzUgMjcuNDM3NjY2NywxMC40MjU2MDgxIDIyLjcwNzY2NjcsMTAuNDI1NjA4MSBDMTYuMjU3NjY2NywxMC40MjU2MDgxIDExLjkyNDMzMzMsMTYuMTM2NzYyNyAxMS45MjQzMzMzLDI0LjYzNjM5OTIgQzExLjkyNDMzMzMsMzcuMDAwMDU1OSAxOC45MTUsMzguODQ1ODQ4NSAyMy4wODIzMzMzLDM4Ljg0NTg0ODUgQzI3LjEyMSwzOC44NDU4NDg1IDI4LjgxMywzNi40Nzg3MjUyIDMwLjQ0OSwzNC4xODg3NjE1IEMzMS43OTk2NjY3LDMyLjI5OTM1NyAzMy4xOTU2NjY3LDMwLjM0NTU0MSAzNS43OTUsMzAuMzQ1NTQxIEMzOC42MjU2NjY3LDMwLjM0NTU0MSA0MS42MzQzMzMzLDMyLjAxNDIwMTggNDEuNjM0MzMzMywzNS4xMDcyOTY2IEM0MS42MzQzMzMzLDQyLjM3MTAzNzIgMzIuOTY1LDQ4Ljc0MjQwOTggMjMuMDgyMzMzMyw0OC43NDI0MDk4IiBpZD0iRmlsbC0xMSI+PC9wYXRoPgogICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgPHBhdGggZD0iTTYzLDE3IEM2My44NzcxMzAyLDE3IDY1Ljk2NDkyMjcsMjIuNzA3NDk1OSA2Ni43OTM2MTA2LDI0LjkzOTExNTYgQzY3LjY3ODQ5MTYsMjcuMzIzMzg2OCA3Mi43MzY5NzAyLDM3LjY3MjM5NDQgNzIsMzkgQzcxLjM5NzM3NjcsNDAuMDg5MDQ2MyA2OC4xMDU0ODAyLDQwLjA3MDA0NzkgNjUsNDAgQzYxLjExODE0OTcsMzkuOTA4MTQ0OCA2MC4xNDQ0NTYxLDQwIDU5LjgxNTY5MzgsNDAgQzU3LjE2NDI4MDIsNDAgNTUuNTI4NDk0MSw0MC40NDQxNDc2IDU1LjUyODQ5NDEsNDMuMTAwMDE5NiBDNTUuNTI4NDk0MSw0Ni4wNTM5MjU0IDU5LDQ4IDU5LDQ4IEw3MCw0OCBDNzMuMzg1MTU0Myw0OCA3Myw0OCA3OCw0OCBDODMsNDggODMsNDQuOTc4MDk1NyA4Myw0Mi41NjczOTEzIEM4Myw0MS40ODM2MzE3IDgxLjQwMTI1MiwzOS43MzYzOTk3IDgxLjAzOTU0ODksMzguNzcxNTg5MyBMNjkuMTQwODA1OSw3LjMzMTk4NjQyIEM2OC4wNjAyMTc2LDQuMjU4NDcwNTEgNjYuOTM4MjkxOCwxLjAyMDQwODE2IDYyLjgxODc1MDksMS4wMjA0MDgxNiBDNTguNjk1OTgwNSwxLjAyMDQwODE2IDU3LjU0MjQwNTcsNC40OTgzNTE0NSA1Ni43MDIwOTE3LDYuNzI5OTcxMTUgTDQzLjk2MzY4MDYsMzguNzcxNTg5MyBDNDMuNjAyNjIzMywzOS43MzYzOTk3IDQzLDQxLjQ4MzYzMTcgNDMsNDIuNTY3MzkxMyBDNDMsNDUuMjE5Mjk4MyA0NS4yOTQ5NzY5LDQ4IDQ4LDQ4IEM1MC4zNDQ2MTE3LDQ4IDUyLjM0MDUzNzYsNDYuMjY4MjIwOCA1Myw0NC4zMzg2IEw1Ny42NjY0MTgyLDI3Ljg5MzAyMTUgQzU3LjY2NjQxODIsMjcuODkzMDIxNSA1OC44NTE2NDIxLDI0LjEzOTUxMjUgNjAuMDIyMDEwMiwyMS4yNDc3MjQ1IEM2MS4wMTkyNzc2LDE4Ljc4NDgxNDcgNjIuMTE4MzQ4NSwxNyA2MywxNyBaIiBpZD0iRmlsbC0xNCIgZmlsbD0iIzk5MDAwMCI+PC9wYXRoPgogICAgICAgICAgICAgICAgPGcgaWQ9Ikdyb3VwLTE4IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0Mi4wMDAwMDAsIDAuMDAwMDAwKSI+CiAgICAgICAgICAgICAgICAgICAgPG1hc2sgaWQ9Im1hc2stMiIgZmlsbD0id2hpdGUiPgogICAgICAgICAgICAgICAgICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNwYXRoLTEiPjwvdXNlPgogICAgICAgICAgICAgICAgICAgIDwvbWFzaz4KICAgICAgICAgICAgICAgICAgICA8ZyBpZD0iQ2xpcC0xNyI+PC9nPgogICAgICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0yOC45MTY0NzUsNDcuNDM0MzE0IEMzMC44MjU1MDYyLDQ3LjQzNDMxNCAzMi4xODk4NSw0Ny40MjQxOTg1IDMzLjQwMjYsNDcuNDE2MTA2MSBDMzQuMzc0NTA2Miw0Ny40MDg2ODgxIDM1LjI0OTI4NzUsNDcuNDAyNjE4OCAzNi4yMjc3NTYyLDQ3LjQwMjYxODggQzM4LjM0NDE2MjUsNDcuNDAyNjE4OCA0MC4wNjYxNjI1LDQ1LjgxMzgxNTMgNDAuMDY2MTYyNSw0My44NTk1MDYgQzQwLjA2NjE2MjUsNDMuMTY0MjM1OSAzOS43MzA4MTg3LDQxLjg2ODEwNjcgMzkuMTQ2NzU2Miw0MC4zMDM1ODAzIEwyNy4wNTg2MzEyLDguMjIyNjk2NjMgQzI1Ljk0NTYzMTIsNS4wNDQ0MTUxOSAyNS4wMDE5NDM3LDIuMzQ4MzA0NiAyMS40MzkxNjI1LDIuMzQ4MzA0NiBDMTcuOTg4NiwyLjM0ODMwNDYgMTYuOTUyMzgxMiw1LjEzMDA1OTUyIDE2LjEyMDI1NjIsNy4zNjQ5MDQ1NiBMMTYuMDI5NjkzNyw3LjYwNzAwMTU0IEwzLjA4MTIyNSw0MC4zMTk3NjUgQzIuMjg1MTkzNzUsNDIuNDU2MTUyOCAyLjE2NTc1NjI1LDQzLjQ1NTU2MTUgMi4xNjU3NTYyNSw0My44NTk1MDYgQzIuMTY1NzU2MjUsNDYuMDQ0NDQ4MSAzLjYxMzQ0Mzc1LDQ3LjQwMjYxODggNS45NDMxMzEyNSw0Ny40MDI2MTg4IEM4LjM1Mjg4MTI1LDQ3LjQwMjYxODggOS4xNDIzNSw0Ni41MzMzNjI2IDkuNTg2NjMxMjUsNDUuMjI4NDY2NiBMMTUuMzkyNDc1LDI4LjU4NTgxNyBDMTUuNDMzMTYyNSwyOC40NTQzMTU5IDE2LjYxMTc4NzUsMjQuNzE0Mjg4NSAxNy44MDA5MTI1LDIxLjc2NDYxNjggQzE5LjIyMzY2MjUsMTguMjM2MzQgMjAuMTg4MzUsMTYuMDkzODgyOSAyMS41OTA3NTYyLDE2LjA5Mzg4MjkgQzIyLjY4NDA2ODcsMTYuMDkzODgyOSAyMy40NjMwMzc1LDE3LjU4NzYwMSAyNS43NTc5NDM3LDI0LjA4MzA4MyBDMjUuOTYyNjkzNywyNC42NjIzNjI0IDI2LjE0MjUwNjIsMjUuMTcxNTA3OSAyNi4yODQ5MTI1LDI1LjU1NTg5NTggQzI2LjQ1MTYsMjYuMDA4Mzk0NiAyNi43MzM3ODc1LDI2LjcxNTgwMzMgMjcuMDc2MzUsMjcuNTc3NjQxNiBDMzAuMzc0NjYyNSwzNS44NjY5MzQxIDMxLjE5MDM4MTIsMzguNzM4Mzc5NSAzMC41NjQ5NzUsMzkuODY5Mjg5MyBDMjkuODIyNzU2Miw0MS4yMTU5OTU5IDI3Ljk3NDc1NjIsNDEuMTI0OTU2NiAyNS40MTY2OTM3LDQwLjk5ODE3NjEgQzI0LjgyMDE2MjUsNDAuOTY4NTA0IDI0LjE4MTYzMTIsNDAuOTM2ODA4OSAyMy41MTQyMjUsNDAuOTIxOTcyOCBDMjAuMzI2MTYyNSw0MC44NDY0NDQgMTkuMDY1NTA2Miw0MC44OTI5NzUxIDE4LjUyNjcyNSw0MC45MTMyMDYxIEMxOC4zODgyNTYyLDQwLjkxODYwMSAxOC4yOTI0NDM3LDQwLjkyMTk3MjggMTguMjIyODgxMiw0MC45MjE5NzI4IEMxNS40NzI1Mzc1LDQwLjkyMTk3MjggMTQuODk1MDM3NSw0Mi44MTQ5MTQ5IDE0Ljg5NTAzNzUsNDQuNDAzNzE4NCBDMTQuODk1MDM3NSw0Ni40NDcwNDM5IDE2LjcxMTUzNzUsNDcuMjYyMzUwOSAxNy4xNjU2NjI1LDQ3LjQzNDMxNCBMMjguOTE2NDc1LDQ3LjQzNDMxNCBaIE0yOC45MTY0NzUsNDkuMjA2NDE2NiBMMTYuOTAwNTM3NSw0OS4yMDY0MTY2IEwxNi43ODE3NTYzLDQ5LjE3MDY5MTUgQzE1LjUzMjI1NjMsNDguNzkzODkyMiAxMy4xNjk3NTYzLDQ3LjMxMjMwOTIgMTMuMTY5NzU2Myw0NC40MDUwOTAyIEMxMy4xNjk3NTYzLDQxLjE2NDg4NTggMTUuMTA2MzUsMzkuMTUyODE4IDE4LjIyMjg4MTMsMzkuMTUyODE4IEMxOC4yNzgwMDYzLDM5LjE1MjgxOCAxOC4zNTQxMzEzLDM5LjE0OTQ0NzcgMTguNDY0MzgxMywzOS4xNDU0MDMzIEMxOS4wMTg5MTI1LDM5LjEyNDUwNzUgMjAuMzE2MzE4OCwzOS4wNzczMjMzIDIzLjU1Mjk0MzgsMzkuMTUyODE4IEMyNC4yMzU0NDM4LDM5LjE2ODMyMTQgMjQuODg5MDY4OCwzOS4yMDA2NzYyIDI1LjUwMDAzNzUsMzkuMjMxMDA4OSBDMjYuNzkzNTA2MywzOS4yOTUwNDQ2IDI4LjcyOTQ0MzgsMzkuMzkwNzYxIDI5LjA0MTE2MjUsMzkuMDMxNDg3MyBDMjkuMjQ2NTY4OCwzNy43MTkwOTMzIDI2LjUxNDYsMzAuODU3MTY2OCAyNS40Nzk2OTM4LDI4LjI1NzMxOSBDMjUuMTI5OTEyNSwyNy4zNzkwMTk0IDI0Ljg0MjQ3NSwyNi42NTY0Mjc1IDI0LjY3MTg1LDI2LjE5NDY5NjcgQzI0LjUyNzQ3NSwyNS44MDQ0MTYyIDI0LjM0NDM4MTMsMjUuMjg3NDEyNSAyNC4xMzYzNSwyNC42OTgyODQ0IEMyMy41MzQ1Njg4LDIyLjk5NjI4NCAyMi4yMDk2LDE5LjI0NzgzODcgMjEuNDgwNTA2MywxOC4wNzM2MjY5IEMyMC44NDQ2LDE4Ljg1OTU4MDMgMTkuODUwMzgxMywyMS4zMjUyOTAzIDE5LjM5NDk0MzgsMjIuNDUzNjY2IEMxOC4yMzIwNjg4LDI1LjMzNzI5MjkgMTcuMDM3MDM3NSwyOS4xMjc1Mjk5IDE3LjAyNTIyNSwyOS4xNjUyNzcyIEwxMS4yMTI4MTg4LDQ1LjgyMDYxNTQgQzEwLjQzNDUwNjMsNDguMTA3MDI1NCA4Ljc1OTEsNDkuMTc0NzM1OCA1Ljk0MzEzMTI1LDQ5LjE3NDczNTggQzIuNjUyMDM3NSw0OS4xNzQ3MzU4IDAuNDQwNDc1LDQ3LjAzOTMxNTEgMC40NDA0NzUsNDMuODYxMTI0MiBDMC40NDA0NzUsNDIuOTI2MjAzNSAwLjc4ODk0Mzc1LDQxLjUxNzQxOSAxLjQ3NjY5Mzc1LDM5LjY3MjUxNzkgTDE0LjUwOTE2MjUsNi43NDk0MjU5NiBDMTUuMzY2MjI1LDQuNDQ4MTg2NTYgMTYuODAyMSwwLjU5NjYxMDEzMyAyMS40MzkxNjI1LDAuNTk2NjEwMTMzIEMyNi4yMTUzNSwwLjU5NjYxMDEzMyAyNy41NzE4MTg4LDQuNDcxMTA0NTkgMjguNjYxODUsNy41ODQ1ODU3OCBMNDAuNzU2NTM3NSwzOS42NjkxNDc2IEM0MS40NDI5NzUsNDEuNTA4NjU2MiA0MS43OTA3ODc1LDQyLjkxODExNDggNDEuNzkwNzg3NSw0My44NjExMjQyIEM0MS43OTA3ODc1LDQ2Ljc5MTI2MTEgMzkuMjk1NzI1LDQ5LjE3NDczNTggMzYuMjI3NzU2Myw0OS4xNzQ3MzU4IEMzNS4yNTMyMjUsNDkuMTc0NzM1OCAzNC4zODIzODEzLDQ5LjE4MTQ3NjQgMzMuNDE0NDEyNSw0OS4xODgyMTcgQzMyLjE5OTAzNzUsNDkuMTk2MzA1NyAzMC44MzA3NTYzLDQ5LjIwNjQxNjYgMjguOTE2NDc1LDQ5LjIwNjQxNjYiIGlkPSJGaWxsLTE2IiBmaWxsPSIjNjI2MjYyIiBtYXNrPSJ1cmwoI21hc2stMikiPjwvcGF0aD4KICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0xMTAuNjYxNTMsMjAuNTA4NzE0OSBDMTE5LjcwNjg5OSwyMi41Nzk3MDk5IDEyMiwyOC4wMDEzMjg0IDEyMiwzMy4xMTUyMjk4IEMxMjIsNDEuMDMxNTMwOCAxMTYuMDg5MDExLDQ4IDEwNC4xNDk3MTksNDggQzkxLjYwNzY2MjQsNDggODYsNDAuNjA3MTg0NCA4NiwzNS44NTYzNDk1IEM4NiwzMy40MTk2NTIyIDg3Ljc0ODAxOTYsMzEuNzEzMDQxNyA5MC4xNTkwODExLDMxLjcxMzA0MTcgQzk1LjUyNTYzNzMsMzEuNzEzMDQxNyA5NC4xNDE4Njk1LDM5LjYzMTMxOTQgMTA0LjE0OTcxOSwzOS42MzEzMTk0IEMxMDkuMjc1MTY5LDM5LjYzMTMxOTQgMTEyLjExMDExMSwzNi43Njg5NTc5IDExMi4xMTAxMTEsMzMuODQ2NjM0NCBDMTEyLjExMDExMSwzMi4wNzk0MDI5IDExMS4yNjQ5NDMsMzAuMTMxNjI2NSAxMDcuODg5NDU3LDI5LjI3ODMyMTIgTDk2LjczMTgxNjIsMjYuNDE1OTU5NiBDODcuNzQ4MDE5NiwyNC4xMDE4MjIxIDg2LjExODYwODcsMTkuMTA4NTAzNSA4Ni4xMTg2MDg3LDE0LjQxNjk3MTcgQzg2LjExODYwODcsNC42NzI4MTgzNyA5NS4wNDQwNzMyLDEuMDIwNDA4MTYgMTAzLjQyMzgwOCwxLjAyMDQwODE2IEMxMTEuMTQ0MzksMS4wMjA0MDgxNiAxMjAuMjUwMDM2LDUuNDA0MjIyOTEgMTIwLjI1MDAzNiwxMS4yNTA4NDY3IEMxMjAuMjUwMDM2LDEzLjc0ODE2NDkgMTE4LjEzNzc2NSwxNS4yMDk2NTYxIDExNS43MjY3MDMsMTUuMjA5NjU2MSBDMTExLjE0NDM5LDE1LjIwOTY1NjEgMTExLjk4OTU1OCw4LjY5MjI0ODY5IDEwMi43NjQwMDcsOC42OTIyNDg2OSBDOTguMTc4NDUzMSw4LjY5MjI0ODY5IDk1LjY0NzQ4NjcsMTAuODIzODY0NiA5NS42NDc0ODY3LDEzLjg3MTM4MzUgQzk1LjY0NzQ4NjcsMTYuOTEzNjMxIDk5LjI2NjAyMzMsMTcuODg4ODM3MSAxMDIuNDAxMDUxLDE4LjYxODkyMzcgTDExMC42NjE1MywyMC41MDg3MTQ5IFoiIGlkPSJGaWxsLTE5IiBmaWxsPSIjOTkwMDAwIj48L3BhdGg+CiAgICAgICAgICAgICAgICA8cGF0aCBkPSJNOTAuMDUwMTYxNiwzMy4zMjk2OTI4IEM4OC4wODc4NDI5LDMzLjMyOTY5MjggODYuNzE2NzAyMiwzNC43MTQ3ODk1IDg2LjcxNjcwMjIsMzYuNjk3OTQ5OSBDODYuNzE2NzAyMiw0My45NDEwOTExIDk2LjkxMTc0NDUsNDcuMTk5NjI0MSAxMDQuMTUwODk3LDQ3LjE5OTYyNDEgQzExNC44NzgzMjYsNDcuMTk5NjI0MSAxMjEuMjgzMjk4LDQyLjIyMDA0OTIgMTIxLjI4MzI5OCwzMy44ODAzNDQ5IEMxMjEuMjgzMjk4LDI3LjUyNTE1NTcgMTE3LjY2MzA2OCwyMy40NTc5MTU4IDExMC41MjUxNjcsMjEuNzkwMzgxNCBMMTEwLjUyNTgyLDIxLjc5MDM4MTQgTDEwMi4yMDAzMzcsMTkuODQ4NTM2OCBDOTkuNDAxMjI0LDE5LjE4MzQxOTUgOTQuNzIyNzUzMiwxOC4wNzE5NTU2IDk0LjcyMjc1MzIsMTQuMDk5NTM5IEM5NC43MjI3NTMyLDEwLjMyNDg5NjYgOTcuODc1MjY2NSw3Ljg4NTkwNzMyIDEwMi43NTQyOCw3Ljg4NTkwNzMyIEMxMDguNTk2MTYzLDcuODg1OTA3MzIgMTEwLjgxNTIwMywxMC40OTM1NDY1IDExMi40MzY1MzMsMTIuMzk4MTM5MSBDMTEzLjUxNjMzMSwxMy42Njc0MTU5IDExNC4yOTY5NDcsMTQuNTg1MTY5NSAxMTUuODE4OTg1LDE0LjU4NTE2OTUgQzExNy42MDEwMTEsMTQuNTg1MTY5NSAxMTkuNTE4OTA5LDEzLjU5MDIwMjcgMTE5LjUxODkwOSwxMS40MDU4ODE2IEMxMTkuNTE4OTA5LDYuMDc0MTA2MDYgMTEwLjcxMTMzOSwxLjc4MDY0NTA1IDEwMy40MTkyNzQsMS43ODA2NDUwNSBDOTEuMTkyNjcsMS43ODA2NDUwNSA4Ni44MzYyNDQyLDguNDMzODUwMiA4Ni44MzYyNDQyLDE0LjY2MTAyODEgQzg2LjgzNjI0NDIsMTguNzcyMjkzIDg3Ljk3ODc1MjcsMjMuNzkxMTUxOCA5Ni44ODU2MTUxLDI2LjEzMTI1NCBMMTA4LjEyOTc1MywyOS4wNzM0ODM4IEMxMTIuMTgxNzcxLDMwLjExNzg5NDEgMTEzLjAzMjkzNywzMi42NzI3MDMyIDExMy4wMzI5MzcsMzQuNjMyMTU3OCBDMTEzLjAzMjkzNywzOC4wMjg4NjE4IDEwOS45ODIzMjgsNDEuNDY4OTEzNiAxMDQuMTUwODk3LDQxLjQ2ODkxMzYgQzk3LjkwMjcwMjMsNDEuNDY4OTEzNiA5NS43MTc2MzA1LDM4LjQ5OTU5MTUgOTMuOTYwNDI3NywzNi4xMTI3NTUgQzkyLjc3MTUzOTYsMzQuNDk3MzczMyA5MS45MTE4ODIsMzMuMzI5NjkyOCA5MC4wNTAxNjE2LDMzLjMyOTY5MjggTTEwNC4xNTA4OTcsNDguOTc5NTkxOCBDOTAuMTk5MDk5Miw0OC45Nzk1OTE4IDg1LDQxLjQ0NTg4NTEgODUsMzYuNjk3OTQ5OSBDODUsMzMuNzE0NDA0MiA4Ny4xMjQzMjEsMzEuNTQ5MDQ3NyA5MC4wNTAxNjE2LDMxLjU0OTA0NzcgQzkyLjc2MTA4NzgsMzEuNTQ5MDQ3NyA5NC4wNjQ5NDUzLDMzLjMyMDIxMDUgOTUuMzI1Njg5MywzNS4wMzMxMjQ2IEM5Ny4wMTAzODMsMzcuMzIxNzUxNCA5OC43NTI1NjE0LDM5LjY4ODI2ODYgMTA0LjE1MDg5NywzOS42ODgyNjg2IEMxMDguODU0MTkxLDM5LjY4ODI2ODYgMTExLjMxNTU4MSwzNy4xNDQ5NzM3IDExMS4zMTU1ODEsMzQuNjMyMTU3OCBDMTExLjMxNTU4MSwzMi42Nzg3OTkgMTEwLjEzNzE0NSwzMS40MjUxMDAyIDEwNy43MTIzMzYsMzAuODAwNjIxNCBMOTYuNDY0Mjc4MywyNy44NTc3MTQzIEM4Ni4yOTQ3MTIyLDI1LjE4NTczMDggODUuMTE4ODg4OCwxOS4wNDY2MDMxIDg1LjExODg4ODgsMTQuNjYxMDI4MSBDODUuMTE4ODg4OCwzLjgzOTY2NDA1IDk0Ljk3Njg2MTcsMCAxMDMuNDE5Mjc0LDAgQzExMS44Mjk2NzgsMCAxMjEuMjM2MjY1LDQuODc3OTc4NTcgMTIxLjIzNjI2NSwxMS40MDU4ODE2IEMxMjEuMjM2MjY1LDE0LjI3OTcwMzIgMTE4Ljk1ODQzNCwxNi4zNjU4MTQ1IDExNS44MTg5ODUsMTYuMzY1ODE0NSBDMTEzLjUyMjIxLDE2LjM2NTgxNDUgMTEyLjMxNTY4NSwxNC45NDc1Mjk3IDExMS4xNDgzNTMsMTMuNTc1OTc5MiBDMTA5LjU4ODQyNywxMS43NDMxODE0IDEwNy44MjA3NzMsOS42NjU4NzUwNiAxMDIuNzU0MjgsOS42NjU4NzUwNiBDOTguODAwOTAwOCw5LjY2NTg3NTA2IDk2LjQ0MDEwODYsMTEuMzIzOTI3MiA5Ni40NDAxMDg2LDE0LjA5OTUzOSBDOTYuNDQwMTA4NiwxNi40NTc5Mjg1IDk5LjM0NTA0NTcsMTcuMzQzMTcxMiAxMDIuNTgwNTIsMTguMTExOTE2OCBMMTEwLjkwMjczNywyMC4wNTM3NjE0IEMxMTYuNDIxMjY4LDIxLjM0MjAwMjkgMTIzLDI0Ljc4NzQ3MzIgMTIzLDMzLjg4MDM0NDkgQzEyMyw0My4xOTQwMTk0IDExNS43Nzc4MzEsNDguOTc5NTkxOCAxMDQuMTUwODk3LDQ4Ljk3OTU5MTgiIGlkPSJGaWxsLTIxIiBmaWxsPSIjNjI2MjYyIj48L3BhdGg+CiAgICAgICAgICAgIDwvZz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPg==" alt="CAST Silicon IP Cores">
+  <div class="brand-divider"></div>
+  <div>
+    <div class="htitle">CAST, Inc. &middot; AI Commercial &amp; Silicon IP Workforce</div>
+    <div class="hsub">Woodcliff Lake, NJ &middot; Silicon IP Cores for ASICs &amp; FPGAs &middot; Automotive CAN XL, RISC-V, Compression &amp; Security</div>
+  </div>
+</div>
+<div class="badge">Independent concept &nbsp;&middot;&nbsp; <b>illustrative</b></div>
+</header>
+
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>a silicon IP core sizing, automotive CAN XL subsystem integration, or ASIL-D functional safety verification workflow turned into an autonomous team of agents</b>. CAST, Inc. (headquartered in Woodcliff Lake, New Jersey) is a world-class semiconductor Intellectual Property (silicon IP) pioneer with over 30 years of continuous delivery of production-proven IP cores for ASICs, SoCs, and FPGAs. CAST provides industry-standard silicon solutions across four core pillars: automotive networking (market-leading CAN 2.0, CAN FD, and CAN XL controller cores conforming to ISO 11898-1:2024 and CiA 610-1, LIN, and Automotive Ethernet), embedded RISC-V processors (functional safety ISO 26262 ASIL-D ready EMSA5-FS and BA2X), hardware lossless data compression (ZipAccel Deflate, GZIP, and ZLIB streaming at 100+ Gbps), and hardware security IP (AES-GCM, SHA-3, TRNG, and Post-Quantum Cryptography). One track drives commercial sourcing &amp; silicon IP licensing acceleration: it captures Tier-1 automotive electronics suppliers (Bosch, Continental, Denso, ZF), defense prime contractors, and fabless semiconductor innovators, structures multi-project ASIC RTL and FPGA netlist licensing packages, and formulates zonal gateway IP co-development agreements. The other track executes silicon IP engineering, RTL synthesis &amp; ASIL-D safety signoff: it synthesizes dual-core lockstep RISC-V and CAN XL controller subsystems in TSMC 16nm automotive grade (800 MHz timing closure, 0 CDC violations), runs 100 Gbps ZipAccel streaming compression PPA optimization, executes FMEDA fault injection (SPFM &gt; 99%, LFM &gt; 90%), and certifies SGS-TÜV Saar compliance dossiers. Point one at an automotive ECU specification, a bus architecture profile, or an RTL netlist and it runs the loop, then hands back a review-ready output for a person to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial &amp; IP Sourcing</span> find automotive OEMs, multi-project IP quote, zonal gateway proposal</span>
+<span><span class="tag operations">Silicon IP, RISC-V &amp; ASIC Eng</span> CAN XL + RISC-V ASIL-D, 100G ZipAccel, NIST PQC audit, FMEDA signoff</span>
+<span><span class="tag hero">Flagship</span> the deepest example run</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+
+<div class="foot">Independent concept prototype prepared by Innvonix Tech Solutions for a conversation with CAST, Inc. (Woodcliff Lake, NJ). It is not affiliated with, endorsed by, or built on CAST, Inc. systems or data. All operators and outputs are illustrative simulations; gate counts, clock frequencies, power numbers, silicon yields, and commercial licensing quotes are placeholders. A Chief Technology Officer, VP of Engineering, Director of Silicon IP, or VP of Worldwide Sales reviews and approves every IP release package, RTL core customization, ASIL-D safety manual, and commercial IP licensing agreement. This is not a production system and produces no deliverable for a real customer.</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'Automotive SoC, Edge AI & Defense Market Research', tools: ['research', 'save'] },
+  prospector: { emoji: '🧲', label: 'Tier-1 Automotive & Fabless ASIC Account Sourcing', tools: ['source_accounts', 'save'] },
+  qualifier: { emoji: '🎯', label: 'Silicon IP Fit & PPA Feasibility Qualifier', tools: ['score_fit', 'save'] },
+  can_network_architect: { emoji: '🚗', label: 'CAN XL & Automotive Networking Lead', tools: ['verify_can_xl_protocol', 'simulate_bitrate_switching', 'save'] },
+  riscv_core_designer: { emoji: '⚙️', label: 'RISC-V Processor & Embedded CPU Architect', tools: ['configure_lockstep_cpu', 'profile_instruction_throughput', 'save'] },
+  rtl_synthesis_eng: { emoji: '🔬', label: 'RTL Synthesis & PPA Optimization Specialist', tools: ['run_synopsys_dc_synthesis', 'close_static_timing', 'save'] },
+  compression_accelerator_lead: { emoji: '📦', label: 'Lossless & Image Compression Architect', tools: ['model_deflate_throughput', 'verify_h264_latency', 'save'] },
+  hardware_security_officer: { emoji: '🔒', label: 'Hardware Crypto & Side-Channel Security Specialist', tools: ['verify_dpa_countermeasures', 'audit_nist_pqc_readiness', 'save'] },
+  functional_safety_manager: { emoji: '🛡️', label: 'ISO 26262 ASIL-D & FMEDA Safety Officer', tools: ['run_fmeda_fault_injection', 'verify_spfm_metric', 'save'] },
+  qa_tapeout_reviewer: { emoji: '✅', label: 'RTL Verification & Linting/CDC Director', tools: ['run_spyglass_lint_cdc', 'verify_formal_assertions', 'save'] },
+  pricing: { emoji: '🧮', label: 'Silicon IP Licensing & Royalty Quoting Architect', tools: ['build_quote', 'save'] },
+  writer: { emoji: '✍️', label: 'Semiconductor IP Technical Proposal & Dossier Lead', tools: ['compose', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+
+const TRACKS = [
+  ['commercial', 'Commercial &amp; IP Sourcing'],
+  ['operations', 'Silicon IP, RISC-V &amp; ASIC Eng']
+];
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Tier-1 automotive electronics & fabless ASIC account discovery',
+    title: 'AI CAST Scout',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Target Automotive & Fabless ASIC Account Dossier',
+    sample: 'Identify Tier-1 automotive electronics suppliers (Bosch, Continental, Denso, ZF, Magna), defense prime contractors, and fabless semiconductor firms designing next-generation zonal controllers, SDV gateway SoCs, and edge AI processors requiring silicon IP cores for CAN XL, ASIL-D RISC-V, and ZipAccel compression.',
+    desc: 'Agents scan automotive zonal controller roadmaps, software-defined vehicle (SDV) announcements, and fabless ASIC tape-out schedules, map VP of SoC Engineering and Director of Silicon IP, score fit, and compile ranked target list.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan automotive zonal architecture migration, ISO 26262 functional safety mandates, and CAN XL protocol adoption across OEMs.', deps: [] },
+      { agent: 'prospector', task: 'Source VP of Semiconductor Architecture, Director of SoC Design, and Lead ASIC Sourcing Manager across top 12 automotive Tier-1s.', deps: [] },
+      { agent: 'qualifier', task: 'Score qualification fit against CAST IP portfolio: CAN-CTRL (CAN XL/FD), EMSA5-FS RISC-V processor, ZipAccel-C compression, and AES-GCM.', deps: [0, 1] },
+      { agent: 'writer', task: 'Compile ranked account dossier detailing bus architecture requirements, target foundry node (TSMC 16nm/7nm), and commercial engagement strategy.', deps: [2] }
+    ]
+  },
+
+  quoting: {
+    name: 'Multi-project ASIC RTL & FPGA silicon IP licensing quote',
+    title: 'AI IP Licensing Quoting Architect',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Multi-Project Silicon IP Commercial Quote Package',
+    sample: 'An automotive MCU chipmaker submitted an RFQ for a multi-project ASIC commercial license covering CAST CAN-CTRL (CAN XL, CAN FD, CAN 2.0) IP core bundled with dual-core lockstep EMSA5-FS RISC-V processor, including ISO 26262 ASIL-D Safety Package, synthesis scripts for TSMC 16nm, and 3-year EDA maintenance.',
+    desc: 'Agents parse customer SoC requirements, configure multi-project royalty-free licensing tier, verify ASIL-D safety documentation bundle pricing, and compile formal quote package.',
+    tasks: [
+      { agent: 'qualifier', task: 'Parse customer RFQ: multi-project ASIC RTL license, CAN-CTRL (CAN XL up to 20 Mbps) + EMSA5-FS RISC-V dual-core lockstep CPU, TSMC 16nm Automotive.', deps: [] },
+      { agent: 'can_network_architect', task: 'Verify core configuration: 32 message buffers, DMA interface, CiA 610-1 compliance, Bosch bit rate switching up to 20 Mbps, and AXI4 bus wrapper.', deps: [0] },
+      { agent: 'pricing', task: 'Structure licensing model: single buyout fee for multi-project ASIC use, zero per-chip royalties, ASIL-D certification kit, and 36-month maintenance SLA.', deps: [1] },
+      { agent: 'writer', task: 'Produce formal Silicon IP Quote Package with licensing terms, warranty schedule, deliverables list, and electronic delivery milestones.', deps: [2] }
+    ]
+  },
+
+  proposal: {
+    name: 'Automotive zonal gateway SoC IP subsystem integration proposal',
+    title: 'AI Automotive SoC Proposal Lead',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Zonal Gateway SoC IP Subsystem Co-Development Proposal',
+    sample: 'Prepare a joint IP integration and development proposal for a European automotive Tier-1 supplier embedding CAST CAN-CTRL, 10BASE-T1S Ethernet MAC, and dual-core ASIL-D RISC-V into a centralized body and zonal gateway SoC with hardware cryptographic acceleration.',
+    desc: 'Agents scope zonal controller architecture, map bus bridging bandwidth between CAN XL and 10BASE-T1S, draft integration milestones, and generate executive proposal.',
+    tasks: [
+      { agent: 'qualifier', task: 'Parse zonal ECU requirements: bridge 4x CAN XL channels to 10BASE-T1S automotive Ethernet backbone with sub-50µs frame transit latency.', deps: [] },
+      { agent: 'riscv_core_designer', task: 'Configure EMSA5-FS RISC-V processor subsystem: dual-core lockstep configuration, tightly-coupled instruction/data memories, and memory protection unit.', deps: [0] },
+      { agent: 'pricing', task: 'Structure multi-core bundled licensing terms, FPGA evaluation platform delivery, and dedicated customer engineering integration support.', deps: [1] },
+      { agent: 'writer', task: 'Synthesize Zonal Gateway SoC IP Subsystem Proposal detailing architecture block diagrams, ASIL-D safety work plan, and milestone schedule.', deps: [2] }
+    ]
+  },
+
+  radar: {
+    name: 'Silicon IP cores & automotive semiconductor competitive intelligence brief',
+    title: 'AI Silicon IP Intel Analyst',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Silicon IP Competitive Intelligence Brief',
+    sample: 'Benchmark CAST, Inc. silicon IP cores (CAN-CTRL CAN XL, EMSA5-FS RISC-V, ZipAccel Deflate) against competitors (Synopsys DesignWare, Cadence, SiFive, Arm, Bosch) across gate count, silicon maturity, royalty-free licensing models, and functional safety support.',
+    desc: 'Agents profile competing IP vendors, benchmark gate counts and latency metrics, and compile sales talk tracks highlighting CAST royalty-free licensing and decades-long track record.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan competitor silicon IP portfolios: Synopsys DesignWare CAN/Ethernet, Cadence Tensilica/automotive IP, SiFive Automotive RISC-V, and Arm Cortex-M.', deps: [] },
+      { agent: 'prospector', task: 'Extract customer friction points: prohibitive per-unit running royalties, complex multi-site legal agreements, and inflexible closed-source processor architectures.', deps: [] },
+      { agent: 'compression_accelerator_lead', task: 'Benchmark architectural metrics: CAST royalty-free buyout option + smaller silicon footprint (up to 30% fewer gates) + pre-certified ASIL-D FMEDA.', deps: [0, 1] },
+      { agent: 'hardware_security_officer', task: 'Analyze hardware security differentiators: side-channel resistant AES-GCM and NIST Post-Quantum Cryptography readiness vs legacy crypto IP.', deps: [0, 1] },
+      { agent: 'writer', task: 'Produce comprehensive competitive intelligence brief highlighting CAST 30-year delivery excellence, royalty-free TCO, and open RISC-V flexibility.', deps: [2, 3] }
+    ]
+  },
+
+  can_xl_emsa5_soc_subsystem_flagship: {
+    name: 'CAN XL & EMSA5-FS dual-core lockstep RISC-V ASIL-D subsystem synthesis',
+    title: 'AI CAN XL & RISC-V ASIL-D Subsystem Architect',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'CAN XL & ASIL-D RISC-V Subsystem Production Release Traveler',
+    sample: 'Synthesize and verify an integrated automotive gateway IP subsystem: combine CAST CAN-CTRL (CAN XL up to 20 Mbps, CiA 610-1) with dual-core lockstep EMSA5-FS 32-bit RISC-V processor in TSMC 16nm FinFET; configure 800 MHz target frequency; run SpyGlass linting and CDC analysis (0 errors); perform ISO 26262 ASIL-D FMEDA fault injection verifying SPFM > 99.2% and LFM > 91.5%; close static timing in Synopsys Design Compiler; and generate production release traveler.',
+    desc: 'Agents configure lockstep CPU and CAN XL controller, run synthesis and timing closure in TSMC 16nm, verify zero CDC violations, execute FMEDA fault injection, and generate signed traveler.',
+    tasks: [
+      { agent: 'can_network_architect', task: 'Configure CAN-CTRL IP core: 64-message buffer FIFO, CAN XL data phase bit rate up to 20 Mbps, ISO 11898-1:2024 frame compliance, and AXI-Stream interface.', deps: [] },
+      { agent: 'riscv_core_designer', task: 'Configure EMSA5-FS RISC-V processor: 5-stage pipeline, dual-core lockstep with 2-cycle staggered delay, ECC on register file and caches, and hardware comparator.', deps: [0] },
+      { agent: 'rtl_synthesis_eng', task: 'Execute RTL synthesis in Synopsys Design Compiler targeting TSMC 16nm FinFET library: achieve 800 MHz timing closure, total gate count 284K gates.', deps: [1] },
+      { agent: 'functional_safety_manager', task: 'Execute ISO 26262 ASIL-D FMEDA fault injection: evaluate permanent and transient single-point faults, verifying SPFM = 99.4% and LFM = 92.1%.', deps: [2] },
+      { agent: 'writer', task: 'Compile CAN XL & ASIL-D RISC-V Subsystem Production Release Traveler with PPA tables, timing reports, FMEDA metrics, and verification signoff.', deps: [3] }
+    ]
+  },
+
+  lossless_compression_synthesis: {
+    name: 'ZipAccel® hardware Deflate/GZIP lossless compression PPA optimization',
+    title: 'AI ZipAccel Compression Architect',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'ZipAccel 100 Gbps Lossless Compression PPA Synthesis Dossier',
+    sample: 'Synthesize CAST ZipAccel-C hardware lossless compression core for enterprise storage and satellite telemetry: configure Deflate/GZIP/ZLIB streaming engine for 100 Gbps line-rate throughput, optimize search engine depth and history buffer size in TSMC 7nm, verify sub-250ns processing latency, and generate synthesis report.',
+    desc: 'Agents model compression ratio and throughput, synthesize multi-engine parallel pipeline, optimize power and area in TSMC 7nm, and produce release dossier.',
+    tasks: [
+      { agent: 'compression_accelerator_lead', task: 'Configure ZipAccel-C multi-stream parallel architecture: 8 compression engines streaming Deflate/GZIP blocks with dynamic Huffman encoding.', deps: [] },
+      { agent: 'rtl_synthesis_eng', task: 'Synthesize in Synopsys DC on TSMC 7nm: achieve 1.2 GHz clock frequency, 100 Gbps aggregate throughput, and dynamic power dissipation < 420 mW.', deps: [0] },
+      { agent: 'qa_tapeout_reviewer', task: 'Run bit-exact decompress verification: compare compressed output against standard GNU GZIP and ZLIB reference vectors across Calgary and Canterbury corpus.', deps: [1] },
+      { agent: 'writer', task: 'Produce ZipAccel 100 Gbps Lossless Compression PPA Synthesis Dossier with throughput graphs, power density tables, and integration user guide.', deps: [2] }
+    ]
+  },
+
+  post_quantum_crypto_audit: {
+    name: 'Hardware root of trust & NIST post-quantum cryptography (PQC) security audit',
+    title: 'AI Hardware Security & PQC Auditor',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'Hardware Cryptography & NIST PQC Readiness Audit Report',
+    sample: 'Audit CAST hardware security IP cores: verify side-channel attack countermeasures (DPA/SPA resistance) on AES-256 GCM and SHA-3 accelerators, evaluate hardware mapping for NIST Post-Quantum Cryptography (ML-KEM / Kyber and ML-DSA / Dilithium), and verify true random number generator (TRNG) entropy.',
+    desc: 'Agents simulate differential power analysis resistance, verify NIST FIPS 140-3 and PQC compliance, run formal assertion checks, and produce security audit report.',
+    tasks: [
+      { agent: 'hardware_security_officer', task: 'Execute DPA/CPA side-channel power simulation: verify threshold masking countermeasures on AES-256 GCM with > 100M trace resistance.', deps: [] },
+      { agent: 'hardware_security_officer', task: 'Map NIST Post-Quantum Cryptography algorithms (ML-KEM-768 and ML-DSA-65) onto polynomial multiplier hardware accelerators.', deps: [] },
+      { agent: 'qa_tapeout_reviewer', task: 'Run formal property verification in OneSpin / JasperGold: prove zero information leakage from secret key registers into non-secure buses.', deps: [0, 1] },
+      { agent: 'writer', task: 'Generate Hardware Cryptography & NIST PQC Readiness Audit Report with NIST FIPS 140-3 compliance matrix and vulnerability assessment.', deps: [2] }
+    ]
+  },
+
+  iso26262_safety_fmeda_signoff: {
+    name: 'ISO 26262 ASIL-D & DO-254 functional safety qualification signoff',
+    title: 'AI ISO 26262 ASIL-D Safety Director',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'ISO 26262 ASIL-D Functional Safety Qualification Package',
+    sample: 'Execute complete functional safety certification for CAST automotive IP portfolio: compile Failure Modes Effects and Diagnostic Analysis (FMEDA), verify safety mechanisms (dual-core lockstep, parity, BIST, CRC-32), audit tool qualification reports, and prepare third-party SGS-TÜV Saar signoff package.',
+    desc: 'Agents verify safety manual requirements, calculate quantitative ASIL-D hardware metrics (SPFM, LFM, PMHF), cross-check DO-254 design assurance, and produce certification package.',
+    tasks: [
+      { agent: 'functional_safety_manager', task: 'Compile Safety Manual and FMEDA: calculate Single-Point Fault Metric (SPFM = 99.4%), Latent Fault Metric (LFM = 92.1%), and PMHF < 10 FIT.', deps: [] },
+      { agent: 'qa_tapeout_reviewer', task: 'Run SpyGlass CDC and Linting audit: verify zero structural clock domain crossing violations and 100% code coverage on safety logic.', deps: [0] },
+      { agent: 'functional_safety_manager', task: 'Format SGS-TÜV Saar Third-Party Certification Traveler: verify ISO 26262:2018 Part 2, Part 5, Part 8 and Part 11 IP compliance.', deps: [1] },
+      { agent: 'writer', task: 'Produce formal ISO 26262 ASIL-D Functional Safety Qualification Package with Safety Manual, FMEDA spreadsheet, and TÜV certificate summary.', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'Target Automotive & Fabless ASIC Account Dossier',
+  quoting: 'Multi-Project Silicon IP Commercial Quote Package',
+  proposal: 'Zonal Gateway SoC IP Subsystem Co-Development Proposal',
+  radar: 'Silicon IP Competitive Intelligence Brief',
+  can_xl_emsa5_soc_subsystem_flagship: 'CAN XL & ASIL-D RISC-V Subsystem Production Release Traveler',
+  lossless_compression_synthesis: 'ZipAccel 100 Gbps Lossless Compression PPA Synthesis Dossier',
+  post_quantum_crypto_audit: 'Hardware Cryptography & NIST PQC Readiness Audit Report',
+  iso26262_safety_fmeda_signoff: 'ISO 26262 ASIL-D Functional Safety Qualification Package'
+};
+
+const TOOLS = {
+  research: () => 'Analyzed Gartner/McKinsey semiconductor IP report: automotive SoC IP market growing at 14.8% CAGR, reaching $3.2B by 2029.',
+  source_accounts: () => 'Sourced 46 executive accounts: VP of SoC Architecture, Lead ASIC Designers, and Silicon Sourcing Directors across Tier-1s and OEMs.',
+  score_fit: () => 'Scored silicon IP fit: 96.2% compatibility with CAST CAN-CTRL, EMSA5-FS RISC-V, and ZipAccel compression portfolios.',
+  verify_can_xl_protocol: () => 'Verified CAN XL CiA 610-1 and ISO 11898-1:2024 compliance: bit rate switching validated from 1 Mbps arbitration to 20 Mbps data phase.',
+  simulate_bitrate_switching: () => 'Simulated physical layer transceiver transition: transceiver delay compensation verified with sub-15ns phase jitter margin.',
+  configure_lockstep_cpu: () => 'Configured dual-core lockstep EMSA5-FS RISC-V: 2-cycle temporal stagger, ECC on caches, and hardware comparator logic validated.',
+  profile_instruction_throughput: () => 'Profiled RV32IMCZicsr benchmark: achieved 2.48 CoreMark/MHz and 1.45 DMIPS/MHz with single-cycle instruction execution.',
+  run_synopsys_dc_synthesis: () => 'Executed synthesis in Synopsys Design Compiler: closed timing at 800 MHz in TSMC 16nm with 284,500 total NAND2 equivalent gates.',
+  close_static_timing: () => 'Closed static timing analysis across PVT corners (WCL -40C to 125C): worst negative slack (WNS) = +0.18 ns, zero setup/hold violations.',
+  model_deflate_throughput: () => 'Modeled ZipAccel-C parallel streaming architecture: sustained 100.4 Gbps throughput across 8 parallel Deflate compression engines.',
+  verify_h264_latency: () => 'Verified H.264 intra-frame encoding pipeline: latency constrained to sub-80 lines of video with 4K@60fps real-time throughput.',
+  verify_dpa_countermeasures: () => 'Simulated differential power analysis (DPA) on AES-256 GCM core: first-order leakage eliminated, > 100 million traces required.',
+  audit_nist_pqc_readiness: () => 'Audited hardware mapping for NIST ML-KEM-768 and ML-DSA-65: polynomial arithmetic pipeline executes key exchange in 1.24 ms.',
+  run_fmeda_fault_injection: () => 'Executed 100,000 transient and permanent fault injections: verified SPFM = 99.4%, LFM = 92.1%, conforming to ASIL-D criteria.',
+  verify_spfm_metric: () => 'Validated quantitative hardware metrics: PMHF calculated at 4.2 FIT, well within the 10 FIT limit for ISO 26262 ASIL-D.',
+  run_spyglass_lint_cdc: () => 'Ran SpyGlass CDC and Linting checks: 0 fatal errors, 0 clock domain crossing synchronization hazards across 12 clock domains.',
+  verify_formal_assertions: () => 'Executed formal property verification in OneSpin/JasperGold: 100% of SystemVerilog assertions (SVA) proven boundedly safe.',
+  build_quote: () => 'Structured multi-project ASIC RTL licensing model: single upfront fee with zero per-unit royalties, ASIL-D kit, and 3-year maintenance.',
+  compose: () => 'Compiled technical deliverable with PPA tables, timing closure summaries, FMEDA spreadsheets, and executive signoff documentation.',
+  save: () => 'Saved verified deliverable to CAST Silicon IP Release Vault and Customer Secure Repository.'
+};
+
+const FINAL = {
+  scout: `CAST, INC. — TIER-1 AUTOMOTIVE & FABLESS ASIC ACCOUNT DOSSIER
+CONFIDENTIAL — PREPARED FOR SILICON IP EXPANSION (WOODCLIFF LAKE, NJ)
+
+1. EXECUTIVE MARKET SUMMARY
+- Industry Growth Driver: Automotive Software-Defined Vehicles (SDVs), zonal gateway architectures, and CAN XL protocol adoption.
+- Target Market Opportunity: Silicon IP market for automotive and industrial microcontrollers expanding to $3.2B by 2029.
+- Key CAST Value Proposition: 30+ years of proven silicon maturity, royalty-free licensing options, and pre-certified ISO 26262 ASIL-D IP.
+
+2. RANKED TIER-1 AUTOMOTIVE & ASIC TARGETS
+a. Bosch Mobility (Farmington Hills, MI / Stuttgart, Germany)
+   - Focus Systems: Next-generation Zonal Gateways and Cross-Domain Vehicle Computers.
+   - Target Sourcing Contacts: VP of Silicon Architecture, Director of ECU Hardware Platforms.
+   - Sizing Fit: CAN-CTRL (CAN XL up to 20 Mbps) + EMSA5-FS dual-core lockstep RISC-V processor.
+b. Continental Automotive (Auburn Hills, MI / Hanover, Germany)
+   - Focus Systems: Central Gateway Modules and In-Cabin Telematics Controllers.
+   - Target Sourcing Contacts: Lead ASIC Architect, Director of Functional Safety Sourcing.
+   - Sizing Fit: CAN-CTRL IP core with ISO 26262 ASIL-D Safety Package and 10BASE-T1S bridging.
+c. Denso Corporation (Southfield, MI / Kariya, Japan)
+   - Focus Systems: High-efficiency thermal, powertrain, and ADAS body electronic modules.
+   - Sizing Fit: Low-power ASIL-D RISC-V cores + ZipAccel hardware lossless compression for telemetry.
+d. NXP Semiconductors / Microchip Technology (Austin, TX / Chandler, AZ)
+   - Focus Systems: Automotive microcontrollers and peripheral communication companion chips.
+   - Sizing Fit: Multi-project ASIC licensing for CAN XL controller and hardware security cryptography IP.
+
+3. COMMERCIAL ACTION PLAN
+- Deliver tailored PPA synthesis benchmarks in TSMC 16nm and 7nm demonstrating 30% area savings over competitor IP.
+- Ship FPGA evaluation bitstreams on Xilinx AMD and Intel Altera platforms for immediate lab validation.
+
+NOTE: illustrative simulation prepared for commercial discussions; customer roadmaps and corporate names are illustrative.`,
+
+  quoting: `CAST, INC. — MULTI-PROJECT SILICON IP COMMERCIAL QUOTE PACKAGE
+FORMAL COMMERCIAL PROPOSAL — REF: CAST-RFQ-2026-9042
+
+1. CUSTOMER & SYSTEM SCOPE
+- Customer: Tier-1 Automotive Semiconductor Vendor (Global Automotive Division)
+- Target Application: Automotive Zonal Gateway & Body Control Processor SoC
+- Licensing Scope: Multi-Project ASIC RTL Commercial License (Unlimited tape-outs for 3 years)
+- Technology Node: TSMC 16nm FinFET Automotive Grade (AEC-Q100 Grade 1 qualified)
+
+2. SILICON IP DELIVERABLES BUNDLE
+a. CAN-CTRL CAN XL IP Core:
+   - Full support for CAN 2.0B, CAN FD, and CAN XL (ISO 11898-1:2024 and CiA 610-1 compliant).
+   - Bit rates: 1 Mbps nominal arbitration, up to 20 Mbps data phase.
+   - AXI4 and APB bus wrappers, DMA engine, 64-message buffer FIFO.
+b. EMSA5-FS 32-bit RISC-V Processor Core:
+   - Dual-Core Lockstep configuration with 2-cycle temporal stagger.
+   - Integrated ECC memory controllers, hardware fault comparator, and MPU.
+c. ISO 26262 ASIL-D Functional Safety Package:
+   - Safety Manual, FMEDA quantitative metrics report, safety verification test suite.
+   - Pre-certified by SGS-TÜV Saar.
+
+3. COMMERCIAL PRICING & TERMS
+- Multi-Project ASIC RTL License Fee: $385,000 USD (Single upfront payment)
+- Per-Unit Chip Royalty: $0.00 (100% Royalty-Free buyout)
+- ISO 26262 ASIL-D Safety Documentation Package: $65,000 USD
+- 36-Month Maintenance, Bug Fixes & EDA Integration Support: Included
+- Total Contract Value: $450,000 USD
+- Delivery Format: Synthesizable Verilog/VHDL RTL, Synopsys DC synthesis scripts, UVM testbench.
+- Lead Time: Instant electronic secure vault delivery upon contract signature.
+
+NOTE: illustrative simulation; pricing, terms, and core parameters are illustrative.`,
+
+  proposal: `CAST, INC. — ZONAL GATEWAY SOC IP SUBSYSTEM CO-DEVELOPMENT PROPOSAL
+JOINT ENGINEERING COLLABORATION AGREEMENT (WOODCLIFF LAKE, NJ)
+
+1. COLLABORATION OBJECTIVES
+- Integrate CAST CAN-CTRL, EMSA5-FS RISC-V, and 10BASE-T1S Ethernet MAC into OEM's next-generation Automotive Zonal Gateway SoC.
+- Provide end-to-end ISO 26262 ASIL-D functional safety assurance and high-throughput bus bridging.
+- Achieve sub-50 microsecond frame forwarding latency between CAN XL and 10BASE-T1S automotive Ethernet backbones.
+
+2. INTEGRATED IP SUBSYSTEM ARCHITECTURE
+- Central Processing: EMSA5-FS Dual-Core Lockstep RISC-V running safety-critical gateway tasks at 800 MHz.
+- Network Interfaces: 4x CAN-CTRL cores (CAN XL up to 20 Mbps) + 1x 10BASE-T1S Ethernet MAC.
+- Hardware Security: AES-256 GCM authenticated encryption engine protecting in-flight telemetry packets.
+- Fault Containment: Hardware comparator detects lockstep discrepancies within 1 clock cycle; triggers safe state.
+
+3. PROJECT MILESTONES & WORKFLOW
+- Month 1: System requirements freeze, PPA budget signoff, and RTL delivery to customer repository.
+- Month 3: FPGA prototyping on AMD Versal / Altera Agilex development board; validate CAN XL physical layer.
+- Month 5: Full chip-level SpyGlass CDC and synthesis timing closure in TSMC 16nm.
+- Month 7: Final FMEDA audit and SGS-TÜV Saar ASIL-D certification signoff before tapeout.
+
+NOTE: illustrative simulation; timelines and specifications are illustrative.`,
+
+  radar: `CAST, INC. — SILICON IP COMPETITIVE INTELLIGENCE BRIEF
+GLOBAL SEMICONDUCTOR IP BENCHMARKING
+
+1. COMPETITIVE LANDSCAPE SUMMARY
+- Synopsys (DesignWare): Broad IP catalog with CAN FD and ARC processors. Weakness: Demands aggressive recurring per-chip royalties, expensive maintenance, and high silicon area overhead.
+- Cadence Design Systems: Offers automotive interfaces and Tensilica DSPs. High license costs, rigid closed architectures.
+- SiFive: Market pioneer in RISC-V. High upfront pricing, focus on high-end application cores rather than ultra-compact deeply embedded ASIL-D microcontrollers.
+- Arm: Cortex-M processors dominate automotive microcontrollers. Weakness: Expensive licensing, vendor lock-in, recurring per-die royalties.
+
+2. CAST COMPETITIVE DIFFERENTIATION
+- Royalty-Free Commercial Licensing: Customers pay a single license fee with zero per-unit royalties, saving millions of dollars over high-volume automotive production runs.
+- 30-Year Silicon Maturity Track Record: Over three decades of defect-free silicon IP delivery across billions of shipping chips worldwide.
+- Proven ISO 26262 ASIL-D Certification: Pre-certified by independent auditor SGS-TÜV Saar with complete FMEDA kits.
+- Compact Silicon PPA: CAST CAN-CTRL and EMSA5-FS require up to 30% fewer gates than competing offerings, reducing silicon die cost in cost-sensitive ECUs.
+
+3. SALES TALK TRACK
+- "Eliminate production royalties forever: CAST provides world-class CAN XL and ASIL-D RISC-V IP under clean, transparent, royalty-free licensing terms."
+
+NOTE: illustrative simulation; competitor data and market comparisons are illustrative.`,
+
+  can_xl_emsa5_soc_subsystem_flagship: `CAST, INC. — CAN XL & ASIL-D RISC-V SUBSYSTEM PRODUCTION RELEASE TRAVELER
+AUTOMOTIVE GATEWAY IP SUBSYSTEM TAPE-OUT RELEASE — LOT: CAST-IP-2026-7714
+
+1. SUBSYSTEM ARCHITECTURE & IP CORES
+- Processor Core: CAST EMSA5-FS Dual-Core Lockstep 32-bit RISC-V (RV32IMCZicsr)
+- Automotive Interface: CAST CAN-CTRL CAN XL / CAN FD / CAN 2.0 Controller
+- Standards Conformance: ISO 11898-1:2024, CiA 610-1 (CAN XL), ISO 26262:2018 ASIL-D
+- Target Foundry Node: TSMC 16nm FinFET Automotive (N16FFC)
+- Interconnect: AMBA AXI4 / APB 32-bit bus with DMA scatter-gather controller
+
+2. SYNTHESIS RESULTS & TIMING CLOSURE (SYNOPSYS DESIGN COMPILER)
+- Operating Clock Frequency: 800 MHz (Worst-case corner: 125°C junction, 0.72V VDD)
+- Worst Negative Slack (WNS): +0.18 ns (Zero timing violations)
+- Total Silicon Area: 0.142 mm² (equivalent to 284,500 2-input NAND gates)
+  * EMSA5-FS Dual-Core Lockstep CPU + ECC logic: 168,200 gates
+  * CAN-CTRL CAN XL Controller + 64 Message Buffers: 86,400 gates
+  * Subsystem Bridges, DMA & AXI crossbar: 29,900 gates
+- Dynamic Power Consumption: 38.4 mW at 800 MHz (100% activity factor)
+- Static Leakage Power: 1.82 mW
+
+3. FUNCTIONAL SAFETY & FMEDA AUDIT (ISO 26262 ASIL-D)
+- Single-Point Fault Metric (SPFM): 99.4% (Specification: > 99.0% for ASIL-D)
+- Latent Fault Metric (LFM): 92.1% (Specification: > 90.0% for ASIL-D)
+- Probabilistic Metric for Random Hardware Failures (PMHF): 4.2 FIT (Spec: < 10 FIT)
+- Fault Injection Campaign: 100,000 permanent and transient faults simulated with 100% detection.
+- Clock Domain Crossing (CDC): SpyGlass CDC verified 0 errors across 12 asynchronous clock domains.
+
+4. PRODUCTION RELEASE SIGNOFF
+- Quality Status: CERTIFIED FOR CUSTOMER ASIC PRODUCTION TAPEOUT
+- Authorized By: Chief Technology Officer, VP of Engineering, Director of Functional Safety
+
+NOTE: illustrative simulation; gate counts, frequencies, and safety metrics are illustrative.`,
+
+  lossless_compression_synthesis: `CAST, INC. — ZIPACCEL® 100 GBPS LOSSLESS COMPRESSION PPA SYNTHESIS DOSSIER
+DATA ACCELERATION IP CORE — SPEC: ZIPACCEL-C-GEN4
+
+1. CORE SPECIFICATIONS & THROUGHPUT
+- Compression Algorithms: Deflate, GZIP (RFC 1952), ZLIB (RFC 1950)
+- Architecture: 8-Engine Parallel Streaming Pipeline with Dynamic Huffman Tables
+- Input / Output Bus: 512-bit AXI4-Stream interface
+- Max Aggregate Throughput: 100.4 Gbps sustained streaming compression
+- Latency: 220 ns from first input byte to first compressed block header
+
+2. PPA OPTIMIZATION (TSMC 7NM FINFET)
+- Target Operating Frequency: 1.20 GHz
+- Gate Count: 485,000 NAND2 equivalent gates
+- Embedded Memory: 128 KB internal SRAM for history buffer and hash tables
+- Power Dissipation: 418 mW at 100 Gbps line rate
+- Compression Ratio: 2.84x on standard Canterbury text corpus; 1.82x on network packet traces
+
+3. VERIFICATION & DEPLOYMENT
+- Bit-Exact Decompression Verified against reference zlib 1.3.1 implementation.
+- Ready for deployment in enterprise NVMe SSDs, cloud accelerators, and satellite communications.
+
+NOTE: illustrative simulation; throughput metrics and gate counts are illustrative.`,
+
+  post_quantum_crypto_audit: `CAST, INC. — HARDWARE CRYPTOGRAPHY & NIST PQC READINESS AUDIT REPORT
+SECURITY IP EVALUATION — REPORT: SEC-PQC-2026-304
+
+1. CRYPTOGRAPHIC ENGINES AUDITED
+- AES-256 GCM Engine: Authenticated encryption/decryption with 100 Gbps line-rate processing.
+- SHA-3 Accelerator: Secure hash algorithm supporting SHA3-224, 256, 384, 512, and SHAKE.
+- True Random Number Generator (TRNG): Ring-oscillator entropy source NIST SP 800-90B compliant.
+- Post-Quantum Crypto (PQC) Accelerator: Modular polynomial arithmetic unit supporting NIST ML-KEM and ML-DSA.
+
+2. SIDE-CHANNEL ATTACK RESISTANCE (DPA/CPA)
+- Countermeasures Implemented: Boolean masking, random delay insertion, and dual-rail pre-charge logic.
+- DPA Leakage Assessment: 100 million power consumption traces analyzed with Welch's t-test (|t| < 4.5). Result: ZERO exploitable first-order leakage.
+- Fault Injection Defense: Parity checking on internal state registers; immediate zeroization on tamper detection.
+
+3. NIST STANDARDS COMPLIANCE
+- FIPS 140-3 Level 3 Physical Security Readiness: CONFIRMED
+- NIST FIPS 203 (ML-KEM-768) Key Encapsulation Mechanism: COMPLIANT
+- NIST FIPS 204 (ML-DSA-65) Digital Signature Algorithm: COMPLIANT
+
+NOTE: illustrative simulation; cryptographic parameters and trace counts are illustrative.`,
+
+  iso26262_safety_fmeda_signoff: `CAST, INC. — ISO 26262 ASIL-D FUNCTIONAL SAFETY QUALIFICATION PACKAGE
+THIRD-PARTY SAFETY CERTIFICATION DOSSIER — REF: SGS-TUV-SAAR-CAST-2026-88
+
+1. SCOPE OF QUALIFICATION
+- IP Product: CAST Automotive Silicon IP Portfolio (CAN-CTRL, LIN, EMSA5-FS RISC-V)
+- Safety Standard: ISO 26262:2018 (Parts 2, 5, 8, 11) for Safety-Critical Automotive Systems
+- Target Automotive Safety Integrity Level: ASIL-D (Highest safety criticality)
+- Independent Audit Agency: SGS-TÜV Saar GmbH
+
+2. QUANTITATIVE HARDWARE METRICS SUMMARY
+- Single-Point Fault Metric (SPFM): 99.4% (Exceeds ASIL-D target of 99.0%)
+- Latent Fault Metric (LFM): 92.1% (Exceeds ASIL-D target of 90.0%)
+- Probabilistic Metric for Hardware Failures (PMHF): 4.2 FIT (Exceeds ASIL-D target of < 10 FIT)
+- Safety Mechanisms Verified:
+  * Dual-Core Lockstep CPU with 2-clock temporal separation
+  * Hardware cyclic redundancy check (CRC-32) on CAN XL frames
+  * Register file ECC (Single Error Correction, Double Error Detection)
+  * Built-In Self-Test (BIST) controller with 99.8% stuck-at fault coverage
+
+3. CERTIFICATION RELEASE
+- Release Status: FULLY CERTIFIED FOR ASIL-D PRODUCTION SOC INTEGRATION
+- Signed: Director of Functional Safety, Lead Auditor SGS-TÜV Saar
+
+NOTE: illustrative simulation; safety metrics and auditor statements are illustrative.`
+};
+
+const EMPLOYEES = [
+  { id: 'scout', name: 'AI CAST Scout', title: 'VP Sourcing & Automotive Capture Lead', wf: 'scout', handled: 36, hrs: 148, win: 0, status: 'idle' },
+  { id: 'quoting', name: 'AI IP Quoting Architect', title: 'Director of IP Licensing & Royalty Sizing', wf: 'quoting', handled: 31, hrs: 124, win: 22, status: 'idle' },
+  { id: 'proposal', name: 'AI Automotive SoC Proposal Lead', title: 'Automotive Gateway Solutions Architect', wf: 'proposal', handled: 24, hrs: 108, win: 26, status: 'idle' },
+  { id: 'radar', name: 'AI Silicon IP Intel Analyst', title: 'Director of Competitive Strategy', wf: 'radar', handled: 45, hrs: 92, win: 0, status: 'idle' },
+  { id: 'can_xl_emsa5', name: 'AI CAN XL & RISC-V Architect', title: 'Principal Automotive Subsystem Lead', wf: 'can_xl_emsa5_soc_subsystem_flagship', handled: 92, hrs: 340, win: 42, status: 'idle' },
+  { id: 'zipaccel', name: 'AI ZipAccel Architect', title: 'Principal Compression & Video IP Lead', wf: 'lossless_compression_synthesis', handled: 58, hrs: 226, win: 36, status: 'idle' },
+  { id: 'hardware_security', name: 'AI PQC Security Auditor', title: 'Principal Hardware Cryptography Lead', wf: 'post_quantum_crypto_audit', handled: 41, hrs: 175, win: 30, status: 'idle' },
+  { id: 'safety_fmeda', name: 'AI ASIL-D Safety Director', title: 'Functional Safety & Quality Certification Director', wf: 'iso26262_safety_fmeda_signoff', handled: 68, hrs: 210, win: 35, status: 'idle' }
+];
+
+let curView = 'ops';
+let curEmp = null;
+let running = false;
+let draft = { step: 1, wf: '', assign: [], name: '', title: '', cadence: 'On-demand', mode: 'sequential' };
+
+function $(id) { return document.getElementById(id); }
+function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+function setView(v) {
+  curView = v;
+  $('tabA').className = 'tab' + (v === 'ops' ? ' active' : '');
+  $('tabB').className = 'tab' + (v === 'hire' ? ' active' : '');
+  $('view-ops').className = v === 'ops' ? '' : 'hidden';
+  $('view-hire').className = v === 'hire' ? '' : 'hidden';
+  if (v === 'hire') initBuilder();
+}
+
+function renderEcon() {
+  const activeOps = EMPLOYEES.length;
+  const totalHandled = EMPLOYEES.reduce((acc, e) => acc + e.handled, 0);
+  const totalHrs = EMPLOYEES.reduce((acc, e) => acc + e.hrs, 0);
+  const avgWin = Math.round(EMPLOYEES.filter(e => e.win > 0).reduce((acc, e) => acc + e.win, 0) / (EMPLOYEES.filter(e => e.win > 0).length || 1));
+  $('econ').innerHTML = `
+    <div class="cell"><div class="v">${activeOps}</div><div class="k">Active AI Operators</div></div>
+    <div class="cell"><div class="v">${totalHandled}</div><div class="k">Silicon IP &amp; Licensing Workflows Handled</div></div>
+    <div class="cell"><div class="v">${totalHrs.toLocaleString()} <span class="u">hrs</span></div><div class="k">Engineering &amp; Sales Time Saved</div></div>
+    <div class="cell"><div class="v">+${avgWin}<span class="u">%</span></div><div class="k">Average Tapeout Cycle Velocity Gain</div></div>
+  `;
+}
+
+function chips(w) {
+  let h = '';
+  if (w.track === 'commercial') h += `<span class="tag commercial">Commercial</span> `;
+  else if (w.track === 'operations') h += `<span class="tag operations">Silicon IP &amp; Eng</span> `;
+  if (w.tag === 'flagship') h += `<span class="tag hero">Flagship</span> `;
+  return h;
+}
+
+function mono(name) {
+  return name.split(' ').map(w => w[0]).filter(Boolean).slice(0, 2).join('').toUpperCase();
+}
+
+function renderRoster() {
+  let html = '';
+  TRACKS.forEach(([tKey, tLabel]) => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === tKey);
+    if (!list.length) return;
+    html += `<div class="slabel">${tLabel}</div><div class="roster">`;
+    list.forEach(e => {
+      const w = WORKFLOWS[e.wf];
+      const isHero = w && w.tag === 'flagship';
+      html += `
+        <div class="emp ${isHero ? 'hero' : ''} ${e.status === 'working' ? 'working' : ''}" id="emp-${e.id}">
+          <div class="emp-top">
+            <div class="avatar">${mono(e.name)}</div>
+            <div>
+              <div class="emp-name">${e.name} ${chips(w)}</div>
+              <div class="emp-title">${e.title}</div>
+            </div>
+          </div>
+          <div class="emp-owns">Owns: <b>${w.name}</b></div>
+          <div class="team">
+            ${w.tasks.map(t => `<span class="chip">${AGENT_ROLES[t.agent] ? AGENT_ROLES[t.agent].emoji + ' ' + AGENT_ROLES[t.agent].label : t.agent}</span>`).join('')}
+          </div>
+          <div class="emp-stats">
+            <div class="st"><b>${e.handled}</b>Workflows handled</div>
+            <div class="st"><b>${e.hrs}h</b>Time saved</div>
+            <div class="st"><b>${e.win ? '+' + e.win + '%' : '—'}</b>Cycle velocity</div>
+          </div>
+          <div class="actions">
+            <button class="btn primary big" onclick="openRun('${e.id}')">▶ Run operator</button>
+          </div>
+        </div>
+      `;
+    });
+    html += `</div>`;
+  });
+  html += `
+    <div class="slabel" style="margin-top:24px">Custom Operator Composition</div>
+    <div class="roster">
+      <div class="hire-card" onclick="setView('hire')">
+        <div class="plus">+</div>
+        <div class="h">Add an AI operator</div>
+        <div class="p">Compose a custom silicon IP licensing, synthesis, or verification workflow from specialist agents</div>
+      </div>
+    </div>
+  `;
+  $('roster').innerHTML = html;
+}
+
+function openRun(id) {
+  curEmp = EMPLOYEES.find(e => e.id === id);
+  if (!curEmp) return;
+  const w = WORKFLOWS[curEmp.wf];
+  $('runPanel').innerHTML = `
+    <div class="run" id="runBox">
+      <div class="run-head">
+        <div class="avatar">${mono(curEmp.name)}</div>
+        <div>
+          <div class="emp-name">${curEmp.name} &middot; Execution Console ${chips(w)}</div>
+          <div class="run-sub">${curEmp.title} &mdash; ${w.name}</div>
+        </div>
+      </div>
+      <div class="run-input">
+        <textarea id="runPrompt">${w.sample}</textarea>
+        <button class="btn primary big" id="btnStart" onclick="startRun()">▶ Run operator</button>
+      </div>
+      <div class="phases">
+        <div class="ph active" id="ph1"><div class="dot">1</div><div class="l">Phase 1: Planning</div></div>
+        <div class="ph" id="ph2"><div class="dot">2</div><div class="l">Phase 2: Execution</div></div>
+        <div class="ph" id="ph3"><div class="dot">3</div><div class="l">Phase 3: Deliverable</div></div>
+      </div>
+      <div class="agent-grid" id="agentGrid">
+        ${w.tasks.map((t, i) => `
+          <div class="acard" id="acard-${i}">
+            <div class="ae">${AGENT_ROLES[t.agent].emoji}</div>
+            <div class="ar">${AGENT_ROLES[t.agent].label}</div>
+            <div class="at">${t.task}</div>
+            <div class="as"><span class="sd"></span> <span id="astat-${i}">Queued</span></div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="feed" id="liveFeed"></div>
+      <div class="result hidden" id="resBox">
+        <div class="rstats">
+          <div class="rrow"><span class="k">Deliverable</span><span class="v">${w.deliverable}</span></div>
+          <div class="rrow"><span class="k">Mode</span><span class="v">${w.mode.toUpperCase()}</span></div>
+          <div class="rrow"><span class="k">Agents Engaged</span><span class="v">${w.tasks.length} Specialists</span></div>
+          <div class="rrow"><span class="k">Quality Signoff</span><span class="v" style="color:var(--ok)">✓ Verified</span></div>
+        </div>
+        <div class="rout">
+          <div class="rh">${DTITLE[curEmp.wf] || w.deliverable}</div>
+          <div class="rb" id="resBody"></div>
+        </div>
+      </div>
+      <div class="donebar hidden" id="doneBar">
+        <b>Operator execution complete.</b> Deliverable generated, formatted, and verified for stakeholder review.
+      </div>
+    </div>
+  `;
+  $('runBox').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function logFeed(t, a, d) {
+  const f = $('liveFeed');
+  if (!f) return;
+  const row = document.createElement('div');
+  row.className = 'frow';
+  row.innerHTML = `<span class="ft">${t}</span><span class="fa">${a}</span><span class="fd">${d}</span>`;
+  f.appendChild(row);
+  f.scrollTop = f.scrollHeight;
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+async function startRun() {
+  if (running || !curEmp) return;
+  running = true;
+  $('btnStart').disabled = true;
+  curEmp.status = 'working';
+  renderRoster();
+
+  const w = WORKFLOWS[curEmp.wf];
+  $('ph1').className = 'ph done';
+  $('ph2').className = 'ph active';
+
+  logFeed('00:00', 'Supervisor', `Initializing execution workflow: ${w.name}`);
+  await sleep(400);
+  logFeed('00:01', 'Planner', `Validating task dependencies and execution mode (${w.mode.toUpperCase()})`);
+  await sleep(400);
+
+  w.tasks.forEach((_, i) => {
+    const c = $('acard-' + i);
+    if (c) c.className = 'acard visible';
+  });
+
+  if (w.mode === 'sequential') {
+    for (let i = 0; i < w.tasks.length; i++) {
+      const t = w.tasks[i];
+      const role = AGENT_ROLES[t.agent];
+      const card = $('acard-' + i);
+      const stat = $('astat-' + i);
+      if (card) card.className = 'acard visible running';
+      if (stat) stat.textContent = 'Executing...';
+
+      logFeed(`00:0${i + 2}`, role.label, `Starting: ${t.task}`);
+      await sleep(650);
+
+      const tool = role.tools[0] || 'save';
+      const output = TOOLS[tool] ? TOOLS[tool]() : 'Step executed successfully.';
+      logFeed(`00:0${i + 2}`, role.label, `[${tool}] ${output}`);
+      await sleep(450);
+
+      if (card) card.className = 'acard visible done';
+      if (stat) stat.textContent = 'Completed ✓';
+    }
+  } else {
+    const completed = new Set();
+    let sec = 2;
+    while (completed.size < w.tasks.length) {
+      const ready = [];
+      for (let i = 0; i < w.tasks.length; i++) {
+        if (!completed.has(i)) {
+          const deps = w.tasks[i].deps;
+          if (deps.every(d => completed.has(d))) {
+            ready.push(i);
+          }
+        }
+      }
+      if (!ready.length) break;
+
+      ready.forEach(i => {
+        const c = $('acard-' + i);
+        const s = $('astat-' + i);
+        if (c) c.className = 'acard visible running';
+        if (s) s.textContent = 'Running parallel...';
+        const role = AGENT_ROLES[w.tasks[i].agent];
+        logFeed(`00:0${sec}`, role.label, `Dispatched: ${w.tasks[i].task}`);
+      });
+      await sleep(800);
+
+      ready.forEach(i => {
+        const role = AGENT_ROLES[w.tasks[i].agent];
+        const tool = role.tools[0] || 'save';
+        const output = TOOLS[tool] ? TOOLS[tool]() : 'Task completed.';
+        logFeed(`00:0${sec}`, role.label, `[${tool}] ${output}`);
+        const c = $('acard-' + i);
+        const s = $('astat-' + i);
+        if (c) c.className = 'acard visible done';
+        if (s) s.textContent = 'Completed ✓';
+        completed.add(i);
+      });
+      sec++;
+      await sleep(400);
+    }
+  }
+
+  $('ph2').className = 'ph done';
+  $('ph3').className = 'ph active done';
+  logFeed('00:08', 'Supervisor', 'All tasks finished. Compiling final deliverable.');
+
+  $('resBody').textContent = FINAL[curEmp.wf] || 'Deliverable generated successfully.';
+  $('resBox').className = 'result';
+  $('doneBar').className = 'donebar';
+
+  curEmp.handled += 1;
+  curEmp.hrs += rand(4, 9);
+  curEmp.status = 'idle';
+  running = false;
+  $('btnStart').disabled = false;
+  renderEcon();
+  renderRoster();
+}
+
+function initBuilder() {
+  draft = {
+    step: 1,
+    wf: Object.keys(WORKFLOWS)[0],
+    assign: WORKFLOWS[Object.keys(WORKFLOWS)[0]].tasks.map(t => t.agent),
+    name: 'Custom Silicon IP Operator',
+    title: 'AI Automotive Subsystem Specialist',
+    cadence: 'On-demand',
+    mode: WORKFLOWS[Object.keys(WORKFLOWS)[0]].mode
+  };
+  renderBuilder();
+}
+
+function renderBuilder() {
+  const steps = [
+    ['1', 'Pick workflow'],
+    ['2', 'Assign agents'],
+    ['3', 'Name & cadence']
+  ];
+  $('bSteps').innerHTML = steps.map((s, i) => `<div class="step ${draft.step === i + 1 ? 'active' : ''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+  if (draft.step === 1) bS1();
+  else if (draft.step === 2) bS2();
+  else bS3();
+  bNav();
+}
+
+function bS1() {
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">` + Object.keys(WORKFLOWS).map(k => {
+    const w = WORKFLOWS[k];
+    return `<div class="wf ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')">
+      <div class="wn">${w.name} ${chips(w)}</div>
+      <div class="wd">${w.desc}</div>
+      <div class="wm">${w.tasks.length} agents · ${w.mode}</div>
+    </div>`;
+  }).join('') + `</div>`;
+}
+
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Assign each task to an agent</div>` + w.tasks.map((t, i) => `
+    <div class="task-row">
+      <div class="tn">${i + 1}</div>
+      <div class="tt">${t.task}${t.deps.length ? ` <span style="color:var(--tert)">· waits for ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}</div>
+      <select onchange="draft.assign[${i}]=this.value">${opts}</select>
+    </div>
+  `).join('') + `
+    <div class="field" style="margin-top:14px">
+      <label>Execution mode</label>
+      <div class="seg">` + ['sequential', 'dag'].map(m => `<button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (parallel where safe)' : 'Sequential'}</button>`).join('') + `</div>
+    </div>
+  `;
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Name & cadence</div>
+    <div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. AI-CAN-XL-Architect" oninput="draft.name=this.value"></div>
+    <div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Silicon IP Specialist" oninput="draft.title=this.value"></div>
+    <div class="field"><label>Cadence</label><div class="seg">` + ['Per tape-out run', 'Per batch', 'Weekly', 'On-demand'].map(c => `<button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('') + `</div></div>
+    <div class="slabel" style="margin-top:0">Preview</div>
+    <div class="emp" style="max-width:360px">
+      <div class="emp-top">
+        <div class="avatar">${mono(draft.name || 'New')}</div>
+        <div>
+          <div class="emp-name">${draft.name || 'New operator'} ${chips(w)}</div>
+          <div class="emp-title">${draft.title || 'AI operator'}</div>
+        </div>
+      </div>
+      <div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div>
+    </div>`;
+}
+
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right;
+  if (draft.step === 1) right = `<button class="btn primary" ${draft.wf ? '' : 'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+  else right = `<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;
+  $('bNav').innerHTML = left + right;
+}
+
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  WORKFLOWS[wfId] = {
+    name: w.name,
+    title: w.title,
+    mode: draft.mode || w.mode,
+    track: w.track,
+    tag: w.tag,
+    deliverable: w.deliverable,
+    sample: w.sample,
+    desc: w.desc,
+    tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps }))
+  };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({ id, name, title: draft.title || w.title, wf: wfId, handled: 0, hrs: rand(40, 140), win: 0, status: 'idle' });
+  renderEcon();
+  renderRoster();
+  setView('ops');
+  setTimeout(() => {
+    const c = $('emp-' + id);
+    if (c) {
+      c.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      c.style.boxShadow = '0 0 0 2px var(--accent)';
+      setTimeout(() => c.style.boxShadow = '', 1800);
+    }
+  }, 250);
+}
+
+renderEcon();
+renderRoster();
+</script>
+</body>
+</html>
