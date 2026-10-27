@@ -344,3 +344,4 @@ https://innvonix-tech-solutions.github.io/ai-workforce/interact-power
 https://innvonix-tech-solutions.github.io/ai-workforce/shapetechnologies
 https://innvonix-tech-solutions.github.io/ai-workforce/bigassfans
 https://innvonix-tech-solutions.github.io/ai-workforce/lesterelectrical
+https://innvonix-tech-solutions.github.io/ai-workforce/advancedpcb
