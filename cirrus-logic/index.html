@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cirrus Logic, Inc. &mdash; AI Commercial &amp; Mixed-Signal Audio Silicon Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Barlow+Semi+Condensed:wght@500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#f8fafc;
+  --surface:#ffffff;
+  --surface2:#f0f4fa;
+  --border:#d4e0ee;
+  --accent:#0047AC;
+  --accent-dim:rgba(0,71,172,.08);
+  --accent-line:rgba(0,71,172,.35);
+  --accent-dark:#013277;
+  --slate:#111e50;
+  --slate-line:rgba(17,30,80,.32);
+  --text:#1e293b;
+  --hi:#0f172a;
+  --tert:#5f6e82;
+  --ok:#16a34a;
+  --ok-dim:rgba(22,163,74,.10);
+  --gold:#f99c00;
+  --gold-bg:#fffbeb;
+  --gold-line:#fde68a;
+  --blue-sky:#bee0f2;
+}
+body{background:var(--canvas);color:var(--text);font-family:'Barlow',system-ui,-apple-system,BlinkMacSystemFont,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.htitle,.emp-name,.cell .v,.wn,.slabel{font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;letter-spacing:-.2px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:14px 30px;border-bottom:2px solid var(--accent);position:sticky;top:0;background:#ffffff;box-shadow:0 3px 10px rgba(0,71,172,0.06);z-index:30}
+.logo{display:flex;align-items:center;gap:14px}
+.logo-img{height:32px;width:auto;display:block;object-fit:contain}
+.brand-divider{height:28px;width:1px;background:var(--border)}
+.htitle{font-size:15px;font-weight:700;color:var(--hi);line-height:1.2}.hsub{font-size:11px;color:var(--tert);margin-top:2px;font-family:'Barlow',sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);background:var(--surface2);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:'Barlow Semi Condensed',sans-serif}.badge b{color:var(--accent)}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:'Barlow Semi Condensed',sans-serif;transition:all .3s}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:13.5px;line-height:1.6;max-width:920px;margin-bottom:14px;color:#334155;font-family:'Barlow',sans-serif}.lead b{color:var(--hi);font-family:'Barlow Semi Condensed',sans-serif}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:'Barlow',sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:'Barlow Semi Condensed',sans-serif}
+.tag.commercial{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(1,50,119,.10);color:var(--accent-dark);border:1px solid rgba(1,50,119,.35)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,0.02)}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:var(--accent)}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:'Barlow',sans-serif}
+.slabel{font-size:11.5px;font-weight:700;letter-spacing:1.2px;color:var(--accent);text-transform:uppercase;margin:22px 0 14px;display:flex;align-items:center;gap:10px}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:0 2px 5px rgba(0,0,0,0.02);transition:border-color .3s,box-shadow .3s}
+.emp.working{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--accent);font-size:14px;flex-shrink:0;position:relative;font-family:'Barlow Semi Condensed',sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:16.5px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:'Barlow',sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:'Barlow',sans-serif;color:#475569}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:'Barlow',sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:'Barlow',sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700;font-family:'Barlow Semi Condensed',sans-serif}
+.btn{font-family:'Barlow Semi Condensed',sans-serif;font-size:12.5px;font-weight:700;border-radius:8px;padding:9px 15px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi);transition:all .25s}
+.btn:hover{border-color:var(--accent);color:var(--accent)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--accent-dark);border-color:var(--accent-dark);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);background:var(--surface);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px;transition:border-color .3s}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);background:var(--surface2);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:700;color:var(--hi);font-family:'Barlow Semi Condensed',sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:'Barlow',sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:0 4px 12px rgba(0,0,0,0.03)}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:'Barlow',sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:'Barlow',sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45;transition:border-color .2s}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:'Barlow Semi Condensed',sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:700;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:'Barlow',sans-serif}
+.acard.visible{opacity:1;background:#fff}.acard.running{border-color:var(--accent);opacity:1;box-shadow:0 0 0 1px var(--accent)}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi);font-family:'Barlow Semi Condensed',sans-serif}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#ffffff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:'Roboto Mono',monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--accent);font-weight:600}.frow .fd{color:var(--text);opacity:.9;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:'Barlow',sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:700;font-family:'Barlow Semi Condensed',sans-serif}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12.5px;font-weight:700;color:var(--hi);font-family:'Barlow Semi Condensed',sans-serif;background:var(--surface2)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto;font-family:'Roboto Mono',monospace;color:#1e293b}
+.donebar{background:var(--surface2);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:'Barlow',sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:'Barlow Semi Condensed',sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:700;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface);transition:border-color .2s}
+.wf:hover{border-color:var(--accent)}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:'Barlow Semi Condensed',sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:'Barlow',sans-serif}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:700;text-transform:uppercase;font-family:'Barlow Semi Condensed',sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:'Barlow',sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;font-family:'Barlow Semi Condensed',sans-serif}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px;font-family:'Barlow',sans-serif}.field label{display:block;font-size:12px;font-weight:700;color:var(--hi);margin-bottom:6px;font-family:'Barlow Semi Condensed',sans-serif}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:99px;padding:11px 16px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:99px;overflow:hidden}
+.seg button{font-family:'Barlow Semi Condensed',sans-serif;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border);transition:background .2s}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff;font-weight:700}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.55;font-family:'Barlow',sans-serif}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="header">
+<div class="logo">
+  <img class="logo-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkzIiBoZWlnaHQ9IjM1IiB2aWV3Qm94PSIwIDAgMTkzIDM1IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMTg3LjUxNCAyMS43OTQ0QzE4Ni40OTggMjEuMDMyNCAxODUuMjI4IDIwLjg3OTkgMTgzLjkwNyAyMC44Nzk5QzE4MS4xMTMgMjAuODc5OSAxNzguMzE5IDIzLjIxNjkgMTc3Ljk2MyAyNi4zMTU4QzE3Ny41NTcgMjkuNDY1NiAxNzkuODk0IDMyLjQ2MyAxODIuOTkzIDMyLjQ2M0MxODQuNTE3IDMyLjQ2MyAxODYuMTQyIDMxLjkwNDIgMTg3LjUxNCAzMS4wOTEzSDE4Ny41NjVMMTg2LjA0MSAzMy40MjgyQzE4NS4wMjUgMzMuODg1NSAxODMuOTU4IDM0LjA4ODcgMTgyLjg5MSAzNC4wODg3QzE3OC4wNjUgMzQuMDg4NyAxNzQuOTY2IDMxLjI0MzcgMTc1LjU3NSAyNi42NzE1QzE3Ni4xMzQgMjIuMjUxNiAxNzkuOTQ0IDE5LjMwNTEgMTg0LjExIDE5LjMwNTFDMTg1LjM4IDE5LjMwNTEgMTg2LjYgMTkuNTU5MSAxODcuNzY4IDE5Ljg2MzlMMTg3LjUxNCAyMS43OTQ0Wk03MS4zMjggMjEuNzk0NEM3MC4zMTE5IDIxLjAzMjQgNjkuMDQxOCAyMC44Nzk5IDY3LjcyMSAyMC44Nzk5QzY0LjkyNjggMjAuODc5OSA2Mi4xMzI2IDIzLjIxNjkgNjEuNzc3IDI2LjMxNThDNjEuMzcwNiAyOS40NjU2IDYzLjcwNzUgMzIuNDYzIDY2LjgwNjUgMzIuNDYzQzY4LjMzMDYgMzIuNDYzIDY5Ljk1NjMgMzEuOTA0MiA3MS4zMjggMzEuMDkxM0g3MS4zNzg4TDY5Ljg1NDcgMzMuNDI4MkM2OC44Mzg2IDMzLjg4NTUgNjcuNzcxOCAzNC4wODg3IDY2LjcwNDkgMzQuMDg4N0M2MS44Nzg2IDM0LjA4ODcgNTguNzc5NyAzMS4yNDM3IDU5LjM4OTMgMjYuNjcxNUM1OS45NDgxIDIyLjI1MTYgNjMuNzU4MyAxOS4zMDUxIDY3LjkyNDIgMTkuMzA1MUM2OS4xNDM0IDE5LjMwNTEgNzAuNDEzNSAxOS41NTkxIDcxLjU4MiAxOS44NjM5TDcxLjMyOCAyMS43OTQ0Wk03NC40Nzc3IDIyLjYwNzJDNzQuNTc5MyAyMS42NDIgNzQuOTM1IDIwLjA2NzEgNzMuOTY5NyAxOS42NjA3VjE5LjYwOTlINzcuODMwN1YxOS42NjA3Qzc2Ljc2MzkgMjAuMDY3MSA3Ni42NjIzIDIxLjY0MiA3Ni41NjA2IDIyLjYwNzJMNzUuNTQ0NiAzMC42ODQ5Qzc1LjQ0MyAzMS42NTAxIDc1LjA4NzQgMzMuMjI1IDc2LjA1MjYgMzMuNjMxNVYzMy42ODIzSDcyLjE5MTZWMzMuNjMxNUM3My4yNTg1IDMzLjIyNSA3My4zNjAxIDMxLjY1MDEgNzMuNDYxNyAzMC42ODQ5TDc0LjQ3NzcgMjIuNjA3MlpNODQuMjMxOSAxOS41NTkxQzg2Ljk3NTIgMTkuNTU5MSA4OC40OTkzIDIxLjA4MzIgODguMjQ1MyAyMy4wMTM3Qzg3Ljk5MTMgMjQuODkzNCA4Ni4wNjA4IDI2LjM2NjYgODQuMzMzNSAyNi43NzMxTDg2Ljc3MiAzMC42MzQxQzg3LjQ4MzMgMzEuNzUxNyA4OC42NTE3IDMyLjg2OTQgODkuNzE4NiAzMy42MzE1SDg3LjgzODlDODYuNzcyIDMzLjYzMTUgODYuMTExNiAzMy4zNzc0IDg1LjYwMzYgMzIuNTY0Nkw4My41MjA2IDI5LjMxMzJMODIuMDQ3NCAyNi4zMTU4QzgzLjcyMzggMjYuMDYxOCA4NS45MDg0IDI1LjI0OSA4Ni4xNjI0IDIzLjI2NzdDODYuMzY1NiAyMS43NDM2IDg0Ljk5MzkgMjAuNjI1OSA4My41NzE0IDIwLjU3NTFDODMuMDYzNCAyMC41NzUxIDgyLjc1ODYgMjAuNTI0MyA4Mi4yNTA2IDIwLjU3NTFMODAuOTgwNSAzMC42ODQ5QzgwLjg3ODkgMzEuNjUwMSA4MC41MjMzIDMzLjIyNSA4MS41MzkzIDMzLjYzMTVWMzMuNjgyM0g3Ny42Mjc1VjMzLjYzMTVDNzguNjk0NCAzMy4yMjUgNzguNzk2IDMxLjY1MDEgNzguODk3NiAzMC42ODQ5TDc5LjkxMzYgMjIuNjA3MkM4MC4wMTUyIDIxLjY0MiA4MC4zNzA5IDIwLjA2NzEgNzkuNDA1NiAxOS42NjA3VjE5LjYwOTlIODQuMjMxOVYxOS41NTkxWk05NS4wNTI5IDE5LjU1OTFDOTcuNzk2MiAxOS41NTkxIDk5LjMyMDMgMjEuMDgzMiA5OS4wNjYzIDIzLjAxMzdDOTguODEyMyAyNC44OTM0IDk2Ljg4MTggMjYuMzY2NiA5NS4xNTQ1IDI2Ljc3MzFMOTcuNTkzIDMwLjYzNDFDOTguMzA0MyAzMS43NTE3IDk5LjQ3MjcgMzIuODY5NCAxMDAuNTQgMzMuNjMxNUg5OC42NTk5Qzk3LjU5MyAzMy42MzE1IDk2LjkzMjYgMzMuMzc3NCA5Ni40MjQ2IDMyLjU2NDZMOTQuMzQxNiAyOS4zMTMyTDkyLjg2ODQgMjYuMzE1OEM5NC41NDQ5IDI2LjA2MTggOTYuNzI5NCAyNS4yNDkgOTYuOTgzNCAyMy4yNjc3Qzk3LjE4NjYgMjEuNzQzNiA5NS44MTQ5IDIwLjYyNTkgOTQuMzkyNCAyMC41NzUxQzkzLjg4NDQgMjAuNTc1MSA5My41Nzk2IDIwLjUyNDMgOTMuMDcxNiAyMC41NzUxTDkxLjgwMTUgMzAuNjg0OUM5MS42OTk5IDMxLjY1MDEgOTEuMzQ0MyAzMy4yMjUgOTIuMzYwMyAzMy42MzE1VjMzLjY4MjNIODguMzk3N1YzMy42MzE1Qzg5LjQ2NDYgMzMuMjI1IDg5LjU2NjIgMzEuNjUwMSA4OS42Njc4IDMwLjY4NDlMOTAuNjgzOCAyMi42MDcyQzkwLjc4NTQgMjEuNjQyIDkxLjE0MTEgMjAuMDY3MSA5MC4xNzU4IDE5LjY2MDdWMTkuNjA5OUg5NS4wNTI5VjE5LjU1OTFaTTEwNS42MiAzNC4wMzc5QzEwNS4xMTIgMzQuMDM3OSAxMDQuODA3IDM0LjAzNzkgMTA0LjgwNyAzNC4wMzc5QzEwMy40MzUgMzQuMDM3OSAxMDIuMDY0IDMzLjU4MDcgMTAxLjI1MSAzMi41MTM4QzEwMC4zMzYgMzEuMjk0NSAxMDAuNTQgMjkuODIxMiAxMDAuNzQzIDI4LjI5NzJMMTAxLjQ1NCAyMi41NTY0QzEwMS41NTYgMjEuNTkxMiAxMDEuOTExIDIwLjAxNjMgMTAwLjk0NiAxOS42MDk5VjE5LjU1OTFIMTA0LjgwN1YxOS42MDk5QzEwMy43NCAyMC4wMTYzIDEwMy42MzkgMjEuNTkxMiAxMDMuNTM3IDIyLjU1NjRMMTAyLjgyNiAyOC4yOTcyQzEwMi40NyAzMS4xNDIxIDEwMy40MzUgMzIuNDYzIDEwNS41NjkgMzIuNDYzSDEwNi4wNzdDMTA4LjE2IDMyLjQ2MyAxMDkuNDgxIDMxLjE0MjEgMTA5LjgzNyAyOC4yOTcyTDExMC41NDggMjIuNTU2NEMxMTAuNjQ5IDIxLjU5MTIgMTExLjAwNSAyMC4wMTYzIDExMC4wNCAxOS42MDk5VjE5LjU1OTFIMTEzLjkwMVYxOS42MDk5QzExMi43ODMgMjAuMDE2MyAxMTIuNzMyIDIxLjU5MTIgMTEyLjYzMSAyMi41NTY0TDExMS45MTkgMjguMjk3MkMxMTEuNzE2IDI5LjgyMTIgMTExLjU2NCAzMS4yOTQ1IDExMC4zNDUgMzIuNTEzOEMxMDkuMjc4IDMzLjU4MDcgMTA3LjgwNCAzNC4wMzc5IDEwNi40ODQgMzQuMDM3OUMxMDYuMzgyIDM0LjAzNzkgMTA2LjEyOCAzNC4wMzc5IDEwNS42MiAzNC4wMzc5WiIgZmlsbD0iIzAwNDdBQyIvPgo8cGF0aCBkPSJNMTIyLjk5MyAyMi4wOTk1QzEyMi4yODIgMjEuMjM1OSAxMjEuMTE0IDIwLjcyNzggMTE5Ljk0NSAyMC43Mjc4QzExOC43NzcgMjAuNzI3OCAxMTcuMjUzIDIxLjE4NTEgMTE3LjA0OSAyMi42NTgzQzExNi42OTQgMjUuNjA0OSAxMjMuNzA1IDI1LjU1NDEgMTIzLjE5NyAyOS41MTY3QzEyMi44OTIgMzEuODAyOSAxMjAuMzUyIDMzLjkzNjYgMTE3LjE1MSAzMy45MzY2QzExNS44ODEgMzMuOTM2NiAxMTQuNjYyIDMzLjczMzQgMTEzLjU5NSAzMy4yNzYxTDExMy4zNDEgMzAuNTgzNkMxMTQuNDA4IDMxLjcwMTMgMTE1Ljk4MyAzMi4zNjE3IDExNy42MDggMzIuMzYxN0MxMTguNzc3IDMyLjM2MTcgMTIwLjYwNiAzMS42NTA1IDEyMC44MDkgMzAuMTI2NEMxMjEuMjE1IDI2Ljc3MzQgMTE0LjE1NCAyNy4zODMgMTE0LjcxMiAyMi44NjE2QzExNS4wNjggMjAuMTY5IDExNy44MTEgMTkuMTUzIDEyMC4zMDEgMTkuMTUzQzEyMS4zMTcgMTkuMTUzIDEyMi4zMzMgMTkuMzA1NCAxMjMuMjk4IDE5LjYxMDJMMTIyLjk5MyAyMi4wOTk1Wk0xMzUuMjM3IDMyLjI2MDFDMTM2LjQwNSAzMi4yNjAxIDEzNy4zMiAzMi4yNjAxIDEzOC43OTMgMzEuNDQ3MkgxMzguODQ0TDEzNy44NzkgMzMuNjgyNkgxMjkuNDk2VjMzLjYzMThDMTMwLjU2MyAzMy4yMjUzIDEzMC42NjUgMzEuNjUwNSAxMzAuNzY2IDMwLjY4NTJMMTMxLjc4MiAyMi42MDc1QzEzMS44ODQgMjEuNjQyMyAxMzIuMjM5IDIwLjA2NzQgMTMxLjIyMyAxOS42NjFWMTkuNjEwMkgxMzUuMTM1VjE5LjY2MUMxMzQuMDE4IDIwLjA2NzQgMTMzLjk2NyAyMS42NDIzIDEzMy44NjUgMjIuNjA3NUwxMzIuNjk3IDMxLjk1NTNDMTMyLjY5NyAzMS45NTUzIDEzMy44MTQgMzIuMjYwMSAxMzUuMjM3IDMyLjI2MDFaTTE0Ny4yNzcgMjAuNzI3OEMxNTAuNTI4IDIwLjcyNzggMTUyLjAwMiAyMy43MjUyIDE1MS42NDYgMjYuODc1QzE1MS4yNCAzMC4wNzU2IDE0OC45NTQgMzIuNDYzMyAxNDUuODU1IDMyLjQ2MzNDMTQyLjY1NCAzMi40NjMzIDE0MS4wMjggMjkuMzY0MyAxNDEuMzg0IDI2LjM2N0MxNDEuNzkgMjMuMTY2NCAxNDQuMTI3IDIwLjcyNzggMTQ3LjI3NyAyMC43Mjc4Wk0xNDcuNjMzIDE5LjIwMzhDMTQzLjM2NSAxOS4xMDIyIDEzOS41NTUgMjIuNTA1OSAxMzkuMDQ3IDI2LjU3MDJDMTM4LjQ4OCAzMC45OSAxNDEuNTM2IDM0LjAzODIgMTQ1LjU1IDM0LjAzODJDMTQ5LjYxNCAzNC4wMzgyIDE1My40NzUgMzAuODg4NCAxNTQuMDM0IDI2LjQ2ODZDMTU0LjU0MiAyMi42MDc1IDE1MS45NTEgMTkuMjAzOCAxNDcuNjMzIDE5LjIwMzhaIiBmaWxsPSIjMDA0N0FDIi8+CjxwYXRoIGQ9Ik0xNjcuNjQ5IDIxLjkxODhIMTY3LjU5OUMxNjYuODg3IDIwLjk1MzUgMTY1LjM2MyAyMC42NDg3IDE2NC4xNDQgMjAuNjQ4N0MxNjAuOTQzIDIwLjY0ODcgMTU4LjI1MSAyMi44MzMyIDE1Ny44NDQgMjYuMjg3OEMxNTcuMzg3IDI5Ljc0MjQgMTU5LjY3MyAzMi4zMzMzIDE2Mi45MjUgMzIuMzMzM0MxNjMuODM5IDMyLjMzMzMgMTY0Ljg1NSAzMi4xODA5IDE2NS44MiAzMS45MjY5TDE2Ni4xMjUgMjguODI3OUMxNjYuMjI3IDI3Ljg2MjcgMTY2LjM3OSAyNi43OTU4IDE2NS40NjUgMjYuMzg5NFYyNi4zMzg2SDE2OC41NjRWMjYuMzg5NEMxNjguNDExIDI2LjY0MzQgMTY4LjM2MSAyNi45OTkgMTY4LjM2MSAyNy4zMDM5TDE2Ny43NTEgMzIuMjMxN0MxNjcuNyAzMi41MzY2IDE2Ny42NDkgMzIuODkyMiAxNjcuNzUxIDMzLjE5N0MxNjYuMDc1IDMzLjUwMTggMTY0LjQ0OSAzMy44NTc0IDE2Mi43NzIgMzMuODU3NEMxNTcuNTQgMzMuODU3NCAxNTQuODQ3IDMwLjg2MDEgMTU1LjM1NSAyNi41NDE4QzE1NS45MTQgMjEuOTE4OCAxNTkuNzc1IDE5LjA3MzggMTY0Ljc1NCAxOS4wNzM4QzE2NS44MiAxOS4wNzM4IDE2Ni44ODcgMTkuMjI2MiAxNjcuOTAzIDE5LjQyOTRMMTY3LjY0OSAyMS45MTg4Wk0xNzEuOTE3IDIyLjQ3NzZDMTcyLjAxOCAyMS41MTIzIDE3Mi4zNzQgMTkuOTM3NCAxNzEuNDA5IDE5LjUzMVYxOS40ODAySDE3NS4yN1YxOS41MzFDMTc0LjIwMyAxOS45Mzc0IDE3NC4xMDEgMjEuNTEyMyAxNzQgMjIuNDc3NkwxNzIuOTg0IDMwLjU1NTJDMTcyLjg4MiAzMS41MjA1IDE3Mi41MjYgMzMuMDk1NCAxNzMuNDkyIDMzLjUwMThWMzMuNTUyNkgxNjkuNjMxVjMzLjUwMThDMTcwLjY5OCAzMy4wOTU0IDE3MC43OTkgMzEuNTIwNSAxNzAuOTAxIDMwLjU1NTJMMTcxLjkxNyAyMi40Nzc2Wk0xODkuNjk4IDIxLjAwNDNDMTg5LjY5OCAyMC4wODk5IDE5MC4zNTggMTkuNDI5NCAxOTEuMTcxIDE5LjQyOTRDMTkxLjk4NCAxOS40Mjk0IDE5Mi42NDQgMjAuMDg5OSAxOTIuNjQ0IDIxLjAwNDNDMTkyLjY0NCAyMS45MTg4IDE5MS45ODQgMjIuNTc5MiAxOTEuMTcxIDIyLjU3OTJDMTkwLjMwNyAyMi41NzkyIDE4OS42OTggMjEuOTE4OCAxODkuNjk4IDIxLjAwNDNaTTE5MS4xNzEgMjIuODg0QzE5Mi4xMzYgMjIuODg0IDE5MyAyMi4wNzEyIDE5MyAyMS4wMDQzQzE5MyAxOS45Mzc0IDE5Mi4xMzYgMTkuMTI0NiAxOTEuMTcxIDE5LjEyNDZDMTkwLjE1NSAxOS4xMjQ2IDE4OS4zNDIgMTkuOTM3NCAxODkuMzQyIDIxLjAwNDNDMTg5LjM0MiAyMi4wNzEyIDE5MC4xNTUgMjIuODg0IDE5MS4xNzEgMjIuODg0Wk0xOTAuNzY1IDIxLjE1NjdIMTkxLjEyTDE5MS42NzkgMjIuMTIySDE5Mi4wMzVMMTkxLjQyNSAyMS4xNTY3QzE5MS43MyAyMS4xMDU5IDE5MS45ODQgMjAuOTUzNSAxOTEuOTg0IDIwLjU0NzFDMTkxLjk4NCAyMC4xNDA3IDE5MS43MyAxOS45Mzc0IDE5MS4yNzMgMTkuOTM3NEgxOTAuNDZWMjIuMTIySDE5MC43NjVWMjEuMTU2N1pNMTkwLjc2NSAyMC44NTE5VjIwLjE5MTVIMTkxLjE3MUMxOTEuMzc0IDIwLjE5MTUgMTkxLjYyOCAyMC4yNDIzIDE5MS42MjggMjAuNDk2M0MxOTEuNjI4IDIwLjg1MTkgMTkxLjM3NCAyMC44NTE5IDE5MS4xMiAyMC44NTE5SDE5MC43NjVaTTU3LjU1OTYgMTQuMDQ0M0gyNS44MDc4QzI1LjcwNjIgMTQuNjUzOSAyNS42NTU0IDE1LjI2MzYgMjUuNjA0NiAxNS45MjRIMTEuOTg5NUMxMS45ODk1IDE2LjIyODggMTEuOTg5NSAxNy40NDgxIDExLjk4OTUgMTcuNzUyOUgwQzAuMDUwODAyOCAxOC4zMTE4IDAuMTAxNjA2IDE4Ljg3MDYgMC4xNTI0MDkgMTkuNDI5NEg1Ny41MDg4QzU3LjY2MTIgMTguNTY1OCA1Ny43MTIgMTcuNjUxMyA1Ny43MTIgMTYuNzM2OUM1Ny43NjI4IDE1LjgyMjQgNTcuNjYxMiAxNC45MDggNTcuNTU5NiAxNC4wNDQzWk0yNi43MjIzIDIyLjk4NTZIMTMuMTA3MUMxMy4zNjExIDIzLjY0NjEgMTMuNjE1MiAyNC4yNTU3IDEzLjkyIDI0Ljg2NTNIMS45MzA1MUMyLjIzNTMzIDI1LjQ3NSAyLjU5MDk1IDI2LjAzMzggMi45NDY1NyAyNi41NDE4SDUyLjEyMzdMNTcuMTUzMiAyMS4xNTY3SDI2LjE2MzVDMjYuMzE1OSAyMS43NjYzIDI2LjUxOTEgMjIuMzc2IDI2LjcyMjMgMjIuOTg1NlpNMzEuODAyNiAzMC4wOThIMTguMTg3NEMxOS4wNTExIDMwLjgwOTMgMjAuMDE2MyAzMS40MTg5IDIxLjAzMjQgMzEuOTI2OUg5LjA0MjkxQzExLjE3NjYgMzIuOTkzOCAxMy41NjQ0IDMzLjYwMzQgMTYuMDUzNyAzMy42MDM0SDE2LjEwNDVINDUuNTE5M0w1MC41OTk2IDI4LjIxODNIMjkuODcyMUMzMC40ODE3IDI4Ljg3ODcgMzEuMTQyMSAyOS41MzkyIDMxLjgwMjYgMzAuMDk4WiIgZmlsbD0iIzAwNDdBQyIvPgo8cGF0aCBkPSJNNTMuNDQ0OCA1LjM4NTFDNTAuNDk4MyAyLjA4MjkyIDQ2LjMzMjQgMCA0MS42NTg2IDBDMzkuMDE2OCAwIDM2LjUyNzUgMC42NjA0MzcgMzQuMzQzIDEuODI4OUgyMC43Mjc4QzE5Ljc2MjYgMi4zMzY5MyAxOC44NDgxIDIuOTk3MzcgMTcuOTg0NSAzLjY1NzgxSDUuOTk0OTlDNS4zODUzNSA0LjE2NTgzIDQuODI2NTIgNC43MjQ2NyA0LjI2NzY5IDUuMzM0M0g1My40NDQ4VjUuMzg1MVpNNTcuMjA0MyAxMi40OTc1QzU2LjY5NjIgMTAuNTE2MiA1NS44ODM0IDguNjg3MjkgNTQuNzY1NyA3LjExMjRIMjguNTUxNUMyOC4xNDUgNy43MjIwMyAyNy43ODk0IDguMzMxNjcgMjcuNDMzOCA4Ljk5MjFIMTMuODY5NEMxMy41NjQ2IDkuNjAxNzQgMTMuMzEwNiAxMC4yMTE0IDEzLjA1NjYgMTAuODcxOEgxLjA2NzExQzAuODYzODk5IDExLjQzMDYgMC43MTE0OTEgMTEuOTg5NSAwLjU1OTA4MiAxMi41NDgzSDU3LjIwNDNWMTIuNDk3NVoiIGZpbGw9IiMwMDQ3QUMiLz4KPC9zdmc+Cg==" alt="Cirrus Logic">
+  <div class="brand-divider"></div>
+  <div>
+    <div class="htitle">Cirrus Logic &middot; AI Commercial &amp; Mixed-Signal Audio Silicon Workforce</div>
+    <div class="hsub">Austin, TX &middot; High-Performance Mixed-Signal ICs &middot; Smart Boosted Audio, Haptics &amp; Power Conversion (NASDAQ: CRUS)</div>
+  </div>
+</div>
+<div class="badge">Independent concept &nbsp;&middot;&nbsp; <b>illustrative</b></div>
+</header>
+
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>a smart boosted audio amplifier tuning, closed-loop haptics DSP modeling, or mixed-signal automotive silicon qualification workflow turned into an autonomous team of agents</b>. Cirrus Logic, Inc. (headquartered in Austin, Texas, NASDAQ: CRUS) is a premier global fabless semiconductor leader pioneering high-performance, low-power mixed-signal processing solutions. Cirrus Logic powers billions of the world's most sophisticated mobile devices, laptops, wearables, and automobiles with flagship audio codecs, boosted class-D smart amplifiers (CS35L56, CS35L45), closed-loop low-latency haptic drivers (CS40L26), camera optical image stabilization (OIS) voice coil motor drivers, and high-efficiency power conversion ICs. One track drives commercial sourcing &amp; Tier-1 mobile, PC and automotive OEM design-wins: it captures smartphone titans (Apple, Samsung, Google), PC leaders (Dell, HP, Lenovo), and automotive innovators (Tesla, BMW, Mercedes-Benz), structures 15-million-unit smart amplifier volume pricing packages, and coordinates multi-year in-cabin road noise cancellation (RNC) platform agreements. The other track executes mixed-signal silicon design, acoustic DSP algorithms &amp; automotive AEC-Q100 reliability: it models real-time speaker voice-coil excursion and thermal protection DSP algorithms (THD+N &lt; -95 dB, &gt; 92% boost converter efficiency), synthesizes resonant frequency tracking for haptic actuators (sub-5ms tactile onset), fine-tunes ultra-low-power hybrid active noise cancellation (sub-5µs acoustic latency), and certifies AEC-Q100 Grade 1 automotive mixed-signal tapeouts. Point one at an acoustic speaker profile, a battery droop specification, or a mixed-signal RTL netlist and it runs the loop, then hands back a review-ready output for a person to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial &amp; Design-Win Sourcing</span> find OEMs, 15M unit IC quote, automotive RNC proposal</span>
+<span><span class="tag operations">Mixed-Signal, Audio DSP &amp; Silicon Eng</span> CS35L56 Smart Amp, closed-loop haptics, adaptive ANC, AEC-Q100</span>
+<span><span class="tag hero">Flagship</span> the deepest example run</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+
+<div class="foot">Independent concept prototype prepared by Innvonix Tech Solutions for a conversation with Cirrus Logic, Inc. (Austin, TX). It is not affiliated with, endorsed by, or built on Cirrus Logic systems or data. All operators and outputs are illustrative simulations; audio dynamic ranges, THD+N figures, boost converter efficiencies, haptic response times, and commercial quotes are placeholders. A Chief Technology Officer, VP of Mixed-Signal Engineering, Chief Audio Architect, or VP of Worldwide Sales reviews and approves every silicon tapeout package, speaker protection DSP tuning, AEC-Q100 qualification traveler, and commercial supply contract. This is not a production system and produces no deliverable for a real customer.</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'Consumer Electronics, Automotive & Audio Market Research', tools: ['research', 'save'] },
+  prospector: { emoji: '🧲', label: 'Smartphone OEM, PC & Automotive Account Sourcing', tools: ['source_accounts', 'save'] },
+  qualifier: { emoji: '🎯', label: 'Audio Codec, Haptics & Mixed-Signal Fit Qualifier', tools: ['score_fit', 'save'] },
+  audio_dsp_architect: { emoji: '🎵', label: 'Smart Audio DSP & Acoustic Algorithm Lead', tools: ['model_speaker_excursion', 'tune_thermal_protection_dsp', 'save'] },
+  mixed_signal_power_eng: { emoji: '⚡', label: 'Class-D Boost & High-Efficiency Mixed-Signal Designer', tools: ['optimize_boost_converter', 'verify_thd_snr_performance', 'save'] },
+  haptics_control_specialist: { emoji: '📳', label: 'Closed-Loop Haptics & Actuator Control Engineer', tools: ['tune_lra_back_emf', 'simulate_haptic_waveform', 'save'] },
+  anc_acoustics_scientist: { emoji: '🎧', label: 'Adaptive ANC & Active Noise Cancellation Physicist', tools: ['simulate_anc_acoustic_delay', 'tune_transparency_filter', 'save'] },
+  ois_camera_actuator_eng: { emoji: '📷', label: 'Voice Coil Motor (VCM) & OIS Closed-Loop Specialist', tools: ['model_ois_settling_time', 'verify_hall_sensor_accuracy', 'save'] },
+  automotive_reliability_dir: { emoji: '🚗', label: 'AEC-Q100 & Automotive Mixed-Signal Quality Director', tools: ['run_aec_q100_stress_test', 'audit_cispr25_emi_emc', 'save'] },
+  qa_tapeout_reviewer: { emoji: '✅', label: 'Mixed-Signal Silicon Verification & Tapeout Reviewer', tools: ['run_cadence_virtuoso_drc', 'verify_pvt_monte_carlo', 'save'] },
+  pricing: { emoji: '🧮', label: 'Mixed-Signal IC Volume & Tier Pricing Architect', tools: ['build_quote', 'save'] },
+  writer: { emoji: '✍️', label: 'Semiconductor Technical Proposal & Datasheet Lead', tools: ['compose', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+
+const TRACKS = [
+  ['commercial', 'Commercial &amp; Design-Win Sourcing'],
+  ['operations', 'Mixed-Signal Silicon &amp; Audio DSP Eng']
+];
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Tier-1 smartphone, premium laptop & automotive OEM design-win discovery',
+    title: 'AI Cirrus Scout',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Target Tier-1 Consumer & Automotive Account Dossier',
+    sample: 'Identify flagship smartphone manufacturers (Apple, Samsung, Google), high-end PC OEMs (Dell, HP, Lenovo), and automotive innovators (Tesla, BMW, Rivian, Mercedes-Benz) developing next-generation micro-speaker acoustic systems, thin-bezel haptic touchpads, and active road noise cancellation requiring Cirrus Logic mixed-signal silicon.',
+    desc: 'Agents scan flagship consumer product teardowns, laptop audio roadmaps, and automotive smart-cockpit RFQs, map VP of Hardware Engineering and Lead Acoustic Architect, score fit, and compile ranked target list.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan smartphone micro-speaker acoustic trends, thin-bezel laptop haptic trackpad adoption, and automotive in-cabin audio zoning.', deps: [] },
+      { agent: 'prospector', task: 'Source VP of Hardware Infrastructure, Head of Audio Architecture, and Principal Haptics Sourcing Manager across top 10 OEMs.', deps: [] },
+      { agent: 'qualifier', task: 'Score qualification fit against Cirrus Logic ICs: CS35L56 smart audio amplifier, CS40L26 closed-loop haptic driver, and CS47L92 codec.', deps: [0, 1] },
+      { agent: 'writer', task: 'Compile ranked Tier-1 account dossier detailing micro-speaker impedance profiles, battery droop constraints, and design-win roadmap.', deps: [2] }
+    ]
+  },
+
+  quoting: {
+    name: 'CS35L56 smart boosted audio amp & CS40L26 haptics 15M-unit volume quoting',
+    title: 'AI Audio IC Quoting Architect',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'High-Volume Mixed-Signal IC Commercial Quote Package',
+    sample: 'A leading global smartphone manufacturer requested a volume RFQ for 15 million units of Cirrus Logic CS35L56 boosted class-D smart amplifiers paired with CS40L26 closed-loop haptic drivers, including custom speaker protection DSP firmware tuning, WLCSP packaging, and 3-year multi-fab foundry allocation guarantees.',
+    desc: 'Agents parse customer volume delivery schedule, verify TSMC 12nm/28nm wafer fabrication allocations, structure tiered volume discounts (18% at 10M+ units), and compile formal commercial proposal.',
+    tasks: [
+      { agent: 'qualifier', task: 'Parse OEM RFQ: 15,000,000 units CS35L56 + CS40L26, 0.4mm pitch WLCSP, 12V boosted output, delivery across 4 production quarters.', deps: [] },
+      { agent: 'audio_dsp_architect', task: 'Confirm DSP feature bundle: SoundClear speaker protection algorithm, dynamic battery voltage monitoring, and I2S/SoundWire-1.2 interface.', deps: [0] },
+      { agent: 'haptics_control_specialist', task: 'Validate haptics driver configuration: integrated LRA resonance frequency tracking, waveform memory ROM, and sub-5ms click latency.', deps: [0] },
+      { agent: 'pricing', task: 'Structure tiered pricing model: silicon unit pricing, custom DSP tuning NRE waiver, multi-fab supply SLA, and RMA warranty terms.', deps: [1, 2] },
+      { agent: 'writer', task: 'Generate formal Mixed-Signal IC Volume Quote Package with pricing tiers, delivery ramp curves, package mechanical drawings, and terms.', deps: [3] }
+    ]
+  },
+
+  proposal: {
+    name: 'Automotive active road noise cancellation (RNC) & smart audio proposal',
+    title: 'AI Zonal Automotive Audio Proposal Lead',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Automotive Active Road Noise Cancellation Co-Development Proposal',
+    sample: 'Prepare a multi-year joint development proposal for a premium electric vehicle manufacturer integrating Cirrus Logic multichannel smart audio codecs and low-latency DSP accelerators into a centralized automotive zonal sound processor supporting active road noise cancellation (ARNC) and personal audio zones.',
+    desc: 'Agents scope EV cabin acoustic requirements, model sub-5ms accelerometer-to-speaker anti-noise latency, structure joint automotive engineering milestones, and compile executive proposal.',
+    tasks: [
+      { agent: 'qualifier', task: 'Parse EV OEM requirements: 8-channel microphone/accelerometer sensor interface, sub-5ms anti-noise latency, AEC-Q100 Grade 1 qualification.', deps: [] },
+      { agent: 'anc_acoustics_scientist', task: 'Architect ARNC DSP pipeline: adaptive filtered-X LMS algorithm, structural vibration transfer function modeling, and 48 kHz 24-bit audio bus.', deps: [0] },
+      { agent: 'ois_camera_actuator_eng', task: 'Integrate low-latency sensor telemetry: synchronize MEMS accelerometer inputs over A2B automotive audio bus with zero clock jitter.', deps: [1] },
+      { agent: 'pricing', task: 'Model automotive NPI development milestones, custom silicon spin schedules, tool qualification kits, and volume production supply tiers.', deps: [2] },
+      { agent: 'writer', task: 'Synthesize Automotive Active Road Noise Cancellation Proposal detailing acoustic performance simulations, AEC-Q100 timeline, and commercial terms.', deps: [3] }
+    ]
+  },
+
+  radar: {
+    name: 'Smart audio amplifiers, haptics & mixed-signal competitive intelligence brief',
+    title: 'AI Mixed-Signal Intel Analyst',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Mixed-Signal Silicon Competitive Intelligence Brief',
+    sample: 'Benchmark Cirrus Logic smart boosted amplifiers, haptics drivers, and camera OIS controllers against competitors (Texas Instruments, Maxim Integrated/Analog Devices, NXP, Knowles) across dynamic range, THD+N, battery voltage tracking, DSP algorithm maturity, and silicon die area.',
+    desc: 'Agents profile competitor mixed-signal IC roadmaps, benchmark electrical and acoustic metrics, and compile sales talk tracks highlighting Cirrus Logic market dominance and patent moat.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan competitor product announcements: TI Smart Amp TAS2563, Maxim/ADI MAX98390 with DSM, NXP TFA98xx series, and Knowles audio processors.', deps: [] },
+      { agent: 'prospector', task: 'Extract OEM design-in friction: speaker voice-coil burnout under heavy bass, battery current clipping during low charge, and large external inductor sizing.', deps: [] },
+      { agent: 'mixed_signal_power_eng', task: 'Benchmark architectural differentiation: Cirrus Class-H predictive boost (> 92% efficiency) + real-time temperature/excursion tracking + ultra-compact WLCSP.', deps: [0, 1] },
+      { agent: 'automotive_reliability_dir', task: 'Evaluate automotive and consumer reliability leadership: zero-defect quality metrics, 150°C junction capability, and CISPR 25 Class 5 EMI suppression.', deps: [0, 1] },
+      { agent: 'writer', task: 'Produce comprehensive competitive intelligence brief detailing Cirrus Logic 10 dB SNR lead, 35% lower quiescent current, and proven billion-unit mobile pedigree.', deps: [2, 3] }
+    ]
+  },
+
+  smart_boosted_amp_speaker_protection_flagship: {
+    name: 'CS35L56 smart boosted Class-D amplifier & real-time speaker protection DSP tuning',
+    title: 'AI Smart Boosted Amp & Protection Architect',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'CS35L56 Smart Audio Amplifier Tapeout & Acoustic Release Traveler',
+    sample: 'Execute end-to-end silicon optimization and acoustic DSP tuning for Cirrus Logic CS35L56 smart boosted audio amplifier: model micro-speaker voice-coil thermal impedance (Rth/Cth) and nonlinear membrane excursion (Xmax = 0.52 mm); configure integrated 12V Class-H DC-DC boost converter with dynamic battery voltage tracking; optimize current/voltage (I/V) sensing ADC calibration; achieve THD+N < -96 dB at 6.8W peak output power; run Cadence Virtuoso mixed-signal DRC/LVS; close PVT timing across 250 Monte Carlo corners; and generate signed tapeout traveler.',
+    desc: 'Agents simulate micro-speaker nonlinear physics, optimize predictive boost converter efficiency, close mixed-signal layout in Virtuoso, and generate signed release traveler.',
+    tasks: [
+      { agent: 'audio_dsp_architect', task: 'Model micro-speaker physical parameters: measure DC resistance (Re = 6.2 ohm), resonance frequency (Fo = 850 Hz), and membrane excursion limit (Xmax = 0.52 mm).', deps: [] },
+      { agent: 'audio_dsp_architect', task: 'Synthesize real-time speaker protection DSP algorithm: calibrate thermal observer and predictive excursion limiter to prevent mechanical voice-coil bottoming.', deps: [0] },
+      { agent: 'mixed_signal_power_eng', task: 'Optimize Class-H DC-DC boost converter: configure 12V boost rail with battery droop tracking down to 2.7V, achieving 93.4% peak power efficiency.', deps: [1] },
+      { agent: 'mixed_signal_power_eng', task: 'Verify mixed-signal audio performance: simulate 128 dB dynamic range DAC and closed-loop I/V feedback ADC, confirming THD+N = -96.4 dB at 6.8W into 8 ohms.', deps: [2] },
+      { agent: 'qa_tapeout_reviewer', task: 'Execute mixed-signal DRC/LVS and Monte Carlo mismatch analysis in Cadence Virtuoso: verify zero layout violations across -40°C to 125°C temperature corners.', deps: [3] },
+      { agent: 'writer', task: 'Compile CS35L56 Smart Audio Amplifier Tapeout & Acoustic Release Traveler with THD+N curves, boost efficiency plots, DSP protection thresholds, and signoff.', deps: [4] }
+    ]
+  },
+
+  haptic_driver_vcm_tuning: {
+    name: 'CS40L26 closed-loop haptic driver resonant tracking & camera OIS tuning',
+    title: 'AI Closed-Loop Haptics & OIS Architect',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'Closed-Loop Haptic Driver & OIS Controller Characterization Dossier',
+    sample: 'Tune Cirrus Logic CS40L26 advanced haptic driver and camera VCM controller: execute real-time closed-loop back-EMF tracking on a linear resonant actuator (LRA) across temperature shifts, synthesize crisp click and textured haptic waveforms with sub-4ms acceleration onset, calibrate Hall-effect sensor position feedback for smartphone camera optical image stabilization, and generate characterization report.',
+    desc: 'Agents tune back-EMF tracking loops, model LRA resonance frequency shifts, calibrate VCM camera positioning, and compile comprehensive characterization dossier.',
+    tasks: [
+      { agent: 'haptics_control_specialist', task: 'Model LRA resonant actuator electromechanical dynamics: measure resonant frequency (Fo = 170 Hz) and Q-factor damping across -20°C to 70°C.', deps: [] },
+      { agent: 'haptics_control_specialist', task: 'Tune closed-loop back-EMF tracking algorithm: achieve automatic resonant frequency tracking within 1.5 cycles and active braking for crisp sub-4ms click sensation.', deps: [0] },
+      { agent: 'ois_camera_actuator_eng', task: 'Calibrate voice coil motor (VCM) closed-loop driver: configure 14-bit Hall-effect feedback loop achieving sub-micron lens settling time for smartphone camera OIS.', deps: [1] },
+      { agent: 'writer', task: 'Produce Closed-Loop Haptic Driver & OIS Controller Characterization Dossier with frequency response curves, tactile vibration profiles, and firmware registers.', deps: [2] }
+    ]
+  },
+
+  active_noise_cancellation_tuning: {
+    name: 'Low-latency adaptive ANC & SoundClear® voice enhancement synthesis',
+    title: 'AI Adaptive ANC & Acoustic Tuning Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'Adaptive ANC & SoundClear Acoustic Release Package',
+    sample: 'Synthesize low-latency adaptive active noise cancellation (ANC) and SoundClear® voice enhancement for a true wireless stereo (TWS) earbud SoC: configure hybrid feedforward and feedback ANC filters with sub-4.8µs group delay, simulate natural ambient transparency mode EQ, tune multi-microphone beamforming for wind-noise reduction, and verify zero acoustic oscillation.',
+    desc: 'Agents calculate acoustic transfer functions, optimize IIR/FIR filter coefficients, verify stability margins under loose earbud fit, and generate production release package.',
+    tasks: [
+      { agent: 'anc_acoustics_scientist', task: 'Measure primary and secondary acoustic paths (P(z) and S(z)) on KEMAR acoustic head: model acoustic leakage variations across ear canal tip sizes.', deps: [] },
+      { agent: 'anc_acoustics_scientist', task: 'Synthesize adaptive hybrid ANC filter coefficients: achieve 38 dB broadband ambient noise reduction from 50 Hz to 2 kHz with sub-4.8µs latency.', deps: [0] },
+      { agent: 'qa_tapeout_reviewer', task: 'Run Nyquist stability and phase margin verification: confirm > 12 dB gain margin and > 45° phase margin to prevent high-frequency howling oscillation.', deps: [1] },
+      { agent: 'writer', task: 'Compile Adaptive ANC & SoundClear Acoustic Release Package with attenuation curves, transparency EQ profiles, stability matrices, and DSP configuration header files.', deps: [2] }
+    ]
+  },
+
+  mixed_signal_automotive_qual: {
+    name: 'AEC-Q100 Grade 1 automotive mixed-signal audio amplifier qualification',
+    title: 'AI Automotive Mixed-Signal Reliability Auditor',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'AEC-Q100 Grade 1 Mixed-Signal Reliability Qualification Traveler',
+    sample: 'Execute comprehensive automotive qualification for a multichannel Cirrus Logic in-cabin audio power amplifier: verify AEC-Q100 Grade 1 operating temperature range (-40°C to 125°C ambient, 150°C junction), audit high-temperature operating life (HTOL 1,000 hrs), test CISPR 25 Class 5 radiated and conducted emissions, and produce zero-defect signoff package.',
+    desc: 'Agents analyze silicon electromigration and ESD stress, verify CISPR 25 automotive electromagnetic compatibility, audit zero-defect manufacturing rules, and generate signed qualification report.',
+    tasks: [
+      { agent: 'automotive_reliability_dir', task: 'Execute AEC-Q100 Stress Test Matrix: verify HTOL (1,000 hrs @ 150°C), temperature cycling (1,000 cycles -55°C to 150°C), and HBM/CDM ESD robustness.', deps: [] },
+      { agent: 'mixed_signal_power_eng', task: 'Evaluate CISPR 25 Class 5 automotive EMI/EMC compliance: configure spread-spectrum clocking on DC-DC boost converter to suppress AM/FM band harmonics.', deps: [] },
+      { agent: 'qa_tapeout_reviewer', task: 'Audit foundry wafer fab defect density and silicon electromigration rules: confirm FIT rate < 0.5 across 15-year automotive mission profile.', deps: [0, 1] },
+      { agent: 'writer', task: 'Generate formal AEC-Q100 Grade 1 Mixed-Signal Reliability Qualification Traveler with thermal dissipation models, EMI test spectra, and PPAP Level 3 documentation.', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'Target Tier-1 Consumer & Automotive Account Dossier',
+  quoting: 'High-Volume Mixed-Signal IC Commercial Quote Package',
+  proposal: 'Automotive Active Road Noise Cancellation Co-Development Proposal',
+  radar: 'Mixed-Signal Silicon Competitive Intelligence Brief',
+  smart_boosted_amp_speaker_protection_flagship: 'CS35L56 Smart Audio Amplifier Tapeout & Acoustic Release Traveler',
+  haptic_driver_vcm_tuning: 'Closed-Loop Haptic Driver & OIS Controller Characterization Dossier',
+  active_noise_cancellation_tuning: 'Adaptive ANC & SoundClear Acoustic Release Package',
+  mixed_signal_automotive_qual: 'AEC-Q100 Grade 1 Mixed-Signal Reliability Qualification Traveler'
+};
+
+const TOOLS = {
+  research: () => 'Analyzed Counterpoint & IDC research: premium smartphone and EV smart audio silicon market expanding to $4.8B with 35% boosted amp attach rate.',
+  source_accounts: () => 'Sourced 52 executive accounts: VP of Hardware Engineering, Chief Audio Architects, and Lead Acoustic Directors across Tier-1 mobile and auto OEMs.',
+  score_fit: () => 'Scored OEM platform fit: 97.4% compatibility with Cirrus Logic CS35L56 boosted amplifiers, CS40L26 haptic drivers, and SoundClear DSP software.',
+  model_speaker_excursion: () => 'Modeled micro-speaker electromechanical dynamics: measured Re = 6.2 ohm, Fo = 850 Hz, and mechanical excursion limit Xmax = 0.52 mm.',
+  tune_thermal_protection_dsp: () => 'Calibrated real-time voice-coil thermal observer: prevents thermal burnout while delivering 3.4 dB higher continuous acoustic sound pressure level (SPL).',
+  optimize_boost_converter: () => 'Optimized Class-H DC-DC boost converter: achieved 93.4% peak efficiency with dynamic 12V rail tracking and battery droop protection down to 2.7V.',
+  verify_thd_snr_performance: () => 'Simulated closed-loop I/V sensing audio pipeline: verified THD+N = -96.4 dB and 128 dB dynamic range at 6.8W output power into 8 ohm load.',
+  tune_lra_back_emf: () => 'Tuned closed-loop back-EMF tracking loop: resonant frequency locked in 1.2 cycles across -20°C to 70°C with active braking for sub-4ms click onset.',
+  simulate_haptic_waveform: () => 'Synthesized textured haptic waveforms: simulated sharp clicks, button detents, and realistic game physics with sub-5ms latency.',
+  simulate_anc_acoustic_delay: () => 'Modeled hybrid ANC acoustic latency: achieved 4.6µs total group delay from microphone input to anti-noise speaker output.',
+  tune_transparency_filter: () => 'Synthesized ambient transparency mode EQ: restored natural ear canal resonance curve with zero occlusion effect and zero oscillation.',
+  model_ois_settling_time: () => 'Calibrated camera VCM closed-loop driver: achieved sub-8ms settling time with 14-bit Hall-effect sub-micron position repeatability.',
+  verify_hall_sensor_accuracy: () => 'Verified Hall sensor linearity: position sensing error constrained to < 0.35 µm across 300 µm optical image stabilization travel range.',
+  run_aec_q100_stress_test: () => 'Executed AEC-Q100 Grade 1 stress test matrix: 1,000 hrs HTOL at 150°C junction and 1,000 temperature cycles with zero parametric drift.',
+  audit_cispr25_emi_emc: () => 'Audited automotive EMC compliance: spread-spectrum boost converter modulation suppressed AM/FM band emissions below CISPR 25 Class 5 limits.',
+  run_cadence_virtuoso_drc: () => 'Executed mixed-signal DRC/LVS in Cadence Virtuoso: verified 0 design rule violations across analog power FETs and digital DSP blocks.',
+  verify_pvt_monte_carlo: () => 'Ran 250-point Monte Carlo mismatch analysis across process corners (-40°C to 125°C): achieved 6-sigma yield robustness on bandgap and ADCs.',
+  build_quote: () => 'Structured 15M-unit mixed-signal quote: tiered volume pricing ($1.42/unit CS35L56, $0.88/unit CS40L26), NRE DSP fee waiver, and 3-year supply SLA.',
+  compose: () => 'Compiled technical deliverable with acoustic SPL curves, boost efficiency plots, AEC-Q100 test logs, and executive signoff documentation.',
+  save: () => 'Saved verified deliverable to Cirrus Logic Engineering Vault and OEM Customer Secure Portal.'
+};
+
+const FINAL = {
+  scout: `CIRRUS LOGIC, INC. — TIER-1 CONSUMER & AUTOMOTIVE ACCOUNT DOSSIER
+CONFIDENTIAL — PREPARED FOR OEM DESIGN-WIN EXPANSION (AUSTIN, TX)
+
+1. EXECUTIVE MARKET SUMMARY
+- Industry Growth Driver: Demand for louder, clearer micro-speaker audio, haptic button replacement, and EV in-cabin acoustic zoning.
+- Target Market Opportunity: Mixed-signal audio, haptics, and power conversion market expanding to $4.8B by 2028.
+- Key Cirrus Logic Value Proposition: Market-proven leadership in smart boosted amplifiers, closed-loop haptic drivers, and proprietary speaker protection algorithms powering billions of flagship consumer devices.
+
+2. RANKED TIER-1 CONSUMER & AUTOMOTIVE TARGETS
+a. Flagship Smartphone Tier-1s (Cupertino, CA / Suwon, South Korea / Mountain View, CA)
+   - Focus Systems: Flagship next-gen smartphones and premium foldable handsets.
+   - Target Sourcing Contacts: VP of Hardware Engineering, Senior Director of Audio Architecture.
+   - Sizing Fit: CS35L56 smart boosted Class-D amplifiers + CS40L26 closed-loop haptic drivers.
+b. Premium PC & Laptop OEMs (Round Rock, TX / Palo Alto, CA / Taipei, Taiwan)
+   - Focus Systems: Ultra-thin laptops, convertible tablets, and haptic force-sensing trackpads.
+   - Target Sourcing Contacts: Chief PC Architect, Director of Acoustic Platforms.
+   - Sizing Fit: CS35L56 stereo boosted audio subsystem + CS40L26 force-sensing haptic trackpad controller.
+c. Electric Vehicle & Automotive Leaders (Austin, TX / Munich, Germany / Stuttgart, Germany)
+   - Focus Systems: Centralized vehicle sound processing, active road noise cancellation (ARNC), and haptic touch controls.
+   - Target Sourcing Contacts: VP of In-Cabin Electronics, Lead Acoustic Systems Architect.
+   - Sizing Fit: Multichannel AEC-Q100 smart audio amplifiers and low-latency DSP co-processors.
+
+3. COMMERCIAL ACTION PLAN
+- Deliver customized acoustic evaluation travelers demonstrating 3.4 dB SPL loudness uplift on customer micro-speakers.
+- Provide turnkey Android and Windows driver packages with pre-calibrated SoundClear DSP binaries.
+
+NOTE: illustrative simulation prepared for commercial discussions; customer roadmaps and corporate names are illustrative.`,
+
+  quoting: `CIRRUS LOGIC, INC. — HIGH-VOLUME MIXED-SIGNAL IC COMMERCIAL QUOTE PACKAGE
+FORMAL COMMERCIAL PROPOSAL — REF: CRUS-RFQ-2026-6619
+
+1. CUSTOMER & SYSTEM SCOPE
+- Customer: Tier-1 Flagship Smartphone Manufacturer (Global Mobile Division)
+- Equipment Platform: Flagship 5G Smartphone & Foldable Device Lineup
+- Volume Commitment: 15,000,000 Units (Delivered across 4 consecutive production quarters)
+- Product Bundle: Cirrus Logic CS35L56 Smart Boosted Amplifier + CS40L26 Closed-Loop Haptic Driver
+
+2. SILICON SPECIFICATIONS & PACKAGING
+a. CS35L56 Smart Boosted Class-D Audio Amplifier:
+   - Output Power: 6.8W peak into 8 ohms at 12V boosted rail (THD+N < -96 dB).
+   - Package: 0.4mm pitch 36-ball Wafer-Level Chip-Scale Package (WLCSP, 2.2mm x 2.4mm).
+   - Features: Integrated DSP with SoundClear speaker protection, dynamic battery droop tracking down to 2.7V.
+b. CS40L26 Closed-Loop Advanced Haptic Driver:
+   - Output Drive: 11V boosted rail into linear resonant actuators (LRA).
+   - Package: 30-ball WLCSP (1.8mm x 2.1mm).
+   - Features: Real-time closed-loop back-EMF tracking, sub-4ms tactile onset, integrated waveform memory.
+
+3. VOLUME PRICING & COMMERCIAL TERMS
+- CS35L56 Unit Price (15M volume tier): $1.42 USD / unit
+- CS40L26 Unit Price (15M volume tier): $0.88 USD / unit
+- Combined Silicon Bundle Unit Price: $2.30 USD / set
+- Extended Hardware Total (15,000,000 sets): $34,500,000 USD
+- Custom Acoustic Speaker Characterization & DSP Tuning NRE: Waived ($150,000 value)
+- Production Supply Guarantee: Dedicated TSMC 12nm/28nm wafer allocation with dual-fab backend assembly.
+- Warranty: 36 months comprehensive semiconductor replacement warranty; 0-defect quality commitment.
+
+NOTE: illustrative simulation; pricing, unit volumes, and terms are illustrative.`,
+
+  proposal: `CIRRUS LOGIC, INC. — AUTOMOTIVE ACTIVE ROAD NOISE CANCELLATION PROPOSAL
+JOINT ENGINEERING COLLABORATION AGREEMENT (AUSTIN, TX)
+
+1. COLLABORATION OBJECTIVES
+- Integrate Cirrus Logic multichannel mixed-signal audio codecs and low-latency DSP accelerators into customer's next-generation EV cabin sound platform.
+- Deliver real-time Active Road Noise Cancellation (ARNC), cutting low-frequency cabin road rumble by up to 12 dB between 30 Hz and 350 Hz.
+- Maintain end-to-end sensor-to-speaker acoustic anti-noise latency below 5.0 milliseconds.
+
+2. SYSTEM ARCHITECTURE & INTERFACES
+- Acoustic Processing Core: Cirrus Logic Automotive Sound Processor with specialized dual-core audio DSP.
+- Sensor Subsystem: 8-channel low-noise ADC interface connecting structural chassis MEMS accelerometers over A2B bus.
+- Output Stage: Multichannel smart boosted Class-D amplifiers driving in-door and headrest speakers.
+- Automotive Qualification: AEC-Q100 Grade 1 (-40°C to 125°C ambient, 150°C junction), ISO 26262 ASIL-B ready.
+
+3. CO-DEVELOPMENT MILESTONES & WORKFLOW
+- Month 2: Vehicle cabin acoustic transfer function mapping and virtual acoustic simulation signoff.
+- Month 4: Delivery of prototype hardware boards and integration into customer test mules.
+- Month 7: Road noise cancellation tuning on track across asphalt, concrete, and rough road surfaces.
+- Month 10: Final PPAP Level 3 documentation and automotive factory production release.
+
+NOTE: illustrative simulation; specifications, timelines, and metrics are illustrative.`,
+
+  radar: `CIRRUS LOGIC, INC. — MIXED-SIGNAL SILICON COMPETITIVE INTELLIGENCE BRIEF
+GLOBAL AUDIO & HAPTICS SEMICONDUCTOR BENCHMARKING
+
+1. COMPETITIVE LANDSCAPE SUMMARY
+- Texas Instruments (TAS2563 / TAS2780): Broad portfolio, but higher quiescent power dissipation, larger external inductor requirements, and less mature predictive speaker excursion algorithms.
+- Maxim Integrated / Analog Devices (MAX98390): Dynamic Speaker Management (DSM) offers good protection, but lacks the high boost voltage (12V) and ultra-low THD+N of Cirrus CS35L56.
+- NXP Semiconductors (TFA98xx): Established in mid-tier mobile, but falling behind in cutting-edge 0.4mm WLCSP density and closed-loop haptic integration.
+- Knowles: Strong in MEMS microphones and hearing health DSPs, but lacks high-power boosted smart amplifiers and high-voltage haptic drivers.
+
+2. CIRRUS LOGIC COMPETITIVE ADVANTAGES
+- Acoustic Loudness & Fidelity Lead: 3.4 dB higher SPL output with THD+N < -96 dB, producing louder, cleaner sound from tiny smartphone and laptop micro-speakers.
+- Predictive Class-H Boost Efficiency: > 92% efficiency with intelligent battery current limiting, preventing smartphone sudden shutoff during low battery states.
+- Closed-Loop Haptics Pedigree: CS40L26 provides industry-leading back-EMF tracking that maintains crisp click feel even as actuator temperature changes by 60°C.
+- Proven Billion-Unit Supply Scale: Unmatched production reliability and high-volume delivery track record with the world's most demanding consumer electronics OEMs.
+
+3. OEM SALES TALK TRACK
+- "Cirrus Logic delivers the complete sensory experience: louder micro-speaker audio, sub-4ms haptic feedback, and camera stabilization from a single, trusted mixed-signal silicon leader."
+
+NOTE: illustrative simulation; competitor metrics and market data are illustrative.`,
+
+  smart_boosted_amp_speaker_protection_flagship: `CIRRUS LOGIC, INC. — CS35L56 SMART AUDIO AMPLIFIER TAPEOUT TRAVELER
+MIXED-SIGNAL SILICON RELEASE & ACOUSTIC DSP TUNING — LOT: CRUS-AMP-2026-9921
+
+1. SILICON ELECTRICAL SPECIFICATIONS
+- IC Device: Cirrus Logic CS35L56 Smart Boosted Class-D Audio Amplifier
+- Foundry Process Node: TSMC 28nm Mixed-Signal / High-Voltage BCD
+- Die Dimensions: 2.18 mm x 2.38 mm (36-ball WLCSP, 0.4mm pitch)
+- Class-H Boost Rail Voltage: Dynamically modulated from 5.5V to 12.0V
+- Peak Output Power: 6.8W into 8 ohms at 10% THD+N; 5.4W into 8 ohms at 1% THD+N
+- Audio Performance Measured:
+  * Dynamic Range: 128.2 dB (A-weighted)
+  * THD+N at 1W into 8 ohms: -96.4 dB (0.0015%)
+  * Quiescent Current Consumption: 14.2 mA in active playback mode
+  * Interconnect Interface: SoundWire 1.2 and I2S / TDM digital audio buses
+
+2. REAL-TIME ACOUSTIC DSP SPEAKER PROTECTION TUNING
+- Target Micro-Speaker Model: Premium 1115 smartphone micro-speaker (11mm x 15mm x 3.5mm)
+- Physical Speaker Parameters Measured:
+  * Voice-Coil DC Resistance (Re): 6.22 ohms
+  * Free-Air Resonant Frequency (Fo): 848 Hz
+  * Maximum Safe Linear Excursion (Xmax): 0.52 mm peak-to-peak
+- Speaker Protection Algorithms Calibrated:
+  * Predictive Excursion Limiter: Anticipates membrane displacement; restricts peak excursion to 0.50 mm (0% mechanical bottoming).
+  * Thermal Observer: Dual-RC thermal model tracks voice-coil temperature (Tmax = 95°C limit); attenuates power safely during long bass heavy playback.
+  * Acoustic Uplift: Achieved +3.4 dB SPL average loudness improvement over unboosted amplifiers.
+
+3. MIXED-SIGNAL VERIFICATION & DRC/LVS SIGNOFF
+- Cadence Virtuoso Layout Signoff: 0 DRC errors, 0 LVS mismatch errors across high-voltage power FETs and logic cores.
+- Monte Carlo PVT Analysis: 250 corner runs from -40°C to 125°C; 6-sigma yield confidence confirmed on bandgap reference and current-sense ADCs.
+- Quality Status: CERTIFIED FOR HIGH-VOLUME FOUNDRY MASK TAPEOUT
+- Signed: Chief Audio Architect, VP of Mixed-Signal Silicon Engineering
+
+NOTE: illustrative simulation; performance numbers, THD+N values, and speaker parameters are illustrative.`,
+
+  haptic_driver_vcm_tuning: `CIRRUS LOGIC, INC. — CLOSED-LOOP HAPTIC DRIVER & OIS DOSSIER
+ACTUATOR CONTROL CHARACTERIZATION — SPEC: CS40L26-REV3
+
+1. HAPTIC ACTUATOR TUNING & CLOSED-LOOP PERFORMANCE
+- IC Device: Cirrus Logic CS40L26 Closed-Loop Advanced Haptic Driver
+- Target Actuator: High-Performance Linear Resonant Actuator (LRA, nominal Fo = 170 Hz)
+- Closed-Loop Back-EMF Tracking:
+  * Resonant Frequency Tracking Accuracy: ±0.3 Hz across -20°C to 70°C operating temperature.
+  * Tracking Speed: Locks to actuator resonant frequency in under 1.2 vibration cycles.
+  * Active Braking Response: Rapid energy absorption stops actuator ringing in < 3.8 ms.
+- Acceleration Profile: Delivers 2.45g peak acceleration on a 180g smartphone body for crisp mechanical button emulation.
+
+2. CAMERA VOICE COIL MOTOR (VCM) & OIS CALIBRATION
+- Application: Smartphone Main Camera Optical Image Stabilization (OIS) Actuator
+- Position Feedback: 14-bit low-noise Hall-effect sensor interface with on-chip temperature compensation.
+- Settling Time: < 7.8 ms step response to 95% final position across 300 µm travel range.
+- Positioning Repeatability: < 0.32 µm sub-micron accuracy, eliminating optical image blur during video capture.
+
+3. ENGINEERING CONCLUSION
+- Released for mass production in Tier-1 smartphone flagship camera and haptic trackpad modules.
+
+NOTE: illustrative simulation; actuator parameters and settling times are illustrative.`,
+
+  active_noise_cancellation_tuning: `CIRRUS LOGIC, INC. — ADAPTIVE ANC & SOUNDCLEAR® RELEASE PACKAGE
+ACOUSTIC SUBSYSTEM SPECIFICATION — REPORT: ANC-SC-2026-412
+
+1. ADAPTIVE HYBRID ANC PERFORMANCE (TWS EARBUD)
+- Acoustic Path Transfer Functions: Measured primary path P(z) and secondary path S(z) on KEMAR acoustic mannequin.
+- Filter Architecture: Dual-rate hybrid architecture combining ultra-low-latency analog front-end with adaptive digital FIR/IIR filters.
+- Acoustic Group Delay: 4.6 microseconds from error microphone input to anti-noise speaker driver.
+- Active Noise Attenuation:
+  * 50 Hz to 250 Hz (Engine/Transit rumble): 38.2 dB attenuation
+  * 250 Hz to 1,000 Hz (Ambient crowd noise): 26.4 dB attenuation
+  * Overall Effective Noise Reduction: 32.8 dB broadband attenuation
+
+2. SOUNDCLEAR® VOICE ENHANCEMENT & TRANSPARENCY
+- Transparency Mode: Synthesizes acoustic transparency EQ matching natural open-ear canal resonance with zero occlusion effect.
+- Beamforming Voice Enhancement: 3-microphone beamforming array suppresses wind noise and ambient clutter by > 28 dB during phone calls.
+- Stability Verification: Verified > 14 dB gain margin and > 48° phase margin under loose ear tip placement; 0 acoustic howling detected.
+
+3. RELEASE VERIFICATION
+- Quality Status: RELEASED FOR OEM TWS EARBUD FIRMWARE DEPLOYMENT
+- Signed: Principal Acoustic Scientist, Director of Audio Systems Engineering
+
+NOTE: illustrative simulation; acoustic attenuation figures and latency numbers are illustrative.`,
+
+  mixed_signal_automotive_qual: `CIRRUS LOGIC, INC. — AEC-Q100 GRADE 1 RELIABILITY QUALIFICATION TRAVELER
+AUTOMOTIVE MIXED-SIGNAL QUALITY ASSURANCE — REF: QUAL-AUTO-2026-7890
+
+1. QUALIFICATION SCOPE & STANDARDS
+- Device: Cirrus Logic Automotive In-Cabin Smart Boosted Audio Amplifier
+- Standard: AEC-Q100 Grade 1 Stress Test Qualification for Integrated Circuits
+- Temperature Rating: -40°C to 125°C ambient operating temperature, 150°C maximum junction temperature
+- Production Quality Target: Zero Defect (0 PPM) automotive manufacturing standard
+
+2. STRESS TESTING RESULTS SUMMARY
+- High-Temperature Operating Life (HTOL): 1,000 hours at 150°C junction with 100% rated voltage (JESD22-A108). Result: 0 failures across 3 wafer lots (77 units/lot).
+- Temperature Cycling (TC): 1,000 cycles from -55°C to 150°C (JESD22-A104). Result: 0 delamination or bond wire fatigue.
+- Highly Accelerated Stress Test (HAST): 96 hours at 130°C, 85% RH under bias (JESD22-A110). Result: 0 corrosion or leakage failures.
+- Electrostatic Discharge (ESD): Human Body Model (HBM) > 4,000V; Charged Device Model (CDM) > 1,000V.
+
+3. ELECTROMAGNETIC COMPATIBILITY (CISPR 25)
+- Radiated & Conducted Emissions: Verified across 150 kHz to 2.5 GHz in anechoic RF test chamber.
+- Spread-Spectrum DC-DC Clocking: Reduces peak switching harmonics by 18 dB, achieving full CISPR 25 Class 5 compliance.
+- Certification Status: CERTIFIED FOR AUTOMOTIVE TIER-1 OEM PRODUCTION SHIPMENT
+
+NOTE: illustrative simulation; stress hours, lot quantities, and test metrics are illustrative.`
+};
+
+const EMPLOYEES = [
+  { id: 'scout', name: 'AI Cirrus Scout', title: 'VP Tier-1 Sourcing & Design-Win Capture', wf: 'scout', handled: 44, hrs: 165, win: 0, status: 'idle' },
+  { id: 'quoting', name: 'AI Audio IC Quoting Architect', title: 'Director of Mixed-Signal Volume Quoting', wf: 'quoting', handled: 38, hrs: 142, win: 24, status: 'idle' },
+  { id: 'proposal', name: 'AI Automotive Audio Proposal Lead', title: 'Automotive Acoustic Solutions Architect', wf: 'proposal', handled: 29, hrs: 118, win: 28, status: 'idle' },
+  { id: 'radar', name: 'AI Mixed-Signal Intel Analyst', title: 'Director of Competitive Strategy', wf: 'radar', handled: 56, hrs: 104, win: 0, status: 'idle' },
+  { id: 'smart_amp', name: 'AI Smart Amp & Protection Architect', title: 'Principal Mixed-Signal Audio Lead', wf: 'smart_boosted_amp_speaker_protection_flagship', handled: 112, hrs: 385, win: 48, status: 'idle' },
+  { id: 'haptics_ois', name: 'AI Closed-Loop Haptics Architect', title: 'Principal Haptics & Actuator Lead', wf: 'haptic_driver_vcm_tuning', handled: 72, hrs: 254, win: 38, status: 'idle' },
+  { id: 'anc_acoustic', name: 'AI Adaptive ANC Specialist', title: 'Principal Acoustic Scientist', wf: 'active_noise_cancellation_tuning', handled: 64, hrs: 215, win: 34, status: 'idle' },
+  { id: 'automotive_qual', name: 'AI Automotive Quality Director', title: 'AEC-Q100 Quality & Reliability Director', wf: 'mixed_signal_automotive_qual', handled: 82, hrs: 248, win: 40, status: 'idle' }
+];
+
+let curView = 'ops';
+let curEmp = null;
+let running = false;
+let draft = { step: 1, wf: '', assign: [], name: '', title: '', cadence: 'On-demand', mode: 'sequential' };
+
+function $(id) { return document.getElementById(id); }
+function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+function setView(v) {
+  curView = v;
+  $('tabA').className = 'tab' + (v === 'ops' ? ' active' : '');
+  $('tabB').className = 'tab' + (v === 'hire' ? ' active' : '');
+  $('view-ops').className = v === 'ops' ? '' : 'hidden';
+  $('view-hire').className = v === 'hire' ? '' : 'hidden';
+  if (v === 'hire') initBuilder();
+}
+
+function renderEcon() {
+  const activeOps = EMPLOYEES.length;
+  const totalHandled = EMPLOYEES.reduce((acc, e) => acc + e.handled, 0);
+  const totalHrs = EMPLOYEES.reduce((acc, e) => acc + e.hrs, 0);
+  const avgWin = Math.round(EMPLOYEES.filter(e => e.win > 0).reduce((acc, e) => acc + e.win, 0) / (EMPLOYEES.filter(e => e.win > 0).length || 1));
+  $('econ').innerHTML = `
+    <div class="cell"><div class="v">${activeOps}</div><div class="k">Active AI Operators</div></div>
+    <div class="cell"><div class="v">${totalHandled}</div><div class="k">Mixed-Signal Audio &amp; IC Workflows Handled</div></div>
+    <div class="cell"><div class="v">${totalHrs.toLocaleString()} <span class="u">hrs</span></div><div class="k">Engineering &amp; Sales Time Saved</div></div>
+    <div class="cell"><div class="v">+${avgWin}<span class="u">%</span></div><div class="k">Average Design-Win Velocity Gain</div></div>
+  `;
+}
+
+function chips(w) {
+  let h = '';
+  if (w.track === 'commercial') h += `<span class="tag commercial">Commercial</span> `;
+  else if (w.track === 'operations') h += `<span class="tag operations">Mixed-Signal &amp; DSP</span> `;
+  if (w.tag === 'flagship') h += `<span class="tag hero">Flagship</span> `;
+  return h;
+}
+
+function mono(name) {
+  return name.split(' ').map(w => w[0]).filter(Boolean).slice(0, 2).join('').toUpperCase();
+}
+
+function renderRoster() {
+  let html = '';
+  TRACKS.forEach(([tKey, tLabel]) => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === tKey);
+    if (!list.length) return;
+    html += `<div class="slabel">${tLabel}</div><div class="roster">`;
+    list.forEach(e => {
+      const w = WORKFLOWS[e.wf];
+      const isHero = w && w.tag === 'flagship';
+      html += `
+        <div class="emp ${isHero ? 'hero' : ''} ${e.status === 'working' ? 'working' : ''}" id="emp-${e.id}">
+          <div class="emp-top">
+            <div class="avatar">${mono(e.name)}</div>
+            <div>
+              <div class="emp-name">${e.name} ${chips(w)}</div>
+              <div class="emp-title">${e.title}</div>
+            </div>
+          </div>
+          <div class="emp-owns">Owns: <b>${w.name}</b></div>
+          <div class="team">
+            ${w.tasks.map(t => `<span class="chip">${AGENT_ROLES[t.agent] ? AGENT_ROLES[t.agent].emoji + ' ' + AGENT_ROLES[t.agent].label : t.agent}</span>`).join('')}
+          </div>
+          <div class="emp-stats">
+            <div class="st"><b>${e.handled}</b>Workflows handled</div>
+            <div class="st"><b>${e.hrs}h</b>Time saved</div>
+            <div class="st"><b>${e.win ? '+' + e.win + '%' : '—'}</b>Cycle velocity</div>
+          </div>
+          <div class="actions">
+            <button class="btn primary big" onclick="openRun('${e.id}')">▶ Run operator</button>
+          </div>
+        </div>
+      `;
+    });
+    html += `</div>`;
+  });
+  html += `
+    <div class="slabel" style="margin-top:24px">Custom Operator Composition</div>
+    <div class="roster">
+      <div class="hire-card" onclick="setView('hire')">
+        <div class="plus">+</div>
+        <div class="h">Add an AI operator</div>
+        <div class="p">Compose a custom smart audio, haptics, or mixed-signal workflow from specialist agents</div>
+      </div>
+    </div>
+  `;
+  $('roster').innerHTML = html;
+}
+
+function openRun(id) {
+  curEmp = EMPLOYEES.find(e => e.id === id);
+  if (!curEmp) return;
+  const w = WORKFLOWS[curEmp.wf];
+  $('runPanel').innerHTML = `
+    <div class="run" id="runBox">
+      <div class="run-head">
+        <div class="avatar">${mono(curEmp.name)}</div>
+        <div>
+          <div class="emp-name">${curEmp.name} &middot; Execution Console ${chips(w)}</div>
+          <div class="run-sub">${curEmp.title} &mdash; ${w.name}</div>
+        </div>
+      </div>
+      <div class="run-input">
+        <textarea id="runPrompt">${w.sample}</textarea>
+        <button class="btn primary big" id="btnStart" onclick="startRun()">▶ Run operator</button>
+      </div>
+      <div class="phases">
+        <div class="ph active" id="ph1"><div class="dot">1</div><div class="l">Phase 1: Planning</div></div>
+        <div class="ph" id="ph2"><div class="dot">2</div><div class="l">Phase 2: Execution</div></div>
+        <div class="ph" id="ph3"><div class="dot">3</div><div class="l">Phase 3: Deliverable</div></div>
+      </div>
+      <div class="agent-grid" id="agentGrid">
+        ${w.tasks.map((t, i) => `
+          <div class="acard" id="acard-${i}">
+            <div class="ae">${AGENT_ROLES[t.agent].emoji}</div>
+            <div class="ar">${AGENT_ROLES[t.agent].label}</div>
+            <div class="at">${t.task}</div>
+            <div class="as"><span class="sd"></span> <span id="astat-${i}">Queued</span></div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="feed" id="liveFeed"></div>
+      <div class="result hidden" id="resBox">
+        <div class="rstats">
+          <div class="rrow"><span class="k">Deliverable</span><span class="v">${w.deliverable}</span></div>
+          <div class="rrow"><span class="k">Mode</span><span class="v">${w.mode.toUpperCase()}</span></div>
+          <div class="rrow"><span class="k">Agents Engaged</span><span class="v">${w.tasks.length} Specialists</span></div>
+          <div class="rrow"><span class="k">Quality Signoff</span><span class="v" style="color:var(--ok)">✓ Verified</span></div>
+        </div>
+        <div class="rout">
+          <div class="rh">${DTITLE[curEmp.wf] || w.deliverable}</div>
+          <div class="rb" id="resBody"></div>
+        </div>
+      </div>
+      <div class="donebar hidden" id="doneBar">
+        <b>Operator execution complete.</b> Deliverable generated, formatted, and verified for stakeholder review.
+      </div>
+    </div>
+  `;
+  $('runBox').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function logFeed(t, a, d) {
+  const f = $('liveFeed');
+  if (!f) return;
+  const row = document.createElement('div');
+  row.className = 'frow';
+  row.innerHTML = `<span class="ft">${t}</span><span class="fa">${a}</span><span class="fd">${d}</span>`;
+  f.appendChild(row);
+  f.scrollTop = f.scrollHeight;
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+async function startRun() {
+  if (running || !curEmp) return;
+  running = true;
+  $('btnStart').disabled = true;
+  curEmp.status = 'working';
+  renderRoster();
+
+  const w = WORKFLOWS[curEmp.wf];
+  $('ph1').className = 'ph done';
+  $('ph2').className = 'ph active';
+
+  logFeed('00:00', 'Supervisor', `Initializing execution workflow: ${w.name}`);
+  await sleep(400);
+  logFeed('00:01', 'Planner', `Validating task dependencies and execution mode (${w.mode.toUpperCase()})`);
+  await sleep(400);
+
+  w.tasks.forEach((_, i) => {
+    const c = $('acard-' + i);
+    if (c) c.className = 'acard visible';
+  });
+
+  if (w.mode === 'sequential') {
+    for (let i = 0; i < w.tasks.length; i++) {
+      const t = w.tasks[i];
+      const role = AGENT_ROLES[t.agent];
+      const card = $('acard-' + i);
+      const stat = $('astat-' + i);
+      if (card) card.className = 'acard visible running';
+      if (stat) stat.textContent = 'Executing...';
+
+      logFeed(`00:0${i + 2}`, role.label, `Starting: ${t.task}`);
+      await sleep(650);
+
+      const tool = role.tools[0] || 'save';
+      const output = TOOLS[tool] ? TOOLS[tool]() : 'Step executed successfully.';
+      logFeed(`00:0${i + 2}`, role.label, `[${tool}] ${output}`);
+      await sleep(450);
+
+      if (card) card.className = 'acard visible done';
+      if (stat) stat.textContent = 'Completed ✓';
+    }
+  } else {
+    const completed = new Set();
+    let sec = 2;
+    while (completed.size < w.tasks.length) {
+      const ready = [];
+      for (let i = 0; i < w.tasks.length; i++) {
+        if (!completed.has(i)) {
+          const deps = w.tasks[i].deps;
+          if (deps.every(d => completed.has(d))) {
+            ready.push(i);
+          }
+        }
+      }
+      if (!ready.length) break;
+
+      ready.forEach(i => {
+        const c = $('acard-' + i);
+        const s = $('astat-' + i);
+        if (c) c.className = 'acard visible running';
+        if (s) s.textContent = 'Running parallel...';
+        const role = AGENT_ROLES[w.tasks[i].agent];
+        logFeed(`00:0${sec}`, role.label, `Dispatched: ${w.tasks[i].task}`);
+      });
+      await sleep(800);
+
+      ready.forEach(i => {
+        const role = AGENT_ROLES[w.tasks[i].agent];
+        const tool = role.tools[0] || 'save';
+        const output = TOOLS[tool] ? TOOLS[tool]() : 'Task completed.';
+        logFeed(`00:0${sec}`, role.label, `[${tool}] ${output}`);
+        const c = $('acard-' + i);
+        const s = $('astat-' + i);
+        if (c) c.className = 'acard visible done';
+        if (s) s.textContent = 'Completed ✓';
+        completed.add(i);
+      });
+      sec++;
+      await sleep(400);
+    }
+  }
+
+  $('ph2').className = 'ph done';
+  $('ph3').className = 'ph active done';
+  logFeed('00:08', 'Supervisor', 'All tasks finished. Compiling final deliverable.');
+
+  $('resBody').textContent = FINAL[curEmp.wf] || 'Deliverable generated successfully.';
+  $('resBox').className = 'result';
+  $('doneBar').className = 'donebar';
+
+  curEmp.handled += 1;
+  curEmp.hrs += rand(4, 9);
+  curEmp.status = 'idle';
+  running = false;
+  $('btnStart').disabled = false;
+  renderEcon();
+  renderRoster();
+}
+
+function initBuilder() {
+  draft = {
+    step: 1,
+    wf: Object.keys(WORKFLOWS)[0],
+    assign: WORKFLOWS[Object.keys(WORKFLOWS)[0]].tasks.map(t => t.agent),
+    name: 'Custom Mixed-Signal Operator',
+    title: 'AI Audio Silicon Specialist',
+    cadence: 'On-demand',
+    mode: WORKFLOWS[Object.keys(WORKFLOWS)[0]].mode
+  };
+  renderBuilder();
+}
+
+function renderBuilder() {
+  const steps = [
+    ['1', 'Pick workflow'],
+    ['2', 'Assign agents'],
+    ['3', 'Name & cadence']
+  ];
+  $('bSteps').innerHTML = steps.map((s, i) => `<div class="step ${draft.step === i + 1 ? 'active' : ''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+  if (draft.step === 1) bS1();
+  else if (draft.step === 2) bS2();
+  else bS3();
+  bNav();
+}
+
+function bS1() {
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">` + Object.keys(WORKFLOWS).map(k => {
+    const w = WORKFLOWS[k];
+    return `<div class="wf ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')">
+      <div class="wn">${w.name} ${chips(w)}</div>
+      <div class="wd">${w.desc}</div>
+      <div class="wm">${w.tasks.length} agents · ${w.mode}</div>
+    </div>`;
+  }).join('') + `</div>`;
+}
+
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Assign each task to an agent</div>` + w.tasks.map((t, i) => `
+    <div class="task-row">
+      <div class="tn">${i + 1}</div>
+      <div class="tt">${t.task}${t.deps.length ? ` <span style="color:var(--tert)">· waits for ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}</div>
+      <select onchange="draft.assign[${i}]=this.value">${opts}</select>
+    </div>
+  `).join('') + `
+    <div class="field" style="margin-top:14px">
+      <label>Execution mode</label>
+      <div class="seg">` + ['sequential', 'dag'].map(m => `<button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (parallel where safe)' : 'Sequential'}</button>`).join('') + `</div>
+    </div>
+  `;
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Name & cadence</div>
+    <div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. AI-CS35L56-Architect" oninput="draft.name=this.value"></div>
+    <div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Smart Audio Specialist" oninput="draft.title=this.value"></div>
+    <div class="field"><label>Cadence</label><div class="seg">` + ['Per tape-out run', 'Per batch', 'Weekly', 'On-demand'].map(c => `<button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('') + `</div></div>
+    <div class="slabel" style="margin-top:0">Preview</div>
+    <div class="emp" style="max-width:360px">
+      <div class="emp-top">
+        <div class="avatar">${mono(draft.name || 'New')}</div>
+        <div>
+          <div class="emp-name">${draft.name || 'New operator'} ${chips(w)}</div>
+          <div class="emp-title">${draft.title || 'AI operator'}</div>
+        </div>
+      </div>
+      <div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div>
+    </div>`;
+}
+
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right;
+  if (draft.step === 1) right = `<button class="btn primary" ${draft.wf ? '' : 'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+  else right = `<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;
+  $('bNav').innerHTML = left + right;
+}
+
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  WORKFLOWS[wfId] = {
+    name: w.name,
+    title: w.title,
+    mode: draft.mode || w.mode,
+    track: w.track,
+    tag: w.tag,
+    deliverable: w.deliverable,
+    sample: w.sample,
+    desc: w.desc,
+    tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps }))
+  };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({ id, name, title: draft.title || w.title, wf: wfId, handled: 0, hrs: rand(40, 140), win: 0, status: 'idle' });
+  renderEcon();
+  renderRoster();
+  setView('ops');
+  setTimeout(() => {
+    const c = $('emp-' + id);
+    if (c) {
+      c.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      c.style.boxShadow = '0 0 0 2px var(--accent)';
+      setTimeout(() => c.style.boxShadow = '', 1800);
+    }
+  }, 250);
+}
+
+renderEcon();
+renderRoster();
+</script>
+</body>
+</html>
