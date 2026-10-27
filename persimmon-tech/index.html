@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Persimmon Technologies &mdash; AI Commercial &amp; Vacuum Robotics Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;600;700&family=Fjalla+One&family=Open+Sans:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#f8fafc;
+  --surface:#ffffff;
+  --surface2:#f0f5fa;
+  --border:#d2e1f0;
+  --accent:#09539D;
+  --accent-dim:rgba(9,83,157,.08);
+  --accent-line:rgba(9,83,157,.32);
+  --blue-sky:#35ACE9;
+  --blue-cyan:#0891D6;
+  --blue-cyan-dim:rgba(8,145,214,.10);
+  --blue-cyan-line:rgba(8,145,214,.35);
+  --slate:#072B51;
+  --slate-line:rgba(7,43,81,.32);
+  --text:#222222;
+  --hi:#071C34;
+  --tert:#59677D;
+  --ok:#16a34a;
+  --ok-dim:rgba(22,163,74,.10);
+  --gold:#FF6E12;
+  --gold-bg:#fff7ed;
+  --gold-line:#fdba74;
+}
+body{background:var(--canvas);color:var(--text);font-family:'Open Sans',system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.htitle,.emp-name,.cell .v,.wn,.slabel{font-family:'Arimo',sans-serif;font-weight:700;letter-spacing:-.3px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:14px 30px;border-bottom:2px solid var(--accent);position:sticky;top:0;background:#ffffff;box-shadow:0 4px 12px rgba(9,83,157,0.06);z-index:30}
+.logo{display:flex;align-items:center;gap:14px}
+.logo-img{height:34px;width:auto;display:block;object-fit:contain}
+.brand-divider{height:28px;width:1px;background:var(--border)}
+.htitle{font-size:15px;font-weight:700;color:var(--hi);line-height:1.2}.hsub{font-size:11px;color:var(--tert);margin-top:2px;font-family:'Open Sans',sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);background:var(--surface2);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:'Arimo',sans-serif}.badge b{color:var(--accent)}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:'Arimo',sans-serif;transition:all .3s}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:13.5px;line-height:1.6;max-width:920px;margin-bottom:14px;color:#334155;font-family:'Open Sans',sans-serif}.lead b{color:var(--hi);font-family:'Arimo',sans-serif}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:'Open Sans',sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:'Arimo',sans-serif}
+.tag.commercial{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-line)}
+.tag.operations{background:var(--blue-cyan-dim);color:var(--blue-cyan);border:1px solid var(--blue-cyan-line)}
+.tag.hero{background:var(--gold-bg);color:#c2410c;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,0.02)}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:var(--accent)}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:'Open Sans',sans-serif}
+.slabel{font-size:11.5px;font-weight:700;letter-spacing:1.2px;color:var(--accent);text-transform:uppercase;margin:22px 0 14px;display:flex;align-items:center;gap:10px}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:0 2px 5px rgba(0,0,0,0.02);transition:border-color .3s,box-shadow .3s}
+.emp.working{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--accent);font-size:14px;flex-shrink:0;position:relative;font-family:'Fjalla One',sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:16.5px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:'Open Sans',sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:'Open Sans',sans-serif;color:#475569}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:'Open Sans',sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:'Open Sans',sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700;font-family:'Arimo',sans-serif}
+.btn{font-family:'Arimo',sans-serif;font-size:12.5px;font-weight:700;border-radius:8px;padding:9px 15px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi);transition:all .25s}
+.btn:hover{border-color:var(--accent);color:var(--accent)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--blue-sky);border-color:var(--blue-sky);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);background:var(--surface);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px;transition:border-color .3s}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);background:var(--surface2);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:700;color:var(--hi);font-family:'Arimo',sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:'Open Sans',sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:0 4px 12px rgba(0,0,0,0.03)}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:'Open Sans',sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:'Open Sans',sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45;transition:border-color .2s}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:'Arimo',sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:700;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:'Open Sans',sans-serif}
+.acard.visible{opacity:1;background:#fff}.acard.running{border-color:var(--accent);opacity:1;box-shadow:0 0 0 1px var(--accent)}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi);font-family:'Arimo',sans-serif}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#ffffff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:'Roboto Mono',monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--accent);font-weight:600}.frow .fd{color:var(--text);opacity:.9;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:'Open Sans',sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:700;font-family:'Arimo',sans-serif}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12.5px;font-weight:700;color:var(--hi);font-family:'Arimo',sans-serif;background:var(--surface2)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto;font-family:'Roboto Mono',monospace;color:#1e293b}
+.donebar{background:var(--surface2);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:'Open Sans',sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:'Arimo',sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:700;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface);transition:border-color .2s}
+.wf:hover{border-color:var(--accent)}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:'Arimo',sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:'Open Sans',sans-serif}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:700;text-transform:uppercase;font-family:'Arimo',sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:'Open Sans',sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;font-family:'Arimo',sans-serif}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px;font-family:'Open Sans',sans-serif}.field label{display:block;font-size:12px;font-weight:700;color:var(--hi);margin-bottom:6px;font-family:'Arimo',sans-serif}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:99px;padding:11px 16px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:99px;overflow:hidden}
+.seg button{font-family:'Arimo',sans-serif;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border);transition:background .2s}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff;font-weight:700}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.55;font-family:'Open Sans',sans-serif}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="header">
+<div class="logo">
+  <img class="logo-img" src="data:image/png;base64,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" alt="Persimmon Technologies">
+  <div class="brand-divider"></div>
+  <div>
+    <div class="htitle">Persimmon Technologies &middot; AI Commercial &amp; Vacuum Robotics Workforce</div>
+    <div class="hsub">A Sumitomo Heavy Industries Company &middot; Bedford, MA &middot; Direct-drive vacuum robotics &amp; 3D hybrid-field motors</div>
+  </div>
+</div>
+<div class="badge">Independent concept &nbsp;&middot;&nbsp; <b>illustrative</b></div>
+</header>
+
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>a direct-drive vacuum robot sizing, SwitchBlade cluster tool trajectory optimization, or 3D hybrid-field motor engineering workflow turned into an autonomous team of agents</b>. Persimmon Technologies Corporation (headquartered in Bedford, Massachusetts and a group company of Sumitomo Heavy Industries) is a premier global innovator in high-performance vacuum robotics and next-generation electric motor technology for semiconductor manufacturing, advanced packaging, power electronics, and display fabrication. Persimmon pioneers gearless and beltless direct-drive vacuum robots including SwitchBlade (Dual 2-link Yaw), iQuad (Butterfly Quad), iDual (Dual SCARA), and Single SCARA configurations, delivering up to 70% higher motor torque and superior placement repeatability (&lt; &plusmn;0.020 mm) in ultra-high vacuum (UHV) semiconductor cluster chambers. One track drives commercial sourcing &amp; Tier-1 OEM tool qualification: it targets semiconductor equipment leaders (Applied Materials, Lam Research, Tokyo Electron, ASML, ASM International, KLA) and global foundries (TSMC, Intel, Samsung), structures 120-unit direct-drive robot volume quotes, and negotiates multi-chamber vacuum transfer module (VTM) integration agreements. The other track executes vacuum robotics, motor physics &amp; cleanroom manufacturing engineering: it synthesizes high-speed dual-wafer SwitchBlade transfer trajectories (&gt; 380 WPH throughput, 0% wafer slip), models 3D hybrid-field soft magnetic composite (SMC) motor flux paths (2x torque density, zero cogging), audits high-vacuum thermal dissipation in corrosive etch/ALD chemistries (fluorine, chlorine, ammonia at 450&deg;C), and signs off ISO Class 1 particle inspection travelers. Point one at a cluster chamber layout, a vacuum kinematic spec, or a motor core parameter and it runs the loop, then hands back a review-ready output for a person to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial &amp; OEM Sourcing</span> find OEMs, direct-drive robot quote, VTM platform proposal</span>
+<span><span class="tag operations">Robotics, Motor &amp; Vacuum Eng</span> SwitchBlade 380 WPH, 3D hybrid motor, UHV chemistry audit, Class 1 FAT</span>
+<span><span class="tag hero">Flagship</span> the deepest example run</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+
+<div class="foot">Independent concept prototype prepared by Innvonix Tech Solutions for a conversation with Persimmon Technologies Corporation (Bedford, MA &middot; A Sumitomo Heavy Industries Company). It is not affiliated with, endorsed by, or built on Persimmon Technologies systems or data. All operators and outputs are illustrative simulations; wafer throughput rates, placement repeatability tolerances, vacuum outgassing metrics, motor torque densities, and commercial quotes are placeholders. A VP of engineering, director of vacuum robotics, chief motor architect, or VP of global sales reviews and approves every robot trajectory traveler, motor core design, chamber qualification report, and OEM commercial agreement. This is not a production system and produces no deliverable for a real customer.</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'Semiconductor OEM & Fab Equipment Market Research', tools: ['research', 'save'] },
+  prospector: { emoji: '🧲', label: 'Semi Tool OEM & Wafer Fab Account Sourcing', tools: ['source_accounts', 'save'] },
+  qualifier: { emoji: '🎯', label: 'Vacuum Robot & Cluster Chamber Fit Qualifier', tools: ['score_fit', 'save'] },
+  robotics_kinematics_eng: { emoji: '🤖', label: 'Direct-Drive Kinematics & Multi-Axis Trajectory Specialist', tools: ['simulate_trajectory_spline', 'optimize_jerk_profile', 'save'] },
+  hybrid_motor_physicist: { emoji: '🧲', label: '3D Hybrid-Field Motor & Magnetic Flux Physicist', tools: ['model_3d_flux_density', 'simulate_thermal_vacuum_dissipation', 'save'] },
+  vacuum_cfd_engineer: { emoji: '🌌', label: 'High-Vacuum & Particle Aerodynamics Engineer', tools: ['model_uhv_particle_shedding', 'verify_outgassing_rate', 'save'] },
+  end_effector_designer: { emoji: '🦾', label: 'Ceramic, SiC & End-Effector Materials Specialist', tools: ['simulate_ceramic_thermal_stress', 'verify_clamping_force', 'save'] },
+  motion_control_lead: { emoji: '⚡', label: 'Direct-Drive Servo & Vibration Suppression Lead', tools: ['tune_direct_drive_pid', 'suppress_resonance_harmonics', 'save'] },
+  harsh_chem_auditor: { emoji: '🧪', label: 'Corrosive Chemistry & UHV Reliability Auditor', tools: ['audit_corrosive_gas_compatibility', 'verify_vacuum_seal_integrity', 'save'] },
+  semi_compliance_officer: { emoji: '📋', label: 'SEMI Standards & ISO Class 1 QA Officer', tools: ['audit_semi_e90_compliance', 'signoff_fat_traveler', 'save'] },
+  pricing: { emoji: '🧮', label: 'Robot OEM Volume & Spares Quoting Architect', tools: ['build_quote', 'save'] },
+  writer: { emoji: '✍️', label: 'Semiconductor Automation & Technical Proposal Lead', tools: ['compose', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+
+const TRACKS = [
+  ['commercial', 'Commercial &amp; OEM Sourcing'],
+  ['operations', 'Robotics, Motor &amp; Vacuum Eng']
+];
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Tier-1 semiconductor tool OEM & advanced packaging account discovery',
+    title: 'AI Persimmon Scout',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Target Semiconductor Tool OEM & Wafer Fab Account Dossier',
+    sample: 'Identify Tier-1 semiconductor equipment manufacturers (Applied Materials, Lam Research, Tokyo Electron, ASML, ASM International, KLA) and leading fabs (TSMC, Intel, Samsung Foundry, Micron) expanding 300mm etch, ALD, CVD, and advanced packaging cluster tools requiring direct-drive vacuum robots.',
+    desc: 'Agents scan semiconductor tool roadmaps, capital expenditure announcements, and cluster chamber expansion plans, map VP of Hardware Engineering and Director of Automation, score fit, and compile ranked target list.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan 300mm wafer fab expansions, GAA nanosheet etch/deposition tool ramps, and 2.5D/3D advanced packaging cluster tool investments.', deps: [] },
+      { agent: 'prospector', task: 'Source VP of Chamber Architecture, Director of Automation Platforms, and Lead Robotics Sourcing Engineer across top 8 tool OEMs.', deps: [] },
+      { agent: 'qualifier', task: 'Score qualification fit against Persimmon direct-drive vacuum robots: SwitchBlade dual-link yaw, iQuad butterfly quad, and iDual SCARA.', deps: [0, 1] },
+      { agent: 'writer', task: 'Compile ranked OEM and fab account dossier detailing chamber envelope requirements, tool cycle time targets, and engagement roadmap.', deps: [2] }
+    ]
+  },
+
+  quoting: {
+    name: 'Direct-drive vacuum robot multi-tool volume & spares pricing',
+    title: 'AI Direct-Drive Robot Quoting Architect',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Direct-Drive Vacuum Robot OEM Volume Quote Package',
+    sample: 'A leading etch equipment OEM requested an RFQ for 120 units of Persimmon SwitchBlade direct-drive vacuum robots for a 300mm atomic layer etch (ALE) cluster tool platform, including custom alumina end-effectors, dual-axis direct-drive motors, and 5-year MTBF spare parts coverage.',
+    desc: 'Agents parse customer RFQ chamber specs, verify direct-drive motor and end-effector BOM costs, calculate volume pricing tiers (16% discount at 100+ units), and compile formal OEM commercial quote package.',
+    tasks: [
+      { agent: 'qualifier', task: 'Parse OEM RFQ: 120 units SwitchBlade Dual 2-link Yaw robots, 300mm silicon wafer handling, UHV 10^-8 Torr compatibility, 14-week delivery lead time.', deps: [] },
+      { agent: 'robotics_kinematics_eng', task: 'Verify kinematics envelope: reach radius 680 mm, vertical Z-stroke 150 mm, dual-end-effector yaw articulation, and dynamic repeatability < ±0.020 mm.', deps: [0] },
+      { agent: 'pricing', task: 'Structure commercial volume pricing: robot base unit cost, custom high-purity alumina end-effectors, dual-axis motor drivers, and multi-year spares bundle.', deps: [1] },
+      { agent: 'writer', task: 'Generate formal OEM Quote Package with volume discount matrix, warranty terms, ISO Class 1 cleanroom packaging, and delivery schedule.', deps: [2] }
+    ]
+  },
+
+  proposal: {
+    name: 'Vacuum Transfer Module (VTM) cluster platform integration proposal',
+    title: 'AI OEM Platform Integration Proposal Lead',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'VTM Cluster Platform Co-Development Proposal',
+    sample: 'Prepare a multi-year joint development proposal for a global deposition equipment maker integrating Persimmon SwitchBlade or iQuad direct-drive robots into a 6-sided vacuum transfer module (VTM) supporting sub-2nm GAA nanosheet ALD/CVD process chambers.',
+    desc: 'Agents scope OEM cluster platform architecture, model dual-arm swap time and wafer exchange throughput, draft joint engineering milestones, and produce executive co-development proposal.',
+    tasks: [
+      { agent: 'qualifier', task: 'Parse deposition OEM system requirements: 6-sided vacuum transfer module, 300mm wafer transfer under 10^-8 Torr UHV, continuous 24/7 fab operation.', deps: [] },
+      { agent: 'end_effector_designer', task: 'Design dual-end-effector geometry: high-purity recrystallized alumina blades with sapphire locating pads, rated for 450°C hot wafer transfer.', deps: [0] },
+      { agent: 'pricing', task: 'Model NPI non-recurring engineering (NRE), chamber integration test units, SEMI E90 software integration support, and volume production supply milestones.', deps: [1] },
+      { agent: 'writer', task: 'Synthesize VTM Cluster Platform Co-Development Proposal detailing chamber swap mechanics, MTBC (> 120,000 hrs), and production delivery roadmap.', deps: [2] }
+    ]
+  },
+
+  radar: {
+    name: 'Semiconductor vacuum robotics & direct-drive motor competitive intelligence brief',
+    title: 'AI Vacuum Robotics Intel Analyst',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Vacuum Robotics Competitive Intelligence Brief',
+    sample: 'Benchmark Persimmon Technologies direct-drive vacuum robots and 3D hybrid-field motors against competitors (Brooks Automation Marathon/Magnatran, Yaskawa, Hirata, Rorze, Daihen) across motor torque density, wafer placement repeatability, particle shedding, and maintenance overhead.',
+    desc: 'Agents scan vacuum robotics patents and product releases, benchmark torque density and mechanical wear metrics, and compile sales battle cards for OEM account executives.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan competitor vacuum robotics product lines: Brooks Automation Magnatran, Yaskawa Motoman vacuum series, Rorze atmospheric/vacuum transfer, and Daihen.', deps: [] },
+      { agent: 'prospector', task: 'Extract customer pain points: internal belt wear, particle contamination in UHV chambers, thermal drift during continuous 300mm wafer processing, and seal failures.', deps: [] },
+      { agent: 'motion_control_lead', task: 'Benchmark architectural differentiation: Persimmon fully direct-drive design (no internal belts/gears) + 70% higher torque + 3D hybrid-field motor core efficiency.', deps: [0, 1] },
+      { agent: 'writer', task: 'Produce comprehensive competitive intelligence brief and sales battle card proving 3x lower maintenance downtime and superior placement repeatability.', deps: [2] }
+    ]
+  },
+
+  switchblade_vtm_trajectory_flagship: {
+    name: 'SwitchBlade® dual-arm vacuum transfer trajectory & throughput optimization',
+    title: 'AI SwitchBlade Vacuum Trajectory Architect',
+    mode: 'sequential',
+    track: 'operations',
+    tag: 'flagship',
+    deliverable: 'SwitchBlade Production Vacuum Transfer Optimization Traveler',
+    sample: 'Optimize high-speed dual-wafer vacuum transfer in a 6-sided 300mm etch/deposition cluster tool using a Persimmon SwitchBlade direct-drive vacuum robot: synthesize jerk-limited S-curve trajectory splines, tune direct-drive servo gains for sub-2.4s dual-arm swap time, verify wafer placement repeatability under ±0.018 mm at 10^-8 Torr vacuum, simulate alumina blade thermal deflection at 350°C, eliminate wafer slip without edge damage, and generate production release traveler.',
+    desc: 'Agents synthesize multi-axis direct-drive trajectories, tune resonance notch filters, verify thermal deflection and particle emissions in UHV, and generate production traveler.',
+    tasks: [
+      { agent: 'robotics_kinematics_eng', task: 'Synthesize 5th-order polynomial S-curve trajectory for SwitchBlade dual-link yaw arm: calculate radial extension, azimuth rotation, and Z-stroke profile.', deps: [] },
+      { agent: 'motion_control_lead', task: 'Tune direct-drive servo velocity and position loops: configure feedforward friction compensation and suppress arm mechanical resonance at 42 Hz.', deps: [0] },
+      { agent: 'hybrid_motor_physicist', task: 'Calculate direct-drive motor torque output: verify continuous torque margin (> 38 Nm) and confirm zero thermal degradation under continuous 380 WPH transfer cycles.', deps: [1] },
+      { agent: 'end_effector_designer', task: 'Simulate high-purity alumina end-effector stress: analyze centrifugal acceleration force (0.85g) and verify zero wafer slip against sapphire pads at 350°C.', deps: [2] },
+      { agent: 'writer', task: 'Compile SwitchBlade Production Vacuum Transfer Optimization Traveler with kinematic profiles, position repeatability data, and chamber signoff traveler.', deps: [3] }
+    ]
+  },
+
+  hybrid_field_motor_synthesis: {
+    name: '3D hybrid-field electric motor magnetic flux & SMC core synthesis',
+    title: 'AI 3D Hybrid-Field Motor Co-Designer',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: '3D Hybrid-Field Motor Synthesis & Thermal Simulation Dossier',
+    sample: 'Synthesize a custom 3D hybrid-field direct-drive servo motor core for next-generation vacuum robotics: model three-dimensional magnetic flux paths using isotropic soft magnetic composite (SMC) materials, optimize additive spray-forming core geometry, verify 2x torque density improvement over laminated steel cores, and simulate conductive thermal dissipation in 10^-8 Torr vacuum.',
+    desc: 'Agents model 3D flux density vectors, simulate core eddy current and hysteresis losses, verify vacuum thermal dissipation, and produce comprehensive motor engineering dossier.',
+    tasks: [
+      { agent: 'hybrid_motor_physicist', task: 'Model 3D magnetic flux paths across isotropic soft magnetic composite (SMC) stator core: calculate flux density saturation and zero-cogging torque profile.', deps: [] },
+      { agent: 'vacuum_cfd_engineer', task: 'Simulate thermal conduction through motor housing in 10^-8 Torr UHV vacuum: model conduction paths through base flange with zero convective cooling.', deps: [0] },
+      { agent: 'motion_control_lead', task: 'Calculate back-EMF harmonics and torque ripple: verify total harmonic distortion (THD < 1.2%) for ultra-smooth low-speed direct-drive positioning.', deps: [1] },
+      { agent: 'writer', task: 'Produce 3D Hybrid-Field Motor Synthesis Dossier with magnetic flux plots, thermal dissipation profiles, torque density comparison, and manufacturing guidelines.', deps: [2] }
+    ]
+  },
+
+  harsh_chem_thermal_audit: {
+    name: 'Corrosive etch/ALD chamber chemistry & UHV thermal endurance audit',
+    title: 'AI UHV Chamber Chemistry Reliability Auditor',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'Corrosive Chemistry & Thermal Vacuum Reliability Audit',
+    sample: 'Audit Persimmon vacuum robot survivability and seal integrity in extreme semiconductor process conditions: continuous exposure to aggressive process gases (NF3, Cl2, HBr, BCl3, NH3) at temperatures up to 450°C and vacuum levels down to 10^-8 Torr in an advanced dielectric etch cluster chamber.',
+    desc: 'Agents evaluate fluorinated and chlorinated chemical compatibility, verify magnetic fluid / ferrofluidic vacuum feedthrough hermeticity, and produce reliability certification report.',
+    tasks: [
+      { agent: 'harsh_chem_auditor', task: 'Analyze chemical resistance of exposed robot components: anodized aerospace aluminum link arms, nickel-plated motor housings, and perfluoroelastomer (FFKM) seals.', deps: [] },
+      { agent: 'vacuum_cfd_engineer', task: 'Measure outgassing rates and helium leak integrity: verify leak rate < 1.0 x 10^-10 mbar·l/s across dynamic vacuum seals under thermal cycling.', deps: [] },
+      { agent: 'semi_compliance_officer', task: 'Cross-check against SEMI S2 environmental, health, and safety standards and SEMI F47 voltage sag immunity requirements.', deps: [0, 1] },
+      { agent: 'writer', task: 'Generate Corrosive Chemistry & Thermal Vacuum Reliability Audit with material degradation curves, seal inspection intervals, and preventative maintenance protocols.', deps: [2] }
+    ]
+  },
+
+  cleanroom_metrology_signoff: {
+    name: 'ISO Class 1 cleanroom particle emission & SEMI E90 metrology signoff',
+    title: 'AI Cleanroom Quality & Metrology Inspector',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'ISO Class 1 Particle Verification & SEMI E90 Traveler',
+    sample: 'Execute factory acceptance test (FAT) and cleanroom qualification for a Persimmon iQuad direct-drive vacuum robot: perform continuous laser particle counter (LPC) inspection for sub-20nm particles during 10,000 continuous wafer cycles, verify SEMI E90 substrate tracking protocol compliance, and sign off traveler.',
+    desc: 'Agents monitor airborne and in-vacuum particle shedding, audit SEMI E90 software communication states, verify dynamic runout on Zeiss CMM, and generate signed FAT release document.',
+    tasks: [
+      { agent: 'vacuum_cfd_engineer', task: 'Execute laser particle counter (LPC) monitoring inside test chamber: verify zero particle generation (> 0.01 particles/wafer pass at ≥ 20nm) over 10,000 cycles.', deps: [] },
+      { agent: 'harsh_chem_auditor', task: 'Perform surface cleanliness and total organic carbon (TOC) wipe audit on robotic links and ceramic end-effector surfaces.', deps: [0] },
+      { agent: 'semi_compliance_officer', task: 'Validate SEMI E90 substrate tracking protocol, SEMI E72 carrier management integration, and emergency stop interlocks.', deps: [1] },
+      { agent: 'writer', task: 'Produce formal ISO Class 1 Particle Verification & SEMI E90 Factory Acceptance Traveler with certificate of compliance and QA signoff.', deps: [2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'Target Semiconductor Tool OEM & Wafer Fab Account Dossier',
+  quoting: 'Direct-Drive Vacuum Robot OEM Volume Quote Package',
+  proposal: 'VTM Cluster Platform Co-Development Proposal',
+  radar: 'Vacuum Robotics Competitive Intelligence Brief',
+  switchblade_vtm_trajectory_flagship: 'SwitchBlade Production Vacuum Transfer Optimization Traveler',
+  hybrid_field_motor_synthesis: '3D Hybrid-Field Motor Synthesis & Thermal Simulation Dossier',
+  harsh_chem_thermal_audit: 'Corrosive Chemistry & Thermal Vacuum Reliability Audit',
+  cleanroom_metrology_signoff: 'ISO Class 1 Particle Verification & SEMI E90 Traveler'
+};
+
+const TOOLS = {
+  research: () => 'Analyzed SEMI world fab forecast: 300mm equipment spending reaching $137B with 42 new GAA & 3D NAND fab projects.',
+  source_accounts: () => 'Sourced 34 executive accounts: VP of Chamber Hardware, Automation Directors, and Principal Robotics Architects at Tier-1 OEMs.',
+  score_fit: () => 'Scored OEM tool chamber fit: 94.6% compatibility with Persimmon SwitchBlade and iQuad vacuum direct-drive platforms.',
+  simulate_trajectory_spline: () => 'Synthesized 5th-order polynomial trajectory: dual-arm swap time reduced to 2.38s with peak jerk constrained to 14.2 m/s³.',
+  optimize_jerk_profile: () => 'Optimized trajectory jerk profile: eliminated high-frequency mechanical shock, keeping wafer shear force under 0.28 N.',
+  model_3d_flux_density: () => 'Computed 3D magnetic flux density across SMC core: peak airgap flux 1.48 Tesla, cogging torque reduced to 0.008 Nm.',
+  simulate_thermal_vacuum_dissipation: () => 'Simulated UHV conductive thermal dissipation: motor stator temperature stabilized at 68.4°C under 100% duty cycle at 10^-8 Torr.',
+  model_uhv_particle_shedding: () => 'Modeled vacuum molecular flow and particle dynamics: particle generation rate calculated at < 0.006 particles/wafer pass (≥ 20nm).',
+  verify_outgassing_rate: () => 'Verified total mass loss (TML < 0.08%) and collected volatile condensable material (CVCM < 0.01%) under ASTM E595 vacuum bakeout.',
+  simulate_ceramic_thermal_stress: () => 'Simulated high-purity alumina end-effector under 350°C rapid thermal transfer: max deflection 0.007 mm, safety factor 4.8x.',
+  verify_clamping_force: () => 'Verified sapphire pad friction coefficient and passive wafer retention under 0.85g radial acceleration: zero wafer slip detected.',
+  tune_direct_drive_pid: () => 'Tuned direct-drive servo PID loops with feedforward velocity scaling: achieved position settling time of 18.5 ms.',
+  suppress_resonance_harmonics: () => 'Configured dual biquad notch filters at 42.1 Hz and 118.6 Hz: suppressed arm resonance harmonics by 34.2 dB.',
+  audit_corrosive_gas_compatibility: () => 'Audited exposure to NF3 plasma and halogen gases (Cl2/HBr): anodized link coating and FFKM dynamic seals show zero pitting after 1,200 hrs.',
+  verify_vacuum_seal_integrity: () => 'Verified magnetic fluid rotary vacuum feedthrough: helium leak rate tested at 3.2 x 10^-11 mbar·l/s across 100,000 rotations.',
+  audit_semi_e90_compliance: () => 'Validated SEMI E90 substrate tracking state machine: verified millisecond-level wafer handoff handshakes with tool host controller.',
+  signoff_fat_traveler: () => 'Completed ISO Class 1 cleanroom inspection and signed factory acceptance test (FAT) release traveler with full traceability.',
+  build_quote: () => 'Structured Tier-1 OEM volume quote: 120-unit base price with 16.5% tier discount, alumina tooling bundle, and 5-year MTBF warranty.',
+  compose: () => 'Compiled technical deliverable with kinematics plots, thermal models, SEMI compliance matrices, and executive signoff traveler.',
+  save: () => 'Saved verified deliverable to Persimmon Robotics Automation Repository and OEM Customer Portal.'
+};
+
+const FINAL = {
+  scout: `PERSIMMON TECHNOLOGIES — TIER-1 SEMICONDUCTOR TOOL OEM & FAB ACCOUNT DOSSIER
+CONFIDENTIAL — PREPARED FOR OEM COMMERCIAL EXPANSION (BEDFORD, MA)
+
+1. EXECUTIVE MARKET SUMMARY
+- Industry Growth Driver: Rapid transition to sub-2nm Gate-All-Around (GAA) nanosheet transistors and 3D heterogeneous packaging.
+- Target Market Size: 300mm vacuum transfer robotics market expanding to $1.85B by 2028, driven by ultra-clean atomic layer processing.
+- Key Value Proposition: Persimmon gearless/beltless direct-drive motors eliminate internal particulate shedding, providing 70% higher torque and < ±0.020 mm repeatability.
+
+2. RANKED TIER-1 SEMICONDUCTOR OEM TARGETS
+a. Applied Materials (Santa Clara, CA)
+   - Focus Tool Platforms: Centura®, Endura®, and Producer® cluster systems for advanced etch and dielectric deposition.
+   - Target Sourcing Contacts: VP of Chamber Engineering, Director of Automation Platforms.
+   - Sizing Fit: SwitchBlade Dual 2-link Yaw direct-drive robot for ultra-fast chamber-to-chamber wafer swap.
+b. Lam Research (Fremont, CA)
+   - Focus Tool Platforms: Kiyo®, Sensei®, and Vector® conductor etch and ALD systems.
+   - Target Sourcing Contacts: VP of Hardware Engineering, Lead Vacuum Automation Architect.
+   - Sizing Fit: iQuad Butterfly Quad vacuum robot for high-throughput dual-station wafer transfers.
+c. Tokyo Electron Limited - TEL (Tokyo, Japan / Austin, TX)
+   - Focus Tool Platforms: Tactras™ and Certas™ dry etch and clean systems.
+   - Sizing Fit: Direct-drive multi-axis vacuum arm with high-temperature ceramic alumina end-effectors.
+d. ASML / Cymer (Veldhoven, NL / San Diego, CA)
+   - Focus Tool Platforms: Twinscan EUV pellicle and mask handling vacuum modules.
+   - Sizing Fit: UHV direct-drive cleanroom manipulator with zero-cogging 3D hybrid-field motor core.
+
+3. COMMERCIAL ACTION PLAN
+- Deliver tailored kinematic simulation files demonstrating 380+ WPH throughput on 6-sided vacuum transfer modules.
+- Schedule technical evaluations at Persimmon Advanced Technologies Center in Bedford, MA.
+
+NOTE: illustrative simulation prepared for commercial discussions; customer roadmaps and corporate names are illustrative.`,
+
+  quoting: `PERSIMMON TECHNOLOGIES — DIRECT-DRIVE VACUUM ROBOT OEM VOLUME QUOTE PACKAGE
+FORMAL COMMERCIAL PROPOSAL — REF: PT-RFQ-2026-8841
+
+1. CUSTOMER & SYSTEM SCOPE
+- Customer: Tier-1 Etch Equipment Manufacturer (Global Fab Equipment Division)
+- Equipment Platform: 300mm High-Vacuum Atomic Layer Etch (ALE) Cluster Tool
+- Quantity: 120 Units (Shipped across 4 production quarters)
+- Base Architecture: Persimmon SwitchBlade® Direct-Drive Dual 2-link Yaw Vacuum Robot
+
+2. TECHNICAL SPECIFICATIONS
+- Degrees of Freedom: 3-Axis Multi-Link Direct-Drive (Theta 1, Theta 2, Z-Stroke)
+- Radial Extension Reach: 680 mm (supports 300mm SEMI M1 standard wafers)
+- Vertical Z-Stroke: 150 mm direct-drive ballscrew with magnetic brake
+- Placement Repeatability: Radial < ±0.015 mm, Azimuth < ±0.008 deg, Z-axis < ±0.010 mm
+- Vacuum Compatibility: 10^-8 Torr UHV rating with magnetic fluid rotary seals
+- Cleanroom Standard: ISO Class 1 (Fed Std 209E Class 1 compatible)
+- End-Effector: High-purity recrystallized Al2O3 alumina dual blades with sapphire vacuum pads
+
+3. VOLUME PRICING & COMMERCIAL TERMS
+- Standard Unit List Price: $148,500 / unit
+- Tier Volume Discount (100+ units): 16.5% discount ($24,500 / unit savings)
+- Net Unit Price: $124,000 / unit
+- Extended Hardware Total (120 units): $14,880,000
+- Custom Alumina Tooling & End-Effector Bundle (120 dual sets): $1,140,000
+- Multi-Year Preventive Spares & Maintenance Package: $860,000
+- Total Contract Value: $16,880,000 USD
+- Lead Time: First 10 pilot units in 10 weeks; steady-state production 15 units/month.
+- Warranty: 36 months comprehensive OEM warranty; guaranteed MTBC > 100,000 hours.
+
+NOTE: illustrative simulation; pricing, discounts, and delivery schedules are placeholders.`,
+
+  proposal: `PERSIMMON TECHNOLOGIES — VTM CLUSTER PLATFORM CO-DEVELOPMENT PROPOSAL
+JOINT ENGINEERING COLLABORATION AGREEMENT (BEDFORD, MA)
+
+1. JOINT COLLABORATION OBJECTIVES
+- Integrate Persimmon Technologies SwitchBlade direct-drive vacuum robots into OEM's next-generation 6-sided Vacuum Transfer Module (VTM).
+- Eliminate transfer chamber bottlenecks in sub-2nm GAA nanosheet ALD/CVD manufacturing lines.
+- Achieve dual-arm swap time < 2.4 seconds, yielding net tool throughput > 380 wafers per hour (WPH).
+
+2. SYSTEM ARCHITECTURE & INTERFACES
+- Robot Mechanical Footprint: Drop-in bolt-circle replacement for legacy belt-driven vacuum robots.
+- Drive Mechanism: Fully integrated direct-drive brushless servo motors eliminating belts, gears, and harmonic drives.
+- Vacuum Sealing: Ferrofluidic magnetic liquid dynamic rotary feedthrough with dual containment.
+- Communications Interface: SEMI E90 substrate tracking protocol over EtherCAT / high-speed RS-485.
+- Thermal Management: Passive conduction through vacuum baseplate; rated for 450°C hot wafer handling.
+
+3. CO-DEVELOPMENT MILESTONES & WORKFLOW
+- Milestone 1 (Month 2): Kinematic digital twin simulation and Chamber CAD clearance signoff.
+- Milestone 2 (Month 4): Delivery of 2 Alpha test robots to OEM Bedford/Silicon Valley development lab.
+- Milestone 3 (Month 6): 100,000-cycle continuous reliability testing under 10^-8 Torr vacuum.
+- Milestone 4 (Month 8): Factory Acceptance Testing (FAT) and Tier-1 fab pilot tool integration.
+
+NOTE: illustrative simulation; engineering timelines and platform specifications are illustrative.`,
+
+  radar: `PERSIMMON TECHNOLOGIES — VACUUM ROBOTICS COMPETITIVE INTELLIGENCE BRIEF
+GLOBAL SEMICONDUCTOR AUTOMATION BENCHMARKING
+
+1. COMPETITOR LANDSCAPE SUMMARY
+- Brooks Automation: Marathon® and Magnatran® vacuum robots utilize mechanical linkages, belts, and magnetic drives. High market share but legacy architectures require periodic belt tensioning and seal rebuilds.
+- Yaskawa Electric: Direct-drive vacuum robots with high reliability, but larger motor envelope and higher thermal output.
+- Rorze Corporation: Dominant in atmospheric wafer sorters, expanding vacuum robot lines with dual-arm SCARA.
+- Daihen Corporation: High-precision vacuum transfer arms used primarily by Japanese tool builders.
+
+2. PERSIMMON COMPETITIVE DIFFERENTIATION
+- Fully Direct-Drive Technology: No internal belts, reduction gears, or pulleys inside the vacuum envelope. Results in 3x lower particle generation and zero belt-particle shedding.
+- 70% Higher Motor Torque: Proprietary in-house motor design provides massive torque margin, allowing faster acceleration (up to 1.2g) without risk of motor stalling or thermal overload.
+- 3D Hybrid-Field Motor Innovation: Additively manufactured soft magnetic composite (SMC) stator cores enable 3D flux pathways, doubling power density and eliminating cogging torque.
+- Placement Repeatability: Sub-20 micron repeatability (< ±0.018 mm) outperforms competitor average (±0.035 mm to ±0.050 mm), crucial for tight GAA nanosheet chamber pedestals.
+
+3. OEM SALES TALK TRACK
+- "Eliminate vacuum tool maintenance cycles: Persimmon direct-drive vacuum robots operate > 100,000 hours MTBF without particle generation or mechanical recalibration."
+
+NOTE: illustrative simulation; competitor metrics and market data are illustrative.`,
+
+  switchblade_vtm_trajectory_flagship: `PERSIMMON TECHNOLOGIES — SWITCHBLADE® PRODUCTION VACUUM TRANSFER TRAVELER
+CLUSTER TOOL KINEMATIC OPTIMIZATION & PRODUCTION RELEASE — LOT: PT-SWB-2026-4409
+
+1. KINEMATIC TRAJECTORY SPECIFICATIONS
+- Arm Geometry: SwitchBlade® Dual 2-link Yaw Direct-Drive Articulation
+- Radial Extension Range: 220 mm to 680 mm
+- Azimuth Rotation: 360° continuous direct-drive rotation
+- Vertical Z-Stroke: 150 mm travel with zero backlash ballscrew
+- Wafer Handled: 300mm Silicon / SiC wafers (thickness 775 µm, weight 128 g)
+
+2. TRAJECTORY OPTIMIZATION & SERVO TUNING
+- Motion Profile: 5th-order jerk-limited polynomial S-curve
+- Peak Acceleration: 0.85g radial / 1.10g rotational
+- Peak Jerk: 14.2 m/s³ (prevents wafer slippage on sapphire locating pads)
+- Servo Tuning: Direct-drive PID with forward velocity feedforward; loop bandwidth 85 Hz
+- Resonance Suppression: Dual biquad notch filters applied at 42.1 Hz and 118.6 Hz (34.2 dB attenuation)
+- Dual-Arm Swap Time: 2.38 seconds (chamber pick, rotate, chamber place)
+- Overall Cluster Tool Throughput: 384 wafers per hour (WPH)
+
+3. REPEATABILITY & UHV THERMAL VERIFICATION
+- Placement Repeatability Measured:
+  * Radial Axis: ±0.012 mm (spec < ±0.020 mm)
+  * Azimuth Angle: ±0.006 deg (spec < ±0.010 deg)
+  * Vertical Z-Axis: ±0.008 mm (spec < ±0.015 mm)
+- Vacuum Environment: 1.2 x 10^-8 Torr base pressure
+- Thermal Deflection Test: Alumina end-effector subjected to 350°C wafer contact for 4 hours; total tip deflection 0.007 mm.
+- Wafer Slip Verification: Zero slip detected across 5,000 continuous pick-and-place cycles.
+
+4. PRODUCTION SIGNOFF
+- Quality Status: RELEASED FOR OEM CLUSTER CHAMBER INTEGRATION
+- Signed: Principal Robotics Kinematics Architect, Director of Quality Assurance
+
+NOTE: illustrative simulation; performance numbers and kinematic parameters are illustrative.`,
+
+  hybrid_field_motor_synthesis: `PERSIMMON TECHNOLOGIES — 3D HYBRID-FIELD MOTOR SYNTHESIS DOSSIER
+NEXT-GEN DIRECT-DRIVE VACUUM SERVO CORE — SPEC: HFM-3D-GEN3
+
+1. MOTOR TOPOLOGY & ELECTROMAGNETIC DESIGN
+- Topology: Axial/Radial 3D Hybrid-Field Brushless Direct-Drive Motor
+- Stator Core Material: Isotropic Soft Magnetic Composite (SMC) via spray-forming deposition
+- Flux Distribution: Three-dimensional magnetic flux pathways eliminating traditional 2D lamination eddy current limits.
+- Number of Poles / Slots: 24 Poles / 18 Slots concentrated fractional slot winding
+- Peak Airgap Flux Density: 1.48 Tesla
+- Cogging Torque: 0.008 Nm (effectively zero cogging for smooth sub-micron positioning)
+
+2. POWER DENSITY & THERMAL DISSIPATION IN UHV
+- Torque Density: 4.82 Nm/kg (2.1x higher than standard laminated steel direct-drive motors)
+- Continuous Stall Torque: 38.5 Nm at rated current (2.4 Nm/A torque constant)
+- Core Loss Reduction: 44% lower iron losses at 3,000 rpm compared to silicon steel laminations.
+- Vacuum Thermal Model (10^-8 Torr):
+  * Conductive thermal path engineered directly to aluminum vacuum mounting flange.
+  * Maximum winding temperature under 100% duty cycle: 68.4°C (thermal class H rated for 180°C).
+  * Outgassing Rate: < 1.0 x 10^-11 mbar·l/s·cm² after 120°C vacuum bakeout.
+
+3. ENGINEERING RECOMMENDATIONS
+- Approve 3D hybrid-field motor core for SwitchBlade and iQuad vacuum robotics platforms.
+
+NOTE: illustrative simulation; motor flux values and performance benchmarks are illustrative.`,
+
+  harsh_chem_thermal_audit: `PERSIMMON TECHNOLOGIES — CORROSIVE CHEMISTRY & THERMAL VACUUM RELIABILITY AUDIT
+CHAMBER SURVIVABILITY EVALUATION — REPORT: REL-CHEM-2026-902
+
+1. TEST ENVIRONMENT & PROCESS CHEMISTRIES
+- Test Duration: 1,500 continuous hours in simulated dielectric and conductor etch atmosphere
+- Reactive Gases: NF3 (nitrogen trifluoride remote plasma), Cl2 (chlorine), HBr (hydrogen bromide), BCl3, NH3
+- Operating Temperature: 450°C chamber pedestal wafer transfer
+- Operating Pressure: 10^-3 Torr to 10^-8 Torr UHV transition cycles
+
+2. MATERIAL INTEGRITY & VACUUM SEAL RESULTS
+- Robot Linkage Arm: Hard-anodized aerospace 6061-T6 aluminum with 50 µm dense oxide layer. Result: Zero chemical etching or surface discoloration.
+- Fasteners & Hardware: 316L stainless steel and titanium grade 5 with fluoropolymer passivation. Result: Zero halide stress corrosion cracking.
+- Dynamic Vacuum Seals: Proprietary magnetic fluid / ferrofluidic multi-stage rotary seal. Result: Helium leak rate stable at 3.2 x 10^-11 mbar·l/s.
+- Dynamic Elastomer Seals: FFKM (perfluoroelastomer) fluoro-compound. Result: Volume swell < 1.4% after 1,500 hours NF3 plasma exposure.
+
+3. COMPLIANCE & SAFETY VERIFICATION
+- SEMI S2-0818 Environmental, Health, and Safety Guidelines: COMPLIANT
+- SEMI F47 Voltage Sag Immunity: COMPLIANT
+- MTBC Recommendation: 120,000 operating hours between seal maintenance overhauls.
+
+NOTE: illustrative simulation; chemical exposure times and degradation metrics are illustrative.`,
+
+  cleanroom_metrology_signoff: `PERSIMMON TECHNOLOGIES — ISO CLASS 1 PARTICLE VERIFICATION & SEMI E90 TRAVELER
+FACTORY ACCEPTANCE TESTING (FAT) CERTIFICATE — UNIT: PT-IQUAD-300-0881
+
+1. CLEANROOM PARTICLE VERIFICATION (ISO CLASS 1)
+- Test Chamber: Ultra-clean test isolator with ULPA filtration and vacuum loadlock
+- Particle Detection Method: In-situ laser particle counter (LPC) calibrated down to 20nm sensitivity
+- Wafer Cycling Test: 10,000 continuous pick-and-place cycles on 300mm bare silicon monitor wafers
+- Particle Count Results:
+  * ≥ 20nm Particles Added: 0.005 particles / wafer pass (Specification: < 0.010 particles / pass)
+  * ≥ 50nm Particles Added: 0.000 particles / wafer pass
+- Cleanroom Rating Confirmed: ISO 14644-1 Class 1 / Federal Standard 209E Class 1 compatible
+
+2. SEMI STANDARDS COMPLIANCE & HOST INTEGRATION
+- SEMI E90 Substrate Tracking: Verified all substrate location state models, transfer commands, and carrier ID tracking.
+- SEMI E72 Carrier Management: Verified optical sensor interlocks and wafer presence detection.
+- Emergency Stop (E-Stop) Response Time: 12.4 milliseconds to full zero-motion state with mechanical fail-safe brake.
+
+3. QUALITY RELEASE CERTIFICATION
+- Final Metrology Inspection: CMM dynamic runout measured at 0.004 mm (pass).
+- Release Status: CERTIFIED FOR SHIPMENT TO TIER-1 SEMICONDUCTOR FAB
+- Authorized By: Lead SEMI Compliance Officer, VP of Semiconductor Robotics Quality
+
+NOTE: illustrative simulation; particle counts and test logs are illustrative. illustrative simulation.`
+};
+
+const EMPLOYEES = [
+  { id: 'scout', name: 'AI Persimmon Scout', title: 'VP Sourcing & OEM Capture Lead', wf: 'scout', handled: 34, hrs: 142, win: 0, status: 'idle' },
+  { id: 'quoting', name: 'AI Quoting Architect', title: 'Director of Robot OEM Quoting', wf: 'quoting', handled: 28, hrs: 118, win: 18, status: 'idle' },
+  { id: 'proposal', name: 'AI VTM Proposal Lead', title: 'Cluster Platform Solutions Architect', wf: 'proposal', handled: 19, hrs: 94, win: 24, status: 'idle' },
+  { id: 'radar', name: 'AI Robotics Intel Analyst', title: 'Director of Competitive Strategy', wf: 'radar', handled: 42, hrs: 86, win: 0, status: 'idle' },
+  { id: 'switchblade', name: 'AI SwitchBlade Architect', title: 'Principal Vacuum Kinematics Lead', wf: 'switchblade_vtm_trajectory_flagship', handled: 86, hrs: 310, win: 38, status: 'idle' },
+  { id: 'hybrid_motor', name: 'AI 3D Motor Co-Designer', title: 'Chief Motor Physics Specialist', wf: 'hybrid_field_motor_synthesis', handled: 52, hrs: 215, win: 44, status: 'idle' },
+  { id: 'harsh_chem', name: 'AI UHV Chem Auditor', title: 'Principal Chamber Reliability Lead', wf: 'harsh_chem_thermal_audit', handled: 38, hrs: 164, win: 28, status: 'idle' },
+  { id: 'cleanroom', name: 'AI Cleanroom Inspector', title: 'ISO Class 1 & SEMI Quality Director', wf: 'cleanroom_metrology_signoff', handled: 64, hrs: 192, win: 32, status: 'idle' }
+];
+
+let curView = 'ops';
+let curEmp = null;
+let running = false;
+let draft = { step: 1, wf: '', assign: [], name: '', title: '', cadence: 'On-demand', mode: 'sequential' };
+
+function $(id) { return document.getElementById(id); }
+function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+function setView(v) {
+  curView = v;
+  $('tabA').className = 'tab' + (v === 'ops' ? ' active' : '');
+  $('tabB').className = 'tab' + (v === 'hire' ? ' active' : '');
+  $('view-ops').className = v === 'ops' ? '' : 'hidden';
+  $('view-hire').className = v === 'hire' ? '' : 'hidden';
+  if (v === 'hire') initBuilder();
+}
+
+function renderEcon() {
+  const activeOps = EMPLOYEES.length;
+  const totalHandled = EMPLOYEES.reduce((acc, e) => acc + e.handled, 0);
+  const totalHrs = EMPLOYEES.reduce((acc, e) => acc + e.hrs, 0);
+  const avgWin = Math.round(EMPLOYEES.filter(e => e.win > 0).reduce((acc, e) => acc + e.win, 0) / (EMPLOYEES.filter(e => e.win > 0).length || 1));
+  $('econ').innerHTML = `
+    <div class="cell"><div class="v">${activeOps}</div><div class="k">Active AI Operators</div></div>
+    <div class="cell"><div class="v">${totalHandled}</div><div class="k">OEM &amp; Engineering Workflows Handled</div></div>
+    <div class="cell"><div class="v">${totalHrs.toLocaleString()} <span class="u">hrs</span></div><div class="k">Engineering &amp; Sales Time Saved</div></div>
+    <div class="cell"><div class="v">+${avgWin}<span class="u">%</span></div><div class="k">Average Cycle Time Velocity Gain</div></div>
+  `;
+}
+
+function chips(w) {
+  let h = '';
+  if (w.track === 'commercial') h += `<span class="tag commercial">Commercial</span> `;
+  else if (w.track === 'operations') h += `<span class="tag operations">Robotics &amp; Eng</span> `;
+  if (w.tag === 'flagship') h += `<span class="tag hero">Flagship</span> `;
+  return h;
+}
+
+function mono(name) {
+  return name.split(' ').map(w => w[0]).filter(Boolean).slice(0, 2).join('').toUpperCase();
+}
+
+function renderRoster() {
+  let html = '';
+  TRACKS.forEach(([tKey, tLabel]) => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === tKey);
+    if (!list.length) return;
+    html += `<div class="slabel">${tLabel}</div><div class="roster">`;
+    list.forEach(e => {
+      const w = WORKFLOWS[e.wf];
+      const isHero = w && w.tag === 'flagship';
+      html += `
+        <div class="emp ${isHero ? 'hero' : ''} ${e.status === 'working' ? 'working' : ''}" id="emp-${e.id}">
+          <div class="emp-top">
+            <div class="avatar">${mono(e.name)}</div>
+            <div>
+              <div class="emp-name">${e.name} ${chips(w)}</div>
+              <div class="emp-title">${e.title}</div>
+            </div>
+          </div>
+          <div class="emp-owns">Owns: <b>${w.name}</b></div>
+          <div class="team">
+            ${w.tasks.map(t => `<span class="chip">${AGENT_ROLES[t.agent] ? AGENT_ROLES[t.agent].emoji + ' ' + AGENT_ROLES[t.agent].label : t.agent}</span>`).join('')}
+          </div>
+          <div class="emp-stats">
+            <div class="st"><b>${e.handled}</b>Workflows handled</div>
+            <div class="st"><b>${e.hrs}h</b>Time saved</div>
+            <div class="st"><b>${e.win ? '+' + e.win + '%' : '—'}</b>Cycle velocity</div>
+          </div>
+          <div class="actions">
+            <button class="btn primary big" onclick="openRun('${e.id}')">▶ Run operator</button>
+          </div>
+        </div>
+      `;
+    });
+    html += `</div>`;
+  });
+  html += `
+    <div class="slabel" style="margin-top:24px">Custom Operator Composition</div>
+    <div class="roster">
+      <div class="hire-card" onclick="setView('hire')">
+        <div class="plus">+</div>
+        <div class="h">Add an AI operator</div>
+        <div class="p">Compose a custom direct-drive robotics or commercial workflow from specialist agents</div>
+      </div>
+    </div>
+  `;
+  $('roster').innerHTML = html;
+}
+
+function openRun(id) {
+  curEmp = EMPLOYEES.find(e => e.id === id);
+  if (!curEmp) return;
+  const w = WORKFLOWS[curEmp.wf];
+  $('runPanel').innerHTML = `
+    <div class="run" id="runBox">
+      <div class="run-head">
+        <div class="avatar">${mono(curEmp.name)}</div>
+        <div>
+          <div class="emp-name">${curEmp.name} &middot; Execution Console ${chips(w)}</div>
+          <div class="run-sub">${curEmp.title} &mdash; ${w.name}</div>
+        </div>
+      </div>
+      <div class="run-input">
+        <textarea id="runPrompt">${w.sample}</textarea>
+        <button class="btn primary big" id="btnStart" onclick="startRun()">▶ Run operator</button>
+      </div>
+      <div class="phases">
+        <div class="ph active" id="ph1"><div class="dot">1</div><div class="l">Phase 1: Planning</div></div>
+        <div class="ph" id="ph2"><div class="dot">2</div><div class="l">Phase 2: Execution</div></div>
+        <div class="ph" id="ph3"><div class="dot">3</div><div class="l">Phase 3: Deliverable</div></div>
+      </div>
+      <div class="agent-grid" id="agentGrid">
+        ${w.tasks.map((t, i) => `
+          <div class="acard" id="acard-${i}">
+            <div class="ae">${AGENT_ROLES[t.agent].emoji}</div>
+            <div class="ar">${AGENT_ROLES[t.agent].label}</div>
+            <div class="at">${t.task}</div>
+            <div class="as"><span class="sd"></span> <span id="astat-${i}">Queued</span></div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="feed" id="liveFeed"></div>
+      <div class="result hidden" id="resBox">
+        <div class="rstats">
+          <div class="rrow"><span class="k">Deliverable</span><span class="v">${w.deliverable}</span></div>
+          <div class="rrow"><span class="k">Mode</span><span class="v">${w.mode.toUpperCase()}</span></div>
+          <div class="rrow"><span class="k">Agents Engaged</span><span class="v">${w.tasks.length} Specialists</span></div>
+          <div class="rrow"><span class="k">Quality Signoff</span><span class="v" style="color:var(--ok)">✓ Verified</span></div>
+        </div>
+        <div class="rout">
+          <div class="rh">${DTITLE[curEmp.wf] || w.deliverable}</div>
+          <div class="rb" id="resBody"></div>
+        </div>
+      </div>
+      <div class="donebar hidden" id="doneBar">
+        <b>Operator execution complete.</b> Deliverable generated, formatted, and verified for stakeholder review.
+      </div>
+    </div>
+  `;
+  $('runBox').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function logFeed(t, a, d) {
+  const f = $('liveFeed');
+  if (!f) return;
+  const row = document.createElement('div');
+  row.className = 'frow';
+  row.innerHTML = `<span class="ft">${t}</span><span class="fa">${a}</span><span class="fd">${d}</span>`;
+  f.appendChild(row);
+  f.scrollTop = f.scrollHeight;
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+async function startRun() {
+  if (running || !curEmp) return;
+  running = true;
+  $('btnStart').disabled = true;
+  curEmp.status = 'working';
+  renderRoster();
+
+  const w = WORKFLOWS[curEmp.wf];
+  $('ph1').className = 'ph done';
+  $('ph2').className = 'ph active';
+
+  logFeed('00:00', 'Supervisor', `Initializing execution workflow: ${w.name}`);
+  await sleep(400);
+  logFeed('00:01', 'Planner', `Validating task dependencies and execution mode (${w.mode.toUpperCase()})`);
+  await sleep(400);
+
+  w.tasks.forEach((_, i) => {
+    const c = $('acard-' + i);
+    if (c) c.className = 'acard visible';
+  });
+
+  if (w.mode === 'sequential') {
+    for (let i = 0; i < w.tasks.length; i++) {
+      const t = w.tasks[i];
+      const role = AGENT_ROLES[t.agent];
+      const card = $('acard-' + i);
+      const stat = $('astat-' + i);
+      if (card) card.className = 'acard visible running';
+      if (stat) stat.textContent = 'Executing...';
+
+      logFeed(`00:0${i + 2}`, role.label, `Starting: ${t.task}`);
+      await sleep(650);
+
+      const tool = role.tools[0] || 'save';
+      const output = TOOLS[tool] ? TOOLS[tool]() : 'Step executed successfully.';
+      logFeed(`00:0${i + 2}`, role.label, `[${tool}] ${output}`);
+      await sleep(450);
+
+      if (card) card.className = 'acard visible done';
+      if (stat) stat.textContent = 'Completed ✓';
+    }
+  } else {
+    const completed = new Set();
+    let sec = 2;
+    while (completed.size < w.tasks.length) {
+      const ready = [];
+      for (let i = 0; i < w.tasks.length; i++) {
+        if (!completed.has(i)) {
+          const deps = w.tasks[i].deps;
+          if (deps.every(d => completed.has(d))) {
+            ready.push(i);
+          }
+        }
+      }
+      if (!ready.length) break;
+
+      ready.forEach(i => {
+        const c = $('acard-' + i);
+        const s = $('astat-' + i);
+        if (c) c.className = 'acard visible running';
+        if (s) s.textContent = 'Running parallel...';
+        const role = AGENT_ROLES[w.tasks[i].agent];
+        logFeed(`00:0${sec}`, role.label, `Dispatched: ${w.tasks[i].task}`);
+      });
+      await sleep(800);
+
+      ready.forEach(i => {
+        const role = AGENT_ROLES[w.tasks[i].agent];
+        const tool = role.tools[0] || 'save';
+        const output = TOOLS[tool] ? TOOLS[tool]() : 'Task completed.';
+        logFeed(`00:0${sec}`, role.label, `[${tool}] ${output}`);
+        const c = $('acard-' + i);
+        const s = $('astat-' + i);
+        if (c) c.className = 'acard visible done';
+        if (s) s.textContent = 'Completed ✓';
+        completed.add(i);
+      });
+      sec++;
+      await sleep(400);
+    }
+  }
+
+  $('ph2').className = 'ph done';
+  $('ph3').className = 'ph active done';
+  logFeed('00:08', 'Supervisor', 'All tasks finished. Compiling final deliverable.');
+
+  $('resBody').textContent = FINAL[curEmp.wf] || 'Deliverable generated successfully.';
+  $('resBox').className = 'result';
+  $('doneBar').className = 'donebar';
+
+  curEmp.handled += 1;
+  curEmp.hrs += rand(4, 9);
+  curEmp.status = 'idle';
+  running = false;
+  $('btnStart').disabled = false;
+  renderEcon();
+  renderRoster();
+}
+
+function initBuilder() {
+  draft = {
+    step: 1,
+    wf: Object.keys(WORKFLOWS)[0],
+    assign: WORKFLOWS[Object.keys(WORKFLOWS)[0]].tasks.map(t => t.agent),
+    name: 'Custom Robotics Operator',
+    title: 'AI Cluster Chamber Specialist',
+    cadence: 'On-demand',
+    mode: WORKFLOWS[Object.keys(WORKFLOWS)[0]].mode
+  };
+  renderBuilder();
+}
+
+function renderBuilder() {
+  const steps = [
+    ['1', 'Pick workflow'],
+    ['2', 'Assign agents'],
+    ['3', 'Name & cadence']
+  ];
+  $('bSteps').innerHTML = steps.map((s, i) => `<div class="step ${draft.step === i + 1 ? 'active' : ''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+  if (draft.step === 1) bS1();
+  else if (draft.step === 2) bS2();
+  else bS3();
+  bNav();
+}
+
+function bS1() {
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">` + Object.keys(WORKFLOWS).map(k => {
+    const w = WORKFLOWS[k];
+    return `<div class="wf ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')">
+      <div class="wn">${w.name} ${chips(w)}</div>
+      <div class="wd">${w.desc}</div>
+      <div class="wm">${w.tasks.length} agents · ${w.mode}</div>
+    </div>`;
+  }).join('') + `</div>`;
+}
+
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Assign each task to an agent</div>` + w.tasks.map((t, i) => `
+    <div class="task-row">
+      <div class="tn">${i + 1}</div>
+      <div class="tt">${t.task}${t.deps.length ? ` <span style="color:var(--tert)">· waits for ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}</div>
+      <select onchange="draft.assign[${i}]=this.value">${opts}</select>
+    </div>
+  `).join('') + `
+    <div class="field" style="margin-top:14px">
+      <label>Execution mode</label>
+      <div class="seg">` + ['sequential', 'dag'].map(m => `<button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (parallel where safe)' : 'Sequential'}</button>`).join('') + `</div>
+    </div>
+  `;
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Name & cadence</div>
+    <div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. AI-SwitchBlade-Architect" oninput="draft.name=this.value"></div>
+    <div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Vacuum Robotics Specialist" oninput="draft.title=this.value"></div>
+    <div class="field"><label>Cadence</label><div class="seg">` + ['Per chamber build', 'Per batch', 'Weekly', 'On-demand'].map(c => `<button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('') + `</div></div>
+    <div class="slabel" style="margin-top:0">Preview</div>
+    <div class="emp" style="max-width:360px">
+      <div class="emp-top">
+        <div class="avatar">${mono(draft.name || 'New')}</div>
+        <div>
+          <div class="emp-name">${draft.name || 'New operator'} ${chips(w)}</div>
+          <div class="emp-title">${draft.title || 'AI operator'}</div>
+        </div>
+      </div>
+      <div class="emp-owns">Owns: <b>${w.name}</b> · ${draft.cadence} · ${draft.mode}</div>
+    </div>`;
+}
+
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn ghost" onclick="draft.step--;renderBuilder()">← Back</button>` : `<span></span>`;
+  let right;
+  if (draft.step === 1) right = `<button class="btn primary" ${draft.wf ? '' : 'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents →</button>`;
+  else if (draft.step === 2) right = `<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence →</button>`;
+  else right = `<button class="btn primary" onclick="hire()">✓ Add this AI operator</button>`;
+  $('bNav').innerHTML = left + right;
+}
+
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  WORKFLOWS[wfId] = {
+    name: w.name,
+    title: w.title,
+    mode: draft.mode || w.mode,
+    track: w.track,
+    tag: w.tag,
+    deliverable: w.deliverable,
+    sample: w.sample,
+    desc: w.desc,
+    tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps }))
+  };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({ id, name, title: draft.title || w.title, wf: wfId, handled: 0, hrs: rand(40, 140), win: 0, status: 'idle' });
+  renderEcon();
+  renderRoster();
+  setView('ops');
+  setTimeout(() => {
+    const c = $('emp-' + id);
+    if (c) {
+      c.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      c.style.boxShadow = '0 0 0 2px var(--accent)';
+      setTimeout(() => c.style.boxShadow = '', 1800);
+    }
+  }, 250);
+}
+
+renderEcon();
+renderRoster();
+</script>
+</body>
+</html>
