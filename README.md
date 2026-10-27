@@ -337,3 +337,10 @@ https://innvonix-tech-solutions.github.io/ai-workforce/agile-analog
 https://innvonix-tech-solutions.github.io/ai-workforce/rasirc
 https://innvonix-tech-solutions.github.io/ai-workforce/cymer
 https://innvonix-tech-solutions.github.io/ai-workforce/achronix-semi
+https://innvonix-tech-solutions.github.io/ai-workforce/persimmon-tech
+https://innvonix-tech-solutions.github.io/ai-workforce/cast-inc
+https://innvonix-tech-solutions.github.io/ai-workforce/cirrus-logic
+https://innvonix-tech-solutions.github.io/ai-workforce/interact-power
+https://innvonix-tech-solutions.github.io/ai-workforce/shapetechnologies
+https://innvonix-tech-solutions.github.io/ai-workforce/bigassfans
+https://innvonix-tech-solutions.github.io/ai-workforce/lesterelectrical
