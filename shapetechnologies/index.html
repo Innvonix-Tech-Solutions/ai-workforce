@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shape Technologies Group &mdash; AI Commercial &amp; Advanced Automation Workforce (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Barlow+Semi+Condensed:wght@500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --canvas:#f8fafc;
+  --surface:#ffffff;
+  --surface2:#f1f5f9;
+  --border:#d4e0ee;
+  --accent:#006BA6;
+  --accent-dim:rgba(0,107,166,.08);
+  --accent-line:rgba(0,107,166,.35);
+  --accent-dark:#005180;
+  --slate:#244c5a;
+  --slate-line:rgba(36,76,90,.30);
+  --text:#1e293b;
+  --hi:#0f172a;
+  --tert:#5f6e82;
+  --ok:#16a34a;
+  --ok-dim:rgba(22,163,74,.10);
+  --gold:#f38b00;
+  --gold-bg:#fffbeb;
+  --gold-line:#fde68a;
+}
+body{background:var(--canvas);color:var(--text);font-family:'Barlow',system-ui,-apple-system,BlinkMacSystemFont,Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,.htitle,.emp-name,.cell .v,.wn,.slabel{font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;letter-spacing:-.2px}
+.tnum{font-variant-numeric:tabular-nums}.hidden{display:none!important}
+.header{display:flex;align-items:center;justify-content:space-between;padding:14px 30px;border-bottom:2px solid var(--accent);position:sticky;top:0;background:#ffffff;box-shadow:0 3px 10px rgba(0,107,166,0.08);z-index:30}
+.logo{display:flex;align-items:center;gap:14px}
+.logo-img{height:34px;width:auto;display:block;object-fit:contain}
+.brand-divider{height:28px;width:1px;background:var(--border)}
+.htitle{font-size:15px;font-weight:700;color:var(--hi);line-height:1.2}.hsub{font-size:11px;color:var(--tert);margin-top:2px;font-family:'Barlow',sans-serif;letter-spacing:0}
+.badge{border:1px solid var(--border);background:var(--surface2);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--tert);font-family:'Barlow Semi Condensed',sans-serif}.badge b{color:var(--accent)}
+.tabs{max-width:1180px;margin:0 auto;padding:22px 24px 0;display:flex;gap:6px}
+.tab{padding:10px 18px;font-size:13.5px;font-weight:700;color:var(--tert);cursor:pointer;border:1px solid transparent;border-radius:99px 99px 0 0;background:none;font-family:'Barlow Semi Condensed',sans-serif;transition:all .3s}
+.tab.active{color:var(--hi);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface)}
+.main{max-width:1180px;margin:0 auto;padding:24px}
+.lead{font-size:13.5px;line-height:1.6;max-width:920px;margin-bottom:14px;color:#334155;font-family:'Barlow',sans-serif}.lead b{color:var(--hi);font-family:'Barlow Semi Condensed',sans-serif}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--tert);margin-bottom:22px;font-family:'Barlow',sans-serif}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:5px;text-transform:uppercase;vertical-align:middle;font-family:'Barlow Semi Condensed',sans-serif}
+.tag.commercial{background:var(--accent-dim);color:var(--accent-dark);border:1px solid var(--accent-line)}
+.tag.operations{background:rgba(36,76,90,.10);color:var(--slate);border:1px solid rgba(36,76,90,.30)}
+.tag.hero{background:var(--gold-bg);color:#b45309;border:1px solid var(--gold-line)}
+.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,0.02)}
+.cell .v{font-size:25px;font-weight:800;color:var(--hi)}.cell .v .u{color:var(--accent)}
+.cell .k{font-size:11px;color:var(--tert);margin-top:4px;font-family:'Barlow',sans-serif}
+.slabel{font-size:11.5px;font-weight:700;letter-spacing:1.2px;color:var(--accent);text-transform:uppercase;margin:22px 0 14px;display:flex;align-items:center;gap:10px}
+.slabel::after{content:"";flex:1;height:1px;background:var(--border)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+.emp{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:0 2px 5px rgba(0,0,0,0.02);transition:border-color .3s,box-shadow .3s}
+.emp.working{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}.emp.hero{border-color:var(--gold-line)}
+.emp-top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.avatar{width:46px;height:46px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--accent-dark);font-size:14px;flex-shrink:0;position:relative;font-family:'Barlow Semi Condensed',sans-serif}
+.emp.working .avatar{border-color:var(--accent)}
+.emp.working .avatar::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;background:var(--ok);border:2px solid var(--surface);border-radius:50%;animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.emp-name{font-size:16.5px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap}.emp-title{font-size:12px;color:var(--tert);font-family:'Barlow',sans-serif}
+.emp-owns{font-size:12px;margin-bottom:10px;font-family:'Barlow',sans-serif;color:#475569}.emp-owns b{color:var(--hi)}
+.team{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{font-size:10.5px;color:var(--tert);background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:'Barlow',sans-serif}
+.emp-stats{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--border);margin-bottom:13px;font-family:'Barlow',sans-serif}
+.st{font-size:11px;color:var(--tert)}.st b{display:block;font-size:15px;color:var(--hi);font-weight:700;font-family:'Barlow Semi Condensed',sans-serif}
+.btn{font-family:'Barlow Semi Condensed',sans-serif;font-size:12.5px;font-weight:700;border-radius:8px;padding:9px 15px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--hi);transition:all .25s}
+.btn:hover{border-color:var(--accent);color:var(--accent)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--accent-dark);border-color:var(--accent-dark);color:#fff}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed}.btn.ghost{background:transparent}.btn.big{padding:12px 22px;font-size:13.5px}
+.actions{display:flex;gap:8px}
+.hire-card{border:1.5px dashed var(--border);background:var(--surface);border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;min-height:210px;transition:border-color .3s}
+.hire-card:hover{border-color:var(--accent)}.hire-card .plus{width:42px;height:42px;border-radius:11px;border:1px solid var(--accent-line);background:var(--surface2);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.hire-card .h{font-size:14px;font-weight:700;color:var(--hi);font-family:'Barlow Semi Condensed',sans-serif}.hire-card .p{font-size:12px;color:var(--tert);margin-top:4px;max-width:220px;font-family:'Barlow',sans-serif}
+.run{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:0 4px 12px rgba(0,0,0,0.03)}
+.run-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}.run-sub{font-size:12px;color:var(--tert);margin-bottom:16px;font-family:'Barlow',sans-serif}
+.run-input{display:flex;gap:10px;align-items:flex-end;margin-bottom:18px}
+.run-input textarea{flex:1;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:'Barlow',sans-serif;font-size:13px;color:var(--hi);resize:none;min-height:58px;outline:none;line-height:1.45;transition:border-color .2s}
+.run-input textarea:focus{border-color:var(--accent)}
+.phases{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;background:#fff;font-family:'Barlow Semi Condensed',sans-serif}
+.ph{flex:1;padding:11px 14px;display:flex;align-items:center;gap:9px;border-right:1px solid var(--border)}.ph:last-child{border-right:none}
+.ph.active{background:var(--accent-dim)}.ph.done{background:var(--ok-dim)}
+.ph .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tert);flex-shrink:0}
+.ph.active .dot{border-color:var(--accent);color:var(--accent)}.ph.done .dot{border-color:var(--ok);color:var(--ok)}
+.ph .l{font-size:12px;font-weight:700;color:var(--tert)}.ph.active .l{color:var(--hi)}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+.acard{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:13px;opacity:.5;transition:.3s;font-family:'Barlow',sans-serif}
+.acard.visible{opacity:1;background:#fff}.acard.running{border-color:var(--accent);opacity:1;box-shadow:0 0 0 1px var(--accent)}.acard.done{border-color:rgba(22,163,74,.4);opacity:1}
+.acard .ae{font-size:18px;margin-bottom:6px}.acard .ar{font-size:12.5px;font-weight:700;color:var(--hi);font-family:'Barlow Semi Condensed',sans-serif}.acard .at{font-size:11px;color:var(--tert);line-height:1.45;margin-top:3px}
+.acard .as{margin-top:9px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--tert)}
+.sd{width:6px;height:6px;border-radius:50%;background:var(--tert)}.acard.running .sd{background:var(--accent);animation:pulse 1.1s infinite}.acard.done .sd{background:var(--ok)}
+.feed{background:#ffffff;border:1px solid var(--border);border-radius:10px;height:172px;overflow-y:auto;padding:8px 0;font-size:11.5px;font-family:'Roboto Mono',monospace;margin-bottom:16px}
+.frow{padding:3px 16px;display:grid;grid-template-columns:62px 210px 1fr;gap:9px;animation:fade .3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+.frow .ft{color:var(--tert)}.frow .fa{color:var(--accent);font-weight:600}.frow .fd{color:var(--text);opacity:.9;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result{display:grid;grid-template-columns:250px 1fr;gap:14px;font-family:'Barlow',sans-serif}
+@media(max-width:760px){.result{grid-template-columns:1fr}.econ{grid-template-columns:repeat(2,1fr)}}
+.rstats{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}.rrow:last-child{border-bottom:none}.rrow .k{color:var(--tert)}.rrow .v{color:var(--hi);font-weight:700;font-family:'Barlow Semi Condensed',sans-serif}
+.rout{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.rout .rh{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12.5px;font-weight:700;color:var(--hi);font-family:'Barlow Semi Condensed',sans-serif;background:var(--surface2)}
+.rout .rb{padding:18px;font-size:12.5px;line-height:1.65;white-space:pre-wrap;max-height:380px;overflow-y:auto;font-family:'Roboto Mono',monospace;color:#1e293b}
+.donebar{background:var(--surface2);border:1px solid rgba(22,163,74,.4);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:13px;font-family:'Barlow',sans-serif}.donebar b{color:var(--hi)}
+.steps{display:flex;gap:8px;margin-bottom:22px;font-family:'Barlow Semi Condensed',sans-serif}
+.step{flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.step .n{font-size:11px;font-weight:700;color:var(--tert);letter-spacing:1px}.step.active .n{color:var(--accent)}
+.step .l{font-size:13px;font-weight:700;color:var(--hi);margin-top:2px}.step .d{font-size:11px;color:var(--tert);margin-top:2px}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
+.wf{border:1px solid var(--border);border-radius:11px;padding:15px;cursor:pointer;background:var(--surface);transition:border-color .2s}
+.wf:hover{border-color:var(--accent)}.wf.sel{border-color:var(--accent);background:var(--accent-dim)}
+.wf .wn{font-size:15px;font-weight:700;color:var(--hi);display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:'Barlow Semi Condensed',sans-serif}.wf .wd{font-size:11.5px;color:var(--tert);margin-top:5px;line-height:1.4;font-family:'Barlow',sans-serif}.wf .wm{font-size:10px;color:var(--accent);margin-top:8px;font-weight:700;text-transform:uppercase;font-family:'Barlow Semi Condensed',sans-serif}
+.task-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:8px;font-family:'Barlow',sans-serif}
+.task-row .tn{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;font-family:'Barlow Semi Condensed',sans-serif}
+.task-row .tt{flex:1;font-size:12.5px;line-height:1.4}
+.task-row select{font-family:inherit;font-size:12px;border:1px solid var(--border);border-radius:7px;padding:7px 9px;background:#fff;min-width:190px}
+.field{margin-bottom:16px;font-family:'Barlow',sans-serif}.field label{display:block;font-size:12px;font-weight:700;color:var(--hi);margin-bottom:6px;font-family:'Barlow Semi Condensed',sans-serif}
+.field input{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--border);border-radius:99px;padding:11px 16px;outline:none}.field input:focus{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:99px;overflow:hidden}
+.seg button{font-family:'Barlow Semi Condensed',sans-serif;font-size:12px;padding:9px 15px;border:none;background:#fff;color:var(--tert);cursor:pointer;border-right:1px solid var(--border);transition:background .2s}.seg button:last-child{border-right:none}.seg button.on{background:var(--accent);color:#fff;font-weight:700}
+.bnav{display:flex;justify-content:space-between;margin-top:22px}
+.foot{max-width:1180px;margin:6px auto 30px;padding:0 24px;font-size:11px;color:var(--tert);line-height:1.55;font-family:'Barlow',sans-serif}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="header">
+<div class="logo">
+  <img class="logo-img" src="data:image/png;base64,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" alt="Shape Technologies Group">
+  <div class="brand-divider"></div>
+  <div>
+    <div class="htitle">Shape Technologies Group &middot; AI Commercial &amp; Advanced Automation Workforce</div>
+    <div class="hsub">Kent, WA &middot; Global Leader in Ultrahigh-Pressure (UHP) Waterjet, Robotic Automation &amp; Process Solutions (Flow &middot; SPA &middot; KMT &middot; APS)</div>
+  </div>
+</div>
+<div class="badge">Independent concept &nbsp;&middot;&nbsp; <b>illustrative</b></div>
+</header>
+
+<div class="tabs">
+<button class="tab active" id="tabA" onclick="setView('ops')">The AI workforce</button>
+<button class="tab" id="tabB" onclick="setView('hire')">Add an AI operator</button>
+</div>
+
+<div class="main">
+<div id="view-ops">
+<div class="lead">Each AI operator is <b>a multi-robot 3D waterjet trimming cell, 94,000 psi HyperJet pump sizing, or 5-axis dynamic kerf taper optimization workflow turned into an autonomous team of agents</b>. Shape Technologies Group (headquartered in Kent, Washington) is the undisputed global manufacturing technology leader in ultrahigh-pressure (UHP) process solutions and turnkey robotic automation. Bringing together premier global brands including Flow Waterjet, Shape Process Automation (SPA), KMT Waterjet, and Advanced Pressure Systems (APS), Shape delivers intelligent, cold-cutting manufacturing cells that operate at pressures exceeding 94,000 psi without heat-affected zones (HAZ). One track drives commercial sourcing, turnkey CapEx quoting, and competitive intelligence: it identifies Tier-1 automotive and aerospace primes retooling for lightweight composites and EV structures, configures complex robotic workcell CapEx packages, and tracks global aftermarket UHP seal utilization. The other track executes robotic workcell kinematic simulation, 94k psi hydraulic sizing, Dynamic Waterjet 5-axis taper compensation, and ISO 10218 robotic safety signoff: it balances dual-robot 3D cutting cycles to under 45 seconds, sizes diamond orifices and UHP intensifiers, eliminates composite fiber fraying, and qualifies RIA 15.06 safety systems. Point one at an automotive CAD surface, a titanium bulkhead specification, or a turnkey cell RFQ and it runs the loop, then hands back a review-ready output for a person to approve.</div>
+<div class="legend">
+<span><span class="tag commercial">Commercial &amp; Systems Sourcing</span> find Tier-1s, turnkey cell quoting, 5-axis aerospace proposals, competitive radar</span>
+<span><span class="tag operations">Robotics, UHP Waterjet &amp; Systems Eng</span> dual-robot trimming cell, 94k psi HyperJet, dynamic 5-axis taper, safety FAT</span>
+<span><span class="tag hero">Flagship</span> the deepest example run</span>
+</div>
+<div class="econ" id="econ"></div>
+<div id="roster"></div>
+<div id="runPanel"></div>
+</div>
+
+<div id="view-hire" class="hidden">
+<div class="lead">Stand up a new AI operator in three steps: <b>pick the workflow</b>, <b>assign each task to an agent</b>, then <b>name it and set the cadence</b>. It joins the workforce.</div>
+<div class="steps" id="bSteps"></div><div id="bBody"></div><div class="bnav" id="bNav"></div>
+</div>
+</div>
+
+<div class="foot">Independent concept prototype prepared by Innvonix Tech Solutions for a conversation with Shape Technologies Group (Kent, WA). It is not affiliated with, endorsed by, or built on Shape Technologies Group systems or data. All operators and outputs are illustrative simulations; robotic path cycle times, UHP flow rates, orifice diameters, and commercial CapEx estimates are placeholders. A VP of Advanced Automation, Chief Robotics Engineer, Director of UHP Systems Engineering, or Plant Operations Director reviews and approves every robotic cell layout, high-pressure hydraulic schematic, safety risk assessment, and commercial integration contract. This is not a production system and produces no deliverable for a real customer.</div>
+
+<script>
+const AGENT_ROLES = {
+  researcher: { emoji: '🔎', label: 'Aerospace, Automotive & Advanced Manufacturing Market Research', tools: ['research', 'save'] },
+  prospector: { emoji: '🧲', label: 'Automotive Tier-1, Aerospace Prime & Industrial Sourcing', tools: ['source_accounts', 'save'] },
+  qualifier: { emoji: '🎯', label: 'Turnkey Robotic Automation & UHP Waterjet Fit Qualifier', tools: ['score_fit', 'save'] },
+  robotics_systems_architect: { emoji: '🤖', label: 'Multi-Robot Trimming Cell & Kinematics Automation Lead', tools: ['simulate_robot_path', 'balance_station_cycle_time', 'save'] },
+  uhp_fluid_dynamics_eng: { emoji: '🌊', label: '94,000 PSI UHP Pump, Intensifier & Orifice Sizing Engineer', tools: ['calculate_uhp_flow_rate', 'model_pressure_drop', 'save'] },
+  abrasive_kerf_specialist: { emoji: '📐', label: 'Dynamic Waterjet 5-Axis Taper & Abrasive Kerf Specialist', tools: ['optimize_kerf_taper_compensation', 'calculate_abrasive_feed', 'save'] },
+  materials_cutting_scientist: { emoji: '🔬', label: 'CFRP Composites, Titanium & Acoustic Fiber Cutting Scientist', tools: ['verify_zero_haz_delamination', 'tune_traverse_speed', 'save'] },
+  controls_plc_engineer: { emoji: '⚡', label: 'Allen-Bradley / Siemens Safety PLC & HMI Systems Engineer', tools: ['configure_safety_plc_logic', 'map_industrial_ethernet', 'save'] },
+  compliance_safety_director: { emoji: '🛡️', label: 'ISO 10218, RIA 15.06 & OSHA Robotic Safety Director', tools: ['audit_robotic_risk_assessment', 'verify_fat_safety_interlocks', 'save'] },
+  field_service_analytics_lead: { emoji: '📊', label: 'UHP Predictive Maintenance & Seal Lifetime Telemetry Lead', tools: ['predict_seal_maintenance_interval', 'monitor_stroke_rate', 'save'] },
+  pricing: { emoji: '🧮', label: 'Turnkey Automation CapEx & Life-Cycle TCO Estimator', tools: ['build_quote', 'save'] },
+  writer: { emoji: '✍️', label: 'Technical Proposal & Robotic FAT Documentation Lead', tools: ['compose', 'save'] }
+};
+
+const RK = Object.keys(AGENT_ROLES);
+
+const TRACKS = [
+  ['commercial', 'Commercial &amp; Turnkey Systems BD'],
+  ['operations', 'UHP Engineering &amp; Robotic Automation']
+];
+
+const WORKFLOWS = {
+  scout: {
+    name: 'Tier-1 automotive interior, aerospace composite & EV battery account discovery',
+    title: 'AI Shape Automation Scout',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Target Automotive & Aerospace Advanced Automation Account Dossier',
+    sample: 'Scan automotive Tier-1 interior suppliers (Faurecia, Yanfeng, Magna) and aerospace airframe primes (Boeing, Airbus, Spirit AeroSystems) retooling high-rate production lines for acoustic headliner robotic waterjet trimming and carbon composite structural trimming.',
+    desc: 'Agents monitor automotive vehicle launches, composite aerospace programs, and EV battery retooling, profile VP of Manufacturing Engineering and Lead Automation Sourcing Managers, score technical fit, and generate prioritized pipeline dossier.',
+    tasks: [
+      { agent: 'researcher', task: 'Scan global automotive vehicle program launches, lightweight composite airframe contracts, and battery enclosure automation retooling.', deps: [] },
+      { agent: 'prospector', task: 'Source VP of Advanced Manufacturing, Director of Automation Engineering, and Lead CapEx Procurement Managers across top 15 Tier-1s.', deps: [] },
+      { agent: 'qualifier', task: 'Score qualification fit against Shape Technologies capabilities: dual-robot SPA trimming cells, Flow Dynamic 5-axis systems, and KMT 60k/90k psi pumps.', deps: [0, 1] },
+      { agent: 'writer', task: 'Synthesize prioritized target account dossier detailing plant tooling schedules, cycle time bottlenecks, and payback horizon benchmarks.', deps: [2] }
+    ]
+  },
+
+  quoting: {
+    name: 'Turnkey multi-robot waterjet cutting cell CapEx & life-cycle TCO quoting',
+    title: 'AI Turnkey Cell Quoting Architect',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Comprehensive Turnkey Robotic Waterjet Cell Commercial CapEx Package',
+    sample: 'An automotive Tier-1 supplier requests an engineered CapEx quotation for a dual-robot Shape Process Automation cell featuring two FANUC 6-axis robots, dual 60,000 psi KMT Streamline pumps, indexing rotary turntable, and light curtain guarding for automotive instrument panel edge trimming at 85 parts per hour.',
+    desc: 'Agents parse customer part geometry and cycle time targets, calculate UHP flow requirements, determine robotic reach and tooling costs, model operating consumables TCO, and generate formal CapEx quotation.',
+    tasks: [
+      { agent: 'qualifier', task: 'Parse automotive RFQ: dual-robot cell, 85 parts/hr throughput, multi-layer thermoformed instrument panel edge trimming, and automated part clamping.', deps: [] },
+      { agent: 'robotics_systems_architect', task: 'Configure cell layout: two FANUC M-20iD/25 articulated robots, servo 180-degree indexing dial table, and vacuum part nesting fixtures.', deps: [0] },
+      { agent: 'uhp_fluid_dynamics_eng', task: 'Size dual 60,000 psi KMT Streamline SL-VI 50HP intensifier pumps, dual 0.007" diamond cutting nozzles, and closed-loop UHP water recirculation.', deps: [1] },
+      { agent: 'pricing', task: 'Calculate turnkey CapEx bill of materials, engineering integration labor, RIA safety compliance, tooling NRE, and 5-year operating TCO.', deps: [2] },
+      { agent: 'writer', task: 'Author complete Turnkey Robotic Waterjet Cell Commercial CapEx Proposal with floor plan layout drawings, cycle time breakdown, and delivery schedule.', deps: [3] }
+    ]
+  },
+
+  proposal: {
+    name: 'Aerospace titanium & CFRP composite 5-axis waterjet machining proposal',
+    title: 'AI Aerospace 5-Axis Proposal Lead',
+    mode: 'sequential',
+    track: 'commercial',
+    deliverable: 'Aerospace 5-Axis Dynamic Waterjet Precision Machining Proposal',
+    sample: 'Develop a comprehensive integration proposal for an aerospace defense contractor procuring a Flow Mach 500 waterjet system equipped with Dynamic Waterjet XD 5-axis cutting head, 94,000 psi HyperJet pump, and garnet abrasive recovery for 4-inch thick titanium bulkhead contouring without heat-affected zones.',
+    desc: 'Agents analyze aerospace composite and titanium alloy specifications, calculate abrasive cutting speed and kerf angle compensation, size HyperJet 94,000 psi intensifier, and formulate formal aerospace proposal.',
+    tasks: [
+      { agent: 'qualifier', task: 'Review aerospace machining RFQ: 4.0-inch Ti-6Al-4V titanium bulkhead cutting, zero heat-affected zone (HAZ), and +/- 0.002 inch part tolerance.', deps: [] },
+      { agent: 'abrasive_kerf_specialist', task: 'Configure Flow Dynamic Waterjet XD 5-axis kinematic wrist with active articulated taper control and 80-mesh Barton garnet abrasive delivery.', deps: [0] },
+      { agent: 'materials_cutting_scientist', task: 'Model traverse cutting rates, verifying zero micro-cracking, zero metallurgical phase changes, and root-mean-square surface finish < 63 Ra.', deps: [1] },
+      { agent: 'pricing', task: 'Structure Flow Mach 500 equipment configuration, 94k psi HyperJet 100HP pump option, abrasive removal system, installation, and training warranty package.', deps: [2] },
+      { agent: 'writer', task: 'Author Aerospace 5-Axis Precision Waterjet Machining Proposal with metallurgical validation data, cut rate curves, and ROI payback analysis.', deps: [3] }
+    ]
+  },
+
+  radar: {
+    name: 'Global UHP waterjet, robotic trimming & industrial water-blasting competitive radar',
+    title: 'AI Waterjet & Automation Intel Analyst',
+    mode: 'dag',
+    track: 'commercial',
+    deliverable: 'Quarterly UHP Waterjet & Industrial Robotics Competitive Intelligence Brief',
+    sample: 'Benchmark Shape Technologies Group brands (Flow, Shape Process Automation, KMT, APS) against OMAX, Bystronic, Jet Edge, ABB Robotics, and Genesis Systems on UHP pump uptime, 5-axis taper compensation accuracy, and global service response SLA.',
+    desc: 'Agents benchmark competing cutting and automation equipment manufacturers, evaluate patent filings on 90k+ psi intensifier seals, track abrasive garnet pricing, and produce executive market intelligence report.',
+    tasks: [
+      { agent: 'researcher', task: 'Benchmark competitor technologies across industrial waterjet cutting, 3D robotic trimming cells, and high-pressure surface preparation.', deps: [] },
+      { agent: 'prospector', task: 'Survey customer satisfaction and mean-time-between-maintenance (MTBM) across Flow, KMT, OMAX, Bystronic, and Jet Edge installations.', deps: [] },
+      { agent: 'pricing', task: 'Analyze cost per hour of operation: UHP seal replacement kits, diamond versus sapphire orifices, power efficiency, and garnet consumption rates.', deps: [0, 1] },
+      { agent: 'writer', task: 'Synthesize Quarterly Waterjet & Automation Competitive Intelligence Brief highlighting Shape Technologies technological leadership and global service network.', deps: [2] }
+    ]
+  },
+
+  turnkey_robotic_trimming_flagship: {
+    name: 'Dual-robot 3D waterjet trimming cell kinematics & factory acceptance signoff',
+    title: 'AI Robotic Waterjet Cell Architect',
+    mode: 'sequential',
+    tag: 'flagship',
+    track: 'operations',
+    deliverable: 'Automotive Dual-Robot 3D Waterjet Trimming Cell Engineering Master Package',
+    sample: 'Design, simulate, and release for build an integrated automotive headliner trimming cell featuring two 6-axis articulated robots, dual pure waterjet 60,000 psi orifices (0.005" diamond nozzles), servo-driven 180-degree rotary indexer, Rockwell GuardLogix safety PLC, and exhaust mist collection achieving 42-second cycle time per part.',
+    desc: 'Agents simulate 6-axis robot kinematics and collision-free paths, calculate 60k psi hydraulic flow, optimize composite cutting speeds, program GuardLogix safety PLC, and conduct ISO 10218 safety risk audit.',
+    tasks: [
+      { agent: 'robotics_systems_architect', task: 'Simulate 6-axis robot kinematics, reach analysis, and dual-robot collision zones in 3D CAD space, balancing station cycle time to 41.5 seconds.', deps: [] },
+      { agent: 'uhp_fluid_dynamics_eng', task: 'Size 60,000 psi KMT Streamline SL-VI 50HP intensifier pump, stainless UHP coiled tubing, and dual 0.005" diamond cutting nozzles delivering 0.28 GPM total flow.', deps: [0] },
+      { agent: 'materials_cutting_scientist', task: 'Optimize pure waterjet cutting parameters for multilayer thermoformed acoustic composite, verifying zero delamination, zero fiber fraying, and zero HAZ.', deps: [1] },
+      { agent: 'controls_plc_engineer', task: 'Program Allen-Bradley GuardLogix Safety PLC, safety zones, light curtains, interlocked service doors, and EtherNet/IP distributed I/O architecture.', deps: [2] },
+      { agent: 'compliance_safety_director', task: 'Execute RIA 15.06 and ISO 10218 robotic safety risk assessment, emergency stop Category 4 / PLe architecture validation, and acoustic sound enclosure dampening (< 78 dBA).', deps: [3] },
+      { agent: 'writer', task: 'Synthesize turnkey engineering documentation, single-line pneumatic/UHP flow schematics, electrical wiring diagrams, and Factory Acceptance Test (FAT) signoff traveler.', deps: [4] }
+    ]
+  },
+
+  hyperjet_94k_pump_sizing: {
+    name: '94,000 PSI HyperJet intensifier pump hydraulic sizing & seal lifetime modeling',
+    title: 'AI 94k PSI UHP Systems Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'HyperJet 94,000 PSI Intensifier Pump Engineering & Fluid Dynamics Dossier',
+    sample: 'Model fluid dynamics and pressure attenuation for a Flow HyperJet 100HP intensifier pump operating at 94,000 psi (6,480 bar) continuous duty, sizing dual ceramic plungers, check valves, and high-pressure attenuator vessel with predictive seal lifetime exceeding 800 hours.',
+    desc: 'Agents calculate hydraulic oil displacement and water compression factors at 94,000 psi, model pressure vessel cyclic fatigue, analyze ceramic plunger seal wear, and compile hydraulic master documentation.',
+    tasks: [
+      { agent: 'uhp_fluid_dynamics_eng', task: 'Calculate water compressibility (14.2% volume reduction at 94,000 psi), hydraulic drive piston ratio (23:1), and required 100HP electric motor torque curves.', deps: [] },
+      { agent: 'field_service_analytics_lead', task: 'Analyze IoT telemetry from 450 field intensifiers, establishing predictive seal wear degradation models and optimizing check-valve service intervals to 850 hours.', deps: [0] },
+      { agent: 'materials_cutting_scientist', task: 'Evaluate cutting velocity gains (+42% faster cutting in thick inconel and titanium) and calculate energy savings per linear foot cut compared to standard 60k psi systems.', deps: [1] },
+      { agent: 'writer', task: 'Compile complete HyperJet 94k PSI Intensifier Engineering Dossier with high-pressure fluid schematics, autofrettage vessel ratings, and maintenance schedules.', deps: [2] }
+    ]
+  },
+
+  dynamic_5axis_taper_opt: {
+    name: 'Dynamic Waterjet XD 5-axis kerf taper & articulate 3D bevel compensation',
+    title: 'AI 5-Axis Dynamic Kerf Specialist',
+    mode: 'sequential',
+    track: 'operations',
+    deliverable: 'Dynamic Waterjet XD 5-Axis Taper Angle & Kerf Accuracy Protocol',
+    sample: 'Generate mathematical taper compensation algorithms and feed rate modulation for 5-axis Dynamic Waterjet XD cutting 2.5-inch 6Al-4V titanium plate, maintaining zero edge taper (+/- 0.001 inch perpendicularity) and 45-degree weld-prep bevel angles.',
+    desc: 'Agents model waterjet stream lag and V-shaped kerf taper geometry, calculate real-time tilt angles up to 60 degrees, tune abrasive garnet feed, and generate machine G-code post-processor rules.',
+    tasks: [
+      { agent: 'abrasive_kerf_specialist', task: 'Model waterjet stream deflection lag and naturally occurring V-shaped taper across 2.5-inch titanium plate, calculating dynamic tilt lead-in angles.', deps: [] },
+      { agent: 'materials_cutting_scientist', task: 'Formulate feed rate acceleration and corner deceleration profiles to prevent inside-corner wash-out and ensure uniform surface finish.', deps: [0] },
+      { agent: 'abrasive_kerf_specialist', task: 'Integrate 5-axis kinematic post-processor algorithms with FlowXpert CAD/CAM, verifying zero taper on straight walls and true 45-degree weld bevels.', deps: [1] },
+      { agent: 'writer', task: 'Publish Dynamic Waterjet XD 5-Axis Calibration Protocol with coordinate transformation matrices, test coupon inspection CMM data, and operator guidance.', deps: [2] }
+    ]
+  },
+
+  robotic_cell_safety_fat: {
+    name: 'Turnkey robotic cell safety qualification, ISO 10218 & Factory Acceptance Testing',
+    title: 'AI Robotic Safety & FAT Quality Director',
+    mode: 'dag',
+    track: 'operations',
+    deliverable: 'Turnkey Robotic Cell ISO 10218 & Factory Acceptance Test Certification Dossier',
+    sample: 'Execute comprehensive Factory Acceptance Testing (FAT) on a multi-station composite trimming automation cell: ISO 13849-1 Performance Level e safety circuit verification, 24-hour continuous dry-run endurance test, 100-part Cpk dimensional capability audit (> 1.67), and OSHA Category 4 lockout/tagout signoff.',
+    desc: 'Agents verify dual-channel safety circuits, execute 24-hour dry-run endurance tests, evaluate Cpk statistical dimensional repeatability on trimmed parts, and authorize CE/OSHA certification traveler.',
+    tasks: [
+      { agent: 'controls_plc_engineer', task: 'Audit Safety PLC code, dual-channel E-stop circuits, safety light curtain muted indexing, and laser area scanner zone boundaries.', deps: [] },
+      { agent: 'compliance_safety_director', task: 'Perform robotic risk assessment according to ANSI/RIA R15.06-2012 and ISO 10218-2 safety standards.', deps: [] },
+      { agent: 'field_service_analytics_lead', task: 'Track 24-hour continuous dry-run telemetry, motor torque signatures, hydraulic oil temperatures, and UHP intensifier stroke counts.', deps: [0] },
+      { agent: 'writer', task: 'Compile comprehensive FAT dossier, dimensional inspection reports (Cpk 1.82 on critical cutouts), CE Declaration of Conformity, and customer signoff traveler.', deps: [1, 2] }
+    ]
+  }
+};
+
+const DTITLE = {
+  scout: 'TARGET AUTOMOTIVE & AEROSPACE ADVANCED AUTOMATION ACCOUNT DOSSIER',
+  quoting: 'COMPREHENSIVE TURNKEY ROBOTIC WATERJET CELL COMMERCIAL CAPEX PACKAGE',
+  proposal: 'AEROSPACE 5-AXIS DYNAMIC WATERJET PRECISION MACHINING PROPOSAL',
+  radar: 'QUARTERLY UHP WATERJET & INDUSTRIAL ROBOTICS COMPETITIVE INTELLIGENCE BRIEF',
+  turnkey_robotic_trimming_flagship: 'AUTOMOTIVE DUAL-ROBOT 3D WATERJET TRIMMING CELL ENGINEERING MASTER PACKAGE',
+  hyperjet_94k_pump_sizing: 'HYPERJET 94,000 PSI INTENSIFIER PUMP ENGINEERING & FLUID DYNAMICS DOSSIER',
+  dynamic_5axis_taper_opt: 'DYNAMIC WATERJET XD 5-AXIS TAPER ANGLE & KERF ACCURACY PROTOCOL',
+  robotic_cell_safety_fat: 'TURNKEY ROBOTIC CELL ISO 10218 & FACTORY ACCEPTANCE TEST CERTIFICATION DOSSIER'
+};
+
+const TOOLS = {
+  research: () => 'Scanned global automotive tooling programs, aerospace composite airframe orders, and industrial automation CAPEX trends.',
+  source_accounts: () => 'Sourced 15 Tier-1 Automotive VP of Manufacturing and Aerospace Lead Automation Tooling Directors.',
+  score_fit: () => 'Scored 95% technical compatibility against Shape Process Automation multi-robot cells and Flow 94k psi UHP systems.',
+  simulate_robot_path: () => 'Simulated 6-axis robot kinematics and wrist articulation; zero singularities or mechanical interference detected.',
+  balance_station_cycle_time: () => 'Balanced Robot 1 (20.6s) and Robot 2 (20.9s) cutting paths, achieving 41.5s total cell cycle time per part.',
+  calculate_uhp_flow_rate: () => 'Calculated total UHP water flow at 0.28 GPM across dual 0.005" diamond nozzles at 60,000 psi operating pressure.',
+  model_pressure_drop: () => 'Modeled high-pressure attenuation along 35ft coiled 1/4" UHP tubing; line pressure drop steady at 1.4%.',
+  optimize_kerf_taper_compensation: () => 'Applied Dynamic Waterjet XD 5-axis tilt algorithms, achieving true 0.000 degree perpendicularity in 2.5" titanium.',
+  calculate_abrasive_feed: () => 'Calculated optimum 80-mesh garnet abrasive feed rate at 0.95 lb/min, maximizing cut speed while eliminating nozzle clogging.',
+  verify_zero_haz_delamination: () => 'Microscopic cross-section verified zero thermal degradation, zero matrix melting, and zero fiber pull-out in CFRP composite.',
+  tune_traverse_speed: () => 'Optimized robotic waterjet traverse cutting speed to 850 inches/minute for acoustic headliner foam-backed substrate.',
+  configure_safety_plc_logic: () => 'Configured Rockwell GuardLogix Safety PLC with dual-channel pulsed inputs and certified safety task cycle time of 10ms.',
+  map_industrial_ethernet: () => 'Mapped EtherNet/IP CIP Safety network topology across 2 robots, 4 VFDs, rotary dial table, and remote safety I/O.',
+  audit_robotic_risk_assessment: () => 'Verified cell design compliant with ANSI/RIA R15.06-2012 and ISO 10218-2; Category 4 / Performance Level e confirmed.',
+  verify_fat_safety_interlocks: () => 'Tested all 12 safety interlocks, optical light curtains, and safety laser scanners; stop time verified under 115ms.',
+  predict_seal_maintenance_interval: () => 'Predictive machine learning algorithm calculated remaining high-pressure seal life at 840 hours before scheduled maintenance.',
+  monitor_stroke_rate: () => 'Monitored intensifier stroke rate at 42 cycles/min; hydraulic oil temperature steady at 43.5C with zero pressure pulsation.',
+  build_quote: () => 'Structured turnkey equipment bill of materials, robot integration engineering, tooling NRE, and 5-year operating TCO model.',
+  compose: () => 'Compiled engineering master package with 3D cell layouts, single-line schematics, safety certifications, and traveler signoffs.',
+  save: () => 'Record committed to Shape Technologies Group enterprise engineering repository and ERP integration portal.'
+};
+
+const FINAL = {
+  scout: `================================================================================
+SHAPE TECHNOLOGIES GROUP &middot; AUTOMOTIVE & AEROSPACE AUTOMATION DOSSIER
+KENT, WA &middot; CONFIDENTIAL COMMERCIAL INTELLIGENCE BRIEF
+================================================================================
+
+1. EXECUTIVE TARGET IDENTIFICATION & DEMAND DRIVERS
+   &bull; Yanfeng Automotive Interiors (Harrison Township, MI & Queretaro, Mexico):
+     - Program: Next-Generation EV Luxury Cockpit & Light-Weight Acoustic Door Trim Lines
+     - Tooling Requirement: Multi-Robot 3D Waterjet Trimming Cells with dual 60,000 psi KMT pumps
+     - Technical Fit: 96% fit; requires ultra-clean pure waterjet cutting of thermoformed skin/foam composites without heat-affected edge burning or adhesive smear
+     - Key Stakeholders: VP of North American Operations, Director of Advanced Manufacturing Tooling
+   &bull; Faurecia / FORVIA (Auburn Hills, MI & Puebla, Mexico):
+     - Program: Sustainable Bio-Composite Acoustic Headliner & Floor Carpet Trimming Programs
+     - Tooling Requirement: High-speed automated robotic cells (SPA Dual-Robot Dial Table Cells)
+     - Technical Fit: 95% fit; requires 40-second total cycle times and fast-change vacuum nest fixtures
+     - Key Stakeholders: Global Manufacturing Engineering Director, Automation Sourcing Manager
+   &bull; Spirit AeroSystems / Boeing Airframe Supply (Wichita, KS & Tulsa, OK):
+     - Program: Commercial Airframe Carbon-Fiber Reinforced Polymer (CFRP) Floor Beams & Stringers
+     - Tooling Requirement: Flow Mach 500 5-Axis Dynamic Waterjet systems with 94,000 psi HyperJet pumps
+     - Technical Fit: 94% fit; strict zero-HAZ, zero-delamination specifications for Class-1 structural flight components
+     - Key Stakeholders: Chief Tooling Engineer, VP of Composite Manufacturing Operations
+   &bull; Magna International / Cosma Body Systems (Troy, MI & Graz, Austria):
+     - Program: Ultra-High-Strength Steel (UHSS) and Aluminum EV Battery Enclosure Structural Trimming
+     - Tooling Requirement: Heavy-duty 3D abrasive waterjet robotic cells and hydro-abrasive deburring
+     - Technical Fit: 92% fit; eliminates micro-cracking and thermal distortion associated with fiber lasers
+
+2. COMMERCIAL PURSUIT STRATEGY
+   &bull; Shape Technologies Advantage: Unrivaled single-source ecosystem combining global robotic integration leadership (Shape Process Automation) with the world's most advanced UHP pump and waterjet technologies (Flow Waterjet & KMT).
+   &bull; Next Steps: Schedule technical workshops demonstrating Shape Process Automation's robotic cell digital twins and 40-second headliner cycle time benchmarking at the Auburn Hills Customer Experience Center.
+
+NOTE: illustrative simulation for Shape Technologies Group (Kent, WA); company names, customer programs, and stakeholder titles are representative placeholders.`,
+
+  quoting: `================================================================================
+SHAPE PROCESS AUTOMATION &middot; TURNKEY ROBOTIC WATERJET CELL CAPEX PROPOSAL
+AUBURN HILLS, MI & BURLINGTON, ON &middot; COMMERCIAL QUOTATION PACKAGE
+================================================================================
+
+CUSTOMER: Tier-1 Automotive Interior Systems Supplier
+PROPOSAL REFERENCE: SPA-CAPEX-2026-9214 &middot; CELL MODEL: SPA-CELL-3D-DUAL
+PROJECT SCOPE: Turnkey Dual-Robot 3D Waterjet Trimming Cell with Rotary Indexing Table
+
+1. CELL SPECIFICATIONS & AUTOMATION ARCHITECTURE
+   &bull; Cell Footprint: 22.0 ft Width x 18.0 ft Depth x 11.5 ft Height acoustic safety enclosure (< 78 dBA)
+   &bull; Robotics: (2) FANUC M-20iD/25 6-Axis Articulated Industrial Robots with 1,831mm reach and +/- 0.02mm repeatability
+   &bull; End-Effectors: (2) Shape Process Automation Ultra-Lightweight 3D Waterjet Cutting Heads with pneumatic needle valves
+   &bull; Part Transfer System: Servo-driven 180-degree heavy-duty rotary index dial table (2.2-second index time)
+   &bull; Part Fixturing: Dual quick-change aluminum vacuum nests with pneumatic part-presence sensors and seal vacuum sensors
+   &bull; Ultrahigh-Pressure System: (2) KMT Streamline SL-VI 50HP 60,000 PSI UHP Intensifier Pumps with redundant backup
+   &bull; Exhaust & Separation: Mist collection exhaust blower (3,500 CFM) and stainless steel water catcher tank with sludge removal conveyor
+
+2. CAPEX INVESTMENT & COMMERCIAL BREAKDOWN
+   &bull; Dual-Robot Articulation & Base Enclosure: $385,000.00
+   &bull; KMT Streamline SL-VI 50HP Dual UHP Intensifiers & Stainless Coiled Tubing: $215,000.00
+   &bull; Rotary Servo Indexing Table & Quick-Change Vacuum Fixture Package: $148,000.00
+   &bull; Rockwell GuardLogix Safety PLC, Light Curtains, Area Scanners & HMI: $92,000.00
+   &bull; Engineering Integration, 3D Offline Simulation, Robot Programming & Runoff: $165,000.00
+   &bull; Factory Acceptance Testing (FAT) & Site Installation Supervision: $45,000.00
+   &bull; Total Turnkey System Investment: $1,050,000.00 USD
+   &bull; Production Throughput: 85 trimmed parts per hour (41.5 second machine cycle time per part)
+   &bull; Delivery Milestones: Engineering freeze at 6 weeks ARO; FAT runoff at 20 weeks ARO; site commissioning at 24 weeks ARO.
+
+NOTE: illustrative simulation for Shape Technologies Group (Kent, WA); cell pricing, component costs, and delivery schedules are representative placeholders.`,
+
+  proposal: `================================================================================
+FLOW WATERJET &middot; AEROSPACE 5-AXIS DYNAMIC PRECISION MACHINING PROPOSAL
+KENT, WASHINGTON &middot; FLOW MACHINING SYSTEMS DIVISION
+================================================================================
+
+PROPOSAL TITLE: Flow Mach 500 5-Axis Dynamic Waterjet XD for Advanced Titanium & Composite Cutting
+CUSTOMER: Aerospace Defense Airframe Manufacturing Prime
+SYSTEM PROPOSAL REF: FLOW-AERO-500-2026-384
+SCOPE: Flow Mach 500 4.0m x 2.0m Bridge Waterjet with Dynamic Waterjet XD & HyperJet 94k PSI Pump
+
+1. AEROSPACE MACHINING CAPABILITIES & PROCESS VALIDATION
+   &bull; Machine Architecture: Flow Mach 500 Bridge with linear motor drive technology (acceleration up to 0.1g, speed up to 700 ipm)
+   &bull; Dynamic Waterjet XD 5-Axis Wrist: Articulated +/- 60 degree cutting envelope with active mathematical taper and stream-lag compensation
+   &bull; UHP Intensifier Technology: Flow HyperJet 100HP operating at continuous 94,000 PSI (6,480 bar)
+   &bull; Metallurgical Zero-HAZ Validation:
+     - Pure cold-supersonic erosion process eliminates Heat-Affected Zones (HAZ) across 4.0" thick Ti-6Al-4V titanium
+     - Zero micro-cracking, zero work-hardening, and zero metallurgical phase changes; eliminates secondary roughing passes
+     - Complete absence of delamination or fiber pullout in high-modulus carbon-fiber reinforced polymer (CFRP) structures
+   &bull; Abrasive Delivery & Management: Flow Paser 4 abrasive cutting head with digital continuous-loop garnet feeder and automated hopper
+
+2. COMMERCIAL PRICING & EQUIPMENT SUMMARY
+   &bull; Flow Mach 500 4020 Machine Tool (4.0m x 2.0m cutting envelope): $340,000.00
+   &bull; Dynamic Waterjet XD 5-Axis Articulating Wrist & Compass Taper Software: $115,000.00
+   &bull; Flow HyperJet 100HP 94,000 PSI UHP Intensifier Pump: $195,000.00
+   &bull; Stainless Steel Sludge Evacuation System & Closed-Loop Water Recycling: $48,000.00
+   &bull; Installation, On-Site Laser Calibration, and FlowXpert CAD/CAM Training: $32,000.00
+   &bull; Total Capital Investment: $730,000.00 USD
+   &bull; Warranty: 24-month comprehensive warranty on machine tool and pressure vessel components.
+
+NOTE: illustrative simulation for Shape Technologies Group (Kent, WA); pricing and equipment specifications are representative placeholders.`,
+
+  radar: `================================================================================
+SHAPE TECHNOLOGIES GROUP &middot; WATERJET & ADVANCED AUTOMATION RADAR
+KENT, WA &middot; STRATEGIC MARKET & COMPETITIVE INTELLIGENCE
+================================================================================
+
+1. GLOBAL COMPETITIVE BENCHMARKING
+   &bull; Shape Technologies Group (Flow &middot; SPA &middot; KMT &middot; APS):
+     - Differentiator: World's only vertically integrated enterprise offering ultrahigh-pressure pumps up to 94,000 psi (Flow HyperJet, KMT PRO), patented 5-axis taper compensation (Dynamic XD), and turnkey multi-robot automation cell integration (Shape Process Automation).
+     - Geographic Scale: Global footprint with operations across North America, Europe, and Asia serving 100+ countries.
+   &bull; OMAX Corporation (Hypertherm Associates):
+     - Focus: High-precision 2D abrasive waterjet tables (ProtoMAX, GlobalMAX, MAXIEM, OMAX series) with direct-drive pumps.
+     - Competitive Dynamic: Strong in job shops and precision prototyping; lacks 90k+ psi intensifier technology and turnkey multi-robot automotive interior trimming automation.
+   &bull; Bystronic Laser AG / ByWater (Nieder&ouml;nz, Switzerland):
+     - Focus: Sheet metal processing systems (fiber lasers, press brakes, 2D waterjet cutting).
+     - Competitive Dynamic: Waterjet is an ancillary product to fiber lasers; cannot match Shape Process Automation's depth in custom automotive interior robotic workcells or aerospace composite trimming.
+   &bull; Jet Edge (St. Michael, MN):
+     - Focus: Heavy-duty industrial waterjet tables and 60k/90k psi intensifier pumps.
+     - Competitive Dynamic: Solid pump manufacturer; lacks Shape Process Automation's automotive Tier-1 turnkey robotics integration capabilities and global field support density.
+
+2. CONSUMABLES & COMPONENT TECHNOLOGY RADAR
+   &bull; 90k+ PSI Seal Technology: Shape Technologies proprietary autofrettage high-pressure cylinders and advanced polymer seal geometries deliver 800+ hour service intervals, compared to competitor averages of 400-500 hours at comparable pressures.
+   &bull; Abrasive Garnet Consumption: Flow Dynamic Waterjet XD reduces garnet consumption by up to 30% through predictive feed rate optimization and active wrist taper compensation.
+
+NOTE: illustrative simulation for Shape Technologies Group (Kent, WA); market comparisons and benchmark numbers are illustrative analytical models.`,
+
+  turnkey_robotic_trimming_flagship: `================================================================================
+SHAPE PROCESS AUTOMATION &middot; DUAL-ROBOT WATERJET TRIMMING CELL MASTER PACKAGE
+CELL SERIAL: SPA-2026-TRIM-088 &middot; PLANT LOCATION: AUBURN HILLS, MI &middot; ISO 9001:2015
+CUSTOMER TARGET: Tier-1 Automotive Acoustic Headliner & Interior Trimming
+================================================================================
+
+1. WORKCELL ROBOTIC KINEMATICS & CYCLE TIME ANALYSIS
+   &bull; Robotic Configuration:
+     - Robot 1: FANUC M-20iD/25 6-Axis (Handles Left & Center Aperture Contouring, Sunroof Opening, Overhead Console)
+     - Robot 2: FANUC M-20iD/25 6-Axis (Handles Right Perimeter Edge Trimming, Pillar Reliefs, Wire Harness Channels)
+     - Tool Center Point (TCP) Speed: Programmed cutting traverse speed up to 850 inches/minute (360 mm/sec)
+     - Kinematic Path Optimization: All wrist motion kept within +/- 145 degrees to avoid wrist axis singularity and eliminate UHP hose binding
+   &bull; Station Cycle Time Breakdown (Target: < 45.0 Seconds):
+     - Rotary Index Dial Table 180-degree motion: 2.20 seconds
+     - Robot 1 Cutting Path Duration: 37.10 seconds (including 14 pierce lead-ins)
+     - Robot 2 Cutting Path Duration: 36.80 seconds (including 11 perimeter sections)
+     - Part Clamp / Vacuum Engagement & Verification: 1.20 seconds
+     - Total Machine Cycle Time: 40.50 seconds per finished part (88.8 parts/hour at 100% OEE)
+
+2. ULTRAHIGH-PRESSURE FLUID DYNAMICS (KMT STREAMLINE PUMP SYSTEM)
+   &bull; High-Pressure Intensifier Configuration:
+     - Pump Model: KMT Streamline SL-VI 50HP Dual-Plunger UHP Intensifier
+     - Continuous Operating Pressure: 60,000 PSI (4,137 bar)
+     - Orifice Selection: Dual 0.005" (0.127 mm) synthetic diamond cutting orifices
+     - Total Volumetric Flow Rate: 0.14 GPM per nozzle &middot; Total Cell Flow: 0.28 GPM (1.06 Liters/min)
+     - Hydraulic Shock Attenuation: 1.0-Liter high-pressure forged accumulator dampens pulsation to < +/- 1.5%
+   &bull; UHP Coiled Whip Plumbing:
+     - 1/4" OD x 0.083" ID 316 stainless steel cold-drawn UHP tubing with 4-turn helical coils mounted at Robot Axis 3 and Axis 5 for 2.5-million cycle fatigue life
+
+3. MATERIAL CUTTING SCIENCE & SUBSTRATE INTEGRITY
+   &bull; Substrate Composition: 5-Layer Composite (Fiberglass scrim, thermoset polyurethane foam, non-woven barrier, decorative knitted fabric facing)
+   &bull; Cutting Validation Results:
+     - Pure waterjet supersonic stream (Mach 3.2, ~3,100 ft/sec) shears fiber matrix cleanly without localized compression
+     - Edge Quality: 100% free of heat degradation, zero thermal discoloration, zero fabric edge unraveling
+     - Moisture Retention: High-velocity vacuum exhaust removes 99.8% of process moisture; dry-to-touch upon part unloading
+
+4. CONTROLS, SAFETY PLC & FACTORY ACCEPTANCE TEST (FAT)
+   &bull; Controls Architecture:
+     - Controller: Allen-Bradley GuardLogix 5580 Safety Controller (1756-L82ES) with Point Guard I/O over CIP Safety
+     - HMI: PanelView 5510 15-inch Touchscreen with graphical cell diagnostic overview and nozzle lifetime counters
+   &bull; Safety Validation (ISO 10218-2 & RIA 15.06-2012):
+     - Guarding: Type 4 optical safety light curtains on rotary dial load/unload station with muting logic
+     - Service Access: Interlocked access doors with trapped-key solenoid locking switches (PLe / Category 4)
+     - Acoustic Sound Proofing: Heavy double-wall insulated acoustic enclosure attenuates 60k psi jet noise to 77.2 dBA (OSHA compliant for 8-hour shift without ear protection)
+   &bull; Quality Conformance Signoff:
+     - Lead Robotics Systems Architect: APPROVED (Auburn Hills Engineering Center)
+     - Director of Robotic Safety & Compliance: APPROVED (Certified Functional Safety Expert)
+     - Quality Assurance & FAT Lead: APPROVED (Serialized FAT Runoff 30/30 parts in tolerance)
+
+NOTE: illustrative simulation for Shape Technologies Group (Kent, WA); robotic kinematics, flow rates, and safety parameters are representative placeholders.`,
+
+  hyperjet_94k_pump_sizing: `================================================================================
+FLOW WATERJET &middot; HYPERJET 94,000 PSI INTENSIFIER PUMP ENGINEERING DOSSIER
+KENT, WASHINGTON &middot; ULTRAHIGH-PRESSURE RESEARCH & DEVELOPMENT
+================================================================================
+
+PUMP MODEL: Flow HyperJet 100 &middot; OPERATING PRESSURE: 94,000 PSI (6,480 BAR)
+CONTINUOUS RATING: 100 Horsepower (75 kW) &middot; DOCUMENT NUMBER: UHP-94K-ENG-2026
+
+1. FLUID DYNAMICS & THERMODYNAMICS AT 94,000 PSI
+   &bull; Water Compressibility Factor:
+     At 94,000 psi (6,480 bar), ambient water is compressed by 14.2% of its original volume. The hydraulic intensifier stroke profile incorporates automated electronic pre-compression stroke advance to maintain steady jet velocity.
+   &bull; Pressure Attenuation & Jet Velocity:
+     - Jet Velocity: 4,100 feet per second (Mach 3.8 supersonic water stream)
+     - Dynamic Water Pressure at Orifice: 93,850 psi with line loss < 150 psi across 25ft 1/4" UHP tubing
+     - Orifice Capacity: Supports single 0.013" orifice or dual 0.009" orifices under continuous 100HP duty
+   &bull; Hydraulic Drive System:
+     - Variable-displacement axial piston hydraulic pump delivering 3,000 psi to center hydraulic piston
+     - Intensification Ratio: 31.3 : 1 ratio between hydraulic piston and ceramic UHP water plunger
+
+2. CERAMIC PLUNGER & SEAL LIFETIME ENGINEERING
+   &bull; Plunger Metallurgy: Solid zirconium-toughened alumina (ZTA) ceramic plungers with sub-nanometer surface polish
+   &bull; Dynamic High-Pressure Seal Pack: Proprietary polymer seal rings energized by custom fluoroelastomer O-rings with titanium backup rings
+   &bull; Predictive Seal Maintenance: Real-time telemetry monitoring plunger stroke frequency, cooling water delta-T, and hydraulic pressure decay curves projects seal life to 850 hours (exceeding industry standards by 75%)
+
+3. PERFORMANCE BENCHMARKS & PRODUCTIVITY GAINS
+   &bull; 0.50-inch 6061-T6 Aluminum: Cutting speed increases from 48 ipm (at 60k psi) to 74 ipm (at 94k psi) &middot; +54% throughput gain
+   &bull; 2.0-inch Inconel 718 Superalloy: Cutting speed increases from 3.2 ipm (at 60k psi) to 5.4 ipm (at 94k psi) &middot; +68% throughput gain
+   &bull; Abrasive Garnet Consumption: Reduces garnet consumption per part by 28.5% due to higher kinetic energy transfer per abrasive grain
+
+NOTE: illustrative simulation for Shape Technologies Group (Kent, WA); thermodynamic equations and pressure metrics are representative placeholders.`,
+
+  dynamic_5axis_taper_opt: `================================================================================
+FLOW WATERJET &middot; DYNAMIC WATERJET XD 5-AXIS TAPER ACCURACY PROTOCOL
+KENT, WA &middot; ADVANCED KINEMATICS & TAPER CONTROL LAB
+================================================================================
+
+SYSTEM CONFIGURATION: Flow Mach 500 with Dynamic Waterjet XD 5-Axis Articulated Head
+TEST COUPON MATERIAL: 2.50-inch (63.5 mm) Titanium Grade 5 (Ti-6Al-4V) AMS 4911
+
+1. MATHEMATICAL STREAM-LAG & KERF TAPER MODELING
+   &bull; Naturally Occurring Waterjet Phenomena:
+     - Kerf Taper: Supersonic abrasive stream loses kinetic energy as it penetrates deep material, creating a natural V-shaped taper (up to 0.012" wider at top than bottom).
+     - Stream Lag: Jet tail trails behind the entrance nozzle tip during high-speed feed, causing inside-corner wash-out and outside-corner undercut.
+   &bull; Dynamic Waterjet XD Real-Time Multi-Axis Correction:
+     - Active Tilt Angle (&theta;): Wrist articulates up to 10 degrees dynamically to tilt the natural taper into the scrap side of the workpiece, leaving the finished edge perfectly perpendicular (90.00 degrees).
+     - Compass Lead Angle (&phi;): Mathematical lead-angle projection compensates for stream trail-back lag based on instantaneous feed velocity and cut radius.
+
+2. CMM INSPECTION & METROLOGICAL VALIDATION
+   &bull; Dimensional Perpendicularity across 2.50" Titanium Cut:
+     - Top Dimension (Entry): 4.0002 inches
+     - Bottom Dimension (Exit): 4.0004 inches
+     - Total Taper Variance: 0.0002 inches (well within +/- 0.001 inch aerospace specification)
+   &bull; True 45.0-Degree Weld Preparation Bevel:
+     - Measured Bevel Angle on Zeiss CMM: 44.98 degrees across 12-inch linear contour
+     - Surface Finish: 52 Ra micro-inches (Class 1 aerospace finish)
+   &bull; G-Code Optimization: Seamless toolpath generation through FlowXpert 3D CAD/CAM with automatic lead-ins, lead-outs, and corner deceleration loops.
+
+NOTE: illustrative simulation for Shape Technologies Group (Kent, WA); metrological CMM logs and angular tolerances are representative placeholders.`,
+
+  robotic_cell_safety_fat: `================================================================================
+SHAPE PROCESS AUTOMATION &middot; TURNKEY ROBOTIC CELL FAT CERTIFICATION DOSSIER
+AUBURN HILLS, MICHIGAN &middot; FUNCTIONAL SAFETY & QUALITY ASSURANCE
+================================================================================
+
+WORK ORDER: FAT-SPA-2026-4402 &middot; CELL IDENTIFIER: DUAL-ROBOT WATERJET TRIMMING CELL
+STANDARDS AUDITED: ANSI/RIA R15.06-2012, ISO 10218-1/2:2011, ISO 13849-1 (PL e)
+
+1. FUNCTIONAL SAFETY & HARDWARE INTERLOCK VERIFICATION
+   &bull; Safety Circuit Architecture:
+     - Category 4 / Performance Level e (PL e) redundant dual-channel safety circuit architecture
+     - GuardLogix 1756-L82ES Safety Controller running certified safety firmware
+   &bull; Safety Interlock Test Matrix:
+     - Light Curtain (Load/Unload Station): Optical break trips safety stop within 88ms (Limit: < 120ms) &middot; [PASS]
+     - Area Scanner (Maintenance Enclosure): Red zone entry triggers Category 0 controlled stop &middot; [PASS]
+     - Pneumatic High-Pressure Dump Valve: De-energizes 60,000 psi hydraulic pressure to 0 psi in 140ms &middot; [PASS]
+     - Dual-Channel E-Stops: 6 individual E-stop pushbuttons verified across all cell perimeter stations &middot; [PASS]
+
+2. 24-HOUR CONTINUOUS DRY-RUN ENDURANCE AUDIT
+   &bull; Total Completed Cycles: 2,130 continuous indexing cycles over 24-hour runtime
+   &bull; Operational Faults: 0 hardware faults, 0 communication dropped packets, 0 safety bus resets
+   &bull; Thermal Equilibrium: Fanuc robot motor temperatures stabilized at 48.2C (limit: 75C); hydraulic oil steady at 44.1C
+   &bull; Intensifier Stroke Count: 53,250 total cycles with zero pressure spike anomalies &middot; [STATUS: PASSED]
+
+3. STATISTICAL PROCESS CAPABILITY (CPK AUDIT)
+   &bull; Sample Size: 100 consecutive automotive headliner parts trimmed and inspected on Romer CMM Arm
+   &bull; Critical Feature 1 (Perimeter Trim Tolerance +/- 0.50mm): Mean deviation +0.06mm &middot; Cpk = 1.84
+   &bull; Critical Feature 2 (Sunroof Aperture Tolerance +/- 0.35mm): Mean deviation +0.04mm &middot; Cpk = 1.92
+   &bull; Critical Feature 3 (Overhead Console Cutout +/- 0.35mm): Mean deviation -0.05mm &middot; Cpk = 1.76
+   &bull; Final Conclusion: All inspected dimensions demonstrate Cpk > 1.67, confirming high-rate production readiness.
+
+4. FACTORY ACCEPTANCE TEST (FAT) DISPOSITION
+   &bull; System certified compliant for shipment to Tier-1 automotive customer plant.
+   &bull; CE Declaration of Conformity and OSHA compliance certificates signed and appended.
+
+NOTE: illustrative simulation for Shape Technologies Group (Kent, WA); traveler serial numbers and test records are representative placeholders.`
+};
+
+const EMPLOYEES = [
+  { id: 'scout', name: 'AI Shape Automation Scout', title: 'VP Automotive & Aerospace Advanced Tooling', wf: 'scout', handled: 48, hrs: 175, win: 0, status: 'idle' },
+  { id: 'quoting', name: 'AI Turnkey Cell Quoting Architect', title: 'Director of Turnkey Automation Quoting', wf: 'quoting', handled: 42, hrs: 156, win: 26, status: 'idle' },
+  { id: 'proposal', name: 'AI Aerospace 5-Axis Proposal Lead', title: 'Principal Aerospace 5-Axis Solutions Lead', wf: 'proposal', handled: 32, hrs: 128, win: 30, status: 'idle' },
+  { id: 'radar', name: 'AI Waterjet & Automation Intel Analyst', title: 'Director of Industrial Automation Market Intel', wf: 'radar', handled: 58, hrs: 110, win: 0, status: 'idle' },
+  { id: 'turnkey_robotic_trimming_flagship', name: 'AI Robotic Waterjet Cell Architect', title: 'Chief Robotics & Kinematics Architect', wf: 'turnkey_robotic_trimming_flagship', handled: 118, hrs: 395, win: 52, status: 'idle' },
+  { id: 'hyperjet_94k_pump_sizing', name: 'AI 94k PSI UHP Systems Specialist', title: 'Principal UHP Fluid Systems Engineer', wf: 'hyperjet_94k_pump_sizing', handled: 76, hrs: 265, win: 36, status: 'idle' },
+  { id: 'dynamic_5axis_taper_opt', name: 'AI 5-Axis Dynamic Kerf Specialist', title: 'Lead 5-Axis Kinematics & Kerf Scientist', wf: 'dynamic_5axis_taper_opt', handled: 68, hrs: 230, win: 42, status: 'idle' },
+  { id: 'robotic_cell_safety_fat', name: 'AI Robotic Safety & FAT Quality Director', title: 'Director of Robotic Functional Safety & FAT', wf: 'robotic_cell_safety_fat', handled: 85, hrs: 260, win: 44, status: 'idle' }
+];
+
+let curEmp = null;
+let running = false;
+let draft = {};
+
+function $(id) { return document.getElementById(id); }
+function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+function setView(v) {
+  $('tabA').className = 'tab' + (v === 'ops' ? ' active' : '');
+  $('tabB').className = 'tab' + (v === 'hire' ? ' active' : '');
+  $('view-ops').className = v === 'ops' ? '' : 'hidden';
+  $('view-hire').className = v === 'hire' ? '' : 'hidden';
+  if (v === 'hire') initBuilder();
+}
+
+function renderEcon() {
+  const activeOps = EMPLOYEES.length;
+  const totalHandled = EMPLOYEES.reduce((acc, e) => acc + e.handled, 0);
+  const totalHrs = EMPLOYEES.reduce((acc, e) => acc + e.hrs, 0);
+  const avgWin = Math.round(EMPLOYEES.filter(e => e.win > 0).reduce((acc, e) => acc + e.win, 0) / (EMPLOYEES.filter(e => e.win > 0).length || 1));
+  $('econ').innerHTML = `
+    <div class="cell"><div class="v">${activeOps}</div><div class="k">Active AI Operators</div></div>
+    <div class="cell"><div class="v">${totalHandled}</div><div class="k">Robotic Waterjet &amp; UHP Cells Run</div></div>
+    <div class="cell"><div class="v">${totalHrs.toLocaleString()} <span class="u">hrs</span></div><div class="k">Engineering &amp; Sales Time Saved</div></div>
+    <div class="cell"><div class="v">+${avgWin}<span class="u">%</span></div><div class="k">Average Cycle Time Velocity Gain</div></div>
+  `;
+}
+
+function chips(w) {
+  let h = '';
+  if (w.track === 'commercial') h += '<span class="tag commercial">Commercial &amp; Sourcing</span> ';
+  else if (w.track === 'operations') h += '<span class="tag operations">Robotics &amp; UHP Eng</span> ';
+  if (w.tag === 'flagship') h += '<span class="tag hero">Flagship</span> ';
+  return h;
+}
+
+function mono(name) {
+  return name.split(' ').map(w => w[0]).filter(Boolean).slice(0, 2).join('').toUpperCase();
+}
+
+function renderRoster() {
+  let html = '';
+  TRACKS.forEach(([tKey, tLabel]) => {
+    const list = EMPLOYEES.filter(e => WORKFLOWS[e.wf] && WORKFLOWS[e.wf].track === tKey);
+    if (!list.length) return;
+    html += `<div class="slabel">${tLabel}</div><div class="roster">`;
+    list.forEach(e => {
+      const w = WORKFLOWS[e.wf];
+      const isHero = w && w.tag === 'flagship';
+      html += `
+        <div class="emp ${isHero ? 'hero' : ''} ${e.status === 'working' ? 'working' : ''}" id="emp-${e.id}">
+          <div class="emp-top">
+            <div class="avatar">${mono(e.name)}</div>
+            <div>
+              <div class="emp-name">${e.name} ${chips(w)}</div>
+              <div class="emp-title">${e.title}</div>
+            </div>
+          </div>
+          <div class="emp-owns">Owns: <b>${w.name}</b></div>
+          <div class="team">
+            ${w.tasks.map(t => `<span class="chip">${AGENT_ROLES[t.agent] ? AGENT_ROLES[t.agent].emoji + ' ' + AGENT_ROLES[t.agent].label : t.agent}</span>`).join('')}
+          </div>
+          <div class="emp-stats">
+            <div class="st"><b>${e.handled}</b>Workflows handled</div>
+            <div class="st"><b>${e.hrs}h</b>Time saved</div>
+            <div class="st"><b>${e.win ? '+' + e.win + '%' : 'N/A'}</b>Cycle velocity</div>
+          </div>
+          <div class="actions">
+            <button class="btn primary big" onclick="openRun('${e.id}')">&#9654; Run operator</button>
+          </div>
+        </div>
+      `;
+    });
+    html += `</div>`;
+  });
+  html += `
+    <div class="slabel" style="margin-top:24px">Custom Operator Composition</div>
+    <div class="roster">
+      <div class="hire-card" onclick="setView('hire')">
+        <div class="plus">+</div>
+        <div class="h">Add an AI operator</div>
+        <div class="p">Compose a custom robotic cell, UHP fluid intensifier, or 5-axis waterjet workflow from specialist agents</div>
+      </div>
+    </div>
+  `;
+  $('roster').innerHTML = html;
+}
+
+function openRun(id) {
+  curEmp = EMPLOYEES.find(e => e.id === id);
+  if (!curEmp) return;
+  const w = WORKFLOWS[curEmp.wf];
+  $('runPanel').innerHTML = `
+    <div class="run" id="runBox">
+      <div class="run-head">
+        <div class="avatar">${mono(curEmp.name)}</div>
+        <div>
+          <div class="emp-name">${curEmp.name} &middot; Execution Console ${chips(w)}</div>
+          <div class="run-sub">${curEmp.title} &mdash; ${w.name}</div>
+        </div>
+      </div>
+      <div class="run-input">
+        <textarea id="runPrompt">${w.sample}</textarea>
+        <button class="btn primary big" id="btnStart" onclick="startRun()">&#9654; Run operator</button>
+      </div>
+      <div class="phases">
+        <div class="ph active" id="ph1"><div class="dot">1</div><div class="l">Phase 1: Planning</div></div>
+        <div class="ph" id="ph2"><div class="dot">2</div><div class="l">Phase 2: Execution</div></div>
+        <div class="ph" id="ph3"><div class="dot">3</div><div class="l">Phase 3: Deliverable</div></div>
+      </div>
+      <div class="agent-grid" id="agentGrid">
+        ${w.tasks.map((t, i) => `
+          <div class="acard" id="acard-${i}">
+            <div class="ae">${AGENT_ROLES[t.agent].emoji}</div>
+            <div class="ar">${AGENT_ROLES[t.agent].label}</div>
+            <div class="at">${t.task}</div>
+            <div class="as"><span class="sd"></span> <span id="astat-${i}">Queued</span></div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="feed" id="liveFeed"></div>
+      <div class="result hidden" id="resBox">
+        <div class="rstats">
+          <div class="rrow"><span class="k">Deliverable</span><span class="v">${w.deliverable}</span></div>
+          <div class="rrow"><span class="k">Mode</span><span class="v">${w.mode.toUpperCase()}</span></div>
+          <div class="rrow"><span class="k">Agents Engaged</span><span class="v">${w.tasks.length} Specialists</span></div>
+          <div class="rrow"><span class="k">Quality Signoff</span><span class="v" style="color:var(--ok)">&#10003; Verified</span></div>
+        </div>
+        <div class="rout">
+          <div class="rh">${DTITLE[curEmp.wf] || w.deliverable}</div>
+          <div class="rb" id="resBody"></div>
+        </div>
+      </div>
+      <div class="donebar hidden" id="doneBar">
+        <b>Operator execution complete.</b> Deliverable generated, formatted, and verified for stakeholder review.
+      </div>
+    </div>
+  `;
+  $('runBox').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function logFeed(t, a, d) {
+  const f = $('liveFeed');
+  if (!f) return;
+  const row = document.createElement('div');
+  row.className = 'frow';
+  row.innerHTML = `<span class="ft">${t}</span><span class="fa">${a}</span><span class="fd">${d}</span>`;
+  f.appendChild(row);
+  f.scrollTop = f.scrollHeight;
+}
+
+async function startRun() {
+  if (running || !curEmp) return;
+  running = true;
+  $('btnStart').disabled = true;
+  curEmp.status = 'working';
+  renderRoster();
+
+  const w = WORKFLOWS[curEmp.wf];
+  $('ph1').className = 'ph done';
+  $('ph2').className = 'ph active';
+
+  logFeed('00:00', 'Supervisor', `Initializing execution workflow: ${w.name}`);
+  await sleep(400);
+  logFeed('00:01', 'Planner', `Validating task dependencies and execution mode (${w.mode.toUpperCase()})`);
+  await sleep(400);
+
+  w.tasks.forEach((_, i) => {
+    const c = $('acard-' + i);
+    if (c) c.className = 'acard visible';
+  });
+
+  if (w.mode === 'sequential') {
+    for (let i = 0; i < w.tasks.length; i++) {
+      const t = w.tasks[i];
+      const role = AGENT_ROLES[t.agent];
+      const card = $('acard-' + i);
+      const stat = $('astat-' + i);
+      if (card) card.className = 'acard visible running';
+      if (stat) stat.textContent = 'Executing...';
+
+      logFeed(`00:0${i + 2}`, role.label, `Starting: ${t.task}`);
+      await sleep(650);
+
+      const tool = role.tools[0] || 'save';
+      const output = TOOLS[tool] ? TOOLS[tool]() : 'Step executed successfully.';
+      logFeed(`00:0${i + 2}`, role.label, `[${tool}] ${output}`);
+      await sleep(450);
+
+      if (card) card.className = 'acard visible done';
+      if (stat) stat.textContent = 'Completed ✓';
+    }
+  } else {
+    const completed = new Set();
+    let sec = 2;
+    while (completed.size < w.tasks.length) {
+      const ready = [];
+      for (let i = 0; i < w.tasks.length; i++) {
+        if (!completed.has(i)) {
+          const deps = w.tasks[i].deps;
+          if (deps.every(d => completed.has(d))) {
+            ready.push(i);
+          }
+        }
+      }
+      if (!ready.length) break;
+
+      ready.forEach(i => {
+        const c = $('acard-' + i);
+        const s = $('astat-' + i);
+        if (c) c.className = 'acard visible running';
+        if (s) s.textContent = 'Running parallel...';
+        const role = AGENT_ROLES[w.tasks[i].agent];
+        logFeed(`00:0${sec}`, role.label, `Dispatched: ${w.tasks[i].task}`);
+      });
+      await sleep(800);
+
+      ready.forEach(i => {
+        const role = AGENT_ROLES[w.tasks[i].agent];
+        const tool = role.tools[0] || 'save';
+        const output = TOOLS[tool] ? TOOLS[tool]() : 'Task completed.';
+        logFeed(`00:0${sec}`, role.label, `[${tool}] ${output}`);
+        const c = $('acard-' + i);
+        const s = $('astat-' + i);
+        if (c) c.className = 'acard visible done';
+        if (s) s.textContent = 'Completed ✓';
+        completed.add(i);
+      });
+      sec++;
+      await sleep(400);
+    }
+  }
+
+  $('ph2').className = 'ph done';
+  $('ph3').className = 'ph active done';
+  logFeed('00:08', 'Supervisor', 'All tasks finished. Compiling final deliverable.');
+
+  $('resBody').textContent = FINAL[curEmp.wf] || 'Deliverable generated successfully.';
+  $('resBox').className = 'result';
+  $('doneBar').className = 'donebar';
+
+  curEmp.handled += 1;
+  curEmp.hrs += rand(4, 9);
+  curEmp.status = 'idle';
+  running = false;
+  $('btnStart').disabled = false;
+  renderEcon();
+  renderRoster();
+}
+
+function initBuilder() {
+  draft = {
+    step: 1,
+    wf: Object.keys(WORKFLOWS)[0],
+    assign: WORKFLOWS[Object.keys(WORKFLOWS)[0]].tasks.map(t => t.agent),
+    name: 'Custom Robotic Cell Operator',
+    title: 'AI Advanced Automation Specialist',
+    cadence: 'On-demand',
+    mode: WORKFLOWS[Object.keys(WORKFLOWS)[0]].mode
+  };
+  renderBuilder();
+}
+
+function renderBuilder() {
+  const steps = [
+    ['1', 'Pick workflow'],
+    ['2', 'Assign agents'],
+    ['3', 'Name & cadence']
+  ];
+  $('bSteps').innerHTML = steps.map((s, i) => `<div class="step ${draft.step === i + 1 ? 'active' : ''}"><div class="n">${s[0]}</div><div class="l">${s[1]}</div></div>`).join('');
+  if (draft.step === 1) bS1();
+  else if (draft.step === 2) bS2();
+  else bS3();
+  bNav();
+}
+
+function bS1() {
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Choose the workflow</div><div class="wf-grid">` + Object.keys(WORKFLOWS).map(k => {
+    const w = WORKFLOWS[k];
+    return `<div class="wf ${draft.wf === k ? 'sel' : ''}" onclick="pickWf('${k}')">
+      <div class="wn">${w.name} ${chips(w)}</div>
+      <div class="wd">${w.desc}</div>
+      <div class="wm">${w.tasks.length} agents &middot; ${w.mode}</div>
+    </div>`;
+  }).join('') + `</div>`;
+}
+
+function pickWf(k) {
+  draft.wf = k;
+  const w = WORKFLOWS[k];
+  draft.mode = w.mode;
+  draft.assign = w.tasks.map(t => t.agent);
+  if (!draft.title) draft.title = w.title;
+  renderBuilder();
+}
+
+function bS2() {
+  const w = WORKFLOWS[draft.wf];
+  const opts = RK.map(r => `<option value="${r}">${AGENT_ROLES[r].emoji} ${AGENT_ROLES[r].label}</option>`).join('');
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Assign each task to an agent</div>` + w.tasks.map((t, i) => `
+    <div class="task-row">
+      <div class="tn">${i + 1}</div>
+      <div class="tt">${t.task}${t.deps.length ? ` <span style="color:var(--tert)">&middot; waits for ${t.deps.map(d => d + 1).join(', ')}</span>` : ''}</div>
+      <select onchange="draft.assign[${i}]=this.value">${opts}</select>
+    </div>
+  `).join('') + `
+    <div class="field" style="margin-top:14px">
+      <label>Execution mode</label>
+      <div class="seg">` + ['sequential', 'dag'].map(m => `<button class="${draft.mode === m ? 'on' : ''}" onclick="draft.mode='${m}';bS2()">${m === 'dag' ? 'Auto (parallel where safe)' : 'Sequential'}</button>`).join('') + `</div>
+    </div>
+  `;
+  document.querySelectorAll('#bBody select').forEach((s, i) => s.value = draft.assign[i]);
+}
+
+function bS3() {
+  const w = WORKFLOWS[draft.wf];
+  $('bBody').innerHTML = `<div class="slabel" style="margin-top:0">Name & cadence</div>
+    <div class="field"><label>Operator name</label><input value="${draft.name}" placeholder="e.g. AI-RoboticCell-Architect" oninput="draft.name=this.value"></div>
+    <div class="field"><label>Role title</label><input value="${draft.title}" placeholder="e.g. AI Automation Specialist" oninput="draft.title=this.value"></div>
+    <div class="field"><label>Cadence</label><div class="seg">` + ['Per cell runoff', 'Per batch', 'Weekly', 'On-demand'].map(c => `<button class="${draft.cadence === c ? 'on' : ''}" onclick="draft.cadence='${c}';bS3()">${c}</button>`).join('') + `</div></div>
+    <div class="slabel" style="margin-top:0">Preview</div>
+    <div class="emp" style="max-width:360px">
+      <div class="emp-top">
+        <div class="avatar">${mono(draft.name || 'New')}</div>
+        <div>
+          <div class="emp-name">${draft.name || 'New operator'} ${chips(w)}</div>
+          <div class="emp-title">${draft.title || 'AI operator'}</div>
+        </div>
+      </div>
+      <div class="emp-owns">Owns: <b>${w.name}</b> &middot; ${draft.cadence} &middot; ${draft.mode}</div>
+    </div>`;
+}
+
+function bNav() {
+  const left = draft.step > 1 ? `<button class="btn ghost" onclick="draft.step--;renderBuilder()">&larr; Back</button>` : `<span></span>`;
+  let right;
+  if (draft.step === 1) right = `<button class="btn primary" ${draft.wf ? '' : 'disabled'} onclick="if(draft.wf){draft.step=2;renderBuilder()}">Next: assign agents &rarr;</button>`;
+  else if (draft.step === 2) right = `<button class="btn primary" onclick="draft.step=3;renderBuilder()">Next: name & cadence &rarr;</button>`;
+  else right = `<button class="btn primary" onclick="hire()">&#10003; Add this AI operator</button>`;
+  $('bNav').innerHTML = left + right;
+}
+
+function hire() {
+  const w = WORKFLOWS[draft.wf];
+  const name = (draft.name || 'New Operator').trim();
+  const wfId = 'custom_' + Date.now();
+  WORKFLOWS[wfId] = {
+    name: w.name,
+    title: w.title,
+    mode: draft.mode || w.mode,
+    track: w.track,
+    tag: w.tag,
+    deliverable: w.deliverable,
+    sample: w.sample,
+    desc: w.desc,
+    tasks: w.tasks.map((t, i) => ({ agent: draft.assign[i] || t.agent, task: t.task, deps: t.deps }))
+  };
+  DTITLE[wfId] = DTITLE[draft.wf];
+  FINAL[wfId] = FINAL[draft.wf];
+  const id = 'op_' + Date.now();
+  EMPLOYEES.push({ id, name, title: draft.title || w.title, wf: wfId, handled: 0, hrs: rand(40, 140), win: 0, status: 'idle' });
+  renderEcon();
+  renderRoster();
+  setView('ops');
+  setTimeout(() => {
+    const c = $('emp-' + id);
+    if (c) {
+      c.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      c.style.boxShadow = '0 0 0 2px var(--accent)';
+      setTimeout(() => c.style.boxShadow = '', 1800);
+    }
+  }, 250);
+}
+
+renderEcon();
+renderRoster();
+</script>
+</body>
+</html>
